@@ -1,0 +1,28 @@
+import {connect} from 'react-redux'
+import {Link} from 'react-router'
+
+import * as homeActions from './actions'
+
+const Home = () => {
+    return (
+        <div>
+            <h2>
+                Home page
+            </h2>
+            <Link to="/potions.html">
+                View potions
+            </Link>
+        </div>
+    )
+}
+
+const mapStateToProps = (state, props) => {
+    return {
+        ...state.home,
+    }
+}
+
+
+export default connect(
+    mapStateToProps
+)(Home)
