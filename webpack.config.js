@@ -44,9 +44,7 @@ module.exports = [{
         ],
     },
     devServer: {
-         headers: { "Access-Control-Allow-Origin": "*" },
          contentBase: 'build/',
-         port: 8443
     }
 },
 {
@@ -68,10 +66,5 @@ module.exports = [{
                 cacheDirectory: __dirname + '/tmp'
             },
         ],
-    },
-    devServer: {
-         headers: { "Access-Control-Allow-Origin": "*" },
-         contentBase: 'build/',
-         port: 8443
     }
 }]

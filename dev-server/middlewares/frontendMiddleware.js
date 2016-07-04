@@ -33,6 +33,13 @@ const addDevMiddlewares = (app, webpackConfig) => {
     })
 }
 
+const addCORSMiddleware = app => {
+    app.use(function(req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*")
+        next()
+    })
+}
+
 module.exports = (app, options) => {
     let webpackConfig
     if (options['webpack-config']) {
@@ -42,6 +49,7 @@ module.exports = (app, options) => {
     }
 
     addDevMiddlewares(app, webpackConfig)
+    addCORSMiddleware(app)
 
     return app
 }
