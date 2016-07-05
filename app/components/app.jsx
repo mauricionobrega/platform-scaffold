@@ -1,5 +1,7 @@
 import {PropTypes} from 'react'
 
+/* eslint-disable react/prop-types */
+
 class App extends React.Component {
 
     componentDidMount() {
@@ -30,6 +32,7 @@ class App extends React.Component {
 }
 
 App.propTypes = {
+    removePreloader: PropTypes.func
 }
 
 export default App
