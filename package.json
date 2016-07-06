@@ -43,6 +43,6 @@
   },
   "scripts": {
     "dev": "node ./dev-server/index.js",
-    "build": "webpack -p --config webpack.production.js --display-error-details --optimize-dedupe --optimize-minimize"
+    "build": "webpack --config webpack.production.js -p --display-error-details --optimize-dedupe"
   }
 }
