@@ -7,7 +7,7 @@ const Home = () => {
     return (
         <div>
             <h2>
-                Home page
+                Home Page
             </h2>
             <Link to="/potions.html">
                 View potions

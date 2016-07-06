@@ -14,7 +14,7 @@ if (isCapturing) {
 
         const script = document.createElement('script')
         script.id = 'progressive-web-script'
-        script.src = getAssetUrl('app.js')
+        script.src = getAssetUrl('main.js')
         body.appendChild(script)
     }
 

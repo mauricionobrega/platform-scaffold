@@ -1,14 +1,18 @@
-var path = require('path');
-var webpack = require('webpack');
-var lodash = require('lodash');
+const path = require('path');
+const webpack = require('webpack');
+const ip = require('ip')
 
 module.exports = [{
     devtool: 'cheap-source-map',
-    entry: './app/main.jsx',
+    entry: [
+        './app/main.jsx',
+        `webpack-dev-server/client?https://${ip.address()}:8443/`,
+        'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
+    ],
     output: {
         path: __dirname + '/build',
-        publicPath: '/',
-        filename: 'app.js'
+        publicPath: `https://${ip.address()}:8443/`,
+        filename: '[name].js'
     },
     resolve: {
         alias: {
@@ -17,6 +21,10 @@ module.exports = [{
         extensions: ['', '.js', '.jsx']
     },
     plugins: [
+        new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoErrorsPlugin(),
+
         new webpack.ProvidePlugin({
             'React': 'react',
             'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
@@ -27,10 +35,10 @@ module.exports = [{
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
-                loader: 'babel',
-                query: {
-                    presets: ['es2015', 'react']
-                },
+                loaders: [
+                    'react-hot',
+                    'babel?presets[]=es2015,presets[]=react'
+                ],
                 cacheDirectory: __dirname + '/tmp'
             },
             {
@@ -42,9 +50,6 @@ module.exports = [{
                 loader: 'text'
             }
         ],
-    },
-    devServer: {
-         contentBase: 'build/',
     }
 },
 {
