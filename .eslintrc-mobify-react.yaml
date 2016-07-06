@@ -108,6 +108,7 @@ rules:
   no-alert: error
   no-labels: error
   no-lone-blocks: error
+  no-nested-ternary: error
   no-new-require: error
   no-unused-expressions:
     - error
@@ -129,6 +130,7 @@ rules:
   prefer-const: error
   prefer-rest-params: error
   prefer-spread: error
+  prefer-template: error
   yoda: error
 
   # JS formatting preferences
@@ -145,6 +147,9 @@ rules:
   camelcase:
     - error
     - properties: never
+  comma-dangle:
+    - error
+    - only-multiline
   comma-spacing: error
   comma-style:
     - error

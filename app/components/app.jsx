@@ -9,7 +9,7 @@ class App extends React.Component {
     }
 
     render() {
-        let templateName = 't-' + this.props.children.props.route.routeName
+        let templateName = `t-${this.props.children.props.route.routeName}`
 
         return (
             <div id="outer-container" className={templateName} style={{height: '100%'}}>
