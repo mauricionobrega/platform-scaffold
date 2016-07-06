@@ -37,7 +37,7 @@ module.exports = [{
                 exclude: /node_modules/,
                 loaders: [
                     'react-hot',
-                    'babel?presets[]=es2015,presets[]=react'
+                    'babel?presets[]=es2015,presets[]=react,plugins[]=transform-object-rest-spread,plugins[]=transform-object-assign'
                 ],
                 cacheDirectory: __dirname + '/tmp'
             },
