@@ -16,7 +16,7 @@ import Home from './containers/home/container'
 import PLP from './containers/plp/container'
 
 const store = configureStore()
-const scrollHistory = useScroll(() => browserHistory)();
+const scrollHistory = useScroll(() => browserHistory)()
 
 render(
     <Provider store={store}>
