@@ -43,6 +43,7 @@ rules:
     - ignore:
         - PLP
         - PDP
+  react/no-string-refs: error
   react/prefer-es6-class: error
   react/prefer-stateless-function: error
 
@@ -53,6 +54,7 @@ rules:
   react/jsx-indent: error
   react/jsx-indent-props: error
   react/jsx-space-before-closing: error
+  react/wrap-multilines: error
 
   # JS error checking
   accessor-pairs: error
@@ -93,6 +95,7 @@ rules:
   no-shadow-restricted-names: error
   no-unmodified-loop-condition: error
   no-unsafe-finally: error
+  no-use-before-define: error
   no-void: error
   no-with: error
   require-yield: error
@@ -104,6 +107,7 @@ rules:
   new-parens: error
   no-alert: error
   no-labels: error
+  no-lone-blocks: error
   no-new-require: error
   no-unused-expressions:
     - error
@@ -113,7 +117,9 @@ rules:
   no-useless-concat: error
   no-useless-constructor: error
   no-useless-rename: error
+  no-undef-init: error
   no-unneeded-ternary: error
+  no-useless-escape: error
   no-var: error
   object-shorthand: error
   one-var:
@@ -159,11 +165,30 @@ rules:
   linebreak-style:
     - error
     - unix
+  max-depth:
+    - error
+    - max: 5
+  max-len:
+    - error
+    - code: 100
+  max-nested-callbacks:
+    - error
+    - max: 3
+  max-statements-per-line:
+    - error
+    - max: 2
+  newline-per-chained-call: error
   no-multi-spaces: error
   no-spaced-func: error
   no-trailing-spaces: error
   no-whitespace-before-property: error
   object-curly-spacing: error
+  operator-linebreak:
+    - error
+    - after
+    - overrides:
+        ?: ignore
+        ':': ignore
   quotes:
     - error
     - single
@@ -172,6 +197,9 @@ rules:
     - error
     - as-needed
   rest-spread-spacing:
+    - error
+    - never
+  semi:
     - error
     - never
   semi-spacing: error
