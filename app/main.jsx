@@ -1,5 +1,4 @@
 import {polyfill} from 'es6-promise'
-polyfill()
 
 // React
 import {render} from 'react-dom'
@@ -14,6 +13,8 @@ import configureStore from './store'
 import App from './containers/app/container'
 import Home from './containers/home/container'
 import PLP from './containers/plp/container'
+
+polyfill()
 
 const store = configureStore()
 const scrollHistory = useScroll(() => browserHistory)()
