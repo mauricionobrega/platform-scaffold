@@ -9,8 +9,8 @@ const baseMainConfig = require('./base.main')
 const productionMainConfig = assign(baseMainConfig, {
     plugins: [].concat(baseMainConfig.plugins,
         new webpack.DefinePlugin({
-            "process.env": {
-                NODE_ENV: JSON.stringify("production")
+            'process.env': {
+                NODE_ENV: JSON.stringify('production')
             }
         })
     )
