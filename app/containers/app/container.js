@@ -3,11 +3,6 @@ import {connect} from 'react-redux'
 import * as appActions from './actions'
 
 class App extends React.Component {
-
-    componentDidMount() {
-        this.props.removePreloader()
-    }
-
     render() {
         let templateName = 't-' + this.props.children.props.route.routeName
 
@@ -39,9 +34,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        removePreloader: () => {
-            dispatch(appActions.removePreloader())
-        },
     }
 }
 
