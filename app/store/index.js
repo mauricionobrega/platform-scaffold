@@ -3,6 +3,8 @@ import thunk from 'redux-thunk'
 
 import rootReducer from '../containers/reducers'
 
+const noop = f => f
+
 const configureStore = (initialState) => {
     const middlewares = [
         thunk
@@ -13,7 +15,7 @@ const configureStore = (initialState) => {
         initialState,
         compose(
             applyMiddleware(...middlewares),
-            window.devToolsExtension ? window.devToolsExtension() : undefined
+            window.devToolsExtension ? window.devToolsExtension() : noop
         )
     )
 
