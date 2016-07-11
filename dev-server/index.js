@@ -2,15 +2,15 @@ const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
 const config = require("../webpack/dev.js")
 
-const addMiddleware = require('./middlewares/frontendMiddleware');
+const addMiddleware = require('./middlewares/frontendMiddleware')
 const logger = require('./logger')
 
 const argv = require('minimist')(process.argv.slice(2))
 const port = argv.port || process.env.PORT || 8443
 
-const compiler = webpack(config);
+const compiler = webpack(config)
 
-var server = new WebpackDevServer(compiler, {
+const server = new WebpackDevServer(compiler, {
     https: true,
     hot: true,
     stats: {
@@ -31,4 +31,5 @@ server.listen(port, (err) => {
         return logger.error(err.message)
     }
     logger.appStarted(port)
+    logger.waitForBuild()
 })

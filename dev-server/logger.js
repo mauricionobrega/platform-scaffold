@@ -10,6 +10,10 @@ const divider = chalk.gray('\n-----------------------------------')
  */
 const logger = {
 
+    waitForBuild: () => {
+        console.log(chalk.yellow('webpack: building bundle...'))
+    },
+
     // Called whenever there's an error on the server we want to print
     error: err => {
         console.error(chalk.red(err))
