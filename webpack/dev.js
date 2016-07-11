@@ -2,8 +2,8 @@ const path = require('path')
 const webpack = require('webpack')
 const ip = require('ip')
 
-var loaderConfig = require('./base.loader')
-var mainConfig = require('./base.main')
+const loaderConfig = require('./base.loader')
+const mainConfig = require('./base.main')
 
 mainConfig.entry = mainConfig.entry.concat([
     `webpack-dev-server/client?https://${ip.address()}:8443/`,
