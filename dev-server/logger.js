@@ -19,14 +19,14 @@ const logger = {
     appStarted: (port) => {
         console.log(`Server started ${chalk.green('✓')}`)
 
-        console.log(`
-            ${chalk.bold('Access URLs:')}
-            ${divider}
-            Localhost: ${chalk.magenta(`https://localhost:${port}`)}
-            LAN: ${chalk.magenta(`https://${ip.address()}:${port}`)}
-            ${divider}
-            ${chalk.blue(`Press ${chalk.italic('CTRL-C')} to stop`)}
-        `)
+        console.log(
+            chalk.bold('Access URLs:') + '\n' +
+            divider + '\n' +
+            'Localhost: ' + chalk.magenta(`https://localhost:${port}`) + '\n' +
+            'LAN: ' + chalk.magenta(`https://${ip.address()}:${port}`) + '\n' +
+            divider + '\n' +
+            chalk.blue(`Press ${chalk.italic('CTRL-C')} to stop`)
+        )
     },
 }
 
