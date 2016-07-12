@@ -1,7 +1,7 @@
 import {createReducer} from 'redux-act'
 import * as plpActions from './actions'
 
-const initialState = {}
+const initialState = Map({})
 
 export default createReducer({
 
