@@ -5,6 +5,7 @@ const path = require('path')
 const exec = Promise.promisify(require('child_process').exec)
 const fs = Promise.promisifyAll(require('fs'))
 const prompt = Promise.promisifyAll(require('prompt'))
+const rimraf = Promise.promisify(require('rimraf'))
 
 const FILE_ENCODING = 'utf8'
 
@@ -75,10 +76,15 @@ const replaceStrings = (startString, stringsToReplace) => {
     }, startString)
 }
 
+const cleanup = () => {
+    return rimraf(path.resolve('setup/'))
+}
+
 removeGit()
     .then(getProjectInfo)
     .then(writeReadme)
     .then(initGit)
+    .then(cleanup)
     .then(() => {
         printDivider()
         process.stdout.write(chalk.green('Your project is now ready to go.\n'))
