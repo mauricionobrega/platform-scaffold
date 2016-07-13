@@ -23,6 +23,7 @@
     "whatwg-fetch": "1.0.0"
   },
   "devDependencies": {
+    "ava": "0.15.2",
     "babel-core": "6.10.4",
     "babel-loader": "6.2.4",
     "babel-plugin-transform-object-assign": "6.8.0",
@@ -50,6 +51,7 @@
   "scripts": {
     "dev": "node ./dev-server/index.js",
     "build": "webpack --config webpack/production.js -p --display-error-details --optimize-dedupe",
-    "lint": "eslint \"app/**/.jsx\" \"app/**/*.jsx\"; exit 0"
+    "lint": "eslint \"app/**/.jsx\" \"app/**/*.jsx\"; exit 0",
+    "test": "ava"
   }
 }
