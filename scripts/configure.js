@@ -14,7 +14,7 @@ const printCheckMark = () => {
 
 const removeGit = () => {
     process.stdout.write('Removing old git ')
-    return exec('rm -Rf test.txt').then(printCheckMark)
+    return exec('rm -Rf .git/').then(printCheckMark)
 }
 
 const initGit = () => {
