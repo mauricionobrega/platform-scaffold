@@ -83,8 +83,8 @@ const cleanup = () => {
 removeGit()
     .then(getProjectInfo)
     .then(writeReadme)
-    .then(initGit)
     .then(cleanup)
+    .then(initGit)
     .then(() => {
         printDivider()
         process.stdout.write(chalk.green('Your project is now ready to go.\n'))
