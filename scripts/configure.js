@@ -4,8 +4,8 @@ const chalk = require('chalk')
 const path = require('path')
 const exec = Promise.promisify(require('child_process').exec)
 
-process.stdin.resume();
-process.stdin.setEncoding('utf8');
+process.stdin.resume()
+process.stdin.setEncoding('utf8')
 
 const printCheckMark = () => {
     process.stdout.write(chalk.green(' ✓\n'))
