@@ -29,7 +29,7 @@ module.exports = {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
                 loaders: [
-                    'babel?presets[]=es2015,presets[]=react,plugins[]=transform-object-rest-spread,plugins[]=transform-object-assign'
+                    'babel'
                 ],
                 cacheDirectory: __dirname + '/tmp'
             },
