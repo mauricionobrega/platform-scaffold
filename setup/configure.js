@@ -10,7 +10,7 @@ const rimraf = Promise.promisify(require('rimraf'))
 const FILE_ENCODING = 'utf8'
 
 process.stdin.resume()
-process.stdin.setEncoding('utf8')
+process.stdin.setEncoding(FILE_ENCODING)
 
 const printDivider = () => {
     process.stdout.write(chalk.gray('\n----------------------------------------------\n\n'))
