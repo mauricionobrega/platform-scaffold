@@ -1,6 +1,6 @@
 const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
-const config = require("../webpack/dev.js")
+const config = require('../webpack/dev.js')
 
 const addMiddleware = require('./middlewares/frontendMiddleware')
 const logger = require('./logger')

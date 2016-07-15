@@ -12,7 +12,7 @@ module.exports = {
     },
     resolve: {
         alias: {
-          'react': path.resolve(process.cwd(), 'node_modules', 'react'),
+            'react': path.resolve(process.cwd(), 'node_modules', 'react'),
         },
         extensions: ['', '.js', '.jsx']
     },

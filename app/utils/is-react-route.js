@@ -1,10 +1,10 @@
 define([], function() {
-    var a = document.createElement('a');
+    var a = document.createElement('a')
 
     var routeMatches = [
         /\/$/,
         /\/potions.html$/,
-    ];
+    ]
 
     var isReactRoute = function(url) {
         a.href = url
@@ -12,12 +12,12 @@ define([], function() {
 
         for (var i = 0; i < routeMatches.length; i++) {
             if (routeMatches[i].test(url.split(/[?#]/)[0])) {
-                return true;
+                return true
             }
         }
 
-        return false;
-    };
+        return false
+    }
 
-    return isReactRoute;
-});
+    return isReactRoute
+})
