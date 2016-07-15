@@ -2,10 +2,10 @@
 The scaffold / starter kit for Progressive Web
 
 ## Requirements
-- We reccommend you use [nvm](https://github.com/creationix/nvm#installation) to
-manage node and npm versions
-- node 5.x or greater
-- npm 3.x or greater
+- We recommend you use [nvm](https://github.com/creationix/nvm#installation) to
+manage node and npm versions.
+- node 4.x or greater
+- npm 2.x or greater
 
 ## Get the Scaffold
 
