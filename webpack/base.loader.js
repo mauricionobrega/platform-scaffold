@@ -1,3 +1,5 @@
+/* eslint-disable import/no-commonjs */
+
 const path = require('path')
 
 module.exports = {
@@ -13,7 +15,7 @@ module.exports = {
                 test: /\.js?$/,
                 exclude: /node_modules/,
                 loader: 'babel?presets[]=es2015',
-                cacheDirectory: __dirname + '/tmp'
+                cacheDirectory: `${__dirname}/tmp`
             },
         ],
     }

@@ -1,4 +1,5 @@
-const path = require('path')
+/* eslint-disable import/no-commonjs */
+
 const webpack = require('webpack')
 const ip = require('ip')
 

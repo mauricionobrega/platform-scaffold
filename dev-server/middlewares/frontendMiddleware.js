@@ -1,6 +1,4 @@
-'use strict'
-
-const path = require('path')
+/* eslint-disable import/no-commonjs */
 
 module.exports = (app) => {
     // Add middlewares here

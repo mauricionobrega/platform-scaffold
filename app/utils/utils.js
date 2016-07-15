@@ -3,12 +3,12 @@ import {createAction as actionCreator} from 'redux-act'
 // simplify redux-act createAction method.
 // usage: createAction('Update Campaign', 'id', 'update')
 // instead of: createAction('Update Campaign', (id, update) => ({id, update}))
-export function createAction(description, ...argNames) {
+const createAction = (description, ...argNames) => {
     let payloadReducer
 
     if (argNames.length) {
         payloadReducer = (...args) => {
-            var payload = {}
+            const payload = {}
 
             argNames.forEach((arg, index) => {
                 payload[arg] = args[index]
@@ -20,3 +20,5 @@ export function createAction(description, ...argNames) {
 
     return actionCreator(description, payloadReducer)
 }
+
+export default createAction

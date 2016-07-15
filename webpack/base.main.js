@@ -1,3 +1,5 @@
+/* eslint-disable import/no-commonjs */
+
 const path = require('path')
 const webpack = require('webpack')
 
@@ -12,14 +14,14 @@ module.exports = {
     },
     resolve: {
         alias: {
-            'react': path.resolve(process.cwd(), 'node_modules', 'react'),
+            react: path.resolve(process.cwd(), 'node_modules', 'react'),
         },
         extensions: ['', '.js', '.jsx']
     },
     plugins: [
         new webpack.ProvidePlugin({
-            'React': 'react',
-            'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+            React: 'react',
+            fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch'
         })
     ],
     module: {
@@ -29,9 +31,9 @@ module.exports = {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
                 loaders: [
-                    'babel?presets[]=es2015,presets[]=react,plugins[]=transform-object-rest-spread,plugins[]=transform-object-assign'
+                    'babel?presets[]=es2015,presets[]=react,plugins[]=transform-object-rest-spread,plugins[]=transform-object-assign' // eslint-disable-line
                 ],
-                cacheDirectory: __dirname + '/tmp'
+                cacheDirectory: `${__dirname}/tmp`
             },
             {
                 test: /\.json$/,
