@@ -3,7 +3,7 @@ import {createAction as actionCreator} from 'redux-act'
 // simplify redux-act createAction method.
 // usage: createAction('Update Campaign', 'id', 'update')
 // instead of: createAction('Update Campaign', (id, update) => ({id, update}))
-const createAction = (description, ...argNames) => {
+export const createAction = (description, ...argNames) => {
     let payloadReducer
 
     if (argNames.length) {
@@ -20,5 +20,3 @@ const createAction = (description, ...argNames) => {
 
     return actionCreator(description, payloadReducer)
 }
-
-export default createAction

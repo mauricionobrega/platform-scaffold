@@ -1,5 +1,5 @@
+/* eslint-disable import/no-commonjs */
 const Promise = require('bluebird')
-
 const chalk = require('chalk')
 const path = require('path')
 const exec = Promise.promisify(require('child_process').exec)
@@ -49,6 +49,13 @@ const getProjectInfo = () => {
     return prompt.getAsync(projectInfoSchema)
 }
 
+const replaceStrings = (startString, stringsToReplace) => {
+    return Object.keys(stringsToReplace).reduce((result, key) => {
+        const pattern = new RegExp(`<${key}>`, 'g')
+        return result.replace(pattern, stringsToReplace[key])
+    }, startString)
+}
+
 const writeReadme = (options) => {
     process.stdout.write('Updating README.md ')
 
@@ -67,13 +74,6 @@ const writeReadme = (options) => {
             return fs.writeFileAsync('README.md', readmeContents, FILE_ENCODING)
         })
         .then(printCheckMark)
-}
-
-const replaceStrings = (startString, stringsToReplace) => {
-    return Object.keys(stringsToReplace).reduce((result, key) => {
-        const pattern = new RegExp(`<${key}>`, 'g')
-        return result.replace(pattern, stringsToReplace[key])
-    }, startString)
 }
 
 const cleanup = () => {

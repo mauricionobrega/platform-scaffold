@@ -1,8 +1,13 @@
+import {PropTypes} from 'react'
 import {connect} from 'react-redux'
 
 import * as appActions from './actions'
 
 class App extends React.Component {
+    componentDidMount() {
+        // Dispatch an action to retrieve global content here
+    }
+
     render() {
         let templateName = `t-${this.props.children.props.route.routeName}`
 
@@ -24,6 +29,10 @@ class App extends React.Component {
             </div>
         )
     }
+}
+
+App.propTypes = {
+    children: PropTypes.element.isRequired
 }
 
 const mapStateToProps = (state) => {

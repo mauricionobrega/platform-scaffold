@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
 
-import * as PLPActions from './actions'
+import * as plpActions from './actions'
 
 const PLP = () => {
     return (

@@ -75,5 +75,3 @@ export const loadAsset = (nodeName, options) => {
     }
     firstScript.parentNode.insertBefore(script, firstScript)
 }
-
-
