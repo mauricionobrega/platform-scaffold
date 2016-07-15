@@ -50,6 +50,6 @@
   "scripts": {
     "dev": "node ./dev-server/index.js",
     "build": "webpack --config webpack/production.js -p --display-error-details --optimize-dedupe",
-    "lint": "eslint '**/*.js'; exit 0"
+    "lint": "eslint '**/*.{js,jsx}'; exit 0"
   }
 }
