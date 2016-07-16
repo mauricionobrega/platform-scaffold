@@ -1,4 +1,6 @@
 /* eslint-disable import/no-commonjs */
+/* eslint-env node */
+
 const Promise = require('bluebird')
 const chalk = require('chalk')
 const path = require('path')

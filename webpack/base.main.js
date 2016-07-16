@@ -1,4 +1,5 @@
 /* eslint-disable import/no-commonjs */
+/* eslint-env node */
 
 const path = require('path')
 const webpack = require('webpack')
