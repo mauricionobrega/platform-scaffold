@@ -26,6 +26,7 @@
     "ava": "0.15.2",
     "babel-core": "6.10.4",
     "babel-loader": "6.2.4",
+    "babel-plugin-istanbul": "1.0.3",
     "babel-plugin-transform-object-assign": "6.8.0",
     "babel-plugin-transform-object-rest-spread": "6.8.0",
     "babel-preset-es2015": "6.9.0",
@@ -47,6 +48,7 @@
     "lodash.assign": "^4.0.9",
     "minimist": "1.2.0",
     "mobify-code-style": "2.5.0",
+    "nyc": "7.0.0",
     "react-addons-test-utils": "15.2.1",
     "react-hot-loader": "1.3.0",
     "tap-mocha-reporter": "0.0.25",
@@ -58,8 +60,9 @@
     "build": "webpack --config webpack/production.js -p --display-error-details --optimize-dedupe",
     "lint": "eslint \"app/**/.jsx\" \"app/**/*.jsx\"; exit 0",
     "test": "ava",
-    "test:watch": "npm test -- --watch",
-    "test:circleci": "ava --tap | tap-mocha-reporter xunit > $CIRCLE_TEST_REPORTS/junit/test-results.xml"
+    "test:circleci": "ava --tap | tap-mocha-reporter xunit > $CIRCLE_TEST_REPORTS/junit/test-results.xml",
+    "test:coverage": "NODE_ENV=test nyc ava",
+    "test:watch": "npm test -- --watch"
   },
   "ava": {
     "require": [
@@ -67,5 +70,13 @@
     ],
     "babel": "inherit",
     "verbose": true
+  },
+  "nyc": {
+    "reporter": [
+      "text",
+      "html"
+    ],
+    "sourceMap": false,
+    "instrument": false
   }
 }
