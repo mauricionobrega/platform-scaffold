@@ -58,7 +58,7 @@
     "build": "webpack --config webpack/production.js -p --display-error-details --optimize-dedupe",
     "lint": "eslint \"app/**/.jsx\" \"app/**/*.jsx\"; exit 0",
     "test": "ava",
-    "test:circleci": "ava --tap | tap-xunit > $CIRCLE_TEST_REPORTS/"
+    "test:circleci": "ava --tap | tap-xunit > $CIRCLE_TEST_REPORTS/junit/test-results.xml"
   },
   "ava": {
     "require": [
