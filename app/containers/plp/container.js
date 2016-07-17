@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
 
-import * as plpActions from './actions'
+// import * as plpActions from './actions'
 
 const PLP = () => {
     return (
@@ -16,7 +16,7 @@ const PLP = () => {
     )
 }
 
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state) => {
     return {
         ...state.PLP,
     }

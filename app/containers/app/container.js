@@ -1,7 +1,7 @@
 import {PropTypes} from 'react'
 import {connect} from 'react-redux'
 
-import * as appActions from './actions'
+// import * as appActions from './actions'
 
 class App extends React.Component {
     componentDidMount() {
@@ -41,7 +41,7 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch, props) => {
+const mapDispatchToProps = () => {
     return {
     }
 }
