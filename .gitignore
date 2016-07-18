@@ -1,6 +1,8 @@
 .DS_Store
+.nyc_output
 
 /build
 build.tar
+coverage
 node_modules
 npm-debug.log
