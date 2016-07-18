@@ -6,7 +6,4 @@ plugins:
 rules:
   no-unused-vars:
     - error
-    - argsIgnorePattern:
-        - '^props$'
-        - '^dispatch$'
-        - '^state$'
+    - argsIgnorePattern: '^(props|dispatch|state)$'
