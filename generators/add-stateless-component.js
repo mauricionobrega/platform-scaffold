@@ -11,9 +11,7 @@ const template = require('lodash.template')
 
 const APP_COMPONENT_DIR = path.join('app', 'components')
 const FILE_ENCODING = 'utf8'
-const SKELETON_DIR = 'page-skeleton'
 
-const camel2Pascal = (name) => name.replace(/^[a-z]/, (c) => c.toUpperCase())
 const Pascal2camel = (name) => name.replace(/^[A-Z]/, (c) => c.toLowerCase())
 const camel2dashed = (name) => name.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`)
 
@@ -63,7 +61,10 @@ checkComponentDir()
     .tap(() => greenWrite(' ✓\n'))
     .tap(() => process.stdout.write('Processing component template'))
     .then((component) => {
-        return substituteVariables(path.join(__dirname, 'component-skeletons', 'stateless.jsx'), component)
+        return substituteVariables(
+            path.join(__dirname, 'component-skeletons', 'stateless.jsx'),
+            component
+        )
             .tap(() => greenWrite(' ✓\n'))
             .tap(() => process.stdout.write('Writing component file'))
             .then((contents) => {

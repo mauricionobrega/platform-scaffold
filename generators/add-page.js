@@ -39,7 +39,11 @@ const getUserInput = () => {
 const makePageDir = (page) => {
     return fs.mkdirAsync(path.join(APP_CONTAINER_DIR, page.dirname))
          .catch(() => {
-             console.log(`Page already exists under that name: ${path.join(APP_CONTAINER_DIR, page.dirname)}`)
+             console.log(
+                 /* eslint-disable max-len */
+                 `Page already exists under that name: ${path.join(APP_CONTAINER_DIR, page.dirname)}`
+                 /* eslint-enable max-len */
+             )
              process.exit()
          })
 }
