@@ -62,7 +62,7 @@
   },
   "scripts": {
     "build": "webpack --config webpack/production.js -p --display-error-details --optimize-dedupe",
-    "configure": "node ./setup/configure.js",
+    "configure": "node ./generators/setup/configure.js",
     "dev": "node ./dev-server/index.js",
     "lint": "eslint '**/*.{js,jsx}'; exit 0",
     "test": "ava",

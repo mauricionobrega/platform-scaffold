@@ -61,7 +61,7 @@ const replaceStrings = (startString, stringsToReplace) => {
 const writeReadme = (options) => {
     process.stdout.write('Updating README.md ')
 
-    return fs.readFileAsync(path.resolve('setup/README.md'), FILE_ENCODING)
+    return fs.readFileAsync(path.resolve('generator/setup/README.md'), FILE_ENCODING)
         .then((fileContents) => {
             return replaceStrings(fileContents, options)
         })
