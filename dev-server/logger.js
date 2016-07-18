@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable no-console, import/no-commonjs */
 
 const chalk = require('chalk')
 const ip = require('ip')
@@ -15,7 +15,7 @@ const logger = {
     },
 
     // Called whenever there's an error on the server we want to print
-    error: err => {
+    error: (err) => {
         console.error(chalk.red(err))
     },
 
@@ -24,7 +24,7 @@ const logger = {
         console.log(`Server started ${chalk.green('✓')}`)
 
         console.log(
-            chalk.bold('Access URLs:') + '\n' +
+            chalk.bold('Access URLs:') + '\n' + // eslint-disable-line prefer-template
             divider + '\n' +
             'Localhost: ' + chalk.magenta(`https://localhost:${port}`) + '\n' +
             'LAN: ' + chalk.magenta(`https://${ip.address()}:${port}`) + '\n' +

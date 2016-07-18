@@ -1,6 +1,9 @@
+/* eslint-disable import/no-commonjs */
+/* eslint-env node */
+
 const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
-const config = require("../webpack/dev.js")
+const config = require('../webpack/dev.js')
 
 const addMiddleware = require('./middlewares/frontendMiddleware')
 const logger = require('./logger')
@@ -26,7 +29,7 @@ const server = new WebpackDevServer(compiler, {
 
 addMiddleware(server)
 
-server.listen(port, (err) => {
+server.listen(port, (err) => { // eslint-disable-line consistent-return
     if (err) {
         return logger.error(err.message)
     }

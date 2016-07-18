@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
 
-import * as homeActions from './actions'
+// import * as homeActions from './actions'
 
 const Home = () => {
     return (
@@ -16,7 +16,7 @@ const Home = () => {
     )
 }
 
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state) => {
     return {
         ...state.home,
     }

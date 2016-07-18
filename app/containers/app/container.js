@@ -1,10 +1,15 @@
+import {PropTypes} from 'react'
 import {connect} from 'react-redux'
 
-import * as appActions from './actions'
+// import * as appActions from './actions'
 
 class App extends React.Component {
+    componentDidMount() {
+        // Dispatch an action to retrieve global content here
+    }
+
     render() {
-        let templateName = 't-' + this.props.children.props.route.routeName
+        let templateName = `t-${this.props.children.props.route.routeName}`
 
         return (
             <div id="outer-container" className={templateName} style={{height: '100%'}}>
@@ -26,13 +31,17 @@ class App extends React.Component {
     }
 }
 
+App.propTypes = {
+    children: PropTypes.element.isRequired
+}
+
 const mapStateToProps = (state) => {
     return {
         ...state.app,
     }
 }
 
-const mapDispatchToProps = (dispatch, props) => {
+const mapDispatchToProps = () => {
     return {
     }
 }
