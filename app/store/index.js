@@ -3,7 +3,7 @@ import thunk from 'redux-thunk'
 
 import rootReducer from '../containers/reducers'
 
-const noop = f => f
+const noop = (f) => f
 
 const configureStore = (initialState) => {
     const middlewares = [
