@@ -64,6 +64,7 @@
     "configure": "node ./setup/configure.js",
     "dev": "node ./dev-server/index.js",
     "lint": "eslint '**/*.{js,jsx}'; exit 0",
+    "lint:githook": "eslint '**/*.{js,jsx}'",
     "test": "ava",
     "test:circleci": "ava --tap | tap-mocha-reporter xunit > $CIRCLE_TEST_REPORTS/junit/test-results.xml",
     "test:coverage": "NODE_ENV=test nyc ava",
@@ -71,7 +72,7 @@
   },
   "config": {
     "ghooks": {
-      "pre-commit": "npm run lint",
+      "pre-commit": "npm run lint:githook",
       "pre-push": "npm run test:coverage"
     }
   },
