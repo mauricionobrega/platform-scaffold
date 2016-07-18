@@ -34,6 +34,7 @@
     "babel-register": "6.9.0",
     "bluebird": "3.4.1",
     "chalk": "1.1.3",
+    "cross-env": "2.0.0",
     "enzyme": "2.4.1",
     "eslint": "3.0.1",
     "eslint-import-resolver-webpack": "0.3.2",
@@ -50,12 +51,11 @@
     "minimist": "1.2.0",
     "mobify-code-style": "2.5.0",
     "nyc": "7.0.0",
+    "prompt": "1.0.0",
     "react-addons-test-utils": "15.2.1",
     "react-hot-loader": "1.3.0",
-    "tap-mocha-reporter": "0.0.25",
-    "prompt": "1.0.0",
-    "react-hot-loader": "1.3.0",
     "rimraf": "2.5.3",
+    "tap-mocha-reporter": "0.0.25",
     "webpack": "1.13.1",
     "webpack-dev-server": "1.14.1"
   },
@@ -66,7 +66,7 @@
     "lint": "eslint '**/*.{js,jsx}'; exit 0",
     "test": "ava",
     "test:circleci": "ava --tap | tap-mocha-reporter xunit > $CIRCLE_TEST_REPORTS/junit/test-results.xml",
-    "test:coverage": "NODE_ENV=test nyc ava",
+    "test:coverage": "cross-env NODE_ENV=test nyc ava",
     "test:watch": "npm test -- --watch"
   },
   "ava": {
