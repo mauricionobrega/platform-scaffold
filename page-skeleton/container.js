@@ -1,9 +1,9 @@
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
 
-import * as <% page.name.toLowerCase() %>Actions from './actions'
+import * as <%= page.name %>Actions from './actions'
 
-export const <% page.name %> = () => {
+export const <%= page.Name %> = () => {
     return (
         <div>
 
@@ -13,7 +13,7 @@ export const <% page.name %> = () => {
 
 export const mapStateToProps = (state, props) => {
     return {
-            ...state.<% page.name.toLowerCase() %>,
+            ...state.<%= page.name %>,
     }
 }
 
@@ -25,4 +25,4 @@ export const mapDispatchToProps = (dispatch, props) => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(<% page.name %>)
+)(<%= page.Name %>)
