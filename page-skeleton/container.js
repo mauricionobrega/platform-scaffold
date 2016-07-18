@@ -13,7 +13,7 @@ export const <%= page.Name %> = () => {
 
 export const mapStateToProps = (state, props) => {
     return {
-            ...state.<%= page.name %>,
+        ...state.<%= page.name %>,
     }
 }
 
