@@ -36,8 +36,7 @@ const makePageDir = (page) => {
 common.getUserInput(USER_INPUT_SCHEMA)
     .then(processUserInput)
     .tap((page) => {
-        return Promise.resolve(page)
-            .then(common.step(`Creating container directory ${page.dirname}`, makePageDir))
+        return common.step(`Creating container directory ${page.dirname}`, makePageDir)(page)
     })
     .then(common.step(
         'Finding component template',

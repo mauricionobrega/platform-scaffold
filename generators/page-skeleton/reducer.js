@@ -6,5 +6,4 @@ const initialState = Map({})
 
 export default createReducer({
 
-
 }, initialState)
