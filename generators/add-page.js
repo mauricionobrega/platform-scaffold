@@ -45,11 +45,11 @@ common.getUserInput(USER_INPUT_SCHEMA)
 // No destructuring in Node 4.x
     .tap(() => process.stdout.write('Generating page container'))
     .spread((page, filenames) => {
-        return Promise.map(filenames, (fn) => {
-            return common.getGeneratorAsset(path.join(SKELETON_DIR, fn))
-                .then(common.processTemplate(page))
-                .then(common.writeToPath(common.container(path.join(page.dirname, fn))))
-        })
+        return Promise.map(filenames, (fn) => common.transformFile(
+            path.join(SKELETON_DIR, fn),
+            page,
+            common.container(path.join(page.dirname, fn))
+        ))
     })
     .then(() => common.greenWrite(' ✓\n'))
     .then(() => console.log('Finished'))

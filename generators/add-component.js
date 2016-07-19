@@ -39,14 +39,13 @@ common.mkdirIfNonexistent(common.APP_COMPONENT_DIR)
     .then(() => common.getUserInput(USER_INPUT_SCHEMA))
     .then(processUserInput)
     .tap(common.step('Checking for an existing component', checkComponentExistence))
-    .tap(() => process.stdout.write('Processing component template'))
-    .then((component) => {
-        return common.getGeneratorAsset(component.input)
-            .then(common.processTemplate(component))
-            .tap(common.printCheckMark)
-            .then(common.step(
-                'Writing component file',
-                common.writeToPath(common.component(component.filename))
-            ))
-    })
+    .then(common.step(
+        'Processing component template',
+        (component) =>
+            common.transformFile(
+                component.input,
+                component,
+                common.component(component.filename)
+            )
+    ))
     .then(() => console.log('Finished'))

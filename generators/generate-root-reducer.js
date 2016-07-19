@@ -5,7 +5,6 @@ const Promise = require('bluebird')
 
 const fs = Promise.promisifyAll(require('fs'))
 const path = require('path')
-const template = require('lodash.template')
 
 const common = require('./common')
 
@@ -39,16 +38,14 @@ const getContainers = () => {
         .then(containersFromDirs)
 }
 
-const generateRootReducer = (containers) => {
-    return common.getGeneratorAsset('reducers.template.js')
-        .then((script) => template(script, {variable: 'context'})({containers}))
-}
-
 Promise.resolve()
     .then(common.step('Finding container directories', getContainers))
-    .then(common.step('Generating program text', generateRootReducer))
     .then(common.step(
-        'Writing new root reducer',
-        common.writeToPath(path.join(common.APP_CONTAINER_DIR, 'reducers.js'))
+        'Generating root reducer program text',
+        (containers) => common.transformFile(
+            'reducers.template.js',
+            {containers},
+            common.container('reducers.js')
+        )
     ))
     .then(() => common.greenWrite('Finished successfully\n'))

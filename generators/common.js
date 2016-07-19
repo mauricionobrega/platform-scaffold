@@ -46,6 +46,12 @@ const processTemplate = (context) => (templateString) =>
 
 const writeToPath = (path) => (contents) => fs.writeFileAsync(path, contents, 'utf8')
 
+const transformFile = (inpath, context, outpath) => {
+    return getGeneratorAsset(inpath)
+        .then(processTemplate(context))
+        .then(writeToPath(outpath))
+}
+
 // FILE MANIPULATION
 
 const mkdirIfNonexistent = (dirname) =>
@@ -83,6 +89,7 @@ module.exports = {
     getGeneratorDir,
     processTemplate,
     writeToPath,
+    transformFile,
 
     mkdirIfNonexistent,
 
