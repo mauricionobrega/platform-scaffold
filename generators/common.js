@@ -12,6 +12,7 @@ const template = require('lodash.template')
 // OUTPUT DIRECTORIES
 const APP_CONTAINER_DIR = path.join('app', 'containers')
 const APP_COMPONENT_DIR = path.join('app', 'components')
+const container = (fn) => path.join(APP_CONTAINER_DIR, fn)
 const component = (fn) => path.join(APP_COMPONENT_DIR, fn)
 
 // IDENTIFIER CASE CONVERTERS
@@ -36,9 +37,9 @@ const getUserInput = (schema) => {
     return prompt.getAsync(schema)
 }
 
-const getGeneratorAsset = (fn) => {
-    return fs.readFileAsync(path.join(__dirname, fn), 'utf8')
-}
+const getGeneratorAsset = (fn) => fs.readFileAsync(path.join(__dirname, fn), 'utf8')
+
+const getGeneratorDir = (dir) => fs.readdirAsync(path.join(__dirname, dir))
 
 const processTemplate = (varname, context) => (templateString) =>
       template(templateString, {variable: varname})(context)
@@ -63,6 +64,7 @@ const step = (message, operation) => (value) => {
 module.exports = {
     APP_CONTAINER_DIR,
     APP_COMPONENT_DIR,
+    container,
     component,
 
     camel2Pascal,
@@ -78,6 +80,7 @@ module.exports = {
 
     getUserInput,
     getGeneratorAsset,
+    getGeneratorDir,
     processTemplate,
     writeToPath,
 

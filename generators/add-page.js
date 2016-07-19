@@ -8,56 +8,47 @@ const path = require('path')
 
 const common = require('./common')
 
-const FILE_ENCODING = 'utf8'
-const SKELETON_DIR = 'generators/page-skeleton'
+const SKELETON_DIR = 'page-skeleton'
 
 const USER_INPUT_SCHEMA = [
     {
         name: 'name',
         description: 'Enter the (camelCase) name of the page you want to add',
-        type: 'string'
+        type: 'string',
+        pattern: /^[a-z]/,
+        message: 'The name must begin with a lower-case letter'
     }
 ]
 
+const processUserInput = (page) => {
+    page.Name = common.camel2Pascal(page.name)
+    page.dirname = common.camel2dashed(page.name)
+    return page
+}
+
 const makePageDir = (page) => {
-    return fs.mkdirAsync(path.join(common.APP_CONTAINER_DIR, page.dirname))
-         .catch(() => {
-             common.redWrite(
-                 /* eslint-disable max-len */
-                 `\nA page already exists under that name: ${path.join(common.APP_CONTAINER_DIR, page.dirname)}\n`
-                 /* eslint-enable max-len */
-             )
-             process.exit()
-         })
+    const pageDir = common.container(page.dirname)
+    return fs.mkdirAsync(pageDir)
+        .catch(common.errorOut(`\nA page already exists under that name: ${pageDir}\n`))
 }
 
 common.getUserInput(USER_INPUT_SCHEMA)
-    .then((page) => {
-        page.Name = common.camel2Pascal(page.name)
-        page.dirname = common.camel2dashed(page.name)
-        return page
-    })
+    .then(processUserInput)
     .tap((page) => {
-        return Promise.resolve()
+        return Promise.resolve(page)
             .then(common.step(`Creating container directory ${page.dirname}`, makePageDir))
     })
-    .tap(() => process.stdout.write('Processing container template'))
-    .then((page) => {
-        return [page, fs.readdirAsync(SKELETON_DIR)]
-    })
+    .then(common.step(
+        'Finding component template',
+        (page) => [page, common.getGeneratorDir(SKELETON_DIR)]
+    ))
 // No destructuring in Node 4.x
+    .tap(() => process.stdout.write('Generating page container'))
     .spread((page, filenames) => {
         return Promise.map(filenames, (fn) => {
-            return fs.readFileAsync(path.join(SKELETON_DIR, fn), FILE_ENCODING)
+            return common.getGeneratorAsset(path.join(SKELETON_DIR, fn))
                 .then(common.processTemplate('page', page))
-                .then((contents) => {
-                    return fs.writeFileAsync(
-                        path.join(common.APP_CONTAINER_DIR, page.dirname, fn),
-                        contents,
-                        FILE_ENCODING
-                    )
-                })
-
+                .then(common.writeToPath(common.container(path.join(page.dirname, fn))))
         })
     })
     .then(() => common.greenWrite(' ✓\n'))
