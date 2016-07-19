@@ -27,7 +27,7 @@ const filterReducers = (dirs) => {
 const containersFromDirs = (dirs) => dirs.map((directory) => {
     return {
         directory,
-        identifier: common.dashed2camel(directory)
+        identifier: common.dashed2Camel(directory)
     }
 })
 

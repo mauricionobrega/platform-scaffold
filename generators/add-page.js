@@ -23,7 +23,7 @@ const USER_INPUT_SCHEMA = [
 
 const processUserInput = (page) => {
     page.Name = common.camel2Pascal(page.name)
-    page.dirname = common.camel2dashed(page.name)
+    page.dirname = common.camel2Dashed(page.name)
     return page
 }
 

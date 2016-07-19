@@ -17,10 +17,10 @@ const component = (fn) => path.join(APP_COMPONENT_DIR, fn)
 
 // IDENTIFIER CASE CONVERTERS
 const camel2Pascal = (name) => name.replace(/^[a-z]/, (c) => c.toUpperCase())
-const camel2dashed = (name) => name.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`)
-const dashed2camel = (name) => name.replace(/-(\w)/g, (_, letter) => letter.toUpperCase())
-const Pascal2camel = (name) => name.replace(/^[A-Z]/, (c) => c.toLowerCase())
-const Pascal2dashed = (name) => camel2dashed(Pascal2camel(name))
+const camel2Dashed = (name) => name.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`)
+const dashed2Camel = (name) => name.replace(/-(\w)/g, (_, letter) => letter.toUpperCase())
+const pascal2Camel = (name) => name.replace(/^[A-Z]/, (c) => c.toLowerCase())
+const pascal2Dashed = (name) => camel2Dashed(pascal2Camel(name))
 
 // COLOURED OUTPUT AND ERRORS
 const greenWrite = (text) => process.stdout.write(chalk.green(text))
@@ -35,6 +35,10 @@ const errorOut = (message) => () => {
 const getUserInput = (schema) => {
     prompt.start()
     return prompt.getAsync(schema)
+        .catch(() => {
+            redWrite('\nOperation cancelled\n')
+            process.exit()
+        })
 }
 
 const getGeneratorAsset = (fn) => fs.readFileAsync(path.join(__dirname, fn), 'utf8')
@@ -74,10 +78,10 @@ module.exports = {
     component,
 
     camel2Pascal,
-    camel2dashed,
-    dashed2camel,
-    Pascal2camel,
-    Pascal2dashed,
+    camel2Dashed,
+    dashed2Camel,
+    pascal2Camel,
+    pascal2Dashed,
 
     greenWrite,
     redWrite,
