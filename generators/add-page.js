@@ -37,9 +37,10 @@ common.getUserInput(USER_INPUT_SCHEMA)
         page.dirname = common.camel2dashed(page.name)
         return page
     })
-    .tap((page) => process.stdout.write(`Creating container directory ${page.dirname} `))
-    .tap(makePageDir)
-    .tap(() => common.greenWrite(' ✓\n'))
+    .tap((page) => {
+        return Promise.resolve()
+            .then(common.step(`Creating container directory ${page.dirname}`, makePageDir))
+    })
     .tap(() => process.stdout.write('Processing container template'))
     .then((page) => {
         return [page, fs.readdirAsync(SKELETON_DIR)]
