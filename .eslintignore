@@ -3,3 +3,4 @@ coverage
 page-skeleton
 *.template.js
 component-skeletons
+*.template.jsx

@@ -39,25 +39,16 @@ const getContainers = () => {
         .then(containersFromDirs)
 }
 
-const getTemplate = (containers) => {
-    return fs.readFileAsync(path.join('generators', 'reducers.template.js'), 'utf8')
-        .then((scriptTemplate) => {
-            return [scriptTemplate, {containers}]
-        })
+const generateRootReducer = (containers) => {
+    return common.getGeneratorAsset('reducers.template.js')
+        .then((script) => template(script, {variable: 'context'})({containers}))
 }
-
-const generateRootReducer = (scriptTemplate, context) =>
-      template(scriptTemplate, {variable: 'context'})(context)
-
-const writeOutScript = (script) => fs.writeFileAsync(
-    path.join(common.APP_CONTAINER_DIR, 'reducers.js'),
-    script,
-    'utf8'
-)
 
 Promise.resolve()
     .then(common.step('Finding container directories', getContainers))
-    .then(common.step('Loading root reducer template', getTemplate))
-    .then(common.spreadStep('Generating program text', generateRootReducer))
-    .then(common.step('Writing new root reducer', writeOutScript))
+    .then(common.step('Generating program text', generateRootReducer))
+    .then(common.step(
+        'Writing new root reducer',
+        common.writeToPath(path.join(common.APP_CONTAINER_DIR, 'reducers.js'))
+    ))
     .then(() => common.greenWrite('Finished successfully\n'))
