@@ -84,7 +84,11 @@
       "babel-register"
     ],
     "babel": "inherit",
-    "verbose": true
+    "verbose": true,
+    "files": [
+      "**/*.test.js",
+      "!generators/page-skeleton/**"
+    ]
   },
   "nyc": {
     "reporter": [
