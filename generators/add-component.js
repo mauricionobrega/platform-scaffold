@@ -4,7 +4,6 @@
 const Promise = require('bluebird')
 
 const fs = Promise.promisifyAll(require('fs'))
-const path = require('path')
 
 const common = require('./common')
 
@@ -12,45 +11,42 @@ const USER_INPUT_SCHEMA = [
     {
         name: 'Name',
         description: 'Enter the (PascalCase) name of the component you want to add',
-        type: 'string'
+        type: 'string',
+        pattern: /^[A-Z]/,
+        message: 'The name must begin with a capital letter'
     },
     {
         name: 'stateful',
-        description: 'Does the container require a state',
-        type: 'boolean'
+        description: 'Is the component stateful? (t/f)',
+        type: 'boolean',
+        default: false
     }
 ]
 
-const checkComponentDir = () => {
-    return fs.statAsync(common.APP_COMPONENT_DIR)
-        .catch(() => fs.mkdirAsync(common.APP_COMPONENT_DIR))
-}
-
 const checkComponentExistence = (component) => {
-    return fs.statAsync(path.join(common.APP_COMPONENT_DIR, component.filename))
+    return fs.statAsync(common.component(component.filename))
         .then(common.errorOut(`\nComponent ${component.Name} already exists\n`))
-        .catchReturn(component)
+        .catchReturn()
 }
 
-checkComponentDir()
-    .then(common.getUserInput(USER_INPUT_SCHEMA))
-    .then((component) => {
-        component.filename = `${common.camel2dashed(common.Pascal2camel(component.Name))}.jsx`
-        component.input = component.stateful ? 'stateful.jsx' : 'stateless.jsx'
-        return component
-    })
+const processUserInput = (component) => {
+    component.filename = `${common.Pascal2dashed(component.Name)}.jsx`
+    component.input = component.stateful ? 'stateful.template.jsx' : 'stateless.template.jsx'
+    return component
+}
+
+common.mkdirIfNonexistent(common.APP_COMPONENT_DIR)
+    .then(() => common.getUserInput(USER_INPUT_SCHEMA))
+    .then(processUserInput)
     .tap(common.step('Checking for an existing component', checkComponentExistence))
-    .then(common.step('Processing component template'), (component) => {
-        return common.getGeneratorAsset(path.join('component-skeletons', component.input))
+    .tap(() => process.stdout.write('Processing component template'))
+    .then((component) => {
+        return common.getGeneratorAsset(component.input)
             .then(common.processTemplate('component', component))
-            .tap(() => common.greenWrite(' ✓\n'))
-            .tap(() => process.stdout.write('Writing component file'))
-            .then((contents) => {
-                return fs.writeFileAsync(
-                    path.join(common.APP_COMPONENT_DIR, component.filename),
-                    contents,
-                    'utf8'
-                )
-            })
+            .tap(common.printCheckMark)
+            .then(common.step(
+                'Writing component file',
+                common.writeToPath(common.component(component.filename))
+            ))
     })
     .then(() => console.log('Finished'))

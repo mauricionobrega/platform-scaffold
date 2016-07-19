@@ -9,14 +9,19 @@ const path = require('path')
 const prompt = Promise.promisifyAll(require('prompt'))
 const template = require('lodash.template')
 
+// OUTPUT DIRECTORIES
 const APP_CONTAINER_DIR = path.join('app', 'containers')
 const APP_COMPONENT_DIR = path.join('app', 'components')
+const component = (fn) => path.join(APP_COMPONENT_DIR, fn)
 
+// IDENTIFIER CASE CONVERTERS
 const camel2Pascal = (name) => name.replace(/^[a-z]/, (c) => c.toUpperCase())
 const camel2dashed = (name) => name.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`)
 const dashed2camel = (name) => name.replace(/-(\w)/g, (_, letter) => letter.toUpperCase())
 const Pascal2camel = (name) => name.replace(/^[A-Z]/, (c) => c.toLowerCase())
+const Pascal2dashed = (name) => camel2dashed(Pascal2camel(name))
 
+// COLOURED OUTPUT AND ERRORS
 const greenWrite = (text) => process.stdout.write(chalk.green(text))
 const redWrite = (text) => process.stdout.write(chalk.red(text))
 const printCheckMark = () => greenWrite(' ✓\n')
@@ -25,6 +30,7 @@ const errorOut = (message) => () => {
     process.exit()
 }
 
+// GENERATION FLOW
 const getUserInput = (schema) => {
     prompt.start()
     return prompt.getAsync(schema)
@@ -37,6 +43,14 @@ const getGeneratorAsset = (fn) => {
 const processTemplate = (varname, context) => (templateString) =>
       template(templateString, {variable: varname})(context)
 
+const writeToPath = (path) => (contents) => fs.writeFileAsync(path, contents, 'utf8')
+
+// FILE MANIPULATION
+
+const mkdirIfNonexistent = (dirname) =>
+      fs.statAsync(dirname).catch(() => fs.mkdirAsync(dirname))
+
+// UTILITIES
 const clearNulls = (items) => items.filter((item) => item !== null)
 
 const step = (message, operation) => (value) => {
@@ -46,22 +60,16 @@ const step = (message, operation) => (value) => {
         .tap(printCheckMark)
 }
 
-const spreadStep = (message, operation) => (value) => {
-    return Promise.resolve(value)
-        .tap(() => process.stdout.write(message))
-        .spread(operation)
-        .tap(printCheckMark)
-}
-
-
 module.exports = {
     APP_CONTAINER_DIR,
     APP_COMPONENT_DIR,
+    component,
 
     camel2Pascal,
     camel2dashed,
     dashed2camel,
     Pascal2camel,
+    Pascal2dashed,
 
     greenWrite,
     redWrite,
@@ -71,8 +79,10 @@ module.exports = {
     getUserInput,
     getGeneratorAsset,
     processTemplate,
-    clearNulls,
+    writeToPath,
 
+    mkdirIfNonexistent,
+
+    clearNulls,
     step,
-    spreadStep,
 }
