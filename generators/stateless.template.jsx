@@ -1,7 +1,7 @@
 import {PropTypes} from 'react'
 import {Link} from 'react-router'
 
-const <%= component.Name %> = ({}) => {
+const <%= context.Name %> = ({}) => {
     return (
         <div>
 
@@ -9,8 +9,8 @@ const <%= component.Name %> = ({}) => {
     )
 }
 
-<%= component.Name %>.propTypes = {
+<%= context.Name %>.propTypes = {
 
 }
 
-export default <%= component.Name %>
+export default <%= context.Name %>

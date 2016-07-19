@@ -1,6 +1,6 @@
 import {PropTypes} from 'react'
 
-class <%= component.Name %> extends React.Component {
+class <%= context.Name %> extends React.Component {
     componentDidUpdate() {
     }
 
@@ -18,8 +18,8 @@ class <%= component.Name %> extends React.Component {
     }
 }
 
-<%= component.Name %>.propTypes = {
+<%= context.Name %>.propTypes = {
 
 }
 
-export default <%= component.Name %>
+export default <%= context.Name %>

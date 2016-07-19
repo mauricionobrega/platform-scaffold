@@ -42,7 +42,7 @@ common.mkdirIfNonexistent(common.APP_COMPONENT_DIR)
     .tap(() => process.stdout.write('Processing component template'))
     .then((component) => {
         return common.getGeneratorAsset(component.input)
-            .then(common.processTemplate('component', component))
+            .then(common.processTemplate(component))
             .tap(common.printCheckMark)
             .then(common.step(
                 'Writing component file',

@@ -41,8 +41,8 @@ const getGeneratorAsset = (fn) => fs.readFileAsync(path.join(__dirname, fn), 'ut
 
 const getGeneratorDir = (dir) => fs.readdirAsync(path.join(__dirname, dir))
 
-const processTemplate = (varname, context) => (templateString) =>
-      template(templateString, {variable: varname})(context)
+const processTemplate = (context) => (templateString) =>
+      template(templateString, {variable: 'context'})(context)
 
 const writeToPath = (path) => (contents) => fs.writeFileAsync(path, contents, 'utf8')
 
