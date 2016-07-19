@@ -5,9 +5,9 @@ const Promise = require('bluebird')
 const chalk = require('chalk')
 const path = require('path')
 const exec = Promise.promisify(require('child_process').exec)
-const fs = Promise.promisifyAll(require('fs'))
-const prompt = Promise.promisifyAll(require('prompt'))
 const rimraf = Promise.promisify(require('rimraf'))
+
+const common = require('../common')
 
 const FILE_ENCODING = 'utf8'
 
@@ -18,20 +18,12 @@ const printDivider = () => {
     process.stdout.write(chalk.gray('\n----------------------------------------------\n\n'))
 }
 
-const printCheckMark = () => {
-    process.stdout.write(chalk.green(' ✓\n'))
-    return Promise.resolve()
-}
+const removeGit = common.step('Removing old .git directory ', () => rimraf('.git/'))
 
-const removeGit = () => {
-    process.stdout.write('Removing old git ')
-    return exec('rm -Rf .git/').then(printCheckMark)
-}
-
-const initGit = () => {
-    process.stdout.write('Initialize git repo ')
-    return exec('git init && git add . && git commit -m "Initial commit"').then(printCheckMark)
-}
+const initGit = common.step(
+    'Initialize git repo ',
+    () => exec('git init && git add . && git commit -m "Initial commit"')
+)
 
 const projectInfoSchema = [
     {
@@ -46,52 +38,33 @@ const projectInfoSchema = [
     }
 ]
 
-const getProjectInfo = () => {
-    prompt.start()
-    return prompt.getAsync(projectInfoSchema)
+const processUserInput = (options) => {
+    options.encodedUrl = options.url ? encodeURIComponent(options.url) : '<preview-url>'
+    return options
 }
 
-const replaceStrings = (startString, stringsToReplace) => {
-    return Object.keys(stringsToReplace).reduce((result, key) => {
-        const pattern = new RegExp(`<${key}>`, 'g')
-        return result.replace(pattern, stringsToReplace[key])
-    }, startString)
-}
+const writeReadme = common.step(
+    'Updating README.md ',
+    (options) => common.transformFile(
+        path.join('setup', 'README.md'),
+        options,
+        'README.md'
+    )
+)
 
-const writeReadme = (options) => {
-    process.stdout.write('Updating README.md ')
-
-    return fs.readFileAsync(path.resolve('generator/setup/README.md'), FILE_ENCODING)
-        .then((fileContents) => {
-            return replaceStrings(fileContents, options)
-        })
-        .then((readmeContents) => {
-            if (options.url) {
-                const encodedUrl = encodeURIComponent(options.url)
-                return readmeContents.replace('<preview-url>', encodedUrl)
-            }
-            return readmeContents
-        })
-        .then((readmeContents) => {
-            return fs.writeFileAsync('README.md', readmeContents, FILE_ENCODING)
-        })
-        .then(printCheckMark)
-}
-
-const cleanup = () => {
-    return rimraf(path.resolve('setup/'))
-}
+const cleanup = () => rimraf(path.join('generator', 'setup'))
 
 removeGit()
-    .then(getProjectInfo)
+    .then(() => common.getUserInput(projectInfoSchema))
+    .then(processUserInput)
     .then(writeReadme)
     .then(cleanup)
     .then(initGit)
     .then(() => {
         printDivider()
-        process.stdout.write(chalk.green('Your project is now ready to go.\n'))
-        process.stdout.write(chalk.green('Follow the steps in README.md to run the app.\n'))
-        process.stdout.write(chalk.green('You must still set up a remote for Git: '))
+        common.greenWrite('Your project is now ready to go.\n')
+        common.greenWrite('Follow the steps in README.md to run the app.\n')
+        common.greenWrite('You must still set up a remote for Git: ')
         process.stdout.write(chalk.blue('https://help.github.com/articles/adding-a-remote/\n'))
         process.exit(0)
     })
