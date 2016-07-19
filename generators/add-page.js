@@ -7,6 +7,7 @@ const fs = Promise.promisifyAll(require('fs'))
 const path = require('path')
 
 const common = require('./common')
+const generateRootReducer = require('./generate-root-reducer')
 
 const SKELETON_DIR = 'page-skeleton'
 
@@ -52,4 +53,5 @@ common.getUserInput(USER_INPUT_SCHEMA)
         ))
     })
     .then(() => common.greenWrite(' ✓\n'))
+    .then(generateRootReducer)
     .then(() => console.log('Finished'))

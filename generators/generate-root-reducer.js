@@ -38,14 +38,23 @@ const getContainers = () => {
         .then(containersFromDirs)
 }
 
-Promise.resolve()
-    .then(common.step('Finding container directories', getContainers))
-    .then(common.step(
-        'Generating root reducer program text',
-        (containers) => common.transformFile(
-            'reducers.template.js',
-            {containers},
-            common.container('reducers.js')
-        )
-    ))
-    .then(() => common.greenWrite('Finished successfully\n'))
+const generateRootReducer = () => {
+    return Promise.resolve()
+        .then(common.step('Finding container directories', getContainers))
+        .then(common.step(
+            'Generating root reducer program text',
+            (containers) => common.transformFile(
+                'reducers.template.js',
+                {containers},
+                common.container('reducers.js')
+            )
+        ))
+}
+
+module.exports = generateRootReducer
+
+// run the code if we're called from the command line
+if (require.main === module) {
+    generateRootReducer()
+        .then(() => common.greenWrite('Finished successfully\n'))
+}
