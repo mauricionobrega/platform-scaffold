@@ -12,7 +12,8 @@ const Example = ({
 
 Example.propTypes = {
     /**
-     * The text of the button.
+     * PropTypes comments are REQUIRED for components to be included
+     * in Styleguidist
      */
     text: PropTypes.string.isRequired
 }
