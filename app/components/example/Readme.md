@@ -1,14 +1,13 @@
 # Minimum Styleguidist Requirements
 
 * `index.js`
-* `component-name.jsx`
-  * Must include comments for each `propType` the component has available
+* `example.jsx`
 * `Readme.md`
 
 ## Example Usage
 
     <Example text="Hear me roar!" />
 
-## Include With
+## Import With
 
-`import Thing from 'components/thing'`
+`import Thing from 'components/example'`
