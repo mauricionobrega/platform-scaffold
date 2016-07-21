@@ -54,6 +54,7 @@ const transformFile = (inpath, context, outpath) => {
     return getGeneratorAsset(inpath)
         .then(processTemplate(context))
         .then(writeToPath(outpath))
+        .tap(() => process.stdout.write(`Wrote ${outpath}\n`))
 }
 
 // FILE MANIPULATION

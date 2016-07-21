@@ -42,7 +42,7 @@ const generateRootReducer = () => {
     return Promise.resolve()
         .then(common.step('Finding container directories', getContainers))
         .then(common.step(
-            'Generating root reducer program text',
+            'Generating root reducer program text\n',
             (containers) => common.transformFile(
                 'reducers.template.js',
                 {containers},

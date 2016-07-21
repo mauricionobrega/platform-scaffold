@@ -43,7 +43,7 @@ common.getUserInput(USER_INPUT_SCHEMA)
         (page) => [page, common.getGeneratorDir(SKELETON_DIR)]
     ))
 // No destructuring in Node 4.x
-    .tap(() => process.stdout.write('Generating page container'))
+    .tap(() => process.stdout.write('Generating page container:\n'))
     .spread((page, filenames) => {
         return Promise.map(filenames, (fn) => common.transformFile(
             path.join(SKELETON_DIR, fn),

@@ -2,5 +2,5 @@ build
 coverage
 page-skeleton
 *.template.js
-component-skeletons
+component-skeleton
 *.template.jsx
