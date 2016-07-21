@@ -3,3 +3,7 @@ extends:
   - 'plugin:ava/recommended'
 plugins:
   - ava
+rules:
+  no-unused-vars:
+    - error
+    - argsIgnorePattern: '^(props|dispatch|state)$'
