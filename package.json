@@ -71,7 +71,6 @@
     "lint": "eslint '**/*.{js,jsx}'; exit 0",
     "lint:githook": "eslint '**/*.{js,jsx}'",
     "test": "ava",
-    "test:circleci": "ava --tap | tap-mocha-reporter xunit > $CIRCLE_TEST_REPORTS/junit/test-results.xml",
     "test:coverage": "cross-env NODE_ENV=test nyc ava",
     "test:watch": "npm test -- --watch",
     "styleguide": "styleguidist server"
