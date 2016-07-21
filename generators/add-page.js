@@ -16,8 +16,8 @@ const USER_INPUT_SCHEMA = [
         name: 'name',
         description: 'Enter the (camelCase) name of the page you want to add',
         type: 'string',
-        pattern: /^[a-z]/,
-        message: 'The name must begin with a lower-case letter'
+        pattern: /^[a-z][A-Za-z0-9]+/,
+        message: 'The name must begin with a lower-case letter, and only contain letters and numbers.' // eslint-disable-line max-len
     }
 ]
 
