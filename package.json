@@ -67,9 +67,9 @@
     "webpack-dev-server": "1.14.1"
   },
   "scripts": {
-    "add:page": "node ./generators/add-page.js",
+    "add:page": "sdk-generate page",
     "build": "webpack --config webpack/production.js -p --display-error-details --optimize-dedupe",
-    "configure": "node ./generators/setup/configure.js",
+    "configure": "sdk-configure",
     "dev": "node ./dev-server/index.js",
     "lint": "eslint '**/*.{js,jsx}'; exit 0",
     "test": "ava",
@@ -82,11 +82,7 @@
       "babel-register"
     ],
     "babel": "inherit",
-    "verbose": true,
-    "files": [
-      "**/*.test.js",
-      "!generators/page-skeleton/**"
-    ]
+    "verbose": true
   },
   "nyc": {
     "reporter": [
