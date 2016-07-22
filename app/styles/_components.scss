@@ -1,0 +1,25 @@
+// Components
+// ===
+
+// Vendor Components
+// ---
+//
+// Styles for external components used on the project.
+// These can include our Mobify modules, Stencil components,
+// and non-Mobify components.
+
+// @import 'node_modules/scooch/src/style/scooch';
+// @import 'node_modules/bellows/src/style/bellows';
+// @import 'node_modules/navitron/src/style/navitron';
+// @import 'node_modules/pinny/src/style/pinny';
+
+
+// Project Components
+// ---
+//
+// Styles for project-specific components.
+//
+// Please try and keep the components in an alphabetical order
+// A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+
+@import 'components/example/example';

@@ -1,0 +1,70 @@
+// Text utils
+// ===
+
+
+// All Caps
+// ---
+//
+// Set text uppercase, letterspaced for legibility.
+
+.u-text-all-caps,
+%u-text-all-caps {
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+
+// Text Flow Alignment
+// ---
+//
+// Writing-direction independent text alignment. For RTL stylesheets, re-define
+// these styles with the opposite direction. Templates need not be changed.
+
+.u-text-align-start,
+%u-text-align-start {
+    text-align: left !important;
+}
+
+.u-text-align-center,
+%u-text-align-center {
+    text-align: center !important;
+}
+
+.u-text-align-end,
+%u-text-align-end {
+    text-align: right !important;
+}
+
+
+// Vertical Alignment
+// ---
+//
+// Vertical aligment of text and replaced (inline-block) elements within a line.
+
+.u-align-middle,
+%u-align-middle {
+    vertical-align: middle !important;
+}
+
+.u-align-baseline,
+%u-align-baseline {
+    vertical-align: baseline !important;
+}
+
+
+// Weights & Style
+// ---
+
+.u-text-normal {
+    font-weight: normal;
+    font-weight: 400;
+}
+
+.u-text-bold {
+    font-weight: bold;
+    font-weight: 700;
+}
+
+.u-text-italic {
+    font-style: italic;
+}
