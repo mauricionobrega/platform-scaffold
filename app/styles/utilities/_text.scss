@@ -7,8 +7,7 @@
 //
 // Set text uppercase, letterspaced for legibility.
 
-.u-text-all-caps,
-%u-text-all-caps {
+.u-text-all-caps {
     letter-spacing: 1px;
     text-transform: uppercase;
 }
@@ -20,18 +19,15 @@
 // Writing-direction independent text alignment. For RTL stylesheets, re-define
 // these styles with the opposite direction. Templates need not be changed.
 
-.u-text-align-start,
-%u-text-align-start {
+.u-text-align-start {
     text-align: left !important;
 }
 
-.u-text-align-center,
-%u-text-align-center {
+.u-text-align-center {
     text-align: center !important;
 }
 
-.u-text-align-end,
-%u-text-align-end {
+.u-text-align-end {
     text-align: right !important;
 }
 
@@ -41,13 +37,11 @@
 //
 // Vertical aligment of text and replaced (inline-block) elements within a line.
 
-.u-align-middle,
-%u-align-middle {
+.u-align-middle {
     vertical-align: middle !important;
 }
 
-.u-align-baseline,
-%u-align-baseline {
+.u-align-baseline {
     vertical-align: baseline !important;
 }
 
@@ -67,4 +61,10 @@
 
 .u-text-italic {
     font-style: italic;
+}
+
+.u-text-quient {
+    font-size: 0.785em;
+    color: $neutral-50;
+    fill: $neutral-50;
 }
