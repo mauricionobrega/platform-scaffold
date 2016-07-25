@@ -111,7 +111,7 @@ select {
     margin-right: $unit;
     border: 1px solid darken($border-color, 0.25);
 
-    background: $neutral-30 $neutral-gradient;
+    background: $neutral-30;
 
     vertical-align: middle;
 
@@ -120,7 +120,7 @@ select {
     -webkit-appearance: none;
 
     &:active {
-        background: $neutral-40 reverse-gradient($neutral-gradient);
+        background: $neutral-40;
     }
 
     &:checked {
@@ -177,7 +177,7 @@ button,
     padding: $input-padding;
     border: 1px solid darken($border-color, 0.25);
 
-    background: $neutral-30 $neutral-gradient;
+    background: $neutral-30;
 
     line-height: $line-height;
 
@@ -185,7 +185,7 @@ button,
     -webkit-appearance: none;
 
     &:active {
-        background: $neutral-40 reverse-gradient($neutral-gradient);
+        background: $neutral-40;
     }
 }
 
