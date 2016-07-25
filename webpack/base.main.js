@@ -3,6 +3,7 @@
 
 const path = require('path')
 const webpack = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     devtool: 'cheap-source-map',
@@ -23,7 +24,8 @@ module.exports = {
         new webpack.ProvidePlugin({
             React: 'react',
             fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch'
-        })
+        }),
+        new ExtractTextPlugin('[name].css'),
     ],
     module: {
         loaders: [
@@ -43,7 +45,12 @@ module.exports = {
             {
                 test: /\.svg$/,
                 loader: 'text'
-            }
+            },
+            {
+                test: /\.scss$/,
+                loader: ExtractTextPlugin.extract(['css', 'sass']),
+                exclude: /node_modules/,
+            },
         ],
     }
 }

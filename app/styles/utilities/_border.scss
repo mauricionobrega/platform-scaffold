@@ -1,0 +1,37 @@
+// Border
+// ===
+
+// Border (Width and Color)
+// ---
+
+.u-border {
+    border: $border;
+}
+
+.u-border-0 {
+    border: 0;
+}
+
+.u-border-top {
+    border-top: $border;
+}
+
+.u-border-start {
+    border-right: $border;
+}
+
+.u-border-bottom {
+    border-bottom: $border;
+}
+
+.u-border-end {
+    border-left: $border;
+}
+
+
+// Border (Other)
+// ---
+
+.u-border-radius {
+    border-radius: $border-radius;
+}
