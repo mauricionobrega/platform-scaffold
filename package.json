@@ -63,6 +63,7 @@
     "webpack-dev-server": "1.14.1"
   },
   "scripts": {
+    "add:component": "sdk-generate component",
     "add:page": "sdk-generate page",
     "build": "webpack --config webpack/production.js -p --display-error-details --optimize-dedupe",
     "configure": "sdk-configure",
