@@ -4,7 +4,7 @@ import {Map} from 'immutable'
 import * as homeActions from './actions'
 
 const initialState = Map({
-    title: 'Merlins Potions'
+    title: ''
 })
 
 export default createReducer({
