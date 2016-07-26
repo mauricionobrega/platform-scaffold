@@ -1,18 +1,40 @@
-import {getAssetUrl} from './utils/assets'
+import {getAssetUrl, loadAsset} from './utils/assets'
+
+const JQUERY_CDN = 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js'
+const CAPTURING_CDN = '//cdn.mobify.com/capturejs/capture-latest.min.js'
 
 // Create React mounting target
-const head = document.getElementsByTagName('head')[0]
 const body = document.getElementsByTagName('body')[0]
 const reactTarget = document.createElement('div')
 reactTarget.className = 'react-target'
 body.appendChild(reactTarget)
 
-const link = document.createElement('link')
-link.rel = 'stylesheet'
-link.href = getAssetUrl('main.css')
-head.appendChild(link)
+/* eslint-disable max-len */
+loadAsset('meta', {
+    name: 'viewport',
+    content: 'width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'
+})
+/* eslint-enable max-len */
+
+loadAsset('link', {
+    href: getAssetUrl('main.css'),
+    rel: 'stylesheet',
+    type: 'text/css'
+})
 
 const script = document.createElement('script')
 script.id = 'progressive-web-script'
 script.src = getAssetUrl('main.js')
 body.appendChild(script)
+
+const jQuery = document.createElement('script')
+jQuery.async = true
+jQuery.id = 'progressive-web-jquery'
+jQuery.src = JQUERY_CDN
+body.appendChild(jQuery)
+
+const capturing = document.createElement('script')
+capturing.async = true
+capturing.id = 'progressive-web-capture'
+capturing.src = CAPTURING_CDN
+body.appendChild(capturing)
