@@ -1,6 +1,2 @@
 build
 coverage
-page-skeleton
-*.template.js
-component-skeleton
-*.template.jsx
