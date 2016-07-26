@@ -52,7 +52,10 @@ const writeReadme = common.step(
     )
 )
 
-const cleanup = () => rimraf(path.join('generator', 'setup'))
+const cleanup = () => {
+    return rimraf(path.join('generator', 'setup'))
+                .then(rimraf('CONTRIBUTING.md'))
+}
 
 removeGit()
     .then(() => common.getUserInput(projectInfoSchema))
