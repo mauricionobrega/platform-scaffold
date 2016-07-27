@@ -1,6 +1,6 @@
 import {getAssetUrl, loadAsset} from './utils/assets'
 
-const JQUERY_CDN = 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js'
+const JQUERY_CDN = '//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js'
 const CAPTURING_CDN = '//cdn.mobify.com/capturejs/capture-latest.min.js'
 
 // Create React mounting target
