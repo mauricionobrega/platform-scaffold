@@ -22,13 +22,12 @@ export const createAction = (description, ...argNames) => {
 }
 
 let captureLoaded = typeof window.Capture !== 'undefined'
-/* eslint-disable consistent-return */
 const escape = (responseText, prefix = 'x-') => {
     if (captureLoaded) {
         captureLoaded = true
         return window.Capture.disable(responseText, prefix)
     } else {
-        escape(responseText, prefix)
+        return escape(responseText, prefix)
     }
 }
 
@@ -39,4 +38,4 @@ export const wrapResponse = (response) => response.text()
             $(resolve($('<div>').append(escape(responseText))))
         })
     })
-/* eslint-enable consistent-return, no-undef, max-len */
+/* eslint-enable no-undef, max-len */
