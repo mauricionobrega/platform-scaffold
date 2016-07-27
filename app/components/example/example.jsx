@@ -6,7 +6,7 @@ const Example = ({
     text
 }) => {
     return (
-        <div>
+        <div className="c-example">
             I am an example! {text}
         </div>
     )
