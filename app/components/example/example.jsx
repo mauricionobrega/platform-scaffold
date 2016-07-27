@@ -1,4 +1,6 @@
 import {PropTypes} from 'react'
+import classNames from 'classnames'
+import styles from './example.scss'
 
 const Example = ({
     text

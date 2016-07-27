@@ -1,5 +1,6 @@
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
+import styles from './home.scss'
 
 // import * as homeActions from './actions'
 
