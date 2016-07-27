@@ -1,4 +1,11 @@
 import {getAssetUrl} from './utils/assets'
+import {displayPreloader} from 'progressive-web-sdk/src/preloader'
+
+import preloadHTML from 'raw!./preloader/preload.html'
+import preloadCSS from 'raw!./preloader/preload.css'
+import preloadJS from 'raw!./preloader/preload.js'
+
+displayPreloader(preloadCSS, preloadHTML, preloadJS)
 
 // Create React mounting target
 const head = document.getElementsByTagName('head')[0]
