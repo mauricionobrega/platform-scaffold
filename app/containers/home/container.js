@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
-import styles from './home.scss'
+import styles from './home.scss' // eslint-disable-line no-unused-vars
 
 // import * as homeActions from './actions'
 

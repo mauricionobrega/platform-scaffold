@@ -7,3 +7,7 @@ rules:
   no-unused-vars:
     - error
     - argsIgnorePattern: '^(props|dispatch|state)$'
+settings:
+  import/ignore:
+    - node_modules
+    - \.scss$

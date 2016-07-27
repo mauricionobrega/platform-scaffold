@@ -1,7 +1,7 @@
 /* eslint-disable import/no-commonjs */
 /* eslint-env node */
 
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
     title: 'Progressive Web SDK',

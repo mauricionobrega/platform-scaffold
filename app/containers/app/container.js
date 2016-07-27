@@ -1,6 +1,6 @@
 import {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import styles from './app.scss'
+import styles from './app.scss' // eslint-disable-line no-unused-vars
 
 // import * as appActions from './actions'
 
@@ -13,7 +13,7 @@ class App extends React.Component {
         let currentTemplate = `t-${this.props.children.props.route.routeName}`
 
         return (
-            <div id="outer-container" className='t-app' style={{height: '100%'}}>
+            <div id="outer-container" className="t-app" style={{height: '100%'}}>
                 <main id="page-wrap" className={currentTemplate}>
                     <header>
                         Header content

@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
-import styles from './plp.scss'
+import styles from './plp.scss' // eslint-disable-line no-unused-vars
 
 // import * as plpActions from './actions'
 
