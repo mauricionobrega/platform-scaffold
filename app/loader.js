@@ -1,5 +1,5 @@
 import {getAssetUrl} from './utils/assets'
-import {displayPreloader} from 'progressive-web-sdk/src/preloader'
+import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
 
 import preloadHTML from 'raw!./preloader/preload.html'
 import preloadCSS from 'raw!./preloader/preload.css'
