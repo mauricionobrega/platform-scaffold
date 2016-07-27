@@ -55,6 +55,8 @@
     "node-sass": "3.8.0",
     "nyc": "7.0.0",
     "progressive-web-sdk": "git+https://9e106adb5c89c314432b20e99c0d5feaee5f738a@github.com/mobify/progressive-web-sdk.git#master",
+    "prompt": "1.0.0",
+    "raw-loader": "0.5.1",
     "react-addons-test-utils": "15.2.1",
     "react-hot-loader": "1.3.0",
     "react-styleguidist": "3.0.1",

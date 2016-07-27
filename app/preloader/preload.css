@@ -1,0 +1,46 @@
+/* This file will be minified and auto-prefixed, there's no need to add
+browser-prefixes */
+body {
+    box-sizing: border-box;
+
+    padding: 0;
+    margin: 0;
+}
+
+/* Progress bar animation */
+@keyframes progress {
+    from {
+        transform: translate3d(-100%, 0, 0);
+    }
+
+    to {
+        transform: translate3d(200%, 0, 0);
+    }
+}
+
+.loader {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    top: 0;
+    height: 6px;
+    background: #eaeaea;
+    background-size: 400% 400%;
+}
+
+.loader:after {
+    display: block;
+    height: 6px;
+    content: '';
+    background: linear-gradient(90deg, #f48020, #e1761e);
+    animation: progress 2s linear infinite;
+}
+
+.logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 25%;
+    margin: -12.5% 0 0 -12.5%;
+    opacity: 0.5;
+}
