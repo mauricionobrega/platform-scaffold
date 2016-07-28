@@ -1,7 +1,7 @@
 import {getAssetUrl, loadAsset} from './utils/assets'
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
 
-const JQUERY_CDN = 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js'
+const JQUERY_CDN = '//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js'
 const CAPTURING_CDN = '//cdn.mobify.com/capturejs/capture-latest.min.js'
 
 import preloadHTML from 'raw!./preloader/preload.html'

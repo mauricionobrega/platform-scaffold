@@ -20,22 +20,3 @@ export const createAction = (description, ...argNames) => {
 
     return actionCreator(description, payloadReducer)
 }
-
-let captureLoaded = typeof window.Capture !== 'undefined'
-const escape = (responseText, prefix = 'x-') => {
-    if (captureLoaded) {
-        captureLoaded = true
-        return window.Capture.disable(responseText, prefix)
-    } else {
-        return escape(responseText, prefix)
-    }
-}
-
-/* eslint-disable no-undef, max-len */
-export const wrapResponse = (response) => response.text()
-    .then((responseText) => {
-        return new Promise((resolve) => {
-            $(resolve($('<div>').append(escape(responseText))))
-        })
-    })
-/* eslint-enable no-undef, max-len */
