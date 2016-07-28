@@ -1,7 +1,14 @@
 import {getAssetUrl, loadAsset} from './utils/assets'
+import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
 
 const JQUERY_CDN = 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js'
 const CAPTURING_CDN = '//cdn.mobify.com/capturejs/capture-latest.min.js'
+
+import preloadHTML from 'raw!./preloader/preload.html'
+import preloadCSS from 'raw!./preloader/preload.css'
+import preloadJS from 'raw!./preloader/preload.js'
+
+displayPreloader(preloadCSS, preloadHTML, preloadJS)
 
 // Create React mounting target
 const body = document.getElementsByTagName('body')[0]

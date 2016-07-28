@@ -1,10 +1,12 @@
 import {PropTypes} from 'react'
 import {connect} from 'react-redux'
+import {hidePreloader} from 'progressive-web-sdk/dist/preloader'
 
 // import * as appActions from './actions'
 
 class App extends React.Component {
     componentDidMount() {
+        hidePreloader()
         // Dispatch an action to retrieve global content here
     }
 
