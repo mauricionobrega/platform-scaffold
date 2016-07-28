@@ -3,7 +3,7 @@
 
 const path = require('path')
 const webpack = require('webpack')
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
     devtool: 'cheap-source-map',
@@ -14,6 +14,9 @@ module.exports = {
         path: path.resolve(process.cwd(), 'build'),
         filename: '[name].js'
     },
+    externals: {
+        jquery: 'jQuery'
+    },
     resolve: {
         alias: {
             react: path.resolve(process.cwd(), 'node_modules', 'react'),
@@ -23,6 +26,7 @@ module.exports = {
     plugins: [
         new webpack.ProvidePlugin({
             React: 'react',
+            $: 'jquery',
             fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch'
         }),
         new ExtractTextPlugin('[name].css'),
