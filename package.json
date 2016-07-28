@@ -89,7 +89,7 @@
       "text",
       "html"
     ],
-    "check-coverage": true,
+    "check-coverage": false,
     "statements": 100,
     "branches": 100,
     "functions": 100,
