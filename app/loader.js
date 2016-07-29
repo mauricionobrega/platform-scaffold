@@ -6,7 +6,7 @@ const CAPTURING_CDN = '//cdn.mobify.com/capturejs/capture-latest.min.js'
 
 import preloadHTML from 'raw!./preloader/preload.html'
 import preloadCSS from 'raw!./preloader/preload.css'
-import preloadJS from 'raw!./preloader/preload.js'
+import preloadJS from 'raw!./preloader/preload.js' // eslint-disable-line import/default
 
 displayPreloader(preloadCSS, preloadHTML, preloadJS)
 
