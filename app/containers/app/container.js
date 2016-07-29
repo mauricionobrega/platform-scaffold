@@ -1,6 +1,6 @@
 import {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {hidePreloader} from 'progressive-web-sdk/dist/preloader'
+import {hidePreloader} from 'progressive-web-sdk/preloader'
 import styles from './app.scss' // eslint-disable-line no-unused-vars
 
 // import * as appActions from './actions'

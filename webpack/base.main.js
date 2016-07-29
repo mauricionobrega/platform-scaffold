@@ -20,6 +20,8 @@ module.exports = {
     resolve: {
         alias: {
             react: path.resolve(process.cwd(), 'node_modules', 'react'),
+            'progressive-web-sdk': path.resolve(process.cwd(), 'node_modules', 'progressive-web-sdk', 'src'),
+            'progressive-components': path.resolve(process.cwd(), 'node_modules', 'progressive-web-sdk', 'src', 'components'),
         },
         extensions: ['', '.js', '.jsx']
     },
@@ -37,6 +39,14 @@ module.exports = {
                 name: 'babel-loader',
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
+                loaders: [
+                    'babel'
+                ],
+                cacheDirectory: `${__dirname}/tmp`
+            },
+            {
+                name: 'progressive-sdk-loader',
+                test: /node_modules\/progressive-web-sdk\/.*\.jsx?$/,
                 loaders: [
                     'babel'
                 ],
