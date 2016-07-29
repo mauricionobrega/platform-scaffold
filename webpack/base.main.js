@@ -63,7 +63,6 @@ module.exports = {
             {
                 test: /\.scss$/,
                 loader: ExtractTextPlugin.extract(['css', 'sass']),
-                exclude: /node_modules/,
             },
         ],
     }
