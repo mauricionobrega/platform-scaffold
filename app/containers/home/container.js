@@ -28,7 +28,8 @@ class Home extends React.Component {
 }
 
 Home.propTypes = {
-    fetchHomeContents: PropTypes.func.isRequired
+    fetchHomeContents: PropTypes.func.isRequired,
+    home: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => {

@@ -47,6 +47,14 @@ module.exports = {
                 cacheDirectory: `${__dirname}/tmp`
             },
             {
+                name: 'progressive-sdk-loader',
+                test: /node_modules\/progressive-web-sdk\/.*\.jsx?$/,
+                loaders: [
+                    'babel'
+                ],
+                cacheDirectory: `${__dirname}/tmp`
+            },
+            {
                 test: /\.json$/,
                 loader: 'json'
             },
@@ -57,7 +65,6 @@ module.exports = {
             {
                 test: /\.scss$/,
                 loader: ExtractTextPlugin.extract(['css', 'sass']),
-                exclude: /node_modules/,
             },
         ],
     }
