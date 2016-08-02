@@ -21,8 +21,6 @@ module.exports = {
     resolve: {
         alias: {
             react: path.resolve(process.cwd(), 'node_modules', 'react'),
-            'progressive-web-sdk': path.resolve(process.cwd(), 'node_modules', 'progressive-web-sdk', 'src'),
-            'progressive-components': path.resolve(process.cwd(), 'node_modules', 'progressive-web-sdk', 'src', 'components'),
         },
         extensions: ['', '.js', '.jsx']
     },
