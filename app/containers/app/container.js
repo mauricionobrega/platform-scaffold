@@ -1,6 +1,7 @@
 import {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {hidePreloader} from 'progressive-web-sdk/dist/preloader'
+import styles from './app.scss' // eslint-disable-line no-unused-vars
 
 // import * as appActions from './actions'
 
@@ -11,11 +12,11 @@ class App extends React.Component {
     }
 
     render() {
-        let templateName = `t-${this.props.children.props.route.routeName}`
+        let currentTemplate = `t-${this.props.children.props.route.routeName}`
 
         return (
-            <div id="outer-container" className={templateName} style={{height: '100%'}}>
-                <main id="page-wrap">
+            <div id="outer-container" className="t-app" style={{height: '100%'}}>
+                <main id="page-wrap" className={currentTemplate}>
                     <header>
                         Header content
                     </header>

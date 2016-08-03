@@ -1,6 +1,7 @@
 import {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
+import styles from './home.scss' // eslint-disable-line no-unused-vars
 
 import * as homeActions from './actions'
 
@@ -27,7 +28,8 @@ class Home extends React.Component {
 }
 
 Home.propTypes = {
-    fetchHomeContents: PropTypes.func.isRequired
+    fetchHomeContents: PropTypes.func.isRequired,
+    home: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => {
