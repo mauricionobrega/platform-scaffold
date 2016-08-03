@@ -1,4 +1,4 @@
-import {getAssetUrl, loadAsset} from './utils/assets'
+import {getAssetUrl, loadAsset} from 'progressive-web-sdk/dist/asset-utils'
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
 
 const JQUERY_CDN = '//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js'
