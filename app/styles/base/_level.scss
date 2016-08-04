@@ -4,9 +4,10 @@
 // ---
 
 * {
+    box-sizing: border-box;
+
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    box-sizing: border-box;
 }
 
 // 1. Prevent iOS text size adjust after orientation change, without disabling
@@ -74,8 +75,9 @@ strong {
 // contexts in Firefox 4+, Safari, and Chrome.
 
 h1 {
-    font-size: 2em;
     margin: 0.67em 0;
+
+    font-size: 2em;
 }
 
 // Address inconsistent and variable font size in all browsers.
@@ -88,9 +90,10 @@ small {
 
 sub,
 sup {
+    position: relative;
+
     font-size: 75%;
     line-height: 0;
-    position: relative;
     vertical-align: baseline;
 }
 
@@ -115,9 +118,10 @@ figure {
 // Address differences between Firefox and other browsers.
 
 hr {
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-  height: 0;
+    box-sizing: content-box;
+    height: 0;
+
+    -moz-box-sizing: content-box;
 }
 
 // Contain overflow in all browsers.
@@ -151,9 +155,10 @@ input,
 optgroup,
 select,
 textarea {
+    margin: 0; // 3
+
     color: inherit; // 1
     font: inherit; // 2
-    margin: 0; // 3
 }
 
 // Address inconsistent `text-transform` inheritance for `button` and `select`.
@@ -171,7 +176,8 @@ select {
 // 2. Correct inability to style clickable `input` types in iOS.
 
 button,
-html input[type="button"], // 1
+html input[type="button"],
+// 1
 input[type="reset"],
 input[type="submit"] {
     -webkit-appearance: button; // 2
@@ -181,8 +187,8 @@ input[type="submit"] {
 
 button::-moz-focus-inner,
 input::-moz-focus-inner {
-    border: 0;
     padding: 0;
+    border: 0;
 }
 
 // Address Firefox 4+ setting `line-height` on `input` using `!important` in
@@ -210,9 +216,9 @@ input[type="search"]::-webkit-search-decoration {
 // Zero out border, margin, and padding.
 
 fieldset {
-    border: 0;
     margin: 0;
     padding: 0;
+    border: 0;
 }
 
 // Remove padding so people aren’t caught out if they zero out fieldsets.
@@ -228,8 +234,8 @@ legend {
 // Remove most spacing between table cells.
 
 table {
-    border-collapse: collapse;
     border-spacing: 0;
+    border-collapse: collapse;
 }
 
 td,
