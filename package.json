@@ -4,6 +4,7 @@
     "type": "git",
     "url": "http://github.com/mobify/progressive-web-scaffold"
   },
+  "license": "LICENSE",
   "private": true,
   "version": "0.0.1",
   "dependencies": {
