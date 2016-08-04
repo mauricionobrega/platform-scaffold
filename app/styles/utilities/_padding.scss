@@ -5,23 +5,23 @@
 // ---
 
 .u-padding {
-    padding: $unit !important;
+    @include padding($unit);
 }
 
 .u-padding-0 {
-    padding: 0 !important;
+    @include padding-0;
 }
 
 .u-padding-sm {
-    padding: ($unit / 2) !important;
+    @include padding-sm($unit); // x0.5
 }
 
 .u-padding-md {
-    padding: $unit * 1.5 !important;
+    @include padding-md($unit); // x1.5
 }
 
 .u-padding-lg {
-    padding: $unit * 2 !important;
+    @include padding-lg($unit); // x2
 }
 
 
@@ -38,43 +38,43 @@
 // lg: large
 
 .u-padding-top {
-    padding-top: $unit !important;
+    @include padding-top($unit); // x1
 }
 
 .u-padding-top-0 {
-    padding-top: 0 !important;
+    @include padding-top-0;
 }
 
 .u-padding-top-sm {
-    padding-top: ($unit / 2) !important;
+    @include padding-top-sm($unit); // x0.5
 }
 
 .u-padding-top-md {
-    padding-top: $unit * 1.5 !important;
+    @include padding-top-md($unit); // x1.5
 }
 
 .u-padding-top-lg {
-    padding-top: $unit * 2 !important;
+    @include padding-top-lg($unit); // x2
 }
 
 .u-padding-bottom {
-    padding-bottom: $unit !important;
+    @include padding-bottom($unit); // x1
 }
 
 .u-padding-bottom-0 {
-    padding-bottom: 0 !important;
+    @include padding-bottom-0;
 }
 
 .u-padding-bottom-sm {
-    padding-bottom: ($unit / 2) !important;
+    @include padding-bottom-sm($unit); // x0.5
 }
 
 .u-padding-bottom-md {
-    padding-bottom: $unit * 1.5 !important;
+    @include padding-bottom-md($unit); // x1.5
 }
 
 .u-padding-bottom-lg {
-    margin-bottom: $unit * 2 !important;
+    @include padding-bottom-lg($unit); // x2
 }
 
 
@@ -87,11 +87,7 @@
 //
 // `start` and `end` are writing-direction independent forms for `left` and
 // `right`. For right-to-left localizations, create an alternate version of this
-// stylesheet with the property directions reversed, e.g.
-//
-// .u-margin-start-0  {
-//     margin-right: 0 !important;
-// }
+// stylesheet with the property directions reversed.
 //
 // Suffixes:
 //
@@ -104,65 +100,65 @@
 // lg: large
 
 .u-padding-start {
-    padding-left: $unit !important;
+    @include padding-start($unit); // x1
 }
 
 .u-padding-start-0 {
-    padding-left: 0 !important;
+    @include padding-start-0;
 }
 
 .u-padding-start-th {
-    padding-left: 0.333em !important;
+    @include padding-start-th; // 0.333em
 }
 
 .u-padding-start-en {
-    padding-left: 0.5em !important;
+    @include padding-start-en; // 0.5em
 }
 
 .u-padding-start-em {
-    padding-left: 1em !important;
+    @include padding-start-em; // 1em
 }
 
 .u-padding-start-sm {
-    padding-left: ($unit / 2) !important;
+    @include padding-start-sm($unit); // x0.5
 }
 
 .u-padding-start-md {
-    padding-left: $unit * 1.5 !important;
+    @include padding-start-md($unit); // x1.5
 }
 
 .u-padding-start-lg {
-    padding-left: $unit * 2 !important;
+    @include padding-start-lg($unit); // x2
 }
 
 .u-padding-end {
-    padding-right: $unit !important;
+    @include padding-end($unit); // x1
 }
 
 .u-padding-end-0 {
-    padding-right: 0 !important;
+    @include padding-end-0;
 }
 
 .u-padding-end-th {
-    padding-right: 0.333em !important;
+    @include padding-end-th; // 0.333em
 }
 
 .u-padding-end-en {
-    padding-right: 0.5em !important;
+    @include padding-end-en; // 0.5em
 }
 
 .u-padding-end-em {
-    padding-right: 1em !important;
+    @include padding-end-em; // 1em
 }
 
 .u-padding-end-sm {
-    padding-right: ($unit / 2) !important;
+    @include padding-end-sm($unit); // x0.5
 }
 
 .u-padding-end-md {
-    padding-right: $unit * 1.5 !important;
+    @include padding-end-md($unit); // x1.5
 }
 
 .u-padding-end-lg {
-    padding-right: $unit * 2 !important;
+    @include padding-end-lg($unit); // x2
 }

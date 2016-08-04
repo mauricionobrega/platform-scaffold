@@ -5,27 +5,27 @@
 // ---
 
 .u-border {
-    border: $border;
+    @include border(true);
 }
 
 .u-border-0 {
-    border: 0;
+    @include border-0(true);
 }
 
 .u-border-top {
-    border-top: $border;
+    @include border-top(true);
 }
 
 .u-border-start {
-    border-right: $border;
+    @include border-start(true);
 }
 
 .u-border-bottom {
-    border-bottom: $border;
+    @include border-bottom(true);
 }
 
 .u-border-end {
-    border-left: $border;
+    @include border-end(true);
 }
 
 
@@ -33,5 +33,5 @@
 // ---
 
 .u-border-radius {
-    border-radius: $border-radius;
+    @include border-radius(true);
 }

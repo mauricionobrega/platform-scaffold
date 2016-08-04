@@ -1,15 +1,13 @@
 // Text utils
 // ===
 
-
 // All Caps
 // ---
 //
 // Set text uppercase, letterspaced for legibility.
 
 .u-text-all-caps {
-    letter-spacing: 1px;
-    text-transform: uppercase;
+    @include text-all-caps;
 }
 
 
@@ -20,15 +18,15 @@
 // these styles with the opposite direction. Templates need not be changed.
 
 .u-text-align-start {
-    text-align: left !important;
+    @include text-align-start;
 }
 
 .u-text-align-center {
-    text-align: center !important;
+    @include text-align-center;
 }
 
 .u-text-align-end {
-    text-align: right !important;
+    @include text-align-end;
 }
 
 
@@ -38,11 +36,11 @@
 // Vertical aligment of text and replaced (inline-block) elements within a line.
 
 .u-align-middle {
-    vertical-align: middle !important;
+    @include align-middle;
 }
 
 .u-align-baseline {
-    vertical-align: baseline !important;
+    @include align-baseline;
 }
 
 
@@ -50,21 +48,17 @@
 // ---
 
 .u-text-normal {
-    font-weight: normal;
-    font-weight: 400;
+    @include text-normal;
 }
 
 .u-text-bold {
-    font-weight: bold;
-    font-weight: 700;
+    @include text-bold;
 }
 
 .u-text-italic {
-    font-style: italic;
+    @include text-italic;
 }
 
-.u-text-quient {
-    font-size: 0.785em;
-    color: $neutral-50;
-    fill: $neutral-50;
+.u-text-quiet {
+    @include text-quiet($neutral-50);
 }

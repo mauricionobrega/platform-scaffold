@@ -6,59 +6,43 @@
 
 // Fractional Widths
 // ---
-//
-// 1. Force elements to keep their explicit width when inside a flexbox to
-//    prevent them from growing or shrinking.
 
-.u-width-1of3,
-.u-width-2of6 {
-    flex: initial !important; // 1
-    width: (100%/3) !important;
-}
-
-.u-width-2of3,
-.u-width-4of6 {
-    flex: initial !important; // 1
-    width: 2 * (100%/3) !important;
+.u-width-1of6 {
+    @include width-1of6; // 16.667%
 }
 
 .u-width-1of4 {
-    flex: initial !important; // 1
-    width: 25% !important;
+    @include width-1of4; // 25%
+}
+
+.u-width-1of3,
+.u-width-2of6 {
+    @include width-2of6; // 33.333%
 }
 
 .u-width-1of2,
 .u-width-2of4,
 .u-width-3of6 {
-    flex: initial !important; // 1
-    width: 50% !important;
+    @include width-3of6; // 50%
+}
+
+.u-width-2of3,
+.u-width-4of6 {
+    @include width-4of6; // 66.666%
 }
 
 .u-width-3of4 {
-    flex: initial !important; // 1
-    width: 75% !important;
-}
-
-.u-width-1of6 {
-    flex: initial !important; // 1
-    width: (100%/6) !important;
+    @include width-3of4; // 75%
 }
 
 .u-width-5of6 {
-    flex: initial !important; // 1
-    width: 5 * (100%/6) !important;
+    @include width-5of6; // 83.333%
 }
 
 
 // Full Width
 // ---
-//
-// 1. Force elements to keep their explicit width when inside a flexbox to
-//    prevent them from growing or shrinking.
-// 2. Override some browser quirks, e.g. with <button>.
 
 .u-width-full {
-    display: block !important;
-    flex: initial !important; // 1
-    width: 100% !important; // 2
+    @include width-full; // 100%
 }
