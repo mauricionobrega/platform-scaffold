@@ -8,9 +8,6 @@
     "transform-object-assign"
   ],
   "env": {
-    "test": {
-      "plugins": ["istanbul"]
-    },
     "development": {
       "presets": ["react-hmre"]
     }
