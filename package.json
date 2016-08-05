@@ -2,7 +2,6 @@
   "name": "progressive-web-scaffold",
   "repository": {
     "type": "git",
-    "url": "http://github.com/mobify/progressive-web-scaffold"
   },
   "license": "LICENSE",
   "private": true,
@@ -72,7 +71,6 @@
     "add:component": "sdk-generate component",
     "add:page": "sdk-generate page",
     "build": "webpack --config webpack/production.js -p --display-error-details --optimize-dedupe",
-    "configure": "sdk-configure",
     "dev": "node ./dev-server/index.js",
     "lint": "eslint '**/*.{js,jsx}'; exit 0",
     "test": "ava",
