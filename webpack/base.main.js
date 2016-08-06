@@ -32,7 +32,7 @@ module.exports = {
         }),
         new ExtractTextPlugin('[name].css'),
         new CopyPlugin([
-            { from: 'static/', to: 'static/' }
+            {from: 'static/', to: 'static/'}
         ]),
     ],
     module: {

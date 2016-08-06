@@ -29,7 +29,7 @@
 }
 
 .u-flexbox-gutters > .u-flex,
-.u-flexbox-gutters > .u-flex-shrink, {
+.u-flexbox-gutters > .u-flex-shrink {
     margin: 0 ($unit / 2);
 }
 
@@ -114,9 +114,26 @@
 // Re-arrange the display order of up to six items. Add additional modifiers in
 // your own stylesheet to re-order more.
 
-.u-order-1 { order: 1; }
-.u-order-2 { order: 2; }
-.u-order-3 { order: 3; }
-.u-order-4 { order: 4; }
-.u-order-5 { order: 5; }
-.u-order-6 { order: 6; }
+.u-order-1 {
+    order: 1;
+}
+
+.u-order-2 {
+    order: 2;
+}
+
+.u-order-3 {
+    order: 3;
+}
+
+.u-order-4 {
+    order: 4;
+}
+
+.u-order-5 {
+    order: 5;
+}
+
+.u-order-6 {
+    order: 6;
+}
