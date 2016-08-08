@@ -1,7 +1,7 @@
 {
   "name": "progressive-web-scaffold",
   "repository": {
-    "type": "git",
+    "type": "git"
   },
   "license": "LICENSE",
   "private": true,
