@@ -3,4 +3,5 @@ machine:
         version: 4.4.7
 test:
     override:
+        - npm run lint:circleci
         - npm run test:coverage
