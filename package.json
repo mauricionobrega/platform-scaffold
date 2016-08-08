@@ -3,7 +3,7 @@
   "repository": {
     "type": "git",
   },
-  "license": "LICENSE",
+  "license": "See license in LICENSE",
   "private": true,
   "version": "0.0.1",
   "dependencies": {
