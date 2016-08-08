@@ -4,4 +4,4 @@ machine:
 test:
     override:
         - npm run lint:circleci
-        - npm run test:coverage
+        - npm test
