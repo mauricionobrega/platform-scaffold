@@ -1,7 +1,8 @@
 {
   "name": "progressive-web-scaffold",
   "repository": {
-    "type": "git"
+    "type": "git",
+    "url": "http://github.com/mobify/progressive-web-scaffold"
   },
   "license": "See license in LICENSE",
   "private": true,
