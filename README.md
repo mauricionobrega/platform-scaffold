@@ -1,29 +1,17 @@
-# Progressive Web Scaffold
-The scaffold / starter kit for Progressive Web
-
 ## Requirements
+
 - [Git](https://git-scm.com/)
 - We recommend you use [nvm](https://github.com/creationix/nvm#installation) to
 manage node and npm versions.
 - node 4.x or greater
 - npm 2.x or greater
 
-## Get the Scaffold
-
-```bash
-git clone git@github.com:mobify/progressive-web-scaffold.git
-npm install
-npm run configure
-```
-
-## Run the Scaffold
+## Setup
 
 ```
 npm install
 npm run dev
 ```
-
-[Visit this preview link](https://preview.mobify.com/?url=http%3A%2F%2Fwww.merlinspotions.com%2F&site_folder=https%3A%2F%2Flocalhost%3A8443%2Floader.js&disabled=0&domain=&scope=0) and click preview.
 
 ## Adding a page (container)
 
@@ -57,3 +45,14 @@ or to see an HTML report in the browser, use:
 npm run test:coverage
 open coverage/index.html
 ```
+
+## Developing against `develop` of the Progressive Web SDK
+
+If you are wanting to improve or add a library/component in the Progressive Web SDK,
+you will need to clone the SDK (note: it is not open on Github).
+
+git clone git@github.com:mobify/progressive-web-sdk.git
+cd progressive-web-sdk
+npm link
+
+Then navigate back to your project root directory and run `npm link progressive-web-sdk`.

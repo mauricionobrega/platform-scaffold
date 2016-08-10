@@ -1,6 +1,6 @@
 # Contributing to Progressive Web
 
-Communication happens in the **#product-web** Slack room.
+Communication happens in the **#progressive-web** Slack room.
 
 All work is managed in [Jira](https://mobify.atlassian.net/secure/RapidBoard.jspa?rapidView=115&projectKey=WEB)
 
