@@ -5,11 +5,11 @@
 // ---
 
 .u-margin-0 {
-    @include margin-0;
+    @include margin-0(true);
 }
 
 .u-margin-center {
-    @include margin-center;
+    @include margin-center(true);
 }
 
 
@@ -26,43 +26,43 @@
 // lg: large
 
 .u-margin-top {
-    @include margin-top($unit); // x1
+    @include margin-top(true); // x1
 }
 
 .u-margin-top-0 {
-    @include margin-top-0;
+    @include margin-top-0(true);
 }
 
 .u-margin-top-sm {
-    @include margin-top-sm($unit); // x0.5
+    @include margin-top-sm(true); // x0.5
 }
 
 .u-margin-top-md {
-    @include margin-top-md($unit); // x1.5
+    @include margin-top-md(true); // x1.5
 }
 
 .u-margin-top-lg {
-    @include margin-top-lg($unit); // x2
+    @include margin-top-lg(true); // x2
 }
 
 .u-margin-bottom {
-    @include margin-bottom($unit); // x1
+    @include margin-bottom(true); // x1
 }
 
 .u-margin-bottom-0 {
-    @include margin-bottom-0;
+    @include margin-bottom-0(true);
 }
 
 .u-margin-bottom-sm {
-    @include margin-bottom-sm($unit); // x0.5
+    @include margin-bottom-sm(true); // x0.5
 }
 
 .u-margin-bottom-md {
-    @include margin-bottom-md($unit); // x1.5
+    @include margin-bottom-md(true); // x1.5
 }
 
 .u-margin-bottom-lg {
-    @include margin-bottom-lg($unit); // x2
+    @include margin-bottom-lg(true); // x2
 }
 
 
@@ -88,65 +88,65 @@
 // lg: large
 
 .u-margin-start {
-    @include margin-start($unit); // x1
+    @include margin-start(true); // x1
 }
 
 .u-margin-start-0 {
-    @include margin-start-0;
+    @include margin-start-0(true);
 }
 
 .u-margin-start-th {
-    @include margin-start-th; // 0.333em
+    @include margin-start-th(true); // 0.333em
 }
 
 .u-margin-start-en {
-    @include margin-start-en; // 0.5em
+    @include margin-start-en(true); // 0.5em
 }
 
 .u-margin-start-em {
-    @include margin-start-em; // 1em
+    @include margin-start-em(true); // 1em
 }
 
 .u-margin-start-sm {
-    @include margin-start-sm($unit); // x0.5
+    @include margin-start-sm(true); // x0.5
 }
 
 .u-margin-start-md {
-    @include margin-start-md($unit); // x1.5
+    @include margin-start-md(true); // x1.5
 }
 
 .u-margin-start-lg {
-    @include margin-start-lg($unit); // x2
+    @include margin-start-lg(true); // x2
 }
 
 .u-margin-end {
-    @include margin-end($unit); // x1
+    @include margin-end(true); // x1
 }
 
 .u-margin-end-0 {
-    @include margin-end-0;
+    @include margin-end-0(true);
 }
 
 .u-margin-end-th {
-    @include margin-end-th; // 0.333em
+    @include margin-end-th(true); // 0.333em
 }
 
 .u-margin-end-en {
-    @include margin-end-en; // 0.5em
+    @include margin-end-en(true); // 0.5em
 }
 
 .u-margin-end-em {
-    @include margin-end-em; // 1em
+    @include margin-end-em(true); // 1em
 }
 
 .u-margin-end-sm {
-    @include margin-end-sm($unit); // x0.5
+    @include margin-end-sm(true); // x0.5
 }
 
 .u-margin-end-md {
-    @include margin-end-md($unit); // x1.5
+    @include margin-end-md(true); // x1.5
 }
 
 .u-margin-end-lg {
-    @include margin-end-lg($unit); // x2
+    @include margin-end-lg(true); // x2
 }

@@ -5,23 +5,23 @@
 // ---
 
 .u-color-neutral-30 {
-    @include color-neutral-30($neutral-30);
+    @include color-neutral-30(true);
 }
 
 .u-color-neutral-40 {
-    @include color-neutral-40($neutral-40);
+    @include color-neutral-40(true);
 }
 
 .u-color-neutral-50 {
-    @include color-neutral-50($neutral-50);
+    @include color-neutral-50(true);
 }
 
 .u-color-neutral-60 {
-    @include color-neutral-60($neutral-60);
+    @include color-neutral-60(true);
 }
 
 .u-color-neutral-70 {
-    @include color-neutral-70($neutral-70);
+    @include color-neutral-70(true);
 }
 
 
@@ -29,19 +29,19 @@
 // ---
 
 .u-color-brand {
-    @include color-brand($brand-color);
+    @include color-brand(true);
 }
 
 .u-color-accent {
-    @include color-accent($accent-color);
+    @include color-accent(true);
 }
 
 .u-color-success {
-    @include color-success($success-color);
+    @include color-success(true);
 }
 
 .u-color-error {
-    @include color-error($error-color);
+    @include color-error(true);
 }
 
 
@@ -49,13 +49,13 @@
 // ---
 
 .u-bg-color-neutral-30 {
-    @include bg-color-neutral-30($neutral-30);
+    @include bg-color-neutral-30(true);
 }
 
 .u-bg-color-error {
-    @include bg-color-error($error-color);
+    @include bg-color-error(true);
 }
 
 .u-bg-color-light-error {
-    @include bg-color-light-error($light-error-color);
+    @include bg-color-light-error(true);
 }

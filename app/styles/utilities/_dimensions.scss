@@ -8,35 +8,35 @@
 // ---
 
 .u-width-1of6 {
-    @include width-1of6; // 16.667%
+    @include width-1of6(true); // 16.667%
 }
 
 .u-width-1of4 {
-    @include width-1of4; // 25%
+    @include width-1of4(true); // 25%
 }
 
 .u-width-1of3,
 .u-width-2of6 {
-    @include width-2of6; // 33.333%
+    @include width-2of6(true); // 33.333%
 }
 
 .u-width-1of2,
 .u-width-2of4,
 .u-width-3of6 {
-    @include width-3of6; // 50%
+    @include width-3of6(true); // 50%
 }
 
 .u-width-2of3,
 .u-width-4of6 {
-    @include width-4of6; // 66.666%
+    @include width-4of6(true); // 66.666%
 }
 
 .u-width-3of4 {
-    @include width-3of4; // 75%
+    @include width-3of4(true); // 75%
 }
 
 .u-width-5of6 {
-    @include width-5of6; // 83.333%
+    @include width-5of6(true); // 83.333%
 }
 
 
@@ -44,5 +44,5 @@
 // ---
 
 .u-width-full {
-    @include width-full; // 100%
+    @include width-full(true); // 100%
 }

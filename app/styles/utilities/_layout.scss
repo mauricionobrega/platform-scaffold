@@ -8,11 +8,11 @@
 // these styles with the opposite direction. Templates need not be changed.
 
 .u-float-start {
-    @include float-start;
+    @include float-start(true);
 }
 
 .u-float-end {
-    @include float-end;
+    @include float-end(true);
 }
 
 
@@ -22,7 +22,7 @@
 // Contain all floated children and their margins.
 
 .u-clearfix {
-    @include clearfix;
+    @include clearfix(true);
 }
 
 
@@ -32,7 +32,7 @@
 // Create a new positioning context.
 
 .u-position-context {
-    @include position-context;
+    @include position-context(true);
 }
 
 
@@ -43,5 +43,5 @@
 // will contain floated children and their margins.
 
 .u-block-context {
-    @include block-context;
+    @include block-context(true);
 }

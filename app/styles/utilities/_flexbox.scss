@@ -15,16 +15,16 @@
 //    any flexbox parents that has flex-direction set to row-reverse
 
 .u-flexbox {
-    @include flexbox;
+    @include flexbox(true);
 }
 
 .u-flexbox-gutters {
-    @include flexbox-gutters($unit);
+    @include flexbox-gutters(true);
 }
 
 .u-flexbox-gutters > .u-flex,
 .u-flexbox-gutters > .u-flex-shrink, {
-    @include flexbox-inner-gutters($unit);
+    @include flexbox-inner-gutters(true);
 }
 
 
@@ -32,15 +32,15 @@
 // ---
 
 .u-align-top {
-    @include align-top;
+    @include align-top(true);
 }
 
 .u-align-center {
-    @include align-center;
+    @include align-center(true);
 }
 
 .u-align-bottom {
-    @include align-bottom;
+    @include align-bottom(true);
 }
 
 
@@ -48,23 +48,23 @@
 // ---
 
 .u-justify-start {
-    @include justify-start;
+    @include justify-start(true);
 }
 
 .u-justify-end {
-    @include justify-end;
+    @include justify-end(true);
 }
 
 .u-justify-between {
-    @include justify-between;
+    @include justify-between(true);
 }
 
 .u-justify-center {
-    @include justify-center;
+    @include justify-center(true);
 }
 
 .u-justify-around {
-    @include justify-around;
+    @include justify-around(true);
 }
 
 
@@ -72,7 +72,7 @@
 // ---
 
 .u-row-reverse {
-    @include row-reverse;
+    @include row-reverse(true);
 }
 
 
@@ -80,7 +80,7 @@
 // ---
 
 .u-flex {
-    @include flex;
+    @include flex(true);
 }
 
 
@@ -90,7 +90,7 @@
 // Shrink Flexbox items to a minimum size.
 
 .u-flex-shrink {
-    @include flex-shrink;
+    @include flex-shrink(true);
 }
 
 
@@ -101,25 +101,25 @@
 // your own stylesheet to re-order more.
 
 .u-order-1 {
-    @include order-1;
+    @include order-1(true);
 }
 
 .u-order-2 {
-    @include order-2;
+    @include order-2(true);
 }
 
 .u-order-3 {
-    @include order-3;
+    @include order-3(true);
 }
 
 .u-order-4 {
-    @include order-4;
+    @include order-4(true);
 }
 
 .u-order-5 {
-    @include order-5;
+    @include order-5(true);
 }
 
 .u-order-6 {
-    @include order-6;
+    @include order-6(true);
 }
