@@ -48,13 +48,12 @@ textarea,
     border: $border;
 
     border-radius: $border-radius;
-
     background-color: $input-background-color;
 
     line-height: $line-height;
 
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     -webkit-appearance: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
     &::-webkit-input-placeholder {
         color: $neutral-50;
@@ -91,6 +90,7 @@ input[type="search"] {
 
 select {
     height: $tap-size; // 1
+
     -webkit-appearance: menulist-button; // 1
 }
 
@@ -115,9 +115,8 @@ select {
 
     vertical-align: middle;
 
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-
     -webkit-appearance: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
     &:active {
         background: $neutral-40;
@@ -181,8 +180,8 @@ button,
 
     line-height: $line-height;
 
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     -webkit-appearance: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
     &:active {
         background: $neutral-40;
@@ -199,7 +198,6 @@ button,
 
 [disabled] {
     opacity: 1;
-
     background: $disabled-input-background-color;
 
     color: $disabled-input-color;
@@ -212,13 +210,9 @@ button,
         border-color: $disabled-input-color;
 
         background: $disabled-input-background-color;
-    }
 
-    // 3
-    &:active,
-    &:checked {
         &::after {
-            color: $disabled-input-color;
+            color: $disabled-input-color; // 3
         }
     }
 
