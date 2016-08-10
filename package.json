@@ -82,6 +82,14 @@
     "styleguide": "styleguidist server"
   },
   "ava": {
+    "files": [
+      "**/*.test.js",
+      "**/test.js",
+      "!node_modules"
+    ],
+    "source": [
+      "**/*.{js,jsx}"
+    ],
     "require": [
       "babel-register",
       "./setup-jsdom.js"
