@@ -23,7 +23,7 @@
 }
 
 .u-flexbox-gutters > .u-flex,
-.u-flexbox-gutters > .u-flex-shrink, {
+.u-flexbox-gutters > .u-flex-shrink {
     @include flexbox-inner-gutters(true);
 }
 
