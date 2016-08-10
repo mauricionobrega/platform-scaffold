@@ -5,11 +5,11 @@
 // ---
 
 .u-margin-0 {
-    margin: 0 !important;
+    @include margin-0(true);
 }
 
 .u-margin-center {
-    margin: 0 auto !important;
+    @include margin-center(true);
 }
 
 
@@ -26,43 +26,43 @@
 // lg: large
 
 .u-margin-top {
-    margin-top: $unit !important;
+    @include margin-top(true); // x1
 }
 
 .u-margin-top-0 {
-    margin-top: 0 !important;
+    @include margin-top-0(true);
 }
 
 .u-margin-top-sm {
-    margin-top: ($unit / 2) !important;
+    @include margin-top-sm(true); // x0.5
 }
 
 .u-margin-top-md {
-    margin-top: $unit * 1.5 !important;
+    @include margin-top-md(true); // x1.5
 }
 
 .u-margin-top-lg {
-    margin-top: $unit * 2 !important;
+    @include margin-top-lg(true); // x2
 }
 
 .u-margin-bottom {
-    margin-bottom: $unit !important;
+    @include margin-bottom(true); // x1
 }
 
 .u-margin-bottom-0 {
-    margin-bottom: 0 !important;
+    @include margin-bottom-0(true);
 }
 
 .u-margin-bottom-sm {
-    margin-bottom: ($unit / 2) !important;
+    @include margin-bottom-sm(true); // x0.5
 }
 
 .u-margin-bottom-md {
-    margin-bottom: $unit * 1.5 !important;
+    @include margin-bottom-md(true); // x1.5
 }
 
 .u-margin-bottom-lg {
-    margin-bottom: $unit * 2 !important;
+    @include margin-bottom-lg(true); // x2
 }
 
 
@@ -75,11 +75,7 @@
 //
 // `start` and `end` are writing-direction independent forms for `left` and
 // `right`. For right-to-left localizations, create an alternate version of this
-// stylesheet with the property directions reversed, e.g.
-//
-// .u-margin-start-0  {
-//     margin-right: 0 !important;
-// }
+// stylesheet with the property directions reversed.
 //
 // Suffixes:
 //
@@ -92,65 +88,65 @@
 // lg: large
 
 .u-margin-start {
-    margin-left: $unit !important;
+    @include margin-start(true); // x1
 }
 
 .u-margin-start-0 {
-    margin-left: 0 !important;
+    @include margin-start-0(true);
 }
 
 .u-margin-start-th {
-    margin-left: 0.333em !important;
+    @include margin-start-th(true); // 0.333em
 }
 
 .u-margin-start-en {
-    margin-left: 0.5em !important;
+    @include margin-start-en(true); // 0.5em
 }
 
 .u-margin-start-em {
-    margin-left: 1em !important;
+    @include margin-start-em(true); // 1em
 }
 
 .u-margin-start-sm {
-    margin-left: ($unit / 2) !important;
+    @include margin-start-sm(true); // x0.5
 }
 
 .u-margin-start-md {
-    margin-left: $unit * 1.5 !important;
+    @include margin-start-md(true); // x1.5
 }
 
 .u-margin-start-lg {
-    margin-left: $unit * 2 !important;
+    @include margin-start-lg(true); // x2
 }
 
 .u-margin-end {
-    margin-right: $unit !important;
+    @include margin-end(true); // x1
 }
 
 .u-margin-end-0 {
-    margin-right: 0 !important;
+    @include margin-end-0(true);
 }
 
 .u-margin-end-th {
-    margin-right: 0.333em !important;
+    @include margin-end-th(true); // 0.333em
 }
 
 .u-margin-end-en {
-    margin-right: 0.5em !important;
+    @include margin-end-en(true); // 0.5em
 }
 
 .u-margin-end-em {
-    margin-right: 1em !important;
+    @include margin-end-em(true); // 1em
 }
 
 .u-margin-end-sm {
-    margin-right: ($unit / 2) !important;
+    @include margin-end-sm(true); // x0.5
 }
 
 .u-margin-end-md {
-    margin-right: $unit * 1.5 !important;
+    @include margin-end-md(true); // x1.5
 }
 
 .u-margin-end-lg {
-    margin-right: $unit * 2 !important;
+    @include margin-end-lg(true); // x2
 }
