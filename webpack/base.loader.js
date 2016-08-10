@@ -8,7 +8,7 @@ module.exports = {
     entry: './app/loader.js',
     output: {
         path: path.resolve(process.cwd(), 'build'),
-        filename: 'loader.js'
+        filename: 'adaptive.min.js'
     },
     module: {
         loaders: [
