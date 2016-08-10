@@ -51,12 +51,16 @@
 
 .u-text-normal {
     font-weight: normal;
-    font-weight: 400;
+    @if (true) {
+        font-weight: 400;
+    }
 }
 
 .u-text-bold {
     font-weight: bold;
-    font-weight: 700;
+    @if (true) {
+        font-weight: 700;
+    }
 }
 
 .u-text-italic {
@@ -64,7 +68,8 @@
 }
 
 .u-text-quient {
-    font-size: 0.785em;
     color: $neutral-50;
+    font-size: 0.785em;
+
     fill: $neutral-50;
 }

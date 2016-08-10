@@ -1,9 +1,3 @@
-# Minimum Styleguidist Requirements
-
-* `index.js`
-* `example.jsx`
-* `Readme.md`
-
 ## Example Usage
 
     <Example text="Hear me roar!" />
