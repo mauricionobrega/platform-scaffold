@@ -22,6 +22,9 @@ class Home extends React.Component {
                 <div>
                     This is the title of the home page: {this.props.home.get('title')}
                 </div>
+                <div className="u-text-all-caps">
+                    This is a test
+                </div>
             </div>
         )
     }
