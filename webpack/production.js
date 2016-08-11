@@ -7,10 +7,10 @@ const baseLoaderConfig = require('./base.loader')
 const baseMainConfig = require('./base.main')
 
 // Add production flag to main app config
-const productionMainConfig = assign(baseMainConfig, {
-    plugins: [].concat(baseMainConfig.plugins,
-        // Add production plugins here
-    )
-})
+//const productionMainConfig = assign(baseMainConfig, {
+//    plugins: [].concat(baseMainConfig.plugins,
+//        // Add production plugins here
+//    )
+//})
 
 module.exports = [productionMainConfig, baseLoaderConfig]
