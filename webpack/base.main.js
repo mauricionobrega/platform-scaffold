@@ -9,6 +9,7 @@ const CopyPlugin = require('copy-webpack-plugin')
 module.exports = {
     devtool: 'cheap-source-map',
     entry: [
+        'whatwg-fetch',
         './app/main.jsx',
     ],
     output: {
@@ -27,8 +28,7 @@ module.exports = {
     plugins: [
         new webpack.ProvidePlugin({
             React: 'react',
-            $: 'jquery',
-            fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+            $: 'jquery'
         }),
         new ExtractTextPlugin('[name].css'),
         new CopyPlugin([
