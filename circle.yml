@@ -5,3 +5,9 @@ test:
     override:
         - npm run lint:circleci
         - npm test
+experimental:
+    notify:
+        branches:
+            only:
+                - master
+                - develop
