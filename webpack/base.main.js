@@ -16,7 +16,7 @@ module.exports = {
         filename: '[name].js'
     },
     externals: {
-        jquery: 'jQuery'
+        jquery: 'window.jQuery'
     },
     resolve: {
         alias: {
