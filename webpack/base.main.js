@@ -6,6 +6,9 @@ const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 
+const MainCSS = new ExtractTextPlugin('[name].css')
+const ThemeCSS = new ExtractTextPlugin('themes.css')
+
 module.exports = {
     devtool: 'cheap-source-map',
     entry: [
@@ -30,7 +33,8 @@ module.exports = {
             React: 'react',
             $: 'jquery'
         }),
-        new ExtractTextPlugin('[name].css'),
+        MainCSS,
+        ThemeCSS,
         new CopyPlugin([
             {from: 'static/', to: 'static/'}
         ]),
@@ -64,7 +68,13 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                loader: ExtractTextPlugin.extract(['css', 'sass']),
+                loader: MainCSS.extract(['css', 'sass']),
+                exclude: /themes/
+            },
+            {
+                test: /\.scss$/,
+                loader: ThemeCSS.extract(['css', 'sass']),
+                include: /themes/
             },
         ],
     }

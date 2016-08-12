@@ -29,6 +29,12 @@ loadAsset('link', {
     type: 'text/css'
 })
 
+loadAsset('link', {
+    href: getAssetUrl('themes.css'),
+    rel: 'stylesheet',
+    type: 'text/css'
+})
+
 const script = document.createElement('script')
 script.id = 'progressive-web-script'
 script.src = getAssetUrl('main.js')
