@@ -9,28 +9,18 @@
 // ---
 //
 // Includes gutters, for grid-like functionality.
-//
-// 1. Remove default styles present on common root elements.
-// 2. Ensure in iOS 5 and 6 that flex-direction isn't inherited from
-//    any flexbox parents that has flex-direction set to row-reverse
 
 .u-flexbox {
-    display: flex;
-    flex-direction: row; // 2
-    margin: 0; // 1
-    padding: 0; // 1
-
-    list-style: none; // 1
+    @include flexbox(true);
 }
 
 .u-flexbox-gutters {
-    margin-right: ($unit * -0.5);
-    margin-left: ($unit * -0.5);
+    @include flexbox-gutters(true);
 }
 
 .u-flexbox-gutters > .u-flex,
 .u-flexbox-gutters > .u-flex-shrink {
-    margin: 0 ($unit / 2);
+    @include flexbox-inner-gutters(true);
 }
 
 
@@ -38,15 +28,15 @@
 // ---
 
 .u-align-top {
-    align-items: flex-start;
+    @include align-top(true);
 }
 
 .u-align-center {
-    align-items: center;
+    @include align-center(true);
 }
 
 .u-align-bottom {
-    align-items: flex-end;
+    @include align-bottom(true);
 }
 
 
@@ -54,23 +44,23 @@
 // ---
 
 .u-justify-start {
-    justify-content: flex-start;
+    @include justify-start(true);
 }
 
 .u-justify-end {
-    justify-content: flex-end;
+    @include justify-end(true);
 }
 
 .u-justify-between {
-    justify-content: space-between;
+    @include justify-between(true);
 }
 
 .u-justify-center {
-    justify-content: center;
+    @include justify-center(true);
 }
 
 .u-justify-around {
-    justify-content: space-around;
+    @include justify-around(true);
 }
 
 
@@ -78,20 +68,15 @@
 // ---
 
 .u-row-reverse {
-    flex-direction: row-reverse;
+    @include row-reverse(true);
 }
 
 
 // Flex (Grow)
 // ---
-//
-// 1. Ensure inline elements are treated as block-level.
-// 2. Prevent width collapsing in old implementations.
 
 .u-flex {
-    display: block; // 1
-    flex: 1 1 auto;
-    width: 100%; // 2
+    @include flex(true);
 }
 
 
@@ -99,12 +84,9 @@
 // ---
 //
 // Shrink Flexbox items to a minimum size.
-//
-// 1. Ensure width collapses in old implementations.
 
 .u-flex-shrink {
-    flex: initial;
-    width: auto; // 1
+    @include flex-shrink(true);
 }
 
 
@@ -115,25 +97,25 @@
 // your own stylesheet to re-order more.
 
 .u-order-1 {
-    order: 1;
+    @include order-1(true);
 }
 
 .u-order-2 {
-    order: 2;
+    @include order-2(true);
 }
 
 .u-order-3 {
-    order: 3;
+    @include order-3(true);
 }
 
 .u-order-4 {
-    order: 4;
+    @include order-4(true);
 }
 
 .u-order-5 {
-    order: 5;
+    @include order-5(true);
 }
 
 .u-order-6 {
-    order: 6;
+    @include order-6(true);
 }

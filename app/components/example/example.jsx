@@ -1,6 +1,6 @@
 import {PropTypes} from 'react'
 import classNames from 'classnames'
-import styles from './example.scss' // eslint-disable-line no-unused-vars
+import styles from './example.scss'
 
 const Example = ({
     text
