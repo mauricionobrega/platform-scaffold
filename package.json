@@ -58,7 +58,7 @@
     "minimist": "1.2.0",
     "mobify-code-style": "2.5.3",
     "node-sass": "3.8.0",
-    "progressive-web-sdk": "0.0.5",
+    "progressive-web-sdk": "0.0.6",
     "prompt": "1.0.0",
     "raw-loader": "0.5.1",
     "react-addons-test-utils": "15.2.1",
@@ -68,6 +68,7 @@
     "sass-loader": "4.0.0",
     "spline-scss": "2.0.0",
     "tap-mocha-reporter": "0.0.27",
+    "text-loader": "0.0.1",
     "webpack": "1.13.1",
     "webpack-dev-server": "1.14.1"
   },
@@ -77,11 +78,13 @@
     "build": "webpack --config webpack/production.js -p --display-error-details --optimize-dedupe",
     "dev": "node ./dev-server/index.js",
     "lint": "eslint '**/*.{js,jsx}'",
-    "sasslint": "sass-lint -c node_modules/mobify-code-style/css/.sass-lint.yml 'app/**/*.scss' -v",
     "lint:circleci": "npm run lint && npm run sasslint",
+    "push": "cross-env NODE_ENV=production npm run build && sdk-upload",
+    "sasslint": "sass-lint -c node_modules/mobify-code-style/css/.sass-lint.yml 'app/**/*.scss' -v",
+    "styleguide": "styleguidist server",
+    "save-credentials": "sdk-save-credentials",
     "test": "ava",
-    "test:watch": "npm test -- --watch",
-    "styleguide": "styleguidist server"
+    "test:watch": "npm test -- --watch"
   },
   "ava": {
     "files": [
