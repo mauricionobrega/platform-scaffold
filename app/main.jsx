@@ -17,7 +17,6 @@ import PLP from './containers/plp/container'
 // Stylesheets: importing it here compiles the SCSS into CSS. The CSS is
 // actually added to the markup in `loader.js`
 import Stylesheet from './stylesheet.scss' // eslint-disable-line no-unused-vars
-import Themes from './themes.scss' // eslint-disable-line no-unused-vars
 
 polyfill()
 

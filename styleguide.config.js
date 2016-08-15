@@ -30,11 +30,15 @@ module.exports = {
             {
                 test: /\.scss$/,
                 loader: ExtractTextPlugin.extract(['css', 'sass']),
-                exclude: /node_modules/,
+                include: [
+                    /node_modules/,
+                    /app/
+                ]
             },
             {
                 test: /\.svg$/,
-                loader: 'text'
+                loader: 'text',
+                include: /node_modules/
             }
         )
 
