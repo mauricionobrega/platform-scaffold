@@ -9,6 +9,7 @@ const CopyPlugin = require('copy-webpack-plugin')
 module.exports = {
     devtool: 'cheap-source-map',
     entry: [
+        'whatwg-fetch',
         './app/main.jsx',
     ],
     output: {
