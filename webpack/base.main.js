@@ -25,7 +25,6 @@ module.exports = {
     plugins: [
         new webpack.ProvidePlugin({
             React: 'react',
-            fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch'
         }),
         new ExtractTextPlugin('[name].css'),
         new CopyPlugin([
