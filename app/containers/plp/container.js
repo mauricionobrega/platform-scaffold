@@ -10,7 +10,7 @@ const PLP = () => {
             <h2>
                 PLP page
             </h2>
-            <Link to="/">
+            <Link href="/">
                 Go home
             </Link>
         </div>

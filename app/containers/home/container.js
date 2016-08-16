@@ -16,7 +16,7 @@ class Home extends React.Component {
                 <h2>
                     Home Page
                 </h2>
-                <Link to="/potions.html">
+                <Link href="/potions.html">
                     View potions
                 </Link>
                 <div>
