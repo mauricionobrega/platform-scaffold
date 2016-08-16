@@ -66,8 +66,8 @@ module.exports = {
                 test: /\.scss$/,
                 loader: ExtractTextPlugin.extract(['css', 'sass']),
                 include: [
-                    /node_modules/,
-                    /app/,
+                    /progressive-web-sdk/,
+                    /app/
                 ]
             },
         ],
