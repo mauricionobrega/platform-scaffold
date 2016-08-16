@@ -8,8 +8,8 @@ export const fetchHomeContents = () => {
     return (dispatch) => {
         fetch('/')
             .then((response) => jqueryResponse(response))
-            .then(([$, $loool]) => {
-                dispatch(receiveHomeContents(homeParser($, $loool)))
+            .then(([$, $response]) => {
+                dispatch(receiveHomeContents(homeParser($, $response)))
             })
     }
 }
