@@ -4,3 +4,9 @@ machine:
 test:
     override:
         - npm run test:all
+experimental:
+    notify:
+        branches:
+            only:
+                - master
+                - develop
