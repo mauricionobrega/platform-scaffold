@@ -1,6 +1,6 @@
 import {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router'
+import Link from 'progressive-web-sdk/dist/components/link'
 import styles from './home.scss'
 
 import * as homeActions from './actions'
@@ -16,7 +16,7 @@ class Home extends React.Component {
                 <h2>
                     Home Page
                 </h2>
-                <Link to="/potions.html">
+                <Link href="/potions.html">
                     View potions
                 </Link>
                 <div>
