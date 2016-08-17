@@ -1,4 +1,4 @@
-const homeParser = ($html) => {
+const homeParser = ($, $html) => {
     return {
         title: $html.find('title').text()
     }

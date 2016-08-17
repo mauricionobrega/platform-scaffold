@@ -1,7 +1,8 @@
 import {getAssetUrl, loadAsset} from 'progressive-web-sdk/dist/asset-utils'
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
 
-const JQUERY_CDN = '//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js'
+window.Progressive = {}
+
 const CAPTURING_CDN = '//cdn.mobify.com/capturejs/capture-latest.min.js'
 
 import preloadHTML from 'raw!./preloader/preload.html'
@@ -37,7 +38,7 @@ body.appendChild(script)
 const jQuery = document.createElement('script')
 jQuery.async = true
 jQuery.id = 'progressive-web-jquery'
-jQuery.src = JQUERY_CDN
+jQuery.src = getAssetUrl('static/js/jquery.min.js')
 body.appendChild(jQuery)
 
 const capturing = document.createElement('script')
