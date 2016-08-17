@@ -3,6 +3,10 @@
 const webpack = require('webpack')
 const ip = require('ip')
 
+const Dashboard = require('webpack-dashboard')
+const DashboardPlugin = require('webpack-dashboard/plugin')
+const dashboard = new Dashboard()
+
 const loaderConfig = require('./base.loader')
 const mainConfig = require('./base.main')
 
@@ -16,7 +20,8 @@ mainConfig.output.publicPath = `https://${ip.address()}:8443/`
 mainConfig.plugins = mainConfig.plugins.concat([
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new DashboardPlugin(dashboard.setData)
 ])
 
 // Ensure the react-hot-loader is applied before the babel-loader
