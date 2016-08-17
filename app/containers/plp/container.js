@@ -1,5 +1,5 @@
 import {connect} from 'react-redux'
-import {Link} from 'react-router'
+import Link from 'progressive-web-sdk/dist/components/link'
 import styles from './plp.scss'
 
 // import * as plpActions from './actions'
@@ -10,7 +10,7 @@ const PLP = () => {
             <h2>
                 PLP page
             </h2>
-            <Link to="/">
+            <Link href="/">
                 Go home
             </Link>
         </div>

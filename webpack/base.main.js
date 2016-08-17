@@ -16,9 +16,6 @@ module.exports = {
         path: path.resolve(process.cwd(), 'build'),
         filename: '[name].js'
     },
-    externals: {
-        jquery: 'jQuery'
-    },
     resolve: {
         alias: {
             react: path.resolve(process.cwd(), 'node_modules', 'react'),
@@ -28,7 +25,6 @@ module.exports = {
     plugins: [
         new webpack.ProvidePlugin({
             React: 'react',
-            $: 'jquery'
         }),
         new ExtractTextPlugin('[name].css'),
         new CopyPlugin([
