@@ -1,7 +1,6 @@
 import {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {hidePreloader} from 'progressive-web-sdk/dist/preloader'
-import styles from './app.scss'
 import {IconSprite} from 'progressive-web-sdk/dist/components/icon'
 
 // import * as appActions from './actions'
@@ -16,7 +15,7 @@ class App extends React.Component {
         let currentTemplate = `t-${this.props.children.props.route.routeName}`
 
         return (
-            <div id="outer-container" className="t-app" style={{height: '100%'}}>
+            <div id="outer-container" className="t-app">
                 <IconSprite />
 
                 <main id="page-wrap" className={currentTemplate}>
