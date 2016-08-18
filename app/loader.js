@@ -3,6 +3,10 @@ import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
 
 window.Progressive = {}
 
+// THESE ARE EXAMPLES
+// They work for Merlin's Potions as currently set up.
+// Replace these with what your project needs
+// Later, they will be automatically generated.
 const REACT_REGEXES = [
     /^\/$/,
     /^\/potions\.html$/
