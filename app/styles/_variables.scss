@@ -86,7 +86,7 @@ $vertical-input-padding: $unit;
 // ---
 
 // Organizes z-index usage by name. Values can be incremented/decremented
-// slightly as necessary. eg. $stage-layer + 1;
+// slightly as necessary. eg. $z1-layer + 1;
 
 $z1-depth: 1;    // background
 $z2-depth: 10;   // icon or other ui element
