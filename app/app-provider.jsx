@@ -1,4 +1,4 @@
-import {PropTypes} from 'react'
+import React, {PropTypes} from 'react'
 import {Router, Route, IndexRoute} from 'progressive-web-sdk/dist/routing'
 import {Provider} from 'react-redux'
 
