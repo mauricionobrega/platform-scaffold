@@ -1,3 +1,4 @@
+/* eslint-env node */
 /* eslint-disable import/no-commonjs */
 const fs = require('fs')
 const jsdom = require('jsdom')
