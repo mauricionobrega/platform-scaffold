@@ -1,5 +1,14 @@
 /* eslint-disable import/no-commonjs */
-global.document = require('jsdom').jsdom('<body></body>')
+const fs = require('fs')
+const jsdom = require('jsdom')
 /* eslint-enable import/no-commonjs */
-global.window = document.defaultView
-global.navigator = window.navigator
+const jQuery = fs.readFileSync(`${__dirname}/static/js/jquery.min.js`, 'utf-8')
+jsdom.env({
+    html: '<html><body></body></html>',
+    src: [jQuery],
+    done: (error, window) => {
+        global.window = window
+        global.document = window.document
+        global.navigator = window.navigator
+    }
+})
