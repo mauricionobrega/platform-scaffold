@@ -21,6 +21,16 @@
 }
 
 
+// Lowercase Text
+// ---
+//
+// Lowercase all text in string.
+
+.u-text-lowercase {
+    @include text-lowercase(true);
+}
+
+
 // Text Flow Alignment
 // ---
 //
