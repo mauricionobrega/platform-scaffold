@@ -11,6 +11,16 @@
 }
 
 
+// Capitalize Text
+// ---
+//
+// Capitalize first letter of string.
+
+.u-text-capitalize {
+    @include text-capitalize(true);
+}
+
+
 // Lowercase Text
 // ---
 //
