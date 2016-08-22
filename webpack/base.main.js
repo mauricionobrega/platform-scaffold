@@ -23,9 +23,6 @@ module.exports = {
         extensions: ['', '.js', '.jsx']
     },
     plugins: [
-        new webpack.ProvidePlugin({
-            React: 'react',
-        }),
         new ExtractTextPlugin('[name].css'),
         new CopyPlugin([
             {from: 'static/', to: 'static/'}
