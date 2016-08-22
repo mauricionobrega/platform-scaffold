@@ -1,3 +1,5 @@
 build
 coverage
 static/js/jquery.min.js
+tests/system/nightwatch-config.js
+tests/system/site.js
