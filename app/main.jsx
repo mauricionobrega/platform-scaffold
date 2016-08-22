@@ -1,3 +1,4 @@
+import React from 'react'
 import {polyfill} from 'es6-promise'
 
 // React
