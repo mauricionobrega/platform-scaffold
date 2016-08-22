@@ -15,11 +15,15 @@ module.exports = {
         path: path.resolve(process.cwd(), 'build'),
         filename: '[name].js'
     },
+    resolveLoader: {
+        root: path.join(process.cwd(), 'node_modules')
+    },
     resolve: {
         alias: {
             react: path.resolve(process.cwd(), 'node_modules', 'react'),
+            cacheHashManifest: path.resolve(process.cwd(), 'tmp', 'cache-hash-manifest.json')
         },
-        extensions: ['', '.js', '.jsx']
+        extensions: ['', '.js', '.jsx', '.json']
     },
     plugins: [
         new ExtractTextPlugin('[name].css'),
