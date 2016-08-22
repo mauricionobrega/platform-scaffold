@@ -1,7 +1,9 @@
-import {PropTypes} from 'react'
+import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router'
+import Link from 'progressive-web-sdk/dist/components/link'
 import styles from './home.scss'
+
+import Button from 'progressive-web-sdk/dist/components/button'
 
 import * as homeActions from './actions'
 
@@ -16,7 +18,7 @@ class Home extends React.Component {
                 <h2>
                     Home Page
                 </h2>
-                <Link to="/potions.html">
+                <Link href="/potions.html">
                     View potions
                 </Link>
                 <div>
@@ -25,6 +27,7 @@ class Home extends React.Component {
                 <div className="u-text-all-caps">
                     This is a test
                 </div>
+                <Button>Themed Component</Button>
             </div>
         )
     }

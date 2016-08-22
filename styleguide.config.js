@@ -30,11 +30,18 @@ module.exports = {
             {
                 test: /\.scss$/,
                 loader: ExtractTextPlugin.extract(['css', 'sass']),
-                exclude: /node_modules/,
+                include: [
+                    /progressive-web-sdk/,
+                    /app/
+                ]
             },
             {
                 test: /\.svg$/,
-                loader: 'text'
+                loader: 'text',
+                include: [
+                    /progressive-web-sdk/,
+                    /app/
+                ]
             }
         )
 

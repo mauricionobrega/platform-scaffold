@@ -46,3 +46,13 @@
 .u-width-full {
     @include width-full(true); // 100%
 }
+
+
+// Full Block
+// ---
+//
+// Set width to 100% with display block.
+
+.u-width-full-block {
+    @include width-full-block(true);
+}

@@ -24,7 +24,8 @@ const server = new WebpackDevServer(compiler, {
         hash: false,
         chunks: true,
         chunkModules: false
-    }
+    },
+    quiet: true // lets WebpackDashboard do its thing
 })
 
 addMiddleware(server)

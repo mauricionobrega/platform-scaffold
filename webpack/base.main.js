@@ -2,7 +2,6 @@
 /* eslint-env node */
 
 const path = require('path')
-const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 
@@ -16,9 +15,6 @@ module.exports = {
         path: path.resolve(process.cwd(), 'build'),
         filename: '[name].js'
     },
-    externals: {
-        jquery: 'jQuery'
-    },
     resolve: {
         alias: {
             react: path.resolve(process.cwd(), 'node_modules', 'react'),
@@ -26,10 +22,6 @@ module.exports = {
         extensions: ['', '.js', '.jsx']
     },
     plugins: [
-        new webpack.ProvidePlugin({
-            React: 'react',
-            $: 'jquery'
-        }),
         new ExtractTextPlugin('[name].css'),
         new CopyPlugin([
             {from: 'static/', to: 'static/'}
@@ -65,6 +57,10 @@ module.exports = {
             {
                 test: /\.scss$/,
                 loader: ExtractTextPlugin.extract(['css', 'sass']),
+                include: [
+                    /progressive-web-sdk/,
+                    /app/
+                ]
             },
         ],
     }
