@@ -1,6 +1,7 @@
 import {polyfill} from 'es6-promise'
 
 // React
+import React from 'react'
 import {render} from 'react-dom'
 
 // Redux
