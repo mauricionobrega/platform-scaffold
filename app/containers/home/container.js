@@ -15,6 +15,9 @@ class Home extends React.Component {
     render() {
         return (
             <div>
+                <Link href="/login.html">
+                    Login
+                </Link>
                 <h2>
                     Home Page
                 </h2>
