@@ -1,4 +1,4 @@
-import {PropTypes} from 'react'
+import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {hidePreloader} from 'progressive-web-sdk/dist/preloader'
 import {IconSprite} from 'progressive-web-sdk/dist/components/icon'

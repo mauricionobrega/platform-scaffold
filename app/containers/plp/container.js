@@ -1,3 +1,4 @@
+import React from 'react'
 import {connect} from 'react-redux'
 import Link from 'progressive-web-sdk/dist/components/link'
 

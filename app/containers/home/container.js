@@ -1,4 +1,4 @@
-import {PropTypes} from 'react'
+import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import Link from 'progressive-web-sdk/dist/components/link'
 import Button from 'progressive-web-sdk/dist/components/button'
