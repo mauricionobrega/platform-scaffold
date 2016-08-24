@@ -1,4 +1,5 @@
 import React from 'react'
+
 import {connect} from 'react-redux'
 import Link from 'progressive-web-sdk/dist/components/link'
 import styles from './login.scss'
@@ -21,6 +22,7 @@ export const mapStateToProps = (state, props) => {
 
 export const mapDispatchToProps = (dispatch, props) => {
     return {
+        fetchLoginContents: () => dispatch(loginActions.fetchContents()),
         onMyEvent: () => dispatch(loginActions.myAction(true))
     }
 }

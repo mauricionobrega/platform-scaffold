@@ -5,7 +5,7 @@ import * as loginActions from './actions'
 const initialState = Map({})
 
 export default createReducer({
-    [loginActions.myAction]: (state, payload) => {
-        return state.set('myProperty', payload)
+    [loginActions.receiveLoginContents]: (state, payload) => {
+        return state.mergeDeep(payload)
     }
 }, initialState)
