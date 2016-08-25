@@ -10,11 +10,15 @@ import * as loginActions from './actions'
 
 export class Login extends React.Component {
 
+    onSubmitLoginForm(data) {
+        alert(`Email: ${data.email} Password: ${data.password}`) // eslint-disable-line no-alert
+    }
+
     render() {
         return (
             <div>
                 <Link href="/">Go Home</Link>
-                <LoginForm />
+                <LoginForm onSubmit={this.onSubmitLoginForm.bind(this)} />
             </div>
         )
     }

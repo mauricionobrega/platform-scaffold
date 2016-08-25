@@ -16,14 +16,22 @@ const validate = (values) => {
 class LoginForm extends React.Component {
     render() {
 
+        const {
+            invalid,
+            pristine,
+            submitting,
+            handleSubmit
+        } = this.props
+
         return (
-            <form>
+            <form onSubmit={handleSubmit}>
                 <ReduxFormField name="email" label="E-mail" component={Field}>
                     <input type="email" />
                 </ReduxFormField>
                 <ReduxFormField name="password" label="Password" component={Field}>
                     <input type="password" />
                 </ReduxFormField>
+                <button type="submit" disabled={pristine || submitting || invalid}>Login</button>
             </form>
         )
     }
