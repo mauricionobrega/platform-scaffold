@@ -13,33 +13,30 @@ const validate = (values) => {
     return errors
 }
 
-class LoginForm extends React.Component {
-    render() {
-
-        const {
-            invalid,
-            pristine,
-            submitting,
-            handleSubmit
-        } = this.props
-
-        return (
-            <form onSubmit={handleSubmit}>
-                <ReduxFormField name="email" label="E-mail" component={Field}>
-                    <input type="email" />
-                </ReduxFormField>
-                <ReduxFormField name="password" label="Password" component={Field}>
-                    <input type="password" />
-                </ReduxFormField>
-                <button type="submit" disabled={pristine || submitting || invalid}>Login</button>
-            </form>
-        )
-    }
+let LoginForm = ({
+    invalid,
+    pristine,
+    submitting,
+    handleSubmit
+}) => {
+    return (
+        <form onSubmit={handleSubmit}>
+            <ReduxFormField name="email" label="E-mail" component={Field}>
+                <input type="email" />
+            </ReduxFormField>
+            <ReduxFormField name="password" label="Password" component={Field}>
+                <input type="password" />
+            </ReduxFormField>
+            <button type="submit" disabled={pristine || submitting || invalid}>Login</button>
+        </form>
+    )
 }
 
-
 LoginForm.propTypes = {
-
+    handleSubmit: PropTypes.func.isRequired,
+    invalid: PropTypes.bool,
+    pristine: PropTypes.bool,
+    submitting: PropTypes.bool,
 }
 
 LoginForm = reduxForm({
