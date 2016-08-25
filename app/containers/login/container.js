@@ -13,7 +13,7 @@ export class Login extends React.Component {
     render() {
         return (
             <div>
-                <Link href="/">Go Home nerd</Link>
+                <Link href="/">Go Home</Link>
                 <LoginForm />
             </div>
         )
