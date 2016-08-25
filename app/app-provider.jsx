@@ -14,7 +14,7 @@ const AppProvider = ({store}) => {
             <Router>
                 <Route path="/" component={App}>
                     <IndexRoute component={Home} routeName="home" />
-                    <Route component={Login} path="login.html" routeName="login" />
+                    <Route component={Login} path="customer/account/login/" routeName="login" />
                     <Route component={PLP} path="potions.html" routeName="productListPage" />
                 </Route>
             </Router>

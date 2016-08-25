@@ -4,14 +4,20 @@ import {connect} from 'react-redux'
 import Link from 'progressive-web-sdk/dist/components/link'
 import styles from './login.scss'
 
+import LoginForm from '../../components/login-form'
+
 import * as loginActions from './actions'
 
-export const Login = () => {
-    return (
-        <div>
-            <Link href="/">Go Home</Link>
-        </div>
-    )
+export class Login extends React.Component {
+
+    render() {
+        return (
+            <div>
+                <Link href="/">Go Home nerd</Link>
+                <LoginForm />
+            </div>
+        )
+    }
 }
 
 export const mapStateToProps = (state, props) => {
@@ -22,8 +28,7 @@ export const mapStateToProps = (state, props) => {
 
 export const mapDispatchToProps = (dispatch, props) => {
     return {
-        fetchLoginContents: () => dispatch(loginActions.fetchContents()),
-        onMyEvent: () => dispatch(loginActions.myAction(true))
+        onMyEvent: () => dispatch(loginActions.myAction())
     }
 }
 
