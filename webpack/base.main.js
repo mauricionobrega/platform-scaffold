@@ -18,6 +18,7 @@ module.exports = {
     resolve: {
         alias: {
             react: path.resolve(process.cwd(), 'node_modules', 'react'),
+            components: path.resolve(process.cwd(), 'app', 'components'),
         },
         extensions: ['', '.js', '.jsx']
     },
