@@ -1,6 +1,6 @@
+import React from 'react'
 import {connect} from 'react-redux'
 import Link from 'progressive-web-sdk/dist/components/link'
-import styles from './plp.scss'
 
 // import * as plpActions from './actions'
 
