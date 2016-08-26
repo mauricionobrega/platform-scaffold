@@ -1,4 +1,14 @@
 // Vendor Files
 // ===
-
-@import 'vendor/example';
+//
+// The vendor stylesheet is intended for styling 3rd party selectors that we
+// do not control.
+//
+//
+//     // jQuery UI plugin classes
+//     // ---
+//
+//     .ui-progressbar-value,
+//     .ui-progressbar-complete, {
+//         ...
+//     }
