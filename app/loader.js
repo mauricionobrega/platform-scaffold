@@ -12,7 +12,7 @@ const isReactRoute = () => {
 const CAPTURING_CDN = '//cdn.mobify.com/capturejs/capture-latest.min.js'
 
 import preloadHTML from 'raw!./preloader/preload.html'
-import preloadCSS from 'raw!./preloader/preload.css'
+import preloadCSS from 'css?minimize!./preloader/preload.css'
 import preloadJS from 'raw!./preloader/preload.js' // eslint-disable-line import/default
 
 if (isReactRoute()) {
