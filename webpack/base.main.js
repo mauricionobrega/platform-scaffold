@@ -16,6 +16,8 @@ module.exports = {
         path: path.resolve(process.cwd(), 'build'),
         filename: '[name].js'
     },
+    // Loaders are resolved relative to the file being applied to. Specifying the
+    // root option here lets Webpack know they are Node modules - avoiding errors
     resolveLoader: {
         root: path.join(process.cwd(), 'node_modules')
     },
