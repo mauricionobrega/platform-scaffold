@@ -4,6 +4,7 @@
 const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
+const CACHE_MANIFEST_NAME = 'cache-hash-manifest.json'
 
 module.exports = {
     devtool: 'cheap-source-map',
@@ -21,7 +22,7 @@ module.exports = {
     resolve: {
         alias: {
             react: path.resolve(process.cwd(), 'node_modules', 'react'),
-            cacheHashManifest: path.resolve(process.cwd(), 'tmp', 'cache-hash-manifest.json')
+            cacheHashManifest: path.resolve(process.cwd(), 'tmp', CACHE_MANIFEST_NAME)
         },
         extensions: ['', '.js', '.jsx', '.json']
     },

@@ -2,6 +2,7 @@
 /* eslint-env node */
 
 const path = require('path')
+const CACHE_MANIFEST_NAME = 'loader-cache-hash-manifest.json'
 
 module.exports = {
     devtool: 'cheap-source-map',
@@ -15,7 +16,7 @@ module.exports = {
     },
     resolve: {
         alias: {
-            cacheHashManifest: path.resolve(process.cwd(), 'tmp', 'cache-hash-manifest.json')
+            cacheHashManifest: path.resolve(process.cwd(), 'tmp', CACHE_MANIFEST_NAME)
         },
         extensions: ['', '.js', '.jsx', '.json']
     },
@@ -30,7 +31,7 @@ module.exports = {
             {
                 test: /\.json$/,
                 loader: 'json'
-            },
+            }
         ],
     }
 }

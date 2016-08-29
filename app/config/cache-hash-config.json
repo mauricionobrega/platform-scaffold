@@ -4,5 +4,5 @@
     ],
     "baseDir": "",
     "hashLength": 8,
-    "destination": "tmp/cache-hash-manifest.json"
+    "destinationFolder": "tmp/"
 }
