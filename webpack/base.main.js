@@ -54,15 +54,7 @@ module.exports = {
             {
                 test: /\.svg$/,
                 loader: 'text'
-            },
-            {
-                test: /\.scss$/,
-                loader: ExtractTextPlugin.extract(['css?-autoprefixer', 'postcss', 'sass']),
-                include: [
-                    /progressive-web-sdk/,
-                    /app/
-                ]
-            },
+            }
         ],
     },
     postcss: () => {
