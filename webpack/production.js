@@ -1,4 +1,5 @@
 /* eslint-disable import/no-commonjs */
+/* eslint-env node */
 
 const webpack = require('webpack')
 const assign = require('lodash.assign')
