@@ -25,8 +25,6 @@ mainConfig.module.loaders = mainConfig.module.loaders.concat({
     ]
 })
 
-console.log(mainConfig.module.loaders)
-
 mainConfig.output.publicPath = `https://${ip.address()}:8443/`
 
 mainConfig.plugins = mainConfig.plugins.concat([
