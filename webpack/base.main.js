@@ -4,6 +4,7 @@
 const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
+const autoprefixer = require('autoprefixer')
 
 module.exports = {
     devtool: 'cheap-source-map',
@@ -56,12 +57,23 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                loader: ExtractTextPlugin.extract(['css', 'sass']),
+                loader: ExtractTextPlugin.extract(['css?-autoprefixer', 'postcss', 'sass']),
                 include: [
                     /progressive-web-sdk/,
                     /app/
                 ]
             },
         ],
+    },
+    postcss: () => {
+        return [
+            autoprefixer({
+                browsers: [
+                    'iOS >= 6.0',
+                    'Android >= 2.3',
+                    'last 4 ChromeAndroid versions'
+                ]
+            })
+        ]
     }
 }

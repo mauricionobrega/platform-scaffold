@@ -23,6 +23,7 @@
     "whatwg-fetch": "1.0.0"
   },
   "devDependencies": {
+    "autoprefixer": "^6.4.0",
     "ava": "0.16.0",
     "babel-core": "6.10.4",
     "babel-loader": "6.2.4",
@@ -58,6 +59,7 @@
     "nightwatch": "0.9.7",
     "nightwatch-commands": "1.7.0",
     "node-sass": "3.8.0",
+    "postcss-loader": "0.11.0",
     "progressive-web-sdk": "0.1.1",
     "prompt": "1.0.0",
     "raw-loader": "0.5.1",
