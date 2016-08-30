@@ -1,7 +1,7 @@
 /* eslint-disable import/no-commonjs */
 /* eslint-env node */
 
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const path = require('path')
 
 module.exports = {
     title: 'Progressive Web SDK',
@@ -10,10 +10,8 @@ module.exports = {
     serverPort: 4000,
     skipComponentsWithoutExample: true,
     updateWebpackConfig(webpackConfig) {
-        // Plugins
-        webpackConfig.plugins.push(
-            new ExtractTextPlugin('css/[name].css')
-        )
+        // Supply our own renderer for styleguide
+        webpackConfig.resolve.alias['rsg-components/Layout/Renderer'] = path.join(__dirname, 'styleguide/renderer')
 
         // Loaders
         webpackConfig.module.loaders.push(
@@ -27,14 +25,22 @@ module.exports = {
                 },
                 cacheDirectory: `${__dirname}/tmp`
             },
+            // Loader for styleguide & project styles
             {
                 test: /\.scss$/,
-                loader: ExtractTextPlugin.extract(['css', 'sass']),
+                loader: 'style!css!sass',
                 include: [
                     /progressive-web-sdk/,
-                    /app/
+                    /styleguide/
                 ]
             },
+            // Loader for plain CSS
+            {
+                test: /\.css$/,
+                loader: 'style!css?modules&importLoaders=1',
+                include: /styleguide/,
+            },
+            // Loader for SVGs
             {
                 test: /\.svg$/,
                 loader: 'text',
