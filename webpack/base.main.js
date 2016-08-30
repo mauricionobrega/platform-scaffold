@@ -25,6 +25,7 @@ module.exports = {
     resolve: {
         alias: {
             react: path.resolve(process.cwd(), 'node_modules', 'react'),
+            components: path.resolve(process.cwd(), 'app', 'components'),
             cacheHashManifest: path.resolve(process.cwd(), 'tmp', CACHE_MANIFEST_NAME)
         },
         extensions: ['', '.js', '.jsx', '.json']
