@@ -2,6 +2,7 @@
 - Add PostCSS (Autoprefixer) and CSS minification
 - Add configuration for building in specific cache manifest files into the main
   and loader build files
+- Move Styleguidist's webpack settings to the `/webpack` directory 
 
 ## 0.0.3 (August 26)
 - use SDK version 0.1.1

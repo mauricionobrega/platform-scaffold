@@ -87,7 +87,7 @@
     "lint:sass": "sass-lint -c node_modules/mobify-code-style/css/.sass-lint.yml 'app/**/*.scss' -v",
     "nightwatch": "node ./node_modules/nightwatch/bin/runner.js -c ./tests/system/nightwatch-config.js --retries 1",
     "push": "cross-env NODE_ENV=production npm run build && sdk-upload",
-    "styleguide": "styleguidist server",
+    "styleguide": "styleguidist --config webpack/styleguide.config.js server",
     "save-credentials": "sdk-save-credentials",
     "test": "cross-env NODE_ENV=test ava",
     "test:all": "npm run lint && npm test",
