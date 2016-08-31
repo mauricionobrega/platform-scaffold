@@ -2,6 +2,7 @@
 /* eslint-env node */
 
 const path = require('path')
+const baseCommon = require('./base.common')
 const CACHE_MANIFEST_NAME = 'loader-cache-hash-manifest.json'
 
 module.exports = {
@@ -31,9 +32,15 @@ module.exports = {
                 cacheDirectory: `${__dirname}/tmp`
             },
             {
+                test: /\.css?$/,
+                exclude: /node_modules/,
+                loader: 'postcss',
+            },
+            {
                 test: /\.json$/,
                 loader: 'json'
             }
         ],
-    }
+    },
+    postcss: baseCommon.postcss
 }

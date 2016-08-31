@@ -2,6 +2,7 @@
 /* eslint-env node */
 
 const path = require('path')
+const baseCommon = require('./base.common')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const CACHE_MANIFEST_NAME = 'cache-hash-manifest.json'
@@ -61,15 +62,8 @@ module.exports = {
             {
                 test: /\.svg$/,
                 loader: 'text'
-            },
-            {
-                test: /\.scss$/,
-                loader: ExtractTextPlugin.extract(['css', 'sass']),
-                include: [
-                    /progressive-web-sdk/,
-                    /app/
-                ]
-            },
+            }
         ],
-    }
+    },
+    postcss: baseCommon.postcss
 }
