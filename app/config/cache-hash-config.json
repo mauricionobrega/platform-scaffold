@@ -1,0 +1,8 @@
+{
+    "files": [
+        "static/**/*"
+    ],
+    "baseDir": "",
+    "hashLength": 8,
+    "destinationFolder": "tmp/"
+}

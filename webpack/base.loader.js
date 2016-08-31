@@ -3,6 +3,7 @@
 
 const path = require('path')
 const baseCommon = require('./base.common')
+const CACHE_MANIFEST_NAME = 'loader-cache-hash-manifest.json'
 
 module.exports = {
     devtool: 'cheap-source-map',
@@ -10,6 +11,17 @@ module.exports = {
     output: {
         path: path.resolve(process.cwd(), 'build'),
         filename: 'loader.min.js'
+    },
+    // Loaders are resolved relative to the file being applied to. Specifying the
+    // root option here lets Webpack know they are Node modules - avoiding errors
+    resolveLoader: {
+        root: path.join(process.cwd(), 'node_modules')
+    },
+    resolve: {
+        alias: {
+            cacheHashManifest: path.resolve(process.cwd(), 'tmp', CACHE_MANIFEST_NAME)
+        },
+        extensions: ['', '.js', '.jsx', '.json']
     },
     module: {
         loaders: [
@@ -24,6 +36,10 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'postcss',
             },
+            {
+                test: /\.json$/,
+                loader: 'json'
+            }
         ],
     },
     postcss: baseCommon.postcss
