@@ -5,6 +5,7 @@ import {Provider} from 'react-redux'
 // Containers
 import App from './containers/app/container'
 import Home from './containers/home/container'
+import Login from './containers/login/container'
 import PLP from './containers/plp/container'
 
 const AppProvider = ({store}) => {
@@ -13,6 +14,7 @@ const AppProvider = ({store}) => {
             <Router>
                 <Route path="/" component={App}>
                     <IndexRoute component={Home} routeName="home" />
+                    <Route component={Login} path="customer/account/login/" routeName="login" />
                     <Route component={PLP} path="potions.html" routeName="productListPage" />
                 </Route>
             </Router>

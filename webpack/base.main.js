@@ -10,6 +10,7 @@ const CACHE_MANIFEST_NAME = 'cache-hash-manifest.json'
 module.exports = {
     devtool: 'cheap-source-map',
     entry: [
+        'react-hot-loader/patch',
         'whatwg-fetch',
         './app/main.jsx',
     ],

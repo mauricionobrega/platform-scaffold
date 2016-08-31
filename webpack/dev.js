@@ -34,12 +34,4 @@ mainConfig.plugins = mainConfig.plugins.concat([
     new DashboardPlugin(dashboard.setData)
 ])
 
-// Ensure the react-hot-loader is applied before the babel-loader
-mainConfig.module.loaders = mainConfig.module.loaders.map((loader) => {
-    if (loader.name === 'babel-loader') {
-        loader.loaders.unshift('react-hot')
-    }
-    return loader
-})
-
 module.exports = [mainConfig, loaderConfig]
