@@ -4,7 +4,7 @@
 const path = require('path')
 
 module.exports = {
-    title: 'Progressive Web SDK',
+    title: 'Progressive Web Scaffold',
     components: './app/components/**/*.jsx',
     serverHost: '0.0.0.0',
     serverPort: 4000,
