@@ -2,8 +2,10 @@
 /* eslint-env node */
 
 const path = require('path')
+const baseCommon = require('./base.common')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
+const CACHE_MANIFEST_NAME = 'cache-hash-manifest.json'
 
 module.exports = {
     devtool: 'cheap-source-map',
@@ -16,11 +18,18 @@ module.exports = {
         path: path.resolve(process.cwd(), 'build'),
         filename: '[name].js'
     },
+    // Loaders are resolved relative to the file being applied to. Specifying the
+    // root option here lets Webpack know they are Node modules - avoiding errors
+    resolveLoader: {
+        root: path.join(process.cwd(), 'node_modules')
+    },
     resolve: {
         alias: {
             react: path.resolve(process.cwd(), 'node_modules', 'react'),
+            components: path.resolve(process.cwd(), 'app', 'components'),
+            cacheHashManifest: path.resolve(process.cwd(), 'tmp', CACHE_MANIFEST_NAME)
         },
-        extensions: ['', '.js', '.jsx']
+        extensions: ['', '.js', '.jsx', '.json']
     },
     plugins: [
         new ExtractTextPlugin('[name].css'),
@@ -54,15 +63,8 @@ module.exports = {
             {
                 test: /\.svg$/,
                 loader: 'text'
-            },
-            {
-                test: /\.scss$/,
-                loader: ExtractTextPlugin.extract(['css', 'sass']),
-                include: [
-                    /progressive-web-sdk/,
-                    /app/
-                ]
-            },
+            }
         ],
-    }
+    },
+    postcss: baseCommon.postcss
 }
