@@ -1,4 +1,4 @@
-## To be released
+## 0.0.4 (August 31)
 - Add configuration for building in specific cache manifest files into the main
   and loader build files
 

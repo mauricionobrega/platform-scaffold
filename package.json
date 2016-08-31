@@ -7,7 +7,7 @@
   "siteUrl": "",
   "license": "See license in LICENSE",
   "private": true,
-  "version": "0.0.2",
+  "version": "0.0.4",
   "dependencies": {
     "es6-promise": "3.2.1",
     "immutable": "3.8.1",
@@ -58,7 +58,7 @@
     "nightwatch": "0.9.7",
     "nightwatch-commands": "1.7.0",
     "node-sass": "3.8.0",
-    "progressive-web-sdk": "0.1.1",
+    "progressive-web-sdk": "0.2.1",
     "prompt": "1.0.0",
     "raw-loader": "0.5.1",
     "react-addons-test-utils": "15.2.1",
