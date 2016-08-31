@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react'
 import classnames from 'classnames'
 import styles from './styleguide.scss'
 
-const s = require('./Layout.css')
+import s from './Layout.css'
 
 const Renderer = ({title, components, toc, sidebar}) => (
     <div className={classnames(s.root, {[s.withoutSidebar]: !sidebar})}>
