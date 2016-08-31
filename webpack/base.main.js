@@ -4,7 +4,7 @@
 const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
-const autoprefixer = require('autoprefixer')
+const baseCommon = require('./base.common')
 
 module.exports = {
     devtool: 'cheap-source-map',
@@ -57,15 +57,5 @@ module.exports = {
             }
         ],
     },
-    postcss: () => {
-        return [
-            autoprefixer({
-                browsers: [
-                    'iOS >= 6.0',
-                    'Android >= 2.3',
-                    'last 4 ChromeAndroid versions'
-                ]
-            })
-        ]
-    }
+    postcss: baseCommon.postcss
 }
