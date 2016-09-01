@@ -1,5 +1,6 @@
-import {getAssetUrl, loadAsset} from 'progressive-web-sdk/dist/asset-utils'
+import {getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
+import cacheHashManifest from '../tmp/cacheHashManifest'
 
 window.Progressive = {}
 
@@ -8,6 +9,8 @@ import ReactRegexes from './loader-routes'
 const isReactRoute = () => {
     return ReactRegexes.some((regex) => regex.test(window.location.pathname))
 }
+
+initCacheManifest(cacheHashManifest)
 
 const CAPTURING_CDN = '//cdn.mobify.com/capturejs/capture-latest.min.js'
 
