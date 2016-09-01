@@ -1,6 +1,6 @@
 import {getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
-import cacheHashManifest from '../tmp/cacheHashManifest'
+import cacheHashManifest from '../tmp/loader-cache-hash-manifest.json'
 
 window.Progressive = {}
 

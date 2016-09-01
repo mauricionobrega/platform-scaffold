@@ -1,6 +1,6 @@
 import {polyfill} from 'es6-promise'
 import {initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
-import cacheHashManifest from '../tmp/cacheHashManifest'
+import cacheHashManifest from '../tmp/cache-hash-manifest.json'
 
 // React
 import React from 'react'
