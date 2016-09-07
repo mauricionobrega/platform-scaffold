@@ -2,7 +2,12 @@ import {createReducer} from 'redux-act'
 import {Map} from 'immutable'
 import * as loginActions from './actions'
 
-const initialState = Map({})
+const initialState = Map({
+    loginForm: {
+        fields: [],
+        initialValues: {}
+    }
+})
 
 export default createReducer({
     [loginActions.receiveLoginContents]: (state, payload) => {

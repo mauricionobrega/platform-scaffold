@@ -1,15 +1,19 @@
 import React, {PropTypes} from 'react'
 import {reduxForm} from 'redux-form'
+import {connect} from 'react-redux'
 
 import classNames from 'classnames'
 
 import FormFields from 'progressive-web-sdk/dist/components/form-fields'
 
 const validate = (values) => {
-    const errors = {}
+    const errors = {
+        login: {}
+    }
 
-    if (values.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Email address invalid'
+    const email = values.login && values.login.username
+    if (email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+        errors.login.username = 'Email address invalid'
     }
     return errors
 }
@@ -33,17 +37,22 @@ let LoginForm = ({
 }
 
 LoginForm = reduxForm({
-    form: 'auto-form',
+    enableReinitialize: true,
+    form: 'login-form',
     validate
 })(LoginForm)
 
 LoginForm.propTypes = {
     className: PropTypes.string,
     formFieldDescriptor: PropTypes.array,
-    handleSubmit: PropTypes.function,
-    invalid: PropTypes.boolean,
-    pristine: PropTypes.booean,
-    submitting: PropTypes.booean,
 }
+
+LoginForm = connect(
+    (state) => {
+        return {
+            initialValues: state.login.toJS().loginForm.initialValues
+        }
+    }
+)(LoginForm)
 
 export default LoginForm

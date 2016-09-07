@@ -10,36 +10,14 @@ import LoginForm from '../../components/login-form'
 
 import * as loginActions from './actions'
 
-const formData = [{
-    type: 'fieldset',
-    children: [
-        {
-            type: 'reduxFormField',
-            props: {
-                type: 'email',
-                name: 'email',
-                label: 'E-mail'
-            }
-        },
-        {
-            type: 'reduxFormField',
-            props: {
-                type: 'password',
-                name: 'password',
-                label: 'Password'
-            }
-        },
-    ]
-}]
-
 export class Login extends React.Component {
 
     componentDidMount() {
         this.props.fetchLoginContents()
     }
 
-    onSubmitLoginForm(data) {
-        alert(`Email: ${data.email} Password: ${data.password}`) // eslint-disable-line no-alert
+    onSubmitLoginForm(formData) {
+        this.props.attemptLogin(formData)
     }
 
     shouldComponentUpdate(nextProps) {
@@ -50,7 +28,9 @@ export class Login extends React.Component {
         return (
             <div>
                 <Link href="/">Go Home</Link>
-                <LoginForm formFieldDescriptor={formData} onSubmit={this.onSubmitLoginForm.bind(this)} />
+                <LoginForm
+                    formFieldDescriptor={this.props.loginForm.fields}
+                    onSubmit={this.onSubmitLoginForm.bind(this)} />
             </div>
         )
     }
@@ -59,13 +39,14 @@ export class Login extends React.Component {
 export const mapStateToProps = (state, props) => {
     return {
         ...state.login.toJS(),
-        immutable: state.home
+        immutable: state.login
     }
 }
 
 export const mapDispatchToProps = (dispatch, props) => {
     return {
-        fetchLoginContents: () => dispatch(loginActions.fetchLoginContents())
+        fetchLoginContents: () => dispatch(loginActions.fetchLoginContents()),
+        attemptLogin: (formData) => dispatch(loginActions.attemptLogin(formData))
     }
 }
 
