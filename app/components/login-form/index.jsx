@@ -1,8 +1,9 @@
 import React, {PropTypes} from 'react'
-import styles from './login-form.scss'
-import {Field as ReduxFormField, reduxForm} from 'redux-form'
+import {reduxForm} from 'redux-form'
 
-import Field from 'progressive-web-sdk/dist/components/field'
+import classNames from 'classnames'
+
+import FormFields from 'progressive-web-sdk/dist/components/form-fields'
 
 const validate = (values) => {
     const errors = {}
@@ -14,34 +15,35 @@ const validate = (values) => {
 }
 
 let LoginForm = ({
+    className,
+    formFieldDescriptor,
+    handleSubmit,
     invalid,
     pristine,
     submitting,
-    handleSubmit
 }) => {
+    const classes = classNames('c-form', className)
+
     return (
-        <form onSubmit={handleSubmit}>
-            <ReduxFormField name="email" label="E-mail" component={Field}>
-                <input type="email" />
-            </ReduxFormField>
-            <ReduxFormField name="password" label="Password" component={Field}>
-                <input type="password" />
-            </ReduxFormField>
+        <form onSubmit={handleSubmit} className={classes}>
+            <FormFields descriptor={formFieldDescriptor} />
             <button type="submit" disabled={pristine || submitting || invalid}>Login</button>
         </form>
     )
 }
 
-LoginForm.propTypes = {
-    handleSubmit: PropTypes.func.isRequired,
-    invalid: PropTypes.bool,
-    pristine: PropTypes.bool,
-    submitting: PropTypes.bool,
-}
-
 LoginForm = reduxForm({
-    form: 'login',
+    form: 'auto-form',
     validate
 })(LoginForm)
+
+LoginForm.propTypes = {
+    className: PropTypes.string,
+    formFieldDescriptor: PropTypes.array,
+    handleSubmit: PropTypes.function,
+    invalid: PropTypes.boolean,
+    pristine: PropTypes.booean,
+    submitting: PropTypes.booean,
+}
 
 export default LoginForm
