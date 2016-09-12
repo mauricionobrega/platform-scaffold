@@ -26,7 +26,7 @@ mainConfig.output.publicPath = `https://${ip.address()}:8443/`
 mainConfig.plugins = mainConfig.plugins.concat([
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoErrorsPlugin()
 ])
 
 module.exports = [mainConfig, loaderConfig]
