@@ -20,6 +20,7 @@ const validate = (values) => {
 }
 
 let LoginForm = ({
+    error,
     className,
     formFields,
     handleSubmit,
@@ -28,6 +29,7 @@ let LoginForm = ({
     submitting,
 }) => {
     const classes = classNames('c-form', className)
+    const loginButtonText = submitting ? 'Logging In...' : 'Login'
 
     return (
         <form onSubmit={handleSubmit} className={classes}>
@@ -41,7 +43,8 @@ let LoginForm = ({
                     <SkeletonBlock width="95%" height="45px" />
                 </div>
             }
-            <button type="submit" disabled={pristine || submitting || invalid}>Login</button>
+            {error && <span className="u-color-error">{error}</span>}
+            <button type="submit" disabled={pristine || submitting || invalid}>{loginButtonText}</button>
         </form>
     )
 }
