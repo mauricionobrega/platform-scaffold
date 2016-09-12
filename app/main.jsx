@@ -16,7 +16,12 @@ import AppProvider from './app-provider'
 // added to the markup in `loader.js`
 import Stylesheet from './stylesheet.scss' // eslint-disable-line no-unused-vars
 
+import {initMobifyAnalytics} from 'progressive-web-sdk/dist/analytics'
+
 polyfill()
+
+// TODO: replace slug with grabbing something from package.json
+initMobifyAnalytics('pure-formulas-mobile')
 
 const store = configureStore()
 
