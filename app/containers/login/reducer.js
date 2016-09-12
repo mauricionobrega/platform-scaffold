@@ -4,7 +4,7 @@ import * as loginActions from './actions'
 
 const initialState = Map({
     loginForm: {
-        fields: [],
+        fields: null,
         initialValues: {}
     }
 })

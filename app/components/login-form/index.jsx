@@ -20,7 +20,7 @@ const validate = (values) => {
 
 let LoginForm = ({
     className,
-    formFieldDescriptor,
+    formFields,
     handleSubmit,
     invalid,
     pristine,
@@ -30,7 +30,7 @@ let LoginForm = ({
 
     return (
         <form onSubmit={handleSubmit} className={classes}>
-            <FormFields descriptor={formFieldDescriptor} />
+            <FormFields items={formFields} />
             <button type="submit" disabled={pristine || submitting || invalid}>Login</button>
         </form>
     )

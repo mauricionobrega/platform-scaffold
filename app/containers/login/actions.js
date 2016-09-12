@@ -8,17 +8,25 @@ export const receiveLoginContents = createAction('Login page contents received')
 
 export const fetchLoginContents = () => {
     return (dispatch) => {
-        fetch(window.location.href)
-            .then((response) => jqueryResponse(response))
-            .then(([$, $response]) => {
-                dispatch(receiveLoginContents(loginParser($, $response)))
-            })
+        fetch(window.location.href, {
+            credentials: 'same-origin',
+        })
+        .then((response) => {
+            if (response.url !== window.location.href) {
+                window.location.href = response.location
+                return false
+            } else {
+                return jqueryResponse(response)
+            }
+        })
+        .then(([$, $response]) => {
+            dispatch(receiveLoginContents(loginParser($, $response)))
+        })
     }
 }
 
 export const attemptLogin = (formData) => {
     return (dispatch) => {
-
         const postBody = ''
             .concat(`form_key=${formData.form_key}`)
             .concat('&')
@@ -33,6 +41,7 @@ export const attemptLogin = (formData) => {
             credentials: 'same-origin',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
+                'Cookie': `${document.cookie}; form_key=${formData.form_key}`,
             },
             body: postBody
         }).then((response) => {

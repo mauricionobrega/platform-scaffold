@@ -28,9 +28,11 @@ export class Login extends React.Component {
         return (
             <div>
                 <Link href="/">Go Home</Link>
-                <LoginForm
-                    formFieldDescriptor={this.props.loginForm.fields}
-                    onSubmit={this.onSubmitLoginForm.bind(this)} />
+                {this.props.loginForm.fields &&
+                    <LoginForm
+                        formFields={this.props.loginForm.fields}
+                        onSubmit={this.onSubmitLoginForm.bind(this)} />
+                }
             </div>
         )
     }
