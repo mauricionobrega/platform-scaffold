@@ -79,7 +79,7 @@
   "scripts": {
     "add:component": "sdk-generate component",
     "add:page": "sdk-generate page",
-    "build": "sdk-create-hash-manifest && webpack --config webpack/production.js -p --display-error-details --optimize-dedupe",
+    "build": "sdk-get-routes && sdk-create-hash-manifest && webpack --config webpack/production.js -p --display-error-details --optimize-dedupe",
     "dev": "sdk-get-routes && sdk-create-hash-manifest && node ./dev-server/index.js",
     "lint": "npm run lint:js && npm run lint:sass",
     "lint:fix": "npm run lint:js -- --fix",
