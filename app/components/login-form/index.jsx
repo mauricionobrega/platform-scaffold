@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import classNames from 'classnames'
 
 import FormFields from 'progressive-web-sdk/dist/components/form-fields'
+import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
 const validate = (values) => {
     const errors = {
@@ -30,7 +31,16 @@ let LoginForm = ({
 
     return (
         <form onSubmit={handleSubmit} className={classes}>
-            <FormFields items={formFields} />
+            {formFields ?
+                <FormFields items={formFields} />
+            :
+                <div>
+                    <SkeletonBlock className="short" width="20%" height="14px" />
+                    <SkeletonBlock width="95%" height="45px" />
+                    <SkeletonBlock className="short" width="20%" height="14px" />
+                    <SkeletonBlock width="95%" height="45px" />
+                </div>
+            }
             <button type="submit" disabled={pristine || submitting || invalid}>Login</button>
         </form>
     )

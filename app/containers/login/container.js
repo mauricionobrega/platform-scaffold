@@ -59,11 +59,9 @@ export class Login extends React.Component {
         return (
             <div>
                 <Link href="/">Go Home</Link>
-                {this.props.loginForm.fields &&
-                    <LoginForm
-                        formFields={this.props.loginForm.fields}
-                        onSubmit={this.onSubmitLoginForm} />
-                }
+                <LoginForm
+                    formFields={this.props.loginForm.fields}
+                    onSubmit={this.onSubmitLoginForm} />
             </div>
         )
     }
