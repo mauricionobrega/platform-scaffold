@@ -19,7 +19,7 @@ export const attemptLogin = (formData) => {
         credentials: 'same-origin',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
-            'Cookie': `${document.cookie}; form_key=${formData.form_key}`,
+            Cookie: `${document.cookie}; form_key=${formData.form_key}`,
         },
         body: postBody
     }).then((response) => {

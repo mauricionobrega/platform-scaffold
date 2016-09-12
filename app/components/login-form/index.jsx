@@ -57,7 +57,12 @@ LoginForm = reduxForm({
 
 LoginForm.propTypes = {
     className: PropTypes.string,
-    formFieldDescriptor: PropTypes.array,
+    error: PropTypes.string,
+    formFields: PropTypes.array,
+    handleSubmit: PropTypes.function,
+    invalid: PropTypes.bool,
+    pristine: PropTypes.bool,
+    submitting: PropTypes.bool
 }
 
 LoginForm = connect(

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 
 import Immutable from 'immutable'
 
@@ -43,6 +43,12 @@ export const mapDispatchToProps = (dispatch, props) => {
     return {
         fetchLoginContents: () => dispatch(loginActions.fetchLoginContents())
     }
+}
+
+Login.propTypes = {
+    fetchLoginContents: PropTypes.function,
+    immutable: PropTypes.object,
+    loginForm: PropTypes.object
 }
 
 export default connect(
