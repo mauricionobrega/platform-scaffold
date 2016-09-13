@@ -1,4 +1,6 @@
 import {polyfill} from 'es6-promise'
+import {initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
+import cacheHashManifest from '../tmp/cache-hash-manifest.json'
 
 // React
 import React from 'react'
@@ -17,6 +19,8 @@ import AppProvider from './app-provider'
 import Stylesheet from './stylesheet.scss' // eslint-disable-line no-unused-vars
 
 polyfill()
+
+initCacheManifest(cacheHashManifest)
 
 const store = configureStore()
 
