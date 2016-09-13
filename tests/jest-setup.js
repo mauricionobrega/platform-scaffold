@@ -2,3 +2,5 @@
 global.Promise = require.requireActual('es6-promise');
 // Parser tests need to be supplied a selector library
 global.$ = require('../static/js/jquery.min.js');
+// Prevents a console.error when using asset-utils/getAssetUrl in tests
+global.document.head.innerHTML = '<head><script src="https://localhost:8443/loader.min.js"></script></head>';
