@@ -1,3 +1,5 @@
+/* eslint-disable import/namespace */
+
 import {Map} from 'immutable'
 
 import reducer from './reducer'
