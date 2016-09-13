@@ -9,7 +9,7 @@ import Home from './containers/home/container'
 import Login from './containers/login/container'
 import PLP from './containers/plp/container'
 
-let triggerPageView = function(){
+let triggerPageView = function() {
     triggerMobifyPageView(this.routeName)
 }
 
