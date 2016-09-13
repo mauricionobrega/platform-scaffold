@@ -15,9 +15,3 @@ test('unknown action type leaves state unchanged', (t) => {
 
     t.is(reducer(inputState, action), inputState)
 })
-
-test('reducer implements all defined actions', (t) => {
-    for (const action of Object.values(Actions)) {
-        t.true(reducer.has(action))
-    }
-})
