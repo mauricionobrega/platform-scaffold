@@ -1,8 +1,7 @@
 extends:
   - './node_modules/mobify-code-style/es6/mobify-es6-react.yml'
-  - 'plugin:ava/recommended'
-plugins:
-  - ava
+env:
+  jest: true
 settings:
   import/resolver:
     webpack:
