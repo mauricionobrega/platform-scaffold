@@ -1,4 +1,6 @@
 import {polyfill} from 'es6-promise'
+import {initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
+import cacheHashManifest from '../tmp/cache-hash-manifest.json'
 
 // React
 import React from 'react'
@@ -22,6 +24,7 @@ polyfill()
 
 // TODO: replace slug with grabbing something from package.json
 initMobifyAnalytics('pure-formulas-mobile')
+initCacheManifest(cacheHashManifest)
 
 const store = configureStore()
 
