@@ -20,3 +20,7 @@ export const createAction = (description, ...argNames) => {
 
     return actionCreator(description, payloadReducer)
 }
+
+export const makeRequest = (url, options) => {
+    return fetch(url, {...options, credentials: 'same-origin'})
+}

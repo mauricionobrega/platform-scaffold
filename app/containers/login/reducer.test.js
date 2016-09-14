@@ -1,10 +1,11 @@
-import test from 'ava'
+/* eslint-disable import/namespace */
+
 import {Map} from 'immutable'
 
 import reducer from './reducer'
 import * as Actions from './actions'
 
-test('unknown action type leaves state unchanged', (t) => {
+test('unknown action type leaves state unchanged', () => {
     const action = {
         type: 'qwertyuiop'
     }
@@ -13,11 +14,13 @@ test('unknown action type leaves state unchanged', (t) => {
         item: false,
     })
 
-    t.is(reducer(inputState, action), inputState)
+    expect(reducer(inputState, action)).toBe(inputState)
 })
 
-test('reducer implements all defined actions', (t) => {
-    for (const action of Object.values(Actions)) {
-        t.true(reducer.has(action))
+test('reducer implements all defined actions', () => {
+    for (const action in Actions) {
+        if (Actions.hasOwnProperty(action)) {
+            expect(reducer.has(Actions[action])).toBeTruthy()
+        }
     }
 })
