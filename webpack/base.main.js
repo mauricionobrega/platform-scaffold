@@ -1,6 +1,7 @@
 /* eslint-disable import/no-commonjs */
 /* eslint-env node */
 
+const webpack = require('webpack')
 const path = require('path')
 const baseCommon = require('./base.common')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -34,6 +35,9 @@ module.exports = {
         new CopyPlugin([
             {from: 'static/', to: 'static/'}
         ]),
+        new webpack.DefinePlugin({
+            PROJECT_SLUG: JSON.stringify(require('../package.json').name) // eslint-disable-line import/no-extraneous-dependencies
+        })
     ],
     module: {
         loaders: [
