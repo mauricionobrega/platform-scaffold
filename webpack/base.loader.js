@@ -3,7 +3,6 @@
 
 const path = require('path')
 const baseCommon = require('./base.common')
-const CACHE_MANIFEST_NAME = 'loader-cache-hash-manifest.json'
 
 module.exports = {
     devtool: 'cheap-source-map',
@@ -18,9 +17,6 @@ module.exports = {
         root: path.join(process.cwd(), 'node_modules')
     },
     resolve: {
-        alias: {
-            cacheHashManifest: path.resolve(process.cwd(), 'tmp', CACHE_MANIFEST_NAME)
-        },
         extensions: ['', '.js', '.jsx', '.json']
     },
     module: {

@@ -1,6 +1,8 @@
 ## To be released
 - Add PostCSS (Autoprefixer) and CSS minification
 - Move Styleguidist's webpack settings to the `/webpack` directory
+- Use SDK version 0.4.2 (test framework AVA replaced with Jest)
+- Project utils.js now contains makeRequest method
 
 ## 0.0.4 (August 31)
 - Add configuration for building in specific cache manifest files into the main
