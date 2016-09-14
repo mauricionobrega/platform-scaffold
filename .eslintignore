@@ -3,3 +3,5 @@ coverage
 static/js/jquery.min.js
 tests/system/nightwatch-config.js
 tests/system/site.js
+tests/jest-setup.js
+tests/jest-preprocessor.js
