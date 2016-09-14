@@ -23,7 +23,7 @@ import {initMobifyAnalytics} from 'progressive-web-sdk/dist/analytics'
 polyfill()
 
 // TODO: replace slug with grabbing something from package.json
-initMobifyAnalytics('pure-formulas-mobile')
+initMobifyAnalytics(PROJECT_SLUG) // eslint-disable-line no-undef
 initCacheManifest(cacheHashManifest)
 
 const store = configureStore()
