@@ -11,5 +11,5 @@ test('unknown action type leaves state unchanged', () => {
         item: false,
     })
 
-    expect(reducer(inputState, action)).toBe(inputState)
+    expect(reducer(inputState, action)).toEqual(inputState)
 })
