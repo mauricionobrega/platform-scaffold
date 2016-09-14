@@ -1,4 +1,6 @@
 import {polyfill} from 'es6-promise'
+import {initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
+import cacheHashManifest from '../tmp/cache-hash-manifest.json'
 
 // React
 import React from 'react'
@@ -16,7 +18,13 @@ import AppProvider from './app-provider'
 // added to the markup in `loader.js`
 import Stylesheet from './stylesheet.scss' // eslint-disable-line no-unused-vars
 
+import {initMobifyAnalytics} from 'progressive-web-sdk/dist/analytics'
+
 polyfill()
+
+// TODO: replace slug with grabbing something from package.json
+initMobifyAnalytics(PROJECT_SLUG) // eslint-disable-line no-undef
+initCacheManifest(cacheHashManifest)
 
 const store = configureStore()
 
