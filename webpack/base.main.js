@@ -1,14 +1,16 @@
 /* eslint-disable import/no-commonjs */
 /* eslint-env node */
 
+const webpack = require('webpack')
 const path = require('path')
+const baseCommon = require('./base.common')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
-const CACHE_MANIFEST_NAME = 'cache-hash-manifest.json'
 
 module.exports = {
     devtool: 'cheap-source-map',
     entry: [
+        'react-hot-loader/patch',
         'whatwg-fetch',
         './app/main.jsx',
     ],
@@ -24,8 +26,7 @@ module.exports = {
     resolve: {
         alias: {
             react: path.resolve(process.cwd(), 'node_modules', 'react'),
-            components: path.resolve(process.cwd(), 'app', 'components'),
-            cacheHashManifest: path.resolve(process.cwd(), 'tmp', CACHE_MANIFEST_NAME)
+            components: path.resolve(process.cwd(), 'app', 'components')
         },
         extensions: ['', '.js', '.jsx', '.json']
     },
@@ -34,6 +35,9 @@ module.exports = {
         new CopyPlugin([
             {from: 'static/', to: 'static/'}
         ]),
+        new webpack.DefinePlugin({
+            PROJECT_SLUG: JSON.stringify(require('../package.json').name) // eslint-disable-line import/no-extraneous-dependencies
+        })
     ],
     module: {
         loaders: [
@@ -61,15 +65,8 @@ module.exports = {
             {
                 test: /\.svg$/,
                 loader: 'text'
-            },
-            {
-                test: /\.scss$/,
-                loader: ExtractTextPlugin.extract(['css', 'sass']),
-                include: [
-                    /progressive-web-sdk/,
-                    /app/
-                ]
-            },
+            }
         ],
-    }
+    },
+    postcss: baseCommon.postcss
 }

@@ -1,18 +1,45 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
+
 import Link from 'progressive-web-sdk/dist/components/link'
 import Button from 'progressive-web-sdk/dist/components/button'
+import {mobifyGa} from 'progressive-web-sdk/dist/analytics'
+
+import Logo from '../../components/logo'
 
 import * as homeActions from './actions'
 
 class Home extends React.Component {
+    constructor(props, context) {
+        super(props, context)
+        this.triggerTapEvent = this.triggerTapEvent.bind(this)
+    }
+
     componentDidMount() {
         this.props.fetchHomeContents()
+    }
+
+    triggerTapEvent() {
+        // mobifyGa is a proxy method which sends events to our
+        // ga loaded through a.js. These events also proxy
+        // to Mobify's Engagement Engage. To understand how
+        // to trigger mobifyGa, please reference the GA documentation:
+        // https://developers.google.com/analytics/devguides/collection/analyticsjs/
+        mobifyGa('send', {
+            hitType: 'event',
+            eventCategory: 'ui',
+            eventAction: 'tap',
+            eventLabel: 'sample component'
+        })
     }
 
     render() {
         return (
             <div>
+                <Logo />
+                <Link href="/customer/account/login/">
+                    Login
+                </Link>
                 <h2>
                     Home Page
                 </h2>
@@ -25,7 +52,7 @@ class Home extends React.Component {
                 <div className="u-text-all-caps">
                     This is a test
                 </div>
-                <Button>Themed Component</Button>
+                <Button onClick={this.triggerTapEvent}>Themed Component</Button>
             </div>
         )
     }

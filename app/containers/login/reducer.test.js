@@ -1,6 +1,9 @@
+/* eslint-disable import/namespace */
+
 import {Map} from 'immutable'
 
 import reducer from './reducer'
+import * as Actions from './actions'
 
 test('unknown action type leaves state unchanged', () => {
     const action = {
@@ -12,4 +15,12 @@ test('unknown action type leaves state unchanged', () => {
     })
 
     expect(reducer(inputState, action)).toBe(inputState)
+})
+
+test('reducer implements all defined actions', () => {
+    for (const action in Actions) {
+        if (Actions.hasOwnProperty(action)) {
+            expect(reducer.has(Actions[action])).toBeTruthy()
+        }
+    }
 })

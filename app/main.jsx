@@ -1,8 +1,12 @@
 import {polyfill} from 'es6-promise'
+import {initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
+import cacheHashManifest from '../tmp/cache-hash-manifest.json'
 
 // React
 import React from 'react'
 import {render} from 'react-dom'
+
+import {AppContainer} from 'react-hot-loader'
 
 // Redux
 import configureStore from './store'
@@ -14,8 +18,35 @@ import AppProvider from './app-provider'
 // added to the markup in `loader.js`
 import Stylesheet from './stylesheet.scss' // eslint-disable-line no-unused-vars
 
+import {initMobifyAnalytics} from 'progressive-web-sdk/dist/analytics'
+
 polyfill()
+
+// TODO: replace slug with grabbing something from package.json
+initMobifyAnalytics(PROJECT_SLUG) // eslint-disable-line no-undef
+initCacheManifest(cacheHashManifest)
 
 const store = configureStore()
 
-render(<AppProvider store={store} />, document.getElementsByClassName('react-target')[0])
+const rootEl = document.getElementsByClassName('react-target')[0]
+
+render(
+    <AppContainer>
+        <AppProvider store={store} />
+    </AppContainer>,
+    rootEl
+)
+
+if (module.hot) {
+    module.hot.accept('./app-provider', () => {
+        // If you use Webpack 2 in ES modules mode, you can
+        // use <App /> here rather than require() a <NextApp />.
+        const NextAppProvider = require('./app-provider').default
+        render(
+            <AppContainer>
+                <NextAppProvider store={store} />
+            </AppContainer>,
+            rootEl
+        )
+    })
+}

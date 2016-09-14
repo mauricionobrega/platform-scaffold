@@ -1,9 +1,8 @@
-import test from 'ava'
 import {Map} from 'immutable'
 
 import reducer from './reducer'
 
-test('unknown action type leaves state unchanged', (t) => {
+test('unknown action type leaves state unchanged', () => {
     const action = {
         type: 'qwertyuiop'
     }
@@ -12,5 +11,5 @@ test('unknown action type leaves state unchanged', (t) => {
         item: false,
     })
 
-    t.is(reducer(inputState, action), inputState)
+    expect(reducer(inputState, action)).toBe(inputState)
 })

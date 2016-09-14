@@ -7,14 +7,14 @@
   "siteUrl": "",
   "license": "See license in LICENSE",
   "private": true,
-  "version": "0.0.4",
+  "version": "0.1.0",
   "dependencies": {
     "es6-promise": "3.2.1",
     "immutable": "3.8.1",
     "lodash.debounce": "4.0.6",
     "lodash.isequal": "4.2.0",
     "lodash.times": "4.2.0",
-    "react": "15.2.1",
+    "react": "15.3.1",
     "react-dom": "15.2.1",
     "react-redux": "4.4.5",
     "redux": "3.5.2",
@@ -23,14 +23,15 @@
     "whatwg-fetch": "1.0.0"
   },
   "devDependencies": {
-    "ava": "0.16.0",
+    "autoprefixer": "6.4.0",
     "babel-core": "6.10.4",
+    "babel-jest": "15.0.0",
     "babel-loader": "6.2.4",
     "babel-plugin-transform-object-assign": "6.8.0",
     "babel-plugin-transform-object-rest-spread": "6.8.0",
+    "babel-polyfill": "6.13.0",
     "babel-preset-es2015": "6.9.0",
     "babel-preset-react": "6.5.0",
-    "babel-preset-react-hmre": "1.1.1",
     "babel-register": "6.11.6",
     "chalk": "1.1.3",
     "classnames": "2.2.5",
@@ -40,7 +41,6 @@
     "enzyme": "2.4.1",
     "eslint": "3.2.2",
     "eslint-import-resolver-webpack": "0.4.0",
-    "eslint-plugin-ava": "2.5.0",
     "eslint-plugin-import": "1.12.0",
     "eslint-plugin-react": "6.0.0",
     "exports-loader": "0.6.3",
@@ -50,6 +50,7 @@
     "ignore-styles": "4.0.0",
     "imports-loader": "0.6.5",
     "ip": "1.1.3",
+    "jest-cli": "15.1.1",
     "jsdom": "9.4.1",
     "json-loader": "0.5.4",
     "lodash.assign": "4.0.9",
@@ -58,12 +59,14 @@
     "nightwatch": "0.9.7",
     "nightwatch-commands": "1.7.0",
     "node-sass": "3.8.0",
-    "progressive-web-sdk": "0.2.1",
+    "postcss-loader": "0.11.0",
+    "progressive-web-sdk": "0.4.3",
     "prompt": "1.0.0",
     "raw-loader": "0.5.1",
-    "react-addons-test-utils": "15.2.1",
-    "react-hot-loader": "1.3.0",
+    "react-addons-test-utils": "15.3.1",
+    "react-hot-loader": "3.0.0-beta.1",
     "react-styleguidist": "3.0.1",
+    "redux-form": "6.0.1",
     "sass-lint": "1.8.2",
     "sass-loader": "4.0.0",
     "spline-scss": "2.2.0",
@@ -71,41 +74,40 @@
     "tap-mocha-reporter": "0.0.27",
     "text-loader": "0.0.1",
     "webpack": "1.13.1",
-    "webpack-dashboard": "0.0.1",
     "webpack-dev-server": "1.14.1"
   },
   "scripts": {
     "add:component": "sdk-generate component",
     "add:page": "sdk-generate page",
-    "build": "sdk-create-hash-manifest && webpack --config webpack/production.js -p --display-error-details --optimize-dedupe",
-    "dev": "sdk-create-hash-manifest && node ./dev-server/index.js",
+    "build": "sdk-get-routes && sdk-create-hash-manifest && webpack --config webpack/production.js -p --display-error-details --optimize-dedupe",
+    "dev": "sdk-get-routes && sdk-create-hash-manifest && node ./dev-server/index.js",
     "lint": "npm run lint:js && npm run lint:sass",
     "lint:fix": "npm run lint:js -- --fix",
     "lint:js": "eslint '**/*.{js,jsx}'",
     "lint:sass": "sass-lint -c node_modules/mobify-code-style/css/.sass-lint.yml 'app/**/*.scss' -v",
     "nightwatch": "node ./node_modules/nightwatch/bin/runner.js -c ./tests/system/nightwatch-config.js --retries 1",
     "push": "cross-env NODE_ENV=production npm run build && sdk-upload",
-    "styleguide": "styleguidist server",
+    "styleguide": "styleguidist --config webpack/styleguide.config.js server",
     "save-credentials": "sdk-save-credentials",
-    "test": "cross-env NODE_ENV=test ava",
+    "test": "cross-env NODE_ENV=test jest",
     "test:all": "npm run lint && npm test",
     "test:watch": "npm test -- --watch",
     "update-loader-routes": "sdk-get-routes"
   },
-  "ava": {
-    "files": [
-      "**/*.test.js",
-      "**/test.js",
-      "!node_modules"
+  "jest": {
+    "cacheDirectory": "./node_modules/cache",
+    "moduleFileExtensions": ["js", "jsx", "json"],
+    "scriptPreprocessor": "tests/jest-preprocessor.js",
+    "setupFiles": [
+        "tests/jest-setup.js"
     ],
-    "source": [
-      "**/*.{js,jsx}"
+    "testPathIgnorePatterns": [
+      "/webpack/",
+      "/tmp/",
+      "/node_modules/",
+      "/static/",
+      "/dev-server/"
     ],
-    "require": [
-      "babel-register",
-      "./setup-jsdom.js"
-    ],
-    "babel": "inherit",
-    "verbose": true
+    "testRegex": "test\\.jsx?|\\.(test|spec)\\.jsx?$"
   }
 }

@@ -1,11 +1,12 @@
 extends:
   - './node_modules/mobify-code-style/es6/mobify-es6-react.yml'
-  - 'plugin:ava/recommended'
-plugins:
-  - ava
+env:
+  jest: true
+  jquery: true
 settings:
   import/resolver:
     webpack:
       config: './webpack/base.main.js'
+  import/extensions: ['.js', '.jsx']
 rules:
   react/react-in-jsx-scope: error
