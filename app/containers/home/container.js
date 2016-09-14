@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import Link from 'progressive-web-sdk/dist/components/link'
 import Button from 'progressive-web-sdk/dist/components/button'
-import {triggerMobifyEvent} from 'progressive-web-sdk/dist/analytics'
+import {mobifyGa} from 'progressive-web-sdk/dist/analytics'
 
 import * as homeActions from './actions'
 
@@ -17,7 +17,17 @@ class Home extends React.Component {
     }
 
     triggerTapEvent() {
-        triggerMobifyEvent('ui', 'tap', 'sample component')
+        // mobifyGa is a proxy method which sends events to our
+        // ga loaded through a.js. These events also proxy
+        // to Mobify's Engagement Engage. To understand how
+        // to trigger mobifyGa, please reference the GA documentation:
+        // https://developers.google.com/analytics/devguides/collection/analyticsjs/
+        mobifyGa('send', {
+            hitType: 'event',
+            eventCategory: 'ui',
+            eventAction: 'tap',
+            eventLabel: 'sample component'
+        })
     }
 
     render() {
