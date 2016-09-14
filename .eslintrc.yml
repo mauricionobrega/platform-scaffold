@@ -7,5 +7,6 @@ settings:
   import/resolver:
     webpack:
       config: './webpack/base.main.js'
+  import/extensions: ['.js', '.jsx']
 rules:
   react/react-in-jsx-scope: error
