@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react'
-import styles from './login-form.scss'
 import {Field as ReduxFormField, reduxForm} from 'redux-form'
 
 import Field from 'progressive-web-sdk/dist/components/field'
