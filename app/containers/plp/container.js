@@ -10,9 +10,21 @@ const PLP = () => {
             <h2>
                 PLP page
             </h2>
-            <Link href="/">
+            <div>
+                <Link href="/">
                 Go home
-            </Link>
+                </Link>
+            </div>
+            <div>
+                <Link href="/potions.html">
+                    Go to potions
+                </Link>
+            </div>
+            <div>
+                <Link href="/ingredients.html">
+                    Go to ingredients
+                </Link>
+            </div>
         </div>
     )
 }
