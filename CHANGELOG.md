@@ -1,4 +1,5 @@
-## To be Released
+## 0.1.1 (September 15, 2016)
+- Use SDK version 0.4.4
 
 ## 0.1.0 (September 14, 2016)
 - Add PostCSS (Autoprefixer) and CSS minification
