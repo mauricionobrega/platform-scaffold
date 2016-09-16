@@ -13,4 +13,3 @@
       * Release title: `X.Y.Z - <release_name>`
       * Description: Use highlights from the CHANGELOG.md (only pick out the most significant changes)
 - [ ] Merge `master` into `develop` (no need for review on PR, just merge).
-- [ ] In the CHANGELOG.md file of the `develop` branch, add a new "To be released" header to the top of the file.
