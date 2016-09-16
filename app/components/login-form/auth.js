@@ -3,7 +3,7 @@ import {SubmissionError} from 'redux-form'
 const loginUrl = 'http://www.merlinspotions.com/customer/account/loginPost/'
 
 export const attemptLogin = (formData) => {
-    const postBody = $('form').serialize()
+    const postBody = $('.login-form').serialize()
 
     // Returning a promise from onSubmit helps Redux-Form determine when
     // the form is finished submitting

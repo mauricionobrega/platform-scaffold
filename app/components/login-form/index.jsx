@@ -30,7 +30,7 @@ let LoginForm = ({
     pristine,
     submitting,
 }) => {
-    const classes = classNames('c-form', className)
+    const classes = classNames('c-form login-form', className)
     const loginButtonText = submitting ? 'Logging In...' : 'Login'
 
     return (
