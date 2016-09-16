@@ -1,5 +1,3 @@
-// import parseInput from 'progressive-web-sdk/dist/parsing/input-parser'
-
 const loginParser = ($, $html) => {
     const $loginForm = $html.find('form.form-login')
 
