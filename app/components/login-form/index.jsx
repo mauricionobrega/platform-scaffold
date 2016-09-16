@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
-import {reduxForm} from 'redux-form'
 import {connect} from 'react-redux'
+import {Field as ReduxFormField, reduxForm} from 'redux-form'
 
 import classNames from 'classnames'
 
