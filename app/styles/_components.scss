@@ -5,6 +5,7 @@
 // ---
 
 @import 'node_modules/progressive-web-sdk/dist/components/button/base';
+@import 'node_modules/progressive-web-sdk/dist/components/skeleton-block/base';
 
 
 // Local Components
@@ -17,3 +18,5 @@
 // ---
 
 @import '../components/button/theme';
+@import '../components/skeleton-block/theme';
+@import 'node_modules/progressive-web-sdk/dist/components/skeleton-block/theme';
