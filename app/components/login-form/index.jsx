@@ -1,12 +1,14 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {Field as ReduxFormField, reduxForm} from 'redux-form'
+import {reduxForm} from 'redux-form'
 
 import classNames from 'classnames'
 
 import FormFields from 'progressive-web-sdk/dist/components/form-fields'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
+// For more info on synchronous validation
+// see http://redux-form.com/6.0.5/examples/syncValidation/
 const validate = (values) => {
     const errors = {
         login: {}
@@ -65,12 +67,14 @@ LoginForm.propTypes = {
     submitting: PropTypes.bool
 }
 
-LoginForm = connect(
-    (state) => {
-        return {
-            initialValues: state.login.toJS().loginForm.initialValues
-        }
+export const mapStateToProps = (state, props) => {
+    return {
+        initialValues: state.login.toJS().loginForm.initialValues
     }
+}
+
+LoginForm = connect(
+    mapStateToProps
 )(LoginForm)
 
 export default LoginForm
