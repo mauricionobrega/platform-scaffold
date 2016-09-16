@@ -1,3 +1,7 @@
+## To be Released
+- Updated login form example to use FormFields
+- Added example of using loadScripts for injecting scripts from desktop
+
 ## 0.1.1 (September 15, 2016)
 - Use SDK version 0.4.4
 
