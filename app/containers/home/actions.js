@@ -23,9 +23,9 @@ export const fetchHomeContents = () => {
                     // This only needs to be done once in the application
                     .init($)
                     /**
-                     * url: current url you want to extract scripts from
-                     * $response: jQuery response document
-                     * {searchTypes}: string or RegExp search terms
+                     * url: the url that the jQuery response is from
+                     * $response: jQuery response object from jQueryResponse
+                     * {searchTypes}: string or RegExp script search terms
                      *   `contains` - inline scripts
                      *   `src` - external scripts
                      */
@@ -36,6 +36,7 @@ export const fetchHomeContents = () => {
                         ],
                         src: [
                             'requirejs/require.js',
+                            /mixins\.js/
                         ]
                     })
             })
