@@ -61,7 +61,7 @@ LoginForm.propTypes = {
     className: PropTypes.string,
     error: PropTypes.string,
     formFields: PropTypes.array,
-    handleSubmit: PropTypes.function,
+    handleSubmit: PropTypes.func,
     invalid: PropTypes.bool,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool

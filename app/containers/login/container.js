@@ -46,7 +46,7 @@ export const mapDispatchToProps = (dispatch, props) => {
 }
 
 Login.propTypes = {
-    fetchLoginContents: PropTypes.function,
+    fetchLoginContents: PropTypes.func,
     immutable: PropTypes.object,
     loginForm: PropTypes.object
 }
