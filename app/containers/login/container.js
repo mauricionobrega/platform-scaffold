@@ -1,24 +1,32 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
+
+import Immutable from 'immutable'
 
 import {connect} from 'react-redux'
 import Link from 'progressive-web-sdk/dist/components/link'
 import styles from './login.scss'
 
 import LoginForm from '../../components/login-form'
+import {attemptLogin} from '../../components/login-form/auth'
 
 import * as loginActions from './actions'
 
 export class Login extends React.Component {
+    componentDidMount() {
+        this.props.fetchLoginContents()
+    }
 
-    onSubmitLoginForm(data) {
-        alert(`Email: ${data.email} Password: ${data.password}`) // eslint-disable-line no-alert
+    shouldComponentUpdate(nextProps) {
+        return !Immutable.is(this.props.immutable, nextProps.immutable)
     }
 
     render() {
         return (
             <div>
                 <Link href="/">Go Home</Link>
-                <LoginForm onSubmit={this.onSubmitLoginForm.bind(this)} />
+                <LoginForm
+                    formFields={this.props.loginForm.fields}
+                    onSubmit={attemptLogin} />
             </div>
         )
     }
@@ -26,14 +34,21 @@ export class Login extends React.Component {
 
 export const mapStateToProps = (state, props) => {
     return {
-        ...state.login,
+        ...state.login.toJS(),
+        immutable: state.login
     }
 }
 
 export const mapDispatchToProps = (dispatch, props) => {
     return {
-        onMyEvent: () => dispatch(loginActions.myAction())
+        fetchLoginContents: () => dispatch(loginActions.fetchLoginContents())
     }
+}
+
+Login.propTypes = {
+    fetchLoginContents: PropTypes.func,
+    immutable: PropTypes.object,
+    loginForm: PropTypes.object
 }
 
 export default connect(
