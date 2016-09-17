@@ -9,18 +9,27 @@ import Home from './containers/home/container'
 import Login from './containers/login/container'
 import PLP from './containers/plp/container'
 
-let triggerPageView = function() {
-    triggerMobifyPageView(this.routeName)
+const triggerPageView = (nextState) => {
+    const routeName = nextState.routes[1].routeName
+    triggerMobifyPageView(routeName)
+}
+
+const handleChange = (prevState, nextState) => {
+    triggerPageView(nextState)
+}
+
+const handleEnter = (nextState) => {
+    triggerPageView(nextState)
 }
 
 const AppProvider = ({store}) => {
     return (
         <Provider store={store}>
             <Router>
-                <Route path="/" component={App}>
-                    <IndexRoute component={Home} routeName="home" onEnter={triggerPageView} />
-                    <Route component={Login} path="customer/account/login/" routeName="login" onEnter={triggerPageView} />
-                    <Route component={PLP} path="*.html" routeName="productListPage" onEnter={triggerPageView} />
+                <Route path="/" component={App} onEnter={handleEnter} onChange={handleChange}>
+                    <IndexRoute component={Home} routeName="home" />
+                    <Route component={Login} path="customer/account/login/" routeName="login" />
+                    <Route component={PLP} path="*.html" routeName="productListPage" />
                 </Route>
             </Router>
         </Provider>
