@@ -21,7 +21,7 @@ module.exports = {
             {
                 test: /\.jsx?$/,
                 include: [
-                    /node_modules\/progressive-web-sdk/,
+                    /node_modules\/progressive-web-sdk\/src/,
                     /styleguide/,
                     /app\/components/,
                     /app\/utils/
