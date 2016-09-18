@@ -5,7 +5,10 @@ const path = require('path')
 
 module.exports = {
     title: 'Progressive Web Scaffold',
-    components: '../app/components/**/*.jsx',
+    sections: [
+        {name: 'Project Components', components: '../app/components/**/*.jsx'},
+        {name: 'SDK Components', components: '../node_modules/progressive-web-sdk/src/components/**/*.jsx'}
+    ],
     serverHost: '0.0.0.0',
     serverPort: 4000,
     skipComponentsWithoutExample: true,
@@ -17,7 +20,12 @@ module.exports = {
         webpackConfig.module.loaders.push(
             {
                 test: /\.jsx?$/,
-                exclude: /node_modules/,
+                include: [
+                    /node_modules\/progressive-web-sdk/,
+                    /styleguide/,
+                    /app\/components/,
+                    /app\/utils/
+                ],
                 loader: 'babel',
                 query: {
                     presets: ['es2015', 'react']
