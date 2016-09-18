@@ -1,3 +1,6 @@
+## To Be Released
+- Display SDK components in the project's styleguide
+
 ## 0.2.0 (September 16, 2016)
 - Updated login form example to use FormFields
 - Added example of using loadScripts for injecting scripts from desktop
