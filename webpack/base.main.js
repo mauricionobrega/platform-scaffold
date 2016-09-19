@@ -33,7 +33,7 @@ module.exports = {
     plugins: [
         new ExtractTextPlugin('[name].css'),
         new CopyPlugin([
-            {from: 'static/', to: 'static/'}
+            {from: 'app/static/', to: 'static/'}
         ]),
         new webpack.DefinePlugin({
             PROJECT_SLUG: JSON.stringify(require('../package.json').name) // eslint-disable-line import/no-extraneous-dependencies
