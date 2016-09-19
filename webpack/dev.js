@@ -14,7 +14,7 @@ mainConfig.entry = mainConfig.entry.concat([
 
 mainConfig.module.loaders = mainConfig.module.loaders.concat({
     test: /\.scss$/,
-    loader: ExtractTextPlugin.extract(['css?-autoprefixer', 'postcss', 'sass']),
+    loader: ExtractTextPlugin.extract(['css?-autoprefixer&-url', 'postcss', 'sass']),
     include: [
         /node_modules\/progressive-web-sdk/,
         /app/
