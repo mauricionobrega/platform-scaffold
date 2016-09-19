@@ -105,7 +105,7 @@
       "/webpack/",
       "/tmp/",
       "/node_modules/",
-      "/static/",
+      "/app/static/",
       "/dev-server/"
     ],
     "testRegex": "test\\.jsx?|\\.(test|spec)\\.jsx?$"

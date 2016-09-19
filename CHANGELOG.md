@@ -1,3 +1,6 @@
+## To be released
+- Moved /static folder into /app to fix CSS url pathing issues
+
 ## 0.2.0 (September 16, 2016)
 - Updated login form example to use FormFields
 - Added example of using loadScripts for injecting scripts from desktop
