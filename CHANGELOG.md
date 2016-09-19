@@ -1,4 +1,4 @@
-## To be released
+## 0.3.0 (September 19, 2016)
 - Moved /static folder into /app to fix CSS url pathing issues
 
 ## 0.2.0 (September 16, 2016)
