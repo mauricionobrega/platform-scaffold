@@ -18,15 +18,11 @@ const handleChange = (prevState, nextState) => {
     triggerPageView(nextState)
 }
 
-const handleEnter = (nextState) => {
-    triggerPageView(nextState)
-}
-
 const AppProvider = ({store}) => {
     return (
         <Provider store={store}>
             <Router>
-                <Route path="/" component={App} onEnter={handleEnter} onChange={handleChange}>
+                <Route path="/" component={App} onEnter={triggerPageView} onChange={handleChange}>
                     <IndexRoute component={Home} routeName="home" />
                     <Route component={Login} path="customer/account/login/" routeName="login" />
                     <Route component={PLP} path="*.html" routeName="productListPage" />
