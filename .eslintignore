@@ -1,6 +1,6 @@
 build
 coverage
-static/js/jquery.min.js
+app/static
 tests/system/nightwatch-config.js
 tests/system/site.js
 tests/jest-setup.js

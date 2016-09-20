@@ -19,6 +19,14 @@ npm run dev
 npm run add:page
 ```
 
+## Styleguide
+
+To run the project styleguide use:
+
+```
+npm run styleguide
+```
+
 ## Tests and test coverage
 
 To run the full test suite, you can use:
@@ -31,19 +39,6 @@ To run tests in watch mode and only run test related to files you modify during 
 
 ```
 npm run test:watch
-```
-
-To see your test coverage in the console, use:
-
-```
-npm run test:coverage
-```
-
-or to see an HTML report in the browser, use:
-
-```
-npm run test:coverage
-open coverage/index.html
 ```
 
 ## Developing against `develop` of the Progressive Web SDK
