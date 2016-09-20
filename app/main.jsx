@@ -1,6 +1,7 @@
 import {polyfill} from 'es6-promise'
 import {initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
 import cacheHashManifest from '../tmp/cache-hash-manifest.json'
+import consoleErrorReporter from 'progressive-web-sdk/dist/console-error-reporter'
 
 // React
 import React from 'react'
@@ -31,7 +32,7 @@ const store = configureStore()
 const rootEl = document.getElementsByClassName('react-target')[0]
 
 render(
-    <AppContainer>
+    <AppContainer errorReporter={consoleErrorReporter}>
         <AppProvider store={store} />
     </AppContainer>,
     rootEl
@@ -43,7 +44,7 @@ if (module.hot) {
         // use <App /> here rather than require() a <NextApp />.
         const NextAppProvider = require('./app-provider').default
         render(
-            <AppContainer>
+            <AppContainer errorReporter={consoleErrorReporter}>
                 <NextAppProvider store={store} />
             </AppContainer>,
             rootEl
