@@ -47,6 +47,9 @@ class Home extends React.Component {
                     View potions
                 </Link>
                 <div>
+                    This is an example of UTF-8 character set text: テスト勉強　チコメ
+                </div>
+                <div>
                     This is the title of the home page: {this.props.home.get('title')}
                 </div>
                 <div className="u-text-all-caps">
