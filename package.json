@@ -42,6 +42,7 @@
     "eslint": "3.2.2",
     "eslint-import-resolver-webpack": "0.4.0",
     "eslint-plugin-import": "1.12.0",
+    "eslint-plugin-jsx-a11y": "2.2.2",
     "eslint-plugin-react": "6.0.0",
     "exports-loader": "0.6.3",
     "express": "4.14.0",
@@ -55,7 +56,7 @@
     "json-loader": "0.5.4",
     "lodash.assign": "4.0.9",
     "minimist": "1.2.0",
-    "mobify-code-style": "2.5.3",
+    "mobify-code-style": "2.6.0",
     "nightwatch": "0.9.7",
     "nightwatch-commands": "1.7.0",
     "node-sass": "3.8.0",
@@ -96,10 +97,14 @@
   },
   "jest": {
     "cacheDirectory": "./node_modules/cache",
-    "moduleFileExtensions": ["js", "jsx", "json"],
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "json"
+    ],
     "scriptPreprocessor": "tests/jest-preprocessor.js",
     "setupFiles": [
-        "tests/jest-setup.js"
+      "tests/jest-setup.js"
     ],
     "testPathIgnorePatterns": [
       "/webpack/",
