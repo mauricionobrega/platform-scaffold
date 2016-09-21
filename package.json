@@ -89,6 +89,7 @@
     "push": "cross-env NODE_ENV=production npm run build && sdk-upload",
     "styleguide": "styleguidist --config webpack/styleguide.config.js server",
     "save-credentials": "sdk-save-credentials",
+    "smoke-test": "./tests/system/smoke-test.sh",
     "test": "cross-env NODE_ENV=test jest",
     "test:all": "npm run lint && npm test",
     "test:watch": "npm test -- --watch",
