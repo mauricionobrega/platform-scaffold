@@ -1,3 +1,8 @@
+## 0.4.0 (September 20, 2016)
+- Include charset attribute on main script tag
+- Fix issue with hot-loader errors
+- Display SDK components in the project's styleguide
+
 ## 0.3.0 (September 19, 2016)
 - Moved /static folder into /app to fix CSS url pathing issues
 

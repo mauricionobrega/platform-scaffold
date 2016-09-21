@@ -42,6 +42,9 @@ if (isReactRoute()) {
 
     const script = document.createElement('script')
     script.id = 'progressive-web-script'
+    // Setting UTF-8 as our encoding ensures that certain strings (i.e.
+    // Japanese text) are not improperly converted to something else.
+    script.charset = 'utf-8'
     script.src = getAssetUrl('main.js')
     body.appendChild(script)
 
