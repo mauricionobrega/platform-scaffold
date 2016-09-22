@@ -1,3 +1,7 @@
+## To be released
+- Add SkipLinks and corresponding nightwatch tests
+- Make Merlin's Potions the initial URL for local Nightwatch tests
+
 ## 0.4.0 (September 20, 2016)
 - Include charset attribute on main script tag
 - Fix issue with hot-loader errors
