@@ -21,17 +21,17 @@ class App extends React.Component {
                 <SkipLinks />
 
                 <div id="app-wrap" className={currentTemplate}>
-                    <header id="app-header">
+                    <header id="app-header" role="banner">
                         Header content
 
                         <button id="app-navigation">Menu</button>
                     </header>
 
-                    <div id="app-main">
+                    <main id="app-main" role="main">
                         {this.props.children}
-                    </div>
+                    </main>
 
-                    <footer id="app-footer">
+                    <footer id="app-footer" role="contentinfo">
                         Footer content
                     </footer>
                 </div>
