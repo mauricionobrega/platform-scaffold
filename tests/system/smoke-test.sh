@@ -3,7 +3,7 @@ set -o pipefail
 
 # Run automated system tests to verify that checkout still works.
 
-# This script starts grunt preview if the current branch is not master.
+# This script starts the local dev server if the current branch is not master.
 # The ACTIVE_PROFILE environment variable defines which testing environment
 # should be used in tests/system/site.js.
 
@@ -23,7 +23,7 @@ if [ "$CURRENT_BRANCH" != "master" ]; then
     trap 'kill $(jobs -p)' EXIT
     export ACTIVE_PROFILE=local
     npm run dev &
-    while ! echo exit | nc localhost 8443; do sleep 5; done
+    while ! echo exit | nc localhost 8443; do sleep 20; done
 else
     echo "Running tests against production"
     export ACTIVE_PROFILE=production
