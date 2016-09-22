@@ -14,7 +14,7 @@ var Site = {
     profiles: {
         local: {
             bundleUrl: 'https://localhost:8443/loader.min.js',
-            "siteUrl": "http://www.merlinspotions.com"
+            "siteUrl": ""
         },
         production: {
             bundleUrl: '',
