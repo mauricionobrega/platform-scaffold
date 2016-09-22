@@ -1,0 +1,41 @@
+// SkipLinks
+// ===
+//
+// Skip Links are a simple technique that is used to provide a fast navigation
+// option for non-mouse users. For example, users who interact using keyboards,
+// screen readers or other assistive technologies.
+//
+// SkipLinks remain hidden until they are focused on by, such as by tabbing to
+// it, at which point they become visible.
+//
+// @url: http://webaim.org/techniques/skipnav/
+//
+// 1. Above everything, but underneath modals and their masks
+
+.c-skip-links__anchor {
+    position: absolute;
+    top: $unit;
+    left: -10000px;
+    z-index: $z3-depth - 1; // 1
+
+    display: inline-block;
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+    padding: $unit/2 $unit;
+    border: 1px solid $neutral-70;
+
+    background-color: #fff;
+
+    color: $neutral-70;
+
+    &:active,
+    &:focus {
+        left: 50%;
+
+        width: auto;
+        height: auto;
+
+        transform: translateX(-50%);
+    }
+}

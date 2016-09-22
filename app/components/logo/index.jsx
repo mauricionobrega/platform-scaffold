@@ -11,7 +11,7 @@ class Logo extends React.Component {
 
     render() {
         return (
-            <Image src={this.logoURL} />
+            <Image role="presentation" src={this.logoURL} />
         )
     }
 }

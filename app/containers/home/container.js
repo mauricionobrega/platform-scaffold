@@ -56,6 +56,10 @@ class Home extends React.Component {
                     This is a test
                 </div>
                 <Button onClick={this.triggerTapEvent}>Themed Component</Button>
+
+                <div id="realContent">
+                    <p>Real Main content!</p>
+                </div>
             </div>
         )
     }
