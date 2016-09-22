@@ -26,61 +26,71 @@ export default {
     },
 
     'Checkout - Guest - Step 1 - Navigate to Home': (browser) => {
-        browser.preview()
-        browser.waitForElementVisible(home.selectors.homeTemplateIdentifier)
-        browser.assert.visible(home.selectors.homeTemplateIdentifier)
+        browser
+            .preview()
+            .waitForElementVisible(home.selectors.homeTemplateIdentifier)
+            .assert.visible(home.selectors.homeTemplateIdentifier)
     },
 
     'Checkout - Guest - Step 2 - Navigate from Home to PLP': (browser) => {
         home.navigateToPLP()
-        browser.waitForElementVisible(plp.selectors.plpTemplateIdentifier)
-        browser.assert.visible(plp.selectors.plpTemplateIdentifier)
+        browser
+            .waitForElementVisible(plp.selectors.plpTemplateIdentifier)
+            .assert.visible(plp.selectors.plpTemplateIdentifier)
     },
 
     'Checkout - Guest - Step 3 - Navigate from PLP to PDP': (browser) => {
         plp.navigateToPDP()
-        browser.waitForElementVisible(pdp.selectors.pdpTemplateIdentifier)
-        browser.assert.visible(pdp.selectors.pdpTemplateIdentifier)
+        browser
+            .waitForElementVisible(pdp.selectors.pdpTemplateIdentifier)
+            .assert.visible(pdp.selectors.pdpTemplateIdentifier)
     },
 
     'Checkout - Guest - Step 4 - Add item to Shopping Cart': (browser) => {
         pdp.addItemToCart()
-        browser.waitForElementVisible(pdp.selectors.cartIconTemplateIdentifier)
-        browser.assert.visible(pdp.selectors.cartIconTemplateIdentifier)
+        browser
+            .waitForElementVisible(pdp.selectors.cartIconTemplateIdentifier)
+            .assert.visible(pdp.selectors.cartIconTemplateIdentifier)
     },
 
     'Checkout - Guest - Step 5 - Navigate from PDP to Shopping Cart': (browser) => {
         pdp.navigateToCart()
-        browser.waitForElementVisible(cart.selectors.cartTemplateIdentifier)
-        browser.assert.visible(cart.selectors.cartTemplateIdentifier)
+        browser
+            .waitForElementVisible(cart.selectors.cartTemplateIdentifier)
+            .assert.visible(cart.selectors.cartTemplateIdentifier)
     },
 
     'Checkout - Guest - Step 6 - Navigate from Shopping Cart to Checkout Sign In or Continue as Guest page': (browser) => {
         cart.navigateToCheckout()
-        browser.waitForElementVisible(checkout.selectors.checkoutAccountTemplateIdentifier)
-        browser.assert.visible(checkout.selectors.checkoutAccountTemplateIdentifier)
+        browser
+            .waitForElementVisible(checkout.selectors.checkoutAccountTemplateIdentifier)
+            .assert.visible(checkout.selectors.checkoutAccountTemplateIdentifier)
     },
 
     'Checkout - Guest - Step 7 - Continue to Guest Checkout': (browser) => {
         checkout.continueAsGuest()
-        browser.waitForElementVisible(checkout.selectors.checkoutTemplateIdentifier)
-        browser.assert.visible(checkout.selectors.checkoutTemplateIdentifier)
+        browser
+            .waitForElementVisible(checkout.selectors.checkoutTemplateIdentifier)
+            .assert.visible(checkout.selectors.checkoutTemplateIdentifier)
     },
 
     'Checkout - Guest - Step 8 - Fill out Guest Checkout Shipping Info form': (browser) => {
         checkout.fillShippingInfo()
-        browser.waitForElementVisible(checkout.selectors.lastShippingInfo)
-        browser.assert.containsValue(checkout.selectors.lastShippingInfo, checkout.userData.lastShippingInfo)
+        browser
+            .waitForElementVisible(checkout.selectors.lastShippingInfo)
+            .assert.containsValue(checkout.selectors.lastShippingInfo, checkout.userData.lastShippingInfo)
     },
 
     'Checkout - Guest - Step 9 - Fill out Guest Checkout Payment Details form': (browser) => {
         checkout.fillPaymentDetails()
-        browser.waitForElementVisible(checkout.selectors.lastPaymentDetail)
-        browser.assert.containsValue(checkout.selectors.lastPaymentDetail, checkout.userData.lastPaymentDetail)
+        browser
+            .waitForElementVisible(checkout.selectors.lastPaymentDetail)
+            .assert.containsValue(checkout.selectors.lastPaymentDetail, checkout.userData.lastPaymentDetail)
     },
 
     'Checkout - Guest - Step 10 - Verify Submit Order button is visible': (browser) => {
-        browser.waitForElementVisible(checkout.selectors.submitOrder)
-        browser.assert.visible(checkout.selectors.submitOrder)
+        browser
+            .waitForElementVisible(checkout.selectors.submitOrder)
+            .assert.visible(checkout.selectors.submitOrder)
     }
 }
