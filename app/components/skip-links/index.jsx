@@ -1,8 +1,11 @@
 import React, {PropTypes} from 'react'
+import classNames from 'classnames'
 
-const SkipLinks = () => {
+const SkipLinks = ({className}) => {
+    const classes = classNames('c-skip-links', className)
+
     return (
-        <div className="c-skip-links">
+        <div className={classes}>
             <a href="#app-main" className="c-skip-links__anchor">
                 Skip to content
             </a>
@@ -16,6 +19,13 @@ const SkipLinks = () => {
             </a>
         </div>
     )
+}
+
+SkipLinks.propTypes = {
+    /**
+     * Adds values to the `class` attribute of the root element
+     */
+    className: PropTypes.string
 }
 
 export default SkipLinks
