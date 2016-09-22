@@ -1,4 +1,4 @@
-## To be released
+## 0.5.0 (September 22, 2016)
 - Add SkipLinks and corresponding nightwatch tests
 - Make Merlin's Potions the initial URL for local Nightwatch tests
 
