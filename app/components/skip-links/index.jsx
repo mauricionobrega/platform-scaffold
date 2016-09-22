@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react'
 
-const SkipLinks = ({fragments}) => {
-
+const SkipLinks = () => {
     return (
         <div className="c-skip-links">
             <a href="#app-main" className="c-skip-links__anchor">
@@ -15,7 +14,6 @@ const SkipLinks = ({fragments}) => {
             <a href="#app-footer" className="c-skip-links__anchor">
                 Skip to footer
             </a>
-
         </div>
     )
 }
