@@ -1,5 +1,9 @@
 const selectors = {
-    homeTemplateIdentifier: '.t-home', // Used in workflow to assert you have reached the page
+    wrapper: '.t-home',
+    skipLinks: '.c-skip-links',
+    skipToMain: '.c-skip-links__anchor:first-of-type',
+    skipToNav: '.c-skip-links__anchor:nth-child(2n)',
+    skipToFooter: '.c-skip-links__anchor:last-of-type',
     plpItem: '.plp .item .selector'
 }
 

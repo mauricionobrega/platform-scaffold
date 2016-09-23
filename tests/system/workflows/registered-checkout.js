@@ -28,8 +28,8 @@ export default {
     'Checkout - Registered - Step 1 - Navigate to Home': (browser) => {
         browser
             .preview()
-            .waitForElementVisible(home.selectors.homeTemplateIdentifier)
-            .assert.visible(home.selectors.homeTemplateIdentifier)
+            .waitForElementVisible(home.selectors.wrapper)
+            .assert.visible(home.selectors.wrapper)
     },
 
     'Checkout - Registered - Step 2 - Navigate from Home to PLP': (browser) => {
