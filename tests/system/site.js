@@ -13,7 +13,7 @@ var Site = {
     */
     profiles: {
         local: {
-            bundleUrl: 'https://localhost:8443/loader.min.js',
+            bundleUrl: 'https://localhost:8443/loader.js',
             "siteUrl": ""
         },
         production: {
