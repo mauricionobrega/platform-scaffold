@@ -61,7 +61,7 @@
     "nightwatch-commands": "1.7.0",
     "node-sass": "3.8.0",
     "postcss-loader": "0.11.0",
-    "progressive-web-sdk": "0.6.1",
+    "progressive-web-sdk": "git+ssh://git@github.com:mobify/progressive-web-sdk.git#develop",
     "prompt": "1.0.0",
     "raw-loader": "0.5.1",
     "react-addons-test-utils": "15.3.1",
@@ -79,6 +79,7 @@
   },
   "scripts": {
     "add:component": "sdk-generate component",
+    "add:form": "sdk-generate form",
     "add:page": "sdk-generate page",
     "build": "sdk-get-routes && sdk-create-hash-manifest && webpack --config webpack/production.js -p --display-error-details --optimize-dedupe",
     "dev": "sdk-get-routes && sdk-create-hash-manifest && node ./dev-server/index.js",
