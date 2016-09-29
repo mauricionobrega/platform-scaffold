@@ -1,5 +1,8 @@
 ## 0.5.2 (September 29, 2016)
 - Use SDK version 0.6.3
+- Use SDK polyfill (which includes es6-promise polyfill)
+- Remove react-hot-loader [106](https://github.com/mobify/progressive-web-scaffold/pull/106)
+- Add npm script alias for generating form components [105](https://github.com/mobify/progressive-web-scaffold/pull/105)
 
 ## 0.5.1 (September 25, 2016)
 - Use SDK version 0.6.1
