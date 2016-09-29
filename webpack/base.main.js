@@ -10,7 +10,6 @@ const CopyPlugin = require('copy-webpack-plugin')
 module.exports = {
     devtool: 'cheap-source-map',
     entry: [
-        'react-hot-loader/patch',
         'whatwg-fetch',
         './app/main.jsx',
     ],

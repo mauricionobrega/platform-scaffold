@@ -6,10 +6,5 @@
   "plugins": [
     "transform-object-rest-spread",
     "transform-object-assign"
-  ],
-  "env": {
-    "development": {
-      "plugins": ["react-hot-loader/babel"]
-    }
-  }
+  ]
 }
