@@ -15,7 +15,6 @@ const compiler = webpack(config)
 
 const server = new WebpackDevServer(compiler, {
     https: true,
-    hot: true,
     stats: {
         // Configures logging: https://webpack.github.io/docs/node.js-api.html#stats
         assets: false,
