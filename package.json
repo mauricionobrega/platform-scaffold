@@ -116,6 +116,6 @@
       "/app/static/",
       "/dev-server/"
     ],
-    "testRegex": "test\\.jsx?|\\.(test|spec)\\.jsx?$"
+    "testRegex": "\\.?(test|spec)\\.jsx?$"
   }
 }
