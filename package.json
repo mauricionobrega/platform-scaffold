@@ -102,6 +102,9 @@
       "jsx",
       "json"
     ],
+    "moduleNameMapper": {
+      "^.+\\.svg$": "<rootDir>/tests/emptyStringMock.js"
+    },
     "scriptPreprocessor": "tests/jest-preprocessor.js",
     "setupFiles": [
       "tests/jest-setup.js"
