@@ -1,14 +1,14 @@
 import Home from '../page-objects/home'
 import PLP from '../page-objects/plp'
-import PDP from '../page-objects/pdp'
-import Cart from '../page-objects/cart'
-import Checkout from '../page-objects/checkout'
+// import PDP from '../page-objects/pdp'
+// import Cart from '../page-objects/cart'
+// import Checkout from '../page-objects/checkout'
 
 let home
 let plp
-let pdp
-let cart
-let checkout
+// let pdp
+// let cart
+// let checkout
 
 export default {
     '@tags': ['checkout'],
@@ -16,9 +16,9 @@ export default {
     before: (browser) => {
         home = new Home(browser)
         plp = new PLP(browser)
-        pdp = new PDP(browser)
-        cart = new Cart(browser)
-        checkout = new Checkout(browser)
+        // pdp = new PDP(browser)
+        // cart = new Cart(browser)
+        // checkout = new Checkout(browser)
     },
 
     after: (browser) => {
@@ -39,6 +39,7 @@ export default {
             .assert.visible(plp.selectors.plpTemplateIdentifier)
     },
 
+/* TODO: Uncomment the following once the Progressive Web build for Merlin's Potions has been completed.
     'Checkout - Guest - Step 3 - Navigate from PLP to PDP': (browser) => {
         plp.navigateToPDP()
         browser
@@ -93,4 +94,5 @@ export default {
             .waitForElementVisible(checkout.selectors.submitOrder)
             .assert.visible(checkout.selectors.submitOrder)
     }
+*/
 }
