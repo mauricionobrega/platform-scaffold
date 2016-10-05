@@ -6,7 +6,7 @@ import Link from 'progressive-web-sdk/dist/components/link'
 
 const PLP = () => {
     return (
-        <div>
+        <div className="t-plp">
             <h2>
                 PLP page
             </h2>
