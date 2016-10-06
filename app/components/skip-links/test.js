@@ -1,6 +1,5 @@
 import {mount, shallow} from 'enzyme'
 import React from 'react'
-import 'ignore-styles'
 
 import SkipLinks from './index.jsx'
 
