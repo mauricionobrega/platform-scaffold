@@ -1,3 +1,6 @@
+## 0.5.4 (October 11, 2016)
+- Use SDK version 0.6.6
+
 ## 0.5.3 (October 6, 2016)
  - Use SDK version 0.6.5
  - Fix Jest tests when importing modules that themselves import .svg assets
