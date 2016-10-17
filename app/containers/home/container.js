@@ -1,11 +1,16 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 
-import Link from 'progressive-web-sdk/dist/components/link'
-import Button from 'progressive-web-sdk/dist/components/button'
-import {mobifyGa} from 'progressive-web-sdk/dist/analytics'
+import Carousel from 'progressive-web-sdk/dist/components/carousel'
+import CarouselItem from 'progressive-web-sdk/dist/components/carousel/carousel-item'
+import {Icon} from 'progressive-web-sdk/dist/components/icon'
+import Image from 'progressive-web-sdk/dist/components/image'
+import List from 'progressive-web-sdk/dist/components/list'
+import ListTile from 'progressive-web-sdk/dist/components/list-tile'
 
 import Logo from '../../components/logo'
+
+import {mobifyGa} from 'progressive-web-sdk/dist/analytics'
 
 import * as homeActions from './actions'
 
@@ -34,31 +39,40 @@ class Home extends React.Component {
     }
 
     render() {
-        return (
-            <div>
-                <Logo />
-                <Link href="/customer/account/login/">
-                    Login
-                </Link>
-                <h2>
-                    Home Page
-                </h2>
-                <Link href="/potions.html">
-                    View potions
-                </Link>
-                <div>
-                    This is an example of UTF-8 character set text: テスト勉強　チコメ
-                </div>
-                <div>
-                    This is the title of the home page: {this.props.home.get('title')}
-                </div>
-                <div className="u-text-all-caps">
-                    This is a test
-                </div>
-                <Button onClick={this.triggerTapEvent}>Themed Component</Button>
+        const {
+            categories,
+            banners
+        } = this.props
 
-                <div id="realContent">
-                    <p>Real Main content!</p>
+        // TODO: setup placeholders
+        return (
+            <div className="">
+                {banners.length > 1 &&
+                    <Carousel allowLooping={true}>
+                        {banners.map(({src, href, alt}, key) => {
+                            return (
+                                <CarouselItem href={href} key={key}>
+                                    <Image src={src} alt={alt} />
+                                </CarouselItem>
+                            )
+                        })}
+                    </Carousel>
+                }
+                <div className="">
+                    {categories.map(({href, imgSrc, text}, key) => {
+                        return (
+                            <ListTile
+                                href={href}
+                                startAction={<Image src={imgSrc} alt={text} height={"60px"} width={"60px"}/>}
+                                endAction={<Icon name="chevron-right" style={{"height":"16px","width":"16px"}}/>}
+                                includeEndActionInPrimary={true}
+                                key={key}
+                            >
+                                <div className="">SHOP</div>
+                                <div className="">{text}</div>
+                            </ListTile>
+                        )
+                    })}
                 </div>
             </div>
         )
@@ -67,12 +81,13 @@ class Home extends React.Component {
 
 Home.propTypes = {
     fetchHomeContents: PropTypes.func.isRequired,
-    home: PropTypes.object.isRequired
+    categories: PropTypes.array.isRequired,
+    banners: PropTypes.array.isRequired
 }
 
 const mapStateToProps = (state) => {
     return {
-        home: state.home,
+        ...state.home.toJS()
     }
 }
 

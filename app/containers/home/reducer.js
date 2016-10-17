@@ -4,7 +4,8 @@ import {Map} from 'immutable'
 import * as homeActions from './actions'
 
 const initialState = Map({
-    title: ''
+    categories: [],
+    banners: []
 })
 
 export default createReducer({
