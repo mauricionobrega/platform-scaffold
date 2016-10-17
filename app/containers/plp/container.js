@@ -22,7 +22,7 @@ const PLP = () => {
             </div>
             <div>
                 <Link href="/ingredients.html">
-                    Go to ingredients
+                    Go to ingredients yeah!
                 </Link>
             </div>
         </div>
