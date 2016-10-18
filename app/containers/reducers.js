@@ -16,8 +16,7 @@ const rootReducer = combineReducers({
     login,
     pdp,
     plp,
-    form: formReducer,
-    
+    form: formReducer
 })
 
 export default rootReducer
