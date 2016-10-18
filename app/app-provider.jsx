@@ -8,6 +8,7 @@ import App from './containers/app/container'
 import Home from './containers/home/container'
 import Login from './containers/login/container'
 import PLP from './containers/plp/container'
+import PDP from './containers/pdp/container'
 
 const triggerPageView = (nextState) => {
     const routeName = nextState.routes[1].routeName
@@ -25,6 +26,7 @@ const AppProvider = ({store}) => {
                 <Route path="/" component={App} onEnter={triggerPageView} onChange={handleChange}>
                     <IndexRoute component={Home} routeName="home" />
                     <Route component={Login} path="customer/account/login/" routeName="login" />
+                    <Route component={PDP} path="eye-of-newt.html" routeName="productDetailsPage" />
                     <Route component={PLP} path="*.html" routeName="productListPage" />
                 </Route>
             </Router>

@@ -46,6 +46,10 @@ class Home extends React.Component {
                 <Link href="/potions.html">
                     View potions
                 </Link>
+                <br />
+                <Link href="/eye-of-newt.html">
+                    View Product Details Page
+                </Link>
                 <div>
                     This is an example of UTF-8 character set text: テスト勉強　チコメ
                 </div>
