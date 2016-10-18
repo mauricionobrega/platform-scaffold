@@ -11,6 +11,7 @@ import ListTile from 'progressive-web-sdk/dist/components/list-tile'
 import Logo from '../../components/logo'
 
 import {mobifyGa} from 'progressive-web-sdk/dist/analytics'
+import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
 import * as homeActions from './actions'
 
@@ -63,7 +64,7 @@ class Home extends React.Component {
                         return (
                             <ListTile
                                 href={href}
-                                startAction={<Image src={imgSrc} alt={text} height={"60px"} width={"60px"}/>}
+                                startAction={<Image src={getAssetUrl(`static/img/${text.trim().toLowerCase()}.png`)} alt={text} height={"60px"} width={"60px"}/>}
                                 endAction={<Icon name="chevron-right" style={{"height":"16px","width":"16px"}}/>}
                                 includeEndActionInPrimary={true}
                                 key={key}
