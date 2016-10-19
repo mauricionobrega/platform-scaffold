@@ -6,7 +6,7 @@ import {jquerifyHtmlFile} from 'progressive-web-sdk/dist/test-utils'
 
 describe('The Footer reducer', () => {
 
-    test('parses the page contents with type ON_PAGE_RECEIVED', () => {
+    test('parses the page contents onPageReceived', () => {
         const $content = jquerifyHtmlFile('app/containers/footer/parsers/footer-example.html')
         const newState = reducer(initialState, appActions.onPageReceived(null, $content))
         // Parsers covered in their own tests
@@ -14,7 +14,7 @@ describe('The Footer reducer', () => {
         expect(newState.get('navigation').size).toBeGreaterThan(0)
     })
 
-    test('sets the signup status with type NEWSLETTER_SIGNUP_COMPLETE', () => {
+    test('sets the signup status on newsletterSignupComplete', () => {
         const status = constants.SIGNUP_SUCCESSFUL
         expect(initialState.get('signupStatus')).not.toEqual(status) // Sanity check
         const newState = reducer(initialState, actions.newsletterSignupComplete(status))

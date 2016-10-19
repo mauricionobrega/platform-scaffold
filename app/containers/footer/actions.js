@@ -1,13 +1,9 @@
 import * as constants from './constants'
 import * as utils from '../../utils/utils'
 
-export const NEWSLETTER_SIGNUP_COMPLETE = 'NEWSLETTER_SIGNUP_COMPLETE'
-export const newsletterSignupComplete = (signupStatus) => {
-    return {
-        type: NEWSLETTER_SIGNUP_COMPLETE,
-        signupStatus
-    }
-}
+export const newsletterSignupComplete = utils.createAction('Newsletter signup complete',
+    'signupStatus'
+)
 
 export const signUpToNewsletter = (action, method, data) => {
     return (dispatch) => {
