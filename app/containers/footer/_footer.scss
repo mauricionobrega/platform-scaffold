@@ -1,0 +1,84 @@
+// Footer
+// ===
+
+$white: #FFF;
+$grey: #C9C9C9;
+
+.t-footer {
+    background-color: white;
+
+    form {
+        .c-field, button {
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: $brand-color;
+            color: $white;
+            border: 0;
+            display: block;
+            width: 100%;
+        }
+    }
+}
+
+.t-footer__panel {
+    padding: 15px;
+}
+
+.t-footer__panel--newsletter {
+    position: relative;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.30);
+}
+
+.t-footer__newsletter-title {
+    margin-bottom: 15px;
+    font-size: 20px;
+    line-height: 1.5;
+    display: block;
+}
+
+.t-footer__panel--social {
+    padding: 24px;
+    background: #F7F7F7;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.t-footer__social-link {
+    width: 30px;
+    height: 30px;
+    background-size: 30px 30px;
+    background-repeat: no-repeat;
+}
+
+.t-footer__panel--navigation {
+    background-color: $brand-color;
+    color: white;
+    line-height: 1.75;
+    text-align: center;
+}
+
+.t-footer__nav {
+    font-size: 15px;
+    color: #FFFFFF;
+    letter-spacing: 0;
+    margin: 0;
+    padding-bottom: 15px;
+}
+
+.t-footer__nav-item-link {
+    color: inherit;
+}
+
+.t-footer__copyright {
+    border-top: 1px solid rgba(238,238,238,0.26);
+    font-size: 12px;
+    color: #FFFFFF;
+    letter-spacing: 0;
+    line-height: 2;
+    margin: 0;
+    padding-top: 15px;
+}

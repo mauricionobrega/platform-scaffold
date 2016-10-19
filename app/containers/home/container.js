@@ -7,16 +7,11 @@ import {mobifyGa} from 'progressive-web-sdk/dist/analytics'
 
 import Logo from '../../components/logo'
 
-import * as homeActions from './actions'
 
 class Home extends React.Component {
     constructor(props, context) {
         super(props, context)
         this.triggerTapEvent = this.triggerTapEvent.bind(this)
-    }
-
-    componentDidMount() {
-        this.props.fetchHomeContents()
     }
 
     triggerTapEvent() {
@@ -66,7 +61,6 @@ class Home extends React.Component {
 }
 
 Home.propTypes = {
-    fetchHomeContents: PropTypes.func.isRequired,
     home: PropTypes.object.isRequired
 }
 
@@ -76,13 +70,6 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        fetchHomeContents: () => dispatch(homeActions.fetchHomeContents())
-    }
-}
-
 export default connect(
     mapStateToProps,
-    mapDispatchToProps
 )(Home)

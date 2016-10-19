@@ -3,8 +3,8 @@ import {connect} from 'react-redux'
 import {hidePreloader} from 'progressive-web-sdk/dist/preloader'
 import {IconSprite} from 'progressive-web-sdk/dist/components/icon'
 import SkipLinks from '../../components/skip-links'
+import Footer from '../../containers/footer/container'
 
-// import * as appActions from './actions'
 
 class App extends React.Component {
     componentDidMount() {
@@ -30,10 +30,7 @@ class App extends React.Component {
                     <main id="app-main" role="main">
                         {this.props.children}
                     </main>
-
-                    <footer id="app-footer" role="contentinfo">
-                        Footer content
-                    </footer>
+                    <Footer />
                 </div>
             </div>
         )
