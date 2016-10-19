@@ -1,0 +1,28 @@
+.c-carousel__controls {
+    margin-top: $unit;
+
+    .c-carousel__previous,
+    .c-carousel__next {
+        display: none;
+    }
+
+    .c-carousel__pips {
+        display: flex;
+        justify-content: center;
+    }
+
+    .c-carousel__pip {
+        color: rgba(0,0,0,0.20);
+        font-size: 0;
+    }
+
+    .c-carousel__pip:after {
+        content: "•";
+        font-size: 30px;
+    }
+
+    .c-carousel__pip.c--active {
+        background-color: transparent;
+        color: #000;
+    }
+}

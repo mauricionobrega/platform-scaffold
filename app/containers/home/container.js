@@ -7,6 +7,8 @@ import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Image from 'progressive-web-sdk/dist/components/image'
 import List from 'progressive-web-sdk/dist/components/list'
 import ListTile from 'progressive-web-sdk/dist/components/list-tile'
+import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
+import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 
 import Logo from '../../components/logo'
 
@@ -45,35 +47,71 @@ class Home extends React.Component {
             banners
         } = this.props
 
-        // TODO: setup placeholders
         return (
-            <div className="">
+            <div className="container">
                 {banners.length > 1 &&
                     <Carousel allowLooping={true}>
-                        {banners.map(({src, href, alt}, key) => {
+                        {banners.map(({src, href, alt}, key) => { //TODO: fix this when we put mobile assets on desktop
                             return (
                                 <CarouselItem href={href} key={key}>
-                                    <Image src={src} alt={alt} />
+                                    <Image
+                                        src={getAssetUrl(`static/img/homepage_carousel/${key}.png`)}
+                                        alt={alt}
+                                        hidePlaceholder={true}
+                                        loadingIndicator={<SkeletonBlock height="84vw" />}
+                                    />
                                 </CarouselItem>
                             )
                         })}
                     </Carousel>
                 }
-                <div className="">
-                    {categories.map(({href, imgSrc, text}, key) => {
+                {banners.length === 0 &&
+                    // The ratio of the banner image width:height is 1:.84.
+                    // Since the banner will be width=100%, we can use 84vw to predict the banner height.
+                    <SkeletonBlock height="84vw" />
+                }
+                <div className="c-card u-margin-all">
+                    {categories.length > 1 && categories.map(({href, text}, key) => {
+                        const image = <Image
+                            src={getAssetUrl(`static/img/categories/${text.trim().toLowerCase()}.png`)}
+                            alt={text}
+                            height={"60px"}
+                            width={"60px"}
+                            className="u-margin-end-lg"
+                        />
+                        const icon = <Icon
+                            name="chevron-right"
+                            style={{"height":"3vh","width":"3vh"}}
+                            className="u-color-brand"
+                        />
                         return (
                             <ListTile
+                                className="c-card__section u-padding-lg"
                                 href={href}
-                                startAction={<Image src={getAssetUrl(`static/img/${text.trim().toLowerCase()}.png`)} alt={text} height={"60px"} width={"60px"}/>}
-                                endAction={<Icon name="chevron-right" style={{"height":"16px","width":"16px"}}/>}
+                                startAction={image}
+                                endAction={icon}
                                 includeEndActionInPrimary={true}
                                 key={key}
                             >
-                                <div className="">SHOP</div>
-                                <div className="">{text}</div>
+                                <div className="c-card__text u-text-light u-text-all-caps">SHOP</div>
+                                <div className="c-card__text u-text-lg u-text-all-caps">{text}</div>
                             </ListTile>
                         )
                     })}
+
+                    {categories.length === 0 &&
+                        [0, 1, 2, 3].map((idx) => {
+                            return (
+                                <ListTile
+                                    className="c-card__section u-padding-lg"
+                                    startAction={<SkeletonBlock height="60px" width="60px" className="u-margin-end-lg" />}
+                                    key={idx}
+                                >
+                                    <SkeletonText className="c-card__text" lines={2} />
+                                </ListTile>
+                            )
+                        })
+                    }
                 </div>
             </div>
         )
