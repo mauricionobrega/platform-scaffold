@@ -1,0 +1,94 @@
+// NavItem Theme
+// ===
+
+$navitemBlack: #3a3a48;
+$navitemPurple: #4e439b;
+
+.c-nav-item {
+    height: $unit * 6;
+    padding: 0 ($unit * 1.5);
+    border: 0;
+
+    background: none;
+
+    color: $navitemBlack;
+    font-size: 15px;
+    line-height: 20px;
+    letter-spacing: 0;
+    text-align: left;
+
+    cursor: pointer;
+
+    &:active,
+    &:focus {
+        border: 0;
+
+        background: none;
+    }
+}
+
+.c-nav-item:hover,
+.c-nav-item:active,
+.c-nav-item:visited,
+.c-nav-item:focus {
+    color: $navitemBlack;
+}
+
+.c-nav-item.c-nav-item--selected {
+    background-color: #f1f0f7;
+
+    color: $navitemPurple;
+}
+
+
+.c-nav-item--with-before-icon {
+    padding: 0;
+}
+
+
+.c-nav-item--with-before-icon.c-nav-item--selected {
+    background-color: #f1f0f7;
+
+    color: $navitemBlack;
+}
+
+.c-nav-item--with-before-icon,
+.c-nav-item--sign-in.c-nav-item--selected {
+    background-color: #f8f8f8;
+}
+
+.c-nav-item__inner {
+    height: 100%;
+}
+
+.c-nav-item__before-icon {
+    width: $unit * 2;
+    height: $unit * 2;
+}
+
+
+.c-nav-item__icon {
+    position: relative;
+
+    width: $unit * 6;
+    height: $unit * 6;
+}
+
+
+.c-nav-item__icon-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: $unit * 2;
+    height: $unit * 2;
+
+    transform: translate(-50%, -50%);
+}
+
+
+.c-nav-item--with-icon {
+    padding: 0;
+
+    background-color: #f8f8f8;
+}

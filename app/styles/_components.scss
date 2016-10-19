@@ -24,11 +24,15 @@
 @import 'node_modules/progressive-web-sdk/dist/components/list-tile/base';
 // @import 'node_modules/progressive-web-sdk/dist/components/lockup/base';
 // @import 'node_modules/progressive-web-sdk/dist/components/nested-navigation/base';
+@import 'node_modules/progressive-web-sdk/dist/components/nav/base';
+@import 'node_modules/progressive-web-sdk/dist/components/nav-item/base';
+@import 'node_modules/progressive-web-sdk/dist/components/nav-menu/base';
+@import 'node_modules/progressive-web-sdk/dist/components/nav-slider/base';
 // @import 'node_modules/progressive-web-sdk/dist/components/pagination/base';
 // @import 'node_modules/progressive-web-sdk/dist/components/rating/base';
 // @import 'node_modules/progressive-web-sdk/dist/components/scroll-to/base';
 // @import 'node_modules/progressive-web-sdk/dist/components/select/base';
-// @import 'node_modules/progressive-web-sdk/dist/components/sheet/base';
+@import 'node_modules/progressive-web-sdk/dist/components/sheet/base';
 @import 'node_modules/progressive-web-sdk/dist/components/skeleton-block/base';
 @import 'node_modules/progressive-web-sdk/dist/components/skeleton-inline/base';
 @import 'node_modules/progressive-web-sdk/dist/components/skeleton-text/base';
@@ -41,6 +45,7 @@
 
 @import '../components/button/theme';
 @import '../components/divider/theme';
+@import '../components/icon-text-button/base';
 @import '../components/field/theme';
 @import '../components/field-row/theme';
 @import '../components/icon/theme';
@@ -49,3 +54,6 @@
 @import '../components/login-form/base';
 @import '../components/skeleton-block/theme';
 @import '../components/skip-links/base';
+@import '../components/nav-item/theme';
+@import '../components/nav-menu/theme';
+@import '../components/nav/theme';

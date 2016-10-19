@@ -4,6 +4,8 @@ import {hidePreloader} from 'progressive-web-sdk/dist/preloader'
 import {IconSprite} from 'progressive-web-sdk/dist/components/icon'
 import SkipLinks from '../../components/skip-links'
 import Footer from '../../containers/footer/container'
+import Navigation from '../../containers/navigation/container'
+import * as navActions from '../../containers/navigation/actions'
 
 
 class App extends React.Component {
@@ -13,7 +15,8 @@ class App extends React.Component {
     }
 
     render() {
-        const currentTemplate = `t-${this.props.children.props.route.routeName}`
+        const {openNavigation} = this.props
+        let currentTemplate = `t-${this.props.children.props.route.routeName}`
 
         return (
             <div id="app" className="t-app">
@@ -21,10 +24,13 @@ class App extends React.Component {
                 <SkipLinks />
 
                 <div id="app-wrap" className={currentTemplate}>
+                    <div>
+                        <Navigation />
+                    </div>
+
                     <header id="app-header" role="banner">
                         Header content
-
-                        <button id="app-navigation">Menu</button>
+                        <button id="app-navigation" onClick={openNavigation}>Menu</button>
                     </header>
 
                     <main id="app-main" role="main">
@@ -41,7 +47,8 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-    children: PropTypes.element.isRequired
+    children: PropTypes.element.isRequired,
+    openNavigation: PropTypes.func,
 }
 
 const mapStateToProps = (state) => {
@@ -50,9 +57,8 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = () => {
-    return {
-    }
+const mapDispatchToProps = {
+    openNavigation: navActions.openNavigation
 }
 
 export default connect(

@@ -1,0 +1,41 @@
+// IconTextButton
+
+.c-icon-text-button,
+.c-icon-text-button:active,
+.c-icon-text-button:focus {
+    position: relative;
+
+    width: ($unit * 6);
+    height: ($unit * 6);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+
+    background-color: $brand-color;
+    color: white;
+}
+
+.c-icon-text-button__icon {
+    position: absolute;
+    top: $unit;
+    left: 50%;
+    width: ($unit * 2);
+    height: ($unit * 2);
+    transform: translateX(-50%);
+}
+
+.c-icon-text-button__text {
+    position: absolute;
+    top: $unit * 3;
+    right: 0;
+    left: 0;
+    font-size: 11px;
+    text-align: center;
+}
+
+
+// Modifiers
+
+
+// Sub components
