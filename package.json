@@ -93,7 +93,7 @@
     "update-loader-routes": "sdk-get-routes"
   },
   "jest": {
-    "cacheDirectory": "./node_modules/cache",
+    "cacheDirectory": "./node_modules/.cache",
     "moduleFileExtensions": [
       "js",
       "jsx",
