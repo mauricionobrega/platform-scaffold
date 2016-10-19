@@ -27,21 +27,28 @@ const AppProvider = ({store}) => {
         ].join('')
     }
 
-    const fetchPage = (url) => {
-        store.dispatch(appActions.fetchPage(url))
+    const getPageType = (routerState) => {
+        const route = routerState.routes[1]
+        const name = route.component.name
+        return name === 'Connect' ? route.component.WrappedComponent.name : name
+    }
+
+    const getRouteName = (routerState) => {
+        return routerState.routes[1].routeName
     }
 
     const onEnter = (nextState) => {
-        const routeName = nextState.routes[1].routeName
+        const routeName = getRouteName(nextState)
         triggerMobifyPageView(routeName)
-        fetchPage(getURL(nextState))
+        store.dispatch(appActions.fetchPage(getURL(nextState), getPageType(nextState)))
     }
 
     const onChange = (prevState, nextState) => {
         const prevURL = getURL(prevState)
         const nextURL = getURL(nextState)
-        if(nextURL !== prevURL) {
-            fetchPage(nextURL)
+        if (nextURL !== prevURL) {
+            const pageType = getPageType(nextState)
+            store.dispatch(appActions.fetchPage(nextURL, pageType))
         }
     }
 
