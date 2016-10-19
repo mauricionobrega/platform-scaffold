@@ -10,6 +10,9 @@ export const parseNavigation = ($content) => {
     const $links = $content.find('footer .footer.links li a')
     return Array.prototype.map.call($links, (link) => {
         const $link = $(link)
-        return {title: $link.text(), url: $link.attr('href')}
+        return {
+            title: $link.text(),
+            href: $link.attr('href')
+        }
     })
 }

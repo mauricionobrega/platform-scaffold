@@ -1,94 +1,70 @@
 // Footer
 // ===
 
-$white: #fff;
-$grey: #c9c9c9;
+
+// Root
+// ---
 
 .t-footer {
-    background-color: white;
+    //
+}
 
-    form {
-        .c-field,
-        button {
-            margin-bottom: 10px;
-        }
 
-        button {
-            display: block;
-            width: 100%;
-            border: 0;
+// Social
+// ---
 
-            background-color: $brand-color;
+.t-footer__social {
+    background: $neutral-20;
+    box-shadow: $inset-box-shadow;
+}
 
-            color: $white;
-        }
+
+// Navigation
+// ---
+
+.t-footer__navigation {
+    background-color: $brand-color;
+
+    color: #fff;
+
+    a {
+        color: #fff;
     }
 }
 
-.t-footer__panel {
-    padding: 15px;
-}
 
-.t-footer__panel--newsletter {
-    position: relative;
+// Panel Newsletter
+// ---
 
+.t-footer__newsletter {
     background: #fff;
-    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.3);
 }
 
-.t-footer__newsletter-title {
-    display: block;
-    margin-bottom: 15px;
 
-    font-size: 20px;
-    line-height: 1.5;
-}
-
-.t-footer__panel--social {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    padding: 24px;
-
-    background: #f7f7f7;
-}
+// Social Link
+// ---
 
 .t-footer__social-link {
-    width: 30px;
-    height: 30px;
+    display: block;
+    width: 32px;
+    height: 32px;
 
     background-repeat: no-repeat;
-    background-size: 30px 30px;
+    background-size: 32px 32px;
+
+    & + & {
+        margin-left: $unit*3;
+    }
 }
 
-.t-footer__panel--navigation {
-    background-color: $brand-color;
 
-    color: white;
-    line-height: 1.75;
-    text-align: center;
-}
-
-.t-footer__nav {
-    margin: 0;
-    padding-bottom: 15px;
-
-    color: #fff;
-    font-size: 15px;
-    letter-spacing: 0;
-}
-
-.t-footer__nav-item-link {
-    color: inherit;
-}
+// Copyright
+// ---
 
 .t-footer__copyright {
     margin: 0;
-    padding-top: 15px;
-    border-top: 1px solid rgba(238, 238, 238, 0.26);
 
     color: #fff;
     font-size: 12px;
-    line-height: 2;
-    letter-spacing: 0;
+    line-height: $font-size;
 }
