@@ -30,7 +30,10 @@ class App extends React.Component {
                     <main id="app-main" role="main">
                         {this.props.children}
                     </main>
-                    <Footer />
+
+                    <div id="app-footer">
+                        <Footer id="app-footer" />
+                    </div>
                 </div>
             </div>
         )
