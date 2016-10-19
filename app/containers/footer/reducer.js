@@ -14,12 +14,10 @@ export const initialState = Immutable.fromJS({
 const footer = (state = initialState, action) => {
     switch (action.type) {
         case appActions.ON_PAGE_RECEIVED:
-            const {$response} = action
-            const parsed = Immutable.fromJS({
-                newsletter: parser.parseNewsLetter($response),
-                navigation: parser.parseNavigation($response),
-            })
-            return state.merge(parsed)
+            return state.merge(Immutable.fromJS({
+                newsletter: parser.parseNewsLetter(action.$response),
+                navigation: parser.parseNavigation(action.$response),
+            }))
 
         case footerActions.NEWSLETTER_SIGNUP_COMPLETE:
             return state.set('signupStatus', action.signupStatus)

@@ -16,13 +16,11 @@ const AppProvider = ({store}) => {
     const onEnter = (nextState) => {
         const routeName = nextState.routes[1].routeName
         triggerMobifyPageView(routeName)
-        console.log('Route enter')
         store.dispatch(appActions.fetchPage('http://www.merlinspotions.com/'))
     }
 
     const onChange = (prevState, nextState) => {
         onEnter(nextState)
-        console.log('Route change')
     }
 
     return (

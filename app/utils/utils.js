@@ -31,10 +31,10 @@ export const makeRequest = (url, options) => {
  */
 export const formEncode = (data) => {
     const pairs = []
-    for(const k in data) {
-        if(data.hasOwnProperty(k)) {
-            pairs.push(encodeURIComponent(k) + '=' + encodeURIComponent(data[k]));
+    for (const k in data) {
+        if (data.hasOwnProperty(k)) {
+            pairs.push(`${encodeURIComponent(k)}=${encodeURIComponent(data[k])}`)
         }
     }
-    return pairs.join('&').replace(/%20/g, '+');
+    return pairs.join('&').replace(/%20/g, '+')
 }
