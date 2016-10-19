@@ -9,20 +9,21 @@
     }
 
     .c-card {
-        background-color: #FFFFFF;
-        box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.20);
+        background-color: #fff;
+        box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.2);
     }
 
     .c-card__section {
         &:not(:first-child) {
-            border-top: solid #EEEEEE 1px;
+            border-top: solid #eee 1px;
         }
     }
 
     .c-card__text {
-        color: #333333;
+        color: #333;
         font-size: 20px;
         line-height: 24px;
+
         &.u-text-lg {
             font-size: 24px;
         }

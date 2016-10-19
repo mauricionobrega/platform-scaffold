@@ -5,12 +5,9 @@ import Carousel from 'progressive-web-sdk/dist/components/carousel'
 import CarouselItem from 'progressive-web-sdk/dist/components/carousel/carousel-item'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Image from 'progressive-web-sdk/dist/components/image'
-import List from 'progressive-web-sdk/dist/components/list'
 import ListTile from 'progressive-web-sdk/dist/components/list-tile'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
-
-import Logo from '../../components/logo'
 
 import {mobifyGa} from 'progressive-web-sdk/dist/analytics'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
@@ -51,7 +48,7 @@ class Home extends React.Component {
             <div className="container">
                 {banners.length > 1 &&
                     <Carousel allowLooping={true}>
-                        {banners.map(({src, href, alt}, key) => { //TODO: fix this when we put mobile assets on desktop
+                        {banners.map(({src, href, alt}, key) => { // TODO: fix this when we put mobile assets on desktop
                             return (
                                 <CarouselItem href={href} key={key}>
                                     <Image
@@ -72,18 +69,18 @@ class Home extends React.Component {
                 }
                 <div className="c-card u-margin-all">
                     {categories.length > 1 && categories.map(({href, text}, key) => {
-                        const image = <Image
+                        const image = (<Image
                             src={getAssetUrl(`static/img/categories/${text.trim().toLowerCase()}.png`)}
                             alt={text}
-                            height={"60px"}
-                            width={"60px"}
+                            height="60px"
+                            width="60px"
                             className="u-margin-end-lg"
-                        />
-                        const icon = <Icon
+                        />)
+                        const icon = (<Icon
                             name="chevron-right"
-                            style={{"height":"3vh","width":"3vh"}}
+                            style={{height: '3vh', width: '3vh'}}
                             className="u-color-brand"
-                        />
+                        />)
                         return (
                             <ListTile
                                 className="c-card__section u-padding-lg"
@@ -119,9 +116,9 @@ class Home extends React.Component {
 }
 
 Home.propTypes = {
-    fetchHomeContents: PropTypes.func.isRequired,
+    banners: PropTypes.array.isRequired,
     categories: PropTypes.array.isRequired,
-    banners: PropTypes.array.isRequired
+    fetchHomeContents: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {

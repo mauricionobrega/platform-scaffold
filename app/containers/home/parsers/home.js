@@ -8,7 +8,7 @@ const homeParser = ($, $html) => {
         }
     })
 
-    //TODO: fix this when we put mobile assets on desktop
+    // TODO: fix this when we put mobile assets on desktop
     const $banners = $html.find('strong.logo, .home-t-shirts, .home-erin')
     const banners = $.makeArray($banners).map((banner) => {
         const $banner = $(banner)
@@ -19,10 +19,7 @@ const homeParser = ($, $html) => {
             alt: $img.attr('alt') || ''
         }
     })
-    return {
-        categories: categories,
-        banners: banners
-    }
+    return {categories, banners}
 }
 
 export default homeParser
