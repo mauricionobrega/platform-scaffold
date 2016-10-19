@@ -13,14 +13,36 @@ import PLP from './containers/plp/container'
 
 const AppProvider = ({store}) => {
 
+    /**
+     * Given the current router state, get the corresponding URL on the
+     * desktop site. Ignores #fragments in the router state.
+     */
+    const getURL = (routerState) => {
+        return [
+            window.location.protocol,
+            '//',
+            window.location.host,
+            routerState.location.pathname,
+            routerState.location.search
+        ].join('')
+    }
+
+    const fetchPage = (url) => {
+        store.dispatch(appActions.fetchPage(url))
+    }
+
     const onEnter = (nextState) => {
         const routeName = nextState.routes[1].routeName
         triggerMobifyPageView(routeName)
-        store.dispatch(appActions.fetchPage('http://www.merlinspotions.com/'))
+        fetchPage(getURL(nextState))
     }
 
     const onChange = (prevState, nextState) => {
-        onEnter(nextState)
+        const prevURL = getURL(prevState)
+        const nextURL = getURL(nextState)
+        if(nextURL !== prevURL) {
+            fetchPage(nextURL)
+        }
     }
 
     return (
