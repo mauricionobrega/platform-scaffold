@@ -15,7 +15,7 @@ const pdpParser = ($, $html) => {
     return {
         product: {
             title: $mainContent.find('.page-title-wrapper.product .page-title > span').text(),
-            price: $mainContent.find('.page-info-price .price-wrapper .price').text(),
+            price: $mainContent.find('.product-info-price .price-wrapper .price').text(),
             carouselItems: parseCarouselItems(magentoObject),
             description: $mainContent.find('.product.info.detailed .product.attibute.description p').text(),
         }
