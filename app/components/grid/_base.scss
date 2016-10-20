@@ -29,6 +29,10 @@
     }
 }
 
+.c-grid__item:last-of-type {
+    margin-bottom: 0;
+}
+
 .c-grid__item-name {
     padding: 16px 0 24px;
 
@@ -45,9 +49,9 @@
 }
 
 .c-list-tile__content {
-    padding-left: 8px;
-    align-self: flex-start;
     justify-content: flex-start;
+    align-self: flex-start;
+    padding-left: 8px;
 
     .c-image {
         flex-shrink: 0;

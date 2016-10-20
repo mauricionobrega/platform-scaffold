@@ -3,6 +3,7 @@ import {Router, Route, IndexRoute} from 'progressive-web-sdk/dist/routing'
 import {triggerMobifyPageView} from 'progressive-web-sdk/dist/analytics'
 import {Provider} from 'react-redux'
 import * as appActions from './containers/app/actions'
+import {getComponentName} from './utils/utils'
 
 // Containers
 import App from './containers/app/container'
@@ -29,8 +30,9 @@ const AppProvider = ({store}) => {
 
     const getPageType = (routerState) => {
         const route = routerState.routes[1]
-        const name = route.component.name
-        return name === 'Connect' ? route.component.WrappedComponent.name : name
+        const component = route.component
+
+        return getComponentName(component)
     }
 
     const getRouteName = (routerState) => {
