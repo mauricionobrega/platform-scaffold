@@ -7,7 +7,8 @@ const initialState = Map({
     title: '',
     numItems: '',
     products: ['', '', '', ''],
-    loaded: false
+    loaded: false,
+    noResultsText: ''
 })
 
 export default createReducer({

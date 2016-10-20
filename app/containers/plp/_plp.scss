@@ -19,6 +19,7 @@
         position: relative;
 
         h1 {
+            margin-top: 12px;
             font-weight: 300;
             text-transform: uppercase;
         }
@@ -31,6 +32,31 @@
             bottom: 10px;
             right: 8px;
         }
+
+        .c-link {
+            font-family: Open Sans;
+            font-size: 12px;
+            color: #4E439B;
+            letter-spacing: 0px;
+            line-height: 12px;
+            font-weight: 300;
+        }
+    }
+
+    .no-results__image {
+        margin: 0 30%;
+    }
+
+    .no-results__text {
+        font-family: Open Sans;
+        font-size: 14px;
+        color: #3A3A48;
+        letter-spacing: 0px;
+        line-height: 20px;
+        font-weight: 300;
+
+        margin: 20px 50px 32px;
+        text-align: center;
     }
 
     .num-results {
@@ -40,5 +66,6 @@
         color: #3A3A48;
         letter-spacing: 0px;
         line-height: 20px;
+        font-weight: 600;
     }
 }
