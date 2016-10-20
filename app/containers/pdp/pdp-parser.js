@@ -1,11 +1,25 @@
+import Immutable from 'immutable'
+
 const parseCarouselItems = ($, $carouselItems) => {
-    return $carouselItems.each((item) => {
+    return $carouselItems.each((idx, item) => {
         console.log(item)
     })
 }
 
+const extractMagentoJson = ($html) => {
+    return $html
+        .find('script[x-type="text/x-magento-init"]')
+        .map((_, item) => item.innerHTML)
+        .get()
+        .map(JSON.parse)
+        .map((item) => Immutable.fromJS(item))
+        .reduce((summary, item) => summary.mergeDeep(item), Immutable.Map())
+}
+
 const pdpParser = ($, $html) => {
     const $mainContent = $html.find('.page-main')
+
+    console.log(extractMagentoJson($html).toJS())
 
     return {
         product: {
