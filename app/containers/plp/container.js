@@ -62,10 +62,25 @@ const PLP = ({loaded, noResultsText, numItems, products, title}) => {
 }
 
 PLP.propTypes = {
+    /**
+     * Set to true after page content is received and parsed
+     */
     loaded: PropTypes.bool.isRequired,
+    /**
+     * The text to display when no products were found
+     */
     noResultsText: PropTypes.string.isRequired,
+    /**
+     * The number of products found
+     */
     numItems: PropTypes.string.isRequired,
+    /**
+     * The array of parsed products
+     */
     products: PropTypes.array.isRequired,
+    /**
+     * The PLP title (i.e. Potions, Ingredients, etc.)
+     */
     title: PropTypes.string.isRequired
 }
 
