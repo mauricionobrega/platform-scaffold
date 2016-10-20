@@ -4,4 +4,41 @@
 .t-plp {
     // Root Class. Contains all core styles, typically for the template's
     // wrapper element.
+    .container {
+        background-color: $background-color;
+        padding-top: 12px;
+
+        box-shadow: 0 0 2px 0 rgba(0, 0, 0, .3);
+    }
+
+    .grid-container {
+        padding: 0 8px;
+    }
+
+    .heading {
+        position: relative;
+
+        h1 {
+            font-weight: 300;
+            text-transform: uppercase;
+        }
+
+        padding: 12px 0 16px 12px;
+
+        .heading-logo {
+            position: absolute;
+
+            bottom: 10px;
+            right: 8px;
+        }
+    }
+
+    .num-results {
+        margin: 0 12px 12px;
+        font-family: Open Sans;
+        font-size: 15px;
+        color: #3A3A48;
+        letter-spacing: 0px;
+        line-height: 20px;
+    }
 }

@@ -25,7 +25,7 @@ $tap-size: 45px;
 // Typography
 // ---
 
-$font-family: 'Helvetica Neue', 'Roboto', sans-serif;
+$font-family: 'Oswald', 'Open Sans', 'Helvetica Neue', 'Roboto', sans-serif;
 $header-font-family: $font-family;
 $font-size: 14px;
 $line-height: 20px;
@@ -42,7 +42,7 @@ $neutral-60: #555;
 $neutral-70: #333;
 
 // Brand colors
-$brand-color: #3498db; // blue
+$brand-color: #4c4496; // purple
 $light-brand-color: lighten($brand-color, 15%);
 $dark-brand-color: darken($brand-color, 15%);
 
@@ -81,6 +81,7 @@ $disabled-input-background-color: $neutral-30;
 $horizontal-input-padding: $unit;
 $vertical-input-padding: $unit;
 
+$background-color: #f7f7f7;
 
 // Layer (z-index)
 // ---

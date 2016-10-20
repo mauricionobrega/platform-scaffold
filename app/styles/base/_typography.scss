@@ -2,6 +2,13 @@
 // ===
 
 
+// Fonts
+// ---
+$oswald: 'https://fonts.googleapis.com/css?family=Oswald:300,400,700'; // Linter workaround
+$openSans: 'https://fonts.googleapis.com/css?family=Open+Sans:600';
+@import url($oswald);
+@import url($openSans);
+
 // Headers
 // ---
 

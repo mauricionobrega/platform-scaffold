@@ -1,5 +1,5 @@
 const plpParser = ($, $html) => {
-    const $products = $html.find('.product-item')
+    const $products = $html.find('.item.product-item')
     const products = $.makeArray($products).map((product) => {
         const $product = $(product)
         return {
@@ -15,6 +15,7 @@ const plpParser = ($, $html) => {
 
     return {
         title: $html.find('.page-title').text().trim(),
+        numItems: $html.find('#toolbar-amount .toolbar-number').text(),
         products: products
     }
 }

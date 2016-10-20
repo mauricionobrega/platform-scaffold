@@ -3,6 +3,9 @@ import {connect} from 'react-redux'
 
 import Image from 'progressive-web-sdk/dist/components/image'
 import ListTile from 'progressive-web-sdk/dist/components/list-tile'
+import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
+import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
+import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
 import * as plpActions from './actions'
 
@@ -18,22 +21,60 @@ class Plp extends React.Component {
     render() {
         const {
             title,
-            products
+            numItems,
+            products,
+            loaded
         } = this.props
 
         return (
             <div className="t-plp">
-                <h1>{title}</h1>
-                <div className="">
-                    {products.map(({name, href, image: {src, alt}, price}, key) => {
-                        return (
-                            <ListTile href={href} key={key}>
-                                <Image src={src} alt={alt} />
-                                <div>{name}</div>
-                                <div>{price}</div>
-                            </ListTile>
-                        )
-                    })}
+                <div className="heading">
+                    {loaded ?
+                        <h1>{title}</h1>
+                    :
+                        <SkeletonText type="h1" lines={1} width="100px" />
+                    }
+
+                    <Image
+                        className="heading-logo"
+                        src={loaded ? getAssetUrl(`static/img/${title.trim().toLowerCase()}.png`) : ''}
+                        height="60px"
+                        width="60px"
+                    />
+                </div>
+                <div className="container">
+                    <div className="num-results">
+                        {numItems} Results
+                    </div>
+                    <div className="c-grid grid-container">
+                        {products.map((product, idx) => {
+                            if (loaded) {
+                                const {name, href, image: {src, alt}, price} = product
+
+                                return (
+                                    <ListTile
+                                        className="c-grid__item"
+                                        href={href}
+                                        key={idx}
+                                        startAction={<Image src={src} alt={alt} height="160px" width="128px" />}
+                                    >
+                                        <div className="c-grid__item-name">{name}</div>
+                                        <div className="c-grid__item-price">{price}</div>
+                                    </ListTile>
+                                )
+                            } else {
+                                return (
+                                    <ListTile
+                                        className="c-grid__item"
+                                        key={idx}
+                                        startAction={<SkeletonBlock className="c--skeleton" height="160px" width="128px" />}
+                                    >
+                                        <SkeletonText lines={2} className="c--skeleton-text" />
+                                    </ListTile>
+                                )
+                            }
+                        })}
+                    </div>
                 </div>
             </div>
         )
