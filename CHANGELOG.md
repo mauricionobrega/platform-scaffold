@@ -1,3 +1,6 @@
+## 0.6.0 (October 13, 2016)
+- Use SDK version 0.7.0
+
 ## 0.5.4 (October 11, 2016)
 - Use SDK version 0.6.6
 
