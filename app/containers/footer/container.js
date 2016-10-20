@@ -111,9 +111,9 @@ const Footer = (props) => {
 
             <div className="t-footer__navigation u-padding-lg u-text-align-center">
                 {navigation ? navigation.map((item, key) =>
-                        <ListTile href={item.get('href')} key={key}>
-                            {item.get('title')}
-                        </ListTile>
+                    <ListTile href={item.get('href')} key={key}>
+                        {item.get('title')}
+                    </ListTile>
                 ) :
                     skeleton
                 }
