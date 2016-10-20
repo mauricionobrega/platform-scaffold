@@ -11,8 +11,22 @@
 // Themes
 // ---
 
+.c-button.c--primary {
+    background-color: $accent-color;
+
+    color: #fff;
+}
+
 .c-button.c--secondary {
     background-color: $brand-color;
 
     color: #fff;
+}
+
+.c-button.c--tertiary {
+    border: 1px solid $brand-color;
+
+    background-color: transparent;
+
+    color: $brand-color;
 }
