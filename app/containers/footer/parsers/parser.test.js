@@ -16,24 +16,24 @@ describe('the footer parser', () => {
     test('should extract footer navigation from the rendered HTML', () => {
         const expected = [
             {
-                url: 'http://www.merlinspotions.com/privacy-policy-cookie-restriction-mode/',
-                title: 'Privacy and Cookie Policy'
+                title: 'Privacy and Cookie Policy',
+                href: 'http://www.merlinspotions.com/privacy-policy-cookie-restriction-mode/'
             },
             {
-                url: 'http://www.merlinspotions.com/search/term/popular/',
-                title: 'Search Terms'
+                title: 'Search Terms',
+                href: 'http://www.merlinspotions.com/search/term/popular/'
             },
             {
-                url: 'http://www.merlinspotions.com/contact/',
-                title: 'Contact Us'
+                title: 'Contact Us',
+                href: 'http://www.merlinspotions.com/contact/'
             },
             {
-                url: 'http://www.merlinspotions.com/sales/guest/form/',
-                title: 'Orders and Returns'
+                title: 'Orders and Returns',
+                href: 'http://www.merlinspotions.com/sales/guest/form/'
             },
             {
-                url: 'http://www.merlinspotions.com/catalogsearch/advanced/',
-                title: 'Advanced Search'
+                title: 'Advanced Search',
+                href: 'http://www.merlinspotions.com/catalogsearch/advanced/'
             }
         ]
         expect(parser.parseNavigation($content)).toEqual(expected)
