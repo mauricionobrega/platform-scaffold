@@ -1,6 +1,9 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 // import Link from 'progressive-web-sdk/dist/components/link'
+import Carousel from 'progressive-web-sdk/dist/components/carousel'
+import CarouselItem from 'progressive-web-sdk/dist/components/carousel/carousel-item'
+// import Image from 'progressive-web-sdk/dist/components/image'
 
 import * as pdpActions from './actions'
 
@@ -15,14 +18,25 @@ class PDP extends React.Component {
             product
         } = this.props
 
+        if (!contentsLoaded) {
+            return false
+        }
+
         return (
-            contentsLoaded &&
-                <div>
-                    <h1>{product.title}</h1>
-                    <p>{product.price}</p>
-                    {/* Carousel */}
-                    <p>{product.description}</p>
-                </div>
+            <div>
+                <h1>{product.title}</h1>
+                <p>{product.price}</p>
+                <Carousel>
+                    {product.carouselItems.map((item) => {
+                        return (
+                            <CarouselItem key={item.position}>
+                                <img src={item.img} />
+                            </CarouselItem>
+                        )
+                    })}
+                </Carousel>
+                <p>{product.description}</p>
+            </div>
         )
     }
 }
