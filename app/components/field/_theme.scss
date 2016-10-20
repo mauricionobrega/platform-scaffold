@@ -1,0 +1,23 @@
+// Field
+// ---
+
+
+.c-field {
+    //
+}
+
+
+// Error
+// ---
+
+.c-field__error {
+    color: $error-color;
+}
+
+
+// States
+// ---
+
+.c-field.c--error {
+    border-color: $error-color;
+}

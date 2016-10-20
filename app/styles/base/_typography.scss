@@ -1,6 +1,12 @@
 // Typography
 // ===
 
+// Fonts
+// ---
+
+$url: 'https://fonts.googleapis.com/css?family=Open+Sans'; // Linter workaround
+@import url($url);
+
 
 // Headers
 // ---
@@ -19,32 +25,38 @@ h6 {
 
 h1,
 %h1 {
-    font-size: 28px;
+    font-size: 38px;
+    line-height: 40px;
 }
 
 h2,
 %h2 {
-    font-size: 24px;
+    font-size: 28px;
+    line-height: 32px;
 }
 
 h3,
 %h3 {
     font-size: 20px;
+    line-height: 24px;
 }
 
 h4,
 %h4 {
-    font-size: 18px;
+    font-size: 16px;
+    line-height: 20px;
 }
 
 h5,
 %h5 {
-    font-size: 16px;
+    font-size: $font-size;
+    line-height: $line-height;
 }
 
 h6,
 %h6 {
     font-size: $font-size;
+    line-height: $line-height;
 }
 
 
@@ -52,7 +64,7 @@ h6,
 // ---
 
 p {
-    margin: 0 0 $unit;
+    margin: 0;
 }
 
 a {

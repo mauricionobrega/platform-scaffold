@@ -26,6 +26,16 @@
 //
 // Lowercase all text in string.
 
+.u-text-uppercase {
+    text-transform: uppercase !important; // @TODO: add to Spline
+}
+
+
+// Lowercase Text
+// ---
+//
+// Lowercase all text in string.
+
 .u-text-lowercase {
     @include text-lowercase(true);
 }
