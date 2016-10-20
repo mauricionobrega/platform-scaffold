@@ -1,13 +1,16 @@
 // PLP.scss
 // ===
 
-.t-plp {
-    // Root Class. Contains all core styles, typically for the template's
-    // wrapper element.
-    .container {
-        background-color: $background-color;
-        padding-top: 12px;
+// [1] - Display box-shadow properly at bottom of container
 
+.t-plp {
+    font-family: 'Oswald';
+
+    .container {
+        margin-bottom: 1px; // [1]
+        padding: 12px 0 20px;
+
+        background-color: $background-color;
         box-shadow: 0 0 2px 0 rgba(0, 0, 0, .3);
     }
 
@@ -18,28 +21,29 @@
     .heading {
         position: relative;
 
+        padding: 12px 0 16px 12px;
+
         h1 {
             margin-top: 12px;
+
+            font-family: 'Oswald';
             font-weight: 300;
             text-transform: uppercase;
         }
 
-        padding: 12px 0 16px 12px;
-
         .heading-logo {
             position: absolute;
-
-            bottom: 10px;
             right: 8px;
+            bottom: 10px;
         }
 
         .c-link {
-            font-family: Open Sans;
-            font-size: 12px;
-            color: #4E439B;
-            letter-spacing: 0px;
-            line-height: 12px;
+            color: #4e439b;
+            font-family: $font-family;
             font-weight: 300;
+            font-size: 12px;
+            line-height: 12px;
+            letter-spacing: 0;
         }
     }
 
@@ -48,24 +52,25 @@
     }
 
     .no-results__text {
-        font-family: Open Sans;
-        font-size: 14px;
-        color: #3A3A48;
-        letter-spacing: 0px;
-        line-height: 20px;
-        font-weight: 300;
-
         margin: 20px 50px 32px;
+
+        color: #3a3a48;
+        font-family: $font-family;
+        font-weight: 300;
+        font-size: 14px;
+        line-height: 20px;
+        letter-spacing: 0;
         text-align: center;
     }
 
     .num-results {
         margin: 0 12px 12px;
-        font-family: Open Sans;
-        font-size: 15px;
-        color: #3A3A48;
-        letter-spacing: 0px;
-        line-height: 20px;
+
+        color: #3a3a48;
+        font-family: $font-family;
         font-weight: 600;
+        font-size: 15px;
+        line-height: 20px;
+        letter-spacing: 0;
     }
 }
