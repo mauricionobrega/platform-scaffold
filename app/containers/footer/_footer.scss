@@ -1,0 +1,70 @@
+// Footer
+// ===
+
+
+// Root
+// ---
+
+.t-footer {
+    //
+}
+
+
+// Social
+// ---
+
+.t-footer__social {
+    background: $neutral-20;
+    box-shadow: $inset-box-shadow;
+}
+
+
+// Navigation
+// ---
+
+.t-footer__navigation {
+    background-color: $brand-color;
+
+    color: #fff;
+
+    a {
+        color: #fff;
+    }
+}
+
+
+// Panel Newsletter
+// ---
+
+.t-footer__newsletter {
+    background: #fff;
+}
+
+
+// Social Link
+// ---
+
+.t-footer__social-link {
+    display: block;
+    width: 32px;
+    height: 32px;
+
+    background-repeat: no-repeat;
+    background-size: 32px 32px;
+
+    & + & {
+        margin-left: $unit*3;
+    }
+}
+
+
+// Copyright
+// ---
+
+.t-footer__copyright {
+    margin: 0;
+
+    color: #fff;
+    font-size: 12px;
+    line-height: $font-size;
+}
