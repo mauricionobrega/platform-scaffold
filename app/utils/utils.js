@@ -41,6 +41,8 @@ export const formEncode = (data) => {
 /**
  * Extract all of the JSON pieces in 'text/x-magento-init' script
  * elements, and merge them together into a single configuration object
+ *
+ * Returns an Immutable Map ready for the Redux store.
  */
 export const extractMagentoJson = ($html) => {
     return $html
