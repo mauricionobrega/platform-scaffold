@@ -6,7 +6,7 @@ import PLP from './container'
 import {onPageReceived} from '../app/actions'
 import parser from './parsers/plp'
 
-const initialState = Immutable.Map({
+export const initialState = Immutable.Map({
     hasProducts: false,
     loaded: false,
     numItems: '',

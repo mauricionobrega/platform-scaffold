@@ -1,15 +1,17 @@
-import {Map} from 'immutable'
+import reducer, {initialState} from './reducer'
+import {onPageReceived} from '../app/actions'
+import {jquerifyHtmlFile} from 'progressive-web-sdk/dist/test-utils'
 
-import reducer from './reducer'
-
-test('unknown action type leaves state unchanged', () => {
-    const action = {
-        type: 'qwertyuiop'
-    }
-    const inputState = Map({
-        test: true,
-        item: false,
+describe('The PLP reducer', () => {
+    test('parses the page contents onPageReceived and updates the store', () => {
+        const $content = jquerifyHtmlFile('app/containers/plp/parsers/plp.test.html')
+        const newState = reducer(initialState, onPageReceived($, $content, 'PLP'))
+        
+        expect(newState).not.toBe(initialState)
     })
 
-    expect(reducer(inputState, action)).toBe(inputState)
+    test('does nothing for unknown action types', () => {
+        const action = {type: 'qwertyuiop'}
+        expect(reducer(initialState, action)).toBe(initialState)
+    })
 })
