@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 // import Link from 'progressive-web-sdk/dist/components/link'
 import Carousel from 'progressive-web-sdk/dist/components/carousel'
 import CarouselItem from 'progressive-web-sdk/dist/components/carousel/carousel-item'
+import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/accordion'
 // import Image from 'progressive-web-sdk/dist/components/image'
 
 import * as pdpActions from './actions'
@@ -35,7 +36,11 @@ class PDP extends React.Component {
                         )
                     })}
                 </Carousel>
-                <p>{product.description}</p>
+                <Accordion>
+                    <AccordionItem header="Product Description" closeIconName="x">
+                        <p>{product.description}</p>
+                    </AccordionItem>
+                </Accordion>
             </div>
         )
     }
