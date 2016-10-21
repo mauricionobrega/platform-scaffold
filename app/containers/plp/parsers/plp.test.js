@@ -5,9 +5,10 @@ describe('the plp parser', () => {
     const $content = jquerifyHtmlFile('app/containers/plp/parsers/plp.test.html')
     const parsedContent = plpParser($, $content)
 
-    test('should extract the plp content from the rendered HTML', () => {
+    it('should extract the plp content from the rendered HTML', () => {
         const expected = {
             hasProducts: true,
+            isPlaceholder: false,
             noResultsText: '',
             numItems: '7',
             title: 'Potions',
