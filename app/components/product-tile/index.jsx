@@ -3,14 +3,13 @@ import Image from 'progressive-web-sdk/dist/components/image'
 import ListTile from 'progressive-web-sdk/dist/components/list-tile'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
-const ProductTile = ({className, product}) => {
+const ProductTile = ({className, product = {}}) => {
     // alt is in product.image props
     /* eslint-disable jsx-a11y/img-has-alt */
     const startAction = <Image {...product.image} height="160px" width="128px" />
     /* eslint-enable jsx-a11y/img-has-alt */
 
     return (
-
         <ListTile
             {...product.link}
             className={className}
@@ -47,7 +46,7 @@ ProductTile.propTypes = {
             title: PropTypes.string
         }),
         price: PropTypes.string,
-    })
+    }).isRequired
 }
 
 export default ProductTile
