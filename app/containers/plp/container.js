@@ -6,6 +6,7 @@ import Image from 'progressive-web-sdk/dist/components/image'
 import Link from 'progressive-web-sdk/dist/components/link'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import ProductTile from '../../components/product-tile'
+import {SELECTOR} from './constants'
 
 const renderResults = (products) => {
     return products.map((product, idx) => <ProductTile className="c-grid__item" key={idx} product={product} />)
@@ -22,34 +23,35 @@ const renderNoResults = (bodyText) => {
     )
 }
 
-const PLP = ({hasProducts, loaded, noResultsText, numItems, products, title}) => {
+const PLP = ({hasProducts, isPlaceholder, noResultsText, numItems, products, title}) => {
+
     return (
         <div className="t-plp">
             <div className="heading">
                 <div>
                     <Link href="/">Home</Link>
                 </div>
-                {loaded ?
-                    <h1>{title}</h1>
-                :
+                {isPlaceholder ?
                     <SkeletonText lines={1} type="h1" width="100px" />
+                :
+                    <h1>{title}</h1>
                 }
 
                 <Image
                     alt="Heading logo"
                     className="heading-logo"
                     height="51px"
-                    src={loaded ? getAssetUrl(`static/img/${title.trim().toLowerCase()}.png`) : ''}
+                    src={isPlaceholder ? '' : getAssetUrl(`static/img/${title.trim().toLowerCase()}.png`)}
                     width="61px"
                 />
             </div>
             <div className="container">
-                {loaded ?
+                {isPlaceholder ?
+                    <SkeletonText lines={1} width="85px" />
+                :
                     <div className="num-results">
                         {numItems} Results
                     </div>
-                :
-                    <SkeletonText lines={1} width="85px" />
                 }
                 <div className="c-grid grid-container">
                     {hasProducts ? renderResults(products) : renderNoResults(noResultsText)}
@@ -65,9 +67,10 @@ PLP.propTypes = {
      */
     hasProducts: PropTypes.bool.isRequired,
     /**
-     * Set to true after page content is received and parsed
+     * Whether we are currently in a placeholder state, or have page content to
+     * display
      */
-    loaded: PropTypes.bool.isRequired,
+    isPlaceholder: PropTypes.bool.isRequired,
     /**
      * The text to display when no products were found
      */
@@ -87,8 +90,10 @@ PLP.propTypes = {
 }
 
 const mapStateToProps = (state) => {
+    const selector = state.plp.get(SELECTOR)
+
     return {
-        ...state.plp.toJS()
+        ...state.plp.get(selector).toJS(),
     }
 }
 
