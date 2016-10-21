@@ -22,14 +22,12 @@ const renderNoResults = (bodyText) => {
     )
 }
 
-const PLP = ({loaded, noResultsText, numItems, products, title}) => {
-    const hasResults = products.length > 0
-
+const PLP = ({hasProducts, loaded, noResultsText, numItems, products, title}) => {
     return (
         <div className="t-plp">
             <div className="heading">
                 <div>
-                    <Link href="/" text="Home" />
+                    <Link href="/">Home</Link>
                 </div>
                 {loaded ?
                     <h1>{title}</h1>
@@ -54,7 +52,7 @@ const PLP = ({loaded, noResultsText, numItems, products, title}) => {
                     <SkeletonText lines={1} width="85px" />
                 }
                 <div className="c-grid grid-container">
-                    {hasResults ? renderResults(products) : renderNoResults(noResultsText)}
+                    {hasProducts ? renderResults(products) : renderNoResults(noResultsText)}
                 </div>
             </div>
         </div>
@@ -62,6 +60,10 @@ const PLP = ({loaded, noResultsText, numItems, products, title}) => {
 }
 
 PLP.propTypes = {
+    /**
+     * When there were products found on the page, this is set to true
+     */
+    hasProducts: PropTypes.bool.isRequired,
     /**
      * Set to true after page content is received and parsed
      */

@@ -7,11 +7,12 @@ import {onPageReceived} from '../app/actions'
 import parser from './parsers/plp'
 
 const initialState = Immutable.Map({
-    title: '',
-    numItems: '',
-    products: [{}, {}, {}, {}],
+    hasProducts: false,
     loaded: false,
-    noResultsText: ''
+    numItems: '',
+    noResultsText: '',
+    products: [{}, {}, {}, {}],
+    title: '',
 })
 
 const plp = createReducer({
