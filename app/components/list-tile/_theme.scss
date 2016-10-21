@@ -1,0 +1,15 @@
+// List Tile
+// ===
+
+.c-list-tile__content {
+    padding: $unit $unit*1.5;
+}
+
+
+.c-list-tile__action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: $tap-size;
+    min-height: $tap-size;
+}
