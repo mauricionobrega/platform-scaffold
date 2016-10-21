@@ -24,7 +24,6 @@ const renderNoResults = (bodyText) => {
 }
 
 const PLP = ({hasProducts, isPlaceholder, noResultsText, numItems, products, title}) => {
-
     return (
         <div className="t-plp">
             <div className="heading">

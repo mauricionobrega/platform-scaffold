@@ -16,7 +16,7 @@ describe('the plp parser', () => {
         }
 
         // Test that the shallow properties of the plp object are correct
-        for (let key in parsedContent) {
+        for (const key in parsedContent) {
             if (key !== 'products') {
                 expect(parsedContent[key]).toEqual(expected[key])
             }

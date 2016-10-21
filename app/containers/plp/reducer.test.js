@@ -6,7 +6,7 @@ describe('The PLP reducer', () => {
     test('parses the page contents onPageReceived and updates the store', () => {
         const $content = jquerifyHtmlFile('app/containers/plp/parsers/plp.test.html')
         const newState = reducer(initialState, onPageReceived($, $content, 'PLP'))
-        
+
         expect(newState).not.toBe(initialState)
     })
 
