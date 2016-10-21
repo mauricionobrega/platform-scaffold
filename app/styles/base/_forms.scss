@@ -47,7 +47,7 @@ textarea,
     padding: $input-padding;
     border: $border;
 
-    border-radius: $border-radius;
+    border-radius: 0;
     background-color: $input-background-color;
 
     line-height: $line-height;
@@ -59,12 +59,11 @@ textarea,
         color: $neutral-50;
     }
 
-    &:active {
-        border-color: darken($border-color, 10%);
-    }
-
+    &:active,
     &:focus {
         border-color: $focus-color;
+
+        box-shadow: $input-box-shadow;
     }
 }
 
