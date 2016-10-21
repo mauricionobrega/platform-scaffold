@@ -73,4 +73,14 @@
         line-height: 20px;
         letter-spacing: 0;
     }
+
+    .c-list-tile__content {
+        justify-content: flex-start;
+        align-self: flex-start;
+        padding: 0 8px;
+
+        .c-image {
+            flex-shrink: 0;
+        }
+    }
 }
