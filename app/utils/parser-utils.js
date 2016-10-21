@@ -1,4 +1,4 @@
-export const parseLink = ($link) => {
+export const parseTextLink = ($link) => {
     return {
         href: $link.attr('href'),
         text: $link.text(),

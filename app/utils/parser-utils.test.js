@@ -1,7 +1,7 @@
 import * as ParserUtils from './parser-utils'
 
-test('parseLink returns the correct href, text, and title', () => {
-    expect(ParserUtils.parseLink($('<a href="/test.html" title="Test">Click Here!</a>')))
+test('parseTextLink returns the correct href, text, and title', () => {
+    expect(ParserUtils.parseTextLink($('<a href="/test.html" title="Test">Click Here!</a>')))
         .toEqual({
             href: '/test.html',
             text: 'Click Here!',
