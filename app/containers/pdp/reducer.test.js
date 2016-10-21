@@ -15,11 +15,3 @@ test('unknown action type leaves state unchanged', () => {
 
     expect(reducer(inputState, action)).toEqual(inputState)
 })
-
-test('reducer implements all defined actions', () => {
-    for (const action in Actions) {
-        if (Actions.hasOwnProperty(action)) {
-            expect(reducer.has(Actions[action])).toBe(true)
-        }
-    }
-})
