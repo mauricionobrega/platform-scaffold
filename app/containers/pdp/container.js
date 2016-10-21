@@ -8,6 +8,52 @@ import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/acco
 
 import * as pdpActions from './actions'
 
+const PDPHeading = ({title, price}) => (
+    <div className="c-pdp-heading">
+        <h1 className="c-pdp-heading__title">{title}</h1>
+        <p className="c-pdp-heading__price">{price}</p>
+    </div>
+)
+
+PDPHeading.propTypes = {
+    price: PropTypes.string,
+    title: PropTypes.string
+}
+
+const PDPCarousel = ({items}) => (
+    <div className="c-pdp-carousel">
+        <Carousel>
+            {items.map((item) => {
+                return (
+                    <CarouselItem key={item.position}>
+                        <img src={item.img} />
+                    </CarouselItem>
+                )
+            })}
+        </Carousel>
+    </div>
+)
+
+PDPCarousel.propTypes = {
+    items: PropTypes.arrayOf(PropTypes.object)
+}
+
+const PDPDescription = ({description}) => (
+    <div className="c-pdp-description">
+        <Accordion>
+            <AccordionItem header="Product Description" closeIconName="x">
+                <p>{description}</p>
+            </AccordionItem>
+        </Accordion>
+    </div>
+)
+
+PDPDescription.propTypes = {
+    description: PropTypes.string
+}
+
+const PDPAddToCart = () => false
+
 class PDP extends React.Component {
     componentDidMount() {
         this.props.fetchContents()
@@ -24,37 +70,23 @@ class PDP extends React.Component {
         }
 
         return (
-            <div>
-                <h1>{product.title}</h1>
-                <p>{product.price}</p>
-                <Carousel>
-                    {product.carouselItems.map((item) => {
-                        return (
-                            <CarouselItem key={item.position}>
-                                <img src={item.img} />
-                            </CarouselItem>
-                        )
-                    })}
-                </Carousel>
-                <Accordion>
-                    <AccordionItem header="Product Description" closeIconName="x">
-                        <p>{product.description}</p>
-                    </AccordionItem>
-                </Accordion>
+            <div className="c-pdp">
+                <PDPHeading {...product} />
+                <PDPCarousel items={product.carouselItems} />
+                <PDPDescription description={product.description} />
+                <PDPAddToCart />
             </div>
         )
     }
 }
 
 PDP.propTypes = {
-    body: PropTypes.string,
+    fetchContents: PropTypes.func.isRequired,
     contentsLoaded: PropTypes.bool,
-    fetchContents: PropTypes.func,
     product: PropTypes.object
 }
 
 PDP.defaultProps = {
-    body: '',
     contentsLoaded: false,
     product: {}
 }
