@@ -2,6 +2,11 @@
 // ===
 
 $base__radio-checkmark: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ffffff"><path d="M18.8 6l-9.1 9.2-4.3-4.3L4 12.3 9.7 18 20.2 7.4z"/></svg>';
+$base__select-triangle: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="#4E439B"><polygon points="0 0 12 0 5.99940185 6"></polygon></svg>';
+// $base__select-triangle: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 0 7 12"><polygon stroke="none" fill="#4E439B" fill-rule="evenodd" points="-3 3 9 3 2.99940185 9"></polygon></svg>';
+
+// width="7px" height="12px"
+// transform="translate(3.000000, 6.000000) rotate(-90.000000) translate(-3.000000, -6.000000)"
 
 
 // General Form Elements
@@ -92,7 +97,13 @@ input[type="search"] {
 select {
     height: $tap-size; // 1
 
-    -webkit-appearance: menulist-button; // 1
+    border-radius: 0;
+    background: url($base__select-triangle); // @TODO replace with Icon Component
+    background-repeat: no-repeat;
+    background-position: calc(100% - 14px) center;
+    background-size: 12px 6px;
+
+    color: $brand-color;
 }
 
 
@@ -140,7 +151,7 @@ select {
     &:disabled {
         border: none;
 
-        background: rgba($neutral-45, 0.5);
+        background: rgba($neutral-35, 0.5);
     }
 }
 
