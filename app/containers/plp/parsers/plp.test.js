@@ -12,8 +12,8 @@ describe('the plp parser', () => {
             noResultsText: '',
             numItems: '7',
             title: 'Potions',
-            productKeys: ['href', 'image', 'name', 'price'],
-            imageKeys: ['alt', 'src']
+            productKeys: ['link', 'image', 'price'],
+            imageKeys: ['title', 'alt', 'src']
         }
 
         // Test that the shallow properties of the plp object are correct

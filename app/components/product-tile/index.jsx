@@ -4,21 +4,24 @@ import ListTile from 'progressive-web-sdk/dist/components/list-tile'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
 const ProductTile = ({className, product}) => {
-    const image = product.image
-    const startAction = <Image alt={image && image.alt} height="160px" src={image && image.src} width="128px" />
+    // alt is in product.image props
+    /* eslint-disable jsx-a11y/img-has-alt */
+    const startAction = <Image {...product.image} height="160px" width="128px" />
+    /* eslint-enable jsx-a11y/img-has-alt */
 
     return (
+
         <ListTile
+            {...product.link}
             className={className}
-            href={product.href}
             startAction={startAction}
         >
             <div className="c-grid__item-name">
-                {product.name ? product.name : <SkeletonBlock />}
+                {product.link ? product.link.text : <SkeletonBlock height="34px" />}
             </div>
 
             <div className="c-grid__item-price">
-                {product.price ? product.price : <SkeletonBlock />}
+                {product.price ? product.price : <SkeletonBlock height="22px" width="50px" />}
             </div>
         </ListTile>
     )
@@ -33,12 +36,16 @@ ProductTile.propTypes = {
      * Product object representing a product on the product list page
      */
     product: PropTypes.shape({
-        href: PropTypes.string,
-        image: PropTypes.shape({
-            src: PropTypes.string,
-            alt: PropTypes.string
+        link: PropTypes.shape({
+            href: PropTypes.string.isRequired,
+            text: PropTypes.string.isRequired,
+            title: PropTypes.string
         }),
-        name: PropTypes.string,
+        image: PropTypes.shape({
+            alt: PropTypes.string.isRequired,
+            src: PropTypes.string.isRequired,
+            title: PropTypes.string
+        }),
         price: PropTypes.string,
     })
 }
