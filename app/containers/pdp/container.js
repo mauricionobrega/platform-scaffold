@@ -1,56 +1,12 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 // import Link from 'progressive-web-sdk/dist/components/link'
-import Carousel from 'progressive-web-sdk/dist/components/carousel'
-import CarouselItem from 'progressive-web-sdk/dist/components/carousel/carousel-item'
-import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/accordion'
 // import Image from 'progressive-web-sdk/dist/components/image'
+import PDPHeading from './partials/pdp-heading'
+import PDPCarousel from './partials/pdp-carousel'
+import PDPDescription from './partials/pdp-description'
 
 import * as pdpActions from './actions'
-
-const PDPHeading = ({title, price}) => (
-    <div className="c-pdp-heading">
-        <h1 className="c-pdp-heading__title">{title}</h1>
-        <p className="c-pdp-heading__price">{price}</p>
-    </div>
-)
-
-PDPHeading.propTypes = {
-    price: PropTypes.string,
-    title: PropTypes.string
-}
-
-const PDPCarousel = ({items}) => (
-    <div className="c-pdp-carousel">
-        <Carousel>
-            {items.map((item) => {
-                return (
-                    <CarouselItem key={item.position}>
-                        <img src={item.img} />
-                    </CarouselItem>
-                )
-            })}
-        </Carousel>
-    </div>
-)
-
-PDPCarousel.propTypes = {
-    items: PropTypes.arrayOf(PropTypes.object)
-}
-
-const PDPDescription = ({description}) => (
-    <div className="c-pdp-description">
-        <Accordion>
-            <AccordionItem header="Product Description" closeIconName="x">
-                <p>{description}</p>
-            </AccordionItem>
-        </Accordion>
-    </div>
-)
-
-PDPDescription.propTypes = {
-    description: PropTypes.string
-}
 
 const PDPAddToCart = () => false
 
