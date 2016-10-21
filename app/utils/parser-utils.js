@@ -8,7 +8,8 @@ export const parseLink = ($link) => {
 
 export const parseButton = ($button) => {
     return {
-        text: $button.text(),
+        // An interim solution since I don't know what we'll need from here a priori
+        children: $button.html(),
         type: $button.attr('type'),
         name: $button.attr('name'),
         value: $button.attr('value'),

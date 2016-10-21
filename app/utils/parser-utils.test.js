@@ -16,7 +16,7 @@ test('parseButton returns the correct values', () => {
         expect(ParserUtils.parseButton($(buttonHtml)))
             .toEqual({
                 type: 'submit',
-                text: 'Button',
+                children: 'Button',
                 name: 'Submit',
                 value: 'test',
                 disabled: isDisabled
