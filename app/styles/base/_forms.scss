@@ -142,7 +142,7 @@ select {
     }
 
     &:checked {
-        border: none;
+        border: 0;
 
         background: $brand-color;
 
@@ -156,7 +156,7 @@ select {
     }
 
     &:disabled {
-        border: none;
+        border: 0;
 
         background: rgba($neutral-35, 0.5);
     }
@@ -206,7 +206,7 @@ button,
     display: block;
     min-height: $tap-size;
     padding: 0;
-    border: none;
+    border: 0;
 
     background: $neutral-30;
 

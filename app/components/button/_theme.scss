@@ -19,10 +19,10 @@
     letter-spacing: 1px;
 
     -webkit-appearance: none;
-}
 
-a.c-button {
-    display: inline-flex;
+    &.c--is-anchor {
+        display: inline-flex;
+    }
 }
 
 
