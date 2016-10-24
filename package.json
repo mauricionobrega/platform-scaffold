@@ -55,7 +55,7 @@
     "minimist": "1.2.0",
     "mobify-code-style": "2.6.0",
     "nightwatch": "0.9.8",
-    "nightwatch-commands": "1.7.0",
+    "nightwatch-commands": "2.0.0",
     "node-sass": "3.10.1",
     "postcss-loader": "0.11.0",
     "progressive-web-sdk": "0.7.3",
