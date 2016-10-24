@@ -12,7 +12,7 @@ const PDPAddToCart = () => false
 
 class PDP extends React.Component {
     shouldComponentUpdate(newProps) {
-        return Immutable.is(newProps.pdp, this.props.pdp)
+        return !Immutable.is(newProps.pdp, this.props.pdp)
     }
 
     render() {
@@ -22,9 +22,9 @@ class PDP extends React.Component {
         } = this.props
 
         const {
-            contentsLoaded,
-            product,
-            itemQuantity
+            contentsLoaded = false,
+            product = {},
+            itemQuantity = 1
         } = pdp.toJS()
 
 
@@ -44,17 +44,10 @@ class PDP extends React.Component {
 }
 
 PDP.propTypes = {
-    contentsLoaded: PropTypes.bool,
-    itemQuantity: PropTypes.number,
-    product: PropTypes.object,
+    pdp: PropTypes.object.isRequired,
     setQuantity: PropTypes.func
 }
 
-PDP.defaultProps = {
-    contentsLoaded: false,
-    product: {},
-    itemQuantity: 1
-}
 
 export const mapStateToProps = ({pdp}) => ({pdp})
 
