@@ -1,8 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import Immutable from 'immutable'
-// import Link from 'progressive-web-sdk/dist/components/link'
-// import Image from 'progressive-web-sdk/dist/components/image'
+
 import PDPHeading from './partials/pdp-heading'
 import PDPCarousel from './partials/pdp-carousel'
 import PDPDescription from './partials/pdp-description'

@@ -1,6 +1,6 @@
 import {createReducer} from 'redux-act'
 import Immutable from 'immutable'
-import pdpParser from './pdp-parser'
+import pdpParser from './parsers/pdp'
 import * as appActions from '../app/actions'
 import * as pdpActions from './actions'
 

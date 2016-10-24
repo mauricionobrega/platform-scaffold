@@ -1,4 +1,4 @@
-import {extractMagentoJson} from '../../utils/magento-utils'
+import {extractMagentoJson} from '../../../utils/magento-utils'
 
 const parseCarouselItems = (magentoObject) => {
     const carouselSetup = magentoObject
