@@ -12,8 +12,8 @@ const PDPAddToCart = () => false
 class PDP extends React.Component {
     // TODO control update with Immutable object.
     shouldComponentUpdate(newProps) {
-        return (newProps.contentsLoaded === this.props.contentsLoaded) &&
-            (newProps.product === this.props.product)
+        return (newProps.contentsLoaded !== this.props.contentsLoaded) ||
+            (newProps.product !== this.props.product)
     }
 
     render() {
