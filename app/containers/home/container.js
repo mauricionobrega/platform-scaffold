@@ -12,16 +12,11 @@ import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import {mobifyGa} from 'progressive-web-sdk/dist/analytics'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
-import * as homeActions from './actions'
 
 class Home extends React.Component {
     constructor(props, context) {
         super(props, context)
         this.triggerTapEvent = this.triggerTapEvent.bind(this)
-    }
-
-    componentDidMount() {
-        this.props.fetchHomeContents()
     }
 
     triggerTapEvent() {
@@ -127,13 +122,6 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        fetchHomeContents: () => dispatch(homeActions.fetchHomeContents())
-    }
-}
-
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
 )(Home)
