@@ -10,8 +10,8 @@ import {SELECTOR, PLACEHOLDER} from './constants'
 const isPageType = (pageType) => pageType === getComponentName(PLP)
 
 const getSelector = (state) => {
-    const path = window.location.pathname
-    return state.has(path) ? path : PLACEHOLDER
+    const loc = window.location.href
+    return state.has(loc) ? loc : PLACEHOLDER
 }
 
 export const initialState = Immutable.Map({
@@ -32,12 +32,12 @@ const plp = createReducer({
 
         if (isPageType(pageType)) {
             const parsedPlp = Immutable.fromJS(parser($, $response))
-            const currentLocation = window.location.pathname
+            const currentLocation = window.location.href
 
             /**
-             * Update the store using location.pathname as key and the result from
+             * Update the store using location.href as key and the result from
              * the parser as our value.
-             * Also set the store's current selector to location.pathname so we
+             * Also set the store's current selector to location.href so we
              * can access it in our container.
              */
             return state
