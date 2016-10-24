@@ -6,15 +6,9 @@ import PDPHeading from './partials/pdp-heading'
 import PDPCarousel from './partials/pdp-carousel'
 import PDPDescription from './partials/pdp-description'
 
-import * as pdpActions from './actions'
-
 const PDPAddToCart = () => false
 
 class PDP extends React.Component {
-    componentDidMount() {
-        this.props.fetchContents()
-    }
-
     render() {
         const {
             contentsLoaded,
@@ -37,7 +31,6 @@ class PDP extends React.Component {
 }
 
 PDP.propTypes = {
-    fetchContents: PropTypes.func.isRequired,
     contentsLoaded: PropTypes.bool,
     product: PropTypes.object
 }
@@ -53,13 +46,12 @@ export const mapStateToProps = (state) => {
     }
 }
 
-export const mapDispatchToProps = (dispatch, props) => {
-    return {
-        fetchContents: () => dispatch(pdpActions.fetchContents())
-    }
-}
+// export const mapDispatchToProps = (dispatch, props) => {
+//     return {
+//         fetchContents: () => dispatch(pdpActions.fetchContents())
+//     }
+// }
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
 )(PDP)

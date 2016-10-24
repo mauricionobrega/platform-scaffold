@@ -1,12 +1,18 @@
 import {createReducer} from 'redux-act'
 import Immutable from 'immutable'
-import * as pdpActions from './actions'
+import pdpParser from './pdp-parser'
+import * as appActions from '../app/actions'
 
 const initialState = Immutable.fromJS({})
 
 export default createReducer({
-    [pdpActions.receiveContents]: (state, payload) => {
-        payload.contentsLoaded = true
-        return state.mergeDeep(payload)
+    [appActions.onPageReceived]: (state, {$, $response, pageType}) => {
+        if (pageType !== 'PDP') {
+            return state
+        }
+        return state.mergeDeep({
+            contentsLoaded: true,
+            ...pdpParser($, $response)
+        })
     }
 }, initialState)
