@@ -3,6 +3,7 @@ import {Map, is} from 'immutable'
 import reducer from './reducer'
 
 import * as appActions from '../app/actions'
+import * as pdpActions from './actions'
 
 jest.mock('./pdp-parser')
 import pdpParser from './pdp-parser'
@@ -47,4 +48,11 @@ test('appActions.onPageReceived causes the page to be parsed into the state', ()
     expect(pdpParser).toBeCalledWith($, $html)
     expect(result.get('test')).toBe(true)
     expect(is(result.get('product'), Map(parsedPage.product))).toBe(true)
+})
+
+test('pdpActions.setItemQuantity sets the item quantity', () => {
+    const action = pdpActions.setItemQuantity(5)
+    const inputState = Map({itemQuantity: 2})
+
+    expect(is(reducer(inputState, action), Map({itemQuantity: 5}))).toBe(true)
 })
