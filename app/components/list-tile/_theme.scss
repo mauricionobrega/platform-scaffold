@@ -1,6 +1,10 @@
 // List Tile
 // ===
 
+.c-list-tile__primary {
+    font-size: $font-size + 1; // 15px
+}
+
 .c-list-tile__content {
     padding: $unit $unit*1.5;
 }
