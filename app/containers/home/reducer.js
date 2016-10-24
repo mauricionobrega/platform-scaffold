@@ -1,7 +1,8 @@
 import {createReducer} from 'redux-act'
 import {Map} from 'immutable'
 
-import * as homeActions from './actions'
+import {onPageReceived} from '../app/actions'
+import homeParser from './parsers/home'
 
 const initialState = Map({
     categories: [],
@@ -9,7 +10,13 @@ const initialState = Map({
 })
 
 export default createReducer({
-    [homeActions.receiveHomeContents]: (state, payload) => {
-        return state.mergeDeep(payload)
+    [onPageReceived]: (state, action) => {
+        const {$, $response, pageType} = action
+
+        if (pageType === 'Home') {
+            return state.mergeDeep(homeParser($, $response))
+        } else {
+            return state
+        }
     }
 }, initialState)
