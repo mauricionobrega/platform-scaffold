@@ -17,8 +17,15 @@ const PDPCarousel = ({items}) => (
     </div>
 )
 
+PDPCarousel.defaultProps = {
+    items: []
+}
+
 PDPCarousel.propTypes = {
-    items: PropTypes.arrayOf(PropTypes.object)
+    items: PropTypes.arrayOf(PropTypes.shape({
+        position: PropTypes.string.isRequired,
+        img: PropTypes.string.isRequired
+    }))
 }
 
 export default PDPCarousel
