@@ -28,10 +28,6 @@ const ProductTile = ({className, product = {}}) => {
 
 ProductTile.propTypes = {
     /**
-     * Optional className for the product tile
-     */
-    className: PropTypes.string,
-    /**
      * Product object representing a product on the product list page
      */
     product: PropTypes.shape({
@@ -46,7 +42,11 @@ ProductTile.propTypes = {
             title: PropTypes.string
         }),
         price: PropTypes.string,
-    }).isRequired
+    }).isRequired,
+    /**
+     * Optional className for the product tile
+     */
+    className: PropTypes.string
 }
 
 export default ProductTile
