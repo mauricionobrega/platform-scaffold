@@ -5,8 +5,8 @@ import reducer from './reducer'
 import * as appActions from '../app/actions'
 import * as pdpActions from './actions'
 
-jest.mock('./pdp-parser')
-import pdpParser from './pdp-parser'
+jest.mock('./parsers/pdp')
+import pdpParser from './parsers/pdp'
 
 test('unknown action type leaves state unchanged', () => {
     const action = {

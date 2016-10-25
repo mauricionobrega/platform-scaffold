@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-// import Link from 'progressive-web-sdk/dist/components/link'
-// import Image from 'progressive-web-sdk/dist/components/image'
+import Immutable from 'immutable'
+
 import PDPHeading from './partials/pdp-heading'
 import PDPCarousel from './partials/pdp-carousel'
 import PDPDescription from './partials/pdp-description'
@@ -10,19 +10,22 @@ import * as pdpActions from './actions'
 const PDPAddToCart = () => false
 
 class PDP extends React.Component {
-    // TODO control update with Immutable object.
     shouldComponentUpdate(newProps) {
-        return (newProps.contentsLoaded !== this.props.contentsLoaded) ||
-            (newProps.product !== this.props.product)
+        return !Immutable.is(newProps.pdp, this.props.pdp)
     }
 
     render() {
         const {
-            contentsLoaded,
-            product,
-            itemQuantity,
+            pdp,
             setQuantity
         } = this.props
+
+        const {
+            contentsLoaded = false,
+            product = {},
+            itemQuantity = 1
+        } = pdp.toJS()
+
 
         if (!contentsLoaded) {
             return false
@@ -40,23 +43,12 @@ class PDP extends React.Component {
 }
 
 PDP.propTypes = {
-    contentsLoaded: PropTypes.bool,
-    itemQuantity: PropTypes.number,
-    product: PropTypes.object,
+    pdp: PropTypes.object.isRequired,
     setQuantity: PropTypes.func
 }
 
-PDP.defaultProps = {
-    contentsLoaded: false,
-    product: {},
-    itemQuantity: 1
-}
 
-export const mapStateToProps = (state) => {
-    return {
-        ...state.pdp.toJS()
-    }
-}
+export const mapStateToProps = ({pdp}) => ({pdp})
 
 export const mapDispatchToProps = (dispatch, props) => {
     return {
