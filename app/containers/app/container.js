@@ -16,7 +16,7 @@ class App extends React.Component {
 
     render() {
         const {openNavigation} = this.props
-        let currentTemplate = `t-${this.props.children.props.route.routeName}`
+        const currentTemplate = `t-${this.props.children.props.route.routeName}`
 
         return (
             <div id="app" className="t-app">
