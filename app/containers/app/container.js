@@ -3,8 +3,8 @@ import {connect} from 'react-redux'
 import {hidePreloader} from 'progressive-web-sdk/dist/preloader'
 import {IconSprite} from 'progressive-web-sdk/dist/components/icon'
 import SkipLinks from '../../components/skip-links'
+import Footer from '../../containers/footer/container'
 
-// import * as appActions from './actions'
 
 class App extends React.Component {
     componentDidMount() {
@@ -13,7 +13,7 @@ class App extends React.Component {
     }
 
     render() {
-        let currentTemplate = `t-${this.props.children.props.route.routeName}`
+        const currentTemplate = `t-${this.props.children.props.route.routeName}`
 
         return (
             <div id="app" className="t-app">
@@ -31,9 +31,9 @@ class App extends React.Component {
                         {this.props.children}
                     </main>
 
-                    <footer id="app-footer" role="contentinfo">
-                        Footer content
-                    </footer>
+                    <div id="app-footer">
+                        <Footer id="app-footer" />
+                    </div>
                 </div>
             </div>
         )

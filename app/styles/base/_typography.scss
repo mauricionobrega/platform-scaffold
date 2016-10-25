@@ -1,6 +1,16 @@
 // Typography
 // ===
 
+// Fonts
+// ---
+//
+// 1. Linter workaround
+
+$base-typography__open-sans: 'https://fonts.googleapis.com/css?family=Open+Sans'; // 1
+$base-typography__oswald: 'https://fonts.googleapis.com/css?family=Oswald'; // 1
+@import url($base-typography__open-sans);
+@import url($base-typography__oswald);
+
 
 // Headers
 // ---
@@ -20,31 +30,37 @@ h6 {
 h1,
 %h1 {
     font-size: 28px;
+    line-height: 32px;
 }
 
 h2,
 %h2 {
-    font-size: 24px;
+    font-size: 20px;
+    line-height: 24px;
 }
 
 h3,
 %h3 {
-    font-size: 20px;
+    font-size: 18px;
+    line-height: 24px;
 }
 
 h4,
 %h4 {
     font-size: 18px;
+    line-height: 24px;
 }
 
 h5,
 %h5 {
     font-size: 16px;
+    line-height: 20px;
 }
 
 h6,
 %h6 {
     font-size: $font-size;
+    line-height: $line-height;
 }
 
 
@@ -52,7 +68,7 @@ h6,
 // ---
 
 p {
-    margin: 0 0 $unit;
+    margin: 0;
 }
 
 a {
