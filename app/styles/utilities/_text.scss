@@ -92,3 +92,27 @@
 .u-text-quiet {
     @include text-quiet(true);
 }
+
+
+// Size
+// ---
+
+// .u-text-small {
+//     @include text-normal(true);
+// }
+//
+.u-text-medium {
+    font-size: 24px;
+}
+
+.u-text-large {
+    font-size: $header-font-size;
+}
+
+
+// Color
+// ---
+
+.u-text-accent {
+    color: $accent-color;
+}
