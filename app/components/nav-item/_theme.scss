@@ -5,7 +5,7 @@ $navitemBlack: #3a3a48;
 $navitemPurple: #4e439b;
 
 .c-nav-item {
-    height: $unit * 6;
+    height: $unit * 5.5;
     padding: 0 ($unit * 1.5);
     border: 0;
 
@@ -70,8 +70,8 @@ $navitemPurple: #4e439b;
 .c-nav-item__icon {
     position: relative;
 
-    width: $unit * 6;
-    height: $unit * 6;
+    width: $unit * 5.5;
+    height: $unit * 5.5;
 }
 
 
