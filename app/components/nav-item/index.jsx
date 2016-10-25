@@ -1,6 +1,6 @@
 import React from 'react'
 import * as assetUtils from 'progressive-web-sdk/dist/asset-utils'
-import * as DefaultNavItem from 'progressive-web-sdk/dist/components/nav-item'
+import DefaultNavItem from 'progressive-web-sdk/dist/components/nav-item'
 import Link from 'progressive-web-sdk/dist/components/link'
 import classNames from 'classnames'
 
