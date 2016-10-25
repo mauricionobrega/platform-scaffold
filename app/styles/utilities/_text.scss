@@ -116,3 +116,12 @@
 .u-text-accent {
     color: $accent-color;
 }
+
+
+// Font-Family
+// ---
+
+.u-text-header-font {
+    font-family: $header-font-family;
+    letter-spacing: 1px;
+}
