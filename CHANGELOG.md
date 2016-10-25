@@ -1,3 +1,6 @@
+## 0.7.0 (October 24, 2016)
+- Use SDK version 0.8.1
+
 ## 0.6.0 (October 13, 2016)
 - Use SDK version 0.7.0
 
@@ -5,10 +8,10 @@
 - Use SDK version 0.6.6
 
 ## 0.5.3 (October 6, 2016)
- - Use SDK version 0.6.5
- - Fix Jest tests when importing modules that themselves import .svg assets
- - Rename `build` npm script to `prod:build`
- - Adds Nightwatch checkout flow smoke test scaffolding; smoke-test npm script
+- Use SDK version 0.6.5
+- Fix Jest tests when importing modules that themselves import .svg assets
+- Rename `build` npm script to `prod:build`
+- Adds Nightwatch checkout flow smoke test scaffolding; smoke-test npm script
 
 ## 0.5.2 (September 29, 2016)
 - Use SDK version 0.6.3
