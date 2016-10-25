@@ -1,14 +1,26 @@
 // List Tile
 // ===
 
+// Primary
+// ---
+//
+// 1. Slightly larger than standard font size, at 15px
+
 .c-list-tile__primary {
-    font-size: $font-size + 1; // 15px
+    font-size: $font-size + 1; // 1
 }
+
+
+// Content
+// ---
 
 .c-list-tile__content {
     padding: $unit $unit*1.5;
 }
 
+
+// Action
+// ---
 
 .c-list-tile__action {
     display: flex;
