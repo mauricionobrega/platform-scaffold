@@ -62,7 +62,7 @@
     "prompt": "1.0.0",
     "raw-loader": "0.5.1",
     "react-addons-test-utils": "15.3.2",
-    "react-styleguidist": "3.1.1",
+    "react-styleguidist": "4.1.0",
     "redux-form": "6.0.5",
     "sass-lint": "1.8.2",
     "sass-loader": "4.0.2",
