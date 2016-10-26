@@ -24,9 +24,8 @@ $tap-size: 44px;
 
 // Typography
 // ---
-
-$font-family: 'Oswald', 'Open Sans', 'Helvetica Neue', 'Roboto', sans-serif;
-$header-font-family: 'Open Sans', 'Helvetica Neue', 'Roboto', sans-serif;
+$font-family: 'Open Sans', 'Helvetica Neue', 'Roboto', sans-serif;
+$header-font-family: 'Oswald', sans-serif;
 $font-size: 14px;
 $line-height: 20px;
 
@@ -35,30 +34,32 @@ $line-height: 20px;
 // ---
 
 // Neutrals
+$neutral-10: #fff;
 $neutral-20: #f7f7f7;
 $neutral-30: #eee;
-$neutral-40: #bbb;
-$neutral-50: #888;
-$neutral-60: #555;
-$neutral-70: #333;
+$neutral-35: #d5d5d5;
+$neutral-40: #bfbfbf;
+$neutral-55: #999;
+$neutral-50: #696969;
+$neutral-60: #333;
 
 // Brand colors
 $brand-color: #4e439b; // purple
 $light-brand-color: lighten($brand-color, 15%);
-$dark-brand-color: darken($brand-color, 15%);
+$dark-brand-color: #261c67;
 
 // Accent colors
-$accent-color: #ec354e; // pink
+$accent-color: #ec354e; // coral
 $light-accent-color: lighten($accent-color, 15%);
-$dark-accent-color: darken($accent-color, 15%);
+$dark-accent-color: #b21c30;
 
 // Success colors
-$success-color: #27ae60; // green
+$success-color: #10b24a; // green
 $light-success-color: lighten($success-color, 15%);
 $dark-success-color: darken($success-color, 15%);
 
 // Error colors
-$error-color: $accent-color;
+$error-color: #dc0a3c; // red
 $light-error-color: lighten($error-color, 15%);
 $dark-error-color: darken($error-color, 15%);
 
@@ -66,9 +67,9 @@ $dark-error-color: darken($error-color, 15%);
 // Appearance
 // ---
 
-$font-color: #3a3a48; // @TODO replace with variable
+$font-color: $neutral-60;
 
-$link-color: $accent-color;
+$link-color: $brand-color;
 $active-link-color: $dark-accent-color;
 
 $focus-color: $brand-color;
@@ -76,13 +77,14 @@ $focus-color: $brand-color;
 $border-color: $neutral-40;
 $border-radius: 4px;
 
-$input-background-color: #fff;
-$disabled-input-color: $neutral-40;
+$input-background-color: $neutral-10;
+$disabled-input-color: $neutral-55;
 $disabled-input-background-color: $neutral-30;
 $horizontal-input-padding: $unit;
 $vertical-input-padding: $unit;
 
 $background-color: #f7f7f7;
+$overlay-color: rgba($neutral-10, 0.85);
 
 
 // Layer (z-index)

@@ -59,14 +59,14 @@
     "minimist": "1.2.0",
     "mobify-code-style": "2.6.0",
     "nightwatch": "0.9.8",
-    "nightwatch-commands": "1.7.0",
+    "nightwatch-commands": "2.0.0",
     "node-sass": "3.10.1",
     "postcss-loader": "0.11.0",
-    "progressive-web-sdk": "0.7.3",
+    "progressive-web-sdk": "0.8.1",
     "prompt": "1.0.0",
     "raw-loader": "0.5.1",
     "react-addons-test-utils": "15.3.2",
-    "react-styleguidist": "3.1.1",
+    "react-styleguidist": "4.1.0",
     "redux-form": "6.0.5",
     "sass-lint": "1.8.2",
     "sass-loader": "4.0.2",
@@ -74,7 +74,8 @@
     "style-loader": "0.13.1",
     "text-loader": "0.0.1",
     "webpack": "1.13.2",
-    "webpack-dev-server": "1.14.1"
+    "webpack-dev-server": "1.14.1",
+    "webpack-hot-middleware": "2.13.0"
   },
   "scripts": {
     "add:component": "sdk-generate component",
