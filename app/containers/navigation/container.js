@@ -29,7 +29,7 @@ const Navigation = (props) => {
     const path = navigation.get('path')
     const isOpen = navigation.get('isOpen')
     const root = navigation.get('root') && navigation.get('root').toJS()
-    const logoURL = assetUtils.getAssetUrl('static/img/logo.svg')
+    const logoURL = assetUtils.getAssetUrl('static/img/nav-logo.svg')
     const closeIconURL = assetUtils.getAssetUrl('static/img/icon-close.svg')
 
     const onPathChange = (path) => {
