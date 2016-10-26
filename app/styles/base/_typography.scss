@@ -3,9 +3,11 @@
 
 // Fonts
 // ---
+//
+// 1. Linter workaround
 
-$url: 'https://fonts.googleapis.com/css?family=Open+Sans'; // Linter workaround
-@import url($url);
+$base-typography__fonts: 'https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,600i,700,700i|Oswald:300,400,700'; // 1
+@import url($base-typography__fonts);
 
 
 // Headers
@@ -25,32 +27,32 @@ h6 {
 
 h1,
 %h1 {
-    font-size: 38px;
-    line-height: 40px;
-}
-
-h2,
-%h2 {
     font-size: 28px;
     line-height: 32px;
 }
 
+h2,
+%h2 {
+    font-size: 20px;
+    line-height: 24px;
+}
+
 h3,
 %h3 {
-    font-size: 20px;
+    font-size: 18px;
     line-height: 24px;
 }
 
 h4,
 %h4 {
-    font-size: 16px;
-    line-height: 20px;
+    font-size: 18px;
+    line-height: 24px;
 }
 
 h5,
 %h5 {
-    font-size: $font-size;
-    line-height: $line-height;
+    font-size: 16px;
+    line-height: 20px;
 }
 
 h6,

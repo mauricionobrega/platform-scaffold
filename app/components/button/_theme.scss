@@ -1,10 +1,28 @@
 // Button Theme
 // ===
+//
+// 1. Ensures that the borderless and bordered buttons appear the same size
+// 2. Slightly larger than standard font size, at 15px
 
 .c-button {
+    display: inline-table;
+    justify-content: center;
+    align-items: center;
+    min-width: $tap-size;
+    min-height: $tap-size;
+    padding: $unit $unit*1.5;
+    border: 1px solid transparent; // 1
+
     background: none;
 
-    font-size: $font-size + 1; // 15px
+    font-size: $font-size + 1; // 2
+    letter-spacing: 1px;
+
+    -webkit-appearance: none;
+
+    &.c--is-anchor {
+        display: inline-flex;
+    }
 }
 
 
@@ -15,12 +33,22 @@
     background-color: $accent-color;
 
     color: #fff;
+
+    &:active,
+    &:focus {
+        background-color: $dark-accent-color;
+    }
 }
 
 .c-button.c--secondary {
     background-color: $brand-color;
 
     color: #fff;
+
+    &:active,
+    &:focus {
+        background-color: $dark-brand-color;
+    }
 }
 
 .c-button.c--tertiary {
@@ -29,4 +57,30 @@
     background-color: transparent;
 
     color: $brand-color;
+
+    &:active,
+    &:focus {
+        border-color: $dark-brand-color;
+
+        color: $dark-brand-color;
+    }
+
+    &[disabled] {
+        border-color: $neutral-40;
+
+        color: $neutral-50;
+    }
+}
+
+.c-button.c--primary,
+.c-button.c--secondary {
+    &[disabled] {
+        background-color: $neutral-40;
+
+        color: $neutral-50;
+    }
+}
+
+.c-button.c--icon-only {
+    line-height: 0;
 }

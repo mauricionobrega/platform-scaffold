@@ -13,7 +13,7 @@ class App extends React.Component {
     }
 
     render() {
-        let currentTemplate = `t-${this.props.children.props.route.routeName}`
+        const currentTemplate = `t-${this.props.children.props.route.routeName}`
 
         return (
             <div id="app" className="t-app">
