@@ -7,7 +7,7 @@ import Sheet from 'progressive-web-sdk/dist/components/sheet'
 import Image from 'progressive-web-sdk/dist/components/image'
 import * as navActions from './actions'
 import * as assetUtils from 'progressive-web-sdk/dist/asset-utils'
-import IconTextButton from '../../components/icon-text-button'
+import IconLabelButton from '../../components/icon-label-button'
 import * as merlinsNavItem from '../../components/nav-item'
 
 
@@ -30,7 +30,6 @@ const Navigation = (props) => {
     const isOpen = navigation.get('isOpen')
     const root = navigation.get('root') && navigation.get('root').toJS()
     const logoURL = assetUtils.getAssetUrl('static/svg/nav-logo.svg')
-    const closeIconURL = assetUtils.getAssetUrl('static/svg/icon-close.svg')
 
     const onPathChange = (path) => {
         history.push(path)
@@ -42,7 +41,7 @@ const Navigation = (props) => {
             <Nav root={root} path={path} onPathChange={onPathChange}>
                 <div className="t-navigation__header">
                     <Image className="t-navigation__header-logo" src={logoURL} alt="Merlin's Potions" />
-                    <IconTextButton iconURL={closeIconURL} text="close" onClick={closeNavigation} />
+                    <IconLabelButton iconName="x" label="close" onClick={closeNavigation} />
                 </div>
                 <NavMenu itemFactory={itemFactory} />
             </Nav>
