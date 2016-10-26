@@ -24,7 +24,7 @@ class Footer extends React.Component {
     onSubmitNewsletter(data) {
         const method = this.props.footer.getIn(['newsletter', 'method'], '')
         const action = this.props.footer.getIn(['newsletter', 'action'], '')
-        this.props.dispatch(actions.signUpToNewsletter(action, method, data))
+        this.props.submitNewsletter(method, action, data)
     }
 
     shouldComponentUpdate(nextProps) {
@@ -49,13 +49,13 @@ class Footer extends React.Component {
 
 Footer.propTypes = {
     /**
-     * Redux dispatch function
-     */
-    dispatch: PropTypes.func,
-    /**
      * Slice into the global app state
      */
-    footer: PropTypes.object
+    footer: PropTypes.object,
+    /**
+     * Submit the newsletter subscription form to the backend
+     */
+    submitNewsletter: PropTypes.func
 }
 
 
@@ -66,10 +66,13 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-
+    return {
+        submitNewsletter: (action, method, data) => dispatch(actions.signUpToNewsletter(action, method, data))
+    }
 }
 
 
 export default connect(
-    mapStateToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(Footer)
