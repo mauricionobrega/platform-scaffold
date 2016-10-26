@@ -17,7 +17,8 @@ class PDP extends React.Component {
     render() {
         const {
             pdp,
-            setQuantity
+            setQuantity,
+            addToCart
         } = this.props
 
         const {
@@ -36,7 +37,7 @@ class PDP extends React.Component {
                 <PDPHeading {...product} />
                 <PDPCarousel items={product.carouselItems} />
                 <PDPDescription description={product.description} />
-                <PDPAddToCart quantity={itemQuantity} setQuantity={setQuantity} />
+                <PDPAddToCart quantity={itemQuantity} setQuantity={setQuantity} onSubmit={addToCart} />
             </div>
         )
     }
@@ -44,15 +45,17 @@ class PDP extends React.Component {
 
 PDP.propTypes = {
     pdp: PropTypes.object.isRequired,
+    addToCart: PropTypes.func,
     setQuantity: PropTypes.func
 }
 
 
 export const mapStateToProps = ({pdp}) => ({pdp})
 
-export const mapDispatchToProps = (dispatch, props) => {
+export const mapDispatchToProps = (dispatch) => {
     return {
-        setQuantity: (quantity) => dispatch(pdpActions.setItemQuantity(quantity))
+        setQuantity: (quantity) => dispatch(pdpActions.setItemQuantity(quantity)),
+        addToCart: () => dispatch(pdpActions.submitCartForm())
     }
 }
 
