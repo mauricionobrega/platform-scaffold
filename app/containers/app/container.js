@@ -15,7 +15,7 @@ class App extends React.Component {
     }
 
     render() {
-        const {openNavigation} = this.props
+        const {openNavigation, history} = this.props
         const currentTemplate = `t-${this.props.children.props.route.routeName}`
 
         return (
@@ -25,7 +25,7 @@ class App extends React.Component {
 
                 <div id="app-wrap" className={currentTemplate}>
                     <div>
-                        <Navigation />
+                        <Navigation history={history} />
                     </div>
 
                     <header id="app-header" role="banner">
@@ -48,6 +48,10 @@ class App extends React.Component {
 
 App.propTypes = {
     children: PropTypes.element.isRequired,
+    /**
+     * The react-router history object
+     */
+    history: PropTypes.object,
     openNavigation: PropTypes.func,
 }
 
