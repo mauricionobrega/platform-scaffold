@@ -25,7 +25,7 @@ NavItemIcon.propTypes = {
  */
 export const NavItemWithIcon = (props) => {
     return (
-        <NavItem {...props} className="c-nav-item--with-icon" />
+        <NavItem {...props} className="c--with-icon" />
     )
 }
 
