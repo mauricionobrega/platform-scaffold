@@ -4,83 +4,70 @@
 // [1] - Display box-shadow properly at bottom of container
 
 .t-plp {
-    font-family: 'Oswald';
-
-    .container {
-        margin-bottom: 1px; // [1]
-        padding: 12px 0 20px;
-
-        background-color: $background-color;
-        box-shadow: 0 0 2px 0 rgba(0, 0, 0, .3);
-    }
-
-    .grid-container {
-        padding: 0 8px;
-    }
-
-    .heading {
-        position: relative;
-
-        padding: 12px 0 16px 12px;
-
-        h1 {
-            margin-top: 12px;
-
-            font-family: 'Oswald';
-            font-weight: 300;
-            text-transform: uppercase;
-        }
-
-        .heading-logo {
-            position: absolute;
-            right: 8px;
-            bottom: 10px;
-        }
-
-        .c-link {
-            color: #4e439b;
-            font-family: $font-family;
-            font-weight: 300;
-            font-size: 12px;
-            line-height: 12px;
-            letter-spacing: 0;
-        }
-    }
-
-    .no-results__image {
-        margin: 0 30%;
-    }
-
-    .no-results__text {
-        margin: 20px 50px 32px;
-
-        color: #3a3a48;
-        font-family: $font-family;
-        font-weight: 300;
-        font-size: 14px;
-        line-height: 20px;
-        letter-spacing: 0;
-        text-align: center;
-    }
-
-    .num-results {
-        margin: 0 12px 12px;
-
-        color: #3a3a48;
-        font-family: $font-family;
-        font-weight: 600;
-        font-size: 15px;
-        line-height: 20px;
-        letter-spacing: 0;
-    }
-
     .c-list-tile__content {
         justify-content: flex-start;
         align-self: flex-start;
-        padding: 0 8px;
 
         .c-image {
             flex-shrink: 0;
         }
     }
+}
+
+.t-plp__container {
+    margin-bottom: 1px; // [1]
+    padding: ($unit * 1.5) 0 ($unit * 2.5);
+
+    background-color: $background-color;
+    box-shadow: $box-shadow;
+}
+
+.t-plp__grid-item {
+    min-height: $unit * 20;
+
+    background-color: $neutral-10;
+    box-shadow: $box-shadow;
+
+    &:last-of-type {
+        margin-bottom: 0;
+    }
+}
+
+.t-plp__grid-item-name {
+    word-break: break-word;
+}
+
+.t-plp__grid-item-price {
+    color: $light-error-color;
+    font-weight: 600;
+    font-size: $unit * 2;
+}
+
+.t-plp__heading {
+    position: relative;
+
+    .c-link {
+        font-size: $unit * 1.5;
+    }
+}
+
+.t-plp__heading-logo {
+    position: absolute;
+    right: $unit;
+    bottom: $unit + 2;
+}
+
+.t-plp__no-results-image {
+    margin: 0 30%;
+}
+
+.t-plp__no-results-text {
+    margin: ($unit * 3) ($unit * 6) ($unit * 4);
+
+    line-height: $unit * 3;
+}
+
+.t-plp__num-results {
+    font-weight: 600;
+    font-size: 15px;
 }

@@ -1,7 +1,20 @@
 import React, {PropTypes} from 'react'
+import classNames from 'classnames'
+
 import Image from 'progressive-web-sdk/dist/components/image'
 import ListTile from 'progressive-web-sdk/dist/components/list-tile'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
+
+const productNameClasses = classNames(
+    't-plp__grid-item-name',
+
+    'u-color-neutral-60',
+    'u-text-lighter',
+    'u-text-uppercase',
+
+    'u-padding-top',
+    'u-padding-bottom'
+)
 
 const ProductTile = ({className, product = {}}) => {
     // alt is in product.image props
@@ -12,14 +25,14 @@ const ProductTile = ({className, product = {}}) => {
     return (
         <ListTile
             {...product.link}
-            className={className}
+            className={classNames(className, 'u-margin-bottom', 'u-padding')}
             startAction={startAction}
         >
-            <div className="c-grid__item-name">
+            <h1 className={productNameClasses}>
                 {product.link ? product.link.text : <SkeletonBlock height="34px" />}
-            </div>
+            </h1>
 
-            <div className="c-grid__item-price">
+            <div className="t-plp__grid-item-price u-padding-top-lg u-padding-bottom">
                 {product.price ? product.price : <SkeletonBlock height="22px" width="50px" />}
             </div>
         </ListTile>
