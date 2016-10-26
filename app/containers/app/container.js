@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {hidePreloader} from 'progressive-web-sdk/dist/preloader'
 import {IconSprite} from 'progressive-web-sdk/dist/components/icon'
 import SkipLinks from '../../components/skip-links'
+import Header from '../../containers/header/container'
 import Footer from '../../containers/footer/container'
 
 
@@ -21,18 +22,16 @@ class App extends React.Component {
                 <SkipLinks />
 
                 <div id="app-wrap" className={currentTemplate}>
-                    <header id="app-header" role="banner">
-                        Header content
-
-                        <button id="app-navigation">Menu</button>
-                    </header>
+                    <div id="app-header" role="banner">
+                        <Header />
+                    </div>
 
                     <main id="app-main" role="main">
                         {this.props.children}
                     </main>
 
                     <div id="app-footer">
-                        <Footer id="app-footer" />
+                        <Footer />
                     </div>
                 </div>
             </div>

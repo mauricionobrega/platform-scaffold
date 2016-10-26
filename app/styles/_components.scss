@@ -15,8 +15,9 @@
 @import 'node_modules/progressive-web-sdk/dist/components/field-row/base';
 // @import 'node_modules/progressive-web-sdk/dist/components/field-set/base';
 // @import 'node_modules/progressive-web-sdk/dist/components/form-fields/base';
-// @import 'node_modules/progressive-web-sdk/dist/components/header-bar/base';
+@import 'node_modules/progressive-web-sdk/dist/components/header-bar/base';
 @import 'node_modules/progressive-web-sdk/dist/components/icon/base';
+@import 'node_modules/progressive-web-sdk/dist/components/icon-label/base';
 // @import 'node_modules/progressive-web-sdk/dist/components/image/base';
 // @import 'node_modules/progressive-web-sdk/dist/components/ledger/base';
 // @import 'node_modules/progressive-web-sdk/dist/components/link/base';
@@ -43,7 +44,9 @@
 @import '../components/divider/theme';
 @import '../components/field/theme';
 @import '../components/field-row/theme';
+@import '../components/header-bar/theme';
 @import '../components/icon/theme';
+@import '../components/icon-label/theme';
 @import '../components/list/theme';
 @import '../components/list-tile/theme';
 @import '../components/login-form/base';
