@@ -33,7 +33,7 @@ class PDP extends React.Component {
         }
 
         return (
-            <div className="c-pdp">
+            <div className="t-pdp">
                 <PDPHeading {...product} />
                 <PDPCarousel items={product.carouselItems} />
                 <PDPDescription description={product.description} />
