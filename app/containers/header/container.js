@@ -78,7 +78,7 @@ Header.propTypes = {
 export const mapStateToProps = ({header}) => ({header})
 
 
-export const mapDispatchToProps = (dispatch, props) => {
+export const mapDispatchToProps = (dispatch) => {
     return {
         shrinkHeader: () => dispatch(headerActions.shrinkHeader()),
         expandHeader: () => dispatch(headerActions.expandHeader())
