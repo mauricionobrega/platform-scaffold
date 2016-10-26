@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react'
+import Immutable from 'immutable'
 import {connect} from 'react-redux'
 import * as actions from './actions'
 
@@ -13,24 +14,37 @@ const social = [
     ['http://www.youtube.com/#TODO', 'static/img/youtube.svg', 'Youtube'],
 ]
 
-const Footer = (props) => {
-    const {footer, dispatch} = props
-    const navigation = footer.get('navigation')
-    const newsletter = footer.get('newsletter')
+class Footer extends React.Component {
+    constructor(props) {
+        super(props)
 
-    const onSubmit = (data) => {
-        const method = newsletter.get('method', '')
-        const action = newsletter.get('action', '')
-        dispatch(actions.signUpToNewsletter(action, method, data))
+        this.onSubmitNewsletter = this.onSubmitNewsletter.bind(this)
     }
 
-    return (
-        <footer className="t-footer">
-            <FooterNewsletterSubscription newsletter={newsletter} onSubmit={onSubmit} />
-            <FooterSocialIcons social={social} />
-            <FooterNavigation navigation={navigation} />
-        </footer>
-    )
+    onSubmitNewsletter(data) {
+        const method = this.props.footer.getIn(['newsletter', 'method'], '')
+        const action = this.props.footer.getIn(['newsletter', 'action'], '')
+        this.props.dispatch(actions.signUpToNewsletter(action, method, data))
+    }
+
+    shouldComponentUpdate(nextProps) {
+        return !Immutable.is(this.props.footer, nextProps.footer)
+    }
+
+    render() {
+        const {footer} = this.props
+        const navigation = footer.get('navigation')
+        const newsletter = footer.get('newsletter')
+
+
+        return (
+            <footer className="t-footer">
+                <FooterNewsletterSubscription newsletter={newsletter} onSubmit={this.onSubmitNewsletter} />
+                <FooterSocialIcons social={social} />
+                <FooterNavigation navigation={navigation} />
+            </footer>
+        )
+    }
 }
 
 Footer.propTypes = {
