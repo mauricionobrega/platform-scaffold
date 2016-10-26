@@ -20,13 +20,12 @@ export const NavItem = (props) => {
         title,
         className,
         childIcon,
-        beforeContent: beforeContentProp,
+        beforeContent: before,
         content: contentProp,
         hasChild,
         path,
     } = props
 
-    const before = beforeContentProp
     const content = contentProp || title
     const after = hasChild ? childIcon : null
     const classes = classNames('c-nav-item', className,
