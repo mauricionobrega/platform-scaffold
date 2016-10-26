@@ -44,6 +44,7 @@ $header-font-size: 28px;
 // ---
 
 // Neutrals
+$neutral-00: #fff;
 $neutral-20: #f7f7f7;
 $neutral-30: #eee;
 $neutral-40: #bbb;
@@ -84,6 +85,7 @@ $focus-color: $brand-color;
 
 $border-color: $neutral-40;
 $border-radius: 4px;
+$border: 1px solid $border-color;
 
 $input-background-color: #fff;
 $disabled-input-color: $neutral-40;

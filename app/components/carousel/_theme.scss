@@ -1,0 +1,36 @@
+.c-carousel {
+    position: relative;
+
+    padding: 12px;
+
+    background: $neutral-20;
+}
+
+.c-carousel__inner {
+    padding: 24px;
+
+    background: $neutral-00;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,0.30);
+}
+
+.c-carousel__previous,
+.c-carousel__next {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+
+    display: flex;
+    width: 44px;
+
+    svg {
+        max-width: 100%;
+    }
+}
+
+.c-carousel__previous {
+    left: $unit;
+}
+
+.c-carousel__next {
+    right: $unit;
+}

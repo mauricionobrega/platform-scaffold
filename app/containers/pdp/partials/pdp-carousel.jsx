@@ -4,7 +4,7 @@ import Carousel from 'progressive-web-sdk/dist/components/carousel'
 import CarouselItem from 'progressive-web-sdk/dist/components/carousel/carousel-item'
 
 const PDPCarousel = ({items}) => (
-    <div className="c-pdp-carousel">
+    // <div className="c-carousel">
         <Carousel>
             {items.map((item) => {
                 return (
@@ -14,7 +14,7 @@ const PDPCarousel = ({items}) => (
                 )
             })}
         </Carousel>
-    </div>
+    // </div>
 )
 
 PDPCarousel.defaultProps = {

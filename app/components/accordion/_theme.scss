@@ -1,0 +1,29 @@
+.c-accordion__open-icon,
+.c-accordion__close-icon {
+    width: $unit*4;
+    height: $unit*4;
+
+    svg {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.c-accordion__inner-header {
+    align-items: center;
+}
+
+.c-accordion__title {
+    font-size: 16px;
+    text-align: left;
+}
+
+.c-accordion {
+    padding: $unit/2 $unit*1.5;
+    border-top: 1px solid $neutral-30;
+    border-bottom: 1px solid $neutral-30;
+}
+
+.c-accordion__content {
+    padding: $unit*1.5 $unit;
+}
