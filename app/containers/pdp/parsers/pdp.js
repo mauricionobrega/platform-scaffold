@@ -7,6 +7,20 @@ const parseCarouselItems = (magentoObject) => {
     return carouselSetup
 }
 
+const parseAddToCartForm = ($, $form) => {
+    const hiddenInputs = {}
+    $form.find('input[type="hidden"]').each((idx, input) => {
+        const $input = $(input)
+        hiddenInputs[$input.attr('name')] = $input.val()
+    })
+
+    return {
+        submitUrl: $form.attr('action'),
+        method: $form.attr('method'),
+        hiddenInputs
+    }
+}
+
 const pdpParser = ($, $html) => {
     const $mainContent = $html.find('.page-main')
 
@@ -17,8 +31,9 @@ const pdpParser = ($, $html) => {
             title: $mainContent.find('.page-title-wrapper.product .page-title > span').text(),
             price: $mainContent.find('.product-info-price .price-wrapper .price').text(),
             carouselItems: parseCarouselItems(magentoObject),
-            description: $mainContent.find('.product.info.detailed .product.attibute.description p').text(),
-        }
+            description: $mainContent.find('.product.info.detailed .product.attibute.description p').text()
+        },
+        formInfo: parseAddToCartForm($, $mainContent.find('#product_addtocart_form'))
     }
 }
 

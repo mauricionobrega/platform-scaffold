@@ -1,6 +1,10 @@
 // Heading
 // ===
 
+.u-heading-family {
+    font-family: $header-font-family;
+}
+
 .u-h1 {
     @extend %h1;
 }
