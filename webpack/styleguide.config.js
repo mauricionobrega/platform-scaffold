@@ -14,7 +14,7 @@ module.exports = {
     skipComponentsWithoutExample: true,
     updateWebpackConfig(webpackConfig) {
         // Supply our own renderer for styleguide
-        webpackConfig.resolve.alias['rsg-components/Layout/Renderer'] = path.join(__dirname, '../styleguide/renderer')
+        webpackConfig.resolve.alias['rsg-components/StyleGuide/StyleGuideRenderer'] = path.join(__dirname, '../styleguide/renderer')
 
         // Loaders
         webpackConfig.module.loaders.push(
