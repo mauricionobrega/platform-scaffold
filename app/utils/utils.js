@@ -36,3 +36,18 @@ export const formEncode = (data) => {
     })
     return pairs.join('&').replace(/%20/g, '+')
 }
+
+/**
+ * Make a request given the provided url and options, form-encoding the data
+ * into the body of the request.
+ */
+export const makeFormEncodedRequest = (url, data, options) => {
+    return makeRequest(url, {
+        ...options,
+        body: formEncode(data),
+        headers: {
+            ...(options.headers || {}),
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+}
