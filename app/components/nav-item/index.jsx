@@ -38,7 +38,7 @@ NavItemWithIcon.propTypes = NavItem.propTypes
 export const AccountNavItem = (props) => {
     return (
         <NavItemWithIcon {...props}
-            beforeContent={<NavItemIcon src={assetUtils.getAssetUrl('static/img/icon-account.svg')} />} />
+            beforeContent={<NavItemIcon src={assetUtils.getAssetUrl('static/svg/icon-account.svg')} />} />
     )
 }
 
