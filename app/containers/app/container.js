@@ -5,6 +5,8 @@ import {IconSprite} from 'progressive-web-sdk/dist/components/icon'
 import SkipLinks from '../../components/skip-links'
 import Header from '../../containers/header/container'
 import Footer from '../../containers/footer/container'
+import Navigation from '../../containers/navigation/container'
+import * as navActions from '../../containers/navigation/actions'
 
 
 class App extends React.Component {
@@ -14,6 +16,7 @@ class App extends React.Component {
     }
 
     render() {
+        const {openNavigation, history} = this.props
         const currentTemplate = `t-${this.props.children.props.route.routeName}`
 
         return (
@@ -24,6 +27,8 @@ class App extends React.Component {
                 <div id="app-wrap" className={currentTemplate}>
                     <div id="app-header" role="banner">
                         <Header />
+                        <Navigation history={history} />
+                        <button id="app-navigation" onClick={openNavigation}>Menu</button>
                     </div>
 
                     <main id="app-main" role="main">
@@ -40,7 +45,12 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-    children: PropTypes.element.isRequired
+    children: PropTypes.element.isRequired,
+    /**
+     * The react-router history object
+     */
+    history: PropTypes.object,
+    openNavigation: PropTypes.func,
 }
 
 const mapStateToProps = (state) => {
@@ -49,9 +59,8 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = () => {
-    return {
-    }
+const mapDispatchToProps = {
+    openNavigation: navActions.openNavigation
 }
 
 export default connect(

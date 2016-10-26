@@ -59,3 +59,4 @@ cd progressive-web-sdk
 npm link
 
 Then navigate back to your project root directory and run `npm link progressive-web-sdk`.
+
