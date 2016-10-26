@@ -1,5 +1,10 @@
+// The nav needs to be given dimensions explicitly. In this case, it is
+// mounted as the child of a Sheet, and should fill it completely.
+//
+// 1) Positioned relative to the containing Sheet.
+
 .c-nav {
-    position: absolute;
+    position: absolute; // 1
     top: 0;
     right: 0;
     bottom: 0;
