@@ -1,4 +1,4 @@
-## 0.7.1 (October 25, 2016)
+## 0.7.1 (October 26, 2016)
 - ACTUALLY bump SDK version to 0.8.1
 
 ## 0.7.0 (October 24, 2016)
