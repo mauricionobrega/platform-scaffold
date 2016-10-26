@@ -1,12 +1,13 @@
 // NavItem Theme
 // ===
 //
-// For Merlin's NavItems are customized to include extra icons, etc.
+// NavItems are customized to include extra icons, etc for the Merlin's site.
 //
 // 1) Provides the positioning context for (2)
 // 2) Is positioned relative to (1)
 
 .c-nav-item {
+    display: block;
     height: $unit * 5.5;
     padding: 0 ($unit * 1.5);
     border: 0;
