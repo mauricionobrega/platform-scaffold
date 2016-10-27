@@ -32,7 +32,25 @@ export const makeRequest = (url, options) => {
 export const formEncode = (data) => {
     const pairs = []
     Object.keys(data).forEach((k) => {
-        pairs.push(`${encodeURIComponent(k)}=${encodeURIComponent(data[k])}`)
+        const val = data[k]
+        if (typeof val === "object") {
+            Object.keys(val).forEach((vk) => {
+                pairs.push(`${encodeURIComponent(k)}[${encodeURIComponent(vk)}]=${encodeURIComponent(val[vk])}`)
+            })
+        } else {
+            pairs.push(`${encodeURIComponent(k)}=${encodeURIComponent(val)}`)
+        }
     })
     return pairs.join('&').replace(/%20/g, '+')
+}
+
+
+/**
+ * Retrieve the registered name of a component as a string
+ * @param {object} component - a React component, potentially wrapped with react-redux
+ * @returns {string} - The registered name of the given component
+ */
+export const getComponentName = (component) => {
+    const name = component.name
+    return name === 'Connect' ? component.WrappedComponent.name : name
 }
