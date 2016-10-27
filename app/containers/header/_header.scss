@@ -39,6 +39,7 @@
 // ---
 //
 // 1. Ensures the icon inside it vertically aligns to the center
+// 2. This value should aim to sit the icon vertically in the middle of `.t-header`
 
 .t-header__inner-button {
     line-height: 0; // 1
@@ -54,7 +55,7 @@
 
     &.t--hide-label {
         .pw-icon {
-            transform: translateY(50%);
+            transform: translateY(40%); // 2
         }
 
         .pw-icon-label__label {
