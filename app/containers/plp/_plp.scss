@@ -2,6 +2,8 @@
 // ===
 
 // [1] - Display box-shadow properly at bottom of container
+// [2] - position: relative to absolutely position the PLP icon in the heading
+// [3] - position: absolute is relative to [2]
 
 .t-plp {
     .c-list-tile__content {
@@ -44,7 +46,7 @@
 }
 
 .t-plp__heading {
-    position: relative;
+    position: relative; // [2]
 
     .c-link {
         font-size: $font-size - 2;
@@ -52,7 +54,7 @@
 }
 
 .t-plp__heading-logo {
-    position: absolute;
+    position: absolute; // [3]
     right: $unit;
     bottom: $unit + 2;
 }
