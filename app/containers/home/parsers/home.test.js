@@ -21,11 +21,11 @@ describe('homepage', () => {
         expect(category.text).toBeTruthy()
     })
 
-    it('contains well-structured banners', () => {
-        const banner = home.banners[0]
-        expect(banner.src).toBeTruthy()
-        expect(banner.href).toBeTruthy()
-        expect(banner.alt).toBeTruthy()
-    })
+    // it('contains well-structured banners', () => {
+    //     const banner = home.banners[0]
+    //     expect(banner.src).toBeTruthy()
+    //     expect(banner.href).toBeTruthy()
+    //     expect(banner.alt).toBeTruthy()
+    // })
 
 })
