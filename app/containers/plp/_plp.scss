@@ -40,14 +40,14 @@
 .t-plp__grid-item-price {
     color: $light-error-color;
     font-weight: 600;
-    font-size: $unit * 2;
+    font-size: $font-size + 2;
 }
 
 .t-plp__heading {
     position: relative;
 
     .c-link {
-        font-size: $unit * 1.5;
+        font-size: $font-size - 2;
     }
 }
 
@@ -69,5 +69,5 @@
 
 .t-plp__num-results {
     font-weight: 600;
-    font-size: 15px;
+    font-size: $font-size + 1;
 }
