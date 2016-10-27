@@ -1,10 +1,10 @@
 import {createReducer} from 'redux-act'
-import {Map} from 'immutable'
+import {fromJS} from 'immutable'
 
 import {onPageReceived} from '../app/actions'
 import homeParser from './parsers/home'
 
-const initialState = Map({
+const initialState = fromJS({
     categories: ['', '', '', ''],
     banners: false
 })
