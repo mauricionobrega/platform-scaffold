@@ -2,23 +2,7 @@
 // ===
 
 .t-navigation {
-    // Root Class. Contains all core styles, typically for the template's
-    // wrapper element.
+    .c-sheet__wrapper {
+        width: calc(100vw - #{$unit*5.5});
+    }
 }
-
-
-// .t-navigation__header {
-//     display: flex;
-//     flex-direction: row;
-//     justify-content: space-between;
-//     align-items: center;
-//     height: $unit * 6.5;
-//
-//     background-color: $brand-color;
-//
-//     color: white;
-// }
-
-// .t-navigation__header-logo {
-//     // text-align: left;
-// }

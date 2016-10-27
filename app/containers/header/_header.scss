@@ -14,10 +14,10 @@
 .t-header__bar {
     position: fixed;
     top: 0;
-    right: 0;
     left: 0;
 
     overflow: hidden;
+    width: 100vw;
 
     box-shadow: $large-box-shadow;
 }

@@ -39,10 +39,10 @@ const Navigation = (props) => {
     }
 
     return (
-        <Sheet open={isOpen} onDismiss={closeNavigation} maskOpacity={0.85}>
+        <Sheet className="t-navigation" open={isOpen} onDismiss={closeNavigation} maskOpacity={0.85}>
             <Nav root={root} path={path} onPathChange={onPathChange}>
                 <HeaderBar>
-                    <HeaderBarTitle className="u-flex u-padding-start-sm u-text-align-start">
+                    <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
                         <Image className="t-navigation__header-logo" src={logoURL} alt="Merlin's Potions Logo" />
                         <h2 className="u-visually-hidden">Merlin's Main Navigation</h2>
                     </HeaderBarTitle>
