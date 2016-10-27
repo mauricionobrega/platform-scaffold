@@ -17,12 +17,12 @@
     }
 }
 
-.t-home__card {
+.t-home__category {
     background-color: $neutral-10;
     box-shadow: $box-shadow;
 }
 
-.t-home__card-section {
+.t-home__category-section {
     a {
         color: $neutral-60;
     }
@@ -40,15 +40,15 @@
     }
 }
 
-.t-home__card-image {
+.t-home__category-image {
 
 }
 
-.t-home__card-text {
+.t-home__category-text {
     font-size: 20px;
     line-height: 25px;
 
-    &.t-home__card-text-large {
+    &.t-home__category-text-large {
         font-size: 24px;
     }
 }

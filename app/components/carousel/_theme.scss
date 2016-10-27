@@ -1,31 +1,31 @@
 .c-carousel__controls {
     margin-top: $unit * 1.5;
+}
 
-    .c-carousel__previous,
-    .c-carousel__next {
-        display: none;
+.c-carousel__previous,
+.c-carousel__next {
+    display: none;
+}
+
+.c-carousel__pips {
+    display: flex;
+    justify-content: center;
+}
+
+.c-carousel__pip {
+    width: 6px;
+    height: 6px;
+    margin-right: 6px;
+    border-radius: 3px;
+    background-color: $neutral-40;
+    color: transparent;
+    font: 0/0 a;
+
+    &.c--active {
+        background-color: $neutral-60;
     }
 
-    .c-carousel__pips {
-        display: flex;
-        justify-content: center;
-    }
-
-    .c-carousel__pip {
-        width: 6px;
-        height: 6px;
-        margin-right: 6px;
-        border-radius: 3px;
-        background-color: $neutral-40;
-        color: transparent;
-        font: 0/0 a;
-
-        &.c--active {
-            background-color: $neutral-60;
-        }
-
-        &:last-of-type {
-            margin-right: 0;
-        }
+    &:last-of-type {
+        margin-right: 0;
     }
 }

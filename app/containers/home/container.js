@@ -11,7 +11,7 @@ import HomeCategory from './partials/home-category'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
 const cardClasses = classNames(
-    't-home__card',
+    't-home__category',
     'u-margin-top-md',
     'u-margin-end',
     'u-margin-start',

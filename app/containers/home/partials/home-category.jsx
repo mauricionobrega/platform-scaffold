@@ -24,21 +24,21 @@ const icon = <Icon name="chevron-right" style={{height: '3vh', width: '3vh'}} cl
 const HomeCategory = ({href, text}) => {
     return text ?
         <ListTile
-            className="t-home__card-section u-text-all-caps"
+            className="t-home__category-section u-text-all-caps"
             href={href}
             startAction={getImage(text)}
             endAction={icon}
             includeEndActionInPrimary={true}
         >
-            <div className="t-home__card-text u-text-light">SHOP</div>
-            <div className="t-home__card-text t-home__card-text-large">{text}</div>
+            <div className="t-home__category-text u-text-light">SHOP</div>
+            <div className="t-home__category-text t-home__category-text-large">{text}</div>
         </ListTile>
     :
         <ListTile
-            className="t-home__card-section"
+            className="t-home__category-section"
             startAction={<SkeletonBlock height="60px" width="63px" />}
         >
-            <SkeletonText className="t-home__card-text" lines={2} />
+            <SkeletonText className="t-home__category-text" lines={2} />
         </ListTile>
 }
 
