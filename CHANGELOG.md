@@ -1,5 +1,12 @@
-## 0.7.2 (October 26 2016)
-- Bump progressive-web-sdk==0.8.2 and fix
+## 0.7.2 (October 27, 2016)
+- Use SDK version 0.8.3
+- Update react-styleguidist to 4.1.0
+- Include webpack-dev-server@1.14.1 and webpack-hot-middleware@2.13.0 to workaround styleguidist problems
+- Add IconLabelButton component
+- Add NavItem component
+- Implement global navigation menu
+- Remove progressive-web-sdk module from Babel transpiling
+- Add yarn lockfile
 
 ## 0.7.1 (October 26, 2016)
 - ACTUALLY bump SDK version to 0.8.1
