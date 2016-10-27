@@ -9,7 +9,7 @@ import * as navActions from './actions'
 import * as assetUtils from 'progressive-web-sdk/dist/asset-utils'
 import IconLabelButton from '../../components/icon-label-button'
 import * as merlinsNavItem from '../../components/nav-item'
-import { withRouter } from 'react-router'
+import {withRouter} from 'react-router'
 
 
 /**
@@ -62,14 +62,14 @@ Navigation.propTypes = {
     closeNavigation: React.PropTypes.func,
 
     /**
-     * The react-router router object.
-     */
-    router: React.PropTypes.object,
-
-    /**
      * The immutableJS data for the nav.
      */
     navigation: React.PropTypes.object,
+
+    /**
+     * The react-router router object.
+     */
+    router: React.PropTypes.object,
 }
 
 
