@@ -37,7 +37,7 @@
     color: $neutral-60;
 }
 
-.c-nav-item.c-nav-item--selected {
+.c-nav-item.c--selected {
     background-color: #f1f0f7;
 
     color: $brand-color;
@@ -49,14 +49,14 @@
 }
 
 
-.c-nav-item--with-before-icon.c-nav-item--selected {
+.c-nav-item--with-before-icon.c--selected {
     background-color: #f1f0f7;
 
     color: $neutral-60;
 }
 
 .c-nav-item--with-before-icon,
-.c-nav-item--sign-in.c-nav-item--selected {
+.c-nav-item--sign-in.c--selected {
     background-color: $neutral-20;
 }
 
