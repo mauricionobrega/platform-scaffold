@@ -1,0 +1,96 @@
+// NavItem Theme
+// ===
+//
+// NavItems are customized to include extra icons, etc for the Merlin's site.
+//
+// 1) Provides the positioning context for (2)
+// 2) Is positioned relative to (1)
+
+.c-nav-item {
+    display: block;
+    height: $unit * 5.5;
+    padding: 0 ($unit * 1.5);
+    border: 0;
+
+    background: none;
+
+    color: $neutral-60;
+    font-size: 15px;
+    line-height: 20px;
+    letter-spacing: 0;
+    text-align: left;
+
+    cursor: pointer;
+
+    &:active,
+    &:focus {
+        border: 0;
+
+        background: none;
+    }
+}
+
+.c-nav-item:hover,
+.c-nav-item:active,
+.c-nav-item:visited,
+.c-nav-item:focus {
+    color: $neutral-60;
+}
+
+.c-nav-item.c--selected {
+    background-color: #f1f0f7;
+
+    color: $brand-color;
+}
+
+
+.c-nav-item--with-before-icon {
+    padding: 0;
+}
+
+
+.c-nav-item--with-before-icon.c--selected {
+    background-color: #f1f0f7;
+
+    color: $neutral-60;
+}
+
+.c-nav-item--with-before-icon,
+.c-nav-item--sign-in.c--selected {
+    background-color: $neutral-20;
+}
+
+.c-nav-item__inner {
+    height: 100%;
+}
+
+.c-nav-item__before-icon {
+    width: $unit * 2;
+    height: $unit * 2;
+}
+
+.c-nav-item__icon {
+    position: relative; // 1
+
+    width: $unit * 5.5;
+    height: $unit * 5.5;
+}
+
+
+.c-nav-item__icon-content {
+    position: absolute; // 2
+    top: 50%;
+    left: 50%;
+
+    width: $unit * 2;
+    height: $unit * 2;
+
+    transform: translate(-50%, -50%);
+}
+
+
+.c-nav-item.c--with-icon {
+    padding: 0;
+
+    background-color: $neutral-20;
+}
