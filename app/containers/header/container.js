@@ -62,13 +62,13 @@ class Header extends React.Component {
 
                     <HeaderBarActions>
                         <Button innerClassName={innerButtonClassName}>
-                            <IconLabel label="Stores" iconName="location" iconSize="medium" />
+                            <IconLabel label="Stores" iconName="map" iconSize="medium" />
                         </Button>
                     </HeaderBarActions>
 
                     <HeaderBarActions>
                         <Button innerClassName={innerButtonClassName}>
-                            <IconLabel label="Cart" iconName="bag" iconSize="medium" />
+                            <IconLabel label="Cart" iconName="cart" iconSize="medium" />
                         </Button>
                     </HeaderBarActions>
                 </HeaderBar>

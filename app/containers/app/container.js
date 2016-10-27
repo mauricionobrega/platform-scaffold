@@ -7,6 +7,7 @@ import Header from '../../containers/header/container'
 import Footer from '../../containers/footer/container'
 import Navigation from '../../containers/navigation/container'
 import * as navActions from '../../containers/navigation/actions'
+import sprite from '../../static/sprite/sprite.svg'
 
 
 class App extends React.Component {
@@ -21,7 +22,7 @@ class App extends React.Component {
 
         return (
             <div id="app" className="t-app">
-                <IconSprite />
+                <IconSprite sprite={sprite} />
                 <SkipLinks />
 
                 <div id="app-wrap" className={currentTemplate}>
