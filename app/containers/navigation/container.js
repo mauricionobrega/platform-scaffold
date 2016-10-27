@@ -9,6 +9,7 @@ import * as navActions from './actions'
 import * as assetUtils from 'progressive-web-sdk/dist/asset-utils'
 import IconLabelButton from '../../components/icon-label-button'
 import * as merlinsNavItem from '../../components/nav-item'
+import { withRouter } from 'react-router'
 
 
 /**
@@ -25,14 +26,18 @@ const itemFactory = (type, props) => {
 
 
 const Navigation = (props) => {
-    const {navigation, closeNavigation, history} = props
+    const {navigation, closeNavigation, router} = props
     const path = navigation.get('path')
     const isOpen = navigation.get('isOpen')
     const root = navigation.get('root') && navigation.get('root').toJS()
     const logoURL = assetUtils.getAssetUrl('static/svg/nav-logo.svg')
 
     const onPathChange = (path) => {
-        history.push(path)
+        const url = new URL(path)
+        // Path in the nav expected to be on this domain. React-router now only accepts
+        // a path, instead of a full url.
+        const routerPath = url.pathname + url.search + url.hash
+        router.push(routerPath)
         closeNavigation()
     }
 
@@ -57,9 +62,9 @@ Navigation.propTypes = {
     closeNavigation: React.PropTypes.func,
 
     /**
-     * The react-router history object.
+     * The react-router router object.
      */
-    history: React.PropTypes.object,
+    router: React.PropTypes.object,
 
     /**
      * The immutableJS data for the nav.
@@ -81,4 +86,4 @@ export default connect(
         openNavigation: navActions.openNavigation,
         closeNavigation: navActions.closeNavigation,
     }
-)(Navigation)
+)(withRouter(Navigation))
