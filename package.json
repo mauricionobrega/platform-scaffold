@@ -58,7 +58,7 @@
     "nightwatch-commands": "2.0.0",
     "node-sass": "3.10.1",
     "postcss-loader": "0.11.0",
-    "progressive-web-sdk": "0.8.1",
+    "progressive-web-sdk": "0.8.2",
     "prompt": "1.0.0",
     "raw-loader": "0.5.1",
     "react-addons-test-utils": "15.3.2",
@@ -69,6 +69,7 @@
     "spline-scss": "2.2.0",
     "style-loader": "0.13.1",
     "text-loader": "0.0.1",
+    "validator": "6.1.0",
     "webpack": "1.13.2",
     "webpack-dev-server": "1.14.1",
     "webpack-hot-middleware": "2.13.0"
