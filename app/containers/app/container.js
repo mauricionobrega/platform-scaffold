@@ -26,9 +26,8 @@ class App extends React.Component {
 
                 <div id="app-wrap" className={currentTemplate}>
                     <div id="app-header" role="banner">
-                        <Header />
+                        <Header onMenuClick={openNavigation} />
                         <Navigation history={history} />
-                        <button id="app-navigation" onClick={openNavigation}>Menu</button>
                     </div>
 
                     <main id="app-main" role="main">

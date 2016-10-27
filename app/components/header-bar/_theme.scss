@@ -20,20 +20,5 @@ $headerBar__logo: 'data:image/svg+xml;utf8,<svg width="67px" height="28px" viewB
 // ---
 
 .c-header-bar__title {
-    flex: 0 0 auto;
-    padding: $unit;
-
-    img {
-        display: none;
-    }
-
-    &::after {
-        content: '';
-
-        display: block;
-        width: 67px;
-        height: 28px;
-
-        background: url($headerBar__logo);
-    }
+    line-height: 0;
 }

@@ -18,6 +18,8 @@
     left: 0;
 
     overflow: hidden;
+
+    box-shadow: $large-box-shadow;
 }
 
 
@@ -60,5 +62,31 @@
 
             transform: translateY(100%);
         }
+    }
+}
+
+
+// Link
+// ---
+
+.t-header__link {
+    .c-button__inner {
+        padding: 0;
+    }
+}
+
+
+// Logo
+// ---
+
+.t-header__logo {
+    &::after {
+        content: '';
+
+        display: block;
+        width: 67px;
+        height: 28px;
+
+        background: url($headerBar__logo);
     }
 }

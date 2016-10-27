@@ -9,6 +9,8 @@ import * as navActions from './actions'
 import * as assetUtils from 'progressive-web-sdk/dist/asset-utils'
 import IconLabelButton from '../../components/icon-label-button'
 import * as merlinsNavItem from '../../components/nav-item'
+import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
+import Link from 'progressive-web-sdk/dist/components/link'
 
 
 /**
@@ -37,12 +39,19 @@ const Navigation = (props) => {
     }
 
     return (
-        <Sheet open={isOpen} onDismiss={closeNavigation}>
+        <Sheet open={isOpen} onDismiss={closeNavigation} maskOpacity={0.85}>
             <Nav root={root} path={path} onPathChange={onPathChange}>
-                <div className="t-navigation__header">
-                    <Image className="t-navigation__header-logo" src={logoURL} alt="Merlin's Potions" />
-                    <IconLabelButton iconName="x" label="close" onClick={closeNavigation} />
-                </div>
+                <HeaderBar>
+                    <HeaderBarTitle className="u-flex u-padding-start-sm u-text-align-start">
+                        <Image className="t-navigation__header-logo" src={logoURL} alt="Merlin's Potions Logo" />
+                        <h2 className="u-visually-hidden">Merlin's Main Navigation</h2>
+                    </HeaderBarTitle>
+
+                    <HeaderBarActions>
+                        <IconLabelButton iconName="x" label="close" onClick={closeNavigation} />
+                    </HeaderBarActions>
+                </HeaderBar>
+
                 <NavMenu itemFactory={itemFactory} />
             </Nav>
         </Sheet>

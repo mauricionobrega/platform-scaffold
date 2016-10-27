@@ -7,19 +7,18 @@
 }
 
 
-.t-navigation__header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    height: $unit * 6;
+// .t-navigation__header {
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: space-between;
+//     align-items: center;
+//     height: $unit * 6.5;
+//
+//     background-color: $brand-color;
+//
+//     color: white;
+// }
 
-    background-color: $brand-color;
-
-    color: white;
-}
-
-.t-navigation__header-logo {
-    height: $unit * 3;
-    padding: 0 $unit * 1.5;
-}
+// .t-navigation__header-logo {
+//     // text-align: left;
+// }

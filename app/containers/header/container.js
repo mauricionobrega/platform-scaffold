@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import classnames from 'classnames'
 import * as headerActions from './actions'
@@ -6,6 +6,7 @@ import * as headerActions from './actions'
 import Button from 'progressive-web-sdk/dist/components/button'
 import IconLabel from 'progressive-web-sdk/dist/components/icon-label'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
+import Link from 'progressive-web-sdk/dist/components/button'
 
 class Header extends React.Component {
     componentDidMount() {
@@ -17,7 +18,7 @@ class Header extends React.Component {
     }
 
     handleScroll() {
-        const {isCollapsed} = this.props.header.toJS()
+        const {isCollapsed} = this.props.header
         const headerHeight = 52
 
         if (window.pageYOffset > headerHeight && !isCollapsed) {
@@ -30,10 +31,10 @@ class Header extends React.Component {
     }
 
     render() {
-        const {header} = this.props
-        const {isCollapsed} = header.toJS()
+        const {header, onMenuClick} = this.props
+        const {isCollapsed} = header
 
-        const innerButtonClassName = classnames('t-header__inner-button', {
+        const innerButtonClassName = classnames('t-header__inner-button', 'u-padding-0', {
             't--hide-label': isCollapsed
         })
 
@@ -41,27 +42,32 @@ class Header extends React.Component {
             <header className="t-header">
                 <HeaderBar className="t-header__bar">
                     <HeaderBarActions>
-                        <Button id="header-navigation" className="u-padding-0" innerClassName={innerButtonClassName}>
-                            <IconLabel label="Menu" iconName="menu" iconSize="medium" />
-                        </Button>
+                        <div role="navigation">
+                            <Button id="header-navigation" innerClassName={innerButtonClassName} onClick={onMenuClick}>
+                                <IconLabel label="Menu" iconName="menu" iconSize="medium" />
+                            </Button>
+                        </div>
                     </HeaderBarActions>
 
                     <div className="t-header__placeholder" />
 
                     <div className="u-flex">
                         <HeaderBarTitle>
-                            <span className="u-visually-hidden">Merlin's Potions</span>
+                            <Link href="/" className="t-header__link">
+                                <div className="t-header__logo"></div>
+                                <h1 className="u-visually-hidden">Merlin's Potions</h1>
+                            </Link>
                         </HeaderBarTitle>
                     </div>
 
                     <HeaderBarActions>
-                        <Button className="u-padding-0" innerClassName={innerButtonClassName}>
+                        <Button innerClassName={innerButtonClassName}>
                             <IconLabel label="Stores" iconName="location" iconSize="medium" />
                         </Button>
                     </HeaderBarActions>
 
                     <HeaderBarActions>
-                        <Button className="u-padding-0" innerClassName={innerButtonClassName}>
+                        <Button innerClassName={innerButtonClassName}>
                             <IconLabel label="Cart" iconName="bag" iconSize="medium" />
                         </Button>
                     </HeaderBarActions>
@@ -72,10 +78,14 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
-    //
+    onMenuClick: PropTypes.func
 }
 
-export const mapStateToProps = ({header}) => ({header})
+export const mapStateToProps = ({header}) => {
+    return {
+        header: header.toJS()
+    }
+}
 
 
 export const mapDispatchToProps = (dispatch) => {
