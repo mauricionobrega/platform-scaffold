@@ -5,8 +5,8 @@ import {onPageReceived} from '../app/actions'
 import homeParser from './parsers/home'
 
 const initialState = Map({
-    categories: [],
-    banners: []
+    categories: ['', '', '', ''],
+    banners: false
 })
 
 export default createReducer({

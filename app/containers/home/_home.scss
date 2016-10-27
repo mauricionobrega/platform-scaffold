@@ -4,28 +4,51 @@
 .t-home {
     // Root Class. Contains all core styles, typically for the template's
     // wrapper element.
-    .container {
-        background-color: $background-color;
+}
+
+.t-home__container {
+    margin-bottom: 1px;
+    background-color: $background-color;
+    box-shadow: $box-shadow;
+    font-family: $header-font-family;
+
+    .c-carousel__inner {
+        box-shadow: $box-shadow;
+    }
+}
+
+.t-home__card {
+    background-color: $neutral-10;
+    box-shadow: $box-shadow;
+}
+
+.t-home__card-section {
+    a {
+        color: $neutral-60;
     }
 
-    .c-card {
-        background-color: #fff;
-        box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.2);
+    &:not(:first-child) {
+        border-top: solid #eee 1px;
     }
 
-    .c-card__section {
-        &:not(:first-child) {
-            border-top: solid #eee 1px;
-        }
+    .c-list-tile__action {
+        margin: $unit 0 $unit ($unit / 2);
     }
 
-    .c-card__text {
-        color: #333;
-        font-size: 20px;
-        line-height: 24px;
+    .c-list-tile__content {
+        padding: ($unit * 1.5) 0 ($unit * 1.5) ($unit * 2);
+    }
+}
 
-        &.u-text-lg {
-            font-size: 24px;
-        }
+.t-home__card-image {
+
+}
+
+.t-home__card-text {
+    font-size: 20px;
+    line-height: 25px;
+
+    &.t-home__card-text-large {
+        font-size: 24px;
     }
 }

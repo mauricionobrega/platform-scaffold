@@ -1,5 +1,5 @@
 .c-carousel__controls {
-    margin-top: $unit;
+    margin-top: $unit * 1.5;
 
     .c-carousel__previous,
     .c-carousel__next {
@@ -12,17 +12,20 @@
     }
 
     .c-carousel__pip {
-        color: rgba(0, 0, 0, 0.2);
-        font-size: 0;
-    }
+        width: 6px;
+        height: 6px;
+        margin-right: 6px;
+        border-radius: 3px;
+        background-color: $neutral-40;
+        color: transparent;
+        font: 0/0 a;
 
-    .c-carousel__pip:after {
-        content: "•";
-        font-size: 30px;
-    }
+        &.c--active {
+            background-color: $neutral-60;
+        }
 
-    .c-carousel__pip.c--active {
-        background-color: transparent;
-        color: #000;
+        &:last-of-type {
+            margin-right: 0;
+        }
     }
 }
