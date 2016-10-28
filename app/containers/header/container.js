@@ -62,7 +62,7 @@ class Header extends React.Component {
                         <HeaderBarTitle>
                             <Link href="/" className={linkClassName}>
                                 <DangerousHTML html={logo}>
-                                    {(htmlObj) => <div className='t-header__logo' dangerouslySetInnerHTML={htmlObj} />}
+                                    {(htmlObj) => <div className="t-header__logo" dangerouslySetInnerHTML={htmlObj} />}
                                 </DangerousHTML>
                                 <h1 className="u-visually-hidden">Merlin's Potions</h1>
                             </Link>
