@@ -10,7 +10,6 @@ import * as assetUtils from 'progressive-web-sdk/dist/asset-utils'
 import IconLabelButton from '../../components/icon-label-button'
 import * as merlinsNavItem from '../../components/nav-item'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
-import Link from 'progressive-web-sdk/dist/components/link'
 import {withRouter} from 'react-router'
 
 

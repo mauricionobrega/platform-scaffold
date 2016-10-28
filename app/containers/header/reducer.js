@@ -9,11 +9,11 @@ export const initialState = Immutable.fromJS({
 
 const header = createReducer({
 
-    [headerActions.shrinkHeader]: (state, action) => {
+    [headerActions.shrinkHeader]: (state) => {
         return state.set('isCollapsed', true)
     },
 
-    [headerActions.expandHeader]: (state, action) => {
+    [headerActions.expandHeader]: (state) => {
         return state.set('isCollapsed', false)
     },
 

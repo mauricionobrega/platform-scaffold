@@ -6,15 +6,15 @@ import * as headerActions from './actions'
 import Button from 'progressive-web-sdk/dist/components/button'
 import IconLabel from 'progressive-web-sdk/dist/components/icon-label'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
-import Link from 'progressive-web-sdk/dist/components/button'
+import Link from 'progressive-web-sdk/dist/components/link'
 
 class Header extends React.Component {
     componentDidMount() {
-        window.addEventListener("scroll", this.handleScroll.bind(this))
+        window.addEventListener('scroll', this.handleScroll.bind(this))
     }
 
     componentWillUnmount() {
-        window.removeEventListener("scroll", this.handleScroll.bind(this))
+        window.removeEventListener('scroll', this.handleScroll.bind(this))
     }
 
     handleScroll() {
@@ -54,7 +54,7 @@ class Header extends React.Component {
                     <div className="u-flex">
                         <HeaderBarTitle>
                             <Link href="/" className="t-header__link">
-                                <div className="t-header__logo"></div>
+                                <div className="t-header__logo" />
                                 <h1 className="u-visually-hidden">Merlin's Potions</h1>
                             </Link>
                         </HeaderBarTitle>
@@ -78,7 +78,11 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
-    onMenuClick: PropTypes.func
+    expandHeader: PropTypes.func,
+    header: PropTypes.object,
+    isCollapsed: PropTypes.bool,
+    shrinkHeader: PropTypes.func,
+    onMenuClick: PropTypes.func,
 }
 
 export const mapStateToProps = ({header}) => {
