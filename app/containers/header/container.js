@@ -7,6 +7,9 @@ import Button from 'progressive-web-sdk/dist/components/button'
 import IconLabel from 'progressive-web-sdk/dist/components/icon-label'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 import Link from 'progressive-web-sdk/dist/components/link'
+import logo from '../../static/svg/logo.svg'
+import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
+
 
 class Header extends React.Component {
     componentDidMount() {
@@ -38,6 +41,10 @@ class Header extends React.Component {
             't--hide-label': isCollapsed
         })
 
+        const linkClassName = classnames('t-header__link', {
+            't--fade-sparkles': isCollapsed
+        })
+
         return (
             <header className="t-header">
                 <HeaderBar className="t-header__bar">
@@ -53,8 +60,10 @@ class Header extends React.Component {
 
                     <div className="u-flex">
                         <HeaderBarTitle>
-                            <Link href="/" className="t-header__link">
-                                <div className="t-header__logo" />
+                            <Link href="/" className={linkClassName}>
+                                <DangerousHTML html={logo}>
+                                    {(htmlObj) => <div className='t-header__logo' dangerouslySetInnerHTML={htmlObj} />}
+                                </DangerousHTML>
                                 <h1 className="u-visually-hidden">Merlin's Potions</h1>
                             </Link>
                         </HeaderBarTitle>
