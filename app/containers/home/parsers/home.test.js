@@ -9,40 +9,40 @@ describe('the home parser', () => {
         const expected = {
             categories: [
                 {
-                    'href': 'http://www.merlinspotions.com/potions.html',
-                    'text': 'Potions'
+                    href: 'http://www.merlinspotions.com/potions.html',
+                    text: 'Potions'
                 },
                 {
-                    'href': 'http://www.merlinspotions.com/books.html',
-                    'text': 'Books'
+                    href: 'http://www.merlinspotions.com/books.html',
+                    text: 'Books'
                 },
                 {
-                    'href': 'http://www.merlinspotions.com/ingredients.html',
-                    'text': 'Ingredients'
+                    href: 'http://www.merlinspotions.com/ingredients.html',
+                    text: 'Ingredients'
                 },
                 {
-                    'href': 'http://www.merlinspotions.com/supplies.html',
-                    'text': 'Supplies'
+                    href: 'http://www.merlinspotions.com/supplies.html',
+                    text: 'Supplies'
                 },
                 {
-                    'href': 'http://www.merlinspotions.com/charms.html',
-                    'text': 'Charms'
+                    href: 'http://www.merlinspotions.com/charms.html',
+                    text: 'Charms'
                 },
                 {
-                    'href': 'http://www.merlinspotions.com/new-arrivals.html',
-                    'text': 'New Arrivals'
+                    href: 'http://www.merlinspotions.com/new-arrivals.html',
+                    text: 'New Arrivals'
                 }
             ],
             // TODO: Update this expected object after we update desktop with new content
             banners: [
                 {
-                    'alt': 'Merlins Potions',
-                    'src': 'http://www.merlinspotions.com/media/logo/default/MerlinsPotions_Logo_Light.png'
+                    alt: 'Merlins Potions',
+                    src: 'http://www.merlinspotions.com/media/logo/default/MerlinsPotions_Logo_Light.png'
                 },
                 {},
                 {
-                    'alt': '',
-                    'src': 'http://www.merlinspotions.com/media/wysiwyg/MP_banner_4.jpg'
+                    alt: '',
+                    src: 'http://www.merlinspotions.com/media/wysiwyg/MP_banner_4.jpg'
                 }
             ]
         }
