@@ -1,0 +1,6 @@
+options:
+    config-file: node_modules/mobify-code-style/css/.sass-lint.yml
+rules:
+    # class-name-format:
+    #     - 1
+    #     - convention: hyphenatedbem
