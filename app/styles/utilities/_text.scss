@@ -96,3 +96,7 @@
 .u-text-quiet {
     @include text-quiet(true);
 }
+
+.u-text-lighter {
+    font-weight: lighter; // @TODO: add to Spline
+}
