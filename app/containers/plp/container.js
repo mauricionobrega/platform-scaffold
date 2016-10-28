@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
+import Immutable from 'immutable'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
 import Image from 'progressive-web-sdk/dist/components/image'
@@ -24,48 +25,63 @@ const renderNoResults = (bodyText) => {
     )
 }
 
-const PLP = ({hasProducts, isPlaceholder, noResultsText, numItems, products, title}) => {
-    return (
-        <div className="t-plp">
-            <div className="t-plp__heading u-padding-top-md u-padding-end-0 u-padding-bottom-lg u-padding-start-md">
-                <div>
-                    <Link href="/">Home</Link>
-                </div>
-                <div className="u-margin-top-md">
-                    {isPlaceholder ?
-                        <SkeletonText lines={1} type="h1" width="100px" />
-                    :
-                        <h1 className="u-text-lighter u-text-uppercase">{title}</h1>
-                    }
-                </div>
+class PLP extends React.Component {
+    shouldComponentUpdate(nextProps) {
+        return !Immutable.is(this.props.plpState, nextProps.plpState)
+    }
 
-                <div className="t-plp__heading-logo">
-                    {isPlaceholder ?
-                        <SkeletonBlock height="51px" width="61px" />
-                    :
-                        <Image
-                            alt="Heading logo"
-                            height="51px"
-                            src={getAssetUrl(`static/img/${title.trim().toLowerCase()}.png`)}
-                            width="61px"
-                        />
-                    }
-                </div>
-            </div>
-            <div className="t-plp__container">
-                {isPlaceholder ?
-                    <SkeletonBlock height="32px" />
-                :
-                    <div className="t-plp__num-results u-margin-top-0 u-margin-end-md u-margin-bottom-md u-margin-start-md">
-                        {numItems} Results
+    render() {
+        const {
+            hasProducts,
+            isPlaceholder,
+            noResultsText,
+            numItems,
+            products,
+            title
+        } = this.props
+
+        return (
+            <div className="t-plp">
+                <div className="t-plp__heading u-padding-top-md u-padding-end-0 u-padding-bottom-lg u-padding-start-md">
+                    <div>
+                        <Link href="/">Home</Link>
                     </div>
-                }
-                <div className="u-clearfix u-padding-start u-padding-end">
-                    {hasProducts ? renderResults(products) : renderNoResults(noResultsText)}
+                    <div className="u-margin-top-md">
+                        {isPlaceholder ?
+                            <SkeletonText lines={1} type="h1" width="100px" />
+                        :
+                            <h1 className="u-text-lighter u-text-uppercase">{title}</h1>
+                        }
+                    </div>
+
+                    <div className="t-plp__heading-logo">
+                        {isPlaceholder ?
+                            <SkeletonBlock height="51px" width="61px" />
+                        :
+                            <Image
+                                alt="Heading logo"
+                                height="51px"
+                                src={getAssetUrl(`static/img/${title.trim().toLowerCase()}.png`)}
+                                width="61px"
+                            />
+                        }
+                    </div>
+                </div>
+                <div className="t-plp__container">
+                    {isPlaceholder ?
+                        <SkeletonBlock height="32px" />
+                    :
+                        <div className="t-plp__num-results u-margin-top-0 u-margin-end-md u-margin-bottom-md u-margin-start-md">
+                            {numItems} Results
+                        </div>
+                    }
+                    <div className="u-clearfix u-padding-start u-padding-end">
+                        {hasProducts ? renderResults(products) : renderNoResults(noResultsText)}
+                    </div>
                 </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
 PLP.propTypes = {
@@ -87,6 +103,10 @@ PLP.propTypes = {
      */
     numItems: PropTypes.string.isRequired,
     /**
+     * The Immutable.js state object, for use with shouldComponentUpdate
+     */
+    plpState: PropTypes.object.isRequired,
+    /**
      * The array of parsed products
      */
     products: PropTypes.array.isRequired,
@@ -98,9 +118,11 @@ PLP.propTypes = {
 
 const mapStateToProps = (state) => {
     const selector = state.plp.get(SELECTOR)
+    const plpState = state.plp.get(selector)
 
     return {
-        ...state.plp.get(selector).toJS(),
+        plpState,
+        ...plpState.toJS()
     }
 }
 
