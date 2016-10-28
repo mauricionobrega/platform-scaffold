@@ -53,6 +53,7 @@
     "jsdom": "9.8.0",
     "json-loader": "0.5.4",
     "lodash.assign": "4.2.0",
+    "lodash.throttle": "4.1.1",
     "minimist": "1.2.0",
     "mobify-code-style": "2.6.0",
     "nightwatch": "0.9.8",

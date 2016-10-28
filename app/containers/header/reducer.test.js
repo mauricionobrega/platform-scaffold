@@ -3,17 +3,17 @@ import * as actions from './actions'
 
 describe('The Header reducer', () => {
 
-    test('sets isCollapsed to true', () => {
-        const status = true
-        expect(initialState.get('isCollapsed')).not.toEqual(status) // Sanity check
-        const newState = reducer(initialState, actions.shrinkHeader(status))
-        expect(newState.get('isCollapsed')).toEqual(status)
-    })
+    test('toggles the header content', () => {
+        let newState
+        expect(initialState.get('isCollapsed')).toEqual(false) // Sanity check
 
-    test('sets isCollapsed to false', () => {
-        const status = false
-        const newState = reducer(initialState, actions.expandHeader(status))
-        expect(newState.get('isCollapsed')).toEqual(status)
+        // First Toggle
+        newState = reducer(initialState, actions.toggleHeader())
+        expect(newState.get('isCollapsed')).toEqual(true)
+
+        // Second Toggle
+        newState = reducer(newState, actions.toggleHeader())
+        expect(newState.get('isCollapsed')).toEqual(false)
     })
 
 })

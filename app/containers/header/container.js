@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
+import throttle from 'lodash.throttle'
 import classnames from 'classnames'
 import * as headerActions from './actions'
 
@@ -12,6 +13,12 @@ import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
 
 
 class Header extends React.Component {
+    constructor() {
+        super()
+
+        this.handleScroll = throttle(this.handleScroll.bind(this), 200)
+    }
+
     componentDidMount() {
         window.addEventListener('scroll', this.handleScroll.bind(this))
     }
@@ -21,21 +28,19 @@ class Header extends React.Component {
     }
 
     handleScroll() {
-        const {isCollapsed} = this.props.header
+        const {isCollapsed} = this.props.header.toJS()
         const headerHeight = 52
+        const isCloseToTop = window.pageYOffset < headerHeight && isCollapsed
+        const hasScrolledDown = window.pageYOffset > headerHeight && !isCollapsed
 
-        if (window.pageYOffset > headerHeight && !isCollapsed) {
-            this.props.shrinkHeader()
-        }
-
-        if (window.pageYOffset < headerHeight && isCollapsed) {
-            this.props.expandHeader()
+        if (isCloseToTop || hasScrolledDown) {
+            this.props.toggleHeader()
         }
     }
 
     render() {
-        const {header, onMenuClick} = this.props
-        const {isCollapsed} = header
+        const {onMenuClick} = this.props
+        const {isCollapsed} = this.props.header.toJS()
 
         const innerButtonClassName = classnames('t-header__inner-button', 'u-padding-0', {
             't--hide-label': isCollapsed
@@ -87,24 +92,22 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
-    expandHeader: PropTypes.func,
     header: PropTypes.object,
     isCollapsed: PropTypes.bool,
-    shrinkHeader: PropTypes.func,
+    toggleHeader: PropTypes.func,
     onMenuClick: PropTypes.func,
 }
 
 export const mapStateToProps = ({header}) => {
     return {
-        header: header.toJS()
+        header
     }
 }
 
 
 export const mapDispatchToProps = (dispatch) => {
     return {
-        shrinkHeader: () => dispatch(headerActions.shrinkHeader()),
-        expandHeader: () => dispatch(headerActions.expandHeader())
+        toggleHeader: () => dispatch(headerActions.toggleHeader())
     }
 }
 
