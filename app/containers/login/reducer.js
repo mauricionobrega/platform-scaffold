@@ -11,6 +11,7 @@ const initialState = Immutable.Map({
     title: "",
     isLogin: true,
     login: {
+        href: "",
         panelTitle: "",
         heading: "",
         description: "",
@@ -22,6 +23,7 @@ const initialState = Immutable.Map({
         }
     },
     register: {
+        href: "",
         panelTitle: "",
         heading: "",
         description: "",

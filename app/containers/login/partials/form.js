@@ -9,8 +9,8 @@ import {makeRequest, formEncode} from '../../../utils/utils'
 
 import {loginSuccess, loginFailure} from '../actions'
 
-const submit = (values, dispatch, props) => {
-    props.hiddenInputs.forEach((input) => {
+const submit = (values, {href, hiddenInputs, success, failure}) => {
+    hiddenInputs.forEach((input) => {
         values[input.name] = input.value
     })
 
@@ -24,19 +24,17 @@ const submit = (values, dispatch, props) => {
 
     let responseCopy
 
-    return makeRequest(props.href, options)
+    return makeRequest(href, options)
         .then((response) => {
             responseCopy = response.clone()
             return response.text()
         })
         .then((responseText) => {
             const $html = $(responseText)
-            debugger
             if ($html.find('.form-login').length) {
-                dispatch(loginFailure(responseCopy))
+                failure(responseCopy)
             } else {
-                dispatch(loginSuccess(responseCopy))
-                // window.location.href = 'customer/account'
+                success(responseCopy)
             }
         })
         .catch((error) => {
@@ -46,14 +44,19 @@ const submit = (values, dispatch, props) => {
 
 const LoginForm = (props) => {
     const {
+        // redux-form
         handleSubmit,
         error,
         invalid,
         submitting,
+        // state props from parent
         href,
         fields,
         hiddenInputs,
-        submitText
+        submitText,
+        // dispatch props from parent
+        success,
+        failure
     } = props
     const items = fields.map((field) => {
         return {
@@ -62,20 +65,13 @@ const LoginForm = (props) => {
         }
     })
     return (
-        <form onSubmit={handleSubmit((values, dispatch) => {
-            submit(values, dispatch, props)
+        <form onSubmit={handleSubmit((values) => {
+            submit(values, props)
         })}>
             <FormFields items={items} />
             <button type="submit" disabled={submitting}>{submitText}</button>
         </form>
     )
-}
-
-LoginForm.propTypes = {
-    href: PropTypes.string.isRequired,
-    fields: PropTypes.array,
-    hiddenInputs: PropTypes.array,
-    submitText: PropTypes.string
 }
 
 

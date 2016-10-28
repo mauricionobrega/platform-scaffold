@@ -1,13 +1,13 @@
 const parseFields = ($fields) => {
     return $fields.map((_, field) => {
         const $field = $(field)
-        const $error = $field.find('.mage-error')
+        // const $error = $field.find('.mage-error')
         return {
             label: $field.find('label').text().trim(),
             name: $field.find('input').attr('name'),
             type: $field.find('input').attr('type'),
             required: $field.hasClass('required'),
-            error: $error.length ? $error.text() : null
+            // error: $error.length ? $error.text() : null
         }
     })
 }

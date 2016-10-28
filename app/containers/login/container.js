@@ -7,49 +7,53 @@ import {Tabs, TabsPanel} from 'progressive-web-sdk/dist/components/tabs'
 
 import LoginForm from './partials/form'
 
-import * as loginActions from './actions'
+import * as actions from './actions'
 
-const LoginPanel = ({panelTitle, heading, description, form}) => {
+const LoginPanel = ({panelTitle, heading, description, form}, success, failure) => {
     return (
         <TabsPanel title={panelTitle}>
             <h3>{heading}</h3>
             <p>{description}</p>
-            <LoginForm {...form}></LoginForm>
+            <LoginForm {...form} success={success} failure={failure}></LoginForm>
         </TabsPanel>
     )
 }
 
-LoginPanel.propTypes = {
-    panelTitle: PropTypes.string.isRequired,
-    heading: PropTypes.string,
-    description: PropTypes.string,
-    form: PropTypes.object.isRequired
-}
-
-const Login = ({title, isLogin, login, register}) => {
+const Login = ({
+    title,
+    isLogin,
+    login,
+    register,
+    loginSuccess,
+    loginFailure,
+    registerSuccess,
+    registerFailure
+}) => {
     return (
         <div>
             <h1>{title}</h1>
             <Tabs activeIndex={isLogin ? 0 : 1}>
-                {LoginPanel(login)}
-                {LoginPanel(register)}
+                {LoginPanel(login, loginSuccess, loginFailure)}
+                {LoginPanel(register, registerSuccess, registerFailure)}
             </Tabs>
         </div>
     )
 }
 
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state) => {
     return {
         ...state.login.toJS()
     }
 }
 
-// const mapDispatchToProps = (dispatch, props) => {
-//     return {
-//         success: (response) => dispatch(loginActions.loginSuccess(response)),
-//         failure: (response) => dispatch(loginActions.loginFailure(response))
-//     }
-// }
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loginSuccess: (response) => dispatch(actions.loginSuccess(response)),
+        loginFailure: (response) => dispatch(actions.loginFailure(response)),
+        registerSuccess: (response) => dispatch(actions.registerSuccess(response)),
+        registerFailure: (response) => dispatch(actions.registerFailure(response))
+    }
+}
 
 Login.propTypes = {
     title: PropTypes.string.isRequired,
@@ -60,5 +64,5 @@ Login.propTypes = {
 
 export default connect(
     mapStateToProps,
-    // mapDispatchToProps
+    mapDispatchToProps
 )(Login)
