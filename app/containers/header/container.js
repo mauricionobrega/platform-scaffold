@@ -34,7 +34,7 @@ class Header extends React.Component {
         const hasScrolledDown = window.pageYOffset > headerHeight && !isCollapsed
 
         if (isCloseToTop || hasScrolledDown) {
-            this.props.toggleHeader()
+            this.props.toggleHeader(!isCollapsed)
         }
     }
 
@@ -104,14 +104,9 @@ export const mapStateToProps = ({header}) => {
     }
 }
 
-
-export const mapDispatchToProps = (dispatch) => {
-    return {
-        toggleHeader: () => dispatch(headerActions.toggleHeader())
-    }
-}
-
 export default connect(
     mapStateToProps,
-    mapDispatchToProps
+    {
+        toggleHeader: headerActions.toggleHeader
+    }
 )(Header)
