@@ -5,9 +5,8 @@ import Immutable from 'immutable'
 import PDPHeading from './partials/pdp-heading'
 import PDPCarousel from './partials/pdp-carousel'
 import PDPDescription from './partials/pdp-description'
+import PDPAddToCart from './partials/pdp-add-to-cart'
 import * as pdpActions from './actions'
-
-const PDPAddToCart = () => false
 
 class PDP extends React.Component {
     shouldComponentUpdate(newProps) {
@@ -24,9 +23,9 @@ class PDP extends React.Component {
         const {
             contentsLoaded = false,
             product = {},
-            itemQuantity = 1
+            itemQuantity = 1,
+            formInfo = {}
         } = pdp.toJS()
-
 
         if (!contentsLoaded) {
             return false
@@ -37,7 +36,7 @@ class PDP extends React.Component {
                 <PDPHeading {...product} />
                 <PDPCarousel items={product.carouselItems} />
                 <PDPDescription description={product.description} />
-                <PDPAddToCart quantity={itemQuantity} setQuantity={setQuantity} onSubmit={addToCart} />
+                <PDPAddToCart formInfo={formInfo} quantity={itemQuantity} setQuantity={setQuantity} onSubmit={addToCart} />
             </div>
         )
     }
