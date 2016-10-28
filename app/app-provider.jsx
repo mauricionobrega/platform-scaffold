@@ -13,7 +13,6 @@ import PLP from './containers/plp/container'
 
 
 const AppProvider = ({store}) => {
-
     /**
      * Given the current router state, get the corresponding URL on the
      * desktop site. Ignores #fragments in the router state.
@@ -28,29 +27,14 @@ const AppProvider = ({store}) => {
         ].join('')
     }
 
-    const getPageType = (routerState) => {
-        const route = routerState.routes[1]
-        const component = route.component
+    const getPageType = (routerState) => getComponentName(routerState.routes[1].component)
 
-        return getComponentName(component)
-    }
+    const dispatchRouteChanged = (nextState) => store.dispatch(appActions.onRouteChanged(getPageType(nextState)))
 
-    const getRouteName = (routerState) => {
-        return routerState.routes[1].routeName
-    }
-
-    const dispatchRouteChanged = (nextState) => {
-        store.dispatch(appActions.onRouteChanged(getPageType(nextState)))
-    }
-
-    const dispatchFetchPage = (nextState) => {
-        store.dispatch(appActions.fetchPage(getURL(nextState), getPageType(nextState)))
-    }
+    const dispatchFetchPage = (nextState) => store.dispatch(appActions.fetchPage(getURL(nextState), getPageType(nextState)))
 
     const onEnter = (nextState) => {
-        const routeName = getRouteName(nextState)
-
-        triggerMobifyPageView(routeName)
+        triggerMobifyPageView(nextState.routes[1].routeName)
         dispatchRouteChanged(nextState)
         dispatchFetchPage(nextState)
     }
