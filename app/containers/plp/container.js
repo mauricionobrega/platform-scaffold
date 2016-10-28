@@ -39,13 +39,18 @@ const PLP = ({hasProducts, isPlaceholder, noResultsText, numItems, products, tit
                     }
                 </div>
 
-                <Image
-                    alt="Heading logo"
-                    className="t-plp__heading-logo"
-                    height="51px"
-                    src={isPlaceholder ? '' : getAssetUrl(`static/img/${title.trim().toLowerCase()}.png`)}
-                    width="61px"
-                />
+                <div className="t-plp__heading-logo">
+                    {isPlaceholder ?
+                        <SkeletonBlock height="51px" width="61px" />
+                    :
+                        <Image
+                            alt="Heading logo"
+                            height="51px"
+                            src={getAssetUrl(`static/img/${title.trim().toLowerCase()}.png`)}
+                            width="61px"
+                        />
+                    }
+                </div>
             </div>
             <div className="t-plp__container">
                 {isPlaceholder ?
