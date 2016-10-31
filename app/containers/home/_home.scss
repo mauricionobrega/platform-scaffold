@@ -1,13 +1,14 @@
 // Home.scss
 // ===
 
-// [1] - Display box-shadow properly at bottom of container
+// [1] - Display box-shadow properly at bottom of container by increasing position
+// context above that of the footer (.t-footer__newsletter)
 
 .t-home {
 }
 
 .t-home__container {
-    margin-bottom: 1px; // [1]
+    position: relative; // [1]
     background-color: $background-color;
     box-shadow: $box-shadow;
     font-family: $header-font-family;
