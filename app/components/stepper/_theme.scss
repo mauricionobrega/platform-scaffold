@@ -19,4 +19,9 @@
     background-color: $brand-color;
 
     color: $neutral-10;
+
+    &:active,
+    &:focus {
+        background-color: $dark-brand-color;
+    }
 }
