@@ -4,11 +4,10 @@ import * as actions from './actions'
 describe('The Header reducer', () => {
 
     test('collapses the header content', () => {
-        let newState
         expect(initialState.get('isCollapsed')).toEqual(false) // Sanity check
 
         // Collapse...
-        newState = reducer(initialState, actions.toggleHeader(true))
+        const newState = reducer(initialState, actions.toggleHeader(true))
         expect(newState.get('isCollapsed')).toEqual(true)
     })
 
