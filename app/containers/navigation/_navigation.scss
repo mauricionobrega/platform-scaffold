@@ -1,0 +1,25 @@
+// Navigation
+// ===
+
+.t-navigation {
+    // Root Class. Contains all core styles, typically for the template's
+    // wrapper element.
+}
+
+
+.t-navigation__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: $unit * 6;
+
+    background-color: $brand-color;
+
+    color: white;
+}
+
+.t-navigation__header-logo {
+    height: $unit * 3;
+    padding: 0 $unit * 1.5;
+}
