@@ -7,9 +7,8 @@
 }
 
 .t-pdp__indicator {
-    float: right;
-
-    width: CALC(100% - 132px);
+    flex: 1;
+    margin-left: $unit;
     padding: 12px;
 
     text-align: center;

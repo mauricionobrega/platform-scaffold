@@ -8,14 +8,16 @@ const PDPAddToCart = ({ formInfo, quantity, setQuantity, onSubmit }) => {
         hiddenInputNodes.push(<input type="hidden" name={input} value={formInfo.hiddenInputs[input]} key={input} />)
     })
     return (
-        <form method={formInfo.method} action={formInfo.submitUrl}>
+        <form method={formInfo.method} action={formInfo.submitUrl} className="u-padding-start-md u-padding-end-md">
             {hiddenInputNodes}
             <div className="t-pdp__stepper">
                 <label>Quantity</label>
-                <Stepper decrementIcon="minus" incrementIcon="plus" initialValue={1} minimumValue={1} onChange={setQuantity}/>
+                <div className="u-flexbox u-margin-bottom-lg">
+                    <Stepper decrementIcon="minus" incrementIcon="plus" initialValue={1} minimumValue={1} onChange={setQuantity}/>
+                    <div className="t-pdp__indicator u-border">In stock</div>
+                </div>
             </div>
-            <div className="t-pdp__indicator u-border">In stock</div>
-            <Button type="submit" icon="plus" title="Add to cart" showIconText={true} className="c--primary u-width-full u-text-uppercase"/>
+            <Button type="submit" icon="plus" title="Add to cart" showIconText={true} className="c--primary u-width-full u-text-uppercase u-margin-bottom-lg"/>
         </form>
     )
 }
