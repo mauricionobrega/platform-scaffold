@@ -10,7 +10,7 @@ const SkipLinks = ({className}) => {
                 Skip to content
             </a>
 
-            <a href="#app-navigation" className="c-skip-links__anchor">
+            <a href="#header-navigation" className="c-skip-links__anchor">
                 Skip to main navigation
             </a>
 

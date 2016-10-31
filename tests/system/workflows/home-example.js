@@ -6,7 +6,7 @@ let home
 // links should be present on the page...
 const skipLinkTargets = {
     main: '#app-main',
-    nav: '#app-navigation',
+    nav: '#header-navigation',
     footer: '#app-footer',
 }
 
