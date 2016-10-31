@@ -61,7 +61,7 @@ class PLP extends React.Component {
                             className="t-plp__heading-logo"
                             alt="Heading logo"
                             height="60px"
-                            src={getAssetUrl(`static/img/categories/${title.trim().toLowerCase()}.png`)}
+                            src={getAssetUrl(`static/img/categories/${title.trim().toLowerCase()}@2x.png`)}
                             width="60px"
                         />
                     }

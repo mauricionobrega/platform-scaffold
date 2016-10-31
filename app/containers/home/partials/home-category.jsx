@@ -11,7 +11,7 @@ import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 const getImage = (text) => {
     return (
         <Image
-            src={getAssetUrl(`static/img/categories/${text.trim().toLowerCase()}.png`)}
+            src={getAssetUrl(`static/img/categories/${text.trim().toLowerCase()}@2x.png`)}
             alt={text}
             height="60px"
             width="60px"
