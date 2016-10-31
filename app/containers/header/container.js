@@ -13,8 +13,8 @@ import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
 
 
 class Header extends React.Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
 
         this.handleScroll = throttle(this.handleScroll.bind(this), 200)
     }
