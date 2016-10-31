@@ -6,10 +6,11 @@
 // 1) Provides the positioning context for (2)
 // 2) Is positioned relative to (1)
 
+$nav-item__active-color: #f1f0f7;
+
 .c-nav-item {
     display: block;
     height: $unit * 5.5;
-    padding: 0 ($unit * 1.5);
     border: 0;
 
     background: none;
@@ -38,7 +39,7 @@
 }
 
 .c-nav-item.c--selected {
-    background-color: #f1f0f7;
+    background-color: $nav-item__active-color;
 
     color: $brand-color;
 }
@@ -50,7 +51,7 @@
 
 
 .c-nav-item--with-before-icon.c--selected {
-    background-color: #f1f0f7;
+    background-color: $nav-item__active-color;
 
     color: $neutral-60;
 }
@@ -90,7 +91,9 @@
 
 
 .c-nav-item.c--with-icon {
-    padding: 0;
-
     background-color: $neutral-20;
+
+    .c-nav-item__inner {
+        padding: 0;
+    }
 }
