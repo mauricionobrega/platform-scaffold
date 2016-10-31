@@ -84,3 +84,9 @@
 .c-button.c--icon-only {
     line-height: 0;
 }
+
+.c-button__inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

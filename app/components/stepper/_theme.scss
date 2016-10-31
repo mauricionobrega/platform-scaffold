@@ -1,0 +1,27 @@
+.c-stepper {
+    display: flex;
+    width: 132px; // 44 per button
+    border: $border;
+
+    input {
+        border: none;
+
+        text-align: center;
+    }
+}
+
+.c-stepper__button {
+    background-color: $brand-color;
+
+    color: $neutral-10;
+
+    // &[disabled] {
+    //     background-color: $neutral-35;
+    //
+    //     color: $neutral-50;
+    // }
+}
+
+.c-stepper__button[diabled] {
+    background-color: red;
+}

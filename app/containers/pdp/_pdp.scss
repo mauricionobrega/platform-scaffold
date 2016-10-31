@@ -5,3 +5,12 @@
     // Root Class. Contains all core styles, typically for the template's
     // wrapper element.
 }
+
+.t-pdp__indicator {
+    float: right;
+
+    width: CALC(100% - 132px);
+    padding: 12px;
+
+    text-align: center;
+}
