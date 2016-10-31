@@ -53,10 +53,16 @@
     }
 }
 
+.t--plp__heading-logo-skeleton {
+    position: absolute;
+    right: $unit + 1;
+    bottom: $unit * 1.5;
+}
+
 .t-plp__heading-logo {
     position: absolute; // [3]
     right: $unit;
-    bottom: $unit + 2;
+    bottom: $unit / 2;
 }
 
 .t-plp__no-results-image {
