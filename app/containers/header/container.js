@@ -30,11 +30,11 @@ class Header extends React.Component {
     handleScroll() {
         const {isCollapsed} = this.props.header.toJS()
         const headerHeight = 52
-        const isCloseToTop = window.pageYOffset < headerHeight && isCollapsed
-        const hasScrolledDown = window.pageYOffset > headerHeight && !isCollapsed
+        const newIsCollapsed = window.pageYOffset > headerHeight
 
-        if (isCloseToTop || hasScrolledDown) {
-            this.props.toggleHeader(!isCollapsed)
+        if (newIsCollapsed !== isCollapsed) {  // Saves triggering the action
+            console.log('test')
+            this.props.toggleHeader(newIsCollapsed)
         }
     }
 
