@@ -11,7 +11,7 @@ module.exports = {
     ],
     serverHost: '0.0.0.0',
     serverPort: 4000,
-    skipComponentsWithoutExample: true,
+    skipComponentsWithoutExample: false,
     updateWebpackConfig(webpackConfig) {
         // Supply our own renderer for styleguide
         webpackConfig.resolve.alias['rsg-components/StyleGuide/StyleGuideRenderer'] = path.join(__dirname, '../styleguide/renderer')
