@@ -1,13 +1,17 @@
+// Carousel Theme
+// ===
+//
+
 .c-carousel {
     position: relative;
 
-    padding: 12px;
+    padding: $unit*1.5;
 
     background: $neutral-20;
 }
 
 .c-carousel__inner {
-    padding: 24px;
+    padding: $unit*3;
 
     background: $neutral-10;
     box-shadow: 0 0 2px 0 rgba(0,0,0,0.30);
@@ -20,7 +24,7 @@
     bottom: 0;
 
     display: flex;
-    width: 44px;
+    width: $unit*5.5;
 
     svg {
         max-width: 100%;

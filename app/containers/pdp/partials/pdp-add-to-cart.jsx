@@ -10,9 +10,9 @@ const PDPAddToCart = ({ formInfo, quantity, setQuantity, onSubmit }) => {
     return (
         <form method={formInfo.method} action={formInfo.submitUrl} className="u-padding-start-md u-padding-end-md">
             {hiddenInputNodes}
-            <div className="t-pdp__stepper">
+            <div className="t-pdp__stepper u-margin-top-lg">
                 <label>Quantity</label>
-                <div className="u-flexbox u-margin-bottom-lg">
+                <div className="u-flexbox u-margin-bottom-lg u-margin-top">
                     <Stepper decrementIcon="minus" incrementIcon="plus" initialValue={1} minimumValue={1} onChange={setQuantity}/>
                     <div className="t-pdp__indicator u-border">In stock</div>
                 </div>

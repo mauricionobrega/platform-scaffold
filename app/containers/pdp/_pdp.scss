@@ -9,7 +9,12 @@
 .t-pdp__indicator {
     flex: 1;
     margin-left: $unit;
-    padding: 12px;
+    padding: $unit*1.5;
 
     text-align: center;
+}
+
+
+.t-pdp-heading {
+    border-bottom: 1px solid $neutral-30;
 }

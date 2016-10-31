@@ -1,6 +1,11 @@
+// Stepper Theme
+// ===
+//
+// 1. 44px per button - as per design
+
 .c-stepper {
     display: flex;
-    width: 132px; // 44 per button
+    width: 132px;
     border: $border;
 
     input {
@@ -14,14 +19,4 @@
     background-color: $brand-color;
 
     color: $neutral-10;
-
-    // &[disabled] {
-    //     background-color: $neutral-35;
-    //
-    //     color: $neutral-50;
-    // }
-}
-
-.c-stepper__button[diabled] {
-    background-color: red;
 }
