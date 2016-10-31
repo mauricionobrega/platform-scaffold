@@ -3,6 +3,7 @@
 
 // [1] - Display box-shadow properly at bottom of container by increasing position
 // context above that of the footer (.t-footer__newsletter)
+// [2] - Fixes white space appearing below carousel images
 
 .t-home {
 }
@@ -14,7 +15,7 @@
     font-family: $header-font-family;
 
     .c-carousel__inner {
-        box-shadow: $box-shadow;
+        line-height: 0; // [2]
     }
 }
 
