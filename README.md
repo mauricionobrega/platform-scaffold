@@ -41,6 +41,14 @@ To run tests in watch mode and only run test related to files you modify during 
 npm run test:watch
 ```
 
+## Automated end-to-end tests
+
+To verify that changes do not break the checkout flow:
+
+```
+npm run smoke-test
+```
+
 ## Developing against `develop` of the Progressive Web SDK
 
 If you are wanting to improve or add a library/component in the Progressive Web SDK,
@@ -51,3 +59,4 @@ cd progressive-web-sdk
 npm link
 
 Then navigate back to your project root directory and run `npm link progressive-web-sdk`.
+

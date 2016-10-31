@@ -1,0 +1,22 @@
+// Icon theme
+// ===
+
+.c-icon {
+    width: $unit*2.5;
+    height: $unit*2.5;
+
+    &.c--small {
+        width: $unit;
+        height: $unit;
+    }
+
+    &.c--medium {
+        width: $unit*3;
+        height: $unit*3;
+    }
+
+    &.c--large {
+        width: $unit*4;
+        height: $unit*4;
+    }
+}
