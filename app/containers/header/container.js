@@ -33,7 +33,6 @@ class Header extends React.Component {
         const newIsCollapsed = window.pageYOffset > headerHeight
 
         if (newIsCollapsed !== isCollapsed) {  // Saves triggering the action
-            console.log('test')
             this.props.toggleHeader(newIsCollapsed)
         }
     }
