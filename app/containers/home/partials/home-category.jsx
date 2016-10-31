@@ -14,7 +14,7 @@ const getImage = (text) => {
             src={getAssetUrl(`static/img/categories/${text.trim().toLowerCase()}.png`)}
             alt={text}
             height="60px"
-            width="63px"
+            width="60px"
         />
     )
 }
@@ -36,7 +36,7 @@ const HomeCategory = ({href, text}) => {
     :
         <ListTile
             className="t-home__category-section"
-            startAction={<SkeletonBlock height="60px" width="63px" />}
+            startAction={<SkeletonBlock height="60px" width="60px" />}
         >
             <SkeletonText className="t-home__category-text" lines={2} />
         </ListTile>
