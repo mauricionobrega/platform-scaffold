@@ -52,7 +52,8 @@ module.exports = {
                 loader: 'text',
                 include: [
                     /progressive-web-sdk/,
-                    /app/
+                    /app/,
+                    /shoppicon/
                 ]
             }
         )
