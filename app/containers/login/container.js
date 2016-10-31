@@ -5,16 +5,18 @@ import {connect} from 'react-redux'
 
 import {Tabs, TabsPanel} from 'progressive-web-sdk/dist/components/tabs'
 
-import LoginForm from './partials/form'
+import Form from './partials/form'
 
 import * as actions from './actions'
 
-const LoginPanel = ({panelTitle, heading, description, form}, success, failure) => {
+const Panel = ({panelTitle, heading, description, form}, submit) => {
     return (
         <TabsPanel title={panelTitle}>
             <h3>{heading}</h3>
             <p>{description}</p>
-            <LoginForm {...form} success={success} failure={failure}></LoginForm>
+            {form.fields &&
+                <Form {...form} submitForm={submit}></Form>
+            }
         </TabsPanel>
     )
 }
@@ -24,17 +26,15 @@ const Login = ({
     isLogin,
     login,
     register,
-    loginSuccess,
-    loginFailure,
-    registerSuccess,
-    registerFailure
+    submitLogin,
+    submitRegister
 }) => {
     return (
         <div>
             <h1>{title}</h1>
             <Tabs activeIndex={isLogin ? 0 : 1}>
-                {LoginPanel(login, loginSuccess, loginFailure)}
-                {LoginPanel(register, registerSuccess, registerFailure)}
+                {Panel(login, submitLogin)}
+                {Panel(register, submitRegister)}
             </Tabs>
         </div>
     )
@@ -48,10 +48,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loginSuccess: (response) => dispatch(actions.loginSuccess(response)),
-        loginFailure: (response) => dispatch(actions.loginFailure(response)),
-        registerSuccess: (response) => dispatch(actions.registerSuccess(response)),
-        registerFailure: (response) => dispatch(actions.registerFailure(response))
+        submitLogin: (values) => dispatch(actions.submitLogin(values)),
+        submitRegister: (values) => dispatch(actions.submitRegister(values)),
     }
 }
 

@@ -41,7 +41,7 @@ export default createReducer({
         const {$, $response, pageType} = action
         if (pageType === getComponentName(Login)) {
             return state.merge(Immutable.fromJS({
-                ...parser($, $response, true)
+                ...parser($, $response)
             })).set('loaded', true)
         } else {
             return state
