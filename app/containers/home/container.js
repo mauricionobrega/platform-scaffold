@@ -16,10 +16,7 @@ const cardClasses = classNames(
     'u-margin-top-md',
     'u-margin-end',
     'u-margin-start',
-    'u-padding-top',
-    'u-padding-end',
-    'u-padding-bottom',
-    'u-padding-start'
+    'u-padding'
 )
 
 class Home extends React.Component {
