@@ -2,14 +2,10 @@ import React, {PropTypes} from 'react'
 import Button from 'progressive-web-sdk/dist/components/button'
 import Stepper from 'progressive-web-sdk/dist/components/stepper'
 
-const PDPAddToCart = ({ formInfo, quantity, setQuantity, onSubmit }) => {
-    const hiddenInputNodes = []
-    Object.keys(formInfo.hiddenInputs).forEach((input) => {
-        hiddenInputNodes.push(<input type="hidden" name={input} value={formInfo.hiddenInputs[input]} key={input} />)
-    })
+const PDPAddToCart = ({ quantity, setQuantity, onSubmit }) => {
+
     return (
-        <form method={formInfo.method} action={formInfo.submitUrl} className="u-padding-start-md u-padding-end-md">
-            {hiddenInputNodes}
+        <form className="u-padding-start-md u-padding-end-md">
             <div className="t-pdp__stepper u-margin-top-lg">
                 <label>Quantity</label>
                 <div className="u-flexbox u-margin-bottom-lg u-margin-top">
@@ -17,7 +13,14 @@ const PDPAddToCart = ({ formInfo, quantity, setQuantity, onSubmit }) => {
                     <div className="t-pdp__indicator u-border">In stock</div>
                 </div>
             </div>
-            <Button type="submit" icon="plus" title="Add to cart" showIconText={true} className="c--primary u-width-full u-text-uppercase u-margin-bottom-lg"/>
+            <Button
+                type="button"
+                icon="plus"
+                title="Add to cart"
+                showIconText={true}
+                className="c--primary u-width-full u-text-uppercase u-margin-bottom-lg"
+                onClick={onSubmit}
+            />
         </form>
     )
 }

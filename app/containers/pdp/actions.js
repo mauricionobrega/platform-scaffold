@@ -16,5 +16,8 @@ export const submitCartForm = () => (dispatch, getStore) => {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
+    }).then(() => {
+        dispatch(setItemQuantity(1))
+        window.location.href = "/checkout/cart"
     })
 }
