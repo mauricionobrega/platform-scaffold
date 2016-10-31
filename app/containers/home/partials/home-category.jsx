@@ -19,7 +19,7 @@ const getImage = (text) => {
     )
 }
 
-const icon = <Icon name="chevron-right" style={{height: '3vh', width: '3vh'}} className="u-color-brand" />
+const icon = <Icon name="chevron-right" style={{height: '3vh', width: '3vh'}} />
 
 const HomeCategory = ({href, text}) => {
     return text ?
