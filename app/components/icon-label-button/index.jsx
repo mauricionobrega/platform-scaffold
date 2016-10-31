@@ -8,7 +8,7 @@ const IconLabelButton = (props) => {
     const {iconName, label, onClick, className} = props
     const classes = classNames('c-icon-label-button', className)
     return (
-        <Button onClick={onClick} className={classes}>
+        <Button onClick={onClick} className={classes} innerClassName="u-padding-0">
             <IconLabel label={label} iconName={iconName} />
         </Button>
     )
