@@ -3,6 +3,11 @@ import * as utils from '../../utils/utils'
 
 
 /**
+ * Action dispatched when the route changes
+ */
+export const onRouteChanged = utils.createAction('On route changed', 'pageType')
+
+/**
  * Action dispatched when content for a global page render is ready.
  */
 export const onPageReceived = utils.createAction('On page received',
