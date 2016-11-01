@@ -25,7 +25,6 @@ export const makeRequest = (url, options) => {
     return fetch(url, {...options, credentials: 'same-origin'})
 }
 
-
 /**
  * Form-encode an arbitrary JS object.
  */
@@ -46,7 +45,6 @@ export const formEncode = (data) => {
     })
     return pairs.join('&').replace(/%20/g, '+')
 }
-
 
 /**
  * Retrieve the registered name of a component as a string

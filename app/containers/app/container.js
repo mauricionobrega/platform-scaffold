@@ -3,7 +3,11 @@ import {connect} from 'react-redux'
 import {hidePreloader} from 'progressive-web-sdk/dist/preloader'
 import {IconSprite} from 'progressive-web-sdk/dist/components/icon'
 import SkipLinks from '../../components/skip-links'
+import Header from '../../containers/header/container'
 import Footer from '../../containers/footer/container'
+import Navigation from '../../containers/navigation/container'
+import * as navActions from '../../containers/navigation/actions'
+import sprite from '../../static/sprite/sprite.svg'
 
 
 class App extends React.Component {
@@ -13,26 +17,26 @@ class App extends React.Component {
     }
 
     render() {
+        const {openNavigation, history} = this.props
         const currentTemplate = `t-${this.props.children.props.route.routeName}`
 
         return (
             <div id="app" className="t-app">
-                <IconSprite />
+                <IconSprite sprite={sprite} />
                 <SkipLinks />
 
                 <div id="app-wrap" className={currentTemplate}>
-                    <header id="app-header" role="banner">
-                        Header content
-
-                        <button id="app-navigation">Menu</button>
-                    </header>
+                    <div id="app-header" role="banner">
+                        <Header onMenuClick={openNavigation} />
+                        <Navigation history={history} />
+                    </div>
 
                     <main id="app-main" role="main">
                         {this.props.children}
                     </main>
 
                     <div id="app-footer">
-                        <Footer id="app-footer" />
+                        <Footer />
                     </div>
                 </div>
             </div>
@@ -41,7 +45,12 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-    children: PropTypes.element.isRequired
+    children: PropTypes.element.isRequired,
+    /**
+     * The react-router history object
+     */
+    history: PropTypes.object,
+    openNavigation: PropTypes.func,
 }
 
 const mapStateToProps = (state) => {
@@ -50,9 +59,8 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = () => {
-    return {
-    }
+const mapDispatchToProps = {
+    openNavigation: navActions.openNavigation
 }
 
 export default connect(

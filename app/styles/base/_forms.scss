@@ -1,6 +1,10 @@
 // Forms
 // ===
 
+$base__radio-checkmark: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ffffff"><path d="M18.8 6l-9.1 9.2-4.3-4.3L4 12.3 9.7 18 20.2 7.4z"/></svg>';
+$base__select-triangle: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="#4E439B"><polygon points="0 0 12 0 5.99940185 6"></polygon></svg>';
+$base__disabled-select-triangle: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="#999999"><polygon points="0 0 12 0 5.99940185 6"></polygon></svg>';
+
 
 // General Form Elements
 // ---
@@ -86,11 +90,27 @@ input[type="search"] {
 //
 // 1. Restore browser default styling. If you’re taking full control of select
 //    styling, remove both these lines.
+// 2. Simulate the position of the down-arrow as if it were a Icon component in
+//    a button.
 
 select {
     height: $tap-size; // 1
 
-    -webkit-appearance: menulist-button; // 1
+    border-radius: 0;
+    background-image: url($base__select-triangle); // @TODO replace with Icon component
+
+    color: $brand-color;
+
+    &,
+    &[disabled] {
+        background-repeat: no-repeat;
+        background-position: calc(100% - 14px) center; // 2
+        background-size: 12px 6px;
+    }
+
+    &[disabled] {
+        background-image: url($base__disabled-select-triangle); // @TODO: replace with Icon component
+    }
 }
 
 
@@ -105,12 +125,12 @@ select {
     top: -2px; // 1
 
     display: inline-block;
-    width: 24px;
-    height: 24px;
+    width: $unit*3;
+    height: $unit*3;
     margin-right: $unit;
-    border: 1px solid darken($border-color, 0.25);
+    border: $border;
 
-    background: $neutral-30;
+    background: #fff;
 
     vertical-align: middle;
 
@@ -122,8 +142,9 @@ select {
     }
 
     &:checked {
-        background: $neutral-30;
-        box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.1);
+        border: 0;
+
+        background: $brand-color;
 
         &::after {
             content: '';
@@ -133,33 +154,45 @@ select {
             display: block;
         }
     }
+
+    &:disabled {
+        border: 0;
+
+        background: rgba($neutral-35, 0.5);
+    }
 }
 
 [type="radio"] {
-    border-radius: 24px;
+    border-radius: 50%;
 
     &:after {
-        top: 20%;
-        right: 20%;
-        bottom: 20%;
-        left: 20%;
+        top: $unit;
+        right: $unit;
+        bottom: $unit;
+        left: $unit;
 
-        border-radius: 24px;
-        background: $neutral-70;
+        border-radius: 50%;
+        background: #fff;
     }
 }
 
 [type="checkbox"] {
     &:checked {
         &:after {
-            content: '\2714';
+            content: '';
 
             top: 0;
 
-            color: $neutral-70;
-            font-family: $font-family;
-            font-size: 32px;
-            line-height: $font-size;
+            display: block;
+            width: $unit*3;
+            height: $unit*3;
+
+            background: url($base__radio-checkmark); // @TODO replace with Icon Component
+
+            color: #fff;
+            line-height: 0;
+
+            pointer-events: none;
         }
     }
 }
@@ -172,8 +205,8 @@ button,
 [type="submit"] {
     display: block;
     min-height: $tap-size;
-    padding: $input-padding;
-    border: 1px solid darken($border-color, 0.25);
+    padding: 0;
+    border: 0;
 
     background: $neutral-30;
 

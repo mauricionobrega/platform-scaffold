@@ -3,6 +3,7 @@ import {Router, Route, IndexRoute} from 'progressive-web-sdk/dist/routing'
 import {triggerMobifyPageView} from 'progressive-web-sdk/dist/analytics'
 import {Provider} from 'react-redux'
 import * as appActions from './containers/app/actions'
+import {getComponentName} from './utils/utils'
 
 // Containers
 import App from './containers/app/container'
@@ -12,7 +13,6 @@ import PLP from './containers/plp/container'
 
 
 const AppProvider = ({store}) => {
-
     /**
      * Given the current router state, get the corresponding URL on the
      * desktop site. Ignores #fragments in the router state.
@@ -27,28 +27,25 @@ const AppProvider = ({store}) => {
         ].join('')
     }
 
-    const getPageType = (routerState) => {
-        const route = routerState.routes[1]
-        const name = route.component.name
-        return name === 'Connect' ? route.component.WrappedComponent.name : name
-    }
+    const getPageType = (routerState) => getComponentName(routerState.routes[1].component)
 
-    const getRouteName = (routerState) => {
-        return routerState.routes[1].routeName
-    }
+    const dispatchRouteChanged = (nextState) => store.dispatch(appActions.onRouteChanged(getPageType(nextState)))
+
+    const dispatchFetchPage = (nextState) => store.dispatch(appActions.fetchPage(getURL(nextState), getPageType(nextState)))
 
     const onEnter = (nextState) => {
-        const routeName = getRouteName(nextState)
-        triggerMobifyPageView(routeName)
-        store.dispatch(appActions.fetchPage(getURL(nextState), getPageType(nextState)))
+        triggerMobifyPageView(nextState.routes[1].routeName)
+        dispatchRouteChanged(nextState)
+        dispatchFetchPage(nextState)
     }
 
     const onChange = (prevState, nextState) => {
         const prevURL = getURL(prevState)
         const nextURL = getURL(nextState)
+
         if (nextURL !== prevURL) {
-            const pageType = getPageType(nextState)
-            store.dispatch(appActions.fetchPage(nextURL, pageType))
+            dispatchRouteChanged(nextState)
+            dispatchFetchPage(nextState)
         }
     }
 
