@@ -5,7 +5,7 @@ import {reduxForm} from 'redux-form'
 import FormFields from 'progressive-web-sdk/dist/components/form-fields'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
-const Form = (props) => {
+const LoginForm = (props) => {
     const {
         // redux-form
         handleSubmit,
@@ -26,9 +26,14 @@ const Form = (props) => {
         }
     })
     return (
-        <form onSubmit={handleSubmit((values) => {
-            submitForm(values)
-        })}>
+        <form
+            onSubmit={handleSubmit((values) => {
+                return new Promise((resolve, reject) => {
+                    submitForm(values, resolve, reject)
+                })
+            })}
+        >
+            {error && <span>{error}</span>}
             <FormFields items={items} />
             <button type="submit" disabled={submitting}>{submitText}</button>
         </form>
@@ -36,8 +41,8 @@ const Form = (props) => {
 }
 
 
-const ReduxForm = reduxForm({
+const ReduxLoginForm = reduxForm({
     form: 'login-form'
-})(Form)
+})(LoginForm)
 
-export default ReduxForm
+export default ReduxLoginForm

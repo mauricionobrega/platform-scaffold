@@ -1,10 +1,12 @@
 import {createAction, makeRequest, formEncode} from '../../utils/utils'
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import {onPageReceived} from '../app/actions'
+import {SubmissionError} from 'redux-form'
 
-export const submitForm = (formValues, form, success, failure) => {
+export const submitForm = (formValues, resolve, reject) => {
     return (dispatch, getStore) => {
-        const {href, hiddenInputs} = form
+        const loginPage = getStore().login.toJS()
+        const {href, hiddenInputs} = loginPage.form
 
         hiddenInputs.forEach((input) => {
             formValues[input.name] = input.value
@@ -21,58 +23,25 @@ export const submitForm = (formValues, form, success, failure) => {
         let responseCopy
 
         return makeRequest(href, options)
-            .then((response) => {
-                responseCopy = response.clone()
-                return response.text()
-            })
-            .then((responseText) => {
-                const $html = $(responseText)
-                if ($html.find('.form-login').length) {
-                    dispatch(failure(responseCopy))
-                } else {
-                    dispatch(success(responseCopy))
-                }
-            })
-            .catch((error) => {
-                console.error('Failed to login due to network error.', error)
-            })
-    }
-}
-
-export const submitLogin = (formValues) => {
-    return (dispatch, getStore) => {
-        const loginPage = getStore().login.toJS()
-        dispatch(submitForm(formValues, loginPage.login.form, loginSuccess, loginFailure))
-
-    }
-}
-
-export const submitRegister = (formValues) => {
-    return (dispatch, getStore) => {
-        const loginPage = getStore().login.toJS()
-        dispatch(submitForm(formValues, loginPage.register.form, registerSuccess, registerFailure))
-    }
-}
-
-export const loginSuccess = (response) => {
-    return (dispatch, getStore) => {
-        window.location.href = '/customer/account'
-    }
-}
-
-export const loginFailure = (response) => {
-    return (dispatch, getStore) => {
-        return jqueryResponse(response)
-            .then(([$, $responseText]) => dispatch(onPageReceived($, $responseText))) //TODO: parse error
-    }
-}
-
-export const registerSuccess = (response) => {
-    return (dispatch, getStore) => {
-    }
-}
-
-export const registerFailure = (response) => {
-    return (dispatch, getStore) => {
+                .then((response) => {
+                    responseCopy = response.clone()
+                    return response.text()
+                })
+                .then((responseText) => {
+                    const $html = $(responseText)
+                    if ($html.find('.form-login').length) {
+                        const error = {
+                            _error: "Username or password is incorrect"
+                        }
+                        reject(new SubmissionError(error))
+                    } else {
+                        window.location.href = '/customer/account'
+                        resolve(true)
+                    }
+                })
+                .catch((error) => {
+                    console.error('Failed to login due to network error.', error)
+                    reject({})
+                })
     }
 }

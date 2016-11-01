@@ -5,35 +5,19 @@ import {getComponentName} from '../../utils/utils'
 import Login from './container'
 
 import {onPageReceived, fetchPage} from '../app/actions'
-import parser from './parsers/shared'
+import parser from './parsers/login'
 
 const initialState = Immutable.Map({
     title: "",
-    isLogin: true,
-    login: {
+    href: "",
+    heading: "",
+    description: "",
+    form: {
         href: "",
-        panelTitle: "",
-        heading: "",
-        description: "",
-        form: {
-            href: "",
-            fields: [],
-            hiddenInputs: [],
-            submitText: ""
-        }
-    },
-    register: {
-        href: "",
-        panelTitle: "",
-        heading: "",
-        description: "",
-        form: {
-            href: "",
-            fields: [],
-            hiddenInputs: [],
-            submitText: ""
-        }
-    },
+        fields: [],
+        hiddenInputs: [],
+        submitText: ""
+    }
 })
 
 export default createReducer({

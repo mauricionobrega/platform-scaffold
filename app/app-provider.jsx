@@ -58,7 +58,6 @@ const AppProvider = ({store}) => {
                 <Route path="/" component={App} onEnter={onEnter} onChange={onChange}>
                     <IndexRoute component={Home} routeName="home" />
                     <Route component={Login} path="customer/account/login" routeName="login" />
-                    <Route component={Login} path="customer/account/create" routeName="register" />
                     <Route component={PLP} path="*.html" routeName="productListPage" />
                 </Route>
             </Router>
