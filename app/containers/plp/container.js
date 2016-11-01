@@ -55,18 +55,17 @@ class PLP extends React.Component {
                         }
                     </div>
 
-                    <div className="t-plp__heading-logo">
-                        {isPlaceholder ?
-                            <SkeletonBlock height="51px" width="61px" />
-                        :
-                            <Image
-                                alt="Heading logo"
-                                height="51px"
-                                src={getAssetUrl(`static/img/${title.trim().toLowerCase()}.png`)}
-                                width="61px"
-                            />
-                        }
-                    </div>
+                    {isPlaceholder ?
+                        <SkeletonBlock height="52px" width="57px" className="t--plp__heading-logo-skeleton" />
+                    :
+                        <Image
+                            className="t-plp__heading-logo"
+                            alt="Heading logo"
+                            height="60px"
+                            src={getAssetUrl(`static/img/categories/${title.trim().toLowerCase()}@2x.png`)}
+                            width="60px"
+                        />
+                    }
                 </div>
                 <div className="t-plp__container">
                     {isPlaceholder ?
