@@ -29,7 +29,7 @@ const AppProvider = ({store}) => {
 
     const getPageType = (routerState) => getComponentName(routerState.routes[1].component)
 
-    const dispatchRouteChanged = (nextState) => store.dispatch(appActions.onRouteChanged(getPageType(nextState)))
+    const dispatchRouteChanged = (nextState) => store.dispatch(appActions.onRouteChanged(getURL(nextState), getPageType(nextState)))
 
     const dispatchFetchPage = (nextState) => store.dispatch(appActions.fetchPage(getURL(nextState), getPageType(nextState)))
 

@@ -12,7 +12,7 @@ describe('The PLP reducer', () => {
     })
 
     test('stores plp state using the current window.location.href as the key name', () => {
-        const firstHref = 'http://www.foo.com'
+        const firstHref = 'http://www.foo.com/'
         const secondHref = 'http://www.foo.com/home.html'
 
         /**
@@ -26,13 +26,13 @@ describe('The PLP reducer', () => {
             value: firstHref
         })
 
-        const oldState = reducer(initialState, onPageReceived($, $content, 'PLP'))
+        const oldState = reducer(initialState, onPageReceived($, $content, 'PLP', firstHref))
         expect(oldState.has(firstHref)).toBeTruthy()
 
         // Mock changing the URL
         window.location.href = secondHref
 
-        const newState = reducer(initialState, onPageReceived($, $content, 'PLP'))
+        const newState = reducer(initialState, onPageReceived($, $content, 'PLP', secondHref))
         expect(newState.has(secondHref)).toBeTruthy()
     })
 
