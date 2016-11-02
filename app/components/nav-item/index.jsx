@@ -38,7 +38,7 @@ NavItemWithIcon.propTypes = NavItem.propTypes
 export const AccountNavItem = (props) => {
     return (
         <NavItemWithIcon {...props}
-            beforeContent={<NavItemIcon name="person" />} />
+            beforeContent={<NavItemIcon name="user" />} />
     )
 }
 
