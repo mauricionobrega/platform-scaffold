@@ -35,7 +35,7 @@ const ProductItem = ({
                     </p>
                 }
 
-                <div className="u-margin-bottom-sm">
+                <div className="u-margin-bottom-sm u-text-uppercase">
                     {title}
                 </div>
 

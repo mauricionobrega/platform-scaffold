@@ -35,11 +35,12 @@ class MiniCart extends React.Component {
         )
 
         return (
-            <Sheet className="t-mini-cart"  open={isOpen} onDismiss={closeMiniCart} maskOpacity={0.85} effect="slide-right">
+            <Sheet className="t-mini-cart"  open={isOpen} onDismiss={closeMiniCart} maskOpacity={0.7} effect="slide-right">
                 <HeaderBar>
                     <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
-                        <Image className="t-navigation__header-logo" src={logoURL} alt="Merlin's Potions Logo" />
-                        <h2 className="u-visually-hidden">Shopping Cart</h2>
+                        <h2 className="t-mini-cart__title u-heading-family u-text-uppercase">
+                            <span className="u-text-lighter">Shopping</span> Cart
+                        </h2>
                     </HeaderBarTitle>
 
                     <HeaderBarActions>
