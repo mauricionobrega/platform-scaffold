@@ -7,12 +7,13 @@ import parser from './parsers/plp'
 import PLP from './container'
 import {SELECTOR, PLACEHOLDER} from './constants'
 
+/**
+ * To determine if we should modify redux state, we compare the component name of
+ * the selected route (and thus, the page we received) to our component: `PLP`
+ */
 const isPageType = (pageType) => pageType === getComponentName(PLP)
 
-const getSelector = (state) => {
-    const loc = window.location.href
-    return state.has(loc) ? loc : PLACEHOLDER
-}
+const getSelector = (state, currentURL) => { return state.has(currentURL) ? currentURL : PLACEHOLDER }
 
 export const initialState = Immutable.Map({
     [SELECTOR]: PLACEHOLDER,
@@ -28,27 +29,32 @@ export const initialState = Immutable.Map({
 
 const plp = createReducer({
     [onPageReceived]: (state, action) => {
-        const {$, $response, pageType} = action
+        const {$, $response, pageType, url, currentURL} = action
 
         if (isPageType(pageType)) {
             const parsedPlp = Immutable.fromJS(parser($, $response))
-            const currentLocation = window.location.href
 
-            /**
-             * Update the store using location.href as key and the result from
-             * the parser as our value.
-             * Also set the store's current selector to location.href so we
-             * can access it in our container.
-             */
-            return state
-                .set(SELECTOR, currentLocation)
-                .set(currentLocation, parsedPlp)
+            // `.withMutations` allows us to batch together changes to state
+            return state.withMutations((s) => {
+                // Update the store using location.href as key and the result from
+                // the parser as our value -- even if it isn't the page we're
+                // currently viewing
+                s.set(url, parsedPlp)
+
+                // Also set the store's current selector to location.href so we
+                // can access it in our container, but only if we're on that href
+                if (url === currentURL) {
+                    s.set(SELECTOR, url)
+                }
+            })
         } else {
             return state
         }
     },
     [onRouteChanged]: (state, action) => {
-        return isPageType(action.pageType) ? state.set(SELECTOR, getSelector(state)) : state
+        const {pageType, currentURL} = action
+
+        return isPageType(pageType) ? state.set(SELECTOR, getSelector(state, currentURL)) : state
     }
 }, initialState)
 
