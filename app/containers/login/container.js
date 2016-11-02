@@ -32,14 +32,14 @@ export class Login extends React.Component {
     }
 }
 
-export const mapStateToProps = (state, props) => {
+const mapStateToProps = (state, props) => {
     return {
         ...state.login.toJS(),
         immutable: state.login
     }
 }
 
-export const mapDispatchToProps = (dispatch, props) => {
+const mapDispatchToProps = (dispatch) => {
     return {
         fetchLoginContents: () => dispatch(loginActions.fetchLoginContents())
     }
