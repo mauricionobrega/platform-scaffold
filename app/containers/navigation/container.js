@@ -9,6 +9,8 @@ import * as navActions from './actions'
 import * as assetUtils from 'progressive-web-sdk/dist/asset-utils'
 import IconLabelButton from '../../components/icon-label-button'
 import * as merlinsNavItem from '../../components/nav-item'
+import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
+import {withRouter} from 'react-router'
 
 
 /**
@@ -25,24 +27,35 @@ const itemFactory = (type, props) => {
 
 
 const Navigation = (props) => {
-    const {navigation, closeNavigation, history} = props
+    const {navigation, closeNavigation, router} = props
     const path = navigation.get('path')
     const isOpen = navigation.get('isOpen')
     const root = navigation.get('root') && navigation.get('root').toJS()
     const logoURL = assetUtils.getAssetUrl('static/svg/nav-logo.svg')
 
     const onPathChange = (path) => {
-        history.push(path)
+        const url = new URL(path)
+        // Path in the nav expected to be on this domain. React-router now only accepts
+        // a path, instead of a full url.
+        const routerPath = url.pathname + url.search + url.hash
+        router.push(routerPath)
         closeNavigation()
     }
 
     return (
-        <Sheet open={isOpen} onDismiss={closeNavigation}>
+        <Sheet className="t-navigation" open={isOpen} onDismiss={closeNavigation} maskOpacity={0.85}>
             <Nav root={root} path={path} onPathChange={onPathChange}>
-                <div className="t-navigation__header">
-                    <Image className="t-navigation__header-logo" src={logoURL} alt="Merlin's Potions" />
-                    <IconLabelButton iconName="x" label="close" onClick={closeNavigation} />
-                </div>
+                <HeaderBar>
+                    <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
+                        <Image className="t-navigation__header-logo" src={logoURL} alt="Merlin's Potions Logo" />
+                        <h2 className="u-visually-hidden">Merlin's Main Navigation</h2>
+                    </HeaderBarTitle>
+
+                    <HeaderBarActions>
+                        <IconLabelButton iconName="close" label="close" onClick={closeNavigation} />
+                    </HeaderBarActions>
+                </HeaderBar>
+
                 <NavMenu itemFactory={itemFactory} />
             </Nav>
         </Sheet>
@@ -57,14 +70,14 @@ Navigation.propTypes = {
     closeNavigation: React.PropTypes.func,
 
     /**
-     * The react-router history object.
-     */
-    history: React.PropTypes.object,
-
-    /**
      * The immutableJS data for the nav.
      */
     navigation: React.PropTypes.object,
+
+    /**
+     * The react-router router object.
+     */
+    router: React.PropTypes.object,
 }
 
 
@@ -81,4 +94,4 @@ export default connect(
         openNavigation: navActions.openNavigation,
         closeNavigation: navActions.closeNavigation,
     }
-)(Navigation)
+)(withRouter(Navigation))

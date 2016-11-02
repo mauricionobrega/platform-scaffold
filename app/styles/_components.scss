@@ -9,16 +9,16 @@
 // @import 'node_modules/progressive-web-sdk/dist/components/accordion/base';
 // @import 'node_modules/progressive-web-sdk/dist/components/breadcrumbs/base';
 @import 'node_modules/progressive-web-sdk/dist/components/button/base';
-// @import 'node_modules/progressive-web-sdk/dist/components/carousel/base';
+@import 'node_modules/progressive-web-sdk/dist/components/carousel/base';
 @import 'node_modules/progressive-web-sdk/dist/components/divider/base';
 @import 'node_modules/progressive-web-sdk/dist/components/field/base';
 @import 'node_modules/progressive-web-sdk/dist/components/field-row/base';
 // @import 'node_modules/progressive-web-sdk/dist/components/field-set/base';
 // @import 'node_modules/progressive-web-sdk/dist/components/form-fields/base';
-// @import 'node_modules/progressive-web-sdk/dist/components/header-bar/base';
+@import 'node_modules/progressive-web-sdk/dist/components/header-bar/base';
 @import 'node_modules/progressive-web-sdk/dist/components/icon/base';
 @import 'node_modules/progressive-web-sdk/dist/components/icon-label/base';
-// @import 'node_modules/progressive-web-sdk/dist/components/image/base';
+@import 'node_modules/progressive-web-sdk/dist/components/image/base';
 // @import 'node_modules/progressive-web-sdk/dist/components/ledger/base';
 // @import 'node_modules/progressive-web-sdk/dist/components/link/base';
 @import 'node_modules/progressive-web-sdk/dist/components/list/base';
@@ -45,18 +45,21 @@
 // ---
 
 @import '../components/button/theme';
+@import '../components/carousel/theme';
 @import '../components/divider/theme';
 @import '../components/icon-label-button/base';
 @import '../components/field/theme';
 @import '../components/field-row/theme';
+@import '../components/header-bar/theme';
 @import '../components/icon/theme';
 @import '../components/icon-label/theme';
+@import '../components/image/theme';
 @import '../components/list/theme';
 @import '../components/list-tile/theme';
 @import '../components/login-form/base';
+@import '../components/sheet/theme';
 @import '../components/skeleton-block/theme';
 @import '../components/skip-links/base';
 @import '../components/nav-item/theme';
 @import '../components/nav-menu/theme';
 @import '../components/nav/theme';
-

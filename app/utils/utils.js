@@ -25,7 +25,6 @@ export const makeRequest = (url, options) => {
     return fetch(url, {...options, credentials: 'same-origin'})
 }
 
-
 /**
  * Form-encode an arbitrary JS object.
  */
@@ -50,4 +49,14 @@ export const makeFormEncodedRequest = (url, data, options) => {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     })
+}
+
+/**
+ * Retrieve the registered name of a component as a string
+ * @param {object} component - a React component, potentially wrapped with react-redux
+ * @returns {string} - The registered name of the given component
+ */
+export const getComponentName = (component) => {
+    const name = component.name
+    return name === 'Connect' ? component.WrappedComponent.name : name
 }

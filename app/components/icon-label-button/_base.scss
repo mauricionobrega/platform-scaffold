@@ -3,13 +3,12 @@
 .c-icon-label-button,
 .c-icon-label-button:active,
 .c-icon-label-button:focus {
-    width: ($unit * 6);
-    height: ($unit * 6);
     margin: 0;
     padding: 0;
     border: 0;
-    background: none;
 
-    background-color: $brand-color;
-    color: white;
+    background: none;
+    background-color: transparent;
+
+    color: inherit;
 }
