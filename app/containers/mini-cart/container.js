@@ -5,37 +5,33 @@ import classNames from 'classnames'
 import Button from 'progressive-web-sdk/dist/components/button'
 import IconLabelButton from '../../components/icon-label-button'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
-import List from 'progressive-web-sdk/dist/components/list' // @TODO fix this to accept children
+import List from 'progressive-web-sdk/dist/components/list'
 import ProductItem from '../../components/product-item'
-import Icon from 'progressive-web-sdk/dist/components/icon'
-import Image from 'progressive-web-sdk/dist/components/image'
 import * as miniCartActions from './actions'
-import * as assetUtils from 'progressive-web-sdk/dist/asset-utils'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 
 class MiniCart extends React.Component {
-    // componentDidMount() {
-    //     this.props.fetchContents()
-    // }
+    componentDidMount() {
+        // this.props.fetchContents()
+    }
 
     render() {
-        const { miniCart, closeMiniCart } = this.props
+        const {miniCart, closeMiniCart} = this.props
         const isOpen = miniCart.get('isOpen')
-
-        // @TODO REPLACE with the Shopping Cart text
-        const logoURL = assetUtils.getAssetUrl('static/svg/nav-logo.svg')
         const subtotalClasses = classNames(
             't-mini-cart__subtotal',
+
             'u-flexbox',
             'u-justify-between',
             'u-margin-bottom-lg',
             'u-padding-top-lg',
+
             'u-h4',
             'u-heading-family'
         )
 
         return (
-            <Sheet className="t-mini-cart"  open={isOpen} onDismiss={closeMiniCart} maskOpacity={0.7} effect="slide-right">
+            <Sheet className="t-mini-cart" open={isOpen} onDismiss={closeMiniCart} maskOpacity={0.7} effect="slide-right">
                 <HeaderBar>
                     <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
                         <h2 className="t-mini-cart__title u-heading-family u-text-uppercase">
@@ -117,9 +113,10 @@ class MiniCart extends React.Component {
 }
 
 MiniCart.propTypes = {
-    contentsLoaded: PropTypes.bool,
     closeMiniCart: PropTypes.func,
+    contentsLoaded: PropTypes.bool,
     fetchContents: PropTypes.func,
+    miniCart: PropTypes.object,
 }
 
 MiniCart.defaultProps = {
@@ -129,12 +126,6 @@ MiniCart.defaultProps = {
 const mapStateToProps = (state) => {
     return {
         miniCart: state.miniCart
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        closeMiniCart: () => dispatch(),
     }
 }
 

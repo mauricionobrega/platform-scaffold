@@ -19,12 +19,7 @@ const ProductItem = ({
     src,
     title,
 }) => {
-    const classes = classNames(
-        'c-product-item',
-        'u-flexbox',
-        'u-row-reverse',
-        className,
-    )
+    const classes = classNames('c-product-item', 'u-flexbox', 'u-row-reverse', className)
 
     return (
         <article className={classes}>
@@ -79,16 +74,29 @@ ProductItem.propTypes = {
     category: PropTypes.string,
 
     /**
+     * Any children to be nested within this ProductItem
+     */
+    children: PropTypes.string,
+
+    /**
      * Adds values to the `class` attribute of the root element
      */
     className: PropTypes.string,
 
     /**
+     * Height of the ProductItem's image
+     */
+    imageHeight: PropTypes.string,
+
+    /**
+     * Width of the ProductItem's image
+     */
+    imageWidth: PropTypes.string,
+
+    /**
      * Provides the source for the ProductItem's image
      */
     src: PropTypes.string,
-
-
 
 }
 

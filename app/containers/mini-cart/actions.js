@@ -1,5 +1,5 @@
-import {createAction, makeRequest} from '../../utils/utils'
-import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
+import {createAction} from '../../utils/utils'
+// import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 // import miniCartParser from './mini-cart-parser'
 
 // export const receiveContents = createAction('Received MiniCart Contents')

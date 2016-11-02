@@ -4,9 +4,7 @@ import Nav from 'progressive-web-sdk/dist/components/nav'
 import NavMenu from 'progressive-web-sdk/dist/components/nav-menu'
 import NavItem from 'progressive-web-sdk/dist/components/nav-item'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
-import Image from 'progressive-web-sdk/dist/components/image'
 import * as navActions from './actions'
-import * as assetUtils from 'progressive-web-sdk/dist/asset-utils'
 import IconLabelButton from '../../components/icon-label-button'
 import * as merlinsNavItem from '../../components/nav-item'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
@@ -31,7 +29,6 @@ const Navigation = (props) => {
     const path = navigation.get('path')
     const isOpen = navigation.get('isOpen')
     const root = navigation.get('root') && navigation.get('root').toJS()
-    const logoURL = assetUtils.getAssetUrl('static/svg/nav-logo.svg')
 
     const onPathChange = (path) => {
         const url = new URL(path)
