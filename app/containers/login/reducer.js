@@ -4,19 +4,19 @@ import {createReducer} from 'redux-act'
 import {getComponentName} from '../../utils/utils'
 import Login from './container'
 
-import {onPageReceived, fetchPage} from '../app/actions'
+import {onPageReceived} from '../app/actions'
 import parser from './parsers/login'
 
 const initialState = Immutable.Map({
-    title: "",
-    href: "",
-    heading: "",
-    description: "",
+    title: '',
+    href: '',
+    heading: '',
+    description: '',
     form: {
-        href: "",
+        href: '',
         fields: [],
         hiddenInputs: [],
-        submitText: ""
+        submitText: ''
     }
 })
 

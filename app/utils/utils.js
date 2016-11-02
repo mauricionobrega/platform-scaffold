@@ -35,7 +35,7 @@ export const formEncode = (data) => {
         // A shoddy way of handling params like apple[banana]
         // Meant to be TEMPORARY
         // TODO: Remove and replace with something legit before merging this PR
-        if (typeof val === "object") {
+        if (typeof val === 'object') {
             Object.keys(val).forEach((vk) => {
                 pairs.push(`${encodeURIComponent(k)}[${encodeURIComponent(vk)}]=${encodeURIComponent(val[vk])}`)
             })

@@ -1,28 +1,23 @@
 import React, {PropTypes} from 'react'
-import {connect} from 'react-redux'
 import {reduxForm} from 'redux-form'
 
 import FormFields from 'progressive-web-sdk/dist/components/form-fields'
-import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
 const LoginForm = (props) => {
     const {
         // redux-form
         handleSubmit,
         error,
-        invalid,
         submitting,
         // props from parent
-        href,
         fields,
-        hiddenInputs,
         submitText,
         submitForm
     } = props
     const items = fields.map((field) => {
         return {
             type: 'reduxFormField',
-            props: { ...field }
+            props: {...field}
         }
     })
     return (
@@ -38,6 +33,17 @@ const LoginForm = (props) => {
             <button type="submit" disabled={submitting}>{submitText}</button>
         </form>
     )
+}
+
+LoginForm.propTypes = {
+    error: PropTypes.string,
+    fields: PropTypes.array,
+    handleSubmit: PropTypes.func,
+    href: PropTypes.string,
+    invalid: PropTypes.bool,
+    submitForm: PropTypes.func,
+    submitText: PropTypes.string,
+    submitting: PropTypes.bool,
 }
 
 

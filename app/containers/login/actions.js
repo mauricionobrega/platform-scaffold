@@ -1,6 +1,4 @@
-import {createAction, makeRequest, formEncode} from '../../utils/utils'
-import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
-import {onPageReceived} from '../app/actions'
+import {makeRequest, formEncode} from '../../utils/utils'
 import {SubmissionError} from 'redux-form'
 
 export const submitForm = (formValues, resolve, reject) => {
@@ -20,18 +18,15 @@ export const submitForm = (formValues, resolve, reject) => {
             }
         }
 
-        let responseCopy
-
         return makeRequest(href, options)
                 .then((response) => {
-                    responseCopy = response.clone()
                     return response.text()
                 })
                 .then((responseText) => {
                     const $html = $(responseText)
                     if ($html.find('.form-login').length) {
                         const error = {
-                            _error: "Username or password is incorrect"
+                            _error: 'Username or password is incorrect'
                         }
                         reject(new SubmissionError(error))
                     } else {

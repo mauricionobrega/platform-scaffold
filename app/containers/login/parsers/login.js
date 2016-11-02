@@ -1,3 +1,5 @@
+/* eslint-disable newline-per-chained-call */
+
 const parseFields = ($fields) => {
     return $fields.map((_, field) => {
         const $field = $(field)
@@ -15,7 +17,7 @@ const parseHiddenInputs = ($inputs) => {
         const $input = $(input)
         return {
             name: $input.attr('name'),
-            type: "hidden",
+            type: 'hidden',
             value: $input.val()
         }
     })

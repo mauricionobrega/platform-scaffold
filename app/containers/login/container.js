@@ -1,9 +1,5 @@
 import React, {PropTypes} from 'react'
-
-import Immutable from 'immutable'
 import {connect} from 'react-redux'
-
-import {Tabs, TabsPanel} from 'progressive-web-sdk/dist/components/tabs'
 
 import LoginForm from './partials/form'
 
@@ -13,7 +9,6 @@ const Login = ({
     title,
     heading,
     description,
-    href,
     form,
     submitForm
 }) => {
@@ -22,7 +17,7 @@ const Login = ({
             <h1>{title}</h1>
             <h3>{heading}</h3>
             <p>{description}</p>
-            <LoginForm {...form} submitForm={submitForm}></LoginForm>
+            <LoginForm {...form} submitForm={submitForm} />
         </div>
     )
 }
@@ -40,11 +35,12 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 Login.propTypes = {
-    title: PropTypes.string.isRequired,
-    heading: PropTypes.string,
     description: PropTypes.string,
+    form: PropTypes.object,
+    heading: PropTypes.string,
     href: PropTypes.string,
-    form: PropTypes.object
+    submitForm: PropTypes.func,
+    title: PropTypes.string
 }
 
 export default connect(
