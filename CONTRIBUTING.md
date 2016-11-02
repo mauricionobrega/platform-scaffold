@@ -16,3 +16,5 @@ help to make for a consistent and easy-to-learn codebase.
 
 We write ES6 wherever we can. Our scaffold contains linting to help you follow our
 guidelines, [which can be found here](https://github.com/mobify/mobify-code-style/tree/develop/es6)
+
+You can run the linting tools via `npm run lint`.
