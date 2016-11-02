@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-// import Link from 'progressive-web-sdk/dist/components/link'
+import classNames from 'classnames'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import IconLabelButton from '../../components/icon-label-button'
@@ -24,6 +24,15 @@ class MiniCart extends React.Component {
 
         // @TODO REPLACE with the Shopping Cart text
         const logoURL = assetUtils.getAssetUrl('static/svg/nav-logo.svg')
+        const subtotalClasses = classNames(
+            't-mini-cart__subtotal',
+            'u-flexbox',
+            'u-justify-between',
+            'u-margin-bottom-lg',
+            'u-padding-top-lg',
+            'u-h4',
+            'u-heading-family'
+        )
 
         return (
             <Sheet className="t-mini-cart"  open={isOpen} onDismiss={closeMiniCart} maskOpacity={0.85} effect="slide-right">
@@ -39,83 +48,64 @@ class MiniCart extends React.Component {
                 </HeaderBar>
 
                 <div className="u-padding-md">
-                    <Button className="c--tertiary u-width-full u-margin-bottom-md u-text-capitalize">
+                    <Button className="c--tertiary u-width-full u-margin-bottom u-text-capitalize">
                         View and edit cart
                     </Button>
 
                     <List component={ProductItem} items={[{
                         category: 'Potions',
-                        className: 'u-padding-botton-0',
-                        title: <h2>Unicorn Blood</h2>,
+                        title: <h2 className="u-h3">Unicorn Blood</h2>,
                         price: '$14.00',
                         src: 'http://www.merlinspotions.com/media/catalog/product/cache/1/thumbnail/75x75/beff4985b56e3afdbeabfc89641a4582/u/n/unicorn-blood-1.png',
                         alt: 'Corked glass bottle of Unicorn Blood',
+                        imageWidth: '64px',
+                        className: 'u-padding-top-lg u-padding-bottom-lg',
                         children: (
                             <div>
-                                <p>Qty: 1</p>
+                                <p className="u-margin-bottom-sm">Qty: 1</p>
                                 <p>Sub-Total: 1</p>
-                                <div className="u-color-brand">
-                                    <Button innerClassName="u-padding-start-0 u-text-small" name="close" size="small">
-                                        Edit
-                                    </Button>
-                                    <Button innerClassName="u-text-small" name="close" size="small">
-                                        Delete
-                                    </Button>
-                                </div>
                             </div>
                         )
                     }, {
                         category: 'Potions',
-                        className: 'u-padding-botton-0',
-                        title: <h2>Eye of Newt</h2>,
+                        title: <h2 className="u-h3">Eye of Newt</h2>,
                         price: '$12.00',
                         src: 'http://www.merlinspotions.com/media/catalog/product/cache/1/thumbnail/75x75/beff4985b56e3afdbeabfc89641a4582/s/l/sleeping-draught-1_1_.png',
                         alt: 'Corked glass bottle of Eye of Newt',
+                        imageWidth: '64px',
+                        className: 'u-padding-top-lg u-padding-bottom-lg',
                         children: (
                             <div>
-                                <p>Qty: 1</p>
+                                <p className="u-margin-bottom-sm">Qty: 1</p>
                                 <p>Sub-Total: 1</p>
-                                <div className="u-color-brand">
-                                    <Button innerClassName="u-padding-start-0 u-text-small" name="close" size="small">
-                                        Edit
-                                    </Button>
-                                    <Button innerClassName="u-text-small" name="close" size="small">
-                                        Delete
-                                    </Button>
-                                </div>
                             </div>
                         )
                     }, {
                         category: 'Books',
-                        className: 'u-padding-botton-0',
-                        title: <h2>Dragon Breeding For Pleasure and Profit</h2>,
+                        title: <h2 className="u-h3">Dragon Breeding For Pleasure and Profit</h2>,
                         price: '$30.00',
                         src: 'http://www.merlinspotions.com/media/catalog/product/cache/1/thumbnail/75x75/beff4985b56e3afdbeabfc89641a4582/d/r/dragon-breeding-for-pleasure-and-profit-1.png',
                         alt: 'Ragged, cryptic book',
+                        imageWidth: '64px',
+                        className: 'u-padding-top-lg u-padding-bottom-lg',
                         children: (
                             <div>
-                                <p>Qty: 1</p>
+                                <p className="u-margin-bottom-sm">Qty: 1</p>
                                 <p>Sub-Total: 1</p>
-                                <div className="u-color-brand">
-                                    <Button innerClassName="u-padding-start-0 u-text-small" name="close" size="small">
-                                        Edit
-                                    </Button>
-                                    <Button innerClassName="u-text-small" name="close" size="small">
-                                        Delete
-                                    </Button>
-                                </div>
                             </div>
                         )
                     }]} />
 
-                    <div className="u-flexbox u-justify-between u-margin-bottom-lg">
-                        <div className="u-h4 u-text-bold">Subtotal:</div>
-                        <div className="u-h4 u-text-bold">$79.99</div>
+                    <div className={subtotalClasses}>
+                        <div className="u-flex u-text-uppercase">Subtotal:</div>
+                        <div className="u-flex-none">$79.99</div>
                     </div>
 
-                    <Button className="c--primary u-width-full u-text-uppercase">
-                        Go To Checkout
-                    </Button>
+                    <div className="u-padding-top-lg">
+                        <Button className="c--primary u-width-full u-text-uppercase">
+                            Go To Checkout
+                        </Button>
+                    </div>
                 </div>
             </Sheet>
         )

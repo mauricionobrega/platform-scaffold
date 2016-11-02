@@ -13,19 +13,17 @@ const ProductItem = ({
     category,
     children,
     className,
+    imageHeight,
+    imageWidth,
     price,
     src,
     title,
 }) => {
     const classes = classNames(
         'c-product-item',
-        'u-padding-top-md',
         'u-flexbox',
         'u-row-reverse',
         className,
-        {
-            'u-padding-bottom-md': className.indexOf('padding-bottom') !== -1
-        }
     )
 
     return (
@@ -51,8 +49,8 @@ const ProductItem = ({
                     </div>
                 }
             </div>
-            <div className="u-flex-shrink">
-                <Image src={src} alt={alt} />
+            <div className="u-padding-start-lg u-padding-end-lg u-flex-none">
+                <Image src={src} alt={alt} width={imageWidth} height={imageHeight} />
             </div>
         </article>
     )
