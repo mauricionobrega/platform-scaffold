@@ -37,6 +37,21 @@ export const formEncode = (data) => {
 }
 
 /**
+ * Make a request given the provided url and options, form-encoding the data
+ * into the body of the request.
+ */
+export const makeFormEncodedRequest = (url, data, options) => {
+    return makeRequest(url, {
+        ...options,
+        body: formEncode(data),
+        headers: {
+            ...(options.headers || {}),
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+}
+
+/**
  * Retrieve the registered name of a component as a string
  * @param {object} component - a React component, potentially wrapped with react-redux
  * @returns {string} - The registered name of the given component
