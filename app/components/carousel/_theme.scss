@@ -2,7 +2,7 @@
 // ===
 //
 
-.c-carousel {
+.pw-carousel {
     position: relative;
 
     padding: $unit*1.5;
@@ -10,15 +10,15 @@
     background: $neutral-20;
 }
 
-.c-carousel__inner {
+.pw-carousel__inner {
     padding: $unit*3;
 
     background: $neutral-10;
     box-shadow: 0 0 2px 0 rgba(0,0,0,0.30);
 }
 
-.c-carousel__previous,
-.c-carousel__next {
+.pw-carousel__previous,
+.pw-carousel__next {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -31,10 +31,10 @@
     }
 }
 
-.c-carousel__previous {
+.pw-carousel__previous {
     left: $unit;
 }
 
-.c-carousel__next {
+.pw-carousel__next {
     right: $unit;
 }

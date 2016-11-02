@@ -3,7 +3,7 @@
 //
 // 1. 44px per button - as per design
 
-.c-stepper {
+.pw-stepper {
     display: flex;
     width: $tap-size*3;
     border: $border;
@@ -15,7 +15,7 @@
     }
 }
 
-.c-stepper__button {
+.pw-stepper__button {
     background-color: $brand-color;
 
     color: $neutral-10;
