@@ -6,6 +6,7 @@ import PDPHeading from './partials/pdp-heading'
 import PDPCarousel from './partials/pdp-carousel'
 import PDPDescription from './partials/pdp-description'
 import PDPAddToCart from './partials/pdp-add-to-cart'
+import PDPItemAddedModal from './partials/pdp-item-added-modal'
 import * as pdpActions from './actions'
 
 class PDP extends React.Component {
@@ -17,14 +18,16 @@ class PDP extends React.Component {
         const {
             pdp,
             setQuantity,
-            addToCart
+            addToCart,
+            closeItemAddedModal
         } = this.props
 
         const {
             contentsLoaded = false,
             product = {},
             itemQuantity = 1,
-            formInfo = {}
+            formInfo = {},
+            itemAddedModalOpen = false
         } = pdp.toJS()
 
         if (!contentsLoaded) {
@@ -37,6 +40,7 @@ class PDP extends React.Component {
                 <PDPCarousel items={product.carouselItems} />
                 <PDPDescription description={product.description} />
                 <PDPAddToCart formInfo={formInfo} quantity={itemQuantity} setQuantity={setQuantity} onSubmit={addToCart} />
+                <PDPItemAddedModal open={itemAddedModalOpen} onDismiss={closeItemAddedModal} />
             </div>
         )
     }
@@ -54,7 +58,8 @@ export const mapStateToProps = ({pdp}) => ({pdp})
 export const mapDispatchToProps = (dispatch) => {
     return {
         setQuantity: (quantity) => dispatch(pdpActions.setItemQuantity(quantity)),
-        addToCart: () => dispatch(pdpActions.submitCartForm())
+        addToCart: () => dispatch(pdpActions.submitCartForm()),
+        closeItemAddedModal: () => dispatch(pdpActions.closeItemAddedModal())
     }
 }
 

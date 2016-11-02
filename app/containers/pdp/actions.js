@@ -18,6 +18,10 @@ export const submitCartForm = () => (dispatch, getStore) => {
         }
     }).then(() => {
         dispatch(setItemQuantity(1))
-        window.location.href = "/checkout/cart"
+        // window.location.href = "/checkout/cart"
+        dispatch(openItemAddedModal())
     })
 }
+
+export const openItemAddedModal = createAction('Open Item Added Sheet')
+export const closeItemAddedModal = createAction('Close Item Added Sheet')
