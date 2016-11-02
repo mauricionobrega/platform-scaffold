@@ -27,7 +27,7 @@ const Login = ({
     )
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
     return {
         ...state.login.toJS()
     }

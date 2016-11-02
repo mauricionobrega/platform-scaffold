@@ -51,12 +51,16 @@ npm run smoke-test
 
 ## Developing against `develop` of the Progressive Web SDK
 
-If you are wanting to improve or add a library/component in the Progressive Web SDK,
+If you are wanting to improve or add a library/component in the [Progressive Web SDK](https://github.com/mobify/progressive-web-sdk),
 you will need to clone the SDK (note: it is not open on Github).
 
+```
 git clone git@github.com:mobify/progressive-web-sdk.git
 cd progressive-web-sdk
 npm link
+```
 
-Then navigate back to your project root directory and run `npm link progressive-web-sdk`.
-
+Then navigate back to your project root directory and run:
+```
+npm link progressive-web-sdk
+```
