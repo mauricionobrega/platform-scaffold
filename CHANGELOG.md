@@ -1,3 +1,8 @@
+## To be released
+
+## 0.8.0 (November 2, 2016)
+- Use SDK version 0.9.0
+
 ## 0.7.2 (October 27, 2016)
 - Use SDK version 0.8.3
 - Update react-styleguidist to 4.1.0
