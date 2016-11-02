@@ -5,7 +5,7 @@
 
 .c-stepper {
     display: flex;
-    width: 132px;
+    width: $tap-size*3;
     border: $border;
 
     input {
@@ -23,5 +23,11 @@
     &:active,
     &:focus {
         background-color: $dark-brand-color;
+    }
+
+    &[diabled] {
+        background-color: $neutral-30;
+
+        color: $neutral-40;
     }
 }
