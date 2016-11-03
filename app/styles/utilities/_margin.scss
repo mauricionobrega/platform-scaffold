@@ -12,6 +12,13 @@
     @include margin-center(true);
 }
 
+.u-margin-all {
+    @include margin-top(true); // x1
+    @include margin-bottom(true); // x1
+    @include margin-start(true); // x1
+    @include margin-end(true); // x1
+}
+
 
 // Vertical Margins
 // ---

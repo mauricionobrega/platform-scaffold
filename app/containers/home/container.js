@@ -1,63 +1,56 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
+import classNames from 'classnames'
+import Immutable from 'immutable'
 
-import Link from 'progressive-web-sdk/dist/components/link'
-import Button from 'progressive-web-sdk/dist/components/button'
-import {mobifyGa} from 'progressive-web-sdk/dist/analytics'
+import Carousel from 'progressive-web-sdk/dist/components/carousel'
+import CarouselItem from 'progressive-web-sdk/dist/components/carousel/carousel-item'
+import Image from 'progressive-web-sdk/dist/components/image'
+import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
+import HomeCategory from './partials/home-category'
 
-import Logo from '../../components/logo'
+import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
+const cardClasses = classNames(
+    't-home__category',
+    'u-margin-top-md',
+    'u-margin-end',
+    'u-margin-start',
+    'u-padding'
+)
 
 class Home extends React.Component {
-    constructor(props, context) {
-        super(props, context)
-        this.triggerTapEvent = this.triggerTapEvent.bind(this)
-    }
-
-    triggerTapEvent() {
-        // mobifyGa is a proxy method which sends events to our
-        // ga loaded through a.js. These events also proxy
-        // to Mobify's Engagement Engage. To understand how
-        // to trigger mobifyGa, please reference the GA documentation:
-        // https://developers.google.com/analytics/devguides/collection/analyticsjs/
-        mobifyGa('send', {
-            hitType: 'event',
-            eventCategory: 'ui',
-            eventAction: 'tap',
-            eventLabel: 'sample component'
-        })
+    shouldComponentUpdate(nextProps) {
+        return !Immutable.is(this.props.homeState, nextProps.homeState)
     }
 
     render() {
-        return (
-            <div>
-                <Logo />
-                <Link href="/customer/account/login/">
-                    Login
-                </Link>
-                <h2>
-                    Home Page
-                </h2>
-                <Link href="/potions.html">
-                    View potions
-                </Link>
-                <br />
-                <Link href="/eye-of-newt.html">
-                    View Product Details Page
-                </Link>
-                <div>
-                    This is an example of UTF-8 character set text: テスト勉強　チコメ
-                </div>
-                <div>
-                    This is the title of the home page: {this.props.home.get('title')}
-                </div>
-                <div className="u-text-all-caps">
-                    This is a test
-                </div>
-                <Button onClick={this.triggerTapEvent}>Themed Component</Button>
+        const {banners, categories} = this.props
 
-                <div id="realContent">
-                    <p>Real Main content!</p>
+        return (
+            <div className="t-home__container u-padding-bottom-md">
+                {banners ?
+                    <Carousel allowLooping={true}>
+                        {banners.map(({src, href, alt}, key) => { // TODO: fix this when we put mobile assets on desktop
+                            return (
+                                <CarouselItem href={href} key={key}>
+                                    <Image
+                                        src={getAssetUrl(`static/img/homepage_carousel/${key}.png`)}
+                                        alt={alt}
+                                        hidePlaceholder={true}
+                                        loadingIndicator={<SkeletonBlock height="84vw" />}
+                                    />
+                                </CarouselItem>
+                            )
+                        })}
+                    </Carousel>
+                :
+                    // The ratio of the banner image width:height is 1:.84.
+                    // Since the banner will be width=100%, we can use 84vw to predict the banner height.
+                    <SkeletonBlock height="84vw" />
+                }
+                <div className={cardClasses}>
+                    {categories.map((category, key) => <HomeCategory {...category} key={key} />)}
                 </div>
             </div>
         )
@@ -65,12 +58,18 @@ class Home extends React.Component {
 }
 
 Home.propTypes = {
-    home: PropTypes.object.isRequired
+    banners: PropTypes.oneOfType([
+        PropTypes.bool,
+        PropTypes.array
+    ]).isRequired,
+    categories: PropTypes.array.isRequired,
+    homeState: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => {
     return {
-        home: state.home,
+        homeState: state.home,
+        ...state.home.toJS()
     }
 }
 

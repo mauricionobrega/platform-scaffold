@@ -3,9 +3,11 @@ import {connect} from 'react-redux'
 import {hidePreloader} from 'progressive-web-sdk/dist/preloader'
 import {IconSprite} from 'progressive-web-sdk/dist/components/icon'
 import SkipLinks from '../../components/skip-links'
+import Header from '../../containers/header/container'
 import Footer from '../../containers/footer/container'
 import Navigation from '../../containers/navigation/container'
 import * as navActions from '../../containers/navigation/actions'
+import sprite from '../../static/sprite/sprite.svg'
 
 
 class App extends React.Component {
@@ -20,25 +22,21 @@ class App extends React.Component {
 
         return (
             <div id="app" className="t-app">
-                <IconSprite />
+                <IconSprite sprite={sprite} />
                 <SkipLinks />
 
                 <div id="app-wrap" className={currentTemplate}>
-                    <div>
+                    <div id="app-header" role="banner">
+                        <Header onMenuClick={openNavigation} />
                         <Navigation history={history} />
                     </div>
-
-                    <header id="app-header" role="banner">
-                        Header content
-                        <button id="app-navigation" onClick={openNavigation}>Menu</button>
-                    </header>
 
                     <main id="app-main" role="main">
                         {this.props.children}
                     </main>
 
                     <div id="app-footer">
-                        <Footer id="app-footer" />
+                        <Footer />
                     </div>
                 </div>
             </div>

@@ -48,6 +48,7 @@ $neutral-60: #333;
 
 // Brand colors
 $brand-color: #4e439b; // purple
+
 $light-brand-color: lighten($brand-color, 15%);
 $dark-brand-color: #261c67;
 
@@ -87,6 +88,7 @@ $disabled-input-background-color: $neutral-30;
 $horizontal-input-padding: $unit;
 $vertical-input-padding: $unit;
 
+$background-color: #f7f7f7;
 $overlay-color: rgba($neutral-10, 0.85);
 
 
@@ -111,5 +113,6 @@ $border: 1px solid $border-color;
 $input-padding: $vertical-input-padding $horizontal-input-padding;
 
 $box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.3);
+$large-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
 $inset-box-shadow: inset 0 2px 2px -2px rgba(0, 0, 0, 0.3), inset 0 -2px 2px -2px rgba(0, 0, 0, 0.3);
 $input-box-shadow: inset 0 0 5px 0 rgba(0, 0, 0, 0.3);

@@ -25,7 +25,6 @@ export const makeRequest = (url, options) => {
     return fetch(url, {...options, credentials: 'same-origin'})
 }
 
-
 /**
  * Form-encode an arbitrary JS object.
  */
@@ -35,4 +34,29 @@ export const formEncode = (data) => {
         pairs.push(`${encodeURIComponent(k)}=${encodeURIComponent(data[k])}`)
     })
     return pairs.join('&').replace(/%20/g, '+')
+}
+
+/**
+ * Make a request given the provided url and options, form-encoding the data
+ * into the body of the request.
+ */
+export const makeFormEncodedRequest = (url, data, options) => {
+    return makeRequest(url, {
+        ...options,
+        body: formEncode(data),
+        headers: {
+            ...(options.headers || {}),
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+}
+
+/**
+ * Retrieve the registered name of a component as a string
+ * @param {object} component - a React component, potentially wrapped with react-redux
+ * @returns {string} - The registered name of the given component
+ */
+export const getComponentName = (component) => {
+    const name = component.name
+    return name === 'Connect' ? component.WrappedComponent.name : name
 }
