@@ -4,15 +4,15 @@ import Carousel from 'progressive-web-sdk/dist/components/carousel'
 import CarouselItem from 'progressive-web-sdk/dist/components/carousel/carousel-item'
 
 const PDPCarousel = ({items}) => (
-        <Carousel>
-            {items.map((item) => {
-                return (
-                    <CarouselItem key={item.position}>
-                        <img src={item.img} />
-                    </CarouselItem>
-                )
-            })}
-        </Carousel>
+    <Carousel>
+        {items.map((item) => {
+            return (
+                <CarouselItem key={item.position}>
+                    <img role="presentation" src={item.img} />
+                </CarouselItem>
+            )
+        })}
+    </Carousel>
 )
 
 PDPCarousel.defaultProps = {

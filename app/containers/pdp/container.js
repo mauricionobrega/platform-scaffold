@@ -41,7 +41,7 @@ class PDP extends React.Component {
                 <PDPCarousel items={product.carouselItems} />
                 <PDPDescription description={product.description} />
                 <PDPAddToCart formInfo={formInfo} quantity={itemQuantity} setQuantity={setQuantity} onSubmit={addToCart} />
-                <PDPItemAddedModal open={itemAddedModalOpen} onDismiss={closeItemAddedModal} product={product} quantity={quantityAdded}/>
+                <PDPItemAddedModal open={itemAddedModalOpen} onDismiss={closeItemAddedModal} product={product} quantity={quantityAdded} />
             </div>
         )
     }
@@ -50,6 +50,7 @@ class PDP extends React.Component {
 PDP.propTypes = {
     pdp: PropTypes.object.isRequired,
     addToCart: PropTypes.func,
+    closeItemAddedModal: PropTypes.func,
     setQuantity: PropTypes.func
 }
 

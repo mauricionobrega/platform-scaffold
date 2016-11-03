@@ -1,7 +1,8 @@
 import React, {PropTypes} from 'react'
+import Link from 'progressive-web-sdk/dist/components/link'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
-const PDPItemAddedModal = ({open, onDismiss, quantity, product:{title, price, carouselItems}}) => (
+const PDPItemAddedModal = ({open, onDismiss, quantity, product: {title, price, carouselItems}}) => (
     <Sheet open={open} onDismiss={onDismiss} effect="slide-bottom">
         <div className="c-sheet__heading">
             <h1>Product Added to Cart</h1>
@@ -9,13 +10,15 @@ const PDPItemAddedModal = ({open, onDismiss, quantity, product:{title, price, ca
                 close
             </button>
         </div>
-        <div className="c-sheet__content u-flexbox">
-            <img src={carouselItems[0].img} />
+        <div className="c-sheet__content">
+            <img role="presentation" src={carouselItems[0].img} />
             <div className="c-sheet__details">
                 <p>category</p>
                 <h1>{title}</h1>
                 <h1>{price}</h1>
                 <p>{quantity}</p>
+                <Link href="/checkout/cart"><button type="button">go to checkout</button></Link>
+                <Link href="/"><button type="button">continue shopping</button></Link>
             </div>
         </div>
 
@@ -25,6 +28,8 @@ const PDPItemAddedModal = ({open, onDismiss, quantity, product:{title, price, ca
 
 PDPItemAddedModal.propTypes = {
     open: PropTypes.bool,
+    product: PropTypes.object,
+    quantity: PropTypes.number,
     onDismiss: PropTypes.func
 }
 
