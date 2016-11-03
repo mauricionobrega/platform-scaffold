@@ -5,9 +5,11 @@ import {onPageReceived, onRouteChanged} from '../app/actions'
 import * as pdpActions from './actions'
 
 const initialState = {
+    contentsLoaded: false,
     itemQuantity: 1,
     itemAddedModalOpen: false,
-    quantityAdded: 0
+    quantityAdded: 0,
+    product: {}
 }
 
 export default createReducer({

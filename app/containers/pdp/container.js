@@ -9,6 +9,8 @@ import PDPAddToCart from './partials/pdp-add-to-cart'
 import PDPItemAddedModal from './partials/pdp-item-added-modal'
 import * as pdpActions from './actions'
 
+import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
+
 class PDP extends React.Component {
     shouldComponentUpdate(newProps) {
         return !Immutable.is(newProps.pdp, this.props.pdp)
@@ -23,25 +25,43 @@ class PDP extends React.Component {
         } = this.props
 
         const {
-            contentsLoaded = false,
             product = {},
             itemQuantity = 1,
             quantityAdded = 0,
             formInfo = {},
-            itemAddedModalOpen = false
+            itemAddedModalOpen = false,
+            contentsLoaded = false
         } = pdp.toJS()
 
-        if (!contentsLoaded) {
-            return false
-        }
+        const {
+            carouselItems,
+            description
+        } = product
 
         return (
             <div className="t-pdp">
                 <PDPHeading {...product} />
-                <PDPCarousel items={product.carouselItems} />
-                <PDPDescription description={product.description} />
-                <PDPAddToCart formInfo={formInfo} quantity={itemQuantity} setQuantity={setQuantity} onSubmit={addToCart} />
-                <PDPItemAddedModal open={itemAddedModalOpen} onDismiss={closeItemAddedModal} product={product} quantity={quantityAdded} />
+                <PDPCarousel items={carouselItems} />
+                {contentsLoaded ?
+                    <div>
+                        <PDPDescription
+                            description={description} />
+                        <PDPAddToCart
+                            formInfo={formInfo}
+                            quantity={itemQuantity}
+                            setQuantity={setQuantity}
+                            onSubmit={addToCart} />
+                        <PDPItemAddedModal
+                            open={itemAddedModalOpen}
+                            onDismiss={closeItemAddedModal}
+                            product={product}
+                            quantity={quantityAdded} />
+                    </div>
+                :
+                    <div className="u-padding-md">
+                        <SkeletonText lines={5} width="100%" size="24px" lineClassName="u-margin-bottom" />
+                    </div>
+                }
             </div>
         )
     }
