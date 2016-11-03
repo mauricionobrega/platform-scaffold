@@ -15,9 +15,9 @@ const Login = ({
     return (
         <div className="t-login">
 
-            <h1>{title}</h1>
-            <div className="u-padding-md">
-                <h3 className="t-login__heading u-margin-bottom-sm">{heading}</h3>
+            <h1 className="u-text-uppercase u-text-normal u-padding-md u-bg-color-neutral-20">{title}</h1>
+            <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
+                <h3 className="u-margin-bottom u-color-brand u-text-font-family u-text-normal">{heading}</h3>
                 <p>{description}</p>
             </div>
             <LoginForm {...form} submitForm={submitForm} />
