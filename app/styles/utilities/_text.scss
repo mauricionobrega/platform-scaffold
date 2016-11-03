@@ -77,10 +77,6 @@
 // Weights & Style
 // ---
 
-.u-text-light {
-    font-weight: 300 !important; // @TODO: Add to spline!
-}
-
 .u-text-normal {
     @include text-normal(true);
 }
@@ -98,7 +94,11 @@
 }
 
 .u-text-lighter {
-    font-weight: lighter !important; // @TODO: Add to Spline
+    font-weight: 300 !important; // @TODO: Add to Spline
+}
+
+.u-text-semi-bold {
+    font-weight: 600 !important; // @TODO: Add to Spline
 }
 
 

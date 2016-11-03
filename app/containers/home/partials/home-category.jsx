@@ -30,7 +30,7 @@ const HomeCategory = ({href, text}) => {
             endAction={icon}
             includeEndActionInPrimary={true}
         >
-            <div className="t-home__category-text u-text-light">SHOP</div>
+            <div className="t-home__category-text u-text-lighter">SHOP</div>
             <div className="t-home__category-text t-home__category-text-large">{text}</div>
         </ListTile>
     :
