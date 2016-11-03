@@ -13,10 +13,13 @@ const Login = ({
     submitForm
 }) => {
     return (
-        <div>
+        <div className="t-login">
+
             <h1>{title}</h1>
-            <h3>{heading}</h3>
-            <p>{description}</p>
+            <div className="u-padding-md">
+                <h3 className="t-login__heading u-margin-bottom-sm">{heading}</h3>
+                <p>{description}</p>
+            </div>
             <LoginForm {...form} submitForm={submitForm} />
         </div>
     )
