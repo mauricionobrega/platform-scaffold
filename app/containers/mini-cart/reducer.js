@@ -19,7 +19,6 @@ export default createReducer({
     // }
 
     [miniCartActions.closeMiniCart]: (state) => {
-        console.log('close?')
         return state.set('isOpen', false)
     },
 
