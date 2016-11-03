@@ -30,7 +30,7 @@ const LoginForm = (props) => {
         >
             {error && <span>{error}</span>}
             <FormFields items={items} />
-            <button type="submit" disabled={submitting}>{submitText}</button>
+            <button className="c-button c--primary u-width-full u-margin-top-lg" type="submit" disabled={submitting}>{submitText}</button>
         </form>
     )
 }

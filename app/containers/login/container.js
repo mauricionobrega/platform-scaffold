@@ -20,7 +20,9 @@ const Login = ({
                 <h3 className="u-margin-bottom u-color-brand u-text-font-family u-text-normal">{heading}</h3>
                 <p>{description}</p>
             </div>
-            <LoginForm {...form} submitForm={submitForm} />
+            <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
+                <LoginForm {...form} submitForm={submitForm} />
+            </div>
         </div>
     )
 }
