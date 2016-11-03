@@ -21,9 +21,6 @@ const PDPItemAddedModal = ({open, onDismiss, quantity, product: {title, price, c
                 <Link href="/"><button type="button">continue shopping</button></Link>
             </div>
         </div>
-
-        {//TODO import button component and pass urls as props
-        }
     </Sheet>
 )
 
