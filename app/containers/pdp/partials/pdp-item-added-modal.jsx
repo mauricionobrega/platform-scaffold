@@ -1,21 +1,25 @@
 import React, {PropTypes} from 'react'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
-const PDPItemAddedModal = ({open, onDismiss}) => (
+const PDPItemAddedModal = ({open, onDismiss, quantity, product:{title, price, carouselItems}}) => (
     <Sheet open={open} onDismiss={onDismiss} effect="slide-bottom">
-        <button type="button" onClick={onDismiss}>
-            close
-        </button>
-        <h2>Basic Sheet Example</h2>
+        <div className="c-sheet__heading">
+            <h1>Product Added to Cart</h1>
+            <button type="button" onClick={onDismiss}>
+                close
+            </button>
+        </div>
+        <div className="c-sheet__content u-flexbox">
+            <img src={carouselItems[0].img} />
+            <div className="c-sheet__details">
+                <p>category</p>
+                <h1>{title}</h1>
+                <h1>{price}</h1>
+                <p>{quantity}</p>
+            </div>
+        </div>
 
-        <p>Prevailed sincerity behaviour to so do principle mr. As departure at no propriety zealously my. On dear rent if girl view. First on smart there he sense. Earnestly enjoyment her you resources. Brother chamber ten old against. Mr be cottage so related minuter is. Delicate say and blessing ladyship exertion few margaret. Delight herself welcome against smiling its for. Suspected discovery by he affection household of principle perfectly he.</p>
-
-        <input type="text" />
-
-        <select>
-            <option>1</option>
-            <option>2</option>
-        </select>
+        // TODO import button component and pass urls as props
     </Sheet>
 )
 

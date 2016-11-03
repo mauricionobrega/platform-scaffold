@@ -26,6 +26,7 @@ class PDP extends React.Component {
             contentsLoaded = false,
             product = {},
             itemQuantity = 1,
+            quantityAdded = 0,
             formInfo = {},
             itemAddedModalOpen = false
         } = pdp.toJS()
@@ -40,7 +41,7 @@ class PDP extends React.Component {
                 <PDPCarousel items={product.carouselItems} />
                 <PDPDescription description={product.description} />
                 <PDPAddToCart formInfo={formInfo} quantity={itemQuantity} setQuantity={setQuantity} onSubmit={addToCart} />
-                <PDPItemAddedModal open={itemAddedModalOpen} onDismiss={closeItemAddedModal} />
+                <PDPItemAddedModal open={itemAddedModalOpen} onDismiss={closeItemAddedModal} product={product} quantity={quantityAdded}/>
             </div>
         )
     }

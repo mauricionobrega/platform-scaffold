@@ -6,7 +6,8 @@ import * as pdpActions from './actions'
 
 const initialState = Immutable.fromJS({
     itemQuantity: 1,
-    itemAddedModalOpen: false
+    itemAddedModalOpen: false,
+    quantityAdded: 0
 })
 
 export default createReducer({
@@ -24,7 +25,8 @@ export default createReducer({
     },
     [pdpActions.openItemAddedModal]: (state) => {
        return state.mergeDeep({
-           itemAddedModalOpen: true
+           itemAddedModalOpen: true,
+           quantityAdded: state.get('itemQuantity')
        })
     },
     [pdpActions.closeItemAddedModal]: (state) => {
