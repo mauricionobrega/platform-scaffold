@@ -6,3 +6,12 @@
         width: calc(100vw - #{$unit*5.5});
     }
 }
+
+
+// Title
+// ---
+
+.t-navigation__title {
+    font-size: $unit*3;
+    line-height: $unit*3.5;
+}
