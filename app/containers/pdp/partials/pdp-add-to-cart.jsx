@@ -12,7 +12,7 @@ const PDPAddToCart = ({quantity, setQuantity, onSubmit}) => {
                 <div className="u-flexbox u-margin-bottom-lg u-margin-top">
                     <Stepper decrementIcon="minus" incrementIcon="plus" initialValue={quantity} minimumValue={1} onChange={setQuantity} />
                     <div className="t-pdp__indicator u-border u-margin-start u-padding-md u-flexbox u-justify-center u-width-full">
-                    <Icon name="check" className="u-margin-end-sm"/>
+                        <Icon name="check" className="u-margin-end-sm" />
                         In stock
                     </div>
                 </div>
