@@ -5,6 +5,13 @@ export const textFromFragment = (fragment) => {
     return e.textContent.trim()
 }
 
+export const quoteItemReviver = (k, v) => {
+    if (k === 'product_price') {
+        return textFromFragment(v)
+    }
+    return v
+}
+
 export const cartReviver = (k, v) => {
     switch (k) {
         case 'subtotal':
@@ -13,7 +20,7 @@ export const cartReviver = (k, v) => {
             return textFromFragment(v)
         case 'items':
             return v.map((item) => {
-                for(const k of Object.keys(item)) {
+                for (const k of Object.keys(item)) {
                     item[k] = quoteItemReviver(k, item[k])
                 }
                 return item
@@ -21,13 +28,6 @@ export const cartReviver = (k, v) => {
         default:
             return v
     }
-}
-
-export const quoteItemReviver = (k, v) => {
-    if (k === 'product_price') {
-        return textFromFragment(v)
-    }
-    return v
 }
 
 export const parse = (responseText) => {

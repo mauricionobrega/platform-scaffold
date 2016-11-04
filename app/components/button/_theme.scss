@@ -32,9 +32,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%; // 2
     min-width: $tap-size;
     min-height: $tap-size;
-    width: 100%; // 2
     padding: $unit $unit*1.5;
     border: 1px solid transparent; // 1
 }
