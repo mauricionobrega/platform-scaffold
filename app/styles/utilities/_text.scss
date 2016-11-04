@@ -81,6 +81,10 @@
     font-weight: 300;
 }
 
+.u-text-lighter {
+    font-weight: lighter; // @TODO: add to Spline
+}
+
 .u-text-normal {
     @include text-normal(true);
 }
@@ -123,9 +127,4 @@
 
 .u-text-letter-spacing {
     letter-spacing: 1px;
-}
-
-
-.u-text-lighter {
-    font-weight: lighter; // @TODO: add to Spline
 }
