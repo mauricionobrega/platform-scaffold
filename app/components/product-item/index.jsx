@@ -35,7 +35,7 @@ const ProductItem = ({
                 </div>
 
                 {!!price &&
-                    <p>{price}</p>
+                    <div>{price}</div>
                 }
 
                 {!!children &&
@@ -44,7 +44,8 @@ const ProductItem = ({
                     </div>
                 }
             </div>
-            <div className="u-padding-start-lg u-padding-end-lg u-flex-none">
+
+            <div className="u-padding-end u-flex-none">
                 <Image src={src} alt={alt} width={imageWidth} height={imageHeight} />
             </div>
         </article>
@@ -56,7 +57,7 @@ ProductItem.propTypes = {
     /**
      * Designates the ProductItem's unit price
      */
-    price: PropTypes.string.isRequired,
+    price: PropTypes.node.isRequired,
 
     /**
      * The ProductItem's name or designation
@@ -76,7 +77,7 @@ ProductItem.propTypes = {
     /**
      * Any children to be nested within this ProductItem
      */
-    children: PropTypes.string,
+    children: PropTypes.node,
 
     /**
      * Adds values to the `class` attribute of the root element

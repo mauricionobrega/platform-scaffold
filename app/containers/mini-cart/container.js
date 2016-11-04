@@ -51,7 +51,7 @@ class MiniCart extends React.Component {
 
                     <List>
                         <ProductItem
-                            className="u-padding-top-lg u-padding-bottom-lg"
+                            className="u-padding-top-lg u-padding-bottom-lg u-padding-start u-padding-end"
                             category="Potions"
                             title={<h2 className="u-h3">Unicorn Blood</h2>}
                             price="$14.00"
@@ -66,7 +66,7 @@ class MiniCart extends React.Component {
                         </ProductItem>
 
                         <ProductItem
-                            className="u-padding-top-lg u-padding-bottom-lg"
+                            className="u-padding-top-lg u-padding-bottom-lg u-padding-start u-padding-end"
                             category="Potions"
                             title={<h2 className="u-h3">Eye of Newt</h2>}
                             price="$12.00"
@@ -81,7 +81,7 @@ class MiniCart extends React.Component {
                         </ProductItem>
 
                         <ProductItem
-                            className="u-padding-top-lg u-padding-bottom-lg"
+                            className="u-padding-top-lg u-padding-bottom-lg u-padding-start u-padding-end"
                             category="Books"
                             title={<h2 className="u-h3">Dragon Breeding For Pleasure and Profit</h2>}
                             price="$30.00"
