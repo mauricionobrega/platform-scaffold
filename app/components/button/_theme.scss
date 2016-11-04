@@ -26,6 +26,7 @@
 // ---
 //
 // 1. Ensures that the borderless and bordered buttons appear the same size
+// 2. Match the width of the parent `c-button` container
 
 .c-button__inner {
     display: flex;
@@ -33,6 +34,7 @@
     align-items: center;
     min-width: $tap-size;
     min-height: $tap-size;
+    width: 100%; // 2
     padding: $unit $unit*1.5;
     border: 1px solid transparent; // 1
 }
