@@ -5,13 +5,14 @@
 // context above that of the footer (.t-footer__newsletter)
 // [2] - Fixes white space appearing below carousel images
 
-.t-home {
-}
+
 
 .t-home__container {
     position: relative; // [1]
+
     background-color: $background-color;
     box-shadow: $box-shadow;
+
     font-family: $header-font-family;
 
     .c-carousel__inner {
@@ -42,9 +43,7 @@
     }
 }
 
-.t-home__category-image {
 
-}
 
 .t-home__category-text {
     font-size: 20px;
@@ -52,5 +51,13 @@
 
     &.t-home__category-text-large {
         font-size: 24px;
+    }
+}
+
+.t-home__carousel {
+    // We don't want to display the controls
+    .c-carousel__previous,
+    .c-carousel__next {
+        display: none;
     }
 }

@@ -49,12 +49,6 @@
     margin-top: $unit * 1.5;
 }
 
-// We don't want to display the controls
-.c-carousel__previous,
-.c-carousel__next {
-    display: none;
-}
-
 .c-carousel__pips {
     display: flex;
     justify-content: center;
