@@ -15,3 +15,21 @@
     height: $unit*1.5 !important;
     margin-right: $unit;
 }
+
+
+// Added to Cart Sheet
+// ---
+//
+// 1. Provide the space within which the Close button with be vertically and
+//    horisontally centered in order to match the mockup
+
+.t-pdp__item-added-modal-close {
+    width: $unit*7; // 1
+    height: $unit*7; // 1
+}
+
+.t-pdp__item-added-modal-icon {
+    color: $neutral-40;
+
+    fill: $neutral-40;
+}
