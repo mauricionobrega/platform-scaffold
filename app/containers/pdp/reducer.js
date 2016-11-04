@@ -4,7 +4,7 @@ import pdpParser from './parsers/pdp'
 import {onPageReceived, onRouteChanged} from '../app/actions'
 import * as pdpActions from './actions'
 
-const initialState = {
+const initialState = Immutable.fromJS({
     contentsLoaded: false,
     itemQuantity: 1,
     itemAddedModalOpen: false,
@@ -15,7 +15,7 @@ const initialState = {
         description: '',
         carouselItems: []
     }
-}
+})
 
 export default createReducer({
     [onPageReceived]: (state, {$, $response, pageType}) => {
@@ -28,7 +28,7 @@ export default createReducer({
         })
     },
     [onRouteChanged]: (state) => {
-        return Immutable.fromJS(initialState)
+        return initialState
     },
     [pdpActions.setItemQuantity]: (state, payload) => {
         return state.set('itemQuantity', payload)
@@ -44,4 +44,4 @@ export default createReducer({
             itemAddedModalOpen: false
         })
     }
-}, Immutable.fromJS(initialState))
+}, initialState)

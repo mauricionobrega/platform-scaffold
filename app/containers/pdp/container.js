@@ -25,12 +25,12 @@ class PDP extends React.Component {
         } = this.props
 
         const {
-            product = {},
-            itemQuantity = 1,
-            quantityAdded = 0,
-            formInfo = {},
-            itemAddedModalOpen = false,
-            contentsLoaded = false
+            product,
+            itemQuantity,
+            quantityAdded,
+            formInfo,
+            itemAddedModalOpen,
+            contentsLoaded
         } = pdp.toJS()
 
         const {
