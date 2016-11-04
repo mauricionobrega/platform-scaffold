@@ -27,6 +27,7 @@ const LoginForm = (props) => {
                     submitForm(values, resolve, reject)
                 })
             })}
+            noValidate={true}
         >
             {error && <div className="u-margin-bottom-md u-color-error">{error}</div>}
             <FormFields items={items} />
