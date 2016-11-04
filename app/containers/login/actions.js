@@ -7,7 +7,7 @@ const validateForm = (formValues) => {
     }
     if (!formValues.login) {
         return {
-            _error: 'bitch, ya gotta fill out the goddamned form'
+            _error: 'Please fill in the form'
         }
     }
     const email = formValues.login.username
