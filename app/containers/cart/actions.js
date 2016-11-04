@@ -15,10 +15,17 @@ const baseHeaders = {
  * Get the contents of the users cart
  */
 export const getCart = () => {
-    const opts = {headers: baseHeaders}
+    const opts = {
+        headers: baseHeaders,
+        credentials: 'same-origin'
+    }
     return fetch('http://www.merlinspotions.com/customer/section/load/?sections=cart', opts)
-        .text()
-        .then(parse)
+        .then((response) => {
+            return response.text()
+        })
+        .then((response) => {
+            return parse(response)
+        })
 }
 
 /**

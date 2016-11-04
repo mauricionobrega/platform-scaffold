@@ -12,12 +12,20 @@ import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/d
 
 class MiniCart extends React.Component {
     componentDidMount() {
-        // this.props.fetchContents()
+        this.props.fetchContents()
     }
 
     render() {
-        const {miniCart, closeMiniCart} = this.props
-        const isOpen = miniCart.get('isOpen')
+        const { contentsLoaded } = this.props;
+
+        if (!contentsLoaded) {
+            return (
+                <div></div>
+            )
+        }
+
+        const { cart, closeMiniCart, isOpen } = this.props
+
         const subtotalClasses = classNames(
             't-mini-cart__subtotal',
 
@@ -50,55 +58,31 @@ class MiniCart extends React.Component {
                     </Button>
 
                     <List>
-                        <ProductItem
-                            className="u-padding-top-lg u-padding-bottom-lg"
-                            category="Potions"
-                            title={<h2 className="u-h3">Unicorn Blood</h2>}
-                            price="$14.00"
-                            src="http://www.merlinspotions.com/media/catalog/product/cache/1/thumbnail/75x75/beff4985b56e3afdbeabfc89641a4582/u/n/unicorn-blood-1.png"
-                            alt="Corked glass bottle of Unicorn Blood"
-                            imageWidth="64px"
-                        >
-                            <div>
-                                <p className="u-margin-bottom-sm">Qty: 1</p>
-                                <p>Sub-Total: 1</p>
-                            </div>
-                        </ProductItem>
-
-                        <ProductItem
-                            className="u-padding-top-lg u-padding-bottom-lg"
-                            category="Potions"
-                            title={<h2 className="u-h3">Eye of Newt</h2>}
-                            price="$12.00"
-                            src="http://www.merlinspotions.com/media/catalog/product/cache/1/thumbnail/75x75/beff4985b56e3afdbeabfc89641a4582/s/l/sleeping-draught-1_1_.png"
-                            alt="Corked glass bottle of Eye of Newt"
-                            imageWidth="64px"
-                        >
-                            <div>
-                                <p className="u-margin-bottom-sm">Qty: 1</p>
-                                <p>Sub-Total: 1</p>
-                            </div>
-                        </ProductItem>
-
-                        <ProductItem
-                            className="u-padding-top-lg u-padding-bottom-lg"
-                            category="Books"
-                            title={<h2 className="u-h3">Dragon Breeding For Pleasure and Profit</h2>}
-                            price="$30.00"
-                            src="http://www.merlinspotions.com/media/catalog/product/cache/1/thumbnail/75x75/beff4985b56e3afdbeabfc89641a4582/d/r/dragon-breeding-for-pleasure-and-profit-1.png"
-                            alt="Ragged, cryptic book"
-                            imageWidth="64px"
-                        >
-                            <div>
-                                <p className="u-margin-bottom-sm">Qty: 1</p>
-                                <p>Sub-Total: 1</p>
-                            </div>
-                        </ProductItem>
+                        {cart.items.map((product, idx) => {
+                            return (
+                                <ProductItem
+                                    className="u-padding-top-lg u-padding-bottom-lg"
+                                    category="Potions"
+                                    title={<h2 className="u-h3">{product.product_name}</h2>}
+                                    price={product.product_price}
+                                    src={product.product_image.src}
+                                    alt={product.product_image.alt}
+                                    imageWidth="64px" // TODO
+                                    key={idx}
+                                >
+                                    <div>
+                                        <p className="u-margin-bottom-sm">Qty: {product.qty}</p>
+                                        <p>Sub-Total: {product.qty}</p>
+                                    </div>
+                                </ProductItem>
+                                )
+                            })
+                        }
                     </List>
 
                     <div className={subtotalClasses}>
                         <div className="u-flex u-text-uppercase">Subtotal:</div>
-                        <div className="u-flex-none">$79.99</div>
+                        <div className="u-flex-none">{cart.subtotal}</div>
                     </div>
 
                     <div className="u-padding-top-lg">
@@ -113,25 +97,28 @@ class MiniCart extends React.Component {
 }
 
 MiniCart.propTypes = {
-    closeMiniCart: PropTypes.func,
-    contentsLoaded: PropTypes.bool,
-    fetchContents: PropTypes.func,
-    miniCart: PropTypes.object,
+    contentsLoaded: PropTypes.bool.isRequired,
+    cart: PropTypes.object,
 }
 
 MiniCart.defaultProps = {
-    // contentsLoaded: false,
+    contentsLoaded: false,
 }
 
 const mapStateToProps = (state) => {
     return {
-        miniCart: state.miniCart
+        ...state.miniCart.toJS()
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchContents: () => dispatch(miniCartActions.fetchContents()),
+        closeMiniCart: () => dispatch(miniCartActions.closeMiniCart())
     }
 }
 
 export default connect(
     mapStateToProps,
-    {
-        closeMiniCart: miniCartActions.closeMiniCart
-    }
+    mapDispatchToProps
 )(MiniCart)
