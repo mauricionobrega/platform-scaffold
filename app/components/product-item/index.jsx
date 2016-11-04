@@ -76,7 +76,7 @@ ProductItem.propTypes = {
     /**
      * Any children to be nested within this ProductItem
      */
-    children: PropTypes.string,
+    children: PropTypes.node,
 
     /**
      * Adds values to the `class` attribute of the root element
