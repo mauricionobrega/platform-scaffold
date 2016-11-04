@@ -4,9 +4,7 @@ import Nav from 'progressive-web-sdk/dist/components/nav'
 import NavMenu from 'progressive-web-sdk/dist/components/nav-menu'
 import NavItem from 'progressive-web-sdk/dist/components/nav-item'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
-import Image from 'progressive-web-sdk/dist/components/image'
 import * as navActions from './actions'
-import * as assetUtils from 'progressive-web-sdk/dist/asset-utils'
 import IconLabelButton from '../../components/icon-label-button'
 import * as merlinsNavItem from '../../components/nav-item'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
@@ -31,7 +29,6 @@ const Navigation = (props) => {
     const path = navigation.get('path')
     const isOpen = navigation.get('isOpen')
     const root = navigation.get('root') && navigation.get('root').toJS()
-    const logoURL = assetUtils.getAssetUrl('static/svg/nav-logo.svg')
 
     const onPathChange = (path) => {
         const url = new URL(path)
@@ -43,12 +40,13 @@ const Navigation = (props) => {
     }
 
     return (
-        <Sheet className="t-navigation" open={isOpen} onDismiss={closeNavigation} maskOpacity={0.85}>
+        <Sheet className="t-navigation" open={isOpen} onDismiss={closeNavigation} maskOpacity={0.7}>
             <Nav root={root} path={path} onPathChange={onPathChange}>
                 <HeaderBar>
                     <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
-                        <Image className="t-navigation__header-logo" src={logoURL} alt="Merlin's Potions Logo" />
-                        <h2 className="u-visually-hidden">Merlin's Main Navigation</h2>
+                        <h2 className="t-navigation__title u-heading-family u-text-uppercase">
+                            <span className="u-text-lighter">Merlin's</span> Potions
+                        </h2>
                     </HeaderBarTitle>
 
                     <HeaderBarActions>

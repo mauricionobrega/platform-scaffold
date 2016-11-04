@@ -38,7 +38,7 @@ class Header extends React.Component {
     }
 
     render() {
-        const {onMenuClick} = this.props
+        const {onMenuClick, onMiniCartClick} = this.props
         const {isCollapsed} = this.props.header.toJS()
 
         const innerButtonClassName = classnames('t-header__inner-button', 'u-padding-0', {
@@ -80,7 +80,7 @@ class Header extends React.Component {
                     </HeaderBarActions>
 
                     <HeaderBarActions>
-                        <Button innerClassName={innerButtonClassName}>
+                        <Button innerClassName={innerButtonClassName} onClick={onMiniCartClick}>
                             <IconLabel label="Cart" iconName="cart" iconSize="medium" />
                         </Button>
                     </HeaderBarActions>
@@ -95,6 +95,7 @@ Header.propTypes = {
     isCollapsed: PropTypes.bool,
     toggleHeader: PropTypes.func,
     onMenuClick: PropTypes.func,
+    onMiniCartClick: PropTypes.func,
 }
 
 export const mapStateToProps = ({header}) => {

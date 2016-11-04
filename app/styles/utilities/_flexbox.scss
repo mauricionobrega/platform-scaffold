@@ -90,6 +90,16 @@
 }
 
 
+// Flex (None)
+// ---
+//
+// Neither grow nor shrink!
+
+.u-flex-none {
+    flex: 0 0 auto !important; // @TODO: Add to spline
+}
+
+
 // Order
 // ---
 //
