@@ -9,7 +9,12 @@ const initialState = {
     itemQuantity: 1,
     itemAddedModalOpen: false,
     quantityAdded: 0,
-    product: {}
+    product: {
+        title: '',
+        price: '',
+        description: '',
+        carouselItems: []
+    }
 }
 
 export default createReducer({
@@ -22,14 +27,8 @@ export default createReducer({
             ...pdpParser($, $response)
         })
     },
-    [onRouteChanged]: (state, {pageType}) => {
-        if (pageType !== 'PDP') {
-            return state
-        }
-        return state.mergeDeep({
-            contentsLoaded: false,
-            ...initialState
-        })
+    [onRouteChanged]: (state) => {
+        return Immutable.fromJS(initialState)
     },
     [pdpActions.setItemQuantity]: (state, payload) => {
         return state.set('itemQuantity', payload)
