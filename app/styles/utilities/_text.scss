@@ -101,30 +101,24 @@
 // Size
 // ---
 
-.u-text-medium {
+.u-text-size-medium {
     font-size: 24px;
 }
 
-.u-text-large {
+.u-text-size-large {
     font-size: $header-font-size;
-}
-
-
-// Color
-// ---
-
-.u-text-accent {
-    color: $accent-color;
 }
 
 
 // Font-Family
 // ---
 
-.u-text-header-font {
+.u-text-header-font-family {
     font-family: $header-font-family;
     letter-spacing: 1px;
 }
+
+
 
 .u-text-lighter {
     font-weight: lighter; // @TODO: add to Spline

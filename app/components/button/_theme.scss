@@ -96,3 +96,12 @@
 .c-button.c--icon-only {
     line-height: 0;
 }
+
+// Button Icon
+// ---
+
+.c-button__icon {
+    width: $unit*1.5 !important;
+    height: $unit*1.5 !important;
+    margin-right: $unit;
+}
