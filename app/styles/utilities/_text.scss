@@ -115,9 +115,15 @@
 
 .u-text-header-font-family {
     font-family: $header-font-family;
-    letter-spacing: 1px;
 }
 
+
+// Letter Spacing
+// ---
+
+.u-text-letter-spacing {
+    letter-spacing: 1px;
+}
 
 
 .u-text-lighter {

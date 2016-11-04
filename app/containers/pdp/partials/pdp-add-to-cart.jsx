@@ -22,7 +22,7 @@ const PDPAddToCart = ({quantity, setQuantity, onSubmit}) => {
                 icon="plus"
                 title="Add to cart"
                 showIconText={true}
-                className="c--primary u-width-full u-text-uppercase u-margin-bottom-lg"
+                className="c--primary u-width-full u-text-uppercase u-margin-bottom-lg t-pdp__add-to-cart"
                 onClick={onSubmit}
             />
         </form>

@@ -5,3 +5,13 @@
     // Root Class. Contains all core styles, typically for the template's
     // wrapper element.
 }
+
+
+// Add to Cart Button
+// ---
+
+.t-pdp__add-to-cart .c-icon {
+    width: $unit*1.5 !important;
+    height: $unit*1.5 !important;
+    margin-right: $unit;
+}
