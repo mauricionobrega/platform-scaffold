@@ -1,0 +1,24 @@
+// MiniCart
+// ===
+
+.t-mini-cart {
+    // Root Class. Contains all core styles, typically for the template's
+    // wrapper element.
+}
+
+
+// Title
+// ---
+
+.t-mini-cart__title {
+    font-size: $unit*3;
+    line-height: $unit*3.5;
+}
+
+
+// Sub-total
+// ---
+
+.t-mini-cart__subtotal {
+    border-top: 1px solid $neutral-30;
+}

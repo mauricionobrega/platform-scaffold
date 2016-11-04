@@ -93,10 +93,10 @@
 // Flex (None)
 // ---
 //
-// Shrink Flexbox items to a minimum size.
+// Neither grow nor shrink!
 
 .u-flex-none {
-    flex: 0 0 auto; // @TODO: Add to Spline!
+    flex: 0 0 auto !important; // @TODO: Add to spline
 }
 
 

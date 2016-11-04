@@ -78,11 +78,11 @@
 // ---
 
 .u-text-light {
-    font-weight: 300;
+    font-weight: 300 !important; // @TODO: Add to spline!
 }
 
 .u-text-lighter {
-    font-weight: lighter; // @TODO: add to Spline
+    font-weight: lighter !important; // @TODO: Add to Spline
 }
 
 .u-text-normal {
@@ -111,6 +111,10 @@
 
 .u-text-size-large {
     font-size: $header-font-size;
+}
+
+.u-text-small {
+    font-size: 12px !important; // @TODO: Add to spline
 }
 
 
