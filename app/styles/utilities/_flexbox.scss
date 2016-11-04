@@ -24,6 +24,26 @@
 }
 
 
+// Directions
+// ---
+
+.u-direction-column {
+    flex-direction: column !important; // @TODO: Add to Spline
+}
+
+.u-direction-column-reverse {
+    flex-direction: column-reverse !important; // @TODO: Add to Spline
+}
+
+.u-direction-row {
+    flex-direction: row !important; // @TODO: Add to Spline
+}
+
+.u-direction-row-reverse {
+    flex-direction: row-reverse !important; // @TODO: Add to Spline
+}
+
+
 // Align Items
 // ---
 
