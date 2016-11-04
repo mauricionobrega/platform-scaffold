@@ -3,6 +3,8 @@ import {connect} from 'react-redux'
 
 import LoginForm from './partials/form'
 
+import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
+
 import * as actions from './actions'
 
 const Login = ({
@@ -14,15 +16,32 @@ const Login = ({
 }) => {
     return (
         <div className="t-login">
-
-            <h1 className="u-text-uppercase u-text-normal u-padding-md u-bg-color-neutral-20">{title}</h1>
+            {title ?
+                <h1 className="u-text-uppercase u-text-normal u-padding-md u-bg-color-neutral-20">{title}</h1>
+            :
+                <div className="u-padding-md">
+                    <SkeletonBlock height="28px" width="50%" />
+                </div>
+            }
             <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
-                <h3 className="u-margin-bottom u-color-brand u-text-font-family u-text-normal">{heading}</h3>
-                <p>{description}</p>
+                {heading ?
+                    <h3 className="u-margin-bottom u-color-brand u-text-font-family u-text-normal">{heading}</h3>
+                :
+                    <SkeletonBlock height="18px" width="50%" className="u-margin-bottom" />
+                }
+                {description ?
+                    <p>{description}</p>
+                :
+                    <SkeletonBlock height="14px" width="100%" />
+                }
             </div>
-            <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
-                <LoginForm {...form} submitForm={submitForm} />
-            </div>
+            {form.href ?
+                <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
+                    <LoginForm {...form} submitForm={submitForm} />
+                </div>
+            :
+                <SkeletonBlock height="200vw" width="100%" />
+            }
         </div>
     )
 }
