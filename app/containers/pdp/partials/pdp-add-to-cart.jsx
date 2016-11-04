@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react'
 import Button from 'progressive-web-sdk/dist/components/button'
+import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Stepper from 'progressive-web-sdk/dist/components/stepper'
 
 const PDPAddToCart = ({quantity, setQuantity, onSubmit}) => {
@@ -10,7 +11,10 @@ const PDPAddToCart = ({quantity, setQuantity, onSubmit}) => {
                 <label htmlFor="quantity">Quantity</label>
                 <div className="u-flexbox u-margin-bottom-lg u-margin-top">
                     <Stepper decrementIcon="minus" incrementIcon="plus" initialValue={quantity} minimumValue={1} onChange={setQuantity} />
-                    <div className="t-pdp__indicator u-border">In stock</div>
+                    <div className="t-pdp__indicator u-border u-margin-start u-padding-md u-flexbox u-justify-center u-width-full">
+                    <Icon name="check" className="u-margin-end-sm"/>
+                        In stock
+                    </div>
                 </div>
             </div>
             <Button
@@ -24,6 +28,7 @@ const PDPAddToCart = ({quantity, setQuantity, onSubmit}) => {
         </form>
     )
 }
+
 
 PDPAddToCart.propTypes = {
     quantity: PropTypes.number.isRequired,

@@ -9,6 +9,7 @@ import PDPAddToCart from './partials/pdp-add-to-cart'
 import PDPItemAddedModal from './partials/pdp-item-added-modal'
 import * as pdpActions from './actions'
 
+import {IconSprite} from 'progressive-web-sdk/dist/components/icon'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 
 class PDP extends React.Component {
@@ -40,6 +41,7 @@ class PDP extends React.Component {
 
         return (
             <div className="t-pdp">
+                <IconSprite />
                 <PDPHeading {...product} />
                 <PDPCarousel items={carouselItems} />
                 {contentsLoaded ?

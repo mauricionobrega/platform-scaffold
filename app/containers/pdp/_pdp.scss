@@ -5,16 +5,3 @@
     // Root Class. Contains all core styles, typically for the template's
     // wrapper element.
 }
-
-.t-pdp__indicator {
-    flex: 1;
-    margin-left: $unit;
-    padding: $unit*1.5;
-
-    text-align: center;
-}
-
-
-.t-pdp-heading {
-    border-bottom: 1px solid $neutral-30;
-}
