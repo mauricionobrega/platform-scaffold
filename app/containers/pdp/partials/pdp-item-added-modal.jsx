@@ -18,7 +18,7 @@ const PDPItemAddedModal = ({open, onDismiss, quantity, product: {title, price, c
                 <h1>{price}</h1>
                 <p>{quantity}</p>
                 <Link href="/checkout/cart"><button type="button">go to checkout</button></Link>
-                <Link href="/"><button type="button">continue shopping</button></Link>
+                <button type="button" onClick={onDismiss}>continue shopping</button>
             </div>
         </div>
     </Sheet>

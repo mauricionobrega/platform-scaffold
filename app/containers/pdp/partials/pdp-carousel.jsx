@@ -6,18 +6,18 @@ import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import Image from 'progressive-web-sdk/dist/components/image'
 
 const PDPCarousel = ({items}) => {
-    return (
-        items.length > 0 ?
-            <Carousel>
-                {items.map((item, idx) => {
-                    return (
-                        <CarouselItem key={idx}>
-                            <Image src={item.img} hidePlaceholder={true} loadingIndicator={<SkeletonBlock height="100vw" />} />
-                        </CarouselItem>
-                    )
-                })}
-            </Carousel>
-            : <SkeletonBlock height="100vw" width="100%" />
+    return (items.length > 0 ?
+        <Carousel>
+            {items.map((item, idx) => {
+                return (
+                    <CarouselItem key={idx}>
+                        <Image src={item.img} hidePlaceholder={true} loadingIndicator={<SkeletonBlock height="100vw" />} />
+                    </CarouselItem>
+                )
+            })}
+        </Carousel>
+    :
+        <SkeletonBlock height="100vw" width="100%" />
     )
 }
 
