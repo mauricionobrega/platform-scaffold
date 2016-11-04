@@ -6,7 +6,9 @@ const validateForm = (formValues) => {
         login: {}
     }
     if (!formValues.login) {
-        return {}
+        return {
+            _error: 'bitch, ya gotta fill out the goddamned form'
+        }
     }
     const email = formValues.login.username
     if (!email) {
@@ -24,8 +26,8 @@ const validateForm = (formValues) => {
 export const submitForm = (formValues, resolve, reject) => {
     return (dispatch, getStore) => {
         const errors = validateForm(formValues)
-        if (Object.keys(errors.login).length) {
-            reject(new SubmissionError(errors))
+        if (errors._error || Object.keys(errors.login).length) {
+            return reject(new SubmissionError(errors))
         }
         const loginPage = getStore().login.toJS()
         const {href, hiddenInputs} = loginPage.form
