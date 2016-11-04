@@ -45,7 +45,7 @@ class MiniCart extends React.Component {
                 </HeaderBar>
 
                 <div className="u-padding-md">
-                    <Button className="c--tertiary u-width-full u-margin-bottom u-text-capitalize">
+                    <Button href="#" className="c--tertiary u-width-full u-margin-bottom u-text-capitalize">
                         View and edit cart
                     </Button>
 
@@ -102,7 +102,7 @@ class MiniCart extends React.Component {
                     </div>
 
                     <div className="u-padding-top-lg">
-                        <Button className="c--primary u-width-full u-text-uppercase">
+                        <Button href="#" className="c--primary u-width-full u-text-uppercase">
                             Go To Checkout
                         </Button>
                     </div>
