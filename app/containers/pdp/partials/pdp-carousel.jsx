@@ -7,7 +7,7 @@ import Image from 'progressive-web-sdk/dist/components/image'
 
 const PDPCarousel = ({items}) => {
     return (items.length > 0 ?
-        <Carousel previousIcon="chevron-left" nextIcon="chevron-right" iconSize="medium" className="c--frame c--side-controls">
+        <Carousel previousIcon="back" nextIcon="chevron-right" iconSize="medium" className="c--frame c--side-controls">
             {items.map((item, idx) => {
                 return (
                     <CarouselItem key={idx}>
