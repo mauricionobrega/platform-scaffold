@@ -14,13 +14,11 @@
 
 .pw-accordion__open-icon,
 .pw-accordion__close-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: $unit*4;
     height: $unit*4;
-
-    svg {
-        width: 100%;
-        height: 100%;
-    }
 }
 
 .pw-accordion__inner-header {
