@@ -16,15 +16,15 @@ class MiniCart extends React.Component {
     }
 
     render() {
-        const { contentsLoaded } = this.props;
+        const {contentsLoaded} = this.props
 
         if (!contentsLoaded) {
             return (
-                <div></div>
+                <div />
             )
         }
 
-        const { cart, closeMiniCart, isOpen } = this.props
+        const {cart, closeMiniCart, isOpen} = this.props
 
         const subtotalClasses = classNames(
             't-mini-cart__subtotal',
@@ -75,9 +75,9 @@ class MiniCart extends React.Component {
                                         <p>Sub-Total: {product.qty}</p>
                                     </div>
                                 </ProductItem>
-                                )
-                            })
-                        }
+                            )
+                        })
+                    }
                     </List>
 
                     <div className={subtotalClasses}>
@@ -98,7 +98,11 @@ class MiniCart extends React.Component {
 
 MiniCart.propTypes = {
     contentsLoaded: PropTypes.bool.isRequired,
+
     cart: PropTypes.object,
+    closeMiniCart: PropTypes.func,
+    fetchContents: PropTypes.func,
+    isOpen: PropTypes.bool,
 }
 
 MiniCart.defaultProps = {
