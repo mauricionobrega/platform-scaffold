@@ -43,21 +43,11 @@
     }
 }
 
-
-
 .t-home__category-text {
     font-size: 20px;
     line-height: 25px;
 
     &.t-home__category-text-large {
         font-size: 24px;
-    }
-}
-
-.t-home__carousel {
-    // We don't want to display the controls
-    .c-carousel__previous,
-    .c-carousel__next {
-        display: none;
     }
 }

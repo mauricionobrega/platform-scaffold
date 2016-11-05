@@ -33,3 +33,85 @@
 
     fill: $neutral-40;
 }
+
+// Carousel Theme
+// ===
+//
+
+.t-pdp__carousel {
+    .pw-carousel {
+        position: relative;
+
+        padding: $unit*1.5;
+
+        background: $neutral-20;
+    }
+
+    .pw-carousel__item {
+        padding: $unit*3;
+
+        background: $neutral-10;
+        box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    .pw-carousel__inner {
+        margin: 0 $unit;
+    }
+
+    .pw-carousel__previous,
+    .pw-carousel__next {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+
+        display: flex;
+        width: $tap-size;
+
+        svg {
+            max-width: 100%;
+        }
+    }
+
+    .pw-carousel__previous {
+        left: $unit;
+    }
+
+    .pw-carousel__next {
+        right: $unit;
+    }
+
+
+    // Carousel Controls
+    // ---
+    //
+    // 1. Hide the carousel slide numbers from being displayed
+
+    .c-carousel__controls {
+        margin-top: $unit * 1.5;
+    }
+
+    .c-carousel__pips {
+        display: flex;
+        justify-content: center;
+    }
+
+    .c-carousel__pip {
+        width: 6px;
+        height: 6px;
+        margin-right: 6px;
+
+        border-radius: 3px;
+        background-color: $neutral-40;
+
+        color: transparent; // 1
+        font: 0/0 a; // 1
+
+        &.c--active {
+            background-color: $neutral-60;
+        }
+
+        &:last-of-type {
+            margin-right: 0;
+        }
+    }
+}

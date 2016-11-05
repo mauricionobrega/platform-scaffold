@@ -2,41 +2,56 @@
 // ===
 //
 
-.pw-carousel {
+.c-carousel {
     position: relative;
+}
 
+
+// Carousel Modifiers
+// ---
+
+.c-carousel.c--frame {
     padding: $unit*1.5;
 
     background: $neutral-20;
-}
 
-.pw-carousel__inner {
-    padding: $unit*3;
+    .c-carousel__item {
+        margin: 0 $unit;
+        padding: $unit*3;
 
-    background: $neutral-10;
-    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.3);
-}
-
-.pw-carousel__previous,
-.pw-carousel__next {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-
-    display: flex;
-    width: $tap-size;
-
-    svg {
-        max-width: 100%;
+        background: $neutral-10;
+        box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.3);
     }
 }
 
-.pw-carousel__previous {
-    left: $unit;
+.c-carousel.c--side-controls {
+    .c-carousel__previous,
+    .c-carousel__next {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+
+        display: flex;
+        width: $tap-size;
+
+        svg {
+            max-width: 100%;
+        }
+    }
+    .c-carousel__previous {
+        left: $unit;
+    }
+
+    .c-carousel__next {
+        right: $unit;
+    }
 }
 
-.pw-carousel__next {
-    right: $unit;
+.c-carousel.c--hide-controls {
+    .c-carousel__previous,
+    .c-carousel__next {
+        display: none;
+    }
 }
 
 
