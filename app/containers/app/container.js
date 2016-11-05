@@ -5,8 +5,10 @@ import {IconSprite} from 'progressive-web-sdk/dist/components/icon'
 import SkipLinks from '../../components/skip-links'
 import Header from '../../containers/header/container'
 import Footer from '../../containers/footer/container'
+import MiniCart from '../../containers/mini-cart/container'
 import Navigation from '../../containers/navigation/container'
 import * as navActions from '../../containers/navigation/actions'
+import * as miniCartActions from '../../containers/mini-cart/actions'
 import sprite from '../../static/sprite/sprite.svg'
 
 
@@ -17,7 +19,7 @@ class App extends React.Component {
     }
 
     render() {
-        const {openNavigation, history} = this.props
+        const {openMiniCart, openNavigation, history} = this.props
         const currentTemplate = `t-${this.props.children.props.route.routeName}`
 
         return (
@@ -27,8 +29,9 @@ class App extends React.Component {
 
                 <div id="app-wrap" className={currentTemplate}>
                     <div id="app-header" role="banner">
-                        <Header onMenuClick={openNavigation} />
+                        <Header onMenuClick={openNavigation} onMiniCartClick={openMiniCart} />
                         <Navigation history={history} />
+                        <MiniCart />
                     </div>
 
                     <main id="app-main" role="main">
@@ -50,6 +53,7 @@ App.propTypes = {
      * The react-router history object
      */
     history: PropTypes.object,
+    openMiniCart: PropTypes.func,
     openNavigation: PropTypes.func,
 }
 
@@ -60,7 +64,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    openNavigation: navActions.openNavigation
+    openMiniCart: miniCartActions.openMiniCart,
+    openNavigation: navActions.openNavigation,
 }
 
 export default connect(
