@@ -1,8 +1,6 @@
 import React, {PropTypes} from 'react'
-import IconLabelButton from '../../../components/icon-label-button'
 import Button from 'progressive-web-sdk/dist/components/button'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
-import Link from 'progressive-web-sdk/dist/components/link'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
 const PDPItemAddedModal = ({open, onDismiss, quantity, product: {title, price, carouselItems}}) => (
