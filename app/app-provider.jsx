@@ -10,6 +10,7 @@ import App from './containers/app/container'
 import Home from './containers/home/container'
 import Login from './containers/login/container'
 import PLP from './containers/plp/container'
+import PDP from './containers/pdp/container'
 
 
 const AppProvider = ({store}) => {
@@ -54,7 +55,8 @@ const AppProvider = ({store}) => {
             <Router>
                 <Route path="/" component={App} onEnter={onEnter} onChange={onChange}>
                     <IndexRoute component={Home} routeName="home" />
-                    <Route component={Login} path="customer/account/login" routeName="login" />
+                    <Route component={Login} path="customer/account/login/" routeName="login" />
+                    <Route component={PDP} path="eye-of-newt.html" routeName="productDetailsPage" />
                     <Route component={PLP} path="*.html" routeName="productListPage" />
                 </Route>
             </Router>

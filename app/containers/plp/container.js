@@ -18,6 +18,7 @@ const renderNoResults = (bodyText) => {
     return (
         <div>
             <Image alt="No results" className="t-plp__no-results-image" src={getAssetUrl('static/img/no-results.png')} />
+
             <div className="t-plp__no-results-text u-text-align-center">
                 {bodyText}
             </div>

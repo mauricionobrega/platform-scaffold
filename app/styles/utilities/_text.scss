@@ -78,7 +78,7 @@
 // ---
 
 .u-text-light {
-    font-weight: 300;
+    font-weight: 300 !important; // @TODO: Add to spline!
 }
 
 .u-text-normal {
@@ -98,7 +98,15 @@
 }
 
 .u-text-lighter {
-    font-weight: lighter; // @TODO: add to Spline
+    font-weight: lighter !important; // @TODO: Add to Spline
+}
+
+
+// Sizes
+// ---
+
+.u-text-small {
+    font-size: 12px !important; // @TODO: Add to spline
 }
 
 // Font Family
