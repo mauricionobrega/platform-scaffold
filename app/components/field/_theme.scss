@@ -6,6 +6,12 @@
     //
 }
 
+.c-field.c--error {
+    .c-field__label {
+        color: $font-color;
+    }
+}
+
 .c-field + .c-field {
     margin-top: $unit*2;
 }
@@ -14,7 +20,7 @@
 // ---
 
 .c-field__label {
-    font-weight: normal;
+    font-weight: 600;
 }
 
 
@@ -22,7 +28,7 @@
 // ---
 
 .c-field__error {
-    color: $error-color;
+    margin-top: $unit;
 }
 
 
