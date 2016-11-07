@@ -7,7 +7,7 @@ const PDPAddToCart = ({quantity, setQuantity, onSubmit}) => {
 
     return (
         <form className="u-padding-start-md u-padding-end-md">
-            <div className="t-pdp__stepper u-margin-top-lg">
+            <div className="u-margin-top-lg">
                 <label htmlFor="quantity">Quantity</label>
                 <div className="u-flexbox u-margin-bottom-lg u-margin-top">
                     <Stepper decrementIcon="minus" incrementIcon="plus" initialValue={quantity} minimumValue={1} onChange={setQuantity} />

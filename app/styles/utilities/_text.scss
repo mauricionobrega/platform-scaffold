@@ -105,16 +105,8 @@
 // Size
 // ---
 
-.u-text-size-medium {
-    font-size: 24px;
-}
-
-.u-text-size-large {
-    font-size: $header-font-size;
-}
-
 .u-text-small {
-    font-size: 12px !important; // @TODO: Add to spline
+    font-size: 12px !important; // @TODO: Add to spline and assign a variable
 }
 
 

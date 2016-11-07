@@ -1,13 +1,15 @@
 // Carousel Theme
 // ===
 //
+// 1. Position context for the child `.c--side-controls .c-carousel__previous`
+//    and `.c--side-controls .c-carousel__next` elements
 
 .c-carousel {
-    position: relative;
+    position: relative; // 1
 }
 
 
-// Carousel Modifiers
+// Carousel Modifier: Frame
 // ---
 
 .c-carousel.c--frame {
@@ -20,14 +22,20 @@
         padding: $unit*3;
 
         background: $neutral-10;
-        box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.3);
+        box-shadow: $box-shadow;
     }
 }
+
+
+// Carousel Modifier: Side Controls
+// ---
+//
+// 1. Positioned absolute relative to the parent `c-carousel` container
 
 .c-carousel.c--side-controls {
     .c-carousel__previous,
     .c-carousel__next {
-        position: absolute;
+        position: absolute; // 1
         top: 0;
         bottom: 0;
 
@@ -46,6 +54,10 @@
         right: $unit;
     }
 }
+
+
+// Carousel Modifier: Hide Controls
+// ---
 
 .c-carousel.c--hide-controls {
     .c-carousel__previous,
@@ -74,7 +86,7 @@
     height: 6px;
     margin-right: 6px;
 
-    border-radius: 3px;
+    border-radius: 50%;
     background-color: $neutral-40;
 
     color: transparent; // 1
