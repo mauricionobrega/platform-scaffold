@@ -8,7 +8,7 @@ test('renders without errors', () => {
     expect(wrapper.length).toBe(1)
 })
 
-const ROOT_CLASS = 'c-pdp-heading'
+const ROOT_CLASS = 't-pdp-heading'
 
 test('renders the component class correctly', () => {
     const wrapper = shallow(<PDPHeading />)

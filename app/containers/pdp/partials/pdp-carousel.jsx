@@ -7,7 +7,7 @@ import Image from 'progressive-web-sdk/dist/components/image'
 
 const PDPCarousel = ({items}) => {
     return (items.length > 0 ?
-        <Carousel>
+        <Carousel className="c-pdp-carousel">
             {items.map((item, idx) => {
                 return (
                     <CarouselItem key={idx}>
