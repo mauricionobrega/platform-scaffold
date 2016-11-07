@@ -111,6 +111,7 @@ class MiniCart extends React.Component {
     render() {
         const {miniCart, closeMiniCart} = this.props
         const isOpen = miniCart.get('isOpen')
+        const isEmpty = false // @TODO replace with actual functionality
 
         return (
             <Sheet className="t-mini-cart" open={isOpen} onDismiss={closeMiniCart} maskOpacity={0.7} effect="slide-right">
@@ -127,7 +128,7 @@ class MiniCart extends React.Component {
                 </HeaderBar>
 
                 <div className="t-mini-cart__content u-flexbox u-column u-padding-md">
-                    {false ? this.renderList() : this.renderEmpty()}
+                    {isEmpty ? this.renderList() : this.renderEmpty()}
 
                     <div className="u-padding-top-lg u-flex-none">
                         <Button href="#" className="c--primary u-width-full u-text-uppercase">
