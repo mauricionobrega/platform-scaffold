@@ -7,6 +7,34 @@
 }
 
 
+// Content
+// ---
+//
+// 1. Setting this here because the utility class overrides my flex-direction
+
+.t-mini-cart__content {
+    min-height: calc(100vh - #{$unit * 6.5});
+}
+
+
+// Empty Cart
+// ---
+
+.t-mini-cart__empty-content {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+// Empty Message
+// ---
+
+.t-mini-cart__empty-message {
+    width: 80%;
+}
+
+
 // Title
 // ---
 
