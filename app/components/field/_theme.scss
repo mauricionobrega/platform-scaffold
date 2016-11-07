@@ -1,14 +1,13 @@
 // Field
 // ---
-
+//
+// 1. Keep the original font color of the label instead of error color - as per design
 
 .c-field {
-    //
-}
-
-.c-field.c--error {
-    .c-field__label {
-        color: $font-color;
+    &.c--error {
+        .c-field__label {
+            color: $font-color; // 1
+        }
     }
 }
 
