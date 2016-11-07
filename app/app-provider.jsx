@@ -57,6 +57,7 @@ const AppProvider = ({store}) => {
                     <IndexRoute component={Home} routeName="home" />
                     <Route component={Login} path="customer/account/login/" routeName="login" />
                     <Route component={PDP} path="eye-of-newt.html" routeName="productDetailsPage" />
+                    <Route component={PDP} path="unicorn-blood.html" routeName="productDetailsPage" />
                     <Route component={PLP} path="*.html" routeName="productListPage" />
                 </Route>
             </Router>

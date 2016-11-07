@@ -3,6 +3,7 @@ import PDPCarousel from './pdp-carousel'
 import {mount, shallow} from 'enzyme'
 import Carousel from 'progressive-web-sdk/dist/components/carousel'
 import CarouselItem from 'progressive-web-sdk/dist/components/carousel/carousel-item'
+import Image from 'progressive-web-sdk/dist/components/image'
 
 /* eslint-disable newline-per-chained-call */
 
@@ -15,15 +16,21 @@ test('renders without errors', () => {
 const ROOT_CLASS = 'c-pdp-carousel'
 
 test('renders the component class correctly', () => {
-    const wrapper = shallow(<PDPCarousel />)
+    const carouselItems = [
+        {position: '0', img: 'test.png'}
+    ]
+    const wrapper = shallow(<PDPCarousel items={carouselItems} />)
 
     expect(wrapper.hasClass(ROOT_CLASS)).toBe(true)
 })
 
 test('renders a Carousel', () => {
-    const wrapper = shallow(<PDPCarousel />)
+    const carouselItems = [
+        {position: '0', img: 'test.png'}
+    ]
+    const wrapper = shallow(<PDPCarousel items={carouselItems} />)
 
-    expect(wrapper.children().first().type()).toBe(Carousel)
+    expect(wrapper.type()).toBe(Carousel)
 })
 
 test('renders a CarouselItem for each item passed', () => {
@@ -40,7 +47,7 @@ test('renders a CarouselItem for each item passed', () => {
         for (let i = 0; i < n; i++) {
             const itemContents = carouselItems.at(i).children()
             expect(itemContents.length).toBe(1)
-            expect(itemContents.type()).toBe('img')
+            expect(itemContents.type()).toBe(Image)
             expect(itemContents.prop('src')).toBe(items[i].img)
         }
     })

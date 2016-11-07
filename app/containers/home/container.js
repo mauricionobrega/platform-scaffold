@@ -30,7 +30,7 @@ class Home extends React.Component {
         return (
             <div className="t-home__container u-padding-bottom-md">
                 {banners ?
-                    <Carousel allowLooping={true}>
+                    <Carousel allowLooping={true} className="c--full-width c--hide-controls">
                         {banners.map(({src, href, alt}, key) => { // TODO: fix this when we put mobile assets on desktop
                             return (
                                 <CarouselItem href={href} key={key}>

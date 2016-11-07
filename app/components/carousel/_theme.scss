@@ -1,15 +1,80 @@
-// Carousel theme
+// Carousel Theme
+// ===
+//
+// 1. Position context for the child `.c--side-controls .c-carousel__previous`
+//    and `.c--side-controls .c-carousel__next` elements
 
-// [1] - Hide the carousel slide numbers from being displayed
+.c-carousel {
+    position: relative; // 1
+}
+
+
+// Carousel Modifier: Frame
+// ---
+
+.c-carousel.c--frame {
+    padding: $unit*1.5;
+
+    background: $neutral-20;
+
+    .c-carousel__item {
+        margin: 0 $unit;
+        padding: $unit*3;
+
+        background: $neutral-10;
+        box-shadow: $box-shadow;
+    }
+}
+
+
+// Carousel Modifier: Side Controls
+// ---
+//
+// 1. Positioned absolute relative to the parent `c-carousel` container
+
+.c-carousel.c--side-controls {
+    .c-carousel__previous,
+    .c-carousel__next {
+        position: absolute; // 1
+        top: 0;
+        bottom: 0;
+
+        display: flex;
+        width: $tap-size;
+
+        svg {
+            max-width: 100%;
+        }
+    }
+
+    .c-carousel__previous {
+        left: $unit;
+    }
+
+    .c-carousel__next {
+        right: $unit;
+    }
+}
+
+
+// Carousel Modifier: Hide Controls
+// ---
+
+.c-carousel.c--hide-controls {
+    .c-carousel__previous,
+    .c-carousel__next {
+        display: none;
+    }
+}
+
+
+// Carousel Controls
+// ---
+//
+// 1. Hide the carousel slide numbers from being displayed
 
 .c-carousel__controls {
     margin-top: $unit * 1.5;
-}
-
-// We don't want to display the controls
-.c-carousel__previous,
-.c-carousel__next {
-    display: none;
 }
 
 .c-carousel__pips {
@@ -21,10 +86,12 @@
     width: 6px;
     height: 6px;
     margin-right: 6px;
-    border-radius: 3px;
+
+    border-radius: 50%;
     background-color: $neutral-40;
-    color: transparent; // [1]
-    font: 0/0 a; // [1]
+
+    color: transparent; // 1
+    font: 0/0 a; // 1
 
     &.c--active {
         background-color: $neutral-60;

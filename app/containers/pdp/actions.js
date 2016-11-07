@@ -2,6 +2,9 @@ import {createAction, makeFormEncodedRequest} from '../../utils/utils'
 
 export const setItemQuantity = createAction('Set item quantity')
 
+export const openItemAddedModal = createAction('Open Item Added Sheet')
+export const closeItemAddedModal = createAction('Close Item Added Sheet')
+
 export const submitCartForm = () => (dispatch, getStore) => {
     const {pdp} = getStore()
     const formInfo = pdp.get('formInfo')
@@ -12,5 +15,7 @@ export const submitCartForm = () => (dispatch, getStore) => {
         qty
     }, {
         method: formInfo.get('method')
+    }).then(() => {
+        dispatch(openItemAddedModal())
     })
 }
