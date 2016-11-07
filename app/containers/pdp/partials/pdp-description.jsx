@@ -3,7 +3,7 @@ import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/acco
 
 const PDPDescription = ({description}) => (
     <Accordion className="c-pdp-description">
-        <AccordionItem header="Product Description" closeIconName="x">
+        <AccordionItem header="Product Description" closeIconName="close" openIconName="plus" iconSize="medium">
             <p>{description}</p>
         </AccordionItem>
     </Accordion>

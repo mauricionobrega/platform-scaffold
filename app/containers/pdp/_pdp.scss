@@ -6,15 +6,39 @@
     // wrapper element.
 }
 
-.t-pdp__indicator {
-    flex: 1;
-    margin-left: $unit;
-    padding: $unit*1.5;
 
-    text-align: center;
+// Price
+// ---
+
+.t-pdp__price {
+    font-size: 24px;
+    line-height: 32px;
 }
 
 
-.t-pdp-heading {
-    border-bottom: 1px solid $neutral-30;
+// Add to Cart Button
+// ---
+
+.t-pdp__add-to-cart .c-icon {
+    width: $unit*1.5 !important;
+    height: $unit*1.5 !important;
+    margin-right: $unit;
+}
+
+
+// Added to Cart Sheet
+// ---
+//
+// 1. Provide the space within which the Close button with be vertically and
+//    horisontally centered in order to match the mockup
+
+.t-pdp__item-added-modal-close {
+    width: $unit*7; // 1
+    height: $unit*7; // 1
+}
+
+.t-pdp__item-added-modal-icon {
+    color: $neutral-40;
+
+    fill: $neutral-40;
 }

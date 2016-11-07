@@ -7,11 +7,16 @@ import Image from 'progressive-web-sdk/dist/components/image'
 
 const PDPCarousel = ({items}) => {
     return (items.length > 0 ?
-        <Carousel className="c-pdp-carousel">
+        <Carousel previousIcon="back" nextIcon="chevron-right" iconSize="medium" className="c-pdp-carousel c--frame c--side-controls">
             {items.map((item, idx) => {
+                const alt = '' // no alt text available :(
                 return (
                     <CarouselItem key={idx}>
-                        <Image src={item.img} hidePlaceholder={true} loadingIndicator={<SkeletonBlock height="100vw" />} />
+                        <Image
+                            alt={alt}
+                            src={item.img}
+                            hidePlaceholder={true}
+                            loadingIndicator={<SkeletonBlock height="100vw" />} />
                     </CarouselItem>
                 )
             })}

@@ -78,7 +78,11 @@
 // ---
 
 .u-text-light {
-    font-weight: 300;
+    font-weight: 300 !important; // @TODO: Add to spline!
+}
+
+.u-text-lighter {
+    font-weight: lighter !important; // @TODO: Add to Spline
 }
 
 .u-text-normal {
@@ -101,31 +105,22 @@
 // Size
 // ---
 
-.u-text-medium {
-    font-size: 24px;
-}
-
-.u-text-large {
-    font-size: $header-font-size;
-}
-
-
-// Color
-// ---
-
-.u-text-accent {
-    color: $accent-color;
+.u-text-small {
+    font-size: 12px !important; // @TODO: Add to spline and assign a variable
 }
 
 
 // Font-Family
 // ---
 
-.u-text-header-font {
+.u-text-header-font-family {
     font-family: $header-font-family;
-    letter-spacing: 1px;
 }
 
-.u-text-lighter {
-    font-weight: lighter; // @TODO: add to Spline
+
+// Letter Spacing
+// ---
+
+.u-text-letter-spacing {
+    letter-spacing: 1px;
 }
