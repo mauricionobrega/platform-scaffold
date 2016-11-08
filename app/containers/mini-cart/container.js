@@ -42,7 +42,10 @@ class MiniCart extends React.Component {
                         category="Potions"
                         title={<h2 className="u-h3">Unicorn Blood</h2>}
                         price="$14.00"
-                        image={<Image src="http://www.merlinspotions.com/media/catalog/product/cache/1/thumbnail/75x75/beff4985b56e3afdbeabfc89641a4582/u/n/unicorn-blood-1.png" alt="Corked glass bottle of Unicorn Blood" width="64px" />}
+                        image={<Image
+                            src="http://www.merlinspotions.com/media/catalog/product/cache/1/thumbnail/75x75/beff4985b56e3afdbeabfc89641a4582/u/n/unicorn-blood-1.png"
+                            alt="Corked glass bottle of Unicorn Blood"
+                            width="64px" />}
                     >
                         <div>
                             <p className="u-margin-bottom-sm">Qty: 1</p>
@@ -55,7 +58,10 @@ class MiniCart extends React.Component {
                         category="Potions"
                         title={<h2 className="u-h3">Eye of Newt</h2>}
                         price="$12.00"
-                        image={<Image src="http://www.merlinspotions.com/media/catalog/product/cache/1/thumbnail/75x75/beff4985b56e3afdbeabfc89641a4582/s/l/sleeping-draught-1_1_.png" alt="Corked glass bottle of Eye of Newt" width="64px" />}
+                        image={<Image
+                            src="http://www.merlinspotions.com/media/catalog/product/cache/1/thumbnail/75x75/beff4985b56e3afdbeabfc89641a4582/s/l/sleeping-draught-1_1_.png"
+                            alt="Corked glass bottle of Eye of Newt"
+                            width="64px" />}
                     >
                         <div>
                             <p className="u-margin-bottom-sm">Qty: 1</p>
@@ -68,7 +74,10 @@ class MiniCart extends React.Component {
                         category="Books"
                         title={<h2 className="u-h3">Dragon Breeding For Pleasure and Profit</h2>}
                         price="$30.00"
-                        image={<Image src="http://www.merlinspotions.com/media/catalog/product/cache/1/thumbnail/75x75/beff4985b56e3afdbeabfc89641a4582/d/r/dragon-breeding-for-pleasure-and-profit-1.png" alt="Ragged, cryptic book" imageWidth="64px" />}
+                        image={<Image
+                            src="http://www.merlinspotions.com/media/catalog/product/cache/1/thumbnail/75x75/beff4985b56e3afdbeabfc89641a4582/d/r/dragon-breeding-for-pleasure-and-profit-1.png"
+                            alt="Ragged, cryptic book"
+                            imageWidth="64px" />}
                     >
                         <div>
                             <p className="u-margin-bottom-sm">Qty: 1</p>
