@@ -1,8 +1,6 @@
 import React, {PropTypes} from 'react'
 import classNames from 'classnames'
 
-import Image from 'progressive-web-sdk/dist/components/image'
-
 /**
  * Product Item represents a single product and it's basic information: name,
  * price, category and other desired information.
@@ -55,11 +53,6 @@ const ProductItem = ({
 
 ProductItem.propTypes = {
     /**
-     * Designates the ProductItem's unit price
-     */
-    price: PropTypes.node.isRequired,
-
-    /**
      * The ProductItem's name or designation
      */
     title: PropTypes.node.isRequired,
@@ -83,6 +76,11 @@ ProductItem.propTypes = {
      * Image of the product. Usually an `<img />` tag or `<Image />` component
      */
     image: PropTypes.node,
+
+    /**
+     * Designates the ProductItem's unit price
+     */
+    price: PropTypes.node,
 }
 
 export default ProductItem
