@@ -9,9 +9,9 @@
 
 // Neutral Colors
 // ---
-@mixin bg-color-neutral-20(
+@mixin bg-color-neutral-20( // @TODO: Add to spline
     $important: false,
-    $color: if(variable-exists(neutral-20), $neutral-20, null) // @TODO: Add to spline
+    $color: if(variable-exists(neutral-20), $neutral-20, null)
 ) {
     @include base-bg-color($important, $color);
 }
