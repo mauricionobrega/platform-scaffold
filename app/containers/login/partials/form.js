@@ -1,7 +1,9 @@
 import React, {PropTypes} from 'react'
-import {reduxForm} from 'redux-form'
+import {Field, reduxForm} from 'redux-form'
 
-import FormFields from 'progressive-web-sdk/dist/components/form-fields'
+import FieldComponent from 'progressive-web-sdk/dist/components/field'
+import FieldSet from 'progressive-web-sdk/dist/components/field-set'
+import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 
 const LoginForm = (props) => {
     const {
@@ -14,12 +16,6 @@ const LoginForm = (props) => {
         submitText,
         submitForm
     } = props
-    const items = fields.map((field) => {
-        return {
-            type: 'reduxFormField',
-            props: {...field}
-        }
-    })
     return (
         <form
             onSubmit={handleSubmit((values) => {
@@ -30,7 +26,21 @@ const LoginForm = (props) => {
             noValidate={true}
         >
             {error && <div className="u-margin-bottom-md u-color-error">{error}</div>}
-            <FormFields items={items} />
+            <FieldSet>
+                {fields.map(({label, name, type}, idx) => {
+                    return (
+                        <FieldRow key={idx}>
+                            <Field // Actually ReduxFormField from 'redux-form'
+                                name={name}
+                                label={label}
+                                component={FieldComponent} // Progressive Web SDK Field Component
+                            >
+                                <input type={type} />
+                            </Field>
+                        </FieldRow>
+                    )
+                })}
+            </FieldSet>
             <button className="c-button c--primary u-width-full u-margin-top-lg" type="submit" disabled={submitting}>{submitText}</button>
         </form>
     )
