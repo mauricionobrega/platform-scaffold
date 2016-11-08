@@ -5,13 +5,14 @@
 // context above that of the footer (.t-footer__newsletter)
 // [2] - Fixes white space appearing below carousel images
 
-.t-home {
-}
+
 
 .t-home__container {
     position: relative; // [1]
+
     background-color: $background-color;
     box-shadow: $box-shadow;
+
     font-family: $header-font-family;
 
     .c-carousel__inner {
@@ -40,10 +41,6 @@
     .c-list-tile__content {
         padding: ($unit * 1.5) 0 ($unit * 1.5) ($unit * 2);
     }
-}
-
-.t-home__category-image {
-
 }
 
 .t-home__category-text {
