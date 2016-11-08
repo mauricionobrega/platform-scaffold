@@ -5,10 +5,47 @@
 // declarative, robust cross-browser way of using flexbox.
 
 
-// Flexbox root
+// Flex (Grow)
+// ---
+//
+// Ensures that the flex child will grow to fill the available space.
+//
+// Note! This utility class should come **BEFORE** the `u-flexbox` class in
+// order to ensure that an element with both classes inherits only the
+// `display: flex` property.
+
+.u-flex {
+    @include flex(true);
+}
+
+
+// Flex (Shrink)
+// ---
+//
+// Shrink Flexbox items to a minimum size.
+
+.u-flex-shrink {
+    @include flex-shrink(true);
+}
+
+
+// Flex (None)
+// ---
+//
+// Neither grow nor shrink!
+
+.u-flex-none {
+    flex: 0 0 auto !important; // @TODO: Add to spline
+}
+
+
+// Flexbox
 // ---
 //
 // Includes gutters, for grid-like functionality.
+//
+// Note! This should come **AFTER** the `u-flex` utility class in order to
+// ensure an element that has both classes inherits `display: flex`!
 
 .u-flexbox {
     @include flexbox(true);
@@ -91,32 +128,12 @@
     @include row-reverse(true);
 }
 
-
-// Flex (Grow)
-// ---
-
-.u-flex {
-    @include flex(true);
+.u-column {
+    flex-direction: column !important; // @TODO: Add to spline
 }
 
-
-// Flex (Shrink)
-// ---
-//
-// Shrink Flexbox items to a minimum size.
-
-.u-flex-shrink {
-    @include flex-shrink(true);
-}
-
-
-// Flex (None)
-// ---
-//
-// Neither grow nor shrink!
-
-.u-flex-none {
-    flex: 0 0 auto !important; // @TODO: Add to spline
+.u-column-reverse {
+    flex-direction: column-reverse !important; // @TODO: Add to spline
 }
 
 

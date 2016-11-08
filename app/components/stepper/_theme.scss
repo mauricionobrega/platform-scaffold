@@ -1,0 +1,32 @@
+// Stepper Theme
+// ===
+//
+
+.pw-stepper {
+    display: flex;
+    border: $border;
+
+    input {
+        width: $tap-size;
+        border: 0;
+
+        text-align: center;
+    }
+}
+
+.pw-stepper__button {
+    background-color: $brand-color;
+
+    color: $neutral-10;
+
+    &:active,
+    &:focus {
+        background-color: $dark-brand-color;
+    }
+
+    &[diabled] {
+        background-color: $neutral-30;
+
+        color: $neutral-40;
+    }
+}

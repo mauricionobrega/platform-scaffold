@@ -22,8 +22,7 @@ test('renders the component class correctly', () => {
 test('renders the description in an AccordionItem', () => {
     const wrapper = shallow(<PDPDescription description="The text that we text is text" />)
 
-    expect(wrapper.children().length).toBe(1)
-    const accordion = wrapper.children().first()
+    const accordion = wrapper
     expect(accordion.type()).toBe(Accordion)
 
     expect(accordion.children().length).toBe(1)
