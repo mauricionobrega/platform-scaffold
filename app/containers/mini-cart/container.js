@@ -1,11 +1,13 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import classNames from 'classnames'
+import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import IconLabelButton from '../../components/icon-label-button'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 import List from 'progressive-web-sdk/dist/components/list'
+import Image from 'progressive-web-sdk/dist/components/image'
 import ProductItem from '../../components/product-item'
 import * as miniCartActions from './actions'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
@@ -15,17 +17,13 @@ class MiniCart extends React.Component {
         this.props.fetchContents()
     }
 
-    render() {
-        const {contentsLoaded} = this.props
+    productSubtotal(price, quantity) {
+        const priceInCents = price.replace(/[$,. ]/g, '')
+        const priceNumber = parseFloat(priceInCents) / 100
+        return (priceNumber * quantity).toFixed(2)
+    }
 
-        if (!contentsLoaded) {
-            return (
-                <div />
-            )
-        }
-
-        const {cart, closeMiniCart, isOpen} = this.props
-
+    renderList(cart) {
         const subtotalClasses = classNames(
             't-mini-cart__subtotal',
 
@@ -37,6 +35,69 @@ class MiniCart extends React.Component {
             'u-h4',
             'u-heading-family'
         )
+
+        return (
+            <div className="u-padding-md">
+                <Button href="#" className="c--tertiary u-width-full u-margin-bottom u-text-capitalize">
+                    View and edit cart
+                </Button>
+
+                <List>
+                    {cart.items.map((product, idx) => {
+                        return (
+                            <ProductItem
+                                className="u-padding-top-lg u-padding-bottom-lg"
+                                category="Potions"
+                                title={<h2 className="u-h3">{product.product_name}</h2>}
+                                price={product.product_price}
+                                src={product.product_image.src}
+                                alt={product.product_image.alt}
+                                imageWidth="64px"
+                                key={idx}
+                            >
+                                <div>
+                                    <p className="u-margin-bottom-sm">Qty: {product.qty}</p>
+                                    <p>Sub-Total: ${this.productSubtotal(product.product_price, product.qty)}</p>
+                                </div>
+                            </ProductItem>
+                        )
+                    })
+                }
+                </List>
+
+                <div className={subtotalClasses}>
+                    <div className="u-flex u-text-uppercase">Subtotal:</div>
+                    <div className="u-flex-none">{cart.subtotal}</div>
+                </div>
+            </div>
+        )
+    }
+
+    renderEmpty() {
+        return (
+            <div className="t-mini-cart__empty-content u-flexbox u-flex u-column">
+                <Image
+                    className="u-margin-bottom-md"
+                    height="140px"
+                    width="140px"
+                    alt="Illustrated upside-down top hat with a bug flying out"
+                    src={getAssetUrl(`static/img/cart/empty-cart@2x.png`)} />
+
+                <p className="t-mini-cart__empty-message u-text-align-center">
+                    You have no items in your shopping cart.
+                </p>
+            </div>
+        )
+    }
+
+    render() {
+        const {contentsLoaded, cart, closeMiniCart, isOpen} = this.props
+
+        if (!contentsLoaded) {
+            return false
+        }
+
+        const hasItems = cart.items.length > 0
 
         return (
             <Sheet className="t-mini-cart" open={isOpen} onDismiss={closeMiniCart} maskOpacity={0.7} effect="slide-right">
@@ -52,40 +113,10 @@ class MiniCart extends React.Component {
                     </HeaderBarActions>
                 </HeaderBar>
 
-                <div className="u-padding-md">
-                    <Button href="#" className="c--tertiary u-width-full u-margin-bottom u-text-capitalize">
-                        View and edit cart
-                    </Button>
+                <div className="t-mini-cart__content u-flexbox u-column u-padding-md">
+                    {hasItems ? this.renderList(cart) : this.renderEmpty()}
 
-                    <List>
-                        {cart.items.map((product, idx) => {
-                            return (
-                                <ProductItem
-                                    className="u-padding-top-lg u-padding-bottom-lg"
-                                    category="Potions"
-                                    title={<h2 className="u-h3">{product.product_name}</h2>}
-                                    price={product.product_price}
-                                    src={product.product_image.src}
-                                    alt={product.product_image.alt}
-                                    imageWidth="64px" // TODO
-                                    key={idx}
-                                >
-                                    <div>
-                                        <p className="u-margin-bottom-sm">Qty: {product.qty}</p>
-                                        <p>Sub-Total: {product.qty}</p>
-                                    </div>
-                                </ProductItem>
-                            )
-                        })
-                    }
-                    </List>
-
-                    <div className={subtotalClasses}>
-                        <div className="u-flex u-text-uppercase">Subtotal:</div>
-                        <div className="u-flex-none">{cart.subtotal}</div>
-                    </div>
-
-                    <div className="u-padding-top-lg">
+                    <div className="u-padding-top-lg u-flex-none">
                         <Button href="#" className="c--primary u-width-full u-text-uppercase">
                             Go To Checkout
                         </Button>
