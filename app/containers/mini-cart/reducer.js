@@ -1,15 +1,18 @@
 import {createReducer} from 'redux-act'
 import Immutable from 'immutable'
 import * as miniCartActions from './actions'
+import * as cartActions from '../cart/actions'
 
 const initialState = Immutable.fromJS({
-    isOpen: false
+    isOpen: false,
+    contentsLoaded: false
 })
 
 export default createReducer({
-    [miniCartActions.receiveContents]: (state, payload) => {
-        return state.set('contentsLoaded', true)
-                    .mergeDeep(payload)
+    [cartActions.receiveCartContents]: (state, payload) => {
+        return state.mergeDeep(
+            {contentsLoaded: true},
+            payload)
     },
 
     [miniCartActions.closeMiniCart]: (state) => {

@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
+import Immutable from 'immutable'
 import classNames from 'classnames'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
@@ -10,11 +11,16 @@ import List from 'progressive-web-sdk/dist/components/list'
 import Image from 'progressive-web-sdk/dist/components/image'
 import ProductItem from '../../components/product-item'
 import * as miniCartActions from './actions'
+import * as cartActions from '../cart/actions'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 
 class MiniCart extends React.Component {
     componentDidMount() {
         this.props.fetchContents()
+    }
+
+    shouldComponentUpdate(newProps) {
+        return !Immutable.is(newProps.caminiCartrt, this.props.miniCart)
     }
 
     productSubtotal(price, quantity) {
@@ -47,7 +53,6 @@ class MiniCart extends React.Component {
                         return (
                             <ProductItem
                                 className="u-padding-top-lg u-padding-bottom-lg"
-                                category="Potions"
                                 title={<h2 className="u-h3">{product.product_name}</h2>}
                                 price={product.product_price}
                                 src={product.product_image.src}
@@ -91,7 +96,9 @@ class MiniCart extends React.Component {
     }
 
     render() {
-        const {contentsLoaded, cart, closeMiniCart, isOpen} = this.props
+        const {miniCart, closeMiniCart} = this.props
+
+        const {cart, contentsLoaded, isOpen} = miniCart.toJS()
 
         if (!contentsLoaded) {
             return false
@@ -128,27 +135,16 @@ class MiniCart extends React.Component {
 }
 
 MiniCart.propTypes = {
-    contentsLoaded: PropTypes.bool.isRequired,
-
-    cart: PropTypes.object,
+    miniCart: PropTypes.object.isRequired,
     closeMiniCart: PropTypes.func,
     fetchContents: PropTypes.func,
-    isOpen: PropTypes.bool,
 }
 
-MiniCart.defaultProps = {
-    contentsLoaded: false,
-}
-
-const mapStateToProps = (state) => {
-    return {
-        ...state.miniCart.toJS()
-    }
-}
+export const mapStateToProps = ({miniCart}) => ({miniCart})
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchContents: () => dispatch(miniCartActions.fetchContents()),
+        fetchContents: () => dispatch(cartActions.getCart()),
         closeMiniCart: () => dispatch(miniCartActions.closeMiniCart())
     }
 }

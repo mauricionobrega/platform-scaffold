@@ -6,26 +6,24 @@
  * All requests require a session, eg. 'Cookie: PHPSESSID=as337c3fq7751n9gn1o3enacf7'
  */
 import parse from './parser/parser'
+import * as utils from '../../utils/utils'
 
 const baseHeaders = {
     Accept: 'application/json',
 }
 
+export const receiveCartContents = utils.createAction('Received Cart Contents')
+
 /**
  * Get the contents of the users cart
  */
-export const getCart = () => {
+export const getCart = () => (dispatch) => {
     const opts = {
-        headers: baseHeaders,
-        credentials: 'same-origin'
+        headers: baseHeaders
     }
-    return fetch('http://www.merlinspotions.com/customer/section/load/?sections=cart', opts)
-        .then((response) => {
-            return response.text()
-        })
-        .then((response) => {
-            return parse(response)
-        })
+    return utils.makeRequest('http://www.merlinspotions.com/customer/section/load/?sections=cart', opts)
+        .then((response) => response.text())
+        .then((responseText) => dispatch(receiveCartContents(parse(responseText))))
 }
 
 /**
