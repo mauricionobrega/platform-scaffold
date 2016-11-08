@@ -13,11 +13,14 @@ const titleClassName = classNames(
     'u-color-neutral-60'
 )
 
-const ProductTile = ({className, product = {}}) => {
-    // alt is in product.image props
-    /* eslint-disable jsx-a11y/img-has-alt */
-    // const startAction = <Image {...product.image} height="160px" width="128px" />
-    /* eslint-enable jsx-a11y/img-has-alt */
+const ProductTile = ({className, product}) => {
+    const productImage = (
+        <Image
+            {...product.image}
+            alt={product.image && product.image.alt}
+            height="150px"
+            width="120px" />
+    )
 
     const title = product.link
         ? <h2 className={titleClassName}>{product.link.text}</h2>
@@ -33,10 +36,13 @@ const ProductTile = ({className, product = {}}) => {
                 className={classNames('u-align-center', className)}
                 title={title}
                 price={price}
-                imageWidth="120px"
-                imageHeight="150px" />
+                image={productImage} />
         </ListTile>
     )
+}
+
+ProductTile.defaultProps = {
+    product: {}
 }
 
 ProductTile.propTypes = {

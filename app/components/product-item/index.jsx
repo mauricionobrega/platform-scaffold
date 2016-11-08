@@ -9,14 +9,11 @@ import Image from 'progressive-web-sdk/dist/components/image'
  */
 
 const ProductItem = ({
-    alt,
     category,
     children,
     className,
-    imageHeight,
-    imageWidth,
+    image,
     price,
-    src,
     title,
 }) => {
     const classes = classNames('c-product-item', 'u-flexbox', 'u-row-reverse', className)
@@ -45,9 +42,12 @@ const ProductItem = ({
                 }
             </div>
 
-            <div className="u-padding-end u-flex-none">
-                <Image src={src} alt={alt} width={imageWidth} height={imageHeight} />
-            </div>
+
+            {image &&
+                <div className="u-padding-end u-flex-none">
+                    {image}
+                </div>
+            }
         </article>
     )
 }
@@ -65,11 +65,6 @@ ProductItem.propTypes = {
     title: PropTypes.node.isRequired,
 
     /**
-     * Adds an alt argument to the ProductItem's image
-     */
-    alt: PropTypes.string,
-
-    /**
      * Designates the ProductItem's category (i.e. Potions, Books, etc.)
      */
     category: PropTypes.string,
@@ -85,20 +80,9 @@ ProductItem.propTypes = {
     className: PropTypes.string,
 
     /**
-     * Height of the ProductItem's image
+     * Image of the product. Usually an `<img />` tag or `<Image />` component
      */
-    imageHeight: PropTypes.string,
-
-    /**
-     * Width of the ProductItem's image
-     */
-    imageWidth: PropTypes.string,
-
-    /**
-     * Provides the source for the ProductItem's image
-     */
-    src: PropTypes.string,
-
+    image: PropTypes.node,
 }
 
 export default ProductItem
