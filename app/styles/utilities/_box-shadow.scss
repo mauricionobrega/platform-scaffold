@@ -1,6 +1,7 @@
 // Box Shadow
 // ===
 
+
 .u-box-shadow {
-    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.3);  // @TODO: add to spline
+    box-shadow: $box-shadow; // @TODO: add to spline
 }

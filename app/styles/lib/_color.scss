@@ -9,7 +9,7 @@
 
 // Neutral Colors
 // ---
-@mixin bg-color-neutral-20( // @TODO: Add to spline
+@mixin bg-color-neutral-20(// @TODO: Add to spline
     $important: false,
     $color: if(variable-exists(neutral-20), $neutral-20, null)
 ) {
