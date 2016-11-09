@@ -54,9 +54,14 @@ const LoginForm = (props) => {
                             {tooltip &&
                                 (<div>
                                     <span onClick={openModal}>{tooltip.title}</span>
-                                    <Sheet open={modalOpen} onDismiss={closeModal} effect="slide-bottom" className="">
-                                        <Button onClick={closeModal}>Close</Button>
+                                    <Sheet
+                                        open={modalOpen}
+                                        onDismiss={closeModal}
+                                        effect="slide-bottom"
+                                        headerContent={<div><span>{label}</span><Button onClick={closeModal}>Close</Button></div>}
+                                    >
                                         {tooltip.content}
+                                        <Button className="u-text-uppercase u-width-full" onClick={closeModal}>Continue</Button>
                                     </Sheet>
                                 </div>)
                             }
