@@ -102,11 +102,7 @@ class MiniCart extends React.Component {
 
         const {cart, contentsLoaded, isOpen} = miniCart.toJS()
 
-        if (!contentsLoaded) {
-            return false
-        }
-
-        const hasItems = cart.items.length > 0
+        const hasItems = cart ? cart.items.length > 0 : false
 
         return (
             <Sheet className="t-mini-cart" open={isOpen} onDismiss={closeMiniCart} maskOpacity={0.7} effect="slide-right">
@@ -122,15 +118,19 @@ class MiniCart extends React.Component {
                     </HeaderBarActions>
                 </HeaderBar>
 
-                <div className="t-mini-cart__content u-flexbox u-column u-padding-md">
-                    {hasItems ? this.renderList(cart) : this.renderEmpty()}
+                {contentsLoaded ?
+                    (
+                        <div className="t-mini-cart__content u-flexbox u-column u-padding-md">
+                            {hasItems ? this.renderList(cart) : this.renderEmpty()}
 
-                    <div className="u-padding-top-lg u-flex-none">
-                        <Button href="#" className="c--primary u-width-full u-text-uppercase">
-                            Go To Checkout
-                        </Button>
-                    </div>
-                </div>
+                            <div className="u-padding-top-lg u-flex-none">
+                                <Button href="#" className="c--primary u-width-full u-text-uppercase">
+                                    Go To Checkout
+                                </Button>
+                            </div>
+                        </div>
+                    )
+                : false}
             </Sheet>
         )
     }
