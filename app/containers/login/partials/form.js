@@ -39,7 +39,7 @@ const LoginForm = (props) => {
                         <span>
                             {label}
                             {required && <span> *</span>}
-                            {type === 'password' && <Link href={forgotPassword.href}>{forgotPassword.title}</Link>}
+                            {type === 'password' && <Link className="u-float-end" href={forgotPassword.href}>{forgotPassword.title}</Link>}
                         </span>
                     )
                     return (
@@ -56,7 +56,9 @@ const LoginForm = (props) => {
                                     <span onClick={openModal}>{tooltip.title}</span>
                                     <Sheet open={modalOpen} onDismiss={closeModal} effect="slide-bottom" className="">
                                         <Button onClick={closeModal}>Close</Button>
-                                        {tooltip.content}
+                                        <div className="u-padding-md">
+                                            {tooltip.content}
+                                        </div>
                                     </Sheet>
                                 </div>)
                             }

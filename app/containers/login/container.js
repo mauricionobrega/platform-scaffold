@@ -38,7 +38,7 @@ const Login = ({
                 :
                     <SkeletonBlock height="14px" width="100%" />
                 }
-                <span>{requiredText}</span>
+                <div className="u-margin-top">{requiredText}</div>
             </div>
             {form.href ?
                 <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
