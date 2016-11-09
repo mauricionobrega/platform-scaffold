@@ -57,7 +57,7 @@ const LoginForm = (props) => {
                     )
                 })}
             </FieldSet>
-            <button className="c-button c--primary u-width-full u-margin-top-lg" type="submit" disabled={submitting}>{submitText}</button>
+            <button className="c-button c--primary u-width-full u-margin-top-lg u-text-uppercase" type="submit" disabled={submitting}>{submitText}</button>
         </form>
     )
 }
