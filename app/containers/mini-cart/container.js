@@ -28,7 +28,7 @@ class MiniCart extends React.Component {
     }
 
     shouldComponentUpdate(newProps) {
-        return !Immutable.is(newProps.caminiCartrt, this.props.miniCart)
+        return !Immutable.is(newProps.miniCart, this.props.miniCart)
     }
 
     renderList(cart) {
