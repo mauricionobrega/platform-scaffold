@@ -31,6 +31,11 @@ const parseHiddenInputs = ($inputs) => {
 const parseForm = ($form) => {
     return {
         href: $form.attr('action'),
+        requiredText: $form.find('.fieldset.login').attr('data-hasrequired'),
+        forgotPassword: {
+            href: $form.find('.action.remind').attr('href'),
+            title: $form.find('.action.remind').text()
+        },
         fields: $.makeArray(parseFields($form.find('.field:not(.note)'))),
         hiddenInputs: $.makeArray(parseHiddenInputs($form.find('input[type="hidden"]'))),
         submitText: $form.find('button[type="submit"]').text().trim()
