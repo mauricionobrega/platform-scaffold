@@ -31,7 +31,6 @@ const parseHiddenInputs = ($inputs) => {
 const parseForm = ($form) => {
     return {
         href: $form.attr('action'),
-        requiredText: $form.find('.fieldset.login').attr('data-hasrequired'),
         forgotPassword: {
             href: $form.find('.action.remind').attr('href'),
             title: $form.find('.action.remind').text()
@@ -48,6 +47,7 @@ const loginParser = ($, $html) => {
         heading: $html.find('#block-customer-login-heading').text().trim(),
         description: $html.find('.field.note').text().trim(),
         href: $html.find('.header.links .authorization-link a').first().attr('href'),
+        requiredText: $html.find('.fieldset.login').attr('data-hasrequired'),
         form: parseForm($html.find('form.form-login'))
     }
 }
