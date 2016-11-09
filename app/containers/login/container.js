@@ -12,6 +12,7 @@ const Login = ({
     heading,
     description,
     form,
+    requiredText,
     infoModalOpen,
     submitForm,
     openInfoModal,
@@ -37,6 +38,7 @@ const Login = ({
                 :
                     <SkeletonBlock height="14px" width="100%" />
                 }
+                <span>{requiredText}</span>
             </div>
             {form.href ?
                 <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
@@ -71,6 +73,7 @@ Login.propTypes = {
     href: PropTypes.string,
     infoModalOpen: PropTypes.bool,
     openInfoModal: PropTypes.func,
+    requiredText: PropTypes.string,
     submitForm: PropTypes.func,
     title: PropTypes.string
 }

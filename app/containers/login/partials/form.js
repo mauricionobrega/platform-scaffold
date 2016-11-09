@@ -17,7 +17,6 @@ const LoginForm = (props) => {
         // props from parent
         fields,
         submitText,
-        requiredText,
         forgotPassword,
         submitForm,
         openModal,
@@ -35,7 +34,6 @@ const LoginForm = (props) => {
         >
             {error && <div className="u-margin-bottom-md u-color-error">{error}</div>}
             <FieldSet>
-                <span>{requiredText}</span>
                 {fields.map(({label, name, type, required, tooltip}, idx) => {
                     const labelNode = (
                         <span>
@@ -81,7 +79,6 @@ LoginForm.propTypes = {
     invalid: PropTypes.bool,
     modalOpen: PropTypes.bool,
     openModal: PropTypes.func,
-    requiredText: PropTypes.string,
     submitForm: PropTypes.func,
     submitText: PropTypes.string,
     submitting: PropTypes.bool,
