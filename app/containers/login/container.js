@@ -12,7 +12,10 @@ const Login = ({
     heading,
     description,
     form,
-    submitForm
+    infoModalOpen,
+    submitForm,
+    openInfoModal,
+    closeInfoModal
 }) => {
     return (
         <div className="t-login">
@@ -37,7 +40,7 @@ const Login = ({
             </div>
             {form.href ?
                 <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
-                    <LoginForm {...form} submitForm={submitForm} />
+                    <LoginForm {...form} submitForm={submitForm} openModal={openInfoModal} closeModal={closeInfoModal} modalOpen={infoModalOpen} />
                 </div>
             :
                 <SkeletonBlock height="200vw" width="100%" />
@@ -54,15 +57,20 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        submitForm: (values, resolve, reject) => dispatch(actions.submitForm(values, resolve, reject))
+        submitForm: (values, resolve, reject) => dispatch(actions.submitForm(values, resolve, reject)),
+        openInfoModal: () => dispatch(actions.openInfoModal()),
+        closeInfoModal: () => dispatch(actions.closeInfoModal())
     }
 }
 
 Login.propTypes = {
+    closeInfoModal: PropTypes.func,
     description: PropTypes.string,
     form: PropTypes.object,
     heading: PropTypes.string,
     href: PropTypes.string,
+    infoModalOpen: PropTypes.bool,
+    openInfoModal: PropTypes.func,
     submitForm: PropTypes.func,
     title: PropTypes.string
 }

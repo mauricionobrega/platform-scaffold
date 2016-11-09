@@ -1,4 +1,4 @@
-import {makeFormEncodedRequest} from '../../utils/utils'
+import {createAction, makeFormEncodedRequest} from '../../utils/utils'
 import {SubmissionError} from 'redux-form'
 
 const validateForm = (formValues) => {
@@ -59,4 +59,5 @@ export const submitForm = (formValues, resolve, reject) => {
     }
 }
 
-
+export const openInfoModal = createAction('Close Info Sheet')
+export const closeInfoModal = createAction('Close Info Sheet')

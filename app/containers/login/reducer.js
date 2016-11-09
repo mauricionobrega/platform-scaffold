@@ -3,6 +3,7 @@ import {createReducer} from 'redux-act'
 
 import {getComponentName} from '../../utils/utils'
 import Login from './container'
+import {openInfoModal, closeInfoModal} from './actions'
 
 import {onPageReceived} from '../app/actions'
 import parser from './parsers/login'
@@ -17,7 +18,8 @@ const initialState = Immutable.Map({
         fields: [],
         hiddenInputs: [],
         submitText: ''
-    }
+    },
+    infoModalOpen: false
 })
 
 export default createReducer({
@@ -31,4 +33,11 @@ export default createReducer({
             return state
         }
     },
+    [openInfoModal]: (state) => {
+        return state.set('infoModalOpen', true)
+    },
+    [closeInfoModal]: (state) => {
+        return state.set('infoModalOpen', false)
+    }
+
 }, initialState)
