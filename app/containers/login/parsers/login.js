@@ -3,11 +3,16 @@
 const parseFields = ($fields) => {
     return $fields.map((_, field) => {
         const $field = $(field)
+        const $tooltip = $field.find('.tooltip.wrapper')
         return {
             label: $field.find('label').text().trim(),
             name: $field.find('input').attr('name'),
             type: $field.find('input').attr('type'),
-            required: $field.hasClass('required')
+            required: $field.hasClass('required'),
+            tooltip: $tooltip.length ? {
+                title: $tooltip.find('.toggle').text().trim(),
+                content: $tooltip.find('.content').text().trim()
+            } : false
         }
     })
 }
