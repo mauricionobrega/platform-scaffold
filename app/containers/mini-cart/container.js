@@ -14,6 +14,14 @@ import * as miniCartActions from './actions'
 import * as cartActions from '../cart/actions'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 
+// Parses strings in the format: $Dollars.Cents
+// Dollar amounts only, cents must be specified.
+export const productSubtotal = (price, quantity) => {
+    const priceInCents = price.replace(/[$,. ]/g, '')
+    const priceNumber = parseFloat(priceInCents) / 100
+    return (priceNumber * quantity).toFixed(2)
+}
+
 class MiniCart extends React.Component {
     componentDidMount() {
         this.props.fetchContents()
@@ -21,12 +29,6 @@ class MiniCart extends React.Component {
 
     shouldComponentUpdate(newProps) {
         return !Immutable.is(newProps.caminiCartrt, this.props.miniCart)
-    }
-
-    productSubtotal(price, quantity) {
-        const priceInCents = price.replace(/[$,. ]/g, '')
-        const priceNumber = parseFloat(priceInCents) / 100
-        return (priceNumber * quantity).toFixed(2)
     }
 
     renderList(cart) {
@@ -62,7 +64,7 @@ class MiniCart extends React.Component {
                             >
                                 <div>
                                     <p className="u-margin-bottom-sm">Qty: {product.qty}</p>
-                                    <p>Sub-Total: ${this.productSubtotal(product.product_price, product.qty)}</p>
+                                    <p>Sub-Total: ${productSubtotal(product.product_price, product.qty)}</p>
                                 </div>
                             </ProductItem>
                         )
