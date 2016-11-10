@@ -4,8 +4,14 @@
 .t-login {
     // Root Class. Contains all core styles, typically for the template's
     // wrapper element.
+}
 
-    .c-sheet__content {
-        padding: $unit*1.5;
-    }
+
+.t-login__button {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    padding: 12px;
 }
