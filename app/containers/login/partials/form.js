@@ -60,12 +60,23 @@ const LoginForm = (props) => {
                                         open={modalOpen}
                                         onDismiss={closeModal}
                                         effect="slide-bottom"
-                                        headerContent={<div className="u-width-full u-padding-start u-bg-color-brand u-color-neutral-10 u-flexbox u-align-center u-justify-between"><span>{label}</span><Button onClick={closeModal}><Icon name="close" /></Button></div>}
+                                        headerContent={
+                                            <div className="u-width-full u-padding-start u-bg-color-brand u-color-neutral-10 u-flexbox u-align-center u-justify-between">
+                                                <span>{label}</span>
+                                                <Button onClick={closeModal}>
+                                                    <Icon name="close" />
+                                                </Button>
+                                            </div>
+                                        }
                                     >
                                         <div className="u-padding">
                                             {tooltip.content}
                                         </div>
-                                        <div className="t-login__button"><Button className="c-button c--secondary u-text-uppercase u-margin-top-lg u-width-full" onClick={closeModal}>Continue</Button></div>
+                                        <div className="t-login__button">
+                                            <Button className="c-button c--secondary u-text-uppercase u-margin-top-lg u-width-full" onClick={closeModal}>
+                                                Continue
+                                            </Button>
+                                        </div>
                                     </Sheet>
                                 </div>)
                             }
