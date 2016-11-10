@@ -5,6 +5,7 @@ import Button from 'progressive-web-sdk/dist/components/button'
 import FieldComponent from 'progressive-web-sdk/dist/components/field'
 import FieldSet from 'progressive-web-sdk/dist/components/field-set'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
+import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Link from 'progressive-web-sdk/dist/components/link'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
@@ -39,7 +40,7 @@ const LoginForm = (props) => {
                         <span>
                             {label}
                             {required && <span> *</span>}
-                            {type === 'password' && <Link className="u-float-end" href={forgotPassword.href}>{forgotPassword.title}</Link>}
+                            {type === 'password' && <Link className="u-float-end u-text-normal" href={forgotPassword.href}>{forgotPassword.title}</Link>}
                         </span>
                     )
                     return (
@@ -54,11 +55,15 @@ const LoginForm = (props) => {
                             {tooltip &&
                                 (<div>
                                     <span onClick={openModal}>{tooltip.title}</span>
-                                    <Sheet open={modalOpen} onDismiss={closeModal} effect="slide-bottom" className="">
-                                        <Button onClick={closeModal}>Close</Button>
-                                        <div className="u-padding-md">
-                                            {tooltip.content}
-                                        </div>
+                                    <Sheet
+                                        className="t-login__modal"
+                                        open={modalOpen}
+                                        onDismiss={closeModal}
+                                        effect="slide-bottom"
+                                        headerContent={<div className="u-width-full u-padding-start u-bg-color-brand u-color-neutral-10 u-flexbox u-align-center u-justify-between"><span>{label}</span><Button onClick={closeModal}><Icon name="close" /></Button></div>}
+                                    >
+                                        {tooltip.content}
+                                        <div className="u-position-relative"><Button className="c-button c--secondary u-text-uppercase u-margin-top-lg u-width-full" onClick={closeModal}>Continue</Button></div>
                                     </Sheet>
                                 </div>)
                             }
