@@ -11,6 +11,7 @@ test:
     override:
         - npm run lint
         - npm test -- --runInBand
+        - npm run lighthouse
         # Enable smoke-test when automated workflow tests have been implemented.
         # - npm run smoke-test
 experimental:
