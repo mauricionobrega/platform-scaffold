@@ -1,6 +1,6 @@
 machine:
     node:
-        version: 4.4.7
+        version: 6.7.0
 dependencies:
     pre:
         - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
