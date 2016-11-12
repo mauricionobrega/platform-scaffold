@@ -32,7 +32,7 @@ npm run docs:dev
 To run the full test suite, you can use:
 
 ```
-npm test
+npm run test:all
 ```
 
 To run tests in watch mode and only run test related to files you modify during development, use:
