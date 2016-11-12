@@ -14,6 +14,9 @@ test:
         - npm run lighthouse
         # Enable smoke-test when automated workflow tests have been implemented.
         # - npm run smoke-test
+general:
+    artifacts:
+        - "tmp"
 experimental:
     notify:
         branches:
