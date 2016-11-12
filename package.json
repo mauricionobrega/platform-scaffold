@@ -85,7 +85,7 @@
     "build-sprites": "svg-sprite --symbol --symbol-dest='.' --symbol-sprite='sprite.svg' --shape-id-generator='shoppicon-%s' --dest=./app/static/sprite ./app/static/svg/*.svg",
     "dev": "sdk-get-routes && sdk-create-hash-manifest && node ./dev-server/index.js",
     "prod:build": "sdk-get-routes && sdk-create-hash-manifest && webpack --config webpack/production.js -p --display-error-details --optimize-dedupe",
-    "lighthouse": "cross-env LIGHTHOUSE_CHROMIUM_PATH=/usr/bin/google-chrome-stable lighthouse http://www.merlinspotions.com/",
+    "lighthouse": "cross-env LIGHTHOUSE_CHROMIUM_PATH=/usr/bin/google-chrome-stable lighthouse http://www.merlinspotions.com/ --output=\"html\" --output-path=./tmp/lighthouse-report.html",
     "lint": "npm run lint:js && npm run lint:sass",
     "lint:fix": "npm run lint:js -- --fix",
     "lint:js": "eslint '**/*.{js,jsx}'",
