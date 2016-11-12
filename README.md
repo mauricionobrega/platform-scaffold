@@ -3,8 +3,8 @@
 - [Git](https://git-scm.com/)
 - We recommend you use [nvm](https://github.com/creationix/nvm#installation) to
 manage node and npm versions.
-- node 4.x or greater
-- npm 2.x or greater
+- node 6.x LTS
+- npm 3.x
 
 ## Setup
 
