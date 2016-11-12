@@ -19,12 +19,12 @@ npm run dev
 npm run add:page
 ```
 
-## Styleguide
+## Docs with Styleguide
 
-To run the project styleguide use:
+To run the project documentation, including a live styleguide, use:
 
 ```
-npm run styleguide
+npm run docs:dev
 ```
 
 ## Tests and test coverage
