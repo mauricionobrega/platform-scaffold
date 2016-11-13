@@ -16,7 +16,7 @@ test:
         # - npm run smoke-test
 general:
     artifacts:
-        - "tmp"
+        - "tests"
 experimental:
     notify:
         branches:
