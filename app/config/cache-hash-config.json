@@ -2,7 +2,7 @@
     "files": [
         "app/static/**/*"
     ],
-    "baseDir": "",
+    "baseDir": "app",
     "hashLength": 8,
     "destinationFolder": "tmp/"
 }
