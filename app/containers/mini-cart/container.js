@@ -56,10 +56,8 @@ class MiniCart extends React.Component {
                             className="u-padding-top-lg u-padding-bottom-lg u-padding-start u-padding-end"
                             title={<h2 className="u-h3">{product.product_name}</h2>}
                             price={product.product_price}
-                            src={product.product_image.src}
-                            alt={product.product_image.alt}
-                            imageWidth="64px"
                             key={idx}
+                            image={<Image src={product.product_image.src} alt={product.product_image.alt} width="64px" />}
                         >
                             <div>
                                 <p className="u-margin-bottom-sm">Qty: {product.qty}</p>
