@@ -64,13 +64,15 @@ class PLP extends React.Component {
                         </div>
                     </div>
 
-                    <Image
-                        className="u-flex-none u-padding-end u-padding-bottom-sm"
-                        alt="Heading logo"
-                        height="60px"
-                        width="60px"
-                        src={getAssetUrl(`static/img/categories/${title.trim().toLowerCase()}@2x.png`)}
-                    />
+                    {title &&
+                        <Image
+                            className="u-flex-none u-padding-end u-padding-bottom-sm"
+                            alt="Heading logo"
+                            height="60px"
+                            width="60px"
+                            src={getAssetUrl(`static/img/categories/${title.trim().toLowerCase()}@2x.png`)}
+                        />
+                    }
                 </div>
 
                 <div className="t-plp__container u-padding-end u-padding-bottom-lg u-padding-start">
