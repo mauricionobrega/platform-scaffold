@@ -32,6 +32,13 @@
 // 1. Provide the space within which the Close button with be vertically and
 //    horisontally centered in order to match the mockup
 
+.t-plp__item-added-modal {
+    .c-sheet__content {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
 .t-pdp__item-added-modal-close {
     width: $unit*7; // 1
     height: $unit*7; // 1

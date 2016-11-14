@@ -1,81 +1,61 @@
 // PLP.scss
 // ===
 
-// [1] - Display box-shadow properly at bottom of container
-// [2] - position: relative to absolutely position the PLP icon in the heading
-// [3] - position: absolute is relative to [2]
-
 .t-plp {
-    .c-list-tile__content {
-        justify-content: flex-start;
-        align-self: flex-start;
-
-        .c-image {
-            flex-shrink: 0;
-        }
-    }
+    //
 }
+
+
+// Container
+// ---
+//
+// 1. Ensure the box-shadow at bottom of container is visible
 
 .t-plp__container {
-    margin-bottom: 1px; // [1]
-    padding: ($unit * 1.5) 0 ($unit * 2.5);
-
     background-color: $background-color;
-    box-shadow: $box-shadow;
+    box-shadow: $inset-box-shadow;
 }
 
-.t-plp__grid-item {
-    min-height: $unit * 20;
 
-    background-color: $neutral-10;
-    box-shadow: $box-shadow;
+// Breadcrumb
+// ---
+//
+// @TODO: Turn this into a component
+//
+// 1. Ensure the container only takes up this amount of vertical space
 
-    &:last-of-type {
-        margin-bottom: 0;
-    }
+.t-plp__breadcrumb {
+    font-size: $unit * 1.5; // 1
+    line-height: $unit * 1.5; // 1
 }
 
-.t-plp__grid-item-name {
+
+// Product Tile
+// ---
+//
+// 1. 172px is the minimum predicated height of the tile based on how large the
+//    images are suppose to be at mobile viewport size. Avoids flash of moving content
+
+.t-plp__product-tile {
+    min-height: $unit * 21.5; // 1
+}
+
+
+// Product Name
+// ---
+
+.t-plp__product-name {
     word-break: break-word;
 }
 
-.t-plp__grid-item-price {
-    color: $accent-color;
-    font-weight: 600;
-    font-size: $font-size + 2;
-}
 
-.t-plp__heading {
-    position: relative; // [2]
-
-    .c-link {
-        font-size: $font-size - 2;
-    }
-}
-
-.t--plp__heading-logo-skeleton {
-    position: absolute;
-    right: $unit + 1;
-    bottom: $unit * 1.5;
-}
-
-.t-plp__heading-logo {
-    position: absolute; // [3]
-    right: $unit;
-    bottom: $unit / 2;
-}
-
-.t-plp__no-results-image {
-    margin: 0 30%;
-}
+// No Results
+// ---
 
 .t-plp__no-results-text {
-    margin: ($unit * 3) ($unit * 6) ($unit * 4);
-
-    line-height: $unit * 3;
+    padding: ($unit * 3) ($unit * 6) ($unit * 2);
 }
 
 .t-plp__num-results {
-    font-weight: 600;
     font-size: $font-size + 1;
 }

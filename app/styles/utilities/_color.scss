@@ -44,6 +44,10 @@
 // Background Colors
 // ---
 
+.u-bg-color-neutral-10 {
+    background-color: $neutral-10 !important; // @TODO: Add to spline
+}
+
 .u-bg-color-neutral-30 {
     @include bg-color-neutral-30(true);
 }
