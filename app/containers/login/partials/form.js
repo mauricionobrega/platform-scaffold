@@ -52,27 +52,33 @@ const LoginForm = (props) => {
                             >
                                 <input type={type} />
                             </Field>
+
                             {tooltip &&
                                 (<div>
                                     <a href="#remember-me" onClick={openModal}>{tooltip.title}</a>
+
                                     <Sheet
-                                        className="t-login__modal"
+                                        className="t-login__remember-me-modal"
                                         open={modalOpen}
                                         onDismiss={closeModal}
                                         effect="slide-bottom"
                                         headerContent={
-                                            <div className="u-width-full u-padding-start u-bg-color-brand u-color-neutral-10 u-flexbox u-align-center u-justify-between">
-                                                <span>{label}</span>
+                                            <div className="u-width-full u-bg-color-brand u-color-neutral-10 u-flexbox">
+                                                <h1 className="u-flex u-padding-md u-h4 u-text-uppercase">
+                                                    {label}
+                                                </h1>
+
                                                 <Button onClick={closeModal}>
                                                     <Icon name="close" />
                                                 </Button>
                                             </div>
                                         }
                                     >
-                                        <div id="remember-me" className="u-padding">
+                                        <div id="remember-me" className="u-padding-md">
                                             {tooltip.content}
                                         </div>
-                                        <div className="t-login__button">
+
+                                        <div className="t-login__remember-me-button">
                                             <Button className="c-button c--secondary u-text-uppercase u-margin-top-lg u-width-full" onClick={closeModal}>
                                                 Continue
                                             </Button>

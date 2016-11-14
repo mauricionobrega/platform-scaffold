@@ -7,8 +7,18 @@
 }
 
 
-.t-login__button {
-    position: absolute;
+// Remember Me Modal
+// ---
+//
+// @TODO: Switch to flexbox
+// 1. Absolutely position buttons to bottom of the "Remember Me" modal
+
+.t-login__remember-me-modal {
+    position: relative; // 1
+}
+
+.t-login__remember-me-button {
+    position: absolute; // 1
     right: 0;
     bottom: 0;
     left: 0;

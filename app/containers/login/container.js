@@ -27,12 +27,14 @@ const Login = ({
                     <SkeletonBlock height="28px" width="50%" />
                 </div>
             }
+
             <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
                 {heading ?
                     <h3 className="u-margin-bottom u-color-brand u-text-font-family u-text-normal">{heading}</h3>
                 :
                     <SkeletonBlock height="18px" width="50%" className="u-margin-bottom" />
                 }
+
                 {description ?
                     <p>{description}</p>
                 :
@@ -40,8 +42,9 @@ const Login = ({
                 }
                 <div className="u-margin-top">{requiredText}</div>
             </div>
+
             {form.href ?
-                <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
+                <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
                     <LoginForm {...form} submitForm={submitForm} openModal={openInfoModal} closeModal={closeInfoModal} modalOpen={infoModalOpen} />
                 </div>
             :
