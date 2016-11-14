@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
+import Immutable from 'immutable'
 import classNames from 'classnames'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
@@ -10,14 +11,27 @@ import List from 'progressive-web-sdk/dist/components/list'
 import Image from 'progressive-web-sdk/dist/components/image'
 import ProductItem from '../../components/product-item'
 import * as miniCartActions from './actions'
+import * as cartActions from '../cart/actions'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
+
+// Parses strings in the format: $Dollars.Cents
+// Dollar amounts only, cents must be specified.
+export const productSubtotal = (price, quantity) => {
+    const priceInCents = price.replace(/[$,. ]/g, '')
+    const priceNumber = parseFloat(priceInCents) / 100
+    return (priceNumber * quantity).toFixed(2)
+}
 
 class MiniCart extends React.Component {
     componentDidMount() {
-        // this.props.fetchContents()
+        this.props.fetchContents()
     }
 
-    renderList() {
+    shouldComponentUpdate(newProps) {
+        return !Immutable.is(newProps.miniCart, this.props.miniCart)
+    }
+
+    renderList(cart) {
         const subtotalClasses = classNames(
             't-mini-cart__subtotal',
 
@@ -31,61 +45,36 @@ class MiniCart extends React.Component {
         )
 
         return (
-            <div className="u-flex">
+            <div className="u-padding-md">
                 <Button href="#" className="c--tertiary u-width-full u-margin-bottom u-text-capitalize">
                     View and edit cart
                 </Button>
 
                 <List>
-                    <ProductItem
-                        className="u-padding-top-lg u-padding-bottom-lg"
-                        category="Potions"
-                        title={<h2 className="u-h3">Unicorn Blood</h2>}
-                        price="$14.00"
-                        src="http://www.merlinspotions.com/media/catalog/product/cache/1/thumbnail/75x75/beff4985b56e3afdbeabfc89641a4582/u/n/unicorn-blood-1.png"
-                        alt="Corked glass bottle of Unicorn Blood"
-                        imageWidth="64px"
-                    >
-                        <div>
-                            <p className="u-margin-bottom-sm">Qty: 1</p>
-                            <p>Sub-Total: 1</p>
-                        </div>
-                    </ProductItem>
-
-                    <ProductItem
-                        className="u-padding-top-lg u-padding-bottom-lg"
-                        category="Potions"
-                        title={<h2 className="u-h3">Eye of Newt</h2>}
-                        price="$12.00"
-                        src="http://www.merlinspotions.com/media/catalog/product/cache/1/thumbnail/75x75/beff4985b56e3afdbeabfc89641a4582/s/l/sleeping-draught-1_1_.png"
-                        alt="Corked glass bottle of Eye of Newt"
-                        imageWidth="64px"
-                    >
-                        <div>
-                            <p className="u-margin-bottom-sm">Qty: 1</p>
-                            <p>Sub-Total: 1</p>
-                        </div>
-                    </ProductItem>
-
-                    <ProductItem
-                        className="u-padding-top-lg u-padding-bottom-lg"
-                        category="Books"
-                        title={<h2 className="u-h3">Dragon Breeding For Pleasure and Profit</h2>}
-                        price="$30.00"
-                        src="http://www.merlinspotions.com/media/catalog/product/cache/1/thumbnail/75x75/beff4985b56e3afdbeabfc89641a4582/d/r/dragon-breeding-for-pleasure-and-profit-1.png"
-                        alt="Ragged, cryptic book"
-                        imageWidth="64px"
-                    >
-                        <div>
-                            <p className="u-margin-bottom-sm">Qty: 1</p>
-                            <p>Sub-Total: 1</p>
-                        </div>
-                    </ProductItem>
+                    {cart.items.map((product, idx) => {
+                        return (
+                            <ProductItem
+                                className="u-padding-top-lg u-padding-bottom-lg"
+                                title={<h2 className="u-h3">{product.product_name}</h2>}
+                                price={product.product_price}
+                                src={product.product_image.src}
+                                alt={product.product_image.alt}
+                                imageWidth="64px"
+                                key={idx}
+                            >
+                                <div>
+                                    <p className="u-margin-bottom-sm">Qty: {product.qty}</p>
+                                    <p>Sub-Total: ${productSubtotal(product.product_price, product.qty)}</p>
+                                </div>
+                            </ProductItem>
+                        )
+                    })
+                }
                 </List>
 
                 <div className={subtotalClasses}>
                     <div className="u-flex u-text-uppercase">Subtotal:</div>
-                    <div className="u-flex-none">$79.99</div>
+                    <div className="u-flex-none">{cart.subtotal}</div>
                 </div>
             </div>
         )
@@ -110,8 +99,10 @@ class MiniCart extends React.Component {
 
     render() {
         const {miniCart, closeMiniCart} = this.props
-        const isOpen = miniCart.get('isOpen')
-        const isEmpty = false // @TODO replace with actual functionality
+
+        const {cart, contentsLoaded, isOpen} = miniCart.toJS()
+
+        const hasItems = cart ? cart.items.length > 0 : false
 
         return (
             <Sheet className="t-mini-cart" open={isOpen} onDismiss={closeMiniCart} maskOpacity={0.7} effect="slide-right">
@@ -127,40 +118,40 @@ class MiniCart extends React.Component {
                     </HeaderBarActions>
                 </HeaderBar>
 
-                <div className="t-mini-cart__content u-flexbox u-column u-padding-md">
-                    {isEmpty ? this.renderList() : this.renderEmpty()}
+                {contentsLoaded ?
+                    (
+                        <div className="t-mini-cart__content u-flexbox u-column u-padding-md">
+                            {hasItems ? this.renderList(cart) : this.renderEmpty()}
 
-                    <div className="u-padding-top-lg u-flex-none">
-                        <Button href="#" className="c--primary u-width-full u-text-uppercase">
-                            Go To Checkout
-                        </Button>
-                    </div>
-                </div>
+                            <div className="u-padding-top-lg u-flex-none">
+                                <Button href="#" className="c--primary u-width-full u-text-uppercase">
+                                    Go To Checkout
+                                </Button>
+                            </div>
+                        </div>
+                    )
+                : false}
             </Sheet>
         )
     }
 }
 
 MiniCart.propTypes = {
+    miniCart: PropTypes.object.isRequired,
     closeMiniCart: PropTypes.func,
-    contentsLoaded: PropTypes.bool,
     fetchContents: PropTypes.func,
-    miniCart: PropTypes.object,
 }
 
-MiniCart.defaultProps = {
-    // contentsLoaded: false,
-}
+export const mapStateToProps = ({miniCart}) => ({miniCart})
 
-const mapStateToProps = (state) => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        miniCart: state.miniCart
+        fetchContents: () => dispatch(cartActions.getCart()),
+        closeMiniCart: () => dispatch(miniCartActions.closeMiniCart())
     }
 }
 
 export default connect(
     mapStateToProps,
-    {
-        closeMiniCart: miniCartActions.closeMiniCart
-    }
+    mapDispatchToProps
 )(MiniCart)
