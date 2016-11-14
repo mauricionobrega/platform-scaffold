@@ -48,8 +48,12 @@
 // Background Colors
 // ---
 
+.u-bg-color-neutral-10 {
+    background-color: $neutral-10 !important; // @TODO: Add to spline
+}
+
 .u-bg-color-neutral-20 {
-    @include bg-color-neutral-20(true); // @TODO: Add to spline
+    @include bg-color-neutral-20(true); // @TODO: Add to spline (it's a local mixin atm)
 }
 
 .u-bg-color-neutral-30 {

@@ -1,22 +1,17 @@
 import React, {PropTypes} from 'react'
 import classNames from 'classnames'
 
-import Image from 'progressive-web-sdk/dist/components/image'
-
 /**
  * Product Item represents a single product and it's basic information: name,
  * price, category and other desired information.
  */
 
 const ProductItem = ({
-    alt,
     category,
     children,
     className,
-    imageHeight,
-    imageWidth,
+    image,
     price,
-    src,
     title,
 }) => {
     const classes = classNames('c-product-item', 'u-flexbox', 'u-row-reverse', className)
@@ -35,7 +30,7 @@ const ProductItem = ({
                 </div>
 
                 {!!price &&
-                    <p>{price}</p>
+                    <div>{price}</div>
                 }
 
                 {!!children &&
@@ -44,9 +39,13 @@ const ProductItem = ({
                     </div>
                 }
             </div>
-            <div className="u-padding-start-lg u-padding-end-lg u-flex-none">
-                <Image src={src} alt={alt} width={imageWidth} height={imageHeight} />
-            </div>
+
+
+            {image &&
+                <div className="u-padding-end u-flex-none">
+                    {image}
+                </div>
+            }
         </article>
     )
 }
@@ -54,19 +53,9 @@ const ProductItem = ({
 
 ProductItem.propTypes = {
     /**
-     * Designates the ProductItem's unit price
-     */
-    price: PropTypes.string.isRequired,
-
-    /**
      * The ProductItem's name or designation
      */
     title: PropTypes.node.isRequired,
-
-    /**
-     * Adds an alt argument to the ProductItem's image
-     */
-    alt: PropTypes.string,
 
     /**
      * Designates the ProductItem's category (i.e. Potions, Books, etc.)
@@ -84,20 +73,14 @@ ProductItem.propTypes = {
     className: PropTypes.string,
 
     /**
-     * Height of the ProductItem's image
+     * Image of the product. Usually an `<img />` tag or `<Image />` component
      */
-    imageHeight: PropTypes.string,
+    image: PropTypes.node,
 
     /**
-     * Width of the ProductItem's image
+     * Designates the ProductItem's unit price
      */
-    imageWidth: PropTypes.string,
-
-    /**
-     * Provides the source for the ProductItem's image
-     */
-    src: PropTypes.string,
-
+    price: PropTypes.node,
 }
 
 export default ProductItem
