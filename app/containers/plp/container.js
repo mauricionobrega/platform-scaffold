@@ -5,19 +5,25 @@ import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
 import Image from 'progressive-web-sdk/dist/components/image'
 import Link from 'progressive-web-sdk/dist/components/link'
+import List from 'progressive-web-sdk/dist/components/list'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import ProductTile from './partials/product-tile'
 import {SELECTOR} from './constants'
 
 const renderResults = (products) => {
-    return products.map((product, idx) => <ProductTile className="t-plp__grid-item" key={idx} product={product} />)
+    return products.map((product, idx) => <ProductTile key={idx} product={product} />)
 }
 
 const renderNoResults = (bodyText) => {
     return (
-        <div>
-            <Image alt="No results" className="t-plp__no-results-image" src={getAssetUrl('static/img/no-results.png')} />
+        <div className="u-flexbox u-direction-column u-align-center">
+            <Image
+                className="u-flex-none"
+                alt="Crystal Ball"
+                width="122px"
+                height="110px"
+                src={getAssetUrl('static/img/no-results.png')} />
 
             <div className="t-plp__no-results-text u-text-align-center">
                 {bodyText}
@@ -43,41 +49,44 @@ class PLP extends React.Component {
 
         return (
             <div className="t-plp">
-                <div className="t-plp__heading u-padding-top-md u-padding-end-0 u-padding-bottom-lg u-padding-start-md">
-                    <div>
-                        <Link href="/">Home</Link>
-                    </div>
-                    <div className="u-margin-top-md">
-                        {isPlaceholder ?
-                            <SkeletonText lines={1} type="h1" width="100px" />
-                        :
-                            <h1 className="u-text-lighter u-text-uppercase">{title}</h1>
-                        }
+                <div className="u-flexbox u-align-bottom">
+                    <div className="u-flex u-padding-top-lg u-padding-bottom-lg u-padding-start-md">
+                        <div className="t-plp__breadcrumb">
+                            <Link href="/" className="u-text-small">Home</Link>
+                        </div>
+
+                        <div className="u-margin-top-md">
+                            {isPlaceholder ?
+                                <SkeletonText lines={1} type="h1" width="100px" />
+                            :
+                                <h1 className="u-text-lighter u-text-uppercase">{title}</h1>
+                            }
+                        </div>
                     </div>
 
-                    {isPlaceholder ?
-                        <SkeletonBlock height="52px" width="57px" className="t--plp__heading-logo-skeleton" />
-                    :
+                    {title &&
                         <Image
-                            className="t-plp__heading-logo"
+                            className="u-flex-none u-padding-end u-padding-bottom-sm"
                             alt="Heading logo"
                             height="60px"
-                            src={getAssetUrl(`static/img/categories/${title.trim().toLowerCase()}@2x.png`)}
                             width="60px"
+                            src={getAssetUrl(`static/img/categories/${title.trim().toLowerCase()}@2x.png`)}
                         />
                     }
                 </div>
-                <div className="t-plp__container">
-                    {isPlaceholder ?
-                        <SkeletonBlock height="32px" />
-                    :
-                        <div className="t-plp__num-results u-margin-top-0 u-margin-end-md u-margin-bottom-md u-margin-start-md">
-                            {numItems} Results
-                        </div>
-                    }
-                    <div className="u-clearfix u-padding-start u-padding-end">
-                        {hasProducts ? renderResults(products) : renderNoResults(noResultsText)}
+
+                <div className="t-plp__container u-padding-end u-padding-bottom-lg u-padding-start">
+                    <div className="t-plp__num-results u-padding-md">
+                        {isPlaceholder ?
+                            <SkeletonBlock height="20px" />
+                        :
+                            <span className="u-text-semi-bold">{numItems} Results</span>
+                        }
                     </div>
+
+                    <List className="c--borderless">
+                        {hasProducts ? renderResults(products) : renderNoResults(noResultsText)}
+                    </List>
                 </div>
             </div>
         )

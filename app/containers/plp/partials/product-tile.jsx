@@ -3,40 +3,46 @@ import classNames from 'classnames'
 
 import Image from 'progressive-web-sdk/dist/components/image'
 import ListTile from 'progressive-web-sdk/dist/components/list-tile'
+import ProductItem from '../../../components/product-item'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
-const productNameClasses = classNames(
-    't-plp__grid-item-name',
-
-    'u-color-neutral-60',
-    'u-text-lighter',
-    'u-text-uppercase',
-
-    'u-padding-top',
-    'u-padding-bottom'
+const titleClassName = classNames(
+    't-plp__product-name',
+    'u-h1',
+    'u-heading-family',
+    'u-color-neutral-60'
 )
 
-const ProductTile = ({className, product = {}}) => {
-    // alt is in product.image props
-    /* eslint-disable jsx-a11y/img-has-alt */
-    const startAction = <Image {...product.image} height="160px" width="128px" />
-    /* eslint-enable jsx-a11y/img-has-alt */
+const ProductTile = ({className, product}) => {
+    const productImage = (
+        <Image
+            {...product.image}
+            alt={product.image && product.image.alt}
+            height="150px"
+            width="120px" />
+    )
+
+    const title = product.link
+        ? <h2 className={titleClassName}>{product.link.text}</h2>
+        : <SkeletonBlock height="34px" />
+    const price = product.price
+        ? <span className="u-text-semi-bold u-color-error">{product.price}</span>
+        : <SkeletonBlock height="22px" width="50px" />
 
     return (
-        <ListTile
-            {...product.link}
-            className={classNames(className, 'u-margin-bottom', 'u-padding')}
-            startAction={startAction}
-        >
-            <h1 className={productNameClasses}>
-                {product.link ? product.link.text : <SkeletonBlock height="34px" />}
-            </h1>
-
-            <div className="t-plp__grid-item-price u-padding-top-lg u-padding-bottom">
-                {product.price ? product.price : <SkeletonBlock height="22px" width="50px" />}
-            </div>
+        <ListTile className="t-plp__product-tile u-card" {...product.link}>
+            <ProductItem
+                {...product.image}
+                className={classNames('u-align-center', className)}
+                title={title}
+                price={price}
+                image={productImage} />
         </ListTile>
     )
+}
+
+ProductTile.defaultProps = {
+    product: {}
 }
 
 ProductTile.propTypes = {
@@ -52,7 +58,6 @@ ProductTile.propTypes = {
         image: PropTypes.shape({
             alt: PropTypes.string.isRequired,
             src: PropTypes.string.isRequired,
-            title: PropTypes.string
         }),
         price: PropTypes.string,
     }).isRequired,
