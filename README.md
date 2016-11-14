@@ -3,8 +3,8 @@
 - [Git](https://git-scm.com/)
 - We recommend you use [nvm](https://github.com/creationix/nvm#installation) to
 manage node and npm versions.
-- node 4.x or greater
-- npm 2.x or greater
+- node 6.x LTS
+- npm 3.x
 
 ## Setup
 
@@ -19,20 +19,20 @@ npm run dev
 npm run add:page
 ```
 
-## Styleguide
+## Docs with Styleguide
 
-To run the project styleguide use:
+To run the project documentation, including a live styleguide, use:
 
 ```
-npm run styleguide
+npm run docs:dev
 ```
 
-## Tests and test coverage
+## Tests
 
 To run the full test suite, you can use:
 
 ```
-npm test
+npm run test:all
 ```
 
 To run tests in watch mode and only run test related to files you modify during development, use:
