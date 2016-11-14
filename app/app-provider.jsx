@@ -56,9 +56,12 @@ const AppProvider = ({store}) => {
                 <Route path="/" component={App} onEnter={onEnter} onChange={onChange}>
                     <IndexRoute component={Home} routeName="home" />
                     <Route component={Login} path="customer/account/login/" routeName="login" />
-                    <Route component={PDP} path="eye-of-newt.html" routeName="productDetailsPage" />
-                    <Route component={PDP} path="unicorn-blood.html" routeName="productDetailsPage" />
-                    <Route component={PLP} path="*.html" routeName="productListPage" />
+                    <Route component={PLP} path="potions.html" routeName="productListPage" />
+                    <Route component={PLP} path="books.html" routeName="productListPage" />
+                    <Route component={PLP} path="ingredients.html" routeName="productListPage" />
+                    <Route component={PLP} path="supplies.html" routeName="productListPage" />
+                    <Route component={PLP} path="new-arrivals.html" routeName="productListPage" />
+                    <Route component={PDP} path="*.html" routeName="productDetailsPage" />
                 </Route>
             </Router>
         </Provider>
