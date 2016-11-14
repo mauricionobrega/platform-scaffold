@@ -51,25 +51,20 @@ class MiniCart extends React.Component {
                 </Button>
 
                 <List>
-                    {cart.items.map((product, idx) => {
-                        return (
-                            <ProductItem
-                                className="u-padding-top-lg u-padding-bottom-lg"
-                                title={<h2 className="u-h3">{product.product_name}</h2>}
-                                price={product.product_price}
-                                src={product.product_image.src}
-                                alt={product.product_image.alt}
-                                imageWidth="64px"
-                                key={idx}
-                            >
-                                <div>
-                                    <p className="u-margin-bottom-sm">Qty: {product.qty}</p>
-                                    <p>Sub-Total: ${productSubtotal(product.product_price, product.qty)}</p>
-                                </div>
-                            </ProductItem>
-                        )
-                    })
-                }
+                    {cart.items.map((product, idx) =>
+                        <ProductItem
+                            className="u-padding-top-lg u-padding-bottom-lg u-padding-start u-padding-end"
+                            title={<h2 className="u-h3">{product.product_name}</h2>}
+                            price={product.product_price}
+                            key={idx}
+                            image={<Image src={product.product_image.src} alt={product.product_image.alt} width="64px" />}
+                        >
+                            <div>
+                                <p className="u-margin-bottom-sm">Qty: {product.qty}</p>
+                                <p>Sub-Total: ${productSubtotal(product.product_price, product.qty)}</p>
+                            </div>
+                        </ProductItem>
+                    )}
                 </List>
 
                 <div className={subtotalClasses}>
@@ -99,9 +94,7 @@ class MiniCart extends React.Component {
 
     render() {
         const {miniCart, closeMiniCart} = this.props
-
         const {cart, contentsLoaded, isOpen} = miniCart.toJS()
-
         const hasItems = cart ? cart.items.length > 0 : false
 
         return (
