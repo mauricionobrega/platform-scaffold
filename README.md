@@ -27,7 +27,7 @@ To run the project documentation, including a live styleguide, use:
 npm run docs:dev
 ```
 
-## Tests and test coverage
+## Tests
 
 To run the full test suite, you can use:
 
