@@ -54,7 +54,7 @@ const LoginForm = (props) => {
                             </Field>
                             {tooltip &&
                                 (<div>
-                                    <span onClick={openModal}>{tooltip.title}</span>
+                                    <a href="#remember-me" onClick={openModal}>{tooltip.title}</a>
                                     <Sheet
                                         className="t-login__modal"
                                         open={modalOpen}
@@ -69,7 +69,7 @@ const LoginForm = (props) => {
                                             </div>
                                         }
                                     >
-                                        <div className="u-padding">
+                                        <div id="remember-me" className="u-padding">
                                             {tooltip.content}
                                         </div>
                                         <div className="t-login__button">
