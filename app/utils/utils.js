@@ -26,14 +26,43 @@ export const makeRequest = (url, options) => {
 }
 
 /**
+ * Form encodes nested URL query parameters using recursion
+ * Copypasta from http://stackoverflow.com/questions/1714786/querystring-encoding-of-a-javascript-object
+*/
+const serialize = function(obj, prefix) {
+    const str = []
+    for (const p in obj) {
+        if (obj.hasOwnProperty(p)) {
+            const k = prefix ? `${prefix}[${p}]` : p
+            const v = obj[p]
+            str.push((v !== null && typeof v === 'object') ?
+            serialize(v, k) :
+            `${window.encodeURIComponent(k)}=${window.encodeURIComponent(v)}`)
+        }
+    }
+    return str.join('&')
+}
+
+/**
  * Form-encode an arbitrary JS object.
  */
 export const formEncode = (data) => {
-    const pairs = []
-    Object.keys(data).forEach((k) => {
-        pairs.push(`${encodeURIComponent(k)}=${encodeURIComponent(data[k])}`)
+    return serialize(data)
+}
+
+/**
+ * Make a request given the provided url and options, form-encoding the data
+ * into the body of the request.
+ */
+export const makeFormEncodedRequest = (url, data, options) => {
+    return makeRequest(url, {
+        ...options,
+        body: formEncode(data),
+        headers: {
+            ...(options.headers || {}),
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
     })
-    return pairs.join('&').replace(/%20/g, '+')
 }
 
 /**

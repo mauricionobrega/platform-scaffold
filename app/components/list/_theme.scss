@@ -3,7 +3,13 @@
 
 .c-list {
     // @TODO: Make this a c-list sub-component className
-    .c-list-tile:not(:first-of-type) {
+    > :not(:first-of-type),
+    > .c-list-tile:not(:first-of-type) {
         border-top: 1px solid $neutral-30;
+    }
+
+    &.c--borderless > :not(:first-of-type) {
+        margin-top: $unit;
+        border-top: 0;
     }
 }
