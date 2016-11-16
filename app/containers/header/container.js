@@ -10,11 +10,16 @@ import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/d
 import Link from 'progressive-web-sdk/dist/components/link'
 import logo from '../../static/svg/logo.svg'
 import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
+import Badge from '../../components/badge'
 
 const generateCartCounterText = (cartContents) => {
-    return cartContents && cartContents.summary_count && cartContents.summary_count > 0 ?
-        `Cart - ${cartContents.summary_count}` :
-        'Cart'
+    return cartContents && cartContents.summary_count && cartContents.summary_count > 0 ? (
+        <Badge className="t-header__badge" title={`${cartContents.summary_count} items in the cart`}>
+            {cartContents.summary_count}
+        </Badge>
+    ) : (
+        <p className="u-visually-hidden">No items in the cart.</p>
+    )
 }
 
 class Header extends React.Component {
@@ -86,8 +91,9 @@ class Header extends React.Component {
                     </HeaderBarActions>
 
                     <HeaderBarActions>
-                        <Button innerClassName={innerButtonClassName} onClick={onMiniCartClick}>
-                            <IconLabel label={cartCounterText} iconName="cart" iconSize="medium" />
+                        <Button className="u-position-relative" innerClassName={innerButtonClassName} onClick={onMiniCartClick}>
+                            <IconLabel label="Cart" iconName="cart" iconSize="medium" />
+                            {cartCounterText}
                         </Button>
                     </HeaderBarActions>
                 </HeaderBar>
