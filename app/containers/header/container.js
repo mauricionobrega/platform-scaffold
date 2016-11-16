@@ -11,6 +11,11 @@ import Link from 'progressive-web-sdk/dist/components/link'
 import logo from '../../static/svg/logo.svg'
 import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
 
+const generateCartCounterText = (cartContents) => {
+    return cartContents && cartContents.summary_count && cartContents.summary_count > 0 ?
+        `Cart - ${cartContents.summary_count}` :
+        'Cart'
+}
 
 class Header extends React.Component {
     constructor(props) {
@@ -39,7 +44,8 @@ class Header extends React.Component {
 
     render() {
         const {onMenuClick, onMiniCartClick} = this.props
-        const {isCollapsed} = this.props.header.toJS()
+        const {isCollapsed, cart} = this.props.header.toJS()
+        const cartCounterText = generateCartCounterText(cart)
 
         const innerButtonClassName = classnames('t-header__inner-button', 'u-padding-0', {
             't--hide-label': isCollapsed
@@ -81,7 +87,7 @@ class Header extends React.Component {
 
                     <HeaderBarActions>
                         <Button innerClassName={innerButtonClassName} onClick={onMiniCartClick}>
-                            <IconLabel label="Cart" iconName="cart" iconSize="medium" />
+                            <IconLabel label={cartCounterText} iconName="cart" iconSize="medium" />
                         </Button>
                     </HeaderBarActions>
                 </HeaderBar>
