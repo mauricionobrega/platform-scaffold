@@ -34,7 +34,7 @@ Badge.propTypes = {
     title: PropTypes.string.isRequired,
 
     /**
-     * Any children to be nested within this ProductItem. **Note!** This is
+     * Any children to be nested within this Badge. **Note!** This is
      * intentionally hidden from screen readers! Use the `title` to provide
      * meaningful text instead.
      */

@@ -40,6 +40,7 @@ test('renders the contents of the title prop if present', () => {
         const wrapper = shallow(<Badge title={title} />)
 
         expect(wrapper.find('.u-visually-hidden').length).toBe(1)
+        expect(wrapper.find('.u-visually-hidden').text()).toBe(title)
     })
 })
 
