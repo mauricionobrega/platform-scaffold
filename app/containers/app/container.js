@@ -53,8 +53,8 @@ App.propTypes = {
      * The react-router history object
      */
     history: PropTypes.object,
-    requestOpenMiniCart: PropTypes.func,
     openNavigation: PropTypes.func,
+    requestOpenMiniCart: PropTypes.func,
 }
 
 const mapStateToProps = (state) => {
@@ -64,8 +64,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    requestOpenMiniCart: miniCartActions.requestOpenMiniCart,
     openNavigation: navActions.openNavigation,
+    requestOpenMiniCart: miniCartActions.requestOpenMiniCart,
 }
 
 export default connect(
