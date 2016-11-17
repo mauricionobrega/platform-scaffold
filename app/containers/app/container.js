@@ -19,7 +19,7 @@ class App extends React.Component {
     }
 
     render() {
-        const {openMiniCart, openNavigation, history} = this.props
+        const {requestOpenMiniCart, openNavigation, history} = this.props
         const currentTemplate = `t-${this.props.children.props.route.routeName}`
 
         return (
@@ -29,7 +29,7 @@ class App extends React.Component {
 
                 <div id="app-wrap" className={currentTemplate}>
                     <div id="app-header" role="banner">
-                        <Header onMenuClick={openNavigation} onMiniCartClick={openMiniCart} />
+                        <Header onMenuClick={openNavigation} onMiniCartClick={requestOpenMiniCart} />
                         <Navigation history={history} />
                         <MiniCart />
                     </div>
@@ -53,7 +53,7 @@ App.propTypes = {
      * The react-router history object
      */
     history: PropTypes.object,
-    openMiniCart: PropTypes.func,
+    requestOpenMiniCart: PropTypes.func,
     openNavigation: PropTypes.func,
 }
 
@@ -64,7 +64,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    openMiniCart: miniCartActions.openMiniCart,
+    requestOpenMiniCart: miniCartActions.requestOpenMiniCart,
     openNavigation: navActions.openNavigation,
 }
 
