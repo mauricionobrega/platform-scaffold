@@ -12,7 +12,7 @@ import logo from '../../static/svg/logo.svg'
 import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
 import Badge from '../../components/badge'
 
-const generateCartCounterText = (cartContents) => {
+const generateCartCounterBadge = (cartContents) => {
     return cartContents && cartContents.summary_count && cartContents.summary_count > 0 ? (
         <Badge className="t-header__badge" title={`${cartContents.summary_count} items in the cart`}>
             {cartContents.summary_count}
@@ -50,7 +50,7 @@ class Header extends React.Component {
     render() {
         const {onMenuClick, onMiniCartClick} = this.props
         const {isCollapsed, cart} = this.props.header.toJS()
-        const cartCounterText = generateCartCounterText(cart)
+        const cartCounterBadge = generateCartCounterBadge(cart)
 
         const innerButtonClassName = classnames('t-header__inner-button', 'u-padding-0', {
             't--hide-label': isCollapsed
@@ -93,7 +93,7 @@ class Header extends React.Component {
                     <HeaderBarActions>
                         <Button className="u-position-relative" innerClassName={innerButtonClassName} onClick={onMiniCartClick}>
                             <IconLabel label="Cart" iconName="cart" iconSize="medium" />
-                            {cartCounterText}
+                            {cartCounterBadge}
                         </Button>
                     </HeaderBarActions>
                 </HeaderBar>
