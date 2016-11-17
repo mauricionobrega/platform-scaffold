@@ -135,7 +135,7 @@ MiniCart.propTypes = {
     fetchContents: PropTypes.func,
 }
 
-export const mapStateToProps = ({miniCart}) => ({miniCart})
+const mapStateToProps = ({miniCart}) => ({miniCart})
 
 const mapDispatchToProps = {
     fetchContents: cartActions.getCart,

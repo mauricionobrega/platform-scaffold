@@ -75,7 +75,7 @@ PDP.propTypes = {
 }
 
 
-export const mapStateToProps = ({pdp}) => ({pdp})
+const mapStateToProps = ({pdp}) => ({pdp})
 
 const mapDispatchToProps = {
     setQuantity: pdpActions.setItemQuantity,
