@@ -77,12 +77,10 @@ PDP.propTypes = {
 
 export const mapStateToProps = ({pdp}) => ({pdp})
 
-export const mapDispatchToProps = (dispatch) => {
-    return {
-        setQuantity: (quantity) => dispatch(pdpActions.setItemQuantity(quantity)),
-        addToCart: () => dispatch(pdpActions.submitCartForm()),
-        closeItemAddedModal: () => dispatch(pdpActions.closeItemAddedModal())
-    }
+const mapDispatchToProps = {
+    setQuantity: pdpActions.setItemQuantity,
+    addToCart: pdpActions.submitCartForm,
+    closeItemAddedModal: pdpActions.closeItemAddedModal
 }
 
 export default connect(

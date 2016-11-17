@@ -60,12 +60,10 @@ const mapStateToProps = (state, props) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        submitForm: (values, resolve, reject) => dispatch(actions.submitForm(values, resolve, reject)),
-        openInfoModal: () => dispatch(actions.openInfoModal()),
-        closeInfoModal: () => dispatch(actions.closeInfoModal())
-    }
+const mapDispatchToProps = {
+    submitForm: actions.submitForm,
+    openInfoModal: actions.openInfoModal,
+    closeInfoModal: actions.closeInfoModal
 }
 
 Login.propTypes = {

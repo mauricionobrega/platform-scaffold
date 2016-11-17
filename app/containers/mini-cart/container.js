@@ -137,11 +137,9 @@ MiniCart.propTypes = {
 
 export const mapStateToProps = ({miniCart}) => ({miniCart})
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        fetchContents: () => dispatch(cartActions.getCart()),
-        closeMiniCart: () => dispatch(miniCartActions.closeMiniCart())
-    }
+const mapDispatchToProps = {
+    fetchContents: cartActions.getCart,
+    closeMiniCart: miniCartActions.closeMiniCart
 }
 
 export default connect(
