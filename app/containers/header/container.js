@@ -13,13 +13,17 @@ import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
 import Badge from '../../components/badge'
 
 const generateCartCounterBadge = (cartContents) => {
-    return cartContents && cartContents.summary_count && cartContents.summary_count > 0 ? (
-        <Badge className="t-header__badge" title={`${cartContents.summary_count} items in the cart`}>
-            {cartContents.summary_count}
-        </Badge>
-    ) : (
-        <p className="u-visually-hidden">No items in the cart.</p>
-    )
+    if (cartContents && cartContents.summary_count && cartContents.summary_count > 0) {
+        return (
+            <Badge className="t-header__badge" title={`${cartContents.summary_count} items in the cart`}>
+                {cartContents.summary_count}
+            </Badge>
+        )
+    } else {
+        return (
+            <p className="u-visually-hidden">No items in the cart.</p>
+        )
+    }
 }
 
 class Header extends React.Component {
