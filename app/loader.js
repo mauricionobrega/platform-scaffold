@@ -37,7 +37,8 @@ if (isReactRoute()) {
     loadAsset('link', {
         href: getAssetUrl('main.css'),
         rel: 'stylesheet',
-        type: 'text/css'
+        type: 'text/css',
+        onload: 'window.progressiveStylesheetLoaded = true;'
     })
 
     const script = document.createElement('script')
