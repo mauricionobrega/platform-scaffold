@@ -74,3 +74,12 @@ export const getComponentName = (component) => {
     const name = component.name
     return name === 'Connect' ? component.WrappedComponent.name : name
 }
+
+/**
+ * Validate email
+ * @param {string} email - email string to validate
+ * @returns {boolean} - validation result
+ */
+export const isEmail = (email) => {
+    return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)
+}

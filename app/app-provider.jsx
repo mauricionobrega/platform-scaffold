@@ -9,6 +9,7 @@ import {getComponentName} from './utils/utils'
 import App from './containers/app/container'
 import Home from './containers/home/container'
 import Login from './containers/login/container'
+import Registration from './containers/registration/container'
 import PLP from './containers/plp/container'
 import PDP from './containers/pdp/container'
 
@@ -56,6 +57,7 @@ const AppProvider = ({store}) => {
                 <Route path="/" component={App} onEnter={onEnter} onChange={onChange}>
                     <IndexRoute component={Home} routeName="home" />
                     <Route component={Login} path="customer/account/login/" routeName="login" />
+                    <Route component={Registration} path="customer/account/create/" routeName="registration" />
                     <Route component={PLP} path="potions.html" routeName="productListPage" />
                     <Route component={PLP} path="books.html" routeName="productListPage" />
                     <Route component={PLP} path="ingredients.html" routeName="productListPage" />
