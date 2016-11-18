@@ -11,10 +11,19 @@ import * as navActions from '../../containers/navigation/actions'
 import * as miniCartActions from '../../containers/mini-cart/actions'
 import sprite from '../../static/sprite/sprite.svg'
 
+const hidePreloaderWhenCSSIsLoaded = () => {
+    if (window.Progressive.stylesheetLoaded) {
+        hidePreloader()
+    } else {
+        setTimeout(hidePreloaderWhenCSSIsLoaded, 100)
+    }
+}
+
 
 class App extends React.Component {
     componentDidMount() {
-        hidePreloader()
+        hidePreloaderWhenCSSIsLoaded()
+
         // Dispatch an action to retrieve global content here
     }
 
@@ -23,7 +32,7 @@ class App extends React.Component {
         const currentTemplate = `t-${this.props.children.props.route.routeName}`
 
         return (
-            <div id="app" className="t-app">
+            <div id="app" className="t-app" style={{display: 'none'}}>
                 <IconSprite sprite={sprite} />
                 <SkipLinks />
 
