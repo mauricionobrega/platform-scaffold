@@ -12,7 +12,7 @@ import * as miniCartActions from '../../containers/mini-cart/actions'
 import sprite from '../../static/sprite/sprite.svg'
 
 const hidePreloaderWhenCSSIsLoaded = () => {
-    if (window.progressiveStylesheetLoaded) {
+    if (window.Progressive.stylesheetLoaded) {
         hidePreloader()
     } else {
         setTimeout(hidePreloaderWhenCSSIsLoaded, 100)
