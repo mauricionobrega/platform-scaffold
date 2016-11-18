@@ -1,4 +1,5 @@
 import {createAction, makeFormEncodedRequest} from '../../utils/utils'
+import {getCart} from '../cart/actions'
 
 export const setItemQuantity = createAction('Set item quantity')
 
@@ -17,5 +18,6 @@ export const submitCartForm = () => (dispatch, getStore) => {
         method: formInfo.get('method')
     }).then(() => {
         dispatch(openItemAddedModal())
+        dispatch(getCart())
     })
 }
