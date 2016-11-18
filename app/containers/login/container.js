@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
+import {stripEvent} from '../../utils/utils'
 
 import LoginForm from './partials/form'
 
@@ -62,8 +63,8 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = {
     submitForm: actions.submitForm,
-    openInfoModal: actions.openInfoModal,
-    closeInfoModal: actions.closeInfoModal
+    openInfoModal: stripEvent(actions.openInfoModal),
+    closeInfoModal: stripEvent(actions.closeInfoModal)
 }
 
 Login.propTypes = {
