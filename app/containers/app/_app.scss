@@ -1,8 +1,11 @@
 // App.scss
 // ===
+//
+// 1. `!import` here is necessary in order to override the inline style. This is
+//    all part of our "Flash Of Unstyled Content" prevention strategy.
 
 .t-app {
     // Root Class. Contains all core styles, typically for the template's
     // wrapper element.
-    display: block !important;
+    display: block !important; // 1
 }
