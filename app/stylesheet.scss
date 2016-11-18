@@ -42,6 +42,7 @@
 //
 // Provides a base for look and feel; alter as needed.
 // Base styles are generated from github.com/mobify/vellum
+
 @import 'styles/base';
 
 
@@ -49,6 +50,14 @@
 // ---
 
 @import 'styles/components';
+
+
+// Themes
+// ---
+//
+// Custom styles for the Progressive Web Components, or other project themes
+
+@import 'styles/themes';
 
 
 // Templates
