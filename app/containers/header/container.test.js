@@ -17,9 +17,11 @@ describe('The cart badge', () => {
         const oneItemResult = generateCartCounterBadge({summary_count: 1})
         expect(oneItemResult.type).toBe(Badge)
         expect(oneItemResult.props.children).toBe(1)
+        expect(oneItemResult.props.title).toMatch(/1/)
 
         const twoItemsResult = generateCartCounterBadge({summary_count: 2})
         expect(twoItemsResult.type).toBe(Badge)
         expect(twoItemsResult.props.children).toBe(2)
+        expect(twoItemsResult.props.title).toMatch(/2/)
     })
 })
