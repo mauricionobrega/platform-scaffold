@@ -4,6 +4,7 @@ import {hidePreloader} from 'progressive-web-sdk/dist/preloader'
 import {IconSprite} from 'progressive-web-sdk/dist/components/icon'
 import SkipLinks from '../../components/skip-links'
 import Header from '../../containers/header/container'
+import Breadcrumbs from 'progressive-web-sdk/dist/components/breadcrumbs'
 import Footer from '../../containers/footer/container'
 import MiniCart from '../../containers/mini-cart/container'
 import Navigation from '../../containers/navigation/container'
@@ -28,7 +29,7 @@ class App extends React.Component {
     }
 
     render() {
-        const {requestOpenMiniCart, openNavigation, history} = this.props
+        const {requestOpenMiniCart, openNavigation, history, breadcrumbs} = this.props
         const currentTemplate = `t-${this.props.children.props.route.routeName}`
 
         return (
@@ -44,6 +45,7 @@ class App extends React.Component {
                     </div>
 
                     <main id="app-main" role="main">
+                        <Breadcrumbs className="u-padding-top-lg u-padding-bottom-md u-padding-end-md u-padding-start-md" {...breadcrumbs} />
                         {this.props.children}
                     </main>
 
@@ -58,6 +60,9 @@ class App extends React.Component {
 
 App.propTypes = {
     children: PropTypes.element.isRequired,
+    breadcrumbs: PropTypes.shape({
+        items: PropTypes.array
+    }),
     /**
      * The react-router history object
      */
@@ -68,7 +73,7 @@ App.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        ...state.app,
+        ...state.app.toJS(),
     }
 }
 

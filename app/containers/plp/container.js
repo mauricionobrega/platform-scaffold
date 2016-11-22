@@ -51,10 +51,6 @@ class PLP extends React.Component {
             <div className="t-plp">
                 <div className="u-flexbox u-align-bottom">
                     <div className="u-flex u-padding-top-lg u-padding-bottom-lg u-padding-start-md">
-                        <div className="t-plp__breadcrumb">
-                            <Link href="/" className="u-text-small">Home</Link>
-                        </div>
-
                         <div className="u-margin-top-md">
                             {isPlaceholder ?
                                 <SkeletonText lines={1} type="h1" width="100px" />
