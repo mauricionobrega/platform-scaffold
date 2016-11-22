@@ -24,4 +24,10 @@ mainConfig.plugins = mainConfig.plugins.concat([
     new webpack.NoErrorsPlugin()
 ])
 
+workerConfig.plugins = workerConfig.plugins.concat([
+    new webpack.DefinePlugin({
+        DEBUG: true
+    })
+])
+
 module.exports = [mainConfig, loaderConfig, workerConfig]
