@@ -37,7 +37,10 @@ if (isReactRoute()) {
     loadAsset('link', {
         href: getAssetUrl('main.css'),
         rel: 'stylesheet',
-        type: 'text/css'
+        type: 'text/css',
+        // Tell us when the stylesheet has loaded so we know when it's safe to
+        // display the app! This prevents a flash of unstyled content.
+        onload: 'window.Progressive.stylesheetLoaded = true;'
     })
 
     const script = document.createElement('script')

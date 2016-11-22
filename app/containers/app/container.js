@@ -11,25 +11,34 @@ import * as navActions from '../../containers/navigation/actions'
 import * as miniCartActions from '../../containers/mini-cart/actions'
 import sprite from '../../static/sprite/sprite.svg'
 
+const hidePreloaderWhenCSSIsLoaded = () => {
+    if (window.Progressive.stylesheetLoaded) {
+        hidePreloader()
+    } else {
+        setTimeout(hidePreloaderWhenCSSIsLoaded, 100)
+    }
+}
+
 
 class App extends React.Component {
     componentDidMount() {
-        hidePreloader()
+        hidePreloaderWhenCSSIsLoaded()
+
         // Dispatch an action to retrieve global content here
     }
 
     render() {
-        const {openMiniCart, openNavigation, history} = this.props
+        const {requestOpenMiniCart, openNavigation, history} = this.props
         const currentTemplate = `t-${this.props.children.props.route.routeName}`
 
         return (
-            <div id="app" className="t-app">
+            <div id="app" className="t-app" style={{display: 'none'}}>
                 <IconSprite sprite={sprite} />
                 <SkipLinks />
 
                 <div id="app-wrap" className={currentTemplate}>
                     <div id="app-header" role="banner">
-                        <Header onMenuClick={openNavigation} onMiniCartClick={openMiniCart} />
+                        <Header onMenuClick={openNavigation} onMiniCartClick={requestOpenMiniCart} />
                         <Navigation history={history} />
                         <MiniCart />
                     </div>
@@ -53,8 +62,8 @@ App.propTypes = {
      * The react-router history object
      */
     history: PropTypes.object,
-    openMiniCart: PropTypes.func,
     openNavigation: PropTypes.func,
+    requestOpenMiniCart: PropTypes.func,
 }
 
 const mapStateToProps = (state) => {
@@ -64,8 +73,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    openMiniCart: miniCartActions.openMiniCart,
     openNavigation: navActions.openNavigation,
+    requestOpenMiniCart: miniCartActions.requestOpenMiniCart,
 }
 
 export default connect(

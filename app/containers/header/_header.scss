@@ -100,3 +100,15 @@
     width: 67px;
     height: 28px;
 }
+
+
+// Badge
+// ---
+//
+// 1. Absolutely positioned relative to the parent `.u-position-relative` container
+
+.t-header__badge {
+    position: absolute; // 1
+    top: 0;
+    right: 0;
+}
