@@ -14,6 +14,21 @@ toolbox.options.cache.name = baseCacheName
 toolbox.options.cache.maxAgeSeconds = 86400
 toolbox.debug = DEBUG
 
+// No cache maintenance options here on purpose,
+// this is a permanent cache
+// NOTE: This should eventually have some sort of bundle identifier
+// so that we throw it away when the bundle changes
+const bundleCache = {
+    name: `${baseCacheName}-bundle`
+}
+
+const imageCache = {
+    name: `${baseCacheName}-images`,
+    maxEntries: 40
+}
+
+toolbox.precache(precacheUrls)
+
 // Utility functions
 const jsonResponse = (data) => {
     return new Response(
@@ -53,3 +68,10 @@ self.addEventListener('activate', (e) => {
 toolbox.router.get('/manifest.json', () => {
     return jsonResponse(manifest)
 })
+
+toolbox.router.get(/\.(?:png|gif|svg|jpe?g)$/, toolbox.fastest, {cache: imageCache})
+
+toolbox.router.get(/cdn\.mobify\.com\/.*\?[a-f\d]+$/, toolbox.cacheFirst, {cache: bundleCache})
+toolbox.router.get(/localhost:8443.*\?[a-f\d]+$/, toolbox.cacheFirst, {cache: bundleCache})
+
+// toolbox.router.default = toolbox.networkFirst
