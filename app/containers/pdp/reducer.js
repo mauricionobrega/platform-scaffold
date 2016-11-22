@@ -1,47 +1,41 @@
-import {createReducer} from 'redux-act'
 import Immutable from 'immutable'
+import PDP from './container'
 import pdpParser from './parsers/pdp'
-import {onPageReceived, onRouteChanged} from '../app/actions'
 import * as pdpActions from './actions'
+import {createRoutedReducer, getRoutedState, getSelectorFromState} from '../../utils/router-utils'
 
-const initialState = Immutable.fromJS({
-    contentsLoaded: false,
+const initialState = Immutable.Map({
+    isPlaceholder: true,
     itemQuantity: 1,
     itemAddedModalOpen: false,
     quantityAdded: 0,
-    product: {
+    product: Immutable.Map({
         title: '',
         price: '',
         description: '',
         carouselItems: []
-    }
+    })
 })
 
-export default createReducer({
-    [onPageReceived]: (state, {$, $response, pageType}) => {
-        if (pageType !== 'PDP') {
-            return state
-        }
-        return state.mergeDeep({
-            contentsLoaded: true,
-            ...pdpParser($, $response)
-        })
-    },
-    [onRouteChanged]: (state) => {
-        return initialState
-    },
+const pdpReducers = {
     [pdpActions.setItemQuantity]: (state, payload) => {
-        return state.set('itemQuantity', payload)
+        const routedState = getRoutedState(state)
+        const selector = getSelectorFromState(state)
+        return state.set(selector, routedState.set('itemQuantity', payload))
     },
     [pdpActions.openItemAddedModal]: (state) => {
-        return state.mergeDeep({
+        const routedState = getRoutedState(state)
+        const selector = getSelectorFromState(state)
+        return state.set(selector, routedState.mergeDeep({
             itemAddedModalOpen: true,
-            quantityAdded: state.get('itemQuantity')
-        })
+            quantityAdded: routedState.get('itemQuantity')
+        }))
     },
     [pdpActions.closeItemAddedModal]: (state) => {
-        return state.mergeDeep({
-            itemAddedModalOpen: false
-        })
+        const routedState = getRoutedState(state)
+        const selector = getSelectorFromState(state)
+        return state.set(selector, routedState.set('itemAddedModalOpen', false))
     }
-}, initialState)
+}
+
+export default createRoutedReducer(PDP, pdpParser, initialState, pdpReducers)
