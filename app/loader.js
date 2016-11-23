@@ -1,10 +1,19 @@
 import {getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
 import cacheHashManifest from '../tmp/loader-cache-hash-manifest.json'
+import FrameBridge from 'progressive-web-sdk/dist/iframe/parent'
 
-window.Progressive = {}
+window.Progressive = window.Progressive || {}
 
 import ReactRegexes from './loader-routes'
+
+const isInIframe = () => {
+    try {
+        return window.self !== window.top
+    } catch (e) {
+        return true
+    }
+}
 
 const isReactRoute = () => {
     return ReactRegexes.some((regex) => regex.test(window.location.pathname))
@@ -18,7 +27,7 @@ import preloadHTML from 'raw!./preloader/preload.html'
 import preloadCSS from 'css?minimize!./preloader/preload.css'
 import preloadJS from 'raw!./preloader/preload.js' // eslint-disable-line import/default
 
-if (isReactRoute()) {
+if (isReactRoute() && !isInIframe()) {
     displayPreloader(preloadCSS, preloadHTML, preloadJS)
 
     // Create React mounting target
@@ -62,6 +71,22 @@ if (isReactRoute()) {
     capturing.id = 'progressive-web-capture'
     capturing.src = CAPTURING_CDN
     body.appendChild(capturing)
+
+    new FrameBridge({debug: true}) // eslint-disable-line no-new
+} else if (isInIframe()) {
+    // Child iframe
+    loadAsset('script', {src: '//cdn.mobify.com/capturejs/capture-latest.min.js', async: true, className: 'capture-remove'})
+    const contentApi = `<script src="${getAssetUrl('content-api.js')}"></script>`
+
+    const interval = setInterval(() => {
+        if (window.Capture) {
+            clearInterval(interval)
+            window.Capture.init((capture) => {
+                capture.restore(contentApi)
+
+            })
+        }
+    }, 150)
 } else {
     const capturing = document.createElement('script')
     capturing.async = true

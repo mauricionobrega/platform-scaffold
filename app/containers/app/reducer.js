@@ -9,7 +9,7 @@ const initialState = Map({
 })
 
 export default createReducer({
-    [appActions.onRouteChanged]: (state, {currentURL}) => {
+    [appActions.routeChanged]: (state, {currentURL}) => {
         return state.set(FETCH_IN_PROGRESS, true).set(CURRENT_URL, currentURL)
     },
     [appActions.onPageReceived]: (state) => {

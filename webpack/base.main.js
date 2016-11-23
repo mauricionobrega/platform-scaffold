@@ -9,10 +9,10 @@ const CopyPlugin = require('copy-webpack-plugin')
 
 module.exports = {
     devtool: 'cheap-source-map',
-    entry: [
-        'whatwg-fetch',
-        './app/main.jsx',
-    ],
+    entry: {
+        main: ['whatwg-fetch', './app/main.jsx'],
+        'content-api': './app/content-api.js'
+    },
     output: {
         path: path.resolve(process.cwd(), 'build'),
         filename: '[name].js'

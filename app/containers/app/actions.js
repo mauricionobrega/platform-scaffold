@@ -1,13 +1,26 @@
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import * as utils from '../../utils/utils'
 import {CURRENT_URL} from './constants'
+import FrameBridge from 'progressive-web-sdk/dist/iframe/parent'
 
 /**
  * Action dispatched when the route changes
  * @param {string} pageType - the component name of the entered route
  * @param {string} currentURL - what's currently shown in the address bar
  */
-export const onRouteChanged = utils.createAction('On route changed', 'currentURL', 'pageType')
+export const routeChanged = utils.createAction('On route changed', 'currentURL', 'pageType')
+
+
+export const onRouteChanged = (currentURL, pageType) => {
+    return (dispatch) => {
+        dispatch(routeChanged(currentURL, pageType))
+
+        // const frameBridge = new FrameBridge()
+        new FrameBridge({debug: true}).trigger('child:navigate', {
+            url: currentURL
+        })
+    }
+}
 
 /**
  * Action dispatched when content for a global page render is ready.
