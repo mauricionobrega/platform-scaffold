@@ -10,9 +10,9 @@ import parser from './parsers/registration'
 
 const initialState = Immutable.Map({
     title: 'Customer Login',
-    heading: 'New Customers',
-    description: 'Creating an account has many benefits: check out faster, keep more than one address, track orders and more.',
-    requiredText: '* Required Fields',
+    heading: '',
+    description: '',
+    requiredText: '',
     href: '',
     form: {
         href: '',
