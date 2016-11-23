@@ -1,4 +1,4 @@
-import {Map, is} from 'immutable'
+import {Map} from 'immutable'
 
 import reducer, {initialState} from './reducer'
 
