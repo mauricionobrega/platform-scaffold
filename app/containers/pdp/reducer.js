@@ -4,7 +4,7 @@ import pdpParser from './parsers/pdp'
 import * as pdpActions from './actions'
 import {createRoutedReducer, getRoutedState, getSelectorFromState} from '../../utils/router-utils'
 
-const initialState = Immutable.Map({
+export const initialState = Immutable.Map({
     isPlaceholder: true,
     itemQuantity: 1,
     itemAddedModalOpen: false,

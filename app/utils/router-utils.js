@@ -34,7 +34,7 @@ const isPageType = (pageType, component) => pageType === getComponentName(compon
 /**
  * Determine whether we should display content or transition into a placeholder state
  */
-const getSelector = (state, currentURL) => { return state.has(currentURL) ? currentURL : PLACEHOLDER }
+const getNextSelector = (state, currentURL) => { return state.has(currentURL) ? currentURL : PLACEHOLDER }
 
 
 /**
@@ -53,6 +53,10 @@ export const getRoutedState = (state) => {
     return state.get(getSelectorFromState(state))
 }
 
+export const baseInitialState = Immutable.Map({
+    [SELECTOR]: PLACEHOLDER,
+    [PLACEHOLDER]: null
+})
 /**
  * Creates a reducer that manages whether or not we're on a url that
  * is matched to our component, as well as pulling the correct data out
@@ -86,13 +90,10 @@ export const createRoutedReducer = (component, parser, initialState, additionalR
         [onRouteChanged]: (state, action) => {
             const {pageType, currentURL} = action
 
-            return isPageType(pageType, component) ? state.set(SELECTOR, getSelector(state, currentURL)) : state
+            return isPageType(pageType, component) ? state.set(SELECTOR, getNextSelector(state, currentURL)) : state
         },
         ...additionalReducers
-    }, Immutable.Map({
-        [SELECTOR]: PLACEHOLDER,
-        [PLACEHOLDER]: initialState
-    }))
+    }, baseInitialState.set(PLACEHOLDER, initialState))
 }
 
 /**
