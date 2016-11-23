@@ -49,7 +49,7 @@ const parseForm = ($form, $infoSection, $accountSection) => {
 
 const registrationParser = ($, $html) => {
     return {
-        heading: $html.find('#block-customer-login-heading').text().trim(),
+        heading: $html.find('.login-container .block-new-customer .block-title').text().trim(),
         description: $html.find('.block-new-customer .block-content').text().trim(),
         href: $html.find('.header.links a').last().attr('href'),
         form: parseForm(
