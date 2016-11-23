@@ -10,7 +10,7 @@ import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/d
 import Link from 'progressive-web-sdk/dist/components/link'
 import logo from '../../static/svg/logo.svg'
 import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
-import Badge from '../../components/badge'
+import Badge from 'progressive-web-sdk/dist/components/badge'
 
 export const generateCartCounterBadge = (cartContents) => {
     if (cartContents && cartContents.summary_count && cartContents.summary_count > 0) {
