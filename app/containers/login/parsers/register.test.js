@@ -1,9 +1,9 @@
 import {jquerifyHtmlFile} from 'progressive-web-sdk/dist/test-utils'
 import {isURL} from 'validator'
-import registrationParser from './registration'
+import registrationParser from './register'
 
 describe('the Registration parser', () => {
-    const $content = jquerifyHtmlFile('app/containers/registration/parsers/registration-example.html')
+    const $content = jquerifyHtmlFile('app/containers/login/parsers/register-example.html')
     const parsedContent = registrationParser($, $content)
 
     const headings = ['Personal Information', 'Sign-in Information']

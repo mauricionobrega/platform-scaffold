@@ -1,8 +1,8 @@
 import React from 'react'
-import RegistrationForm from './form'
+import SignInForm from './signin'
 import {shallow} from 'enzyme'
 
 test('renders without errors', () => {
-    const wrapper = shallow(<RegistrationForm />)
+    const wrapper = shallow(<SignInForm />)
     expect(wrapper.length).toBe(1)
 })

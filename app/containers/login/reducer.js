@@ -6,29 +6,58 @@ import Login from './container'
 import {openInfoModal, closeInfoModal} from './actions'
 
 import {onPageReceived} from '../app/actions'
-import parser from './parsers/login'
+import signinParser from './parsers/signin'
+import registerParser from './parsers/register'
 
 const initialState = Immutable.Map({
-    title: '',
-    href: '',
-    heading: '',
-    description: '',
-    form: {
+    title: 'Customer Login',
+    signinSection: {
         href: '',
-        fields: [],
-        hiddenInputs: [],
-        submitText: ''
+        heading: '',
+        description: '',
+        requiredText: '',
+        form: {
+            href: '',
+            fields: [],
+            hiddenInputs: [],
+            submitText: ''
+        },
+    },
+    registerSection: {
+        href: '',
+        heading: '',
+        description: '',
+        requiredText: '',
+        form: {
+            href: '',
+            hiddenInputs: [],
+            submitText: '',
+            sections: [{
+                heading: '',
+                fields: [],
+            }]
+        },
     },
     infoModalOpen: false
 })
 
 export default createReducer({
     [onPageReceived]: (state, action) => {
-        const {$, $response, pageType} = action
+        const {$, $response, pageType, routeName} = action
         if (pageType === getComponentName(Login)) {
-            return state.merge(Immutable.fromJS({
-                ...parser($, $response)
-            })).set('loaded', true)
+            let newState
+
+            if (routeName === Login.SIGN_IN_SECTION) {
+                newState = {
+                    signinSection: signinParser($, $response)
+                }
+            } else if (routeName === Login.REGISTER_SECTION) {
+                newState = {
+                    registerSection: registerParser($, $response)
+                }
+            }
+
+            return state.merge(Immutable.fromJS(newState)).set('loaded', true)
         } else {
             return state
         }

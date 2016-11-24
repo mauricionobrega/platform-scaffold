@@ -5,8 +5,8 @@ import reducer from './reducer'
 import * as appActions from '../app/actions'
 import * as loginActions from './actions'
 
-jest.mock('./parsers/login')
-import loginParser from './parsers/login'
+jest.mock('./parsers/signin')
+import signinParser from './parsers/signin'
 
 test('unknown action type leaves state unchanged', () => {
     const action = {
@@ -28,7 +28,7 @@ test('appActions.onPageReceived does nothing when pageType !== Login', () => {
 })
 
 test('appActions.onPageReceived sets loaded to true', () => {
-    const action = appActions.onPageReceived($, $(), 'Login')
+    const action = appActions.onPageReceived($, $(), 'Login', 'signin')
     const inputState = Map()
 
     expect(reducer(inputState, action).get('loaded')).toBe(true)
@@ -36,18 +36,18 @@ test('appActions.onPageReceived sets loaded to true', () => {
 
 test('appActions.onPageReceived causes the page to be parsed into the state', () => {
     const $html = $('<body><hr /></body')
-    const action = appActions.onPageReceived($, $html, 'Login')
+    const action = appActions.onPageReceived($, $html, 'Login', 'signin')
     const inputState = Map()
 
-    loginParser.mockClear()
-    const parsedPage = {test: true, title: 'Customer Login', loaded: true}
-    loginParser.mockReturnValueOnce(parsedPage)
+    signinParser.mockClear()
+    const parsedPage = {test: true, title: 'Customer Login'}
+    signinParser.mockReturnValueOnce(parsedPage)
 
     const result = reducer(inputState, action)
 
-    expect(loginParser).toBeCalledWith($, $html)
-    expect(result.get('test')).toBe(true)
-    expect(is(result, Map(parsedPage))).toBe(true)
+    expect(signinParser).toBeCalledWith($, $html)
+    expect(result.get('signinSection').get('test')).toBe(true)
+    expect(is(result, Map({signinSection: Map(parsedPage), loaded: true}))).toBe(true)
 })
 
 test('loginActions.openInfoModal opens the info modal', () => {

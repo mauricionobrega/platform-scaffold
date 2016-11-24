@@ -9,7 +9,7 @@ import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Link from 'progressive-web-sdk/dist/components/link'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
-const LoginForm = (props) => {
+const SignInForm = (props) => {
     const {
         // redux-form
         handleSubmit,
@@ -95,7 +95,7 @@ const LoginForm = (props) => {
     )
 }
 
-LoginForm.propTypes = {
+SignInForm.propTypes = {
     closeModal: PropTypes.func,
     error: PropTypes.string,
     fields: PropTypes.array,
@@ -111,8 +111,8 @@ LoginForm.propTypes = {
 }
 
 
-const ReduxLoginForm = reduxForm({
-    form: 'login-form'
-})(LoginForm)
+const ReduxSignInForm = reduxForm({
+    form: 'signin-form'
+})(SignInForm)
 
-export default ReduxLoginForm
+export default ReduxSignInForm

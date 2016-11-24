@@ -1,11 +1,12 @@
 // Login
 // ===
 
+@import 'node_modules/progressive-web-sdk/dist/components/tabs/base';
+
 .t-login {
     // Root Class. Contains all core styles, typically for the template's
     // wrapper element.
 }
-
 
 // Remember Me Modal
 // ---
@@ -25,3 +26,20 @@
 
     padding: 12px;
 }
+
+// Tab Navigation
+// ---
+
+.t-login__navigation .pw-tabs__link {
+    height: 48px;
+    color: $neutral-70;
+}
+
+.t-login__navigation .pw-tabs__tab.pw--is-active {
+    border-bottom: 2px solid $brand-color;
+
+    .pw-tabs__link {
+        font-weight: 600;
+    }
+}
+

@@ -9,7 +9,7 @@ import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
-const RegistrationForm = (props) => {
+const RegisterForm = (props) => {
     const {
         // redux-form
         handleSubmit,
@@ -104,7 +104,7 @@ const RegistrationForm = (props) => {
     )
 }
 
-RegistrationForm.propTypes = {
+RegisterForm.propTypes = {
     closeModal: PropTypes.func,
     error: PropTypes.string,
     handleSubmit: PropTypes.func,
@@ -119,8 +119,8 @@ RegistrationForm.propTypes = {
 }
 
 
-const ReduxRegistrationForm = reduxForm({
-    form: 'registration-form'
-})(RegistrationForm)
+const ReduxRegisterForm = reduxForm({
+    form: 'register-form'
+})(RegisterForm)
 
-export default ReduxRegistrationForm
+export default ReduxRegisterForm

@@ -9,7 +9,6 @@ import {getComponentName} from './utils/utils'
 import App from './containers/app/container'
 import Home from './containers/home/container'
 import Login from './containers/login/container'
-import Registration from './containers/registration/container'
 import PLP from './containers/plp/container'
 import PDP from './containers/pdp/container'
 
@@ -31,9 +30,11 @@ const AppProvider = ({store}) => {
 
     const getPageType = (routerState) => getComponentName(routerState.routes[1].component)
 
+    const getRouteName = (routerState) => routerState.routes[1].routeName
+
     const dispatchRouteChanged = (nextState) => store.dispatch(appActions.onRouteChanged(getURL(nextState), getPageType(nextState)))
 
-    const dispatchFetchPage = (nextState) => store.dispatch(appActions.fetchPage(getURL(nextState), getPageType(nextState)))
+    const dispatchFetchPage = (nextState) => store.dispatch(appActions.fetchPage(getURL(nextState), getPageType(nextState), getRouteName(nextState)))
 
     const onEnter = (nextState) => {
         triggerMobifyPageView(nextState.routes[1].routeName)
@@ -56,8 +57,8 @@ const AppProvider = ({store}) => {
             <Router>
                 <Route path="/" component={App} onEnter={onEnter} onChange={onChange}>
                     <IndexRoute component={Home} routeName="home" />
-                    <Route component={Login} path="customer/account/login/" routeName="login" />
-                    <Route component={Registration} path="customer/account/create/" routeName="registration" />
+                    <Route component={Login} path="customer/account/login/" routeName="signin" />
+                    <Route component={Login} path="customer/account/create/" routeName="register" />
                     <Route component={PLP} path="potions.html" routeName="productListPage" />
                     <Route component={PLP} path="books.html" routeName="productListPage" />
                     <Route component={PLP} path="ingredients.html" routeName="productListPage" />
