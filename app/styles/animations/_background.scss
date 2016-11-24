@@ -3,7 +3,11 @@
 //
 // Animation styles can be added here
 
-@keyframes skeletonPulseAnimation {
+
+// Background Shimmer
+// ---
+
+@keyframes background-shimmer {
     0% {
         background-position: 100% 0;
     }
