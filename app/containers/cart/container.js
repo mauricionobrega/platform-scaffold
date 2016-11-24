@@ -10,16 +10,13 @@ Cart.propTypes = {
 Cart.defaultProps = {
 }
 
-export const mapStateToProps = (state) => {
+const mapStateToProps = (state) => {
     return {
         cart: state.cart
     }
 }
 
-export const mapDispatchToProps = (dispatch, props) => {
-    return {
-    }
-}
+const mapDispatchToProps = {}
 
 export default connect(
     mapStateToProps,

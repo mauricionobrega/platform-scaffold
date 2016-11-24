@@ -114,7 +114,7 @@ Header.propTypes = {
     onMiniCartClick: PropTypes.func,
 }
 
-export const mapStateToProps = ({header}) => {
+const mapStateToProps = ({header}) => {
     return {
         header
     }
