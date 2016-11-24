@@ -26,7 +26,8 @@ class PDP extends React.Component {
             itemQuantity,
             quantityAdded,
             itemAddedModalOpen,
-            isPlaceholder
+            isPlaceholder,
+            contentsLoaded
         } = this.props
 
         const {
@@ -38,7 +39,7 @@ class PDP extends React.Component {
             <div className="t-pdp">
                 <PDPHeading {...product} />
                 <PDPCarousel items={carouselItems} />
-                {!isPlaceholder ?
+                {!isPlaceholder && contentsLoaded ?
                     <div>
                         <PDPDescription
                             description={description} />
@@ -71,6 +72,10 @@ PDP.propTypes = {
      * Callback when the added-to-cart modal closes
      */
     closeItemAddedModal: PropTypes.func.isRequired,
+    /**
+     * Whether or not the page's contents have been received in entirety before
+     */
+    contentsLoaded: PropTypes.bool.isRequired,
     /**
      * Whether we are currently in a placeholder state, or have page content to
      * display

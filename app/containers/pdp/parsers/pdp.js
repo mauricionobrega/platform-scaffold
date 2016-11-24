@@ -28,6 +28,7 @@ const pdpParser = ($, $html) => {
 
     const defaults = {
         isPlaceholder: false,
+        contentsLoaded: true,
         itemQuantity: 1,
         itemAddedModalOpen: false,
         quantityAdded: 0
