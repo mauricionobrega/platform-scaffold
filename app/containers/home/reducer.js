@@ -5,7 +5,7 @@ import {onPageReceived} from '../app/actions'
 import homeParser from './parsers/home'
 
 const initialState = fromJS({
-    categories: ['', '', '', ''],
+    categories: ['', '', '', '', '', ''],
     banners: false
 })
 

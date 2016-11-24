@@ -6,6 +6,11 @@ import CarouselItem from 'progressive-web-sdk/dist/components/carousel/carousel-
 import Image from 'progressive-web-sdk/dist/components/image'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
+// The ratio of the banner image width:height is 1:.84. Since the banner will be
+// width=100%, we can use 84vw to predict the banner height.
+const imageHeight = '84vw'
+const placeholder = <SkeletonBlock height={imageHeight} />
+
 const HomeCarousel = ({banners}) => {
     return (
         <div className="t-home__carousel">
@@ -18,17 +23,16 @@ const HomeCarousel = ({banners}) => {
                                     src={getAssetUrl(`static/img/homepage_carousel/${key}.png`)}
                                     alt={alt}
                                     hidePlaceholder={true}
-                                    loadingIndicator={<SkeletonBlock height="84vw" />}
+                                    loadingIndicator={placeholder}
                                 />
                             </CarouselItem>
                         )
                     })}
                 </Carousel>
             :
-                // The ratio of the banner image width:height is 1:.84.
-                // Since the banner will be width=100%, we can use 84vw to
-                // predict the banner height.
-                <SkeletonBlock style={{marginBottom: '26px'}} height="84vw" />
+                <div style={{paddingBottom: '30px'}}>
+                    {placeholder}
+                </div>
             }
         </div>
     )
