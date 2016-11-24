@@ -1,0 +1,8 @@
+// SkeletonInline Theme
+// ===
+
+.pw-skeleton-inline {
+    &::after {
+        @include background-shimmer;
+    }
+}
