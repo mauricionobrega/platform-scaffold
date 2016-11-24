@@ -5,6 +5,18 @@ import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/acco
 
 /* eslint-disable newline-per-chained-call */
 
+// Mock the mutation observer used to update the accordion's height
+// The tests don't use the mutation observer, so we can use a minimal mock
+beforeAll(() => {
+    window.MutationObserver = function() {
+        this.observe = () => {}
+    }
+})
+
+afterAll(() => {
+    delete window.MutationObserver
+})
+
 test('renders without errors', () => {
     const wrapper = mount(<PDPDescription />)
 
