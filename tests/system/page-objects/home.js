@@ -1,9 +1,9 @@
 const selectors = {
     wrapper: '.t-home',
-    skipLinks: '.c-skip-links',
-    skipToMain: '.c-skip-links__anchor:first-of-type',
-    skipToNav: '.c-skip-links__anchor:nth-child(2n)',
-    skipToFooter: '.c-skip-links__anchor:last-of-type',
+    skipLinks: '.pw-skip-links',
+    skipToMain: '.pw-skip-links__anchor:first-of-type',
+    skipToNav: '.pw-skip-links__anchor:nth-child(2n)',
+    skipToFooter: '.pw-skip-links__anchor:last-of-type',
     plpItem: '#app-wrap a:nth-of-type(2)'
 }
 
@@ -23,4 +23,3 @@ Home.prototype.navigateToPLP = function() {
 }
 
 export default Home
-
