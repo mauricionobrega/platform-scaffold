@@ -65,12 +65,9 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        submitNewsletter: (action, method, data) => dispatch(actions.signUpToNewsletter(action, method, data))
-    }
+const mapDispatchToProps = {
+    submitNewsletter: actions.signUpToNewsletter
 }
-
 
 export default connect(
     mapStateToProps,
