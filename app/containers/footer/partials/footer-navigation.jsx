@@ -11,11 +11,7 @@ const FooterNavigation = ({navigation}) => {
                 const title = item.get('title')
                 return (
                     <ListTile href={item.get('href')} key={key}>
-                        {title ?
-                            title
-                        :
-                            <SkeletonText width="135px" style={{lineHeight: '20px'}} />
-                        }
+                        {title || <SkeletonText width="135px" style={{lineHeight: '20px'}} />}
                     </ListTile>
                 )
             })}
