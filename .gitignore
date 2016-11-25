@@ -5,6 +5,7 @@
 /tmp
 build.tar
 coverage
+lighthouse
 node_modules
 npm-debug.log
 

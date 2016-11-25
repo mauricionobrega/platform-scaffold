@@ -1,5 +1,6 @@
 build
 coverage
+lighthouse
 app/static
 tests/system/nightwatch-config.js
 tests/system/site.js
