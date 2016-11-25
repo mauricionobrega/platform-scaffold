@@ -122,5 +122,16 @@ export const submitRegisterForm = (formValues, resolve, reject) => {
     }
 }
 
+const findPathForRoute = (routes, routeName) => {
+    const path = routes[0].childRoutes.find((route) => route.routeName === routeName).path
+    return `/${path}`
+}
+
+export const navigateToSection = (router, routes, sectionName) => {
+    return () => {
+        router.push(findPathForRoute(routes, sectionName))
+    }
+}
+
 export const openInfoModal = createAction('Close Info Sheet')
 export const closeInfoModal = createAction('Close Info Sheet')

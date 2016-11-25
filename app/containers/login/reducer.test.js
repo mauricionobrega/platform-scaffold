@@ -27,16 +27,26 @@ test('appActions.onPageReceived does nothing when pageType !== Login', () => {
     expect(reducer(inputState, action)).toEqual(inputState)
 })
 
-test('appActions.onPageReceived sets loaded to true', () => {
-    const action = appActions.onPageReceived($, $(), 'Login', 'signin')
+test('appActions.onPageReceived does nothing when pageType !== Login and different route name', () => {
+    const action = appActions.onPageReceived($, $(), 'Home', null, null, 'productListPage')
     const inputState = Map()
 
-    expect(reducer(inputState, action).get('loaded')).toBe(true)
+    expect(reducer(inputState, action)).toEqual(inputState)
+})
+
+test('appActions.onPageReceived sets loaded to true', () => {
+    const inputState = Map()
+
+    const signinAction = appActions.onPageReceived($, $(), 'Login', null, null, 'signin')
+    expect(reducer(inputState, signinAction).get('loaded')).toBe(true)
+
+    const registerAction = appActions.onPageReceived($, $(), 'Login', null, null, 'register')
+    expect(reducer(inputState, registerAction).get('loaded')).toBe(true)
 })
 
 test('appActions.onPageReceived causes the page to be parsed into the state', () => {
     const $html = $('<body><hr /></body')
-    const action = appActions.onPageReceived($, $html, 'Login', 'signin')
+    const action = appActions.onPageReceived($, $html, 'Login', null, null, 'signin')
     const inputState = Map()
 
     signinParser.mockClear()

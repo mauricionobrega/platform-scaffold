@@ -12,10 +12,11 @@ import {Tabs, TabsPanel} from 'progressive-web-sdk/dist/components/tabs'
 import * as actions from './actions'
 
 class Login extends React.Component {
+
+    // a few constants to make refactoring easier in future
     static get SIGN_IN_SECTION() { return 'signin' }
     static get REGISTER_SECTION() { return 'register' }
-
-    static get sectionNames() {
+    static get SECTION_NAMES() {
         return {
             [Login.SIGN_IN_SECTION]: 'Sign In',
             [Login.REGISTER_SECTION]: 'Register'
@@ -34,15 +35,6 @@ class Login extends React.Component {
         return activeIndex === 1 ? Login.REGISTER_SECTION : Login.SIGN_IN_SECTION
     }
 
-    findPathForRoute(routes, routeName) {
-        const path = routes[0].childRoutes.find((route) => route.routeName === routeName).path
-        return `/${path}`
-    }
-
-    navigateToSection(router, routes, sectionName) {
-        router.push(this.findPathForRoute(routes, sectionName))
-    }
-
     render() {
         const {
             title,
@@ -53,6 +45,7 @@ class Login extends React.Component {
             submitRegisterForm,
             openInfoModal,
             closeInfoModal,
+            navigateToSection,
             route: {routeName},
             router,
             routes
@@ -68,8 +61,8 @@ class Login extends React.Component {
                     </div>
                 }
 
-                <Tabs activeIndex={this.indexForSection(routeName)} className="t-login__navigation" onChange={(index) => this.navigateToSection(router, routes, this.sectionForIndex(index))}>
-                    <TabsPanel title={Login.sectionNames[Login.SIGN_IN_SECTION]}>
+                <Tabs activeIndex={this.indexForSection(routeName)} className="t-login__navigation" onChange={(index) => navigateToSection(router, routes, this.sectionForIndex(index))}>
+                    <TabsPanel title={Login.SECTION_NAMES[Login.SIGN_IN_SECTION]}>
                         <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
                             {signinSection.heading ?
                                 <h3 className="u-margin-bottom u-color-brand u-text-font-family u-text-normal">{signinSection.heading}</h3>
@@ -93,7 +86,7 @@ class Login extends React.Component {
                             <SkeletonBlock height="200vw" width="100%" />
                         }
                     </TabsPanel>
-                    <TabsPanel title={Login.sectionNames[Login.REGISTER_SECTION]}>
+                    <TabsPanel title={Login.SECTION_NAMES[Login.REGISTER_SECTION]}>
                         <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
                             {registerSection.heading ?
                                 <h3 className="u-margin-bottom u-color-brand u-text-font-family u-text-normal">{registerSection.heading}</h3>
@@ -132,6 +125,7 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = {
     submitSignInForm: actions.submitSignInForm,
     submitRegisterForm: actions.submitRegisterForm,
+    navigateToSection: actions.navigateToSection,
     openInfoModal: stripEvent(actions.openInfoModal),
     closeInfoModal: stripEvent(actions.closeInfoModal)
 }
@@ -139,6 +133,7 @@ const mapDispatchToProps = {
 Login.propTypes = {
     closeInfoModal: PropTypes.func,
     infoModalOpen: PropTypes.bool,
+    navigateToSection: PropTypes.func,
     openInfoModal: PropTypes.func,
     registerSection: PropTypes.object,
     route: PropTypes.object,

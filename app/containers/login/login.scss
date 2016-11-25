@@ -30,6 +30,10 @@
 // Tab Navigation
 // ---
 
+.t-login__navigation .pw-tabs__strip {
+    box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
 .t-login__navigation .pw-tabs__link {
     height: 48px;
     color: $neutral-70;

@@ -22,9 +22,9 @@ export const onPageReceived = utils.createAction('On page received',
     '$',
     '$response',
     'pageType',
-    'routeName',
     'url',
-    'currentURL'
+    'currentURL',
+    'routeName'
 )
 
 /**
@@ -38,7 +38,7 @@ export const fetchPage = (url, pageType, routeName) => {
             .then((res) => {
                 const [$, $response] = res
                 const currentURL = getState().app.get(CURRENT_URL)
-                dispatch(onPageReceived($, $response, pageType, routeName, url, currentURL))
+                dispatch(onPageReceived($, $response, pageType, url, currentURL, routeName))
             })
             .catch((error) => { console.info(error.message) })
     }
