@@ -8,15 +8,13 @@ const FooterNewsletterSubscription = ({newsletter, onSubmit}) => {
 
     return (
         <div className="t-footer__newsletter u-padding-md u-padding-top-lg u-padding-bottom-lg">
-            {newsletter ? (
-                <div>
-                    <h2 className="u-h2 u-margin-bottom-md">
-                        Subscribe to Merlin's Newsletter
-                    </h2>
+            <div>
+                <h2 className="u-h2 u-margin-bottom-md">
+                    Subscribe to Merlin&#39;s Newsletter
+                </h2>
 
-                    <NewsletterForm onSubmit={onSubmit} />
-                </div>
-            ) : skeleton}
+                <NewsletterForm disabled={!newsletter} onSubmit={onSubmit} />
+            </div>
         </div>
     )
 }

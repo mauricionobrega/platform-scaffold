@@ -7,7 +7,10 @@ import * as constants from './constants'
 
 export const initialState = Immutable.fromJS({
     newsletter: null,
-    navigation: null,
+    navigation: new Array(5).fill({
+        title: null,
+        href: null
+    }),
     signupStatus: constants.SIGNUP_NOT_ATTEMPTED
 })
 
