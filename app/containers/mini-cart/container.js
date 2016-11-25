@@ -13,6 +13,7 @@ import ProductItem from '../../components/product-item'
 import * as miniCartActions from './actions'
 import * as cartActions from '../cart/actions'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
+import {stripEvent} from '../../utils/utils'
 
 // Parses strings in the format: $Dollars.Cents
 // Dollar amounts only, cents must be specified.
@@ -135,13 +136,11 @@ MiniCart.propTypes = {
     fetchContents: PropTypes.func,
 }
 
-export const mapStateToProps = ({miniCart}) => ({miniCart})
+const mapStateToProps = ({miniCart}) => ({miniCart})
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        fetchContents: () => dispatch(cartActions.getCart()),
-        closeMiniCart: () => dispatch(miniCartActions.closeMiniCart())
-    }
+const mapDispatchToProps = {
+    fetchContents: cartActions.getCart,
+    closeMiniCart: stripEvent(miniCartActions.closeMiniCart)
 }
 
 export default connect(
