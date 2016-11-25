@@ -1,5 +1,6 @@
 {
-  "name": "progressive-web-scaffold",
+  "name": "platform-scaffold",
+  "projectSlug": "merlinspotions-2",
   "repository": {
     "type": "git",
     "url": "http://github.com/mobify/progressive-web-scaffold"
