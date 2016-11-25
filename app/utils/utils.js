@@ -83,3 +83,12 @@ export const getComponentName = (component) => {
 export const isEmail = (email) => {
     return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)
 }
+
+/**
+ * Wraps an action creator function so that the React synthetic action
+ * is not passed in. This is necessary to avoid spurious warnings from
+ * the React code.
+ * @param {function} fn - an action creator function
+ * @returns {function} - the wrapped action creator
+ */
+export const stripEvent = (fn) => () => fn()

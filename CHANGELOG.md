@@ -1,3 +1,6 @@
+## 0.9.1 (November 14, 2016)
+- Use SDK version 0.10.4
+
 ## 0.9.0 (November 14, 2016)
 - Use SDK version 0.10.3
 - Build the homepage, PLPs, PDPs and login for Merlin's Potions

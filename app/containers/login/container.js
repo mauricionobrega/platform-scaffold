@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router'
+import {stripEvent} from '../../utils/utils'
 
 import SignInForm from './partials/signin'
 import RegisterForm from './partials/register'
@@ -128,13 +129,11 @@ const mapStateToProps = (state, props) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        submitSignInForm: (values, resolve, reject) => dispatch(actions.submitSignInForm(values, resolve, reject)),
-        submitRegisterForm: (values, resolve, reject) => dispatch(actions.submitRegisterForm(values, resolve, reject)),
-        openInfoModal: () => dispatch(actions.openInfoModal()),
-        closeInfoModal: () => dispatch(actions.closeInfoModal())
-    }
+const mapDispatchToProps = {
+    submitSignInForm: actions.submitSignInForm,
+    submitRegisterForm: actions.submitRegisterForm,
+    openInfoModal: stripEvent(actions.openInfoModal),
+    closeInfoModal: stripEvent(actions.closeInfoModal)
 }
 
 Login.propTypes = {
