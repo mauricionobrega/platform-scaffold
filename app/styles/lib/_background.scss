@@ -5,12 +5,6 @@
 // ---
 
 @mixin background-shimmer() {
-    // background: $neutral-30;
-    // background-image: linear-gradient(to left, $neutral-30, scale-color($neutral-30, $lightness: -5%) 20%, $neutral-30 40%, $neutral-30);
-    // background-repeat: no-repeat;
-    // background-size: 600% 600%;
-    //
-    // animation: 1.5s linear infinite forwards background-shimmer;
     overflow: hidden;
 
     background: rgba(0, 0, 0, 0.03);
