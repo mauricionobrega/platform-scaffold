@@ -1,33 +1,41 @@
 // Home.scss
 // ===
 
-// [1] - Display box-shadow properly at bottom of container by increasing position
-// context above that of the footer (.t-footer__newsletter)
-// [2] - Fixes white space appearing below carousel images
 
-
+// Container
+// ---
+//
+// 1. Display box-shadow properly at bottom of container by increasing position
+//    context above that of the footer (.t-footer__newsletter)
+// 2. Fixes white space appearing below carousel images
+// 3. Force `max-height` on the carousel, since the Image component can't
+//    yet take a `style` prop. @TODO: Add `style` prop to Image?
 
 .t-home__container {
-    position: relative; // [1]
+    position: relative; // 1
 
     background-color: $background-color;
-    box-shadow: $box-shadow;
+    box-shadow: $inset-box-shadow;
 
     font-family: $header-font-family;
 
-    .c-carousel__inner {
-        line-height: 0; // [2]
+    .pw-carousel__inner {
+        max-height: 84vw; // 3
+
+        line-height: 0; // 2
     }
 }
 
-.t-home__category {
-    background-color: $neutral-10;
-    box-shadow: $box-shadow;
-}
+
+// Category Section
+// ---
+//
+// 1. Necessary for now because ListTile does not accept a className prop for
+//    customizing the Primary Action. @TODO: fix this in the SDK
 
 .t-home__category-section {
     a {
-        color: $neutral-60;
+        color: $neutral-60; // 1
     }
 
     &:not(:first-child) {
@@ -44,10 +52,8 @@
 }
 
 .t-home__category-text {
-    font-size: 20px;
-    line-height: 25px;
-
-    &.t-home__category-text-large {
+    &.t--text-large {
         font-size: 24px;
+        line-height: 25px;
     }
 }
