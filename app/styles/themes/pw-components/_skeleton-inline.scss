@@ -2,7 +2,9 @@
 // ===
 
 .pw-skeleton-inline {
-    &::after {
-        @include background-shimmer;
-    }
+    @include background-shimmer;
+
+    // &::after {
+    //     @include background-shimmer;
+    // }
 }
