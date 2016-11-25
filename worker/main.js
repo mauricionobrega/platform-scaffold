@@ -12,7 +12,7 @@ const manifest = {}
 const baseCacheName = `${PROJECT_SLUG}-v${version}`
 toolbox.options.cache.name = baseCacheName
 toolbox.options.cache.maxAgeSeconds = 86400
-toolbox.debug = DEBUG
+toolbox.options.debug = DEBUG
 
 // No cache maintenance options here on purpose,
 // this is a permanent cache
