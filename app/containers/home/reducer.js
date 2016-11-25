@@ -4,9 +4,11 @@ import {fromJS} from 'immutable'
 import {onPageReceived} from '../app/actions'
 import homeParser from './parsers/home'
 
+const CATEGORY_PLACEHOLDER_COUNT = 6
+
 const initialState = fromJS({
-    categories: ['', '', '', '', '', ''],
-    banners: false
+    categories: new Array(CATEGORY_PLACEHOLDER_COUNT).fill(''),
+    banners: []
 })
 
 export default createReducer({

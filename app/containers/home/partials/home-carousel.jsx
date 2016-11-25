@@ -14,7 +14,7 @@ const placeholder = <SkeletonBlock height={imageHeight} />
 const HomeCarousel = ({banners}) => {
     return (
         <div className="t-home__carousel">
-            {banners ?
+            {banners.length > 0 ?
                 <Carousel allowLooping={true} className="pw--hide-controls">
                     {banners.map(({src, href, alt}, key) => { // TODO: fix this when we put mobile assets on desktop
                         return (

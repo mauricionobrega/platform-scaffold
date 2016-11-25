@@ -8,11 +8,11 @@ import ListTile from 'progressive-web-sdk/dist/components/list-tile'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 
-const getImage = (text) => {
-    return text ? (
+const getImage = (alt) => {
+    return alt ? (
         <Image
-            src={getAssetUrl(`static/img/categories/${text.trim().toLowerCase()}@2x.png`)}
-            alt={text}
+            src={getAssetUrl(`static/img/categories/${alt.trim().toLowerCase()}@2x.png`)}
+            alt={alt}
             height="60px"
             width="60px"
         />
