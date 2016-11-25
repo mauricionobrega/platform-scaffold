@@ -127,6 +127,9 @@ const findPathForRoute = (routes, routeName) => {
     return `/${path}`
 }
 
+/**
+ * Uses React router to navigate between different pages. Takes care of browser history, etc.
+ */
 export const navigateToSection = (router, routes, sectionName) => {
     return () => {
         router.push(findPathForRoute(routes, sectionName))

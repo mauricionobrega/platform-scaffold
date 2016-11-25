@@ -23,10 +23,6 @@ class Login extends React.Component {
         }
     }
 
-    /**
-     * @param {string} sectionName - Name of the section, values: 'register', 'signin'
-     * @returns {number} - index to use
-     */
     indexForSection(sectionName) {
         return sectionName === Login.REGISTER_SECTION ? 1 : 0
     }
