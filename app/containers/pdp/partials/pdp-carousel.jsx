@@ -2,27 +2,54 @@ import React, {PropTypes} from 'react'
 
 import Carousel from 'progressive-web-sdk/dist/components/carousel'
 import CarouselItem from 'progressive-web-sdk/dist/components/carousel/carousel-item'
+import Ratio from 'progressive-web-sdk/dist/components/ratio'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import Image from 'progressive-web-sdk/dist/components/image'
 
 const PDPCarousel = ({items}) => {
-    return (items.length > 0 ?
-        <Carousel previousIcon="back" nextIcon="chevron-right" iconSize="medium" className="c-pdp-carousel c--frame c--side-controls">
-            {items.map((item, idx) => {
-                const alt = '' // no alt text available :(
-                return (
-                    <CarouselItem key={idx}>
-                        <Image
-                            alt={alt}
-                            src={item.img}
-                            hidePlaceholder={true}
-                            loadingIndicator={<SkeletonBlock height="100vw" />} />
-                    </CarouselItem>
-                )
-            })}
-        </Carousel>
-    :
-        <SkeletonBlock height="100vw" width="100%" />
+    const carouselProps = {
+        previousIcon: 'back',
+        nextIcon: 'chevron-right',
+        iconSize: 'medium',
+        className: 'pw--frame pw--side-controls t-pdp__carousel u-padding-md u-bg-color-neutral-20'
+    }
+
+    // So long as we have items, display the carousel as intended!
+    if (items.length) {
+        return (
+            <Carousel {...carouselProps}>
+                {items.map((item, idx) => {
+                    const imgProps = {
+                        className: 'u-block',
+                        alt: '', // no alt text available :(
+                        src: item.img,
+                        hidePlaceholder: true,
+                        ratio: {aspect: '1:1'},
+                        loadingIndicator: <SkeletonBlock height="100%" />
+                    }
+
+                    return (
+                        <CarouselItem key={idx}>
+                            <Image {...imgProps} alt={imgProps.alt} />
+                        </CarouselItem>
+                    )
+                })}
+            </Carousel>
+        )
+    }
+
+    // If there are NO ITEMS then display a placeholder skeleton instead
+    return (
+        <CarouselItem>
+            <Ratio aspect="1:1">
+                <SkeletonBlock
+                    height="100%"
+                    width="100%"
+                    className="u-padding-md"
+                />
+            </Ratio>
+            <SkeletonBlock height="30px" />
+        </CarouselItem>
     )
 }
 
@@ -33,7 +60,7 @@ PDPCarousel.defaultProps = {
 PDPCarousel.propTypes = {
     items: PropTypes.arrayOf(PropTypes.shape({
         position: PropTypes.string.isRequired,
-        img: PropTypes.string.isRequired
+        img: PropTypes.string.isRequired,
     }))
 }
 

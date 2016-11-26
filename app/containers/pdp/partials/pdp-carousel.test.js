@@ -13,7 +13,7 @@ test('renders without errors', () => {
     expect(wrapper.length).toBe(1)
 })
 
-const ROOT_CLASS = 'c-pdp-carousel'
+const ROOT_CLASS = 't-pdp__carousel'
 
 test('renders the component class correctly', () => {
     const carouselItems = [

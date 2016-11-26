@@ -42,26 +42,26 @@ class PDP extends React.Component {
         return (
             <div className="t-pdp">
                 <PDPHeading {...product} />
+
                 <PDPCarousel items={carouselItems} />
-                {contentsLoaded ?
-                    <div>
-                        <PDPDescription
-                            description={description} />
-                        <PDPAddToCart
-                            formInfo={formInfo}
-                            quantity={itemQuantity}
-                            setQuantity={setQuantity}
-                            onSubmit={addToCart} />
-                        <PDPItemAddedModal
-                            open={itemAddedModalOpen}
-                            onDismiss={closeItemAddedModal}
-                            product={product}
-                            quantity={quantityAdded} />
-                    </div>
-                :
-                    <div className="u-padding-md">
-                        <SkeletonText lines={5} width="100%" size="24px" lineClassName="u-margin-bottom" />
-                    </div>
+
+                <PDPDescription description={description} />
+
+                <PDPAddToCart
+                    formInfo={formInfo}
+                    quantity={itemQuantity}
+                    setQuantity={setQuantity}
+                    onSubmit={addToCart}
+                    disabled={!contentsLoaded}
+                />
+
+                {contentsLoaded &&
+                    <PDPItemAddedModal
+                        open={itemAddedModalOpen}
+                        onDismiss={closeItemAddedModal}
+                        product={product}
+                        quantity={quantityAdded}
+                    />
                 }
             </div>
         )
