@@ -22,6 +22,7 @@ const HomeCarousel = ({banners}) => {
                                 <Image
                                     src={getAssetUrl(`static/img/homepage_carousel/${key}.png`)}
                                     alt={alt}
+                                    className="u-block"
                                     hidePlaceholder={true}
                                     loadingIndicator={placeholder}
                                 />
