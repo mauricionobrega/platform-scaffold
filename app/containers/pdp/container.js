@@ -10,8 +10,6 @@ import PDPItemAddedModal from './partials/pdp-item-added-modal'
 import {stripEvent} from '../../utils/utils'
 import * as pdpActions from './actions'
 
-import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
-
 class PDP extends React.Component {
     shouldComponentUpdate(newProps) {
         return !Immutable.is(newProps.pdp, this.props.pdp)
