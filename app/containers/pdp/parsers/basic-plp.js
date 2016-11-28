@@ -16,7 +16,7 @@ export const basicPlpParser = ($, $html) => {
                 carouselItems: [
                     {
                         img: img.src,
-                        position: "0"
+                        position: '0'
                     }
                 ]
             }),
