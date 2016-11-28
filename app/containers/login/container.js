@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router'
-import {stripEvent} from '../../utils/utils'
 
 import SignInForm from './partials/signin'
 import RegisterForm from './partials/register'
@@ -36,7 +35,6 @@ class Login extends React.Component {
             title,
             signinSection,
             registerSection,
-            infoModalOpen,
             submitSignInForm,
             submitRegisterForm,
             openInfoModal,
@@ -46,6 +44,12 @@ class Login extends React.Component {
             router,
             routes
         } = this.props
+
+        const openSignInModal = () => openInfoModal(Login.SIGN_IN_SECTION)
+        const closeSignInModal = () => closeInfoModal(Login.SIGN_IN_SECTION)
+
+        const openRegisterModal = () => openInfoModal(Login.REGISTER_SECTION)
+        const closeRegisterModal = () => closeInfoModal(Login.REGISTER_SECTION)
 
         return (
             <div className="t-login">
@@ -76,7 +80,8 @@ class Login extends React.Component {
 
                         {signinSection.form.href ?
                             <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
-                                <SignInForm {...signinSection.form} submitForm={submitSignInForm} openModal={openInfoModal} closeModal={closeInfoModal} modalOpen={infoModalOpen} />
+                                <SignInForm {...signinSection.form} submitForm={submitSignInForm}
+                                    openModal={openSignInModal} closeModal={closeSignInModal} modalOpen={signinSection.infoModalOpen} />
                             </div>
                         :
                             <SkeletonBlock height="200vw" width="100%" />
@@ -100,7 +105,8 @@ class Login extends React.Component {
 
                         {registerSection.form.href ?
                             <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
-                                <RegisterForm {...registerSection.form} submitForm={submitRegisterForm} openModal={openInfoModal} closeModal={closeInfoModal} modalOpen={infoModalOpen} />
+                                <RegisterForm {...registerSection.form} submitForm={submitRegisterForm}
+                                    openModal={openRegisterModal} closeModal={closeRegisterModal} modalOpen={registerSection.infoModalOpen} />
                             </div>
                         :
                             <SkeletonBlock height="200vw" width="100%" />
@@ -122,13 +128,12 @@ const mapDispatchToProps = {
     submitSignInForm: actions.submitSignInForm,
     submitRegisterForm: actions.submitRegisterForm,
     navigateToSection: actions.navigateToSection,
-    openInfoModal: stripEvent(actions.openInfoModal),
-    closeInfoModal: stripEvent(actions.closeInfoModal)
+    openInfoModal: actions.openInfoModal,
+    closeInfoModal: actions.closeInfoModal
 }
 
 Login.propTypes = {
     closeInfoModal: PropTypes.func,
-    infoModalOpen: PropTypes.bool,
     navigateToSection: PropTypes.func,
     openInfoModal: PropTypes.func,
     registerSection: PropTypes.object,

@@ -35,7 +35,10 @@ test('appActions.onPageReceived does nothing when pageType !== Login and differe
 })
 
 test('appActions.onPageReceived sets loaded to true', () => {
-    const inputState = Map()
+    const inputState = Map({
+        signinSection: Map({}),
+        registerSection: Map({})
+    })
 
     const signinAction = appActions.onPageReceived($, $(), 'Login', null, null, 'signin')
     expect(reducer(inputState, signinAction).get('loaded')).toBe(true)
@@ -47,7 +50,9 @@ test('appActions.onPageReceived sets loaded to true', () => {
 test('appActions.onPageReceived causes the page to be parsed into the state', () => {
     const $html = $('<body><hr /></body')
     const action = appActions.onPageReceived($, $html, 'Login', null, null, 'signin')
-    const inputState = Map()
+    const inputState = Map({
+        signinSection: Map({})
+    })
 
     signinParser.mockClear()
     const parsedPage = {test: true, title: 'Customer Login'}
@@ -57,19 +62,19 @@ test('appActions.onPageReceived causes the page to be parsed into the state', ()
 
     expect(signinParser).toBeCalledWith($, $html)
     expect(result.get('signinSection').get('test')).toBe(true)
-    expect(is(result, Map({signinSection: Map(parsedPage), loaded: true}))).toBe(true)
+    expect(is(result, Map({signinSection: Map({...parsedPage, ...{infoModalOpen: false}}), loaded: true}))).toBe(true)
 })
 
 test('loginActions.openInfoModal opens the info modal', () => {
-    const action = loginActions.openInfoModal()
+    const action = loginActions.openInfoModal('signin')
     const inputState = Map()
 
-    expect(is(reducer(inputState, action), Map({infoModalOpen: true}))).toBe(true)
+    expect(is(reducer(inputState, action), Map({signinSection: Map({infoModalOpen: true})}))).toBe(true)
 })
 
 test('loginActions.closeInfoModal closes the info modal', () => {
-    const action = loginActions.closeInfoModal()
-    const inputState = Map({infoModalOpen: true})
+    const action = loginActions.closeInfoModal('signin')
+    const inputState = Map({signinSection: Map({infoModalOpen: true})})
 
-    expect(is(reducer(inputState, action), Map({infoModalOpen: false}))).toBe(true)
+    expect(is(reducer(inputState, action), Map({signinSection: Map({infoModalOpen: false})}))).toBe(true)
 })

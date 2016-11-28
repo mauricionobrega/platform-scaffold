@@ -136,5 +136,5 @@ export const navigateToSection = (router, routes, sectionName) => {
     }
 }
 
-export const openInfoModal = createAction('Close Info Sheet')
-export const closeInfoModal = createAction('Close Info Sheet')
+export const openInfoModal = createAction('Open Info Sheet', 'sectionName')
+export const closeInfoModal = createAction('Close Info Sheet', 'sectionName')

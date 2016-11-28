@@ -11,7 +11,7 @@ import registerParser from './parsers/register'
 
 const initialState = Immutable.Map({
     title: 'Customer Login',
-    signinSection: {
+    signinSection: Immutable.Map({
         href: '',
         heading: '',
         description: '',
@@ -22,8 +22,9 @@ const initialState = Immutable.Map({
             hiddenInputs: [],
             submitText: ''
         },
-    },
-    registerSection: {
+        infoModalOpen: false
+    }),
+    registerSection: Immutable.Map({
         href: '',
         heading: '',
         description: '',
@@ -37,9 +38,15 @@ const initialState = Immutable.Map({
                 fields: [],
             }]
         },
-    },
-    infoModalOpen: false
+        infoModalOpen: false
+    })
 })
+
+const formatSectionName = (sectionName) => `${sectionName}Section`
+
+const merge = (object1, object2) => {
+    return {...object1, ...object2}
+}
 
 export default createReducer({
     [onPageReceived]: (state, action) => {
@@ -47,13 +54,15 @@ export default createReducer({
         if (pageType === getComponentName(Login)) {
             let newState
 
+            const infoModalOpen = !!state.get(formatSectionName(routeName)).get('infoModalOpen')
+
             if (routeName === Login.SIGN_IN_SECTION) {
                 newState = {
-                    signinSection: signinParser($, $response)
+                    signinSection: merge(signinParser($, $response), {infoModalOpen})
                 }
             } else if (routeName === Login.REGISTER_SECTION) {
                 newState = {
-                    registerSection: registerParser($, $response)
+                    registerSection: merge(registerParser($, $response), {infoModalOpen})
                 }
             }
 
@@ -62,11 +71,11 @@ export default createReducer({
             return state
         }
     },
-    [openInfoModal]: (state) => {
-        return state.set('infoModalOpen', true)
+    [openInfoModal]: (state, action) => {
+        return state.updateIn([formatSectionName(action.sectionName), 'infoModalOpen'], () => true)
     },
-    [closeInfoModal]: (state) => {
-        return state.set('infoModalOpen', false)
+    [closeInfoModal]: (state, action) => {
+        return state.updateIn([formatSectionName(action.sectionName), 'infoModalOpen'], () => false)
     }
 
 }, initialState)
