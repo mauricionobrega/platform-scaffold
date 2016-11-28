@@ -15,6 +15,7 @@ const PDPCarousel = ({items}) => {
                         <Image
                             alt={alt}
                             src={item.img}
+                            className="u-block"
                             hidePlaceholder={true}
                             loadingIndicator={<SkeletonBlock height="100vw" />} />
                     </CarouselItem>
