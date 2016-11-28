@@ -1,4 +1,5 @@
-import {createAction, makeFormEncodedRequest, isEmail} from '../../utils/utils'
+import {createAction, makeFormEncodedRequest} from '../../utils/utils'
+import {isEmail} from 'validator'
 import {SubmissionError} from 'redux-form'
 
 const validateSignInForm = (formValues) => {
