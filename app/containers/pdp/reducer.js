@@ -13,18 +13,18 @@ import {basicPlpParser} from './parsers/basic-plp'
 import {onPageReceived, onRouteChanged} from '../app/actions'
 import {SELECTOR, PLACEHOLDER} from '../app/constants'
 
-export const initialState = Immutable.Map({
+export const initialState = Immutable.fromJS({
     isPlaceholder: true,
     contentsLoaded: true,
     itemQuantity: 1,
     itemAddedModalOpen: false,
     quantityAdded: 0,
-    product: Immutable.Map({
+    product: {
         title: '',
         price: '',
         description: '',
         carouselItems: []
-    })
+    }
 })
 
 const reducer = createReducer({

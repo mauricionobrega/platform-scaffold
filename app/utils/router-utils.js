@@ -38,18 +38,14 @@ export const getNextSelector = (state, currentURL) => { return state.has(current
 /**
  * Takes a slice of state and returns the key of the current route
  */
-export const getSelectorFromState = (state) => {
-    return state.get(SELECTOR)
-}
+export const getSelectorFromState = (state) => state.get(SELECTOR)
 
 /**
  * Takes a slice of state and returns the data mapped to the current route
  *
  * eg. plp > 'http://www.merlinspotions.com/potions.html' > {data}
  */
-export const getRoutedState = (state) => {
-    return state.get(getSelectorFromState(state))
-}
+export const getRoutedState = (state) => state.get(getSelectorFromState(state))
 
 export const baseInitialState = Immutable.Map({
     [SELECTOR]: PLACEHOLDER,

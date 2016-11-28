@@ -19,15 +19,17 @@ class PDP extends React.Component {
 
     render() {
         const {
-            setQuantity,
-            addToCart,
-            closeItemAddedModal,
             product,
             itemQuantity,
             quantityAdded,
             itemAddedModalOpen,
             isPlaceholder,
             contentsLoaded
+        } = this.props.routedState.toJS()
+        const {
+            setQuantity,
+            addToCart,
+            closeItemAddedModal
         } = this.props
 
         const {
@@ -73,23 +75,6 @@ PDP.propTypes = {
      */
     closeItemAddedModal: PropTypes.func.isRequired,
     /**
-     * Whether or not the page's contents have been received in entirety before
-     */
-    contentsLoaded: PropTypes.bool.isRequired,
-    /**
-     * Whether we are currently in a placeholder state, or have page content to
-     * display
-     */
-    isPlaceholder: PropTypes.bool.isRequired,
-    /**
-     * Whether or not the added-to-cart modal is open
-     */
-    itemAddedModalOpen: PropTypes.bool.isRequired,
-    /**
-     * Item quantity to add to cart
-     */
-    itemQuantity: PropTypes.number.isRequired,
-    /**
      * The Immutable.js state object, for use with shouldComponentUpdate
      */
     routedState: PropTypes.object.isRequired,
@@ -97,28 +82,11 @@ PDP.propTypes = {
      * Function to update the item quantity when user changes it
      */
     setQuantity: PropTypes.func.isRequired,
-    /**
-     * Content of the PDP page
-     */
-    product: PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        price: PropTypes.string,
-        carouselItems: PropTypes.array,
-        description: PropTypes.string
-    }),
-    /**
-     * Set with the quantity added after an add-to-cart action
-     */
-    quantityAdded: PropTypes.number
-
 }
 
 export const mapStateToProps = (state) => {
     const routedState = getRoutedState(state.pdp)
-    return {
-        routedState,
-        ...routedState.toJS()
-    }
+    return {routedState}
 }
 
 export const mapDispatchToProps = (dispatch) => {
