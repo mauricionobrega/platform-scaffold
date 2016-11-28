@@ -7,6 +7,7 @@ import PDPCarousel from './partials/pdp-carousel'
 import PDPDescription from './partials/pdp-description'
 import PDPAddToCart from './partials/pdp-add-to-cart'
 import PDPItemAddedModal from './partials/pdp-item-added-modal'
+import {stripEvent} from '../../utils/utils'
 import * as pdpActions from './actions'
 import {getRoutedState} from '../../utils/router-utils'
 
@@ -89,12 +90,10 @@ export const mapStateToProps = (state) => {
     return {routedState}
 }
 
-export const mapDispatchToProps = (dispatch) => {
-    return {
-        setQuantity: (quantity) => dispatch(pdpActions.setItemQuantity(quantity)),
-        addToCart: () => dispatch(pdpActions.submitCartForm()),
-        closeItemAddedModal: () => dispatch(pdpActions.closeItemAddedModal())
-    }
+const mapDispatchToProps = {
+    setQuantity: pdpActions.setItemQuantity,
+    addToCart: stripEvent(pdpActions.submitCartForm),
+    closeItemAddedModal: stripEvent(pdpActions.closeItemAddedModal)
 }
 
 export default connect(

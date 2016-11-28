@@ -79,7 +79,7 @@ Navigation.propTypes = {
 }
 
 
-export const mapStateToProps = (state) => {
+const mapStateToProps = (state) => {
     return {
         navigation: state.navigation,
     }
