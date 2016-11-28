@@ -8,6 +8,30 @@ import {openInfoModal, closeInfoModal} from './actions'
 import {onPageReceived} from '../app/actions'
 import parser from './parsers/login'
 
+const placeholderFields = [
+    {
+        label: 'Email',
+        name: 'login[username]',
+        type: 'email',
+        required: true,
+        tooltip: false,
+    },
+    {
+        label: 'Password',
+        name: 'login[password]',
+        type: 'password',
+        required: true,
+        tooltip: false,
+    },
+    {
+        label: 'Remember Me',
+        name: 'persistent_remember_me',
+        type: 'checkbox',
+        required: false,
+        tooltip: false,
+    },
+]
+
 const initialState = Immutable.Map({
     title: '',
     href: '',
@@ -15,7 +39,7 @@ const initialState = Immutable.Map({
     description: '',
     form: {
         href: '',
-        fields: [],
+        fields: placeholderFields,
         hiddenInputs: [],
         submitText: ''
     },

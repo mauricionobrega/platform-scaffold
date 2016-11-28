@@ -9,6 +9,75 @@ import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Link from 'progressive-web-sdk/dist/components/link'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
+const renderFields = (fields, forgotPassword, openModal, closeModal, modalOpen) => {
+    return fields.map(({label, name, type, required, tooltip, disabled}, idx) => {
+        const labelNode = (
+            <span>
+                {label} {required && <span>*</span>}
+
+                {type === 'password' && forgotPassword &&
+                    <Link className="u-float-end u-text-normal" href={forgotPassword.href}>
+                        {forgotPassword.title}
+                    </Link>
+                }
+            </span>
+        )
+
+        const headerContent = (
+            <div className="u-width-full u-bg-color-brand u-color-neutral-10 u-flexbox">
+                <h1 className="u-flex u-padding-md u-h4 u-text-uppercase">
+                    {label}
+                </h1>
+
+                <Button onClick={closeModal}>
+                    <Icon name="close" />
+                </Button>
+            </div>
+        )
+
+        return (
+            <FieldRow key={idx}>
+                {/*
+                    Actually ReduxFormField from 'redux-form' into
+                    which we pass the Progressive Web SDK Field component
+                */}
+                <Field name={name} label={labelNode} component={FieldComponent}>
+                    <input type={type} />
+                </Field>
+
+                {tooltip &&
+                    <div>
+                        <a href="#remember-me" onClick={openModal}>
+                            {tooltip.title}
+                        </a>
+
+                        <Sheet
+                            className="t-login__remember-me-modal"
+                            open={modalOpen}
+                            onDismiss={closeModal}
+                            effect="slide-bottom"
+                            headerContent={headerContent}
+                        >
+                            <div id="remember-me" className="u-padding-md">
+                                {tooltip.content}
+                            </div>
+
+                            <div className="t-login__remember-me-button">
+                                <Button
+                                    className="c-button c--secondary u-text-uppercase u-margin-top-lg u-width-full"
+                                    onClick={closeModal}
+                                >
+                                    Continue
+                                </Button>
+                            </div>
+                        </Sheet>
+                    </div>
+                }
+            </FieldRow>
+        )
+    })
+}
+
 const LoginForm = (props) => {
     const {
         // redux-form
@@ -20,83 +89,48 @@ const LoginForm = (props) => {
         submitText,
         forgotPassword,
         submitForm,
+        disabled,
+        // Handlers
         openModal,
         closeModal,
         modalOpen
     } = props
+
     return (
         <form
-            onSubmit={handleSubmit((values) => {
-                return new Promise((resolve, reject) => {
+            noValidate={true}
+            onSubmit={handleSubmit((values) =>
+                new Promise((resolve, reject) => {
                     submitForm(values, resolve, reject)
                 })
-            })}
-            noValidate={true}
+            )}
         >
-            {error && <div className="u-margin-bottom-md u-color-error">{error}</div>}
+            {error &&
+                <div className="u-margin-bottom-md u-color-error">
+                    {error}
+                </div>
+            }
+
             <FieldSet>
-                {fields.map(({label, name, type, required, tooltip}, idx) => {
-                    const labelNode = (
-                        <span>
-                            {label}
-                            {required && <span> *</span>}
-                            {type === 'password' && <Link className="u-float-end u-text-normal" href={forgotPassword.href}>{forgotPassword.title}</Link>}
-                        </span>
-                    )
-                    return (
-                        <FieldRow key={idx}>
-                            <Field // Actually ReduxFormField from 'redux-form'
-                                name={name}
-                                label={labelNode}
-                                component={FieldComponent} // Progressive Web SDK Field Component
-                            >
-                                <input type={type} />
-                            </Field>
+                {renderFields(fields, forgotPassword, openModal, closeModal, modalOpen)}
 
-                            {tooltip &&
-                                (<div>
-                                    <a href="#remember-me" onClick={openModal}>{tooltip.title}</a>
-
-                                    <Sheet
-                                        className="t-login__remember-me-modal"
-                                        open={modalOpen}
-                                        onDismiss={closeModal}
-                                        effect="slide-bottom"
-                                        headerContent={
-                                            <div className="u-width-full u-bg-color-brand u-color-neutral-10 u-flexbox">
-                                                <h1 className="u-flex u-padding-md u-h4 u-text-uppercase">
-                                                    {label}
-                                                </h1>
-
-                                                <Button onClick={closeModal}>
-                                                    <Icon name="close" />
-                                                </Button>
-                                            </div>
-                                        }
-                                    >
-                                        <div id="remember-me" className="u-padding-md">
-                                            {tooltip.content}
-                                        </div>
-
-                                        <div className="t-login__remember-me-button">
-                                            <Button className="c-button c--secondary u-text-uppercase u-margin-top-lg u-width-full" onClick={closeModal}>
-                                                Continue
-                                            </Button>
-                                        </div>
-                                    </Sheet>
-                                </div>)
-                            }
-                        </FieldRow>
-                    )
-                })}
+                <FieldRow>
+                    <Button
+                        className="c--primary u-width-full"
+                        type="submit"
+                        disabled={submitting || disabled}
+                    >
+                        <span className="u-text-uppercase">{submitText || 'Login'}</span>
+                    </Button>
+                </FieldRow>
             </FieldSet>
-            <button className="c-button c--primary u-width-full u-margin-top-lg u-text-uppercase" type="submit" disabled={submitting}>{submitText}</button>
         </form>
     )
 }
 
 LoginForm.propTypes = {
     closeModal: PropTypes.func,
+    disabled: PropTypes.bool,
     error: PropTypes.string,
     fields: PropTypes.array,
     forgotPassword: PropTypes.object,
