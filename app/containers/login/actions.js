@@ -63,6 +63,10 @@ const validateRegisterForm = (formValues) => {
         errors.password_confirmation = 'Passwords are not the same'
     }
 
+    if (password.length < 6) {
+        errors.password = 'Please enter 6 or more characters'
+    }
+
     return errors
 }
 
