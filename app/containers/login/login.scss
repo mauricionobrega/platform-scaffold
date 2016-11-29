@@ -8,6 +8,7 @@
     // wrapper element.
 }
 
+
 // Remember Me Modal
 // ---
 //
@@ -27,6 +28,7 @@
     padding: 12px;
 }
 
+
 // Tab Navigation
 // ---
 
@@ -36,6 +38,7 @@
 
 .t-login__navigation .pw-tabs__link {
     height: 48px;
+
     color: $neutral-70;
 }
 
@@ -47,3 +50,12 @@
     }
 }
 
+
+// Registration
+// ---
+
+.t-login__register-fieldset {
+    & + & {
+        margin-top: $unit*4;
+    }
+}

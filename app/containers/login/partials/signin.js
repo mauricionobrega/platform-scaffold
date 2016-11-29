@@ -31,6 +31,7 @@ const renderFields = (fields, forgotPassword, openModal, closeModal, modalOpen) 
 
                 <Button onClick={closeModal}>
                     <Icon name="close" />
+                    <span className="u-visually-hidden">Close</span>
                 </Button>
             </div>
         )
@@ -111,7 +112,7 @@ const SignInForm = (props) => {
                 </div>
             }
 
-            <FieldSet>
+            <FieldSet className="t-login__signin-fieldset">
                 {renderFields(fields, forgotPassword, openModal, closeModal, modalOpen)}
 
                 <FieldRow>

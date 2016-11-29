@@ -67,13 +67,15 @@ class Login extends React.Component {
                 <Tabs activeIndex={this.indexForSection(routeName)} className="t-login__navigation" onChange={(index) => navigateToSection(router, routes, this.sectionForIndex(index))}>
                     <TabsPanel title={Login.SECTION_NAMES[Login.SIGN_IN_SECTION]}>
                         <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
-                            {signinSection.heading ?
-                                <h3 className="u-margin-bottom u-color-brand u-text-font-family u-text-normal">
-                                    {signinSection.heading}
-                                </h3>
-                            :
-                                <SkeletonBlock height="24px" width="50%" className="u-margin-bottom" />
-                            }
+                            <div className="u-margin-bottom">
+                                {signinSection.heading ?
+                                    <h2 className="u-h3 u-color-brand u-text-font-family u-text-normal">
+                                        {signinSection.heading}
+                                    </h2>
+                                :
+                                    <SkeletonBlock height="24px" width="50%" className="u-margin-bottom" />
+                                }
+                            </div>
 
                             {signinSection.description ?
                                 <p>{signinSection.description}</p>
@@ -81,13 +83,13 @@ class Login extends React.Component {
                                 <SkeletonText lines={2} size="14px" width="100%" />
                             }
 
-                            {signinSection.requiredText ?
-                                <div className="u-margin-top">
-                                    {signinSection.requiredText}
-                                </div>
-                            :
-                                <SkeletonText lines={1} size="16px" width="33%" />
-                            }
+                            <div className="u-margin-top">
+                                {signinSection.requiredText ?
+                                    signinSection.requiredText
+                                :
+                                    <SkeletonText lines={1} size="14px" width="33%" />
+                                }
+                            </div>
                         </div>
 
                         <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
@@ -114,16 +116,16 @@ class Login extends React.Component {
                             {registerSection.description ?
                                 <p>{registerSection.description}</p>
                             :
-                                <SkeletonText lines={2} size="14px" width="100%" />
+                                <SkeletonText lines={3} size="14px" width="100%" />
                             }
 
-                            {registerSection.requiredText ?
-                                <div className="u-margin-top">
-                                    {registerSection.requiredText}
-                                </div>
-                            :
-                                <SkeletonText lines={1} size="16px" width="33%" />
-                            }
+                            <div className="u-margin-top">
+                                {registerSection.requiredText ?
+                                    registerSection.requiredText
+                                :
+                                    <SkeletonText lines={1} size="14px" width="33%" />
+                                }
+                            </div>
                         </div>
 
                         <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
