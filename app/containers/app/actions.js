@@ -23,21 +23,22 @@ export const onPageReceived = utils.createAction('On page received',
     '$response',
     'pageType',
     'url',
-    'currentURL'
+    'currentURL',
+    'routeName'
 )
 
 /**
  * Fetch the content for a 'global' page render. This should be driven
  * by react-router, ideally.
  */
-export const fetchPage = (url, pageType) => {
+export const fetchPage = (url, pageType, routeName) => {
     return (dispatch, getState) => {
         utils.makeRequest(url)
             .then(jqueryResponse)
             .then((res) => {
                 const [$, $response] = res
                 const currentURL = getState().app.get(CURRENT_URL)
-                dispatch(onPageReceived($, $response, pageType, url, currentURL))
+                dispatch(onPageReceived($, $response, pageType, url, currentURL, routeName))
             })
             .catch((error) => { console.info(error.message) })
     }
