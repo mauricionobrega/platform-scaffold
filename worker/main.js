@@ -3,9 +3,15 @@
 
 import toolbox from 'sw-toolbox'
 
+const cachebreaker = /b=([^&]+)/.exec(self.location.search)[1]
+const CAPTURING_URL = 'https://cdn.mobify.com/capturejs/capture-latest.min.js'
+
 // Configuration options
 const version = '0.1.0'
-const precacheUrls = []
+const precacheUrls = [
+    `https://localhost:8443/main.css?${cachebreaker}`,
+    `https://localhost:8443/main.js?${cachebreaker}`
+]
 const manifest = {}
 
 // Derived constants
@@ -16,16 +22,16 @@ toolbox.options.debug = DEBUG
 
 // No cache maintenance options here on purpose,
 // this is a permanent cache
-// NOTE: This should eventually have some sort of bundle identifier
-// so that we throw it away when the bundle changes
 const bundleCache = {
-    name: `${baseCacheName}-bundle`
+    name: `${baseCacheName}-bundle-${cachebreaker}`
 }
 
 const imageCache = {
     name: `${baseCacheName}-images`,
     maxEntries: 40
 }
+
+const cacheNames = [baseCacheName, bundleCache.name, imageCache.name]
 
 toolbox.precache(precacheUrls)
 
@@ -43,7 +49,6 @@ const jsonResponse = (data) => {
     )
 }
 
-
 // Lifecycle Handlers
 
 self.addEventListener('install', (e) => {
@@ -58,7 +63,7 @@ self.addEventListener('activate', (e) => {
         self.clients.claim()
             .then(() => caches.keys())
             .then((cacheKeys) => cacheKeys.filter(
-                (key) => !key.startsWith(baseCacheName) && !key.endsWith('$$$inactive$$$')))
+                (key) => cacheNames.indexOf(key) === -1 && !key.endsWith('$$$inactive$$$')))
             .then((keysToDelete) => keysToDelete.map((key) => caches.delete(key)))
             .then((promises) => Promise.all(promises))
     )
@@ -73,5 +78,7 @@ toolbox.router.get(/\.(?:png|gif|svg|jpe?g)$/, toolbox.fastest, {cache: imageCac
 
 toolbox.router.get(/cdn\.mobify\.com\/.*\?[a-f\d]+$/, toolbox.cacheFirst, {cache: bundleCache})
 toolbox.router.get(/localhost:8443.*\?[a-f\d]+$/, toolbox.cacheFirst, {cache: bundleCache})
+toolbox.router.get(new RegExp(`^${CAPTURING_URL}$`), toolbox.networkFirst, {cache: bundleCache})
+
 
 // toolbox.router.default = toolbox.networkFirst
