@@ -18,11 +18,11 @@ const PDPCarousel = ({items}) => {
     if (items.length) {
         return (
             <Carousel {...carouselProps}>
-                {items.map((item, idx) => {
+                {items.map(({img}, idx) => {
                     const imgProps = {
                         className: 'u-block',
                         alt: '', // no alt text available :(
-                        src: item.img,
+                        src: img,
                         hidePlaceholder: true,
                         ratio: {aspect: '1:1'},
                         loadingIndicator: <SkeletonBlock height="100%" />
