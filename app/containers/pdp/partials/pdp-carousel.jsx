@@ -30,7 +30,9 @@ const PDPCarousel = ({items}) => {
 
                     return (
                         <CarouselItem key={idx}>
-                            <Image {...imgProps} alt={imgProps.alt} />
+                            {/* eslint-disable jsx-a11y/img-has-alt */}
+                            <Image {...imgProps} />
+                            {/* eslint-enable jsx-a11y/img-has-alt */}
                         </CarouselItem>
                     )
                 })}
