@@ -23,7 +23,9 @@ const Login = ({
     return (
         <div className="t-login">
             {title ?
-                <h1 className="u-text-uppercase u-text-normal u-padding-md u-bg-color-neutral-20">{title}</h1>
+                <h1 className="u-text-uppercase u-text-normal u-padding-md u-bg-color-neutral-20">
+                    {title}
+                </h1>
             :
                 <div className="u-padding-md">
                     <SkeletonBlock height="32px" width="50%" />
@@ -32,7 +34,9 @@ const Login = ({
 
             <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
                 {heading ?
-                    <h3 className="u-margin-bottom u-color-brand u-text-font-family u-text-normal">{heading}</h3>
+                    <h3 className="u-margin-bottom u-color-brand u-text-font-family u-text-normal">
+                        {heading}
+                    </h3>
                 :
                     <SkeletonBlock height="24px" width="50%" className="u-margin-bottom" />
                 }
@@ -40,14 +44,14 @@ const Login = ({
                 {description ?
                     <p>{description}</p>
                 :
-                    <SkeletonText lines={2} width="100%" />
+                    <SkeletonText lines={2} size="16px" width="100%" />
                 }
 
                 <div className="u-margin-top">
                     {requiredText ?
                         requiredText
                     :
-                        <SkeletonText lines={1} width="33%" />
+                        <SkeletonText lines={1} size="16px" width="33%" />
                     }
                 </div>
             </div>
