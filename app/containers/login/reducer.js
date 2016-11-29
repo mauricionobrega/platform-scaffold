@@ -6,7 +6,8 @@ import Login from './container'
 import {openInfoModal, closeInfoModal} from './actions'
 
 import {onPageReceived} from '../app/actions'
-import parser from './parsers/login'
+import signinParser from './parsers/signin'
+import registerParser from './parsers/register'
 
 const placeholderFields = [
     {
@@ -33,35 +34,72 @@ const placeholderFields = [
 ]
 
 const initialState = Immutable.Map({
-    title: '',
-    href: '',
-    heading: '',
-    description: '',
-    form: {
+    title: 'Customer Login',
+    signinSection: Immutable.Map({
         href: '',
-        fields: placeholderFields,
-        hiddenInputs: [],
-        submitText: ''
-    },
-    infoModalOpen: false
+        heading: '',
+        description: '',
+        requiredText: '',
+        form: {
+            href: '',
+            fields: placeholderFields,
+            hiddenInputs: [],
+            submitText: ''
+        },
+        infoModalOpen: false
+    }),
+    registerSection: Immutable.Map({
+        href: '',
+        heading: '',
+        description: '',
+        requiredText: '',
+        form: {
+            href: '',
+            hiddenInputs: [],
+            submitText: '',
+            sections: [{
+                heading: '',
+                fields: [],
+            }]
+        },
+        infoModalOpen: false
+    })
 })
+
+const formatSectionName = (sectionName) => `${sectionName}Section`
+
+const merge = (object1, object2) => {
+    return {...object1, ...object2}
+}
 
 export default createReducer({
     [onPageReceived]: (state, action) => {
-        const {$, $response, pageType} = action
+        const {$, $response, pageType, routeName} = action
         if (pageType === getComponentName(Login)) {
-            return state.merge(Immutable.fromJS({
-                ...parser($, $response)
-            })).set('loaded', true)
+            let newState
+
+            const infoModalOpen = !!state.get(formatSectionName(routeName)).get('infoModalOpen')
+
+            if (routeName === Login.SIGN_IN_SECTION) {
+                newState = {
+                    signinSection: merge(signinParser($, $response), {infoModalOpen})
+                }
+            } else if (routeName === Login.REGISTER_SECTION) {
+                newState = {
+                    registerSection: merge(registerParser($, $response), {infoModalOpen})
+                }
+            }
+
+            return state.merge(Immutable.fromJS(newState)).set('loaded', true)
         } else {
             return state
         }
     },
-    [openInfoModal]: (state) => {
-        return state.set('infoModalOpen', true)
+    [openInfoModal]: (state, action) => {
+        return state.updateIn([formatSectionName(action.sectionName), 'infoModalOpen'], () => true)
     },
-    [closeInfoModal]: (state) => {
-        return state.set('infoModalOpen', false)
+    [closeInfoModal]: (state, action) => {
+        return state.updateIn([formatSectionName(action.sectionName), 'infoModalOpen'], () => false)
     }
 
 }, initialState)

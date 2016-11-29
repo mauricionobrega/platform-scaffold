@@ -78,7 +78,7 @@ const renderFields = (fields, forgotPassword, openModal, closeModal, modalOpen) 
     })
 }
 
-const LoginForm = (props) => {
+const SignInForm = (props) => {
     const {
         // redux-form
         handleSubmit,
@@ -128,7 +128,7 @@ const LoginForm = (props) => {
     )
 }
 
-LoginForm.propTypes = {
+SignInForm.propTypes = {
     closeModal: PropTypes.func,
     disabled: PropTypes.bool,
     error: PropTypes.string,
@@ -145,8 +145,8 @@ LoginForm.propTypes = {
 }
 
 
-const ReduxLoginForm = reduxForm({
-    form: 'login-form'
-})(LoginForm)
+const ReduxSignInForm = reduxForm({
+    form: 'signin-form'
+})(SignInForm)
 
-export default ReduxLoginForm
+export default ReduxSignInForm
