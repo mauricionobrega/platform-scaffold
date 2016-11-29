@@ -54,15 +54,17 @@ class Login extends React.Component {
 
         return (
             <div className="t-login">
-                {title ?
-                    <h1 className="u-text-uppercase u-text-normal u-padding-md u-bg-color-neutral-20">
-                        {title}
-                    </h1>
-                :
-                    <div className="u-padding-md">
-                        <SkeletonBlock height="32px" width="50%" />
-                    </div>
-                }
+                <div className="u-bg-color-neutral-20 u-padding-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
+                    {title ?
+                        <h1 className="u-text-uppercase u-text-normal">
+                            {title}
+                        </h1>
+                    :
+                        <div className="u-padding-md">
+                            <SkeletonBlock height="32px" width="50%" />
+                        </div>
+                    }
+                </div>
 
                 <Tabs activeIndex={this.indexForSection(routeName)} className="t-login__navigation" onChange={(index) => navigateToSection(router, routes, this.sectionForIndex(index))}>
                     <TabsPanel title={Login.SECTION_NAMES[Login.SIGN_IN_SECTION]}>
