@@ -63,7 +63,7 @@ const renderFields = (fields, forgotPassword, openModal, closeModal, modalOpen) 
                                 {tooltip.content}
                             </div>
 
-                            <div className="t-login__remember-me-button">
+                            <div className="t-login__remember-me-button u-padding-md">
                                 <Button
                                     className="c-button c--secondary u-text-uppercase u-margin-top-lg u-width-full"
                                     onClick={closeModal}
