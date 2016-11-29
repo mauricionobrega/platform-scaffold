@@ -6,6 +6,7 @@ import SignInForm from './partials/signin'
 import RegisterForm from './partials/register'
 
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
+import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import {Tabs, TabsPanel} from 'progressive-web-sdk/dist/components/tabs'
 
 import * as actions from './actions'
@@ -53,64 +54,91 @@ class Login extends React.Component {
 
         return (
             <div className="t-login">
-                {title ?
-                    <h1 className="u-text-uppercase u-text-normal u-padding-md u-bg-color-neutral-20">{title}</h1>
-                :
-                    <div className="u-padding-md">
-                        <SkeletonBlock height="28px" width="50%" />
-                    </div>
-                }
+                <div className="u-bg-color-neutral-20 u-padding-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
+                    {title ?
+                        <h1 className="u-text-uppercase u-text-normal">
+                            {title}
+                        </h1>
+                    :
+                        <div className="u-padding-md">
+                            <SkeletonBlock height="32px" width="50%" />
+                        </div>
+                    }
+                </div>
 
                 <Tabs activeIndex={this.indexForSection(routeName)} className="t-login__navigation" onChange={(index) => navigateToSection(router, routes, this.sectionForIndex(index))}>
                     <TabsPanel title={Login.SECTION_NAMES[Login.SIGN_IN_SECTION]}>
                         <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
-                            {signinSection.heading ?
-                                <h3 className="u-margin-bottom u-color-brand u-text-font-family u-text-normal">{signinSection.heading}</h3>
-                            :
-                                <SkeletonBlock height="18px" width="50%" className="u-margin-bottom" />
-                            }
+                            <div className="u-margin-bottom">
+                                {signinSection.heading ?
+                                    <h2 className="u-h3 u-color-brand u-text-font-family u-text-normal">
+                                        {signinSection.heading}
+                                    </h2>
+                                :
+                                    <SkeletonBlock height="24px" width="50%" className="u-margin-bottom" />
+                                }
+                            </div>
 
                             {signinSection.description ?
                                 <p>{signinSection.description}</p>
                             :
-                                <SkeletonBlock height="14px" width="100%" />
+                                <SkeletonText lines={2} size="14px" width="100%" />
                             }
-                            <div className="u-margin-top">{signinSection.requiredText}</div>
+
+                            <div className="u-margin-top">
+                                {signinSection.requiredText ?
+                                    signinSection.requiredText
+                                :
+                                    <SkeletonText lines={1} size="14px" width="33%" />
+                                }
+                            </div>
                         </div>
 
-                        {signinSection.form.href ?
-                            <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
-                                <SignInForm {...signinSection.form} submitForm={submitSignInForm}
-                                    openModal={openSignInModal} closeModal={closeSignInModal} modalOpen={signinSection.infoModalOpen} />
-                            </div>
-                        :
-                            <SkeletonBlock height="200vw" width="100%" />
-                        }
+                        <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
+                            <SignInForm {...signinSection.form}
+                                disabled={!signinSection.form.href}
+                                submitForm={submitSignInForm}
+                                openModal={openSignInModal}
+                                closeModal={closeSignInModal}
+                                modalOpen={signinSection.infoModalOpen}
+                            />
+                        </div>
                     </TabsPanel>
+
                     <TabsPanel title={Login.SECTION_NAMES[Login.REGISTER_SECTION]}>
                         <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
                             {registerSection.heading ?
-                                <h3 className="u-margin-bottom u-color-brand u-text-font-family u-text-normal">{registerSection.heading}</h3>
+                                <h3 className="u-margin-bottom u-color-brand u-text-font-family u-text-normal">
+                                    {registerSection.heading}
+                                </h3>
                             :
-                                <SkeletonBlock height="18px" width="50%" className="u-margin-bottom" />
+                                <SkeletonBlock height="24px" width="50%" className="u-margin-bottom" />
                             }
 
                             {registerSection.description ?
                                 <p>{registerSection.description}</p>
                             :
-                                <SkeletonBlock height="14px" width="100%" />
+                                <SkeletonText lines={3} size="14px" width="100%" />
                             }
-                            <div className="u-margin-top">{registerSection.requiredText}</div>
+
+                            <div className="u-margin-top">
+                                {registerSection.requiredText ?
+                                    registerSection.requiredText
+                                :
+                                    <SkeletonText lines={1} size="14px" width="33%" />
+                                }
+                            </div>
                         </div>
 
-                        {registerSection.form.href ?
-                            <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
-                                <RegisterForm {...registerSection.form} submitForm={submitRegisterForm}
-                                    openModal={openRegisterModal} closeModal={closeRegisterModal} modalOpen={registerSection.infoModalOpen} />
-                            </div>
-                        :
-                            <SkeletonBlock height="200vw" width="100%" />
-                        }
+                        <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
+                            <RegisterForm {...registerSection.form}
+                                disabled={!registerSection.form.href}
+                                submitForm={submitRegisterForm}
+                                openModal={openRegisterModal}
+                                closeModal={closeRegisterModal}
+                                modalOpen={registerSection.infoModalOpen}
+                            />
+                        </div>
                     </TabsPanel>
                 </Tabs>
             </div>
