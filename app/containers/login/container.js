@@ -44,14 +44,14 @@ const Login = ({
                 {description ?
                     <p>{description}</p>
                 :
-                    <SkeletonText lines={2} size="16px" width="100%" />
+                    <SkeletonText lines={2} size="14px" width="100%" />
                 }
 
                 <div className="u-margin-top">
                     {requiredText ?
                         requiredText
                     :
-                        <SkeletonText lines={1} size="16px" width="33%" />
+                        <SkeletonText lines={1} size="14px" width="33%" />
                     }
                 </div>
             </div>
