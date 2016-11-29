@@ -33,7 +33,7 @@
 // ---
 
 .t-login__register-fieldset {
-    & + & {
+    &:not(:first-of-type) {
         margin-top: $unit*4;
     }
 }
