@@ -4,6 +4,7 @@ import {triggerMobifyPageView} from 'progressive-web-sdk/dist/analytics'
 import {Provider} from 'react-redux'
 import * as appActions from './containers/app/actions'
 import {getComponentName} from './utils/utils'
+import blacklist from './config/route-blacklist'
 
 // Containers
 import App from './containers/app/container'
@@ -54,7 +55,7 @@ const AppProvider = ({store}) => {
 
     return (
         <Provider store={store}>
-            <Router>
+            <Router blacklist={blacklist.routes}>
                 <Route path="/" component={App} onEnter={onEnter} onChange={onChange}>
                     <IndexRoute component={Home} routeName="home" />
                     <Route component={Login} path="customer/account/login/" routeName="signin" />

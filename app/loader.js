@@ -1,12 +1,22 @@
 import {getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
 import cacheHashManifest from '../tmp/loader-cache-hash-manifest.json'
+import blacklistedRoutes from './config/route-blacklist'
 
 window.Progressive = {}
 
 import ReactRegexes from './loader-routes'
 
+const isBlacklistedRoute = () => {
+    return blacklistedRoutes.routes.some((route) => {
+        const regex = new RegExp(route)
+        return regex.test(window.location.pathname)
+    })
+}
 const isReactRoute = () => {
+    if (isBlacklistedRoute()) {
+        return false
+    }
     return ReactRegexes.some((regex) => regex.test(window.location.pathname))
 }
 
