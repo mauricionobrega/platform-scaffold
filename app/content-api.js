@@ -1,7 +1,39 @@
 import ChildFrame from 'progressive-web-sdk/dist/iframe/child'
+let $
 
-const frame = new ChildFrame({debug: true})
+const waitForJQuery = new Promise((resolve) => {
+    let timeout
+    const check = () => {
+        clearTimeout(timeout)
+        if (window.jQuery) {
+            window.require(['jquery'], (jQuery) => {
+                $ = jQuery
+                resolve()
+            })
+        } else {
+            timeout = setTimeout(check, 50)
+        }
+    }
 
-frame.on('child:navigate', ({url}) => {
-    window.location.href = url
+    check()
 })
+
+const frame = new ChildFrame({
+    debug: true,
+    willFireReady: true,
+    readyCheck: waitForJQuery
+})
+
+frame
+    .registerMethod('getText', (selector) => $(selector).text())
+    .registerMethod('clickTest', (selector) => new Promise((resolve) => {
+        // @TODO: Determine if Magento lets us know when UI is ready
+        setTimeout(() => {
+            $(selector).click()
+            // Animation delay
+            setTimeout(() => {
+                resolve($('html').hasClass('nav-open'))
+            }, 200)
+        }, 5000)
+    }))
+

@@ -16,9 +16,20 @@ export const onRouteChanged = (currentURL, pageType) => {
         dispatch(routeChanged(currentURL, pageType))
 
         // const frameBridge = new FrameBridge()
-        new FrameBridge({debug: true}).trigger('child:navigate', {
-            url: currentURL
-        })
+        const frame = new FrameBridge({debug: true})
+
+        const callback = ({data, eventName}) => {
+            console.log('data:', data, 'eventName:', eventName)
+        }
+
+        frame
+            // .navigate(currentURL)
+            .callMethod('getText', '.title.main-banner-action', 'text')
+            .then(callback)
+            .then(() => frame.callMethod('clickTest', '.nav-toggle'))
+            .then(({data}) => {
+                console.log('html has the class .nav-open:', data)
+            })
     }
 }
 
