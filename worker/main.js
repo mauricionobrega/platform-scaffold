@@ -77,7 +77,7 @@ toolbox.router.get('/manifest.json', () => {
 toolbox.router.get(/\.(?:png|gif|svg|jpe?g)$/, toolbox.fastest, {cache: imageCache})
 
 toolbox.router.get(/cdn\.mobify\.com\/.*\?[a-f\d]+$/, toolbox.cacheFirst, {cache: bundleCache})
-toolbox.router.get(/localhost:8443.*\?[a-f\d]+$/, toolbox.cacheFirst, {cache: bundleCache})
+toolbox.router.get(/localhost:8443.*\?[a-f\d]+$/, toolbox.networkFirst, {cache: bundleCache})
 toolbox.router.get(new RegExp(`^${CAPTURING_URL}$`), toolbox.networkFirst, {cache: bundleCache})
 
 
