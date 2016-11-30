@@ -1,5 +1,6 @@
 {
     "routes": [
-        "/eye-of-newt.html"
+        "^/(eye-of-newt|unicorn-blood).*$",
+        "beginners-guide-to-transfiguration.html"
     ]
 }
