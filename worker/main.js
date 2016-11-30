@@ -6,22 +6,21 @@ import toolbox from 'sw-toolbox'
 const cachebreaker = /b=([^&]+)/.exec(self.location.search)[1]
 const CAPTURING_URL = 'https://cdn.mobify.com/capturejs/capture-latest.min.js'
 
-// Configuration options
 const version = '0.1.0'
+// For offline mode this needs to store the main.js, main.css, loader,
+// and capturing in the bundle cache. For now we can't due to CORS limitations
 const precacheUrls = [
-    `https://localhost:8443/main.css?${cachebreaker}`,
-    `https://localhost:8443/main.js?${cachebreaker}`
+    // `https://localhost:8443/main.css?${cachebreaker}`,
+    // `https://localhost:8443/main.js?${cachebreaker}`
 ]
 const manifest = {}
 
-// Derived constants
 const baseCacheName = `${PROJECT_SLUG}-v${version}`
 toolbox.options.cache.name = baseCacheName
 toolbox.options.cache.maxAgeSeconds = 86400
 toolbox.options.debug = DEBUG
 
-// No cache maintenance options here on purpose,
-// this is a permanent cache
+// No cache maintenance options here on purpose, this is a permanent cache
 const bundleCache = {
     name: `${baseCacheName}-bundle-${cachebreaker}`
 }
@@ -79,6 +78,7 @@ toolbox.router.get(/\.(?:png|gif|svg|jpe?g)$/, toolbox.fastest, {cache: imageCac
 toolbox.router.get(/cdn\.mobify\.com\/.*\?[a-f\d]+$/, toolbox.cacheFirst, {cache: bundleCache})
 toolbox.router.get(/localhost:8443.*\?[a-f\d]+$/, toolbox.networkFirst, {cache: bundleCache})
 toolbox.router.get(new RegExp(`^${CAPTURING_URL}$`), toolbox.networkFirst, {cache: bundleCache})
+toolbox.router.get(/cdn\.mobify\.com\/.*loader\.js$/, toolbox.networkFirst, {cache: bundleCache})
 
 
-// toolbox.router.default = toolbox.networkFirst
+toolbox.router.default = toolbox.networkFirst
