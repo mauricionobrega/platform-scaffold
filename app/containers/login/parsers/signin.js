@@ -41,7 +41,7 @@ const parseForm = ($form) => {
     }
 }
 
-const loginParser = ($, $html) => {
+const signinParser = ($, $html) => {
     return {
         title: $html.find('.page-title').text().trim(),
         heading: $html.find('#block-customer-login-heading').text().trim(),
@@ -52,4 +52,4 @@ const loginParser = ($, $html) => {
     }
 }
 
-export default loginParser
+export default signinParser

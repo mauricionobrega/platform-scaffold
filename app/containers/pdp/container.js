@@ -7,9 +7,8 @@ import PDPCarousel from './partials/pdp-carousel'
 import PDPDescription from './partials/pdp-description'
 import PDPAddToCart from './partials/pdp-add-to-cart'
 import PDPItemAddedModal from './partials/pdp-item-added-modal'
+import {stripEvent} from '../../utils/utils'
 import * as pdpActions from './actions'
-
-import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 
 class PDP extends React.Component {
     shouldComponentUpdate(newProps) {
@@ -41,26 +40,26 @@ class PDP extends React.Component {
         return (
             <div className="t-pdp">
                 <PDPHeading {...product} />
+
                 <PDPCarousel items={carouselItems} />
-                {contentsLoaded ?
-                    <div>
-                        <PDPDescription
-                            description={description} />
-                        <PDPAddToCart
-                            formInfo={formInfo}
-                            quantity={itemQuantity}
-                            setQuantity={setQuantity}
-                            onSubmit={addToCart} />
-                        <PDPItemAddedModal
-                            open={itemAddedModalOpen}
-                            onDismiss={closeItemAddedModal}
-                            product={product}
-                            quantity={quantityAdded} />
-                    </div>
-                :
-                    <div className="u-padding-md">
-                        <SkeletonText lines={5} width="100%" size="24px" lineClassName="u-margin-bottom" />
-                    </div>
+
+                <PDPDescription description={description} />
+
+                <PDPAddToCart
+                    formInfo={formInfo}
+                    quantity={itemQuantity}
+                    setQuantity={setQuantity}
+                    onSubmit={addToCart}
+                    disabled={!contentsLoaded}
+                />
+
+                {contentsLoaded &&
+                    <PDPItemAddedModal
+                        open={itemAddedModalOpen}
+                        onDismiss={closeItemAddedModal}
+                        product={product}
+                        quantity={quantityAdded}
+                    />
                 }
             </div>
         )
@@ -75,14 +74,12 @@ PDP.propTypes = {
 }
 
 
-export const mapStateToProps = ({pdp}) => ({pdp})
+const mapStateToProps = ({pdp}) => ({pdp})
 
-export const mapDispatchToProps = (dispatch) => {
-    return {
-        setQuantity: (quantity) => dispatch(pdpActions.setItemQuantity(quantity)),
-        addToCart: () => dispatch(pdpActions.submitCartForm()),
-        closeItemAddedModal: () => dispatch(pdpActions.closeItemAddedModal())
-    }
+const mapDispatchToProps = {
+    setQuantity: pdpActions.setItemQuantity,
+    addToCart: stripEvent(pdpActions.submitCartForm),
+    closeItemAddedModal: stripEvent(pdpActions.closeItemAddedModal)
 }
 
 export default connect(

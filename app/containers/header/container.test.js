@@ -1,5 +1,5 @@
 import {generateCartCounterBadge} from './container'
-import Badge from '../../components/badge'
+import Badge from 'progressive-web-sdk/dist/components/badge'
 
 describe('The cart badge', () => {
 

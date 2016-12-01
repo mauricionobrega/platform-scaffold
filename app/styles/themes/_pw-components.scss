@@ -16,6 +16,13 @@
 @import 'pw-components/accordion';
 
 
+// Badge
+// ---
+
+@import 'node_modules/progressive-web-sdk/dist/components/badge/base';
+@import 'pw-components/badge';
+
+
 // Breadcrumbs
 // ---
 
@@ -197,6 +204,13 @@
 // @import 'pw-components/rating';
 
 
+// Ratio
+// ---
+
+@import 'node_modules/progressive-web-sdk/dist/components/ratio/base';
+// @import 'pw-components/ratio';
+
+
 // Select
 // ---
 
@@ -222,14 +236,21 @@
 // ---
 
 @import 'node_modules/progressive-web-sdk/dist/components/skeleton-inline/base';
-// @import 'pw-components/skeleton-inline';
+@import 'pw-components/skeleton-inline';
 
 
 // Skeleton Text
 // ---
 
 @import 'node_modules/progressive-web-sdk/dist/components/skeleton-text/base';
-// @import 'pw-components/skeleton-text';
+@import 'pw-components/skeleton-text';
+
+
+// Skip Links
+// ---
+
+@import 'node_modules/progressive-web-sdk/dist/components/skip-links/base';
+// @import 'pw-components/skip-links';
 
 
 // Stepper
@@ -243,4 +264,4 @@
 // ---
 
 @import 'node_modules/progressive-web-sdk/dist/components/tabs/base';
-// @import 'pw-components/tabs';
+@import 'pw-components/tabs';

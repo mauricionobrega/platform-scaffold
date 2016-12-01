@@ -1,0 +1,18 @@
+// Example Animation
+// ===
+//
+// Animation styles can be added here
+
+
+// Background Shimmer
+// ---
+
+@keyframes background-shimmer {
+    0% {
+        transform: translateX(-5000%);
+    }
+
+    to {
+        transform: translateX(5000%);
+    }
+}
