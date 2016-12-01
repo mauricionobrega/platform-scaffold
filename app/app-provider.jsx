@@ -3,7 +3,6 @@ import {Router, Route, IndexRoute} from 'progressive-web-sdk/dist/routing'
 import {triggerMobifyPageView} from 'progressive-web-sdk/dist/analytics'
 import {Provider} from 'react-redux'
 import * as appActions from './containers/app/actions'
-import {getComponentName} from './utils/utils'
 
 // Containers
 import App from './containers/app/container'
@@ -28,7 +27,7 @@ const AppProvider = ({store}) => {
         ].join('')
     }
 
-    const getPageType = (routerState) => getComponentName(routerState.routes[1].component)
+    const getPageType = (routerState) => routerState.routes[1].routeType
 
     const getRouteName = (routerState) => routerState.routes[1].routeName
 
@@ -56,15 +55,15 @@ const AppProvider = ({store}) => {
         <Provider store={store}>
             <Router>
                 <Route path="/" component={App} onEnter={onEnter} onChange={onChange}>
-                    <IndexRoute component={Home} routeName="home" />
-                    <Route component={Login} path="customer/account/login/" routeName="signin" />
-                    <Route component={Login} path="customer/account/create/" routeName="register" />
-                    <Route component={PLP} path="potions.html" routeName="productListPage" />
-                    <Route component={PLP} path="books.html" routeName="productListPage" />
-                    <Route component={PLP} path="ingredients.html" routeName="productListPage" />
-                    <Route component={PLP} path="supplies.html" routeName="productListPage" />
-                    <Route component={PLP} path="new-arrivals.html" routeName="productListPage" />
-                    <Route component={PDP} path="*.html" routeName="productDetailsPage" />
+                    <IndexRoute component={Home} routeName="home" routeType="Home" />
+                    <Route component={Login} path="customer/account/login/" routeName="login" routeType="Login" />
+                    <Route component={Login} path="customer/account/create/" routeName="register" routeType="Login" />
+                    <Route component={PLP} path="potions.html" routeName="productListPage" routeType="PLP" />
+                    <Route component={PLP} path="books.html" routeName="productListPage" routeType="PLP" />
+                    <Route component={PLP} path="ingredients.html" routeName="productListPage" routeType="PLP" />
+                    <Route component={PLP} path="supplies.html" routeName="productListPage" routeType="PLP" />
+                    <Route component={PLP} path="new-arrivals.html" routeName="productListPage" routeType="PLP" />
+                    <Route component={PDP} path="*.html" routeName="productDetailsPage" routeType="PDP" />
                 </Route>
             </Router>
         </Provider>

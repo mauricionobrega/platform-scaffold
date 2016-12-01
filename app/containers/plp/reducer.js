@@ -11,7 +11,7 @@ import {SELECTOR, PLACEHOLDER} from './constants'
  * To determine if we should modify redux state, we compare the component name of
  * the selected route (and thus, the page we received) to our component: `PLP`
  */
-const isPageType = (pageType) => pageType === getComponentName(PLP)
+const isPageType = (pageType) => pageType === 'PLP'
 
 const getSelector = (state, currentURL) => { return state.has(currentURL) ? currentURL : PLACEHOLDER }
 
