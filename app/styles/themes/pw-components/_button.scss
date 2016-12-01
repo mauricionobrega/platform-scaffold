@@ -12,6 +12,8 @@
     font-size: $font-size + 1; // 1
     letter-spacing: 1px;
 
+    transition: background 0.5s ease-in;
+
     -webkit-appearance: none;
 
     &:active,
@@ -81,9 +83,9 @@
     }
 
     &[disabled] {
-        border-color: $neutral-40;
+        border-color: $neutral-30;
 
-        color: $neutral-50;
+        color: $neutral-40;
     }
 
     .c-button__inner {
@@ -94,9 +96,9 @@
 .c-button.c--primary,
 .c-button.c--secondary {
     &[disabled] {
-        background-color: $neutral-40;
+        background-color: $neutral-30;
 
-        color: $neutral-50;
+        color: $neutral-40;
     }
 }
 
