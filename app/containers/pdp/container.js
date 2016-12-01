@@ -85,10 +85,7 @@ PDP.propTypes = {
     setQuantity: PropTypes.func.isRequired,
 }
 
-export const mapStateToProps = (state) => {
-    const routedState = getRoutedState(state.pdp)
-    return {routedState}
-}
+export const mapStateToProps = ({pdp}) => ({routedState: getRoutedState(pdp)})
 
 const mapDispatchToProps = {
     setQuantity: pdpActions.setItemQuantity,
