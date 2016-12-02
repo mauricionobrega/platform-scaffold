@@ -1,0 +1,39 @@
+// Grid Test
+// ===
+
+.c-grid {
+    overflow: hidden; // 1
+}
+
+
+// Small Grids (such as Mobile)
+// ---
+
+@include susy-breakpoint($mobile-breakpoint, $mobile-layout) {
+    .c-grid__inner {
+        margin-right: -($mobile-gutters / 2);
+        margin-left: -($mobile-gutters / 2);
+    }
+}
+
+
+// Medium Breakpoints (such as Tablet)
+// ---
+
+@include susy-breakpoint($tablet-breakpoint, $tablet-layout) {
+    .c-grid__inner {
+        margin-right: -($tablet-gutters / 2);
+        margin-left: -($tablet-gutters / 2);
+    }
+}
+
+
+// Large Breakpoints (such as Desktop)
+// ---
+
+@include susy-breakpoint($desktop-breakpoint, $desktop-layout) {
+    .c-grid__inner {
+        margin-right: -($desktop-gutters / 2);
+        margin-left: -($desktop-gutters / 2);
+    }
+}
