@@ -1,4 +1,4 @@
-import {getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
+import {getBuildOrigin, getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
 import cacheHashManifest from '../tmp/loader-cache-hash-manifest.json'
 
@@ -12,8 +12,11 @@ const isReactRoute = () => {
 
 initCacheManifest(cacheHashManifest)
 
+// This isn't accurate but does describe the case where the PR currently works
+const IS_PREVIEW = getBuildOrigin().indexOf('localhost') !== -1
+
 const CAPTURING_CDN = '//cdn.mobify.com/capturejs/capture-latest.min.js'
-const SW_LOADER_PATH = `/service-worker-loader.js?preview=true&b=${cacheHashManifest.buildDate}`
+const SW_LOADER_PATH = `/service-worker-loader.js?preview=${IS_PREVIEW}&b=${cacheHashManifest.buildDate}`
 
 import preloadHTML from 'raw!./preloader/preload.html'
 import preloadCSS from 'css?minimize!./preloader/preload.css'
