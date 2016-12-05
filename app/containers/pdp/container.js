@@ -41,7 +41,7 @@ class PDP extends React.Component {
             <div className="t-pdp">
                 <PDPHeading {...product} />
 
-                <PDPCarousel items={carouselItems} />
+                <PDPCarousel items={carouselItems} contentsLoaded={contentsLoaded} />
 
                 <PDPDescription description={description} />
 

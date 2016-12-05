@@ -6,7 +6,7 @@ import Ratio from 'progressive-web-sdk/dist/components/ratio'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import Image from 'progressive-web-sdk/dist/components/image'
 
-const PDPCarousel = ({items}) => {
+const PDPCarousel = ({items, contentsLoaded}) => {
     const carouselProps = {
         previousIcon: 'back',
         nextIcon: 'chevron-right',
@@ -20,7 +20,7 @@ const PDPCarousel = ({items}) => {
             <Carousel {...carouselProps}>
                 {items.map(({img}, idx) => {
                     const imgProps = {
-                        className: 'u-block',
+                        className: contentsLoaded ? 'u-block' : 'u-block c-image__transition', // Carousel hasn't received the final images yet
                         alt: '', // no alt text available :(
                         src: img,
                         hidePlaceholder: true,
@@ -60,6 +60,7 @@ PDPCarousel.defaultProps = {
 }
 
 PDPCarousel.propTypes = {
+    contentsLoaded: PropTypes.bool,
     items: PropTypes.arrayOf(PropTypes.shape({
         position: PropTypes.string.isRequired,
         img: PropTypes.string.isRequired,
