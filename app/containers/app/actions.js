@@ -1,6 +1,7 @@
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import * as utils from '../../utils/utils'
 import {CURRENT_URL} from './constants'
+import logger from 'progressive-web-sdk/dist/mobify-debugger'
 
 /**
  * Action dispatched when the route changes
@@ -32,6 +33,7 @@ export const onPageReceived = utils.createAction('On page received',
  * by react-router, ideally.
  */
 export const fetchPage = (url, pageType, routeName) => {
+    logger.log(`Fetching page from URL ${url} for ${pageType}`)
     return (dispatch, getState) => {
         utils.makeRequest(url)
             .then(jqueryResponse)
