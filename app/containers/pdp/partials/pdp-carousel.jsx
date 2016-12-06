@@ -25,7 +25,8 @@ const PDPCarousel = ({items, contentsLoaded}) => {
                         src: img,
                         hidePlaceholder: true,
                         ratio: {aspect: '1:1'},
-                        loadingIndicator: <SkeletonBlock height="100%" />
+                        loadingIndicator: <SkeletonBlock height="100%" />,
+                        transitionPlaceholder: false
                     }
 
                     return (
