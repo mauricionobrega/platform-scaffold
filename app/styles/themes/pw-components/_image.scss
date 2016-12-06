@@ -4,3 +4,7 @@
 .c-image {
     display: inline-block;
 }
+
+.c-image__tag.c--is-transitioning {
+    opacity: 0.5;
+}
