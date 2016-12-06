@@ -9,72 +9,78 @@ import Grid from 'components/grid'
 
 ## Example Usage
 
-The `Grid` component by itself doesn't do a whole lot because it's just a
-container for children that you must customize with grid styles in a template
-stylesheet using [Susy mixins](http://susydocs.oddbird.net/en/latest/toolkit/).
-The `Grid` container component is actually used to offset the outer most grid
-children's excess padding.
-
-The main thing to understand is that the children of `Grid` are set span a
-certain number of columns in the grid via Sass mixins from the Susy library. See
-the example SCSS further below.
+The `Grid` component by itself doesn't do a whole lot by itself, it's a wrapper
+container for the child `GridSpan` components. The `GridSpan` component is where
+you are able to control the grid's layout based on the three available
+breakpoints defined in the project's stylesheet. The `Grid` uses the [Susy mixin
+library](http://susydocs.oddbird.net/en/latest/toolkit/) for it's layout.
 
     <Grid className="t-example-template">
-        <div className="t-example-template__promo">
+        {/*
+            Note that omitting the `span` prop will default the GridSpan to
+            full width!
+        */}
+
+        <GridSpan className="t-example-template__promo"
+            mobile={{span: null}}
+            tablet={{span: 6, pre: 1, post: 1}}
+            desktop={{span: 6, pre: 3, post: 3}}
+        >
             <strong>Full Content:</strong>
-        </div>
+        </GridSpan>
 
-        <div className="t-example-template__main ">
+        <GridSpan className="t-example-template__main"
+            mobile={{span: null}}
+            tablet={{span: 6, pre: 1, post: 1}}
+            desktop={{span: 7}}
+        >
             <strong>Main Content:</strong>
-        </div>
+        </GridSpan>
 
-        <div className="t-example-template__aux c">
+        <GridSpan className="t-example-template__aux"
+            mobile={{span: null}}
+            tablet={{span: 6, pre: 1, post: 1}}
+            desktop={{span: 5}}
+        >
             <strong>Auxiliary Content:</strong>
-        </div>
+        </GridSpan>
+
     </Grid>
 
-The above example sub-template classes are styled in the following manner:
+
+## Breakpoint Modifiers
+
+As you can see in the above props table, there are three breakpoint props:
+`mobile`, `tablet` and `desktop`. Into each of these props can be passed an
+object with properties that define the `GridSpan`'s behavior at that
+breakpoint. The table below describes what behaviors can be defined:
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `span` | Number | Designates how many columns the current `GridSpan` component will occupy. |
+| `pre` | Number | Designates how much `margin-left` should be added to the current `GridSpan` component in number of columns. |
+| `post` | Number | Designates how much `margin-right` should be added to the current `GridSpan` component in number of columns. |
+
+How many columns that can be "spanned", "pre'ed" or "post'ed" depends on the
+breakpoint: by default `mobile` has a total of 4 columns, `tablet` has 8 columns,
+and `desktop` 12 columns. If no `span` property is provided, the `GridSpan` will
+default to a full width span.
+
+## Customizing Column Count
+
+The number of columns there are for each breakpoint can be customized in the
+`GridSpan`'s `grid-span.jsx` file and `_variable.scss` file.
+
+```js
+// app/components/grid/grid-span.jsx
+const MOBILE_COLUMN_COUNT = 6   // defaults to 4
+const TABLET_COLUMN_COUNT = 10  // defaults to 8
+const DESKTOP_COLUMN_COUNT = 12 // 12 is the default
+```
 
 ```scss
-@include susy-breakpoint($mobile-breakpoint, $mobile-layout) {
-    // Less than 420px viewport width
-    .t-example-template__promo,
-    .t-example-template__main,
-    .t-example-template__aux {
-        @include span(4);
-        @include first();
-        @include last();
-    }
-}
-
-@include susy-breakpoint($tablet-breakpoint, $tablet-layout) {
-    // Less than 1024px viewport width
-    .t-example-template__promo,
-    .t-example-template__main,
-    .t-example-template__aux {
-        @include span(6);
-        @include pre(1);
-        @include post(1);
-        @include last();
-    }
-}
-
-@include susy-breakpoint($desktop-breakpoint, $desktop-layout) {
-    // Over 1024px viewport width
-    .t-example-template__promo {
-        @include span(6);
-        @include pre(3);
-        @include post(3);
-        @include last();
-    }
-
-    .t-example-template__main {
-        @include span(7);
-    }
-
-    .t-example-template__aux {
-        @include span(5);
-        @include last();
-    }
-}
+// app/componeonts/grid/_base.scss
+$mobile-column-count: 6;   // defaults to 4
+$tablet-column-count: 10;  // defaults to 8
+$desktop-column-count: 12; // 12 is the default
 ```
