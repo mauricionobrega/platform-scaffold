@@ -5,6 +5,7 @@ const ip = require('ip')
 
 const loaderConfig = require('./base.loader')
 const mainConfig = require('./base.main')
+const workerConfig = require('./base.worker')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 mainConfig.module.loaders = mainConfig.module.loaders.concat({
@@ -23,4 +24,10 @@ mainConfig.plugins = mainConfig.plugins.concat([
     new webpack.NoErrorsPlugin()
 ])
 
-module.exports = [mainConfig, loaderConfig]
+workerConfig.plugins = workerConfig.plugins.concat([
+    new webpack.DefinePlugin({
+        DEBUG: true
+    })
+])
+
+module.exports = [mainConfig, loaderConfig, workerConfig]

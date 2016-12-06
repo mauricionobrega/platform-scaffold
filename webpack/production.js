@@ -6,6 +6,7 @@ const assign = require('lodash.assign')
 
 const baseLoaderConfig = require('./base.loader')
 const baseMainConfig = require('./base.main')
+const workerConfig = require('./base.worker')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 // Add production flag to main app config
@@ -27,4 +28,10 @@ baseMainConfig.module.loaders = baseMainConfig.module.loaders.concat({
     ]
 })
 
-module.exports = [productionMainConfig, baseLoaderConfig]
+workerConfig.plugins = workerConfig.plugins.concat([
+    new webpack.DefinePlugin({
+        DEBUG: false
+    })
+])
+
+module.exports = [productionMainConfig, baseLoaderConfig, workerConfig]

@@ -23,7 +23,7 @@ test('renders without errors', () => {
     expect(wrapper.length).toBe(1)
 })
 
-const ROOT_CLASS = 'c-pdp-description'
+const ROOT_CLASS = 't-pdp__description'
 
 test('renders the component class correctly', () => {
     const wrapper = shallow(<PDPDescription />)
