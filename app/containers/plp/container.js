@@ -32,7 +32,7 @@ const renderNoResults = (bodyText) => {
     )
 }
 
-class PLP extends React.Component {
+export class PLP extends React.Component {
     shouldComponentUpdate(nextProps) {
         return !Immutable.is(this.props.plpState, nextProps.plpState)
     }

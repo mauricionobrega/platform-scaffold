@@ -1,17 +1,17 @@
 import Immutable from 'immutable'
 import {createReducer} from 'redux-act'
-import {getComponentName} from '../../utils/utils'
 import {onPageReceived, onRouteChanged} from '../app/actions'
+import {getComponentType} from '../../utils/utils'
 
 import parser from './parsers/plp'
-import PLP from './container'
+import {PLP} from './container'
 import {SELECTOR, PLACEHOLDER} from './constants'
 
 /**
- * To determine if we should modify redux state, we compare the component name of
+ * To determine if we should modify redux state, we compare the component of
  * the selected route (and thus, the page we received) to our component: `PLP`
  */
-const isPageType = (pageType) => pageType === 'PLP'
+const isPageComponent = (pageComponent) => getComponentType(pageComponent) === PLP
 
 const getSelector = (state, currentURL) => { return state.has(currentURL) ? currentURL : PLACEHOLDER }
 
@@ -29,9 +29,9 @@ export const initialState = Immutable.Map({
 
 const plp = createReducer({
     [onPageReceived]: (state, action) => {
-        const {$, $response, pageType, url, currentURL} = action
+        const {$, $response, pageComponent, url, currentURL} = action
 
-        if (isPageType(pageType)) {
+        if (isPageComponent(pageComponent)) {
             const parsedPlp = Immutable.fromJS(parser($, $response))
 
             // `.withMutations` allows us to batch together changes to state
@@ -52,9 +52,9 @@ const plp = createReducer({
         }
     },
     [onRouteChanged]: (state, action) => {
-        const {pageType, currentURL} = action
+        const {pageComponent, currentURL} = action
 
-        return isPageType(pageType) ? state.set(SELECTOR, getSelector(state, currentURL)) : state
+        return isPageComponent(pageComponent) ? state.set(SELECTOR, getSelector(state, currentURL)) : state
     }
 }, initialState)
 

@@ -10,7 +10,7 @@ import PDPItemAddedModal from './partials/pdp-item-added-modal'
 import {stripEvent} from '../../utils/utils'
 import * as pdpActions from './actions'
 
-class PDP extends React.Component {
+export class PDP extends React.Component {
     shouldComponentUpdate(newProps) {
         return !Immutable.is(newProps.pdp, this.props.pdp)
     }

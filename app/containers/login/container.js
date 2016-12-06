@@ -11,7 +11,7 @@ import {Tabs, TabsPanel} from 'progressive-web-sdk/dist/components/tabs'
 
 import * as actions from './actions'
 
-class Login extends React.Component {
+export class Login extends React.Component {
 
     // a few constants to make refactoring easier in future
     static get SIGN_IN_SECTION() { return 'signin' }

@@ -1,6 +1,8 @@
 import {Map, is} from 'immutable'
 
 import reducer from './reducer'
+import {Home} from '../home/container'
+import {PDP} from './container'
 
 import * as appActions from '../app/actions'
 import * as pdpActions from './actions'
@@ -20,15 +22,15 @@ test('unknown action type leaves state unchanged', () => {
     expect(reducer(inputState, action)).toEqual(inputState)
 })
 
-test('appActions.onPageReceived does nothing when pageType !== PDP', () => {
-    const action = appActions.onPageReceived($, $(), 'Home')
+test('appActions.onPageReceived does nothing when pageComponent !== PDP', () => {
+    const action = appActions.onPageReceived($, $(), Home)
     const inputState = Map()
 
     expect(reducer(inputState, action)).toEqual(inputState)
 })
 
 test('appActions.onPageReceived sets contentsLoaded to true', () => {
-    const action = appActions.onPageReceived($, $(), 'PDP')
+    const action = appActions.onPageReceived($, $(), PDP)
     const inputState = Map()
 
     expect(reducer(inputState, action).get('contentsLoaded')).toBe(true)
@@ -36,7 +38,7 @@ test('appActions.onPageReceived sets contentsLoaded to true', () => {
 
 test('appActions.onPageReceived causes the page to be parsed into the state', () => {
     const $html = $('<body><hr /></body')
-    const action = appActions.onPageReceived($, $html, 'PDP')
+    const action = appActions.onPageReceived($, $html, PDP)
     const inputState = Map()
 
     pdpParser.mockClear()

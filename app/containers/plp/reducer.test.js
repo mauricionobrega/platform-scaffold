@@ -1,12 +1,13 @@
 import reducer, {initialState} from './reducer'
 import {onPageReceived} from '../app/actions'
 import {jquerifyHtmlFile} from 'progressive-web-sdk/dist/test-utils'
+import {PLP} from './container'
 
 describe('The PLP reducer', () => {
     const $content = jquerifyHtmlFile('app/containers/plp/parsers/plp.test.html')
 
     test('parses the page contents onPageReceived and updates the store', () => {
-        const newState = reducer(initialState, onPageReceived($, $content, 'PLP'))
+        const newState = reducer(initialState, onPageReceived($, $content, PLP))
 
         expect(newState).not.toBe(initialState)
     })
@@ -26,13 +27,13 @@ describe('The PLP reducer', () => {
             value: firstHref
         })
 
-        const oldState = reducer(initialState, onPageReceived($, $content, 'PLP', firstHref))
+        const oldState = reducer(initialState, onPageReceived($, $content, PLP, firstHref))
         expect(oldState.has(firstHref)).toBeTruthy()
 
         // Mock changing the URL
         window.location.href = secondHref
 
-        const newState = reducer(initialState, onPageReceived($, $content, 'PLP', secondHref))
+        const newState = reducer(initialState, onPageReceived($, $content, PLP, secondHref))
         expect(newState.has(secondHref)).toBeTruthy()
     })
 

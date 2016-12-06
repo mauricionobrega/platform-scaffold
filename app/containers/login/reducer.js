@@ -1,8 +1,8 @@
 import Immutable from 'immutable'
 import {createReducer} from 'redux-act'
 
-import {getComponentName} from '../../utils/utils'
-import Login from './container'
+import {getComponentType} from '../../utils/utils'
+import {Login} from './container'
 import {openInfoModal, closeInfoModal} from './actions'
 
 import {onPageReceived} from '../app/actions'
@@ -132,8 +132,8 @@ const merge = (object1, object2) => {
 
 export default createReducer({
     [onPageReceived]: (state, action) => {
-        const {$, $response, pageType, routeName} = action
-        if (pageType === getComponentName(Login)) {
+        const {$, $response, pageComponent, routeName} = action
+        if (pageComponent === getComponentType(Login)) {
             let newState
 
             const infoModalOpen = !!state.get(formatSectionName(routeName)).get('infoModalOpen')

@@ -1,6 +1,8 @@
 import {Map, is} from 'immutable'
 
 import reducer from './reducer'
+import {Login} from './container'
+import {Home} from '../home/container'
 
 import * as appActions from '../app/actions'
 import * as loginActions from './actions'
@@ -20,15 +22,15 @@ test('unknown action type leaves state unchanged', () => {
     expect(reducer(inputState, action)).toBe(inputState)
 })
 
-test('appActions.onPageReceived does nothing when pageType !== Login', () => {
-    const action = appActions.onPageReceived($, $(), 'Home')
+test('appActions.onPageReceived does nothing when pageComponent !== Login', () => {
+    const action = appActions.onPageReceived($, $(), Home)
     const inputState = Map()
 
     expect(reducer(inputState, action)).toEqual(inputState)
 })
 
-test('appActions.onPageReceived does nothing when pageType !== Login and different route name', () => {
-    const action = appActions.onPageReceived($, $(), 'Home', null, null, 'productListPage')
+test('appActions.onPageReceived does nothing when pageComponent !== Login and different route name', () => {
+    const action = appActions.onPageReceived($, $(), Home, null, null, 'productListPage')
     const inputState = Map()
 
     expect(reducer(inputState, action)).toEqual(inputState)
@@ -40,16 +42,16 @@ test('appActions.onPageReceived sets loaded to true', () => {
         registerSection: Map({})
     })
 
-    const signinAction = appActions.onPageReceived($, $(), 'Login', null, null, 'signin')
+    const signinAction = appActions.onPageReceived($, $(), Login, null, null, 'signin')
     expect(reducer(inputState, signinAction).get('loaded')).toBe(true)
 
-    const registerAction = appActions.onPageReceived($, $(), 'Login', null, null, 'register')
+    const registerAction = appActions.onPageReceived($, $(), Login, null, null, 'register')
     expect(reducer(inputState, registerAction).get('loaded')).toBe(true)
 })
 
 test('appActions.onPageReceived causes the page to be parsed into the state', () => {
     const $html = $('<body><hr /></body')
-    const action = appActions.onPageReceived($, $html, 'Login', null, null, 'signin')
+    const action = appActions.onPageReceived($, $html, Login, null, null, 'signin')
     const inputState = Map({
         signinSection: Map({})
     })
