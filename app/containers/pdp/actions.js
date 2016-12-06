@@ -12,7 +12,7 @@ export const submitCartForm = () => (dispatch, getStore) => {
     const formInfo = routedState.get('formInfo')
     const qty = routedState.get('itemQuantity')
 
-    makeFormEncodedRequest(formInfo.get('submitUrl'), {
+    return makeFormEncodedRequest(formInfo.get('submitUrl'), {
         ...formInfo.get('hiddenInputs').toJS(),
         qty
     }, {
