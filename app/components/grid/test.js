@@ -83,6 +83,20 @@ test('renders no span class if a value greater than the max span is provided', (
     })
 })
 
+test('renders the full width class if span value is null rather than a `c--span-null` class', () => {
+    BREAKPOINTS.forEach((breakpoint) => {
+        const wrapper = shallow(<GridSpan />)
+        const props = {span: null}
+
+        wrapper.setProps({
+            [breakpoint]: props
+        })
+
+        expect(wrapper.hasClass(`c--full-width@${breakpoint}`)).toBe(true)
+        expect(wrapper.hasClass(`c--span-null@${breakpoint}`)).toBe(false)
+    })
+})
+
 test('renders the full width class if a value greater than the max span is provided', () => {
     BREAKPOINTS.forEach((breakpoint, i) => {
         const wrapper = shallow(<GridSpan />)

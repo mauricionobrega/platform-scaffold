@@ -8,40 +8,39 @@ const MOBILE_COLUMN_COUNT = 4
 const TABLET_COLUMN_COUNT = 8
 const DESKTOP_COLUMN_COUNT = 12
 
-const generateModifiers = (breakpoint, maxColumnCount, props) => {
+const generateModifiers = (props) => {
     const classes = {}
+    const breakpoints = [MOBILE_BREAKPOINT, TABLET_BREAKPOINT, DESKTOP_BREAKPOINT]
+    const columns = [MOBILE_COLUMN_COUNT, TABLET_COLUMN_COUNT, DESKTOP_COLUMN_COUNT]
 
-    // Generate a class modifier for each combination of possible column counts.
-    // Creates modifiers from 1 up to the value of `maxColumnCount`
-    for (let i = 1; i <= maxColumnCount; i++) {
-        const columnSpanCountIsActive = props[breakpoint] && props[breakpoint].span === i
-        classes[`c--span-${i}@${breakpoint}`] = columnSpanCountIsActive
-    }
+    breakpoints.forEach((currentBreakpoint, i) => {
+        const breakpointProps = props[currentBreakpoint]
+        const maxColumnsForThisBreakpoint = columns[i]
 
-    for (let i = 1; i < maxColumnCount; i++) {
-        // Generate classes for each pre modifier class. Adds padding on the
-        // along the right side of the grid span equal to `pre` number of
-        // columns plus gutters
-        const preCountIsActive = props[breakpoint] && props[breakpoint].pre === i
-        classes[`c--pre-${i}@${breakpoint}`] = preCountIsActive
+        // Generate a span modifier class equal to the `span` prop. Can't be
+        // larger than the `maxColumnsForThisBreakpoint`
+        if (breakpointProps && breakpointProps.span <= maxColumnsForThisBreakpoint && breakpointProps.span !== null) {
+            classes[`c--span-${breakpointProps.span}@${currentBreakpoint}`] = true
+        }
 
-        // Generate classes for each post modifier class. Adds padding on the
-        // along the right side of the grid span equal to `post` number of
-        // columns plus gutters
-        const postCountIsActive = props[breakpoint] && props[breakpoint].post === i
-        classes[`c--post-${i}@${breakpoint}`] = postCountIsActive
-    }
+        // Generate full width modifier class for where there is no `span` prop,
+        // or if the span value is larger than the `maxColumnsForThisBreakpoint`
+        if (!breakpointProps || breakpointProps.span > maxColumnsForThisBreakpoint || !breakpointProps.span) {
+            classes[`c--full-width@${currentBreakpoint}`] = true
+        }
 
-    // Generate full width modifier class for when there is no span provided, or
-    // if the span value is larger than the grid's max number of columns at the
-    // current breakpoint
-    const spanOrBreakpointIsMissing = !props[breakpoint] || !props[breakpoint].span
-    const spanIsOverMaxSize = (
-        breakpoint === MOBILE_BREAKPOINT && props[breakpoint] && props[breakpoint].span > MOBILE_COLUMN_COUNT ||
-        breakpoint === TABLET_BREAKPOINT && props[breakpoint] && props[breakpoint].span > TABLET_COLUMN_COUNT ||
-        breakpoint === DESKTOP_BREAKPOINT && props[breakpoint] && props[breakpoint].span > DESKTOP_COLUMN_COUNT
-    )
-    classes[`c--full-width@${breakpoint}`] = spanOrBreakpointIsMissing || spanIsOverMaxSize
+        // Generate a pre modifier class equal to the `pre` prop. Must be less
+        // than the `maxColumnsForThisBreakpoint`
+        if (breakpointProps && breakpointProps.pre && breakpointProps.pre < maxColumnsForThisBreakpoint) {
+            classes[`c--pre-${breakpointProps.pre}@${currentBreakpoint}`] = true
+        }
+
+        // Generate a pre modifier class equal to the `post` prop. Must be less
+        // than the `maxColumnsForThisBreakpoint`
+        if (breakpointProps && breakpointProps.post && breakpointProps.post < maxColumnsForThisBreakpoint) {
+            classes[`c--post-${breakpointProps.post}@${currentBreakpoint}`] = true
+        }
+    })
 
     return classes
 }
@@ -56,9 +55,7 @@ const generateModifiers = (breakpoint, maxColumnCount, props) => {
  */
 const GridSpan = (props) => {
     const classes = classNames('c-grid__span', {
-        ...generateModifiers(MOBILE_BREAKPOINT, MOBILE_COLUMN_COUNT, props),
-        ...generateModifiers(TABLET_BREAKPOINT, TABLET_COLUMN_COUNT, props),
-        ...generateModifiers(DESKTOP_BREAKPOINT, DESKTOP_COLUMN_COUNT, props),
+        ...generateModifiers(props),
     }, props.className)
 
     return (
