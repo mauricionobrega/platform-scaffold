@@ -3,7 +3,6 @@ import Immutable from 'immutable'
 import pdpParser from './parsers/pdp'
 import {onPageReceived, onRouteChanged} from '../app/actions'
 import * as pdpActions from './actions'
-import {getComponentType} from '../../utils/utils'
 import {PDP} from './container'
 
 const initialState = Immutable.fromJS({
@@ -21,7 +20,7 @@ const initialState = Immutable.fromJS({
 
 export default createReducer({
     [onPageReceived]: (state, {$, $response, pageComponent}) => {
-        if (getComponentType(pageComponent) !== PDP) {
+        if (pageComponent !== PDP) {
             return state
         }
         return state.mergeDeep({

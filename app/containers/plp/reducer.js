@@ -1,7 +1,6 @@
 import Immutable from 'immutable'
 import {createReducer} from 'redux-act'
 import {onPageReceived, onRouteChanged} from '../app/actions'
-import {getComponentType} from '../../utils/utils'
 
 import parser from './parsers/plp'
 import {PLP} from './container'
@@ -11,7 +10,7 @@ import {SELECTOR, PLACEHOLDER} from './constants'
  * To determine if we should modify redux state, we compare the component of
  * the selected route (and thus, the page we received) to our component: `PLP`
  */
-const isPageComponent = (pageComponent) => getComponentType(pageComponent) === PLP
+const isPageComponent = (pageComponent) => pageComponent === PLP
 
 const getSelector = (state, currentURL) => { return state.has(currentURL) ? currentURL : PLACEHOLDER }
 

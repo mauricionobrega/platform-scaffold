@@ -2,7 +2,6 @@ import {createReducer} from 'redux-act'
 import {fromJS} from 'immutable'
 
 import {onPageReceived} from '../app/actions'
-import {getComponentType} from '../../utils/utils'
 import homeParser from './parsers/home'
 import {Home} from './container'
 
@@ -16,7 +15,7 @@ const initialState = fromJS({
 export default createReducer({
     [onPageReceived]: (state, action) => {
         const {$, $response, pageComponent} = action
-        if (getComponentType(pageComponent) === Home) {
+        if (pageComponent === Home) {
             return state.mergeDeep(homeParser($, $response))
         } else {
             return state

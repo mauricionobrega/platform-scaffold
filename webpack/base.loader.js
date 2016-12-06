@@ -9,7 +9,7 @@ module.exports = {
     entry: './app/loader.js',
     output: {
         path: path.resolve(process.cwd(), 'build'),
-        filename: 'loader.min.js'
+        filename: 'loader.js'
     },
     // Loaders are resolved relative to the file being applied to. Specifying the
     // root option here lets Webpack know they are Node modules - avoiding errors

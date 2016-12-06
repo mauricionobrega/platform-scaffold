@@ -3,6 +3,7 @@ import {Router, Route, IndexRoute} from 'progressive-web-sdk/dist/routing'
 import {triggerMobifyPageView} from 'progressive-web-sdk/dist/analytics'
 import {Provider} from 'react-redux'
 import * as appActions from './containers/app/actions'
+import {getComponentType} from './utils/utils'
 
 // Containers
 import App from './containers/app/container'
@@ -27,7 +28,7 @@ const AppProvider = ({store}) => {
         ].join('')
     }
 
-    const getPageComponent = (routerState) => routerState.routes[1].component
+    const getPageComponent = (routerState) => getComponentType(routerState.routes[1].component)
 
     const getRouteName = (routerState) => routerState.routes[1].routeName
 
