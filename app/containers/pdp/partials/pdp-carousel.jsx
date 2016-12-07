@@ -26,7 +26,7 @@ const PDPCarousel = ({items, contentsLoaded}) => {
                         hidePlaceholder: true,
                         ratio: {aspect: '1:1'},
                         loadingIndicator: <SkeletonBlock height="100%" />,
-                        transitionPlaceholder: false
+                        useLoaderDuringTransitions: false
                     }
 
                     return (
