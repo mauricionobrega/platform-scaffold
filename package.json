@@ -1,5 +1,6 @@
 {
   "name": "progressive-web-scaffold",
+  "projectSlug": "progressive-web-scaffold",
   "repository": {
     "type": "git",
     "url": "http://github.com/mobify/progressive-web-scaffold"
@@ -71,6 +72,7 @@
     "sass-loader": "4.0.2",
     "spline-scss": "2.2.0",
     "style-loader": "0.13.1",
+    "susy": "2.2.12",
     "svg-sprite": "1.3.6",
     "text-loader": "0.0.1",
     "validator": "6.1.0",

@@ -9,27 +9,27 @@ describe('the home parser', () => {
         const expected = {
             categories: [
                 {
-                    href: 'http://www.merlinspotions.com/potions.html',
+                    href: 'https://www.merlinspotions.com/potions.html',
                     text: 'Potions'
                 },
                 {
-                    href: 'http://www.merlinspotions.com/books.html',
+                    href: 'https://www.merlinspotions.com/books.html',
                     text: 'Books'
                 },
                 {
-                    href: 'http://www.merlinspotions.com/ingredients.html',
+                    href: 'https://www.merlinspotions.com/ingredients.html',
                     text: 'Ingredients'
                 },
                 {
-                    href: 'http://www.merlinspotions.com/supplies.html',
+                    href: 'https://www.merlinspotions.com/supplies.html',
                     text: 'Supplies'
                 },
                 {
-                    href: 'http://www.merlinspotions.com/charms.html',
+                    href: 'https://www.merlinspotions.com/charms.html',
                     text: 'Charms'
                 },
                 {
-                    href: 'http://www.merlinspotions.com/new-arrivals.html',
+                    href: 'https://www.merlinspotions.com/new-arrivals.html',
                     text: 'New Arrivals'
                 }
             ],
@@ -37,12 +37,12 @@ describe('the home parser', () => {
             banners: [
                 {
                     alt: 'Merlins Potions',
-                    src: 'http://www.merlinspotions.com/media/logo/default/MerlinsPotions_Logo_Light.png'
+                    src: 'https://www.merlinspotions.com/media/logo/default/MerlinsPotions_Logo_Light.png'
                 },
                 {},
                 {
                     alt: '',
-                    src: 'http://www.merlinspotions.com/media/wysiwyg/MP_banner_4.jpg'
+                    src: 'https://www.merlinspotions.com/media/wysiwyg/MP_banner_4.jpg'
                 }
             ]
         }
