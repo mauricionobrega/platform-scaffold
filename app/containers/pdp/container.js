@@ -9,28 +9,28 @@ import PDPAddToCart from './partials/pdp-add-to-cart'
 import PDPItemAddedModal from './partials/pdp-item-added-modal'
 import {stripEvent} from '../../utils/utils'
 import * as pdpActions from './actions'
+import {getRoutedState} from '../../utils/router-utils'
 
 export class PDP extends React.Component {
     shouldComponentUpdate(newProps) {
-        return !Immutable.is(newProps.pdp, this.props.pdp)
+        return !Immutable.is(newProps.routedState, this.props.routedState)
     }
 
     render() {
         const {
-            pdp,
+            product,
+            itemQuantity,
+            quantityAdded,
+            itemAddedModalOpen,
+            formInfo,
+            isPlaceholder,
+            contentsLoaded
+        } = this.props.routedState.toJS()
+        const {
             setQuantity,
             addToCart,
             closeItemAddedModal
         } = this.props
-
-        const {
-            product,
-            itemQuantity,
-            quantityAdded,
-            formInfo,
-            itemAddedModalOpen,
-            contentsLoaded
-        } = pdp.toJS()
 
         const {
             carouselItems,
@@ -41,7 +41,7 @@ export class PDP extends React.Component {
             <div className="t-pdp">
                 <PDPHeading {...product} />
 
-                <PDPCarousel items={carouselItems} />
+                <PDPCarousel items={carouselItems} contentsLoaded={contentsLoaded} />
 
                 <PDPDescription description={description} />
 
@@ -53,7 +53,7 @@ export class PDP extends React.Component {
                     disabled={!contentsLoaded}
                 />
 
-                {contentsLoaded &&
+                {!isPlaceholder && contentsLoaded &&
                     <PDPItemAddedModal
                         open={itemAddedModalOpen}
                         onDismiss={closeItemAddedModal}
@@ -67,14 +67,25 @@ export class PDP extends React.Component {
 }
 
 PDP.propTypes = {
-    pdp: PropTypes.object.isRequired,
-    addToCart: PropTypes.func,
-    closeItemAddedModal: PropTypes.func,
-    setQuantity: PropTypes.func
+    /**
+     * Function to submit the add-to-cart form
+     */
+    addToCart: PropTypes.func.isRequired,
+    /**
+     * Callback when the added-to-cart modal closes
+     */
+    closeItemAddedModal: PropTypes.func.isRequired,
+    /**
+     * The Immutable.js state object, for use with shouldComponentUpdate
+     */
+    routedState: PropTypes.object.isRequired,
+    /**
+     * Function to update the item quantity when user changes it
+     */
+    setQuantity: PropTypes.func.isRequired,
 }
 
-
-const mapStateToProps = ({pdp}) => ({pdp})
+export const mapStateToProps = ({pdp}) => ({routedState: getRoutedState(pdp)})
 
 const mapDispatchToProps = {
     setQuantity: pdpActions.setItemQuantity,

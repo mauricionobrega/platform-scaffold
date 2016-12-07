@@ -9,7 +9,7 @@ import List from 'progressive-web-sdk/dist/components/list'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import ProductTile from './partials/product-tile'
-import {SELECTOR} from './constants'
+import {getRoutedState} from '../../utils/router-utils'
 
 const renderResults = (products) => {
     return products.map((product, idx) => <ProductTile key={idx} product={product} />)
@@ -34,7 +34,7 @@ const renderNoResults = (bodyText) => {
 
 export class PLP extends React.Component {
     shouldComponentUpdate(nextProps) {
-        return !Immutable.is(this.props.plpState, nextProps.plpState)
+        return !Immutable.is(this.props.routedState, nextProps.routedState)
     }
 
     render() {
@@ -112,13 +112,13 @@ PLP.propTypes = {
      */
     numItems: PropTypes.string.isRequired,
     /**
-     * The Immutable.js state object, for use with shouldComponentUpdate
-     */
-    plpState: PropTypes.object.isRequired,
-    /**
      * The array of parsed products
      */
     products: PropTypes.array.isRequired,
+    /**
+     * The Immutable.js state object, for use with shouldComponentUpdate
+     */
+    routedState: PropTypes.object.isRequired,
     /**
      * The PLP title (i.e. Potions, Ingredients, etc.)
      */
@@ -126,12 +126,10 @@ PLP.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-    const selector = state.plp.get(SELECTOR)
-    const plpState = state.plp.get(selector)
-
+    const routedState = getRoutedState(state.plp)
     return {
-        plpState,
-        ...plpState.toJS()
+        routedState,
+        ...routedState.toJS()
     }
 }
 
