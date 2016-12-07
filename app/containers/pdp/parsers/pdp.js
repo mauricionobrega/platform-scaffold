@@ -26,6 +26,14 @@ const pdpParser = ($, $html) => {
 
     const magentoObject = extractMagentoJson($html)
 
+    const defaults = {
+        isPlaceholder: false,
+        contentsLoaded: true,
+        itemQuantity: 1,
+        itemAddedModalOpen: false,
+        quantityAdded: 0
+    }
+
     return {
         product: {
             title: $mainContent.find('.page-title-wrapper.product .page-title > span').text(),
@@ -33,7 +41,8 @@ const pdpParser = ($, $html) => {
             carouselItems: parseCarouselItems(magentoObject),
             description: $mainContent.find('.product.info.detailed .product.attibute.description p').text()
         },
-        formInfo: parseAddToCartForm($, $mainContent.find('#product_addtocart_form'))
+        formInfo: parseAddToCartForm($, $mainContent.find('#product_addtocart_form')),
+        ...defaults
     }
 }
 
