@@ -55,9 +55,9 @@ const reducer = createReducer({
         }
     },
     [onRouteChanged]: (state, action) => {
-        const {pageType, currentURL} = action
+        const {pageComponent, currentURL} = action
 
-        if (RouterUtils.isPageType(pageType, PDP)) {
+        if (RouterUtils.isPageType(pageComponent, PDP)) {
             return state.set(SELECTOR, RouterUtils.getNextSelector(state, currentURL))
         } else {
             return state

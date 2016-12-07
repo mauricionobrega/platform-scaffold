@@ -42,9 +42,9 @@ const plpReducer = createReducer({
         }
     },
     [onRouteChanged]: (state, action) => {
-        const {pageType, currentURL} = action
+        const {pageComponent, currentURL} = action
 
-        return isPageType(pageType, PLP) ? state.set(SELECTOR, getNextSelector(state, currentURL)) : state
+        return isPageType(pageComponent, PLP) ? state.set(SELECTOR, getNextSelector(state, currentURL)) : state
     }
 }, baseInitialState.set(PLACEHOLDER, initialState))
 

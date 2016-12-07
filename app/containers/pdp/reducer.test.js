@@ -27,7 +27,7 @@ test('unknown action type leaves state unchanged', () => {
     expect(reducer(inputState, action)).toEqual(inputState)
 })
 
-test('appActions.onPageReceived does nothing when pageType !== PDP', () => {
+test('appActions.onPageReceived does nothing when pageComponent !== PDP', () => {
     const action = appActions.onPageReceived($, $content, Home)
     const inputState = Map()
 
