@@ -15,6 +15,7 @@ const initialState = fromJS({
 export default createReducer({
     [onPageReceived]: (state, action) => {
         const {$, $response, pageComponent} = action
+
         if (pageComponent === Home) {
             return state.mergeDeep(homeParser($, $response))
         } else {
