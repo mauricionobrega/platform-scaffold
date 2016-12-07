@@ -1,45 +1,35 @@
 import Immutable from 'immutable'
 import {createReducer} from 'redux-act'
-import {getComponentName} from '../../utils/utils'
+
+import {baseInitialState, isPageType, getNextSelector} from '../../utils/router-utils'
 import {onPageReceived, onRouteChanged} from '../app/actions'
+import {SELECTOR, PLACEHOLDER} from '../app/constants'
 
-import parser from './parsers/plp'
+import plpParser from './parsers/plp'
 import PLP from './container'
-import {SELECTOR, PLACEHOLDER} from './constants'
-
-/**
- * To determine if we should modify redux state, we compare the component name of
- * the selected route (and thus, the page we received) to our component: `PLP`
- */
-const isPageType = (pageType) => pageType === getComponentName(PLP)
-
-const getSelector = (state, currentURL) => { return state.has(currentURL) ? currentURL : PLACEHOLDER }
 
 export const initialState = Immutable.Map({
-    [SELECTOR]: PLACEHOLDER,
-    [PLACEHOLDER]: Immutable.Map({
-        isPlaceholder: true,
-        hasProducts: true,
-        numItems: '',
-        noResultsText: '',
-        products: [{}, {}, {}, {}],
-        title: ''
-    })
+    isPlaceholder: true,
+    hasProducts: true,
+    numItems: '',
+    noResultsText: '',
+    products: [{}, {}, {}, {}],
+    title: ''
 })
 
-const plp = createReducer({
+const plpReducer = createReducer({
     [onPageReceived]: (state, action) => {
         const {$, $response, pageType, url, currentURL} = action
 
-        if (isPageType(pageType)) {
-            const parsedPlp = Immutable.fromJS(parser($, $response))
+        if (isPageType(pageType, PLP)) {
+            const parsed = Immutable.fromJS(plpParser($, $response))
 
             // `.withMutations` allows us to batch together changes to state
             return state.withMutations((s) => {
                 // Update the store using location.href as key and the result from
                 // the parser as our value -- even if it isn't the page we're
                 // currently viewing
-                s.set(url, parsedPlp)
+                s.set(url, parsed)
 
                 // Also set the store's current selector to location.href so we
                 // can access it in our container, but only if we're on that href
@@ -54,8 +44,8 @@ const plp = createReducer({
     [onRouteChanged]: (state, action) => {
         const {pageType, currentURL} = action
 
-        return isPageType(pageType) ? state.set(SELECTOR, getSelector(state, currentURL)) : state
+        return isPageType(pageType, PLP) ? state.set(SELECTOR, getNextSelector(state, currentURL)) : state
     }
-}, initialState)
+}, baseInitialState.set(PLACEHOLDER, initialState))
 
-export default plp
+export default plpReducer
