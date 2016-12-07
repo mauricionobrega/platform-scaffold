@@ -45,3 +45,16 @@
 .u-block-context {
     @include block-context(true);
 }
+
+
+// Center Piece
+// ---
+//
+// Center Piece is responsible for setting a container to a max-width, and
+// center aligning it when the viewport is larger than that.
+//
+// 1. From Susy, the grid framework
+
+.u-center-piece {
+    @include container($max-width); // 1
+}
