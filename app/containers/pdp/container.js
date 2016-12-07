@@ -11,7 +11,7 @@ import {stripEvent} from '../../utils/utils'
 import * as pdpActions from './actions'
 import {getRoutedState} from '../../utils/router-utils'
 
-export class PDP extends React.Component {
+class PDP extends React.Component {
     shouldComponentUpdate(newProps) {
         return !Immutable.is(newProps.routedState, this.props.routedState)
     }

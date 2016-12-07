@@ -6,7 +6,7 @@ import {onPageReceived, onRouteChanged} from '../app/actions'
 import {SELECTOR, PLACEHOLDER} from '../app/constants'
 
 import plpParser from './parsers/plp'
-import {PLP} from './container'
+import PLP from './container'
 
 export const initialState = Immutable.Map({
     isPlaceholder: true,

@@ -5,7 +5,7 @@ import Immutable from 'immutable'
 import HomeCarousel from './partials/home-carousel'
 import HomeCategories from './partials/home-categories'
 
-export class Home extends React.Component {
+class Home extends React.Component {
     shouldComponentUpdate(nextProps) {
         return !Immutable.is(this.props.homeState, nextProps.homeState)
     }

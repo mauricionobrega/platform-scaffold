@@ -1,9 +1,10 @@
 import {createReducer} from 'redux-act'
 import {fromJS} from 'immutable'
 
+import {isPageType} from '../../utils/router-utils'
 import {onPageReceived} from '../app/actions'
 import homeParser from './parsers/home'
-import {Home} from './container'
+import Home from './container'
 
 const CATEGORY_PLACEHOLDER_COUNT = 6
 
@@ -16,7 +17,7 @@ export default createReducer({
     [onPageReceived]: (state, action) => {
         const {$, $response, pageComponent} = action
 
-        if (pageComponent === Home) {
+        if (isPageType(pageComponent, Home)) {
             return state.mergeDeep(homeParser($, $response))
         } else {
             return state
