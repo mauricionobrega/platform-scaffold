@@ -66,13 +66,12 @@ export const makeFormEncodedRequest = (url, data, options) => {
 }
 
 /**
- * Retrieve the registered name of a component as a string
+ * Retrieve the wrapped component if there is one, otherwise just returns the passed-in component
  * @param {object} component - a React component, potentially wrapped with react-redux
- * @returns {string} - The registered name of the given component
+ * @returns {object} - The component or the WrappedComponent if it exists
  */
-export const getComponentName = (component) => {
-    const name = component.name
-    return name === 'Connect' ? component.WrappedComponent.name : name
+export const getComponentType = (component) => {
+    return component.WrappedComponent || component
 }
 
 /**
