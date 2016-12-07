@@ -6,7 +6,7 @@ import {onPageReceived, onRouteChanged} from '../app/actions'
 import {SELECTOR, PLACEHOLDER} from '../app/constants'
 
 import plpParser from './parsers/plp'
-import PLP from './container'
+import {PLP} from './container'
 
 export const initialState = Immutable.Map({
     isPlaceholder: true,
@@ -19,9 +19,9 @@ export const initialState = Immutable.Map({
 
 const plpReducer = createReducer({
     [onPageReceived]: (state, action) => {
-        const {$, $response, pageType, url, currentURL} = action
+        const {$, $response, pageComponent, url, currentURL} = action
 
-        if (isPageType(pageType, PLP)) {
+        if (isPageType(pageComponent, PLP)) {
             const parsed = Immutable.fromJS(plpParser($, $response))
 
             // `.withMutations` allows us to batch together changes to state

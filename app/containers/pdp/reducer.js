@@ -3,11 +3,11 @@ import {createReducer} from 'redux-act'
 
 import * as RouterUtils from '../../utils/router-utils'
 
-import PDP from './container'
+import {PDP} from './container'
 import pdpParser from './parsers/pdp'
 import * as pdpActions from './actions'
 
-import PLP from '../plp/container'
+import {PLP} from '../plp/container'
 import {basicPlpParser} from './parsers/basic-plp'
 
 import {onPageReceived, onRouteChanged} from '../app/actions'
@@ -29,9 +29,9 @@ export const initialState = Immutable.fromJS({
 
 const reducer = createReducer({
     [onPageReceived]: (state, action) => {
-        const {$, $response, pageType, url, currentURL} = action
+        const {$, $response, pageComponent, url, currentURL} = action
 
-        if (RouterUtils.isPageType(pageType, PDP)) {
+        if (RouterUtils.isPageType(pageComponent, PDP)) {
             const parsed = Immutable.fromJS(pdpParser($, $response))
 
             // `.withMutations` allows us to batch together changes to state
@@ -47,7 +47,7 @@ const reducer = createReducer({
                     s.set(SELECTOR, url)
                 }
             })
-        } else if (RouterUtils.isPageType(pageType, PLP)) {
+        } else if (RouterUtils.isPageType(pageComponent, PLP)) {
             const parsedPlp = basicPlpParser($, $response)
             return Immutable.fromJS(parsedPlp).mergeDeep(state)
         } else {

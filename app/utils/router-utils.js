@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import {getComponentName} from './utils'
+import {getComponentType} from './utils'
 import {SELECTOR, PLACEHOLDER} from '../containers/app/constants'
 
 /**
@@ -27,7 +27,7 @@ import {SELECTOR, PLACEHOLDER} from '../containers/app/constants'
 /**
  * Determine whether the page received corresponds to the component we care about
  */
-export const isPageType = (pageType, component) => pageType === getComponentName(component)
+export const isPageType = (pageType, component) => pageType === getComponentType(component)
 
 /**
  * Determine whether we should display content or transition into a placeholder state
