@@ -29,9 +29,9 @@ export const initialState = Immutable.fromJS({
 
 const reducer = createReducer({
     [onPageReceived]: (state, action) => {
-        const {$, $response, pageType, url, currentURL} = action
+        const {$, $response, pageComponent, url, currentURL} = action
 
-        if (RouterUtils.isPageType(pageType, PDP)) {
+        if (RouterUtils.isPageType(pageComponent, PDP)) {
             const parsed = Immutable.fromJS(pdpParser($, $response))
 
             // `.withMutations` allows us to batch together changes to state
@@ -47,7 +47,7 @@ const reducer = createReducer({
                     s.set(SELECTOR, url)
                 }
             })
-        } else if (RouterUtils.isPageType(pageType, PLP)) {
+        } else if (RouterUtils.isPageType(pageComponent, PLP)) {
             const parsedPlp = basicPlpParser($, $response)
             return Immutable.fromJS(parsedPlp).mergeDeep(state)
         } else {
@@ -55,9 +55,9 @@ const reducer = createReducer({
         }
     },
     [onRouteChanged]: (state, action) => {
-        const {pageType, currentURL} = action
+        const {pageComponent, currentURL} = action
 
-        if (RouterUtils.isPageType(pageType, PDP)) {
+        if (RouterUtils.isPageType(pageComponent, PDP)) {
             return state.set(SELECTOR, RouterUtils.getNextSelector(state, currentURL))
         } else {
             return state
