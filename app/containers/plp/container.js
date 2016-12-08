@@ -34,18 +34,23 @@ const renderNoResults = (bodyText) => {
 
 class PLP extends React.Component {
     shouldComponentUpdate(nextProps) {
-        return !Immutable.is(this.props.routedState, nextProps.routedState)
+        return !Immutable.is(this.props.plp, nextProps.plp) || !Immutable.is(nextProps.catalog, this.props.catalog)
     }
 
     render() {
         const {
+            productUrls,
             hasProducts,
             isPlaceholder,
             noResultsText,
             numItems,
-            products,
             title
-        } = this.props
+        } = this.props.plp.toJS()
+
+        const catalog = this.props.catalog.toJS()
+        const products = productUrls.map((url) => {
+            return catalog[url]
+        })
 
         return (
             <div className="t-plp">
@@ -95,41 +100,19 @@ class PLP extends React.Component {
 
 PLP.propTypes = {
     /**
-     * When there were products found on the page, this is set to true
+     * The Immutable.js Catalog -> Products state object
      */
-    hasProducts: PropTypes.bool.isRequired,
+    catalog: PropTypes.object.isRequired,
     /**
-     * Whether we are currently in a placeholder state, or have page content to
-     * display
+     * The Immutable.js PLP state object
      */
-    isPlaceholder: PropTypes.bool.isRequired,
-    /**
-     * The text to display when no products were found
-     */
-    noResultsText: PropTypes.string.isRequired,
-    /**
-     * The number of products found
-     */
-    numItems: PropTypes.string.isRequired,
-    /**
-     * The array of parsed products
-     */
-    products: PropTypes.array.isRequired,
-    /**
-     * The Immutable.js state object, for use with shouldComponentUpdate
-     */
-    routedState: PropTypes.object.isRequired,
-    /**
-     * The PLP title (i.e. Potions, Ingredients, etc.)
-     */
-    title: PropTypes.string.isRequired
+    plp: PropTypes.object.isRequired
 }
 
-const mapStateToProps = (state) => {
-    const routedState = getRoutedState(state.plp)
+const mapStateToProps = ({catalog, plp}) => {
     return {
-        routedState,
-        ...routedState.toJS()
+        catalog: catalog.products,
+        plp: getRoutedState(plp)
     }
 }
 

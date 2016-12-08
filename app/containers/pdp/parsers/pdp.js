@@ -1,11 +1,4 @@
-import {extractMagentoJson} from '../../../utils/magento-utils'
 
-const parseCarouselItems = (magentoObject) => {
-    const carouselSetup = magentoObject
-          .getIn(['[data-gallery-role=gallery-placeholder]', 'mage/gallery/gallery', 'data'])
-          .sortBy((item) => item.get('position'))
-    return carouselSetup
-}
 
 const parseAddToCartForm = ($, $form) => {
     const hiddenInputs = {}
@@ -24,8 +17,6 @@ const parseAddToCartForm = ($, $form) => {
 const pdpParser = ($, $html) => {
     const $mainContent = $html.find('.page-main')
 
-    const magentoObject = extractMagentoJson($html)
-
     const defaults = {
         isPlaceholder: false,
         contentsLoaded: true,
@@ -35,12 +26,6 @@ const pdpParser = ($, $html) => {
     }
 
     return {
-        product: {
-            title: $mainContent.find('.page-title-wrapper.product .page-title > span').text(),
-            price: $mainContent.find('.product-info-price .price-wrapper .price').text(),
-            carouselItems: parseCarouselItems(magentoObject),
-            description: $mainContent.find('.product.info.detailed .product.attibute.description p').text()
-        },
         formInfo: parseAddToCartForm($, $mainContent.find('#product_addtocart_form')),
         ...defaults
     }

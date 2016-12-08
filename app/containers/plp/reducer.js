@@ -13,7 +13,7 @@ export const initialState = Immutable.Map({
     hasProducts: true,
     numItems: '',
     noResultsText: '',
-    products: [{}, {}, {}, {}],
+    productUrls: [PLACEHOLDER, PLACEHOLDER, PLACEHOLDER, PLACEHOLDER],
     title: ''
 })
 
