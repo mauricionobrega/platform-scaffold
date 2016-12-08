@@ -9,6 +9,7 @@ const pdpParser = ($, $html) => {
     })
 
     return {
+        contentsLoaded: true,
         formInfo: {
             submitUrl: $form.attr('action'),
             method: $form.attr('method'),
