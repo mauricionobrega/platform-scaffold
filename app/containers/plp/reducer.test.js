@@ -1,14 +1,18 @@
 import reducer, {initialState} from './reducer'
 import {onPageReceived} from '../app/actions'
 import {jquerifyHtmlFile} from 'progressive-web-sdk/dist/test-utils'
+import {SELECTOR, PLACEHOLDER} from '../app/constants'
+import {baseInitialState} from '../../utils/router-utils'
+import {getComponentType} from '../../utils/utils'
+import PLP from './container'
 
 describe('The PLP reducer', () => {
     const $content = jquerifyHtmlFile('app/containers/plp/parsers/plp.test.html')
+    const untouchedState = baseInitialState.set(PLACEHOLDER, initialState)
 
     test('parses the page contents onPageReceived and updates the store', () => {
-        const newState = reducer(initialState, onPageReceived($, $content, 'PLP'))
-
-        expect(newState).not.toBe(initialState)
+        const newState = reducer(untouchedState, onPageReceived($, $content, getComponentType(PLP)))
+        expect(newState).not.toBe(untouchedState)
     })
 
     test('stores plp state using the current window.location.href as the key name', () => {
@@ -26,18 +30,20 @@ describe('The PLP reducer', () => {
             value: firstHref
         })
 
-        const oldState = reducer(initialState, onPageReceived($, $content, 'PLP', firstHref))
+        const oldState = reducer(untouchedState, onPageReceived($, $content, getComponentType(PLP), firstHref, firstHref))
         expect(oldState.has(firstHref)).toBeTruthy()
+        expect(oldState.get(SELECTOR)).toBe(firstHref)
 
         // Mock changing the URL
         window.location.href = secondHref
 
-        const newState = reducer(initialState, onPageReceived($, $content, 'PLP', secondHref))
+        const newState = reducer(oldState, onPageReceived($, $content, getComponentType(PLP), secondHref, secondHref))
         expect(newState.has(secondHref)).toBeTruthy()
+        expect(newState.get(SELECTOR)).toBe(secondHref)
     })
 
     test('does nothing for unknown action types', () => {
         const action = {type: 'qwertyuiop'}
-        expect(reducer(initialState, action)).toBe(initialState)
+        expect(reducer(untouchedState, action)).toBe(untouchedState)
     })
 })
