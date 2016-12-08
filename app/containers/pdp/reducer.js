@@ -24,13 +24,14 @@ const reducer = createReducer({
 
         if (RouterUtils.isPageType(pageType, PDP)) {
             const parsed = Immutable.fromJS(pdpParser($, $response))
+            const newState = initialState.mergeDeep(parsed)
 
             // `.withMutations` allows us to batch together changes to state
             return state.withMutations((s) => {
                 // Update the store using location.href as key and the result from
                 // the parser as our value -- even if it isn't the page we're
                 // currently viewing
-                s.set(url, parsed)
+                s.set(url, newState)
 
                 // Also set the store's current selector to location.href so we
                 // can access it in our container, but only if we're on that href
@@ -47,7 +48,7 @@ const reducer = createReducer({
 
         if (RouterUtils.isPageType(pageType, PDP)) {
             return state.withMutations((s) => {
-                if (RouterUtils.getNextSelector(state, currentURL) === PLACEHOLDER) {
+                if (!state.has(currentURL)) {
                     s.set(currentURL, initialState)
                 }
                 s.set(SELECTOR, currentURL)

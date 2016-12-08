@@ -9,7 +9,7 @@ import List from 'progressive-web-sdk/dist/components/list'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import ProductTile from './partials/product-tile'
-import {getRoutedState} from '../../utils/router-utils'
+import {getSelectorFromState} from '../../utils/router-utils'
 
 const renderResults = (products) => {
     return products.map((product, idx) => <ProductTile key={idx} product={product} />)
@@ -34,7 +34,7 @@ const renderNoResults = (bodyText) => {
 
 class PLP extends React.Component {
     shouldComponentUpdate(nextProps) {
-        return !Immutable.is(this.props.plp, nextProps.plp) || !Immutable.is(nextProps.catalog, this.props.catalog)
+        return !Immutable.is(this.props.plp, nextProps.plp) || !Immutable.is(nextProps.products, this.props.products)
     }
 
     render() {
@@ -100,14 +100,14 @@ PLP.propTypes = {
      */
     plp: PropTypes.object.isRequired,
     /**
-     * Products from the Immutable.js Catalog -> Products state object, filtered
-     * by productUrls in the Plp state object
+     * Product data from state (Catalog -> Products), filtered by the productUrls in the Plp state object
      */
     products: PropTypes.array.isRequired
 }
 
 const mapStateToProps = ({catalog, plp}) => {
-    const routedPlp = getRoutedState(plp)
+    const selector = getSelectorFromState(plp)
+    const routedPlp = plp.get(selector)
     const productUrls = routedPlp.get('productUrls').toJS()
     const catalogProducts = catalog.products
     const products = productUrls.map((url) => {

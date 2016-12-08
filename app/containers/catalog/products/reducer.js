@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import {createReducer} from 'redux-act'
 
-import * as RouterUtils from '../../../utils/router-utils'
+import {isPageType} from '../../../utils/router-utils'
 
 import PLP from '../../plp/container'
 import PDP from '../../pdp/container'
@@ -30,16 +30,25 @@ export const initialState = Immutable.fromJS({
     }
 })
 
-const productReducer = createReducer({
+const productsReducer = createReducer({
     [onPageReceived]: (state, action) => {
         const {$, $response, pageType, url} = action
 
-        if (RouterUtils.isPageType(pageType, PLP)) {
+        if (isPageType(pageType, PLP)) {
             const parsedProducts = plpParser($, $response)
-            return Immutable.fromJS(parsedProducts).mergeDeep(state)
-        } else if (RouterUtils.isPageType(pageType, PDP)) {
-            const parsedProduct = {[url]: pdpParser($, $response)}
-            return Immutable.fromJS(parsedProduct).mergeDeep(state)
+            const merger = (prev, next) => {
+                if (prev) {
+                    return prev
+                } else {
+                    return next
+                }
+            }
+            return state.mergeDeepWith(merger, Immutable.fromJS(parsedProducts))
+        } else if (isPageType(pageType, PDP)) {
+            const parsedProduct = {
+                [url]: pdpParser($, $response)
+            }
+            return state.mergeDeep(Immutable.fromJS(parsedProduct))
         } else {
             return state
         }
@@ -47,12 +56,12 @@ const productReducer = createReducer({
     [onRouteChanged]: (state, action) => {
         const {pageType, currentURL} = action
 
-        if (RouterUtils.isPageType(pageType, PDP) && !state.has(currentURL)) {
-            return state.set(currentURL, initialState)
+        if (isPageType(pageType, PDP) && !state.has(currentURL)) {
+            return state.set(currentURL, initialState.get(PLACEHOLDER))
         } else {
             return state
         }
     }
 }, initialState)
 
-export default productReducer
+export default productsReducer
