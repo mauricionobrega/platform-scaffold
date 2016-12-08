@@ -11,7 +11,6 @@ import {onPageReceived, onRouteChanged} from '../app/actions'
 import {SELECTOR, PLACEHOLDER} from '../app/constants'
 
 export const initialState = Immutable.fromJS({
-    isPlaceholder: true,
     contentsLoaded: false,
     itemQuantity: 1,
     itemAddedModalOpen: false,
@@ -24,14 +23,13 @@ const reducer = createReducer({
 
         if (RouterUtils.isPageType(pageComponent, PDP)) {
             const parsed = Immutable.fromJS(pdpParser($, $response))
-            const newState = initialState.mergeDeep(parsed)
 
             // `.withMutations` allows us to batch together changes to state
             return state.withMutations((s) => {
                 // Update the store using location.href as key and the result from
                 // the parser as our value -- even if it isn't the page we're
                 // currently viewing
-                s.set(url, newState)
+                s.mergeDeepIn([url], parsed)
 
                 // Also set the store's current selector to location.href so we
                 // can access it in our container, but only if we're on that href

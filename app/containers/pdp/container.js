@@ -22,7 +22,6 @@ class PDP extends React.Component {
             quantityAdded,
             itemAddedModalOpen,
             formInfo,
-            isPlaceholder,
             contentsLoaded
         } = this.props.pdp.toJS()
 
@@ -57,7 +56,7 @@ class PDP extends React.Component {
                     disabled={!contentsLoaded}
                 />
 
-                {!isPlaceholder && contentsLoaded &&
+                {contentsLoaded &&
                     <PDPItemAddedModal
                         open={itemAddedModalOpen}
                         onDismiss={closeItemAddedModal}
