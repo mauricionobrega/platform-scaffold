@@ -8,7 +8,7 @@ import {SELECTOR, PLACEHOLDER} from '../app/constants'
 import plpParser from './parsers/plp'
 import PLP from './container'
 
-export const initialState = Immutable.Map({
+export const initialState = Immutable.fromJS({
     isPlaceholder: true,
     hasProducts: true,
     numItems: '',

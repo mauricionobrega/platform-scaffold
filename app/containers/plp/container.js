@@ -39,7 +39,6 @@ class PLP extends React.Component {
 
     render() {
         const {
-            productUrls,
             hasProducts,
             isPlaceholder,
             noResultsText,
@@ -47,10 +46,7 @@ class PLP extends React.Component {
             title
         } = this.props.plp.toJS()
 
-        const catalog = this.props.catalog.toJS()
-        const products = productUrls.map((url) => {
-            return catalog[url]
-        })
+        const products = this.props.products
 
         return (
             <div className="t-plp">
@@ -100,19 +96,26 @@ class PLP extends React.Component {
 
 PLP.propTypes = {
     /**
-     * The Immutable.js Catalog -> Products state object
-     */
-    catalog: PropTypes.object.isRequired,
-    /**
      * The Immutable.js PLP state object
      */
-    plp: PropTypes.object.isRequired
+    plp: PropTypes.object.isRequired,
+    /**
+     * Products from the Immutable.js Catalog -> Products state object, filtered
+     * by productUrls in the Plp state object
+     */
+    products: PropTypes.array.isRequired
 }
 
 const mapStateToProps = ({catalog, plp}) => {
+    const routedPlp = getRoutedState(plp)
+    const productUrls = routedPlp.get('productUrls').toJS()
+    const catalogProducts = catalog.products
+    const products = productUrls.map((url) => {
+        return catalogProducts.get(url).toJS()
+    })
     return {
-        catalog: catalog.products,
-        plp: getRoutedState(plp)
+        products,
+        plp: routedPlp
     }
 }
 
