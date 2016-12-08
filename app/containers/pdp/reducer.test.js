@@ -4,10 +4,14 @@ import reducer, {initialState} from './reducer'
 
 import * as appActions from '../app/actions'
 import * as pdpActions from './actions'
+import PDP from './container'
+
+import Home from '../home/container'
 
 import {jquerifyHtmlFile} from 'progressive-web-sdk/dist/test-utils'
 import {SELECTOR, PLACEHOLDER} from '../app/constants'
 import {baseInitialState} from '../../utils/router-utils'
+import {getComponentType} from '../../utils/utils'
 
 const untouchedState = baseInitialState.set(PLACEHOLDER, initialState)
 const $content = jquerifyHtmlFile('app/containers/pdp/parsers/pdp-example.html')
@@ -24,15 +28,15 @@ test('unknown action type leaves state unchanged', () => {
     expect(reducer(inputState, action)).toEqual(inputState)
 })
 
-test('appActions.onPageReceived does nothing when pageType !== PDP', () => {
-    const action = appActions.onPageReceived($, $content, 'Home')
+test('appActions.onPageReceived does nothing when pageComponent !== PDP', () => {
+    const action = appActions.onPageReceived($, $content, getComponentType(Home))
     const inputState = Map()
 
     expect(reducer(inputState, action)).toEqual(inputState)
 })
 
 test('appActions.onPageReceived causes the page to be parsed into the state', () => {
-    const newState = reducer(untouchedState, appActions.onPageReceived($, $content, 'PDP'))
+    const newState = reducer(untouchedState, appActions.onPageReceived($, $content, getComponentType(PDP)))
     expect(newState).not.toBe(untouchedState)
 })
 
@@ -59,14 +63,14 @@ test('stores pdp state using the current window.location.href as the key name', 
         value: firstHref
     })
 
-    const oldState = reducer(untouchedState, appActions.onPageReceived($, $content, 'PDP', firstHref, firstHref))
+    const oldState = reducer(untouchedState, appActions.onPageReceived($, $content, getComponentType(PDP), firstHref, firstHref))
     expect(oldState.has(firstHref)).toBeTruthy()
     expect(oldState.get(SELECTOR)).toBe(firstHref)
 
     // Mock changing the URL
     window.location.href = secondHref
 
-    const newState = reducer(oldState, appActions.onPageReceived($, $content, 'PDP', secondHref, secondHref))
+    const newState = reducer(oldState, appActions.onPageReceived($, $content, getComponentType(PDP), secondHref, secondHref))
     expect(newState.has(secondHref)).toBeTruthy()
     expect(newState.get(SELECTOR)).toBe(secondHref)
 })

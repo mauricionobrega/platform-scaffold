@@ -32,9 +32,9 @@ export const initialState = Immutable.fromJS({
 
 const productsReducer = createReducer({
     [onPageReceived]: (state, action) => {
-        const {$, $response, pageType, url} = action
+        const {$, $response, pageComponent, url} = action
 
-        if (isPageType(pageType, PLP)) {
+        if (isPageType(pageComponent, PLP)) {
             const parsedProducts = plpParser($, $response)
             const merger = (prev, next) => {
                 if (prev) {
@@ -44,7 +44,7 @@ const productsReducer = createReducer({
                 }
             }
             return state.mergeDeepWith(merger, Immutable.fromJS(parsedProducts))
-        } else if (isPageType(pageType, PDP)) {
+        } else if (isPageType(pageComponent, PDP)) {
             const parsedProduct = {
                 [url]: pdpParser($, $response)
             }
@@ -54,9 +54,9 @@ const productsReducer = createReducer({
         }
     },
     [onRouteChanged]: (state, action) => {
-        const {pageType, currentURL} = action
+        const {pageComponent, currentURL} = action
 
-        if (isPageType(pageType, PDP) && !state.has(currentURL)) {
+        if (isPageType(pageComponent, PDP) && !state.has(currentURL)) {
             return state.set(currentURL, initialState.get(PLACEHOLDER))
         } else {
             return state

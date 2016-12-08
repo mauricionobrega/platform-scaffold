@@ -3,7 +3,7 @@ import {Router, Route, IndexRoute} from 'progressive-web-sdk/dist/routing'
 import {triggerMobifyPageView} from 'progressive-web-sdk/dist/analytics'
 import {Provider} from 'react-redux'
 import * as appActions from './containers/app/actions'
-import {getComponentName} from './utils/utils'
+import {getComponentType} from './utils/utils'
 
 // Containers
 import App from './containers/app/container'
@@ -28,13 +28,13 @@ const AppProvider = ({store}) => {
         ].join('')
     }
 
-    const getPageType = (routerState) => getComponentName(routerState.routes[1].component)
+    const getPageComponent = (routerState) => getComponentType(routerState.routes[1].component)
 
     const getRouteName = (routerState) => routerState.routes[1].routeName
 
-    const dispatchRouteChanged = (nextState) => store.dispatch(appActions.onRouteChanged(getURL(nextState), getPageType(nextState)))
+    const dispatchRouteChanged = (nextState) => store.dispatch(appActions.onRouteChanged(getURL(nextState), getPageComponent(nextState)))
 
-    const dispatchFetchPage = (nextState) => store.dispatch(appActions.fetchPage(getURL(nextState), getPageType(nextState), getRouteName(nextState)))
+    const dispatchFetchPage = (nextState) => store.dispatch(appActions.fetchPage(getURL(nextState), getPageComponent(nextState), getRouteName(nextState)))
 
     const onEnter = (nextState) => {
         triggerMobifyPageView(nextState.routes[1].routeName)

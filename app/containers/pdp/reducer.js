@@ -20,9 +20,9 @@ export const initialState = Immutable.fromJS({
 
 const reducer = createReducer({
     [onPageReceived]: (state, action) => {
-        const {$, $response, pageType, url, currentURL} = action
+        const {$, $response, pageComponent, url, currentURL} = action
 
-        if (RouterUtils.isPageType(pageType, PDP)) {
+        if (RouterUtils.isPageType(pageComponent, PDP)) {
             const parsed = Immutable.fromJS(pdpParser($, $response))
             const newState = initialState.mergeDeep(parsed)
 
@@ -44,9 +44,9 @@ const reducer = createReducer({
         }
     },
     [onRouteChanged]: (state, action) => {
-        const {pageType, currentURL} = action
+        const {pageComponent, currentURL} = action
 
-        if (RouterUtils.isPageType(pageType, PDP)) {
+        if (RouterUtils.isPageType(pageComponent, PDP)) {
             return state.withMutations((s) => {
                 if (!state.has(currentURL)) {
                     s.set(currentURL, initialState)
