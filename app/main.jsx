@@ -20,7 +20,7 @@ import {initMobifyAnalytics} from 'progressive-web-sdk/dist/analytics'
 
 polyfill()
 
-initMobifyAnalytics(PROJECT_SLUG) // eslint-disable-line no-undef
+initMobifyAnalytics(AJS_SLUG) // eslint-disable-line no-undef
 initCacheManifest(cacheHashManifest)
 
 const store = configureStore()
