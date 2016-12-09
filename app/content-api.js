@@ -20,7 +20,6 @@ const waitForJQuery = new Promise((resolve) => {
 
 const frame = new ChildFrame({
     debug: true,
-    willFireReady: true,
     readyCheck: waitForJQuery
 })
 
@@ -30,6 +29,7 @@ frame
         // @TODO: Determine if Magento lets us know when UI is ready
         setTimeout(() => {
             $(selector).click()
+            alert('sup!')
             // Animation delay
             setTimeout(() => {
                 resolve($('html').hasClass('nav-open'))
