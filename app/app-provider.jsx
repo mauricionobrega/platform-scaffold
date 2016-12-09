@@ -3,7 +3,7 @@ import {Router, Route, IndexRoute} from 'progressive-web-sdk/dist/routing'
 import {triggerMobifyPageView} from 'progressive-web-sdk/dist/analytics'
 import {Provider} from 'react-redux'
 import * as appActions from './containers/app/actions'
-import {getComponentName} from './utils/utils'
+import {getComponentType} from './utils/utils'
 
 // Containers
 import App from './containers/app/container'
@@ -28,11 +28,13 @@ const AppProvider = ({store}) => {
         ].join('')
     }
 
-    const getPageType = (routerState) => getComponentName(routerState.routes[1].component)
+    const getPageComponent = (routerState) => getComponentType(routerState.routes[1].component)
 
-    const dispatchRouteChanged = (nextState) => store.dispatch(appActions.onRouteChanged(getURL(nextState), getPageType(nextState)))
+    const getRouteName = (routerState) => routerState.routes[1].routeName
 
-    const dispatchFetchPage = (nextState) => store.dispatch(appActions.fetchPage(getURL(nextState), getPageType(nextState)))
+    const dispatchRouteChanged = (nextState) => store.dispatch(appActions.onRouteChanged(getURL(nextState), getPageComponent(nextState)))
+
+    const dispatchFetchPage = (nextState) => store.dispatch(appActions.fetchPage(getURL(nextState), getPageComponent(nextState), getRouteName(nextState)))
 
     const onEnter = (nextState) => {
         triggerMobifyPageView(nextState.routes[1].routeName)
@@ -55,7 +57,8 @@ const AppProvider = ({store}) => {
             <Router>
                 <Route path="/" component={App} onEnter={onEnter} onChange={onChange}>
                     <IndexRoute component={Home} routeName="home" />
-                    <Route component={Login} path="customer/account/login/" routeName="login" />
+                    <Route component={Login} path="customer/account/login/" routeName="signin" />
+                    <Route component={Login} path="customer/account/create/" routeName="register" />
                     <Route component={PLP} path="potions.html" routeName="productListPage" />
                     <Route component={PLP} path="books.html" routeName="productListPage" />
                     <Route component={PLP} path="ingredients.html" routeName="productListPage" />

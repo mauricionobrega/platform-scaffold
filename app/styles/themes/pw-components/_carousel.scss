@@ -1,8 +1,8 @@
 // Carousel Theme
 // ===
 //
-// 1. Position context for the child `.c--side-controls .pw-carousel__previous`
-//    and `.c--side-controls .pw-carousel__next` elements
+// 1. Position context for the child `.pw--side-controls .pw-carousel__previous`
+//    and `.pw--side-controls .pw-carousel__next` elements
 
 .pw-carousel {
     position: relative; // 1
@@ -12,11 +12,7 @@
 // Carousel Modifier: Frame
 // ---
 
-.pw-carousel.c--frame {
-    padding: $unit*1.5;
-
-    background: $neutral-20;
-
+.pw-carousel.pw--frame {
     .pw-carousel__item {
         margin: 0 $unit;
         padding: $unit*3;
@@ -30,9 +26,9 @@
 // Carousel Modifier: Side Controls
 // ---
 //
-// 1. Positioned absolute relative to the parent `c-carousel` container
+// 1. Positioned absolute relative to the parent `pw-carousel` container
 
-.pw-carousel.c--side-controls {
+.pw-carousel.pw--side-controls {
     .pw-carousel__previous,
     .pw-carousel__next {
         position: absolute; // 1

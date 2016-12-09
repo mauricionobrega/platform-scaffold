@@ -9,30 +9,28 @@ import PDPAddToCart from './partials/pdp-add-to-cart'
 import PDPItemAddedModal from './partials/pdp-item-added-modal'
 import {stripEvent} from '../../utils/utils'
 import * as pdpActions from './actions'
-
-import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
+import {getRoutedState} from '../../utils/router-utils'
 
 class PDP extends React.Component {
     shouldComponentUpdate(newProps) {
-        return !Immutable.is(newProps.pdp, this.props.pdp)
+        return !Immutable.is(newProps.routedState, this.props.routedState)
     }
 
     render() {
         const {
-            pdp,
+            product,
+            itemQuantity,
+            quantityAdded,
+            itemAddedModalOpen,
+            formInfo,
+            isPlaceholder,
+            contentsLoaded
+        } = this.props.routedState.toJS()
+        const {
             setQuantity,
             addToCart,
             closeItemAddedModal
         } = this.props
-
-        const {
-            product,
-            itemQuantity,
-            quantityAdded,
-            formInfo,
-            itemAddedModalOpen,
-            contentsLoaded
-        } = pdp.toJS()
 
         const {
             carouselItems,
@@ -42,26 +40,26 @@ class PDP extends React.Component {
         return (
             <div className="t-pdp">
                 <PDPHeading {...product} />
-                <PDPCarousel items={carouselItems} />
-                {contentsLoaded ?
-                    <div>
-                        <PDPDescription
-                            description={description} />
-                        <PDPAddToCart
-                            formInfo={formInfo}
-                            quantity={itemQuantity}
-                            setQuantity={setQuantity}
-                            onSubmit={addToCart} />
-                        <PDPItemAddedModal
-                            open={itemAddedModalOpen}
-                            onDismiss={closeItemAddedModal}
-                            product={product}
-                            quantity={quantityAdded} />
-                    </div>
-                :
-                    <div className="u-padding-md">
-                        <SkeletonText lines={5} width="100%" size="24px" lineClassName="u-margin-bottom" />
-                    </div>
+
+                <PDPCarousel items={carouselItems} contentsLoaded={contentsLoaded} />
+
+                <PDPDescription description={description} />
+
+                <PDPAddToCart
+                    formInfo={formInfo}
+                    quantity={itemQuantity}
+                    setQuantity={setQuantity}
+                    onSubmit={addToCart}
+                    disabled={!contentsLoaded}
+                />
+
+                {!isPlaceholder && contentsLoaded &&
+                    <PDPItemAddedModal
+                        open={itemAddedModalOpen}
+                        onDismiss={closeItemAddedModal}
+                        product={product}
+                        quantity={quantityAdded}
+                    />
                 }
             </div>
         )
@@ -69,14 +67,25 @@ class PDP extends React.Component {
 }
 
 PDP.propTypes = {
-    pdp: PropTypes.object.isRequired,
-    addToCart: PropTypes.func,
-    closeItemAddedModal: PropTypes.func,
-    setQuantity: PropTypes.func
+    /**
+     * Function to submit the add-to-cart form
+     */
+    addToCart: PropTypes.func.isRequired,
+    /**
+     * Callback when the added-to-cart modal closes
+     */
+    closeItemAddedModal: PropTypes.func.isRequired,
+    /**
+     * The Immutable.js state object, for use with shouldComponentUpdate
+     */
+    routedState: PropTypes.object.isRequired,
+    /**
+     * Function to update the item quantity when user changes it
+     */
+    setQuantity: PropTypes.func.isRequired,
 }
 
-
-const mapStateToProps = ({pdp}) => ({pdp})
+export const mapStateToProps = ({pdp}) => ({routedState: getRoutedState(pdp)})
 
 const mapDispatchToProps = {
     setQuantity: pdpActions.setItemQuantity,

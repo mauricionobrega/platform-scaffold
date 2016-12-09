@@ -204,6 +204,13 @@
 // @import 'pw-components/rating';
 
 
+// Ratio
+// ---
+
+@import 'node_modules/progressive-web-sdk/dist/components/ratio/base';
+// @import 'pw-components/ratio';
+
+
 // Select
 // ---
 
@@ -257,4 +264,4 @@
 // ---
 
 @import 'node_modules/progressive-web-sdk/dist/components/tabs/base';
-// @import 'pw-components/tabs';
+@import 'pw-components/tabs';

@@ -33,7 +33,7 @@ const logger = {
 
         console.log(
             chalk.bold('Preview URL: ') + // eslint-disable-line prefer-template
-            chalk.magenta(`https://preview.mobify.com/?url=https%3A%2F%2Fwww.merlinspotions.com%2F&site_folder=https%3A%2F%2Flocalhost%3A${port}%2Floader.js&disabled=0&domain=&scope=1`) + '\n' +
+            chalk.magenta(`https://preview.mobify.com/?url=https%3A%2F%2Fwww.merlinspotions.com%2F&site_folder=https%3A%2F%2Flocalhost%3A${port}%2Floader.js&disabled=0&domain=&scope=0`) + '\n' +
             divider + '\n' +
             chalk.blue(`Press ${chalk.italic('CTRL-C')} to stop`) + '\n'
         )

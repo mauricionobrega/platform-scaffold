@@ -9,10 +9,10 @@
 
 @keyframes background-shimmer {
     0% {
-        background-position: 100% 0;
+        transform: translateX(-5000%);
     }
 
     to {
-        background-position: -100% 0;
+        transform: translateX(5000%);
     }
 }
