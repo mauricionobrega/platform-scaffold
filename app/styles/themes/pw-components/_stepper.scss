@@ -30,3 +30,29 @@
         color: $neutral-40;
     }
 }
+
+
+// Simple Variaton
+// ---
+
+.pw-stepper.pw--simple {
+    input {
+        width: $unit * 1.5;
+        padding: 0;
+    }
+
+    .pw-stepper__button {
+        color: $brand-color;
+
+        &,
+        &:active,
+        &:focus,
+        &[disabled] {
+            background: transparent;
+        }
+    }
+
+    .pw-stepper__button[disabled] {
+        opacity: 0.15;
+    }
+}

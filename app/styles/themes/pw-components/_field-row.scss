@@ -2,6 +2,8 @@
 // ===
 
 .c-field-row {
+    align-items: baseline;
+
     & + & {
         margin-top: $unit*1.5;
     }
