@@ -8,7 +8,6 @@ const mainConfig = require('./base.main')
 const workerConfig = require('./base.worker')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
-// TODO: Why is this here instead of base.main.js?
 mainConfig.module.rules = mainConfig.module.rules.concat({
     test: /\.scss$/,
     loader: ExtractTextPlugin.extract(['css-loader?-autoprefixer&-url', 'postcss-loader', 'sass-loader']),
