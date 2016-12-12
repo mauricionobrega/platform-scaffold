@@ -9,12 +9,12 @@ import List from 'progressive-web-sdk/dist/components/list'
 import ProductItem from '../../../components/product-item'
 import Stepper from 'progressive-web-sdk/dist/components/stepper'
 
-const CartProductList = ({items}) => (
+const CartProductList = ({cart}) => (
     <div className="t-cart__product-list">
         <div className="t-cart__product-list-title u-padding-top-md u-padding-bottom-md">
             <div className="u-flexbox u-align-center">
                 <h1 className="u-flex">
-                    Cart (x Items)
+                    Cart ({cart.summary_count} Items)
                 </h1>
 
                 <Button className="u-flex-none u-color-brand">
@@ -25,7 +25,7 @@ const CartProductList = ({items}) => (
         </div>
 
         <List className="u-bg-color-neutral-10 u-border-light-top u-border-light-bottom">
-            {items.map((item, idx) => {
+            {cart.items.map((item, idx) => {
                 const productImage = (
                     <Image
                         src={item.product_image.src}
@@ -93,7 +93,7 @@ const CartProductList = ({items}) => (
 )
 
 CartProductList.propTypes = {
-    items: PropTypes.array
+    cart: PropTypes.object,
 }
 
 export default CartProductList

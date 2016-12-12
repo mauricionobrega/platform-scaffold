@@ -16,15 +16,15 @@ class Cart extends React.Component {
         return !Immutable.is(newProps.miniCart, this.props.miniCart)
     }
 
-    renderItems(items) {
+    renderItems(cart) {
         return (
             <div>
                 <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 7}}>
-                    <CartProductList items={items} />
+                    <CartProductList cart={cart} />
                 </GridSpan>
 
                 <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 5}}>
-                    <CartSummary />
+                    <CartSummary cart={cart} />
 
                     <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg">
                         <Button className="c--tertiary u-width-full">
@@ -68,18 +68,14 @@ class Cart extends React.Component {
     }
 
     render() {
-        let items = this.props.miniCart.getIn(['cart', 'items'], false)
-        const productsArePresent = !!items
-
-        if (items) {
-            items = items.toJS()
-        }
+        const cart = this.props.miniCart.get('cart').toJS()
+        const productsArePresent = !!cart.items
 
         return (
             <div className="t-cart u-bg-color-neutral-20">
                 <Grid className="u-center-piece">
-                    {productsArePresent && items.length ?
-                        this.renderItems(items)
+                    {productsArePresent && cart.items.length ?
+                        this.renderItems(cart)
                     :
                         this.renderEmpty()
                     }

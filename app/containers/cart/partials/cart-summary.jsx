@@ -5,7 +5,7 @@ import CartPromoForm from './cart-promo-form'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import {Ledger, LedgerRow} from 'progressive-web-sdk/dist/components/ledger'
 
-const CartSummary = () => {
+const CartSummary = ({cart}) => {
     const calculateButton = (
         <Button innerClassName="u-padding-end-0 u-color-brand">
             Calculate <Icon name="chevron-right" />
@@ -29,8 +29,8 @@ const CartSummary = () => {
 
                 <Ledger className="u-border-light-top">
                     <LedgerRow
-                        label="Subtotal (x items)"
-                        value="$59.99"
+                        label={`Subtotal (${cart.summary_count} items)`}
+                        value={cart.subtotal_excl_tax}
                     />
 
                     <LedgerRow
@@ -53,7 +53,7 @@ const CartSummary = () => {
                     <LedgerRow
                         label="Total"
                         isTotal={true}
-                        value="$59.99"
+                        value={cart.subtotal_incl_tax}
                     />
                 </Ledger>
 
@@ -69,7 +69,7 @@ const CartSummary = () => {
 }
 
 CartSummary.propTypes = {
-    items: PropTypes.array
+    cart: PropTypes.object
 }
 
 export default CartSummary
