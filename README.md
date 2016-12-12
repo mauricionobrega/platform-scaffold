@@ -29,7 +29,9 @@ npm run docs:dev
 
 ## Add, remove, or edit svg icons
 
-To add, remove, or edit project svg icons from `app/static/svg`,  run the following command to create new spritesheet. (This spritesheet lives in `app/sprite/sprite.svg`.)
+To update the SVG sprite to match any additions, removals, or changes made to SVG icons from `app/static/svg`, run the following command to create new spritesheet. (This spritesheet lives in `app/sprite/sprite.svg`.)
+
+_SVG can be used as an icon system to replace icon fonts. SVG Sprits is just like bitmaps, we can create image sprites with SVG._
 
 ```
 npm run build-sprites
