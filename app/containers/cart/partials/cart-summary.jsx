@@ -14,7 +14,7 @@ const CartSummary = () => {
 
     return (
         <div className="t-cart__summary">
-            <div className="t-cart__summary-title u-padding-top-md u-padding-bottom-md">
+            <div className="t-cart__summary-title">
                 <div className="u-flexbox u-align-center">
                     <h2 className="u-flex">
                         Order Summary
