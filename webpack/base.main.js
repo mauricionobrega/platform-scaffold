@@ -35,7 +35,8 @@ module.exports = {
             {from: 'app/static/', to: 'static/'}
         ]),
         new webpack.DefinePlugin({
-            PROJECT_SLUG: JSON.stringify(require('../package.json').projectSlug) // eslint-disable-line import/no-extraneous-dependencies
+            PROJECT_SLUG: JSON.stringify(require('../package.json').projectSlug), // eslint-disable-line import/no-extraneous-dependencies
+            AJS_SLUG: JSON.stringify(require('../package.json').aJSSlug) // eslint-disable-line import/no-extraneous-dependencies
         })
     ],
     module: {
