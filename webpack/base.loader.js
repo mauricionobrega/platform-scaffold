@@ -23,8 +23,7 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        cacheDirectory: `${__dirname}/tmp`,
-                        presets: 'es2015'
+                        cacheDirectory: `${__dirname}/tmp`
                     }
                 }
             },
