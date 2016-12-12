@@ -2,13 +2,15 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import Immutable from 'immutable'
 
+import Link from 'progressive-web-sdk/dist/components/link'
+
 import * as checkoutConfirmationActions from './actions'
 
 const containerClass = 't-checkout-confirmation'
 
 class CheckoutConfirmation extends React.Component {
     componentDidMount() {
-        this.props.fetchContents()
+        // this.props.fetchContents()
     }
 
     shouldComponentUpdate(newProps) {
@@ -25,6 +27,12 @@ class CheckoutConfirmation extends React.Component {
             contentsLoaded &&
                 <div className={containerClass}>
                     {testText}
+                    <div>
+                        <Link href="/checkout/shipping/" className="u-text-small">To Shipping</Link>
+                    </div>
+                    <div>
+                        <Link href="/" className="u-text-small">Home</Link>
+                    </div>
                 </div>
         )
     }

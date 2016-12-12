@@ -4,8 +4,8 @@ import * as checkoutConfirmationActions from './actions'
 
 const initialState = Immutable.fromJS({
     body: '',
-    contentsLoaded: false,
-    testText: ''
+    contentsLoaded: true,
+    testText: 'Confirmation'
 })
 
 export default createReducer({

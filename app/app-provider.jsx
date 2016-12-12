@@ -11,7 +11,9 @@ import Home from './containers/home/container'
 import Login from './containers/login/container'
 import PLP from './containers/plp/container'
 import PDP from './containers/pdp/container'
-
+import CheckoutShipping from './containers/checkout-shipping/container'
+import CheckoutPayment from './containers/checkout-payment/container'
+import CheckoutConfirmation from './containers/checkout-confirmation/container'
 
 const AppProvider = ({store}) => {
     /**
@@ -28,6 +30,8 @@ const AppProvider = ({store}) => {
         ].join('')
     }
 
+    const shouldFetchPage = (routerState) => routerState.routes[1].fetchPage !== 'false'
+
     const getPageComponent = (routerState) => getComponentType(routerState.routes[1].component)
 
     const getRouteName = (routerState) => routerState.routes[1].routeName
@@ -39,7 +43,9 @@ const AppProvider = ({store}) => {
     const onEnter = (nextState) => {
         triggerMobifyPageView(nextState.routes[1].routeName)
         dispatchRouteChanged(nextState)
-        dispatchFetchPage(nextState)
+        if (shouldFetchPage(nextState)) {
+            dispatchFetchPage(nextState)
+        }
     }
 
     const onChange = (prevState, nextState) => {
@@ -48,7 +54,9 @@ const AppProvider = ({store}) => {
 
         if (nextURL !== prevURL) {
             dispatchRouteChanged(nextState)
-            dispatchFetchPage(nextState)
+            if (shouldFetchPage(nextState)) {
+                dispatchFetchPage(nextState)
+            }
         }
     }
 
@@ -65,6 +73,9 @@ const AppProvider = ({store}) => {
                     <Route component={PLP} path="supplies.html" routeName="productListPage" />
                     <Route component={PLP} path="new-arrivals.html" routeName="productListPage" />
                     <Route component={PDP} path="*.html" routeName="productDetailsPage" />
+                    <Route component={CheckoutShipping} path="checkout/shipping/" routeName="checkingShipping" fetchPage="false" />
+                    <Route component={CheckoutPayment} path="checkout/payment/" routeName="checkingPayment" fetchPage="false" />
+                    <Route component={CheckoutConfirmation} path="checkout/confirmation/" routeName="checkingConfirmation" fetchPage="false" />
                 </Route>
             </Router>
         </Provider>
