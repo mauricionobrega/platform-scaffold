@@ -27,6 +27,14 @@ To run the project documentation, including a live styleguide, use:
 npm run docs:dev
 ```
 
+## Add, remove, or edit svg icons
+
+To add, remove, or edit project svg icons from `app/static/svg`,  run the following command to create new spritesheet. (This spritesheet lives in `app/sprite/sprite.svg`.)
+
+```
+npm run build-sprites
+```
+
 ## Tests
 
 To run the full test suite, you can use:
