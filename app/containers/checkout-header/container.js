@@ -7,8 +7,6 @@ import Button from 'progressive-web-sdk/dist/components/button'
 import IconLabel from 'progressive-web-sdk/dist/components/icon-label'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 import Link from 'progressive-web-sdk/dist/components/link'
-import logo from '../../static/svg/logo.svg'
-import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
 
 class CheckoutHeader extends React.Component {
     shouldComponentUpdate(nextProps) {
@@ -18,25 +16,22 @@ class CheckoutHeader extends React.Component {
     render() {
         const {header} = this.props
 
-        const innerButtonClassName = classnames('t-header__inner-button', 'u-padding-0', {
+        const innerButtonClassName = classnames('t-checkout-header__inner-button', 'u-padding-0', {
             't--hide-label': false
         })
 
-        const linkClassName = classnames('t-header__link', {
+        const linkClassName = classnames('t-checkout-header__link', {
             't--fade-sparkles': false
         })
 
         return (
-            <header className="t-header">
-                <HeaderBar className="t-header__bar">
-                    <div className="t-header__placeholder" />
+            <header className="t-checkout-header">
+                <HeaderBar className="t-checkout-header__bar">
+                    <div className="t-checkout-header__placeholder" />
 
                     <div className="u-flex">
                         <HeaderBarTitle>
                             <Link href="/" className={linkClassName}>
-                                <DangerousHTML html={logo}>
-                                    {(htmlObj) => <div className="t-header__logo" dangerouslySetInnerHTML={htmlObj} />}
-                                </DangerousHTML>
                                 <h1 className="u-visually-hidden">Merlin's Potions</h1>
                             </Link>
                         </HeaderBarTitle>
