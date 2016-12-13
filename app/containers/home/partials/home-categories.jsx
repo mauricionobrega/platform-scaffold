@@ -11,7 +11,8 @@ import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 const getImage = (alt) => {
     return alt ? (
         <Image
-            src={getAssetUrl(`static/img/categories/${alt.trim().toLowerCase()}@2x.png`)}
+            src={getAssetUrl(`static/img/categories/${alt.trim().replace(/\s+/g, '-')
+            .toLowerCase()}@2x.png`)}
             alt={alt}
             height="60px"
             width="60px"
