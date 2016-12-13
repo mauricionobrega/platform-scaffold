@@ -5,8 +5,8 @@ import Immutable from 'immutable'
 import Link from 'progressive-web-sdk/dist/components/link'
 
 import * as checkoutShippingActions from './actions'
+import CheckoutShippingReduxForm from './partials/checkout-shipping-form'
 
-const containerClass = 't-checkout-shipping'
 
 class CheckoutShipping extends React.Component {
     componentDidMount() {
@@ -20,17 +20,12 @@ class CheckoutShipping extends React.Component {
     render() {
         const {
             contentsLoaded,
-            testText
         } = this.props.checkoutShipping.toJS()
 
-        return (
-            contentsLoaded &&
-                <div className={containerClass}>
-                    {testText}
-                    <div>
-                        <Link href="/checkout/payment/" className="u-text-small">To Payment</Link>
-                    </div>
-                </div>
+        return contentsLoaded && (
+            <div className="t-checkout-shipping u-bg-color-neutral-20">
+                <CheckoutShippingReduxForm />
+            </div>
         )
     }
 }
