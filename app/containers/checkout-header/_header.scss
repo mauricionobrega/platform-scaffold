@@ -1,0 +1,114 @@
+// Header
+// ===
+//
+// 1. The expected height of the site HeaderBar (.t-header__bar)
+// 2. Ensure header bar appears above page content
+
+.t-header {
+    padding-top: 52px; // 1
+}
+
+
+// Bar
+// ---
+
+.t-header__bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: $z2-depth; // 2
+
+    overflow: hidden;
+    width: 100vw;
+
+    box-shadow: $large-box-shadow;
+}
+
+
+// Placeholder
+// ---
+//
+// This is a fake button to help ensure that the site logo always stays centered
+
+.t-header__placeholder {
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+}
+
+
+// Inner Button
+// ---
+//
+// 1. Ensures the icon inside it vertically aligns to the center
+// 2. This value should aim to sit the icon vertically in the middle of `.t-header`
+
+.t-header__inner-button {
+    line-height: 0; // 1
+
+    .pw-icon,
+    .pw-icon-label__label {
+        opacity: 1;
+
+        transform: translateY(0);
+
+        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    &.t--hide-label {
+        .pw-icon {
+            transform: translateY(40%); // 2
+        }
+
+        .pw-icon-label__label {
+            opacity: 0;
+
+            transform: translateY(100%);
+        }
+    }
+}
+
+
+// Link
+// ---
+
+.t-header__link {
+    .c-button__inner {
+        padding: 0;
+    }
+
+    [id*='logo-sparkle-1'],
+    [id*="logo-sparkle-2"] {
+        opacity: 0.3;
+
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    &.t--fade-sparkles {
+        [id*='logo-sparkle-1'],
+        [id*="logo-sparkle-2"] {
+            opacity: 1;
+        }
+    }
+}
+
+
+// Logo
+// ---
+
+.t-header__logo {
+    width: 67px;
+    height: 28px;
+}
+
+
+// Badge
+// ---
+//
+// 1. Absolutely positioned relative to the parent `.u-position-relative` container
+
+.t-header__badge {
+    position: absolute; // 1
+    top: 0;
+    right: 0;
+}
