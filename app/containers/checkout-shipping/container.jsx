@@ -2,10 +2,9 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import Immutable from 'immutable'
 
-import Link from 'progressive-web-sdk/dist/components/link'
-
 import * as checkoutShippingActions from './actions'
 import CheckoutShippingReduxForm from './partials/checkout-shipping-form'
+import {ProgressSteps, ProgressStepsItem} from 'progressive-web-sdk/dist/components/progress-steps'
 
 
 class CheckoutShipping extends React.Component {
@@ -24,6 +23,15 @@ class CheckoutShipping extends React.Component {
 
         return contentsLoaded && (
             <div className="t-checkout-shipping u-bg-color-neutral-20">
+                <div className="u-bg-color-neutral-10 u-border-light-bottom">
+                    <ProgressSteps className="u-center-piece">
+                        <ProgressStepsItem icon="cart" title="Cart" href="#" />
+                        <ProgressStepsItem icon="star" current title="Shipping" />
+                        <ProgressStepsItem icon="star" title="Payment" />
+                        <ProgressStepsItem icon="check" title="Done" />
+                    </ProgressSteps>
+                </div>
+
                 <CheckoutShippingReduxForm />
             </div>
         )

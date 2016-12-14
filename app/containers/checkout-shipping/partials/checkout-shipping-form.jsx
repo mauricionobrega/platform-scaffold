@@ -6,7 +6,6 @@ import Field from 'progressive-web-sdk/dist/components/field'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 import {Grid, GridSpan} from '../../../components/grid'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
-import {ProgressSteps, ProgressStepsItem} from 'progressive-web-sdk/dist/components/progress-steps'
 
 const renderEmailAddress = () => {
     const emailHint = (
@@ -35,7 +34,7 @@ const renderEmailAddress = () => {
 const renderShippingAddress = () => {
     const addCompanyButton = (
         <Button className="c--is-anchor" innerClassName="u-padding-0">
-            <span className="u-color-brand u-text-underline ">
+            <span className="u-color-brand u-text-letter-spacing-normal u-text-small">
                 Add company or apt #
             </span>
         </Button>
@@ -142,15 +141,6 @@ const CheckoutShippingForm = (props) => {
 
     return (
         <form onSubmit={handleSubmit} noValidate>
-            <div className="u-bg-color-neutral-10 u-border-light-bottom">
-                <ProgressSteps className="u-center-piece">
-                    <ProgressStepsItem icon="cart" title="Cart" href="#" />
-                    <ProgressStepsItem icon="star" current title="Shipping" />
-                    <ProgressStepsItem icon="star" title="Payment" />
-                    <ProgressStepsItem icon="check" title="Done" />
-                </ProgressSteps>
-            </div>
-
             <Grid className="u-center-piece">
                 <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 7}}>
                     {renderEmailAddress()}
@@ -191,7 +181,7 @@ const validate = (values) => {
 }
 
 const CheckoutShippingReduxForm = ReduxForm.reduxForm({
-    form: 'newsletterForm',
+    form: 'shippingForm',
     validate,
 })(CheckoutShippingForm)
 

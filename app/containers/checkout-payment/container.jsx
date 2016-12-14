@@ -2,11 +2,9 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import Immutable from 'immutable'
 
-import Link from 'progressive-web-sdk/dist/components/link'
-
 import * as checkoutPaymentActions from './actions'
-
-const containerClass = 't-checkout-payment'
+import CheckoutPaymentReduxForm from './partials/checkout-payment-form'
+import {ProgressSteps, ProgressStepsItem} from 'progressive-web-sdk/dist/components/progress-steps'
 
 class CheckoutPayment extends React.Component {
     componentDidMount() {
@@ -19,18 +17,22 @@ class CheckoutPayment extends React.Component {
 
     render() {
         const {
-            contentsLoaded,
-            testText
+            contentsLoaded
         } = this.props.checkoutPayment.toJS()
 
-        return (
-            contentsLoaded &&
-                <div className={containerClass}>
-                    {testText}
-                    <div>
-                        <Link href="/checkout/confirmation/" className="u-text-small">To Confirmation</Link>
-                    </div>
+        return contentsLoaded && (
+            <div className="t-checkout-payment u-bg-color-neutral-20">
+                <div className="u-bg-color-neutral-10 u-border-light-bottom">
+                    <ProgressSteps className="u-center-piece">
+                        <ProgressStepsItem icon="cart" title="Cart" href="#" />
+                        <ProgressStepsItem icon="star" title="Shipping" />
+                        <ProgressStepsItem icon="star" title="Payment" current />
+                        <ProgressStepsItem icon="check" title="Done" />
+                    </ProgressSteps>
                 </div>
+
+                <CheckoutPaymentReduxForm />
+            </div>
         )
     }
 }

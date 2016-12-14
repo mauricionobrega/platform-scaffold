@@ -122,7 +122,11 @@
 // ---
 
 .u-text-letter-spacing {
-    letter-spacing: 1px;
+    letter-spacing: 1px !important;
+}
+
+.u-text-letter-spacing-normal {
+    letter-spacing: initial !important;
 }
 
 // Font Family

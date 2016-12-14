@@ -1,7 +1,33 @@
-// CheckoutPayment
+// CheckoutShipping
 // ===
 
 .t-checkout-payment {
     // Root Class. Contains all core styles, typically for the template's
     // wrapper element.
 }
+
+
+// Mobile Styles
+// ---
+
+@include susy-breakpoint($mobile-breakpoint, $mobile-layout) {
+    .t-checkout-payment__title {
+        padding-left: $unit * 1.5;
+    }
+}
+
+
+// Tablet Styles
+// ---
+
+// @include susy-breakpoint($tablet-breakpoint, $tablet-layout) {
+//
+// }
+
+
+// Desktop Styles
+// ---
+
+// @include susy-breakpoint($desktop-breakpoint, $desktop-layout) {
+//
+// }
