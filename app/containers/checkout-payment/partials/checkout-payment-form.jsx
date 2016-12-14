@@ -23,7 +23,7 @@ const renderCreditCartForm = () => {
                 <h2 className="u-h4">Pay With Card</h2>
             </div>
 
-            <div className="u-padding-md u-border-light-top u-border-light-bottom u-bg-color-neutral-10">
+            <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg u-border-light-top u-border-light-bottom u-bg-color-neutral-10">
                 <FieldRow>
                     <ReduxForm.Field component={Field} name="email" label="Cardholder Name">
                         <input type="text" noValidate />
@@ -83,7 +83,7 @@ const renderBillingAddress = () => {
                 </FieldRow>
 
                 {newShippingAddressIsEnabled &&
-                    <div className="u-padding-md u-border-light-top">
+                    <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg u-border-light-top">
                         <FieldRow>
                             <ReduxForm.Field component={Field} name="email" label="Full name">
                                 <input type="text" noValidate />

@@ -40,8 +40,11 @@ $field__caution-icon: 'data:image/svg+xml;utf8,<svg width="20px" height="20px" f
 .pw-field__label {
     flex: 1 1 auto;
     width: 100%;
+    margin-bottom: $unit;
 
     font-weight: 600;
+    font-size: $font-size;
+    line-height: 1em;
 }
 
 
@@ -89,12 +92,15 @@ $field__caution-icon: 'data:image/svg+xml;utf8,<svg width="20px" height="20px" f
 // ---
 //
 // 1. Align the caption with its checkbox or radio
+// 2. Offset the next margin that's set on checkbox and radios in _form.scss
 
 .pw-field.pw--error {
     border-color: $error-color;
 }
 
 .pw-field.pw--is-check-radio {
+    padding-top: $unit; // 2
+
     .pw-field__caption {
         padding-left: $unit * 4; // 1
     }
