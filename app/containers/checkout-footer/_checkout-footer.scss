@@ -6,7 +6,7 @@
 // ---
 
 .t-checkout-footer {
-    //
+    background-color: $brand-color;
 }
 
 
@@ -14,9 +14,8 @@
 // ---
 
 .t-checkout-footer__inner {
-    background-color: $brand-color;
-
-    color: #fff;
+    color: $neutral-10;
+    opacity: 0.5;
 }
 
 // Copyright
@@ -25,8 +24,6 @@
 .t-checkout-footer__copyright {
     margin: 0;
 
-    opacity: 0.5;
-    color: #fff;
     font-size: 12px;
     line-height: $font-size;
 }
@@ -34,7 +31,6 @@
 .t-checkout-footer__logo {
     width: 67px;
     height: 28px;
-    opacity: 0.5;
 }
 
 .t-checkout-footer__logo-wrapper {

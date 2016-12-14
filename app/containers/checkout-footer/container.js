@@ -13,7 +13,7 @@ const CheckoutFooter = function(props) {
                         </DangerousHTML>
                     </div>
                 </div>
-                <div className="t-checkout-footer__copyright u-padding-top u-padding-bottom">
+                <div className="t-checkout-footer__copyright u-padding-top">
                     <p>© 2016 Mobify Research & Development Inc.</p>
                 </div>
             </div>
