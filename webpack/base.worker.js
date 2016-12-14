@@ -16,14 +16,15 @@ module.exports = {
         })
     ],
     module: {
-        loaders: [{
-            name: 'babel-loader',
+        rules: [{
             test: /\.js$/,
             exclude: /node_modules/,
-            loaders: [
-                'babel'
-            ],
-            cacheDirectory: path.join(__dirname, 'tmp')
+            use: {
+                loader: 'babel-loader',
+                options: {
+                    cacheDirectory: path.join(__dirname, 'tmp')
+                }
+            }
         }]
     }
 }

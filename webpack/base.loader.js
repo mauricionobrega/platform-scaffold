@@ -2,6 +2,7 @@
 /* eslint-env node */
 
 const path = require('path')
+const webpack = require('webpack')
 const baseCommon = require('./base.common')
 
 module.exports = {
@@ -11,32 +12,37 @@ module.exports = {
         path: path.resolve(process.cwd(), 'build'),
         filename: 'loader.js'
     },
-    // Loaders are resolved relative to the file being applied to. Specifying the
-    // root option here lets Webpack know they are Node modules - avoiding errors
-    resolveLoader: {
-        root: path.join(process.cwd(), 'node_modules')
-    },
     resolve: {
-        extensions: ['', '.js', '.jsx', '.json']
+        extensions: ['.js', '.jsx', '.json']
     },
     module: {
-        loaders: [
+        rules: [
             {
-                test: /\.js?$/,
+                test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel?presets[]=es2015',
-                cacheDirectory: `${__dirname}/tmp`
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        cacheDirectory: `${__dirname}/tmp`
+                    }
+                }
             },
             {
                 test: /\.css?$/,
                 exclude: /node_modules/,
-                loader: 'postcss',
+                use: 'postcss-loader',
             },
             {
                 test: /\.json$/,
-                loader: 'json'
+                use: 'json-loader'
             }
         ],
     },
-    postcss: baseCommon.postcss
+    plugins: [
+        new webpack.LoaderOptionsPlugin({
+            options: {
+                postcss: baseCommon.postcss
+            }
+        })
+    ]
 }
