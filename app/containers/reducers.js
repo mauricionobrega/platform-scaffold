@@ -9,8 +9,6 @@ import checkoutPayment from './checkout-payment/reducer'
 import checkoutShipping from './checkout-shipping/reducer'
 import footer from './footer/reducer'
 import header from './header/reducer'
-import checkoutFooter from './checkout-footer/reducer'
-import checkoutHeader from './checkout-header/reducer'
 import home from './home/reducer'
 import login from './login/reducer'
 import miniCart from './mini-cart/reducer'
@@ -28,8 +26,6 @@ const rootReducer = combineReducers({
     checkoutShipping,
     footer,
     header,
-    checkoutFooter,
-    checkoutHeader,
     home,
     login,
     miniCart,
