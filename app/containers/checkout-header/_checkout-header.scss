@@ -21,7 +21,6 @@
     overflow: hidden;
     width: 100vw;
 
-    padding: 0;
     box-shadow: $large-box-shadow;
 }
 
@@ -30,9 +29,16 @@
 // ---
 
 .t-checkout-header__title {
-    padding-top: 11px;
-    padding-bottom: 13px;
-    padding-left: 12px;
+    align-items: center;
     font-size: $unit*3;
     line-height: $unit*3.5;
+}
+
+
+// Lock icon
+// ---
+
+.t-checkout-header__icon-lock {
+    width: 44px;
+    height: 44px;
 }
