@@ -42,6 +42,10 @@
     min-height: $tap-size;
     padding: $unit $unit*1.5;
     border: 1px solid transparent; // 1
+
+    &.c--no-min-width {
+        min-width: initial;
+    }
 }
 
 
