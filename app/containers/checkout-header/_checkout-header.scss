@@ -21,8 +21,8 @@
     overflow: hidden;
     width: 100vw;
 
-    box-shadow: $large-box-shadow;
     padding: 0;
+    box-shadow: $large-box-shadow;
 }
 
 
@@ -30,9 +30,9 @@
 // ---
 
 .t-checkout-header__title {
+    padding-top: 11px;
+    padding-bottom: 13px;
+    padding-left: 12px;
     font-size: $unit*3;
     line-height: $unit*3.5;
-    padding-top: 11px;
-    padding-left: 12px;
-    padding-bottom: 13px;
 }

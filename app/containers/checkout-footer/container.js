@@ -7,7 +7,7 @@ const CheckoutFooter = function(props) {
         <footer className="t-checkout-footer">
             <div className="t-checkout-footer__inner u-padding-lg u-text-align-center">
                 <div className="u-flex">
-                    <div className="t-checkout-footer__logo_wrapper">
+                    <div className="t-checkout-footer__logo-wrapper">
                         <DangerousHTML html={logo}>
                             {(htmlObj) => <div className="t-checkout-footer__logo" dangerouslySetInnerHTML={htmlObj} />}
                         </DangerousHTML>
