@@ -17,48 +17,46 @@ module.exports = {
         path: path.resolve(process.cwd(), 'build'),
         filename: '[name].js'
     },
-    // Loaders are resolved relative to the file being applied to. Specifying the
-    // root option here lets Webpack know they are Node modules - avoiding errors
-    resolveLoader: {
-        root: path.join(process.cwd(), 'node_modules')
-    },
     resolve: {
-        alias: {
-            react: path.resolve(process.cwd(), 'node_modules', 'react'),
-            components: path.resolve(process.cwd(), 'app', 'components')
-        },
-        extensions: ['', '.js', '.jsx', '.json']
+        extensions: ['.js', '.jsx', '.json']
     },
     plugins: [
-        new ExtractTextPlugin('[name].css'),
+        new ExtractTextPlugin({
+            filename: '[name].css'
+        }),
         new CopyPlugin([
             {from: 'app/static/', to: 'static/'}
         ]),
         new webpack.DefinePlugin({
             PROJECT_SLUG: JSON.stringify(require('../package.json').projectSlug), // eslint-disable-line import/no-extraneous-dependencies
             AJS_SLUG: JSON.stringify(require('../package.json').aJSSlug) // eslint-disable-line import/no-extraneous-dependencies
+        }),
+        new webpack.LoaderOptionsPlugin({
+            options: {
+                postcss: baseCommon.postcss
+            }
         })
     ],
     module: {
-        loaders: [
+        rules: [
             {
-                name: 'babel-loader',
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
-                loaders: [
-                    'babel'
-                ],
-                cacheDirectory: `${__dirname}/tmp`
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        cacheDirectory: `${__dirname}/tmp`
+                    }
+                }
             },
             {
                 test: /\.json$/,
-                loader: 'json'
+                use: 'json-loader'
             },
             {
                 test: /\.svg$/,
-                loader: 'text'
+                use: 'text-loader'
             }
         ],
-    },
-    postcss: baseCommon.postcss
+    }
 }
