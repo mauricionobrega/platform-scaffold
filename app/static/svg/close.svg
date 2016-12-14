@@ -1,10 +1,12 @@
-<svg width="20px" height="20px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-    <g stroke="none" stroke-width="1" fill-rule="evenodd">
-        <g>
-            <g transform="translate(10.000000, 10.500000) rotate(-45.000000) translate(-10.000000, -10.500000) translate(2.000000, 2.000000)">
-                <rect x="-2.48689958e-14" y="7" width="16" height="2"></rect>
-                <rect transform="translate(7.985701, 8.089290) rotate(-90.000000) translate(-7.985701, -8.089290) " x="-0.0142993324" y="7.08929002" width="16" height="2"></rect>
-            </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>[icon]/close/dark</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="[icon]/close/dark" fill="currentColor">
+            <path d="M6.98570067,6.91070998 L0,6.91070998 L0,8.91070998 L6.98570067,8.91070998 L6.98570067,16 L8.98570067,16 L8.98570067,8.91070998 L16,8.91070998 L16,6.91070998 L8.98570067,6.91070998 L8.98570067,0 L6.98570067,0 L6.98570067,6.91070998 Z" id="Combined-Shape" transform="translate(8.000000, 8.000000) rotate(-45.000000) translate(-8.000000, -8.000000) "></path>
         </g>
     </g>
 </svg>

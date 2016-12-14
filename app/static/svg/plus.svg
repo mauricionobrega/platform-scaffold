@@ -1,10 +1,12 @@
-<svg width="20px" height="20px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-    <g stroke="none" stroke-width="1" fill-rule="evenodd">
-        <g>
-            <g transform="translate(2.000000, 2.000000)">
-                <rect x="0" y="7" width="16" height="2"></rect>
-                <rect transform="translate(8.000000, 8.000000) rotate(-90.000000) translate(-8.000000, -8.000000) " x="0" y="7" width="16" height="2"></rect>
-            </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>[icon]/plus/dark</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="[icon]/plus/dark" fill="currentColor">
+            <path d="M7,7 L0,7 L0,9 L7,9 L7,16 L9,16 L9,9 L16,9 L16,7 L9,7 L9,0 L7,0 L7,7 Z" id="Combined-Shape"></path>
         </g>
     </g>
 </svg>
