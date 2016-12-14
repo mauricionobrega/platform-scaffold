@@ -9,7 +9,7 @@ import MiniCart from '../../containers/mini-cart/container'
 import Navigation from '../../containers/navigation/container'
 import * as navActions from '../../containers/navigation/actions'
 import * as miniCartActions from '../../containers/mini-cart/actions'
-import sprite from '../../static/sprite/sprite.svg'
+import sprite from '../../static/svg/sprite-dist/sprite.svg'
 
 const hidePreloaderWhenCSSIsLoaded = () => {
     if (window.Progressive.stylesheetLoaded) {
