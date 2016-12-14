@@ -19,9 +19,9 @@ const productionMainConfig = assign(baseMainConfig, {
     ])
 })
 
-baseMainConfig.module.loaders = baseMainConfig.module.loaders.concat({
+baseMainConfig.module.rules = baseMainConfig.module.rules.concat({
     test: /\.scss$/,
-    loader: ExtractTextPlugin.extract(['css?-autoprefixer&-url&minification', 'postcss', 'sass']),
+    loader: ExtractTextPlugin.extract(['css-loader?-autoprefixer&-url&minification', 'postcss-loader', 'sass-loader']),
     include: [
         /progressive-web-sdk/,
         /app/

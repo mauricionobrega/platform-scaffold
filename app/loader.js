@@ -18,9 +18,9 @@ const IS_PREVIEW = getBuildOrigin().indexOf('localhost') !== -1
 const CAPTURING_CDN = '//cdn.mobify.com/capturejs/capture-latest.min.js'
 const SW_LOADER_PATH = `/service-worker-loader.js?preview=${IS_PREVIEW}&b=${cacheHashManifest.buildDate}`
 
-import preloadHTML from 'raw!./preloader/preload.html'
-import preloadCSS from 'css?minimize!./preloader/preload.css'
-import preloadJS from 'raw!./preloader/preload.js' // eslint-disable-line import/default
+import preloadHTML from 'raw-loader!./preloader/preload.html'
+import preloadCSS from 'css-loader?minimize!./preloader/preload.css'
+import preloadJS from 'raw-loader!./preloader/preload.js' // eslint-disable-line import/default
 
 const loadWorker = () => (
       navigator.serviceWorker.register(SW_LOADER_PATH)
