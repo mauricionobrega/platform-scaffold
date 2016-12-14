@@ -27,12 +27,14 @@ class CheckoutPayment extends React.Component {
         return contentsLoaded && (
             <div className="t-checkout-payment u-bg-color-neutral-20">
                 <div className="u-bg-color-neutral-10 u-border-light-bottom">
-                    <ProgressSteps className="u-center-piece">
-                        <ProgressStepsItem icon="cart" title="Cart" href="#" />
-                        <ProgressStepsItem icon="star" title="Shipping" />
-                        <ProgressStepsItem icon="star" title="Payment" current />
-                        <ProgressStepsItem icon="check" title="Done" />
-                    </ProgressSteps>
+                    <div className="t-checkout-payment__progress">
+                        <ProgressSteps>
+                            <ProgressStepsItem icon="cart" title="Cart" href="#" />
+                            <ProgressStepsItem icon="star" title="Shipping" />
+                            <ProgressStepsItem icon="star" title="Payment" current />
+                            <ProgressStepsItem icon="check" title="Done" />
+                        </ProgressSteps>
+                    </div>
                 </div>
 
                 <CheckoutPaymentReduxForm cart={cart} />
