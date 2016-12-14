@@ -1,6 +1,8 @@
 import React from 'react'
 import * as ReduxForm from 'redux-form'
 
+import CheckoutPaymentProductList from './checkout-payment-product-list'
+
 import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
@@ -128,27 +130,9 @@ const renderBillingAddress = () => {
     )
 }
 
-const renderOrderSummary = () => {
-    return (
-        <div>
-            <div className="t-checkout-payment__title u-padding-top-lg u-padding-bottom-lg">
-                <h2 className="u-h4">Order Summary</h2>
-            </div>
-
-            <div className="u-padding-md u-border-light-top u-border-light-bottom u-bg-color-neutral-10">
-                <p>Insert list of products here</p>
-                <p>Insert summary table</p>
-                <p>Insert discount code</p>
-                <p>Insert total price</p>
-                <p>Insert Place order button</p>
-                <p>Insert Verisign and McAfee notices</p>
-            </div>
-        </div>
-    )
-}
-
 const CheckoutPaymentForm = (props) => {
     const {
+        cart,
         handleSubmit,
         // disabled,
         // submitting
@@ -163,7 +147,7 @@ const CheckoutPaymentForm = (props) => {
                 </GridSpan>
 
                 <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 5}}>
-                    {renderOrderSummary()}
+                    <CheckoutPaymentProductList cart={cart} />
                 </GridSpan>
             </Grid>
         </form>
@@ -171,6 +155,11 @@ const CheckoutPaymentForm = (props) => {
 }
 
 CheckoutPaymentForm.propTypes = {
+    /**
+     * The cart object, passed down from the parent Checkout-Payment container
+     */
+    cart: React.PropTypes.object,
+
     /**
      * Whether the form is disabled or not
      */

@@ -4,6 +4,7 @@ import Immutable from 'immutable'
 
 import * as checkoutPaymentActions from './actions'
 import CheckoutPaymentReduxForm from './partials/checkout-payment-form'
+
 import {ProgressSteps, ProgressStepsItem} from 'progressive-web-sdk/dist/components/progress-steps'
 
 class CheckoutPayment extends React.Component {
@@ -12,10 +13,13 @@ class CheckoutPayment extends React.Component {
     }
 
     shouldComponentUpdate(newProps) {
-        return !Immutable.is(this.props.checkoutPayment, newProps.checkoutPayment)
+        const checkoutPaymentChanged = !Immutable.is(this.props.checkoutPayment, newProps.checkoutPayment)
+        const miniCartChanged = !Immutable.is(this.props.miniCart, newProps.miniCart)
+        return checkoutPaymentChanged || miniCartChanged
     }
 
     render() {
+        const cart = this.props.miniCart.get('cart').toJS()
         const {
             contentsLoaded
         } = this.props.checkoutPayment.toJS()
@@ -31,7 +35,7 @@ class CheckoutPayment extends React.Component {
                     </ProgressSteps>
                 </div>
 
-                <CheckoutPaymentReduxForm />
+                <CheckoutPaymentReduxForm cart={cart} />
             </div>
         )
     }
@@ -39,12 +43,14 @@ class CheckoutPayment extends React.Component {
 
 CheckoutPayment.propTypes = {
     checkoutPayment: PropTypes.instanceOf(Immutable.Map),
-    fetchContents: PropTypes.func
+    fetchContents: PropTypes.func,
+    miniCart: PropTypes.object
 }
 
 const mapStateToProps = (state) => {
     return {
-        checkoutPayment: state.checkoutPayment
+        checkoutPayment: state.checkoutPayment,
+        miniCart: state.miniCart
     }
 }
 
