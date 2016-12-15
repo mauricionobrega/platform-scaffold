@@ -5,9 +5,9 @@ import CartPromoForm from './cart-promo-form'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import {Ledger, LedgerRow} from 'progressive-web-sdk/dist/components/ledger'
 
-const CartSummary = ({cart}) => {
+const CartSummary = ({cart, onCalculateClick}) => {
     const calculateButton = (
-        <Button innerClassName="u-padding-end-0 u-color-brand">
+        <Button innerClassName="u-padding-end-0 u-color-brand" onClick={onCalculateClick}>
             Calculate <Icon name="chevron-right" />
         </Button>
     )
@@ -69,7 +69,8 @@ const CartSummary = ({cart}) => {
 }
 
 CartSummary.propTypes = {
-    cart: PropTypes.object
+    cart: PropTypes.object,
+    onCalculateClick: PropTypes.func
 }
 
 export default CartSummary

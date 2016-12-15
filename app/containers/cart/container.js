@@ -8,12 +8,31 @@ import {Grid, GridSpan} from '../../components/grid'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Image from 'progressive-web-sdk/dist/components/image'
 
+import * as actions from './actions'
 import CartProductList from './partials/cart-product-list'
 import CartSummary from './partials/cart-summary'
+import CartEstimateShippingModal from './partials/cart-estimate-shipping'
 
 class Cart extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.openEstimateShippingModal = this.openEstimateShippingModal.bind(this)
+        this.closeEstimateShippingModal = this.closeEstimateShippingModal.bind(this)
+    }
+
     shouldComponentUpdate(newProps) {
-        return !Immutable.is(newProps.miniCart, this.props.miniCart)
+        const miniCartChanged = !Immutable.is(newProps.miniCart, this.props.miniCart)
+        const cartChanged = !Immutable.is(newProps.cart, this.props.cart)
+        return miniCartChanged || cartChanged
+    }
+
+    openEstimateShippingModal() {
+        this.props.toggleEstimateShippingModal(true)
+    }
+
+    closeEstimateShippingModal() {
+        this.props.toggleEstimateShippingModal(false)
     }
 
     renderItems(cart) {
@@ -24,7 +43,7 @@ class Cart extends React.Component {
                 </GridSpan>
 
                 <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 5}}>
-                    <CartSummary cart={cart} />
+                    <CartSummary cart={cart} onCalculateClick={this.openEstimateShippingModal} />
 
                     <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg">
                         <Button className="c--tertiary u-width-full">
@@ -69,6 +88,7 @@ class Cart extends React.Component {
 
     render() {
         const cart = this.props.miniCart.get('cart').toJS()
+        const {estimateShippingModal} = this.props.cart.toJS()
         const productsArePresent = !!cart.items
 
         return (
@@ -80,6 +100,8 @@ class Cart extends React.Component {
                         this.renderEmpty()
                     }
                 </Grid>
+
+                <CartEstimateShippingModal isOpen={estimateShippingModal.isOpen} closeModal={this.closeEstimateShippingModal} />
             </div>
         )
     }
@@ -88,6 +110,7 @@ class Cart extends React.Component {
 Cart.propTypes = {
     cart: PropTypes.object,
     miniCart: PropTypes.object,
+    toggleEstimateShippingModal: PropTypes.func
 }
 
 Cart.defaultProps = {
@@ -100,7 +123,9 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+    toggleEstimateShippingModal: actions.toggleEstimateShippingModal
+}
 
 export default connect(
     mapStateToProps,

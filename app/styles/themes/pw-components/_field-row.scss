@@ -5,7 +5,7 @@
     align-items: baseline;
 
     & + & {
-        margin-top: $unit * 1.5;
+        margin-top: $unit * 2;
     }
 
     > * + * {

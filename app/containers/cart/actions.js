@@ -13,6 +13,7 @@ const baseHeaders = {
 }
 
 export const receiveCartContents = utils.createAction('Received Cart Contents')
+export const toggleEstimateShippingModal = utils.createAction('Toggled Estimate Shipping modal', 'isOpen')
 
 /**
  * Get the contents of the users cart
