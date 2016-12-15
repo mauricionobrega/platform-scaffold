@@ -25,9 +25,14 @@ $field__caution-icon: 'data:image/svg+xml;utf8,<svg width="20px" height="20px" f
 
 // Label Wrap
 // ---
+//
+// 1. Position context so the child `pw-field__hint` can be absolutely positioned
 
 .pw-field__label-wrap {
+    position: relative; // 1
+
     display: flex;
+    flex: 1 1 auto;
 }
 
 
@@ -53,6 +58,8 @@ $field__caution-icon: 'data:image/svg+xml;utf8,<svg width="20px" height="20px" f
 
 .pw-field__hint {
     flex: 0 0 auto;
+
+    font-size: 12px;
 }
 
 
@@ -93,6 +100,8 @@ $field__caution-icon: 'data:image/svg+xml;utf8,<svg width="20px" height="20px" f
 //
 // 1. Align the caption with its checkbox or radio
 // 2. Offset the next margin that's set on checkbox and radios in _form.scss
+// 3. Positioned relative to the parent `pw-field__label-wrap` container
+// 4. Position the hint button to sit directly on top of the field input
 
 .pw-field.pw--error {
     border-color: $error-color;
@@ -103,5 +112,13 @@ $field__caution-icon: 'data:image/svg+xml;utf8,<svg width="20px" height="20px" f
 
     .pw-field__caption {
         padding-left: $unit * 4; // 1
+    }
+}
+
+.pw-field.pw--overlayed-hint {
+    .pw-field__hint {
+        position: absolute; // 3
+        top: 100%; // 4
+        right: 0; // 4
     }
 }

@@ -6,6 +6,7 @@ import Field from 'progressive-web-sdk/dist/components/field'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 import {Grid, GridSpan} from '../../../components/grid'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
+import Link from 'progressive-web-sdk/dist/components/link'
 
 const renderEmailAddress = () => {
     const emailHint = (
@@ -13,19 +14,40 @@ const renderEmailAddress = () => {
             <Icon name="question" />
         </Button>
     )
+    const passwordHint = (
+        <Link className="u-color-brand" href="/customer/account/forgotpassword/">
+            Forgot password
+        </Link>
+    )
+    const isSigningIn = true
 
     return (
         <div>
-            <div className="t-checkout-shipping__title u-padding-top-lg u-padding-bottom-lg">
-                <h2 className="u-h4">Email my receipt to</h2>
-            </div>
+            <div className="t-checkout-shipping__email-title" />
 
             <div className="u-padding-md u-border-light-top u-border-light-bottom u-bg-color-neutral-10">
                 <FieldRow>
-                    <ReduxForm.Field component={Field} name="email" label="Email Address" hint={emailHint}>
+                    <ReduxForm.Field component={Field} className="pw--overlayed-hint" name="email" label="Email my receipt to" hint={emailHint}>
                         <input type="email" noValidate />
                     </ReduxForm.Field>
                 </FieldRow>
+
+                {isSigningIn &&
+                    <FieldRow>
+                        <ReduxForm.Field component={Field} name="email" label="Password" hint={passwordHint}>
+                            <input type="email" noValidate />
+                        </ReduxForm.Field>
+                    </FieldRow>
+                }
+
+                {isSigningIn &&
+                    <FieldRow>
+                        <Button className="c--secondary u-width-full u-text-uppercase">
+                            <Icon name="user" className="u-margin-end" />
+                            Sign In
+                        </Button>
+                    </FieldRow>
+                }
             </div>
         </div>
     )
@@ -39,6 +61,12 @@ const renderShippingAddress = () => {
             </span>
         </Button>
     )
+    const shippingAddress = (
+        <div>
+            <p>Vancouver, BC, Canada, V4R5TS</p>
+            <p>Name: John Appleseet</p>
+        </div>
+    )
 
     return (
         <div>
@@ -48,55 +76,90 @@ const renderShippingAddress = () => {
 
             <div className="u-padding-md u-border-light-top u-border-light-bottom u-bg-color-neutral-10">
                 <FieldRow>
-                    <ReduxForm.Field component={Field} name="email" label="Full Name">
-                        <input type="email" noValidate />
-                    </ReduxForm.Field>
-                </FieldRow>
-
-                <FieldRow>
                     <ReduxForm.Field
                         component={Field}
                         name="email"
-                        label="Address"
-                        caption={addCompanyButton}
+                        label={<strong className="u-text-semi-bold">725 West Georgia</strong>}
+                        caption={shippingAddress}
                     >
-                        <input type="email" noValidate />
+                        <input type="radio" noValidate />
                     </ReduxForm.Field>
                 </FieldRow>
 
-                <FieldRow>
-                    <ReduxForm.Field component={Field} name="email" label="Country">
-                        <input type="email" noValidate />
-                    </ReduxForm.Field>
+                <div className="u-padding-md u-margin-top-md u-border-light">
+                    <FieldRow>
+                        <ReduxForm.Field
+                            component={Field}
+                            name="email"
+                            label={<strong className="u-text-semi-bold">Add a new address</strong>}
+                        >
+                            <input type="radio" checked noValidate />
+                        </ReduxForm.Field>
+                    </FieldRow>
 
-                    <ReduxForm.Field component={Field} name="email" label="City">
-                        <input type="email" noValidate />
-                    </ReduxForm.Field>
-                </FieldRow>
+                    <FieldRow>
+                        <ReduxForm.Field component={Field} name="email" label="Full Name">
+                            <input type="email" noValidate />
+                        </ReduxForm.Field>
+                    </FieldRow>
 
-                <FieldRow>
-                    <ReduxForm.Field component={Field} name="email" label="Province">
-                        <input type="email" noValidate />
-                    </ReduxForm.Field>
-                </FieldRow>
+                    <FieldRow>
+                        <ReduxForm.Field
+                            component={Field}
+                            name="email"
+                            label="Address"
+                            caption={addCompanyButton}
+                        >
+                            <input type="email" noValidate />
+                        </ReduxForm.Field>
+                    </FieldRow>
 
-                <FieldRow>
-                    <ReduxForm.Field component={Field} name="email" label="Postal Code">
-                        <input type="email" noValidate />
-                    </ReduxForm.Field>
-                </FieldRow>
+                    <FieldRow>
+                        <ReduxForm.Field component={Field} name="email" label="Country">
+                            <input type="email" noValidate />
+                        </ReduxForm.Field>
 
-                <FieldRow>
-                    <ReduxForm.Field component={Field} name="email" label="Phone" caption="In case we need to contact you about your order">
-                        <input type="email" noValidate />
-                    </ReduxForm.Field>
-                </FieldRow>
+                        <ReduxForm.Field component={Field} name="email" label="City">
+                            <input type="email" noValidate />
+                        </ReduxForm.Field>
+                    </FieldRow>
+
+                    <FieldRow>
+                        <ReduxForm.Field component={Field} name="email" label="Province">
+                            <input type="email" noValidate />
+                        </ReduxForm.Field>
+                    </FieldRow>
+
+                    <FieldRow>
+                        <ReduxForm.Field component={Field} name="email" label="Postal Code">
+                            <input type="email" noValidate />
+                        </ReduxForm.Field>
+                    </FieldRow>
+
+                    <FieldRow>
+                        <ReduxForm.Field
+                            component={Field}
+                            name="email"
+                            label="Phone"
+                            caption="In case we need to contact you about your order"
+                        >
+                            <input type="email" noValidate />
+                        </ReduxForm.Field>
+                    </FieldRow>
+                </div>
             </div>
         </div>
     )
 }
 
 const renderShippingMethod = () => {
+    const methodLabel = (
+        <strong className="u-flexbox u-text-semi-bold">
+            <div className="u-flex">Fixed - Flate rate</div>
+            <div className="u-flex-none">$5.00</div>
+        </strong>
+    )
+
     return (
         <div>
             <div className="t-checkout-shipping__title u-padding-top-lg u-padding-bottom-lg">
@@ -105,19 +168,7 @@ const renderShippingMethod = () => {
 
             <div className="u-padding-md u-border-light-top u-border-light-bottom u-bg-color-neutral-10">
                 <FieldRow>
-                    <ReduxForm.Field component={Field} name="email" label="Standard Shipping" caption="5-7 business days">
-                        <input type="radio" noValidate />
-                    </ReduxForm.Field>
-                </FieldRow>
-
-                <FieldRow>
-                    <ReduxForm.Field component={Field} name="email" label="2 day shipping" caption="2-5 business days">
-                        <input type="radio" noValidate />
-                    </ReduxForm.Field>
-                </FieldRow>
-
-                <FieldRow>
-                    <ReduxForm.Field component={Field} name="email" label="Next day delivery">
+                    <ReduxForm.Field component={Field} name="email" label={methodLabel}>
                         <input type="radio" noValidate />
                     </ReduxForm.Field>
                 </FieldRow>
@@ -140,7 +191,7 @@ const CheckoutShippingForm = (props) => {
     } = props
 
     return (
-        <form onSubmit={handleSubmit} noValidate>
+        <form className="t-checkout-shipping__form" onSubmit={handleSubmit} noValidate>
             <Grid className="u-center-piece">
                 <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 7}}>
                     {renderEmailAddress()}
