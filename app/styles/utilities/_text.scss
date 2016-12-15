@@ -90,7 +90,9 @@
 }
 
 .u-text-quiet {
-    @include text-quiet(true);
+    @include text-quiet(true); // @TODO: Tweak to use a $font-size-small var
+
+    font-size: 12px !important; // @TODO: Remove this line after above todo is done
 }
 
 .u-text-lighter {
