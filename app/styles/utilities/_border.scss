@@ -32,13 +32,9 @@
 // Light Border (Width and Color)
 // ---
 
-// .u-border-light {
-//     @include border(true);
-// }
-
-// .u-border-light-0 {
-//     @include border-0(true);
-// }
+.u-border-light {
+    border: 1px solid $neutral-30; // @TODO: Add to Spline
+}
 
 .u-border-light-top {
     border-top: 1px solid $neutral-30; // @TODO: Add to Spline
