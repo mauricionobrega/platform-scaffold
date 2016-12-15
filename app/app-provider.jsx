@@ -15,6 +15,8 @@ import PDP from './containers/pdp/container'
 import CheckoutShipping from './containers/checkout-shipping/container'
 import CheckoutPayment from './containers/checkout-payment/container'
 import CheckoutConfirmation from './containers/checkout-confirmation/container'
+import CheckoutHeader from './containers/checkout-header/container'
+import CheckoutFooter from './containers/checkout-footer/container'
 
 const AppProvider = ({store}) => {
     /**
@@ -75,9 +77,9 @@ const AppProvider = ({store}) => {
                     <Route component={PLP} path="supplies.html" routeName="productListPage" />
                     <Route component={PLP} path="new-arrivals.html" routeName="productListPage" />
                     <Route component={PDP} path="*.html" routeName="productDetailsPage" />
-                    <Route component={CheckoutShipping} path="checkout/shipping/" routeName="checkingShipping" fetchPage="false" />
-                    <Route component={CheckoutPayment} path="checkout/payment/" routeName="checkingPayment" fetchPage="false" />
-                    <Route component={CheckoutConfirmation} path="checkout/confirmation/" routeName="checkingConfirmation" fetchPage="false" />
+                    <Route component={CheckoutShipping} path="checkout/shipping/" routeName="checkingShipping" fetchPage="false" Header={CheckoutHeader} Footer={CheckoutFooter} />
+                    <Route component={CheckoutPayment} path="checkout/payment/" routeName="checkingPayment" fetchPage="false" Header={CheckoutHeader} Footer={CheckoutFooter} />
+                    <Route component={CheckoutConfirmation} path="checkout/confirmation/" routeName="checkingConfirmation" fetchPage="false" Header={CheckoutHeader} Footer={CheckoutFooter} />
                 </Route>
             </Router>
         </Provider>
