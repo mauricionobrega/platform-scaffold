@@ -69,7 +69,10 @@ $field__caution-icon: 'data:image/svg+xml;utf8,<svg width="20px" height="20px" f
 .pw-field__caption {
     @include text-quiet();
 
+    padding-top: $unit/2;
+
     font-size: 12px; // @TODO: Remove this line once text-quiet uses a $font-size-small var
+    line-height: 16px;
 }
 
 
@@ -101,26 +104,30 @@ $field__caution-icon: 'data:image/svg+xml;utf8,<svg width="20px" height="20px" f
 // ---
 //
 // 1. Align the caption with its checkbox or radio
-// 2. Offset the next margin that's set on checkbox and radios in _form.scss
-// 3. Positioned relative to the parent `pw-field__label-wrap` container
-// 4. Position the hint button to sit directly on top of the field input
+// 2. Positioned relative to the parent `pw-field__label-wrap` container
+// 3. Position the hint button to sit directly on top of the field input
+// 4. Margin no longer needed, since we know there is no input below it (the
+//    input is the checkbox/radio on the side in this state)
 
 .pw-field.pw--error {
     border-color: $error-color;
 }
 
 .pw-field.pw--is-check-radio {
-    padding-top: $unit; // 2
-
     .pw-field__caption {
         padding-left: $unit * 4; // 1
+    }
+
+    .c-field__label,
+    .pw-field__label {
+        margin-bottom: 0; // 4
     }
 }
 
 .pw-field.pw--overlayed-hint {
     .pw-field__hint {
-        position: absolute; // 3
-        top: 100%; // 4
-        right: 0; // 4
+        position: absolute; // 2
+        top: 100%; // 3
+        right: 0; // 3
     }
 }

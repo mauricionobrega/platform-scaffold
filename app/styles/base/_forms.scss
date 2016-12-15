@@ -116,13 +116,10 @@ select {
 
 // Checkbox and Radios
 // ---
-//
-// 1. Aligns them with any inline content that follows
 
 [type="checkbox"],
 [type="radio"] {
     position: relative;
-    top: -$unit/2; // 1
 
     display: inline-block;
     width: $unit*3;
