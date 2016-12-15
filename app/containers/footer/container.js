@@ -8,10 +8,10 @@ import FooterSocialIcons from './partials/footer-social-icons'
 import FooterNavigation from './partials/footer-navigation'
 
 const social = [
-    ['http://www.facebook.com/#TODO', 'static/img/facebook.svg', 'Facebook'],
-    ['http://www.twitter.com/#TODO', 'static/img/twitter.svg', 'Twitter'],
-    ['http://plus.google.com/#TODO', 'static/img/googleplus.svg', 'Google+'],
-    ['http://www.youtube.com/#TODO', 'static/img/youtube.svg', 'Youtube'],
+    ['http://www.facebook.com/#TODO', 'static/svg/facebook.svg', 'Facebook'],
+    ['http://www.twitter.com/#TODO', 'static/svg/twitter.svg', 'Twitter'],
+    ['http://plus.google.com/#TODO', 'static/svg/googleplus.svg', 'Google+'],
+    ['http://www.youtube.com/#TODO', 'static/svg/youtube.svg', 'Youtube'],
 ]
 
 class Footer extends React.Component {
