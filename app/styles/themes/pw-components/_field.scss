@@ -68,6 +68,8 @@ $field__caution-icon: 'data:image/svg+xml;utf8,<svg width="20px" height="20px" f
 
 .pw-field__caption {
     @include text-quiet();
+
+    font-size: 12px; // @TODO: Remove this line once text-quiet uses a $font-size-small var
 }
 
 
