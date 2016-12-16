@@ -2,6 +2,10 @@ import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import * as utils from '../../utils/utils'
 import {CURRENT_URL} from './constants'
 
+export const addNotification = utils.createAction('Add Notification')
+export const removeNotification = utils.createAction('Remove Notification')
+export const removeAllNotifications = utils.createAction('Remove All Notifications')
+
 /**
  * Action dispatched when the route changes
  * @param {string} pageComponent - the component of the entered route

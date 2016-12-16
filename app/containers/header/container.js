@@ -3,6 +3,9 @@ import {connect} from 'react-redux'
 import throttle from 'lodash.throttle'
 import classnames from 'classnames'
 import * as headerActions from './actions'
+import * as appActions from '../app/actions'
+
+import NotificationManager from './partials/notification-manager'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import IconLabel from 'progressive-web-sdk/dist/components/icon-label'
@@ -52,8 +55,9 @@ class Header extends React.Component {
     }
 
     render() {
-        const {onMenuClick, onMiniCartClick} = this.props
+        const {onMenuClick, onMiniCartClick, notificationActions} = this.props
         const {isCollapsed, cart} = this.props.header.toJS()
+        const {notifications} = this.props.appState.toJS()
         const cartCounterBadge = generateCartCounterBadge(cart)
 
         const innerButtonClassName = classnames('t-header__inner-button', 'u-padding-0', {
@@ -66,63 +70,79 @@ class Header extends React.Component {
 
         return (
             <header className="t-header">
-                <HeaderBar className="t-header__bar">
-                    <HeaderBarActions>
-                        <div role="navigation">
-                            <Button id="header-navigation" innerClassName={innerButtonClassName} onClick={onMenuClick}>
-                                <IconLabel label="Menu" iconName="menu" iconSize="medium" />
-                            </Button>
+                <div className="t-header__bar">
+                    <HeaderBar >
+                        <HeaderBarActions>
+                            <div role="navigation">
+                                <Button id="header-navigation" innerClassName={innerButtonClassName} onClick={onMenuClick}>
+                                    <IconLabel label="Menu" iconName="menu" iconSize="medium" />
+                                </Button>
+                            </div>
+                        </HeaderBarActions>
+
+                        <div className="t-header__placeholder" />
+
+                        <div className="u-flex">
+                            <HeaderBarTitle>
+                                <Link href="/" className={linkClassName}>
+                                    <DangerousHTML html={logo}>
+                                        {(htmlObj) => <div className="t-header__logo" dangerouslySetInnerHTML={htmlObj} />}
+                                    </DangerousHTML>
+                                    <h1 className="u-visually-hidden">Merlin's Potions</h1>
+                                </Link>
+                            </HeaderBarTitle>
                         </div>
-                    </HeaderBarActions>
 
-                    <div className="t-header__placeholder" />
+                        <HeaderBarActions>
+                            <Button innerClassName={innerButtonClassName}>
+                                <IconLabel label="Stores" iconName="map" iconSize="medium" />
+                            </Button>
+                        </HeaderBarActions>
 
-                    <div className="u-flex">
-                        <HeaderBarTitle>
-                            <Link href="/" className={linkClassName}>
-                                <DangerousHTML html={logo}>
-                                    {(htmlObj) => <div className="t-header__logo" dangerouslySetInnerHTML={htmlObj} />}
-                                </DangerousHTML>
-                                <h1 className="u-visually-hidden">Merlin's Potions</h1>
-                            </Link>
-                        </HeaderBarTitle>
-                    </div>
-
-                    <HeaderBarActions>
-                        <Button innerClassName={innerButtonClassName}>
-                            <IconLabel label="Stores" iconName="map" iconSize="medium" />
-                        </Button>
-                    </HeaderBarActions>
-
-                    <HeaderBarActions>
-                        <Button className="u-position-relative" innerClassName={innerButtonClassName} onClick={onMiniCartClick}>
-                            <IconLabel label="Cart" iconName="cart" iconSize="medium" />
-                            {cartCounterBadge}
-                        </Button>
-                    </HeaderBarActions>
-                </HeaderBar>
+                        <HeaderBarActions>
+                            <Button className="u-position-relative" innerClassName={innerButtonClassName} onClick={onMiniCartClick}>
+                                <IconLabel label="Cart" iconName="cart" iconSize="medium" />
+                                {cartCounterBadge}
+                            </Button>
+                        </HeaderBarActions>
+                    </HeaderBar>
+                    {notifications &&
+                        <NotificationManager notifications={notifications} actions={notificationActions} />
+                    }
+                </div>
             </header>
         )
     }
 }
 
 Header.propTypes = {
+    appState: PropTypes.object,
     header: PropTypes.object,
     isCollapsed: PropTypes.bool,
+    notificationActions: PropTypes.object,
     toggleHeader: PropTypes.func,
+
     onMenuClick: PropTypes.func,
     onMiniCartClick: PropTypes.func,
 }
 
-const mapStateToProps = ({header}) => {
+const mapStateToProps = (state, props) => {
     return {
-        header
+        header: state.header,
+        appState: state.app
+    }
+}
+
+export const mapDispatchToProps = (dispatch, props) => {
+    return {
+        notificationActions: {
+            removeNotification: (id) => dispatch(appActions.removeNotification(id))
+        },
+        toggleHeader: headerActions.toggleHeader
     }
 }
 
 export default connect(
     mapStateToProps,
-    {
-        toggleHeader: headerActions.toggleHeader
-    }
+    mapDispatchToProps
 )(Header)

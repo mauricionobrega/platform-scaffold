@@ -1,0 +1,86 @@
+$notification__duration: 0.4s;
+$notification__easing: cubic-bezier(0.45, 0.1, 0.5, 1);
+
+// Notification
+// ===
+
+// Notification root
+// ---
+//
+// 1. Slight increase of height transition duration to give the staggered collapse animation
+
+.c-notification {
+    display: flex;
+    overflow: hidden;
+    margin-bottom: $unit/2;
+
+    color: $neutral-10;
+    background: rgba($brand-color, 0.85);
+
+    transform-origin: left top;
+
+    transition: height $notification__duration*2 $notification__easing; // 1
+    animation: notification__show $notification__duration 1 forwards;
+}
+
+
+// Notification Action
+// ---
+
+.c-notification__action {
+    align-self: flex-start;
+}
+
+
+// State: Dismissing
+// ---
+//
+// 1. Override inline styles to collapse notification
+// 2. Prevent contents from leaking out
+
+.c-notification.c--dismissing {
+    overflow: hidden; // 2
+    height: 0 !important; // 1
+    margin: 0;
+
+    animation: notification__hide $notification__duration 1 forwards;
+}
+
+
+// Notification Animations
+// ---
+
+@keyframes notification__show {
+    0% {
+        opacity: 0;
+
+        transform: scaleY(0);
+    }
+
+    25% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+
+        transform: scaleY(1);
+    }
+}
+
+
+@keyframes notification__hide {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        transform: scaleY(0);
+    }
+
+    100% {
+        opacity: 0;
+
+        transform: scaleY(0);
+    }
+}
