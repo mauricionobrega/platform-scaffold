@@ -14,8 +14,8 @@ $notification__easing: cubic-bezier(0.45, 0.1, 0.5, 1);
     overflow: hidden;
     margin-bottom: $unit/2;
 
-    color: $neutral-10;
     background: rgba($brand-color, 0.85);
+    color: $neutral-10;
 
     transform-origin: left top;
 
