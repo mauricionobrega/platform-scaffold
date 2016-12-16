@@ -26,7 +26,6 @@ class Notification extends React.Component {
         // Set notification height for CSS animations
         this.updateHeight()
 
-        // CRAB-270: Re-calculate notification height when viewport changes size
         window.addEventListener('resize', this.recalculateHeight)
 
         if (!showRemoveButton) {
