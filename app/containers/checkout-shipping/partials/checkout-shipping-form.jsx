@@ -11,7 +11,7 @@ import Link from 'progressive-web-sdk/dist/components/link'
 const renderEmailAddress = () => {
     const emailHint = (
         <Button innerClassName="u-color-brand">
-            <Icon name="question" />
+            <Icon name="help" />
         </Button>
     )
     const passwordHint = (
@@ -55,10 +55,11 @@ const renderEmailAddress = () => {
 
 const renderShippingAddress = () => {
     const addCompanyButton = (
-        <Button className="c--is-anchor" innerClassName="u-padding-0">
+        <Button className="c--is-anchor" innerClassName="c--no-min-height u-padding-0">
             <span className="u-color-brand u-text-letter-spacing-normal u-text-small">
                 Add company or apt #
             </span>
+            <Icon name="chevron-down" className="u-margin-start-sm u-color-brand" />
         </Button>
     )
     const shippingAddress = (
@@ -174,7 +175,7 @@ const renderShippingMethod = () => {
                 </FieldRow>
 
                 <FieldRow className="u-margin-top-lg">
-                    <Button type="submit" className="c--primary u-width-full">
+                    <Button type="submit" className="c--primary u-width-full u-text-uppercase">
                         Continue to Payment
                     </Button>
                 </FieldRow>

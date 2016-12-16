@@ -12,7 +12,7 @@ import {Icon} from 'progressive-web-sdk/dist/components/icon'
 const renderCreditCartForm = () => {
     const cvvHint = (
         <Button innerClassName="u-color-brand">
-            <Icon name="question" />
+            <Icon name="help" />
             <span className="u-visually-hidden">What is the CVV&#63;</span>
         </Button>
     )
@@ -109,11 +109,11 @@ const renderBillingAddress = () => {
     )
 
     const addDetails = (
-        <Button className="c--is-anchor" innerClassName="u-padding-0">
+        <Button className="c--is-anchor" innerClassName="c--no-min-height u-padding-0">
             <span className="u-color-brand u-text-letter-spacing-normal u-text-small">
                 Add company, apt #, suite etc.
-                <Icon name="chevron-down" />
             </span>
+            <Icon name="chevron-down" className="u-margin-start-sm u-color-brand" />
         </Button>
     )
 

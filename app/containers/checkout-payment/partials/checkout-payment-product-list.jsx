@@ -83,7 +83,7 @@ const CheckoutPaymentProductList = ({cart}) => (
 
             <div className="u-padding-end-md u-padding-bottom-lg u-padding-start-md">
                 <Button className="c--primary u-flex-none u-width-full">
-                    <Icon name="star" />
+                    <Icon name="lock" />
                     Place Your Order
                 </Button>
             </div>

@@ -3,7 +3,7 @@
 //
 // 1. Slightly larger than standard font size, at 15px
 
-.c-button {
+.pw-button {
     display: inline-table;
     padding: 0;
 
@@ -33,7 +33,7 @@
 // 1. Ensures that the borderless and bordered buttons appear the same size
 // 2. Match the width of the parent `c-button` container
 
-.c-button__inner {
+.pw-button__inner {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -46,13 +46,17 @@
     &.c--no-min-width {
         min-width: initial;
     }
+
+    &.c--no-min-height {
+        min-height: initial;
+    }
 }
 
 
 // Themes
 // ---
 
-.c-button.c--primary {
+.pw-button.c--primary {
     background-color: $accent-color;
 
     color: #fff;
@@ -63,7 +67,7 @@
     }
 }
 
-.c-button.c--secondary {
+.pw-button.c--secondary {
     background-color: $brand-color;
 
     color: #fff;
@@ -74,7 +78,7 @@
     }
 }
 
-.c-button.c--tertiary {
+.pw-button.c--tertiary {
     background-color: transparent;
 
     color: $brand-color;
@@ -92,13 +96,13 @@
         color: $neutral-40;
     }
 
-    .c-button__inner {
+    .pw-button__inner {
         border: 1px solid $brand-color;
     }
 }
 
-.c-button.c--primary,
-.c-button.c--secondary {
+.pw-button.c--primary,
+.pw-button.c--secondary {
     &[disabled] {
         background-color: $neutral-30;
 
@@ -106,6 +110,6 @@
     }
 }
 
-.c-button.c--icon-only {
+.pw-button.c--icon-only {
     line-height: 0;
 }

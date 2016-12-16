@@ -26,10 +26,10 @@ class CheckoutShipping extends React.Component {
                 <div className="u-bg-color-neutral-10 u-border-light-bottom">
                     <div className="t-checkout-shipping__progress">
                         <ProgressSteps>
-                            <ProgressStepsItem icon="cart" title="Cart" href="#" />
-                            <ProgressStepsItem icon="star" current title="Shipping" />
-                            <ProgressStepsItem icon="star" title="Payment" />
-                            <ProgressStepsItem icon="check" title="Done" />
+                            <ProgressStepsItem icon="cart-full" title="Cart" href="#" />
+                            <ProgressStepsItem icon="shipping" title="Shipping" current />
+                            <ProgressStepsItem icon="payment-full" title="Payment" />
+                            <ProgressStepsItem icon="done" title="Done" />
                         </ProgressSteps>
                     </div>
                 </div>
