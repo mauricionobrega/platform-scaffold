@@ -9,7 +9,7 @@ import List from 'progressive-web-sdk/dist/components/list'
 import ProductItem from '../../../components/product-item'
 import Stepper from 'progressive-web-sdk/dist/components/stepper'
 
-const CartProductList = ({cart}) => (
+const CartProductList = ({cart, onSaveLater}) => (
     <div className="t-cart__product-list">
         <div className="t-cart__product-list-title u-padding-top-md u-padding-bottom-md">
             <div className="u-flexbox u-align-center">
@@ -74,6 +74,7 @@ const CartProductList = ({cart}) => (
                             <Button
                                 className="u-text-small u-color-brand"
                                 innerClassName="u-padding-bottom-0"
+                                onClick={onSaveLater}
                             >
                                 Save for Later
                             </Button>
@@ -94,6 +95,7 @@ const CartProductList = ({cart}) => (
 
 CartProductList.propTypes = {
     cart: PropTypes.object,
+    onSaveLater: PropTypes.func,
 }
 
 export default CartProductList

@@ -12,6 +12,7 @@ import * as actions from './actions'
 import CartProductList from './partials/cart-product-list'
 import CartSummary from './partials/cart-summary'
 import CartEstimateShippingModal from './partials/cart-estimate-shipping'
+import CartWishlistModal from './partials/cart-wishlist'
 
 class Cart extends React.Component {
     constructor(props) {
@@ -19,6 +20,8 @@ class Cart extends React.Component {
 
         this.openEstimateShippingModal = this.openEstimateShippingModal.bind(this)
         this.closeEstimateShippingModal = this.closeEstimateShippingModal.bind(this)
+        this.openWishlistModal = this.openWishlistModal.bind(this)
+        this.closeWishlistModal = this.closeWishlistModal.bind(this)
     }
 
     shouldComponentUpdate(newProps) {
@@ -35,11 +38,22 @@ class Cart extends React.Component {
         this.props.toggleEstimateShippingModal(false)
     }
 
+    openWishlistModal() {
+        this.props.toggleWishlistModal(true)
+    }
+
+    closeWishlistModal() {
+        this.props.toggleWishlistModal(false)
+    }
+
     renderItems(cart) {
         return (
             <div>
                 <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 7}}>
-                    <CartProductList cart={cart} />
+                    <CartProductList
+                        cart={cart}
+                        onSaveLater={this.openWishlistModal}
+                    />
                 </GridSpan>
 
                 <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 5}}>
@@ -88,7 +102,7 @@ class Cart extends React.Component {
 
     render() {
         const cart = this.props.miniCart.get('cart').toJS()
-        const {estimateShippingModal} = this.props.cart.toJS()
+        const {estimateShippingModal, wishlistModal} = this.props.cart.toJS()
         const productsArePresent = !!cart.items
 
         return (
@@ -101,7 +115,15 @@ class Cart extends React.Component {
                     }
                 </Grid>
 
-                <CartEstimateShippingModal isOpen={estimateShippingModal.isOpen} closeModal={this.closeEstimateShippingModal} />
+                <CartEstimateShippingModal
+                    isOpen={estimateShippingModal.isOpen}
+                    closeModal={this.closeEstimateShippingModal}
+                />
+
+                <CartWishlistModal
+                    isOpen={wishlistModal.isOpen}
+                    closeModal={this.closeWishlistModal}
+                />
             </div>
         )
     }
@@ -110,21 +132,20 @@ class Cart extends React.Component {
 Cart.propTypes = {
     cart: PropTypes.object,
     miniCart: PropTypes.object,
-    toggleEstimateShippingModal: PropTypes.func
-}
-
-Cart.defaultProps = {
+    toggleEstimateShippingModal: PropTypes.func,
+    toggleWishlistModal: PropTypes.func,
 }
 
 const mapStateToProps = (state) => {
     return {
         cart: state.cart,
-        miniCart: state.miniCart
+        miniCart: state.miniCart,
     }
 }
 
 const mapDispatchToProps = {
-    toggleEstimateShippingModal: actions.toggleEstimateShippingModal
+    toggleEstimateShippingModal: actions.toggleEstimateShippingModal,
+    toggleWishlistModal: actions.toggleWishlistModal,
 }
 
 export default connect(

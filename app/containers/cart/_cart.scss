@@ -20,6 +20,18 @@ $cart__approximate-footer-height: 584px;
 }
 
 
+// Wislist Modal
+// ---
+
+.t-cart__wishlist-modal {
+    .pw-sheet__inner {
+        max-width: 520px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+}
+
+
 // Mobile Styles
 // ---
 

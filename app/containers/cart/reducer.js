@@ -19,5 +19,12 @@ export default createReducer({
                 isOpen: payload.isOpen
             }
         })
+    },
+    [cartActions.toggleWishlistModal]: (state, payload) => {
+        return state.mergeDeep({
+            wishlistModal: {
+                isOpen: payload.isOpen
+            }
+        })
     }
 }, initialState)
