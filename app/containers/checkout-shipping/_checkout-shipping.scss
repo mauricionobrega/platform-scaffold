@@ -2,8 +2,13 @@
 // ===
 
 .t-checkout-shipping {
-    // Root Class. Contains all core styles, typically for the template's
-    // wrapper element.
+    min-height: 100vh;
+
+    transition: min-height 2s ease-out;
+
+    &.t--loaded {
+        min-height: 0;
+    }
 }
 
 

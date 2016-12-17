@@ -4,7 +4,6 @@ import * as cartActions from './actions'
 
 const initialState = Immutable.fromJS({
     items: [],
-    contentsLoaded: false,
     estimateShippingModal: {
         isOpen: false
     },

@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import Immutable from 'immutable'
+import classNames from 'classnames'
 
 import * as checkoutShippingActions from './actions'
 import CheckoutShippingReduxForm from './partials/checkout-shipping-form'
@@ -20,9 +21,12 @@ class CheckoutShipping extends React.Component {
         const {
             contentsLoaded,
         } = this.props.checkoutShipping.toJS()
+        const templateClassnames = classNames('t-checkout-shipping u-bg-color-neutral-20', {
+            't--loaded': false
+        })
 
         return contentsLoaded && (
-            <div className="t-checkout-shipping u-bg-color-neutral-20">
+            <div className={templateClassnames}>
                 <div className="u-bg-color-neutral-10 u-border-light-bottom">
                     <div className="t-checkout-shipping__progress">
                         <ProgressSteps>

@@ -78,10 +78,14 @@ class Cart extends React.Component {
         )
     }
 
-    renderEmpty() {
+    renderEmpty(isCartEmptyAndLoaded) {
+        const emptyCartClassnames = classNames('t-cart__empty u-flexbox u-flex u-direction-column u-align-center u-justify-center', {
+            'u-visually-hidden': !isCartEmptyAndLoaded,
+            't--hide': !isCartEmptyAndLoaded,
+        })
         return (
             <GridSpan>
-                <div className="t-cart__empty u-flexbox u-flex u-direction-column u-align-center u-justify-center">
+                <div className={emptyCartClassnames}>
                     <Image
                         className="u-margin-bottom-md"
                         height="140px"
@@ -111,24 +115,24 @@ class Cart extends React.Component {
 
     render() {
         const cart = this.props.miniCart.get('cart').toJS()
+        const contentsLoaded = this.props.miniCart.get('contentsLoaded')
         const {
-            contentsLoaded,
             estimateShippingModal,
             wishlistModal
         } = this.props.cart.toJS()
         const isCartEmptyAndLoaded = cart.items.length === 0 && contentsLoaded
         const templateClassnames = classNames('t-cart u-bg-color-neutral-20', {
-            't--loaded': cart.items.length > 0
+            't--loaded': contentsLoaded
         })
 
         return (
             <div className={templateClassnames}>
                 <Grid className="u-center-piece">
-                    {isCartEmptyAndLoaded ?
-                        this.renderEmpty()
-                    :
+                    {!isCartEmptyAndLoaded &&
                         this.renderItems(cart)
                     }
+
+                    {this.renderEmpty(isCartEmptyAndLoaded)}
                 </Grid>
 
                 <CartEstimateShippingModal
@@ -147,7 +151,6 @@ class Cart extends React.Component {
 
 Cart.propTypes = {
     cart: PropTypes.object,
-    contentsLoaded: PropTypes.bool,
     miniCart: PropTypes.object,
     toggleEstimateShippingModal: PropTypes.func,
     toggleWishlistModal: PropTypes.func,

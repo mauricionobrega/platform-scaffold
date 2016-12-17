@@ -32,10 +32,32 @@ $cart__approximate-footer-height: 584px;
 .t-cart__summary-wrapper {
     opacity: 1;
 
-    transition: opacity 0.5s ease-out;
+    transform: translateY(0);
+
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 
     &.t--hide {
         opacity: 0;
+
+        transform: translateY(5%);
+    }
+}
+
+
+// Summary Wrapper
+// ---
+
+.t-cart__empty {
+    opacity: 1;
+
+    transform: translateY(0);
+
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+
+    &.t--hide {
+        opacity: 0;
+
+        transform: translateY(5%);
     }
 }
 
