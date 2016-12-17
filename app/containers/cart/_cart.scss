@@ -6,9 +6,15 @@ $cart__approximate-footer-height: 584px;
 
 // Root
 // ---
+
 .t-cart {
-    // Root Class. Contains all core styles, typically for the template's
-    // wrapper element.
+    min-height: 100vh;
+
+    transition: min-height 2s ease-out;
+
+    &.t--loaded {
+        min-height: 0;
+    }
 }
 
 
@@ -17,6 +23,32 @@ $cart__approximate-footer-height: 584px;
 
 .t-cart__empty {
     min-height: calc(100vh - #{$cart__approximate-header-height} - #{$cart__approximate-footer-height});
+}
+
+
+// Summary Wrapper
+// ---
+
+.t-cart__summary-wrapper {
+    opacity: 1;
+
+    transition: opacity 0.5s ease-out;
+
+    &.t--hide {
+        opacity: 0;
+    }
+}
+
+
+// Product Content Placeholder
+// ---
+//
+// This is meant to emulate the height of the cart product's quantity and edit,
+// save for later and remove buttons.
+
+.t-cart__product-content-placeholder {
+    width: 1px;
+    height: 126px;
 }
 
 
@@ -52,6 +84,10 @@ $cart__approximate-footer-height: 584px;
 // ---
 
 @include susy-breakpoint($tablet-breakpoint, $tablet-layout) {
+    .t-cart {
+        padding-bottom: $unit * 2;
+    }
+
     .t-cart__summary-title {
         padding-top: $unit * 3;
         padding-bottom: $unit * 2.5;
@@ -63,6 +99,10 @@ $cart__approximate-footer-height: 584px;
 // ---
 
 @include susy-breakpoint($desktop-breakpoint, $desktop-layout) {
+    .t-cart {
+        padding-bottom: $unit * 2;
+    }
+
     .t-cart__summary-title {
         padding-top: $unit * 3;
         padding-bottom: $unit * 2.5;

@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import Immutable from 'immutable'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
+import classNames from 'classnames'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import {Grid, GridSpan} from '../../components/grid'
@@ -47,6 +48,11 @@ class Cart extends React.Component {
     }
 
     renderItems(cart) {
+        const isCartEmpty = cart.items.length === 0
+        const summaryClassnames = classNames('t-cart__summary-wrapper', {
+            'u-visually-hidden': isCartEmpty,
+            't--hide': isCartEmpty,
+        })
         return (
             <div>
                 <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 7}}>
@@ -56,11 +62,14 @@ class Cart extends React.Component {
                     />
                 </GridSpan>
 
-                <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 5}}>
-                    <CartSummary cart={cart} onCalculateClick={this.openEstimateShippingModal} />
+                <GridSpan className={summaryClassnames} tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 5}}>
+                    <CartSummary
+                        cart={cart}
+                        onCalculateClick={this.openEstimateShippingModal}
+                    />
 
                     <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg">
-                        <Button className="c--tertiary u-width-full">
+                        <Button className="c--tertiary u-width-full u-text-uppercase">
                             Continue Shopping
                         </Button>
                     </div>
@@ -102,16 +111,23 @@ class Cart extends React.Component {
 
     render() {
         const cart = this.props.miniCart.get('cart').toJS()
-        const {estimateShippingModal, wishlistModal} = this.props.cart.toJS()
-        const productsArePresent = !!cart.items
+        const {
+            contentsLoaded,
+            estimateShippingModal,
+            wishlistModal
+        } = this.props.cart.toJS()
+        const isCartEmptyAndLoaded = cart.items.length === 0 && contentsLoaded
+        const templateClassnames = classNames('t-cart u-bg-color-neutral-20', {
+            't--loaded': cart.items.length > 0
+        })
 
         return (
-            <div className="t-cart u-bg-color-neutral-20">
+            <div className={templateClassnames}>
                 <Grid className="u-center-piece">
-                    {productsArePresent && cart.items.length ?
-                        this.renderItems(cart)
-                    :
+                    {isCartEmptyAndLoaded ?
                         this.renderEmpty()
+                    :
+                        this.renderItems(cart)
                     }
                 </Grid>
 
@@ -131,6 +147,7 @@ class Cart extends React.Component {
 
 Cart.propTypes = {
     cart: PropTypes.object,
+    contentsLoaded: PropTypes.bool,
     miniCart: PropTypes.object,
     toggleEstimateShippingModal: PropTypes.func,
     toggleWishlistModal: PropTypes.func,

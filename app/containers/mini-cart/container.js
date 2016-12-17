@@ -47,7 +47,7 @@ class MiniCart extends React.Component {
 
         return (
             <div className="u-padding-md">
-                <Button href="#" className="c--tertiary u-width-full u-margin-bottom u-text-capitalize">
+                <Button href="/checkout/cart/" className="c--tertiary u-width-full u-margin-bottom u-text-capitalize">
                     View and edit cart
                 </Button>
 

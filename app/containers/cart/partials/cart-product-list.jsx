@@ -7,40 +7,54 @@ import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Image from 'progressive-web-sdk/dist/components/image'
 import List from 'progressive-web-sdk/dist/components/list'
 import ProductItem from '../../../components/product-item'
+import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import Stepper from 'progressive-web-sdk/dist/components/stepper'
 
-const CartProductList = ({cart, onSaveLater}) => (
-    <div className="t-cart__product-list">
-        <div className="t-cart__product-list-title u-padding-top-md u-padding-bottom-md">
-            <div className="u-flexbox u-align-center">
-                <h1 className="u-flex">
-                    Cart ({cart.summary_count} Items)
-                </h1>
+const productItemClassNames = 'u-padding-top-lg u-padding-bottom-lg u-padding-start u-padding-end'
 
-                <Button className="u-flex-none u-color-brand">
-                    <Icon name="user" />
-                    Sign in
-                </Button>
+const renderProductImage = (src, alt) => (
+    <Image src={src} alt={alt} width="104px" height="104px" />
+)
+
+const renderProductSkeleton = () => (
+    <ProductItem
+        className={productItemClassNames}
+        title={<SkeletonText type="h3" className="u-margin-bottom-sm" />}
+        image={renderProductImage('null', 'null')}
+    >
+        <SkeletonText width="60%" style={{lineHeight: '20px'}} />
+        <SkeletonText width="60%" style={{lineHeight: '20px'}} className="u-margin-bottom-sm" />
+        <div className="t-cart__product-content-placeholder" />
+    </ProductItem>
+)
+
+const CartProductList = ({cart, onSaveLater}) => {
+    const isCartEmpty = cart.items.length === 0
+
+    return (
+        <div className="t-cart__product-list">
+            <div className="t-cart__product-list-title u-padding-top-md u-padding-bottom-md">
+                <div className="u-flexbox u-align-center">
+                    <h1 className="u-flex">
+                        Cart {cart.summary_count > 0 && <span>({cart.summary_count} Items)</span>}
+                    </h1>
+
+                    <Button className="u-flex-none u-color-brand">
+                        <Icon name="user" />
+                        Sign in
+                    </Button>
+                </div>
             </div>
-        </div>
 
-        <List className="u-bg-color-neutral-10 u-border-light-top u-border-light-bottom">
-            {cart.items.map((item, idx) => {
-                const productImage = (
-                    <Image
-                        src={item.product_image.src}
-                        alt={item.product_image.alt}
-                        width="104px"
-                        height="104px"
-                    />
-                )
+            <List className="u-bg-color-neutral-10 u-border-light-top u-border-light-bottom">
+                {isCartEmpty && renderProductSkeleton()}
 
-                return (
+                {cart.items.map((item, idx) => (
                     <ProductItem
-                        className="u-padding-top-lg u-padding-bottom-lg u-padding-start u-padding-end"
+                        className={productItemClassNames}
                         title={<h2 className="u-h3">{item.product_name}</h2>}
                         key={idx}
-                        image={productImage}
+                        image={renderProductImage(item.product_image.src, item.product_image.alt)}
                     >
                         <p className="u-color-neutral-50">Color: Maroon</p>
                         <p className="u-margin-bottom-sm u-color-neutral-50">Size: XL</p>
@@ -87,11 +101,11 @@ const CartProductList = ({cart, onSaveLater}) => (
                             </Button>
                         </div>
                     </ProductItem>
-                )
-            })}
-        </List>
-    </div>
-)
+                ))}
+            </List>
+        </div>
+    )
+}
 
 CartProductList.propTypes = {
     cart: PropTypes.object,
