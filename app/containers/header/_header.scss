@@ -111,24 +111,3 @@
     top: 0;
     right: 0;
 }
-
-// Notification Manager
-// ---
-//
-// 1. Position relative to `.t-header__bar`
-// 2. Prevent absolute positioned `<div>` from blocking clicks on elements
-//    below it
-// 3. Allow interactions with the notifications inside notification manager container
-
-.t-header__notification-manager {
-    position: absolute; // 1
-    top: 100%;
-    right: 0;
-    left: 0;
-
-    pointer-events: none; // 2
-
-    .c-notification {
-        pointer-events: auto; // 3
-    }
-}

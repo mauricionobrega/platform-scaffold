@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react'
-import Notification from '../../../components/notification'
+import Notification from './notification'
 
 const NotificationManager = ({
     notifications,

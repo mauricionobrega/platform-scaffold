@@ -47,3 +47,24 @@ $notification__easing: cubic-bezier(0.45, 0.1, 0.5, 1);
 
     animation: visibility-hide $notification__duration 1 forwards;
 }
+
+// Notification Manager
+// ---
+//
+// 1. Position relative to `.t-header__bar`
+// 2. Prevent absolute positioned `<div>` from blocking clicks on elements
+//    below it
+// 3. Allow interactions with the notifications inside notification manager container
+
+.t-header__notification-manager {
+    position: fixed;
+    right: 0;
+    left: 0;
+
+    pointer-events: none;
+    z-index: $z2-depth;
+
+    .c-notification {
+        pointer-events: auto;
+    }
+}

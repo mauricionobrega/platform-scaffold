@@ -4,4 +4,4 @@
 
 ## Import With
 
-`import Notification from 'progressive-web-sdk/dist/components/notification'`
+`import Notification from 'progressive-web-sdk/dist/components/notification-manager/notification'`

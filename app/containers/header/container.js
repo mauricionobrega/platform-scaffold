@@ -3,9 +3,6 @@ import {connect} from 'react-redux'
 import throttle from 'lodash.throttle'
 import classnames from 'classnames'
 import * as headerActions from './actions'
-import * as appActions from '../app/actions'
-
-import NotificationManager from './partials/notification-manager'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import IconLabel from 'progressive-web-sdk/dist/components/icon-label'
@@ -55,9 +52,8 @@ class Header extends React.Component {
     }
 
     render() {
-        const {onMenuClick, onMiniCartClick, notificationActions} = this.props
+        const {onMenuClick, onMiniCartClick} = this.props
         const {isCollapsed, cart} = this.props.header.toJS()
-        const {notifications} = this.props.appState.toJS()
         const cartCounterBadge = generateCartCounterBadge(cart)
 
         const innerButtonClassName = classnames('t-header__inner-button', 'u-padding-0', {
@@ -106,9 +102,6 @@ class Header extends React.Component {
                             </Button>
                         </HeaderBarActions>
                     </HeaderBar>
-                    {notifications &&
-                        <NotificationManager notifications={notifications} actions={notificationActions} />
-                    }
                 </div>
             </header>
         )
@@ -119,7 +112,6 @@ Header.propTypes = {
     appState: PropTypes.object,
     header: PropTypes.object,
     isCollapsed: PropTypes.bool,
-    notificationActions: PropTypes.object,
     toggleHeader: PropTypes.func,
 
     onMenuClick: PropTypes.func,
@@ -128,16 +120,12 @@ Header.propTypes = {
 
 const mapStateToProps = (state, props) => {
     return {
-        header: state.header,
-        appState: state.app
+        header: state.header
     }
 }
 
 export const mapDispatchToProps = (dispatch, props) => {
     return {
-        notificationActions: {
-            removeNotification: (id) => dispatch(appActions.removeNotification(id))
-        },
         toggleHeader: headerActions.toggleHeader
     }
 }
