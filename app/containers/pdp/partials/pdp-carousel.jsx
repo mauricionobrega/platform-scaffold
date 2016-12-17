@@ -8,7 +8,7 @@ import Image from 'progressive-web-sdk/dist/components/image'
 
 const PDPCarousel = ({items, contentsLoaded}) => {
     const carouselProps = {
-        previousIcon: 'back',
+        previousIcon: 'chevron-left',
         nextIcon: 'chevron-right',
         iconSize: 'medium',
         className: 'pw--frame pw--side-controls t-pdp__carousel u-padding-md u-bg-color-neutral-20'
