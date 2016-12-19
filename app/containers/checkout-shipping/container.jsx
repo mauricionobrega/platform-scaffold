@@ -24,7 +24,6 @@ class CheckoutShipping extends React.Component {
     }
 
     handleShowCompanyAndApt() {
-        console.log('test 1')
         this.props.showCompanyAndApt()
     }
 
