@@ -5,11 +5,15 @@ import * as checkoutShippingActions from './actions'
 const initialState = Immutable.fromJS({
     body: '',
     contentsLoaded: true,
-    testText: 'Shipping'
+    testText: 'Shipping',
+    isCompanyOrAptShown: false
 })
 
 export default createReducer({
     [checkoutShippingActions.receiveContents]: (state, payload) => {
         return state.mergeDeep(payload, {contentsLoaded: true})
+    },
+    [checkoutShippingActions.showCompanyAndApt]: (state) => {
+        return state.merge({isCompanyOrAptShown: true})
     }
 }, initialState)

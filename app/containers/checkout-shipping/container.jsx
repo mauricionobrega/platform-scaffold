@@ -9,6 +9,12 @@ import {ProgressSteps, ProgressStepsItem} from 'progressive-web-sdk/dist/compone
 
 
 class CheckoutShipping extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.handleShowCompanyAndApt = this.handleShowCompanyAndApt.bind(this)
+    }
+
     componentDidMount() {
         // this.props.fetchContents()
     }
@@ -17,15 +23,21 @@ class CheckoutShipping extends React.Component {
         return !Immutable.is(this.props.checkoutShipping, newProps.checkoutShipping)
     }
 
+    handleShowCompanyAndApt() {
+        console.log('test 1')
+        this.props.showCompanyAndApt()
+    }
+
     render() {
         const {
             contentsLoaded,
+            isCompanyOrAptShown,
         } = this.props.checkoutShipping.toJS()
         const templateClassnames = classNames('t-checkout-shipping u-bg-color-neutral-20', {
-            't--loaded': false
+            't--loaded': contentsLoaded
         })
 
-        return contentsLoaded && (
+        return (
             <div className={templateClassnames}>
                 <div className="u-bg-color-neutral-10 u-border-light-bottom">
                     <div className="t-checkout-shipping__progress">
@@ -38,7 +50,12 @@ class CheckoutShipping extends React.Component {
                     </div>
                 </div>
 
-                <CheckoutShippingReduxForm />
+                {contentsLoaded &&
+                    <CheckoutShippingReduxForm
+                        isCompanyOrAptShown={isCompanyOrAptShown}
+                        handleShowCompanyAndApt={this.handleShowCompanyAndApt}
+                    />
+                }
             </div>
         )
     }
@@ -46,7 +63,8 @@ class CheckoutShipping extends React.Component {
 
 CheckoutShipping.propTypes = {
     checkoutShipping: PropTypes.instanceOf(Immutable.Map),
-    fetchContents: PropTypes.func
+    fetchContents: PropTypes.func,
+    showCompanyAndApt: PropTypes.func
 }
 
 const mapStateToProps = (state) => {
@@ -56,7 +74,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    fetchContents: checkoutShippingActions.fetchContents
+    fetchContents: checkoutShippingActions.fetchContents,
+    showCompanyAndApt: checkoutShippingActions.showCompanyAndApt,
 }
 
 export default connect(

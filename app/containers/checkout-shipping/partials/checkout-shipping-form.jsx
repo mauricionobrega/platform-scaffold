@@ -53,9 +53,13 @@ const renderEmailAddress = () => {
     )
 }
 
-const renderShippingAddress = () => {
+const renderShippingAddress = (isCompanyOrAptShown, handleShowCompanyAndApt) => {
     const addCompanyButton = (
-        <Button className="c--is-anchor" innerClassName="c--no-min-height u-padding-0">
+        <Button
+            className="c--is-anchor"
+            innerClassName="c--no-min-height u-padding-0"
+            onClick={handleShowCompanyAndApt}
+            >
             <span className="u-color-brand u-text-letter-spacing-normal u-text-small">
                 Add company or apt #
             </span>
@@ -100,7 +104,7 @@ const renderShippingAddress = () => {
 
                     <FieldRow>
                         <ReduxForm.Field component={Field} name="email" label="Full Name">
-                            <input type="email" noValidate />
+                            <input type="text" noValidate />
                         </ReduxForm.Field>
                     </FieldRow>
 
@@ -109,31 +113,51 @@ const renderShippingAddress = () => {
                             component={Field}
                             name="email"
                             label="Address"
-                            caption={addCompanyButton}
+                            caption={!isCompanyOrAptShown && addCompanyButton}
                         >
-                            <input type="email" noValidate />
+                            <input type="text" noValidate />
+                        </ReduxForm.Field>
+                    </FieldRow>
+
+                    {isCompanyOrAptShown &&
+                        <FieldRow>
+                            <ReduxForm.Field
+                                component={Field}
+                                name="email"
+                                label="Company"
+                            >
+                                <input type="text" noValidate />
+                            </ReduxForm.Field>
+
+                            <ReduxForm.Field
+                                component={Field}
+                                name="email"
+                                label="Apt #, suite etc."
+                            >
+                                <input type="text" noValidate />
+                            </ReduxForm.Field>
+                        </FieldRow>
+                    }
+
+                    <FieldRow>
+                        <ReduxForm.Field component={Field} name="email" label="City">
+                            <input type="text" noValidate />
                         </ReduxForm.Field>
                     </FieldRow>
 
                     <FieldRow>
                         <ReduxForm.Field component={Field} name="email" label="Country">
-                            <input type="email" noValidate />
+                            <input type="text" noValidate />
                         </ReduxForm.Field>
 
-                        <ReduxForm.Field component={Field} name="email" label="City">
-                            <input type="email" noValidate />
-                        </ReduxForm.Field>
-                    </FieldRow>
-
-                    <FieldRow>
                         <ReduxForm.Field component={Field} name="email" label="Province">
-                            <input type="email" noValidate />
+                            <input type="text" noValidate />
                         </ReduxForm.Field>
                     </FieldRow>
 
                     <FieldRow>
                         <ReduxForm.Field component={Field} name="email" label="Postal Code">
-                            <input type="email" noValidate />
+                            <input type="text" noValidate />
                         </ReduxForm.Field>
                     </FieldRow>
 
@@ -186,7 +210,9 @@ const renderShippingMethod = () => {
 
 const CheckoutShippingForm = (props) => {
     const {
+        handleShowCompanyAndApt,
         handleSubmit,
+        isCompanyOrAptShown,
         // disabled,
         // submitting
     } = props
@@ -196,7 +222,7 @@ const CheckoutShippingForm = (props) => {
             <Grid className="u-center-piece">
                 <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 7}}>
                     {renderEmailAddress()}
-                    {renderShippingAddress()}
+                    {renderShippingAddress(isCompanyOrAptShown, handleShowCompanyAndApt)}
                 </GridSpan>
 
                 <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 5}}>
@@ -214,9 +240,19 @@ CheckoutShippingForm.propTypes = {
     disabled: React.PropTypes.bool,
 
     /**
+     * Shows the "Company" and "Apt #" fields
+     */
+    handleShowCompanyAndApt: React.PropTypes.func,
+
+    /**
      * Redux-form internal
      */
     handleSubmit: React.PropTypes.func,
+
+    /**
+     * Whether the "Company" and "Apt #" fields display
+     */
+    isCompanyOrAptShown: React.PropTypes.bool,
 
     /**
      * Redux-form internal
