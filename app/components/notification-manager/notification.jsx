@@ -76,7 +76,7 @@ class Notification extends React.Component {
             showRemoveButton,
         } = this.props
 
-        const baseClass = 'c-notification'
+        const baseClass = 'u-flexbox u-margin-bottom-sm u-color-neutral-10 c-notification'
 
         const classes = classNames(baseClass, 'u-align-center u-color-white', className, {
             'c--dismissing': this.state.dismissing

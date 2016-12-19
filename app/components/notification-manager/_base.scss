@@ -11,13 +11,9 @@ $notification__easing: cubic-bezier(0.45, 0.1, 0.5, 1);
 // 1. Slight increase of height transition duration to give the staggered collapse animation
 
 .c-notification {
-    display: flex;
     overflow: hidden;
-    margin-bottom: $unit/2;
 
     background: rgba($brand-color, 0.9);
-
-    color: $neutral-10;
 
     transform-origin: left top;
 
@@ -61,8 +57,8 @@ $notification__easing: cubic-bezier(0.45, 0.1, 0.5, 1);
     right: 0;
     left: 0;
 
-    pointer-events: none;
     z-index: $z2-depth;
+    pointer-events: none;
 
     .c-notification {
         pointer-events: auto;
