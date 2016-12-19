@@ -3,6 +3,8 @@
 
 $cart__approximate-header-height: 52px;
 $cart__approximate-footer-height: 584px;
+$cart__content-height: calc(100vh - #{$cart__approximate-header-height} - #{$cart__approximate-footer-height});
+$cart__custom-ease-out: cubic-bezier(0.35, 0.35, 0.32, 1);
 
 // Root
 // ---
@@ -10,19 +12,35 @@ $cart__approximate-footer-height: 584px;
 .t-cart {
     min-height: 100vh;
 
-    transition: min-height 2s ease-out;
+    transition: min-height 0.5s $cart__custom-ease-out;
 
     &.t--loaded {
-        min-height: 0;
+        min-height: $cart__content-height;
     }
 }
 
 
 // Empty State
 // ---
+//
+// 1. Prevent the hidden empty container from creating unwanted white-space
 
 .t-cart__empty {
-    min-height: calc(100vh - #{$cart__approximate-header-height} - #{$cart__approximate-footer-height});
+    min-height: $cart__content-height;
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+    transition: opacity 0.5s ease-in, transform 0.5s $cart__custom-ease-out;
+
+    &.t--hide {
+        margin-bottom: -100% !important; // 1
+
+        opacity: 0;
+
+        transform: translateY(5%);
+    }
 }
 
 
@@ -34,25 +52,7 @@ $cart__approximate-footer-height: 584px;
 
     transform: translateY(0);
 
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-
-    &.t--hide {
-        opacity: 0;
-
-        transform: translateY(5%);
-    }
-}
-
-
-// Summary Wrapper
-// ---
-
-.t-cart__empty {
-    opacity: 1;
-
-    transform: translateY(0);
-
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    transition: opacity 0.5s ease-in, transform 0.5s $cart__custom-ease-out;
 
     &.t--hide {
         opacity: 0;
