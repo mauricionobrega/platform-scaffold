@@ -51,7 +51,6 @@
     "extract-text-webpack-plugin": "2.0.0-beta.4",
     "html-to-json": "0.6.0",
     "ignore-styles": "5.0.1",
-    "imports-loader": "0.6.5",
     "ip": "1.1.4",
     "jest-cli": "17.0.1",
     "jsdom": "9.9.1",
