@@ -11,13 +11,16 @@ const CartPromoForm = (props) => {
         <form onSubmit={handleSubmit} noValidate>
             <FieldRow>
                 <ReduxForm.Field component={Field} name="email">
-                    <input type="text"
+                    <input
+                        className="t-cart__promo-input"
+                        type="text"
                         placeholder="Enter promo or gift code"
-                        noValidate />
+                        noValidate
+                    />
                 </ReduxForm.Field>
 
                 <Button type="submit"
-                    className="c--tertiary"
+                    className="c--tertiary u-margin-0"
                     disabled={disabled || submitting}>
                     Apply
                 </Button>
