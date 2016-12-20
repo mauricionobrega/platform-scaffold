@@ -74,6 +74,25 @@ $cart__custom-ease-out: cubic-bezier(0.35, 0.35, 0.32, 1);
 }
 
 
+// Product Stepper
+// ---
+//
+// 1. Force this input to overlap with the buttons to make it look smaller than
+//    it actually is.
+// 2. Ensure the buttons sit above the text input
+
+.t-cart__product-stepper {
+    [type="tel"] {
+        margin-right: -$unit * 2; // 1
+        margin-left: -$unit * 2; // 1
+    }
+
+    button {
+        z-index: 1; // 2
+    }
+}
+
+
 // Wislist Modal
 // ---
 

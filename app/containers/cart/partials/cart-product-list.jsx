@@ -59,10 +59,10 @@ const CartProductList = ({cart, onSaveLater}) => {
                         <p className="u-color-neutral-50">Color: Maroon</p>
                         <p className="u-margin-bottom-sm u-color-neutral-50">Size: XL</p>
 
-                        <FieldRow>
+                        <FieldRow className="u-align-bottom">
                             <Field label="Quantity" idFor={`quantity-${idx}`}>
                                 <Stepper
-                                    className="pw--simple"
+                                    className="pw--simple t-cart__product-stepper"
                                     idForLabel={`quantity-${idx}`}
                                     incrementIcon="plus"
                                     decrementIcon="minus"

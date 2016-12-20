@@ -2,8 +2,6 @@
 // ===
 
 .pw-field-row {
-    align-items: baseline;
-
     & + & {
         margin-top: $unit * 2;
     }
