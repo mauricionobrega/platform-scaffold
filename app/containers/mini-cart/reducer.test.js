@@ -1,7 +1,9 @@
-/* eslint-disable import/namespace */
-import {Map} from 'immutable'
+import {Map, fromJS} from 'immutable'
 
 import reducer from './reducer'
+import * as miniCartActions from './actions'
+import {receiveCartContents} from '../cart/actions'
+
 
 test('unknown action type leaves state unchanged', () => {
     const action = {
@@ -13,4 +15,78 @@ test('unknown action type leaves state unchanged', () => {
     })
 
     expect(reducer(inputState, action)).toEqual(inputState)
+})
+
+test('cartActions.receiveCartContents sets contentsLoaded flag', () => {
+    const action = receiveCartContents({})
+
+    const initialState = Map({
+        contentsLoaded: false,
+        bystander: 'data'
+    })
+
+    const finalState = Map({
+        contentsLoaded: true,
+        bystander: 'data'
+    })
+
+    expect(reducer(initialState, action).equals(finalState)).toBe(true)
+})
+
+test('cartActions.receiveCartContents merges in its payload', () => {
+    const action = receiveCartContents({
+        title: 'Test',
+        details: {
+            detail1: 'one',
+            detail2: 'two'
+        }
+    })
+
+    const initialState = Map({
+        bystander: 'data'
+    })
+
+    const finalState = fromJS({
+        bystander: 'data',
+        contentsLoaded: true,
+        title: 'Test',
+        details: {
+            detail1: 'one',
+            detail2: 'two'
+        }
+    })
+
+    expect(reducer(initialState, action).equals(finalState)).toBe(true)
+})
+
+test('openMiniCart sets the isOpen flag', () => {
+    const action = miniCartActions.openMiniCart()
+
+    const initialState = Map({
+        isOpen: false,
+        bystander: 'data'
+    })
+
+    const finalState = Map({
+        isOpen: true,
+        bystander: 'data'
+    })
+
+    expect(reducer(initialState, action).equals(finalState)).toBe(true)
+})
+
+test('closeMiniCart clears the isOpen flag', () => {
+    const action = miniCartActions.closeMiniCart()
+
+    const initialState = Map({
+        isOpen: true,
+        bystander: 'data'
+    })
+
+    const finalState = Map({
+        isOpen: false,
+        bystander: 'data'
+    })
+
+    expect(reducer(initialState, action).equals(finalState)).toBe(true)
 })

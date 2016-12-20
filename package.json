@@ -111,6 +111,7 @@
       "**/*.{js,jsx}",
       "!app/static/js/*.js",
       "!app/containers/reducers.js",
+      "!app/**/container.js",
       "!{dev-server,coverage,build,tests,webpack}/**/*.js",
       "!styleguide/**/*.{js,jsx}",
       "!app/loader-routes.js"
