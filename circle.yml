@@ -13,6 +13,7 @@ test:
         - npm test -- --runInBand
         # Enable smoke-test when automated workflow tests have been implemented.
         # - npm run smoke-test
+        #    parallel: true
 experimental:
     notify:
         branches:
