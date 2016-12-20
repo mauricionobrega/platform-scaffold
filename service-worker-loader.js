@@ -1,4 +1,4 @@
-// THIS IS A STRING VALUE NOT A BOOLEAN
+// THIS IS A STRING VALUE NOT A BOOLEAN, BE CAREFUL
 const isPreview = /preview=(true|false)/.exec(self.location.search)[1]
 
 if (isPreview === 'true') {
