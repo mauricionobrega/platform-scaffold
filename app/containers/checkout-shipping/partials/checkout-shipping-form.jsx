@@ -147,9 +147,13 @@ const renderShippingAddress = (isCompanyOrAptShown, handleShowCompanyAndApt) => 
 
                     <FieldRow>
                         <ReduxForm.Field component={Field} name="email" label="Country">
-                            <input type="text" noValidate />
+                            <select>
+                                <option>Canada</option>
+                            </select>
                         </ReduxForm.Field>
+                    </FieldRow>
 
+                    <FieldRow>
                         <ReduxForm.Field component={Field} name="email" label="Province">
                             <input type="text" noValidate />
                         </ReduxForm.Field>
