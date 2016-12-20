@@ -82,13 +82,13 @@ const CartProductList = ({cart, onSaveLater}) => {
                         <div className="u-flexbox">
                             <Button
                                 className="u-text-small u-color-brand u-flex-none"
-                                innerClassName="c--no-min-width u-padding-start-0 u-padding-end-0 u-padding-bottom-0"
+                                innerClassName="c--no-min-width u-padding-start-0 u-padding-bottom-0"
                             >
                                 Edit
                             </Button>
 
                             <Button
-                                className="u-text-small u-color-brand"
+                                className="u-text-small u-color-brand u-padding-start-0 u-padding-end-0"
                                 innerClassName="u-padding-bottom-0"
                                 onClick={onSaveLater}
                             >
@@ -97,7 +97,7 @@ const CartProductList = ({cart, onSaveLater}) => {
 
                             <Button
                                 className="u-text-small u-color-brand"
-                                innerClassName="u-padding-start-0 u-padding-end-0 u-padding-bottom-0"
+                                innerClassName="u-padding-end-0 u-padding-bottom-0"
                             >
                                 Remove
                             </Button>
