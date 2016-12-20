@@ -1,66 +1,14 @@
-// Notification
-// ===
-
-$notification__duration: 0.4s;
-$notification__easing: cubic-bezier(0.45, 0.1, 0.5, 1);
-
-
-// Root
-// ---
-//
-// 1. Slight increase of height transition duration to give the staggered collapse animation
-
-.c-notification {
-    overflow: hidden;
-
-    background: rgba($brand-color, 0.9);
-
-    transform-origin: left top;
-
-    transition: height $notification__duration*2 $notification__easing; // 1
-    animation: visibility-show $notification__duration 1 forwards;
-}
-
-
-// Action
-// ---
-
-.c-notification__action {
-    align-self: flex-start;
-}
-
-
-// State: Dismissing
-// ---
-//
-// 1. Override inline styles to collapse notification
-// 2. Prevent contents from leaking out
-
-.c-notification.c--dismissing {
-    overflow: hidden; // 2
-    height: 0; // 1
-    margin: 0;
-
-    animation: visibility-hide $notification__duration 1 forwards;
-}
-
 // Notification Manager
 // ---
 //
-// 1. Position relative to `.t-header__bar`
-// 2. Prevent absolute positioned `<div>` from blocking clicks on elements
+// 1. Prevent absolute positioned `<div>` from blocking clicks on elements
 //    below it
-// 3. Allow interactions with the notifications inside notification manager container
 
-.t-header__notification-manager {
+.c-notification-manager {
     position: fixed;
     right: 0;
     left: 0;
 
     z-index: $z2-depth;
-    pointer-events: none;
-
-    .c-notification {
-        pointer-events: auto;
-    }
+    pointer-events: none; // 1
 }

@@ -63,8 +63,8 @@ class Notification extends React.Component {
         })
     }
 
-    removeNotification(e) {
-        if (this.state.dismissing && e.target === this._notification) {
+    removeNotification() {
+        if (this.state.dismissing) {
             this.props.removeNotification(this.props.id)
         }
     }

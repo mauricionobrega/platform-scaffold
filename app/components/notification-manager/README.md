@@ -1,7 +1,11 @@
-## Notification Usage
+## NotificationManager Usage
 
-    <Notification showRemoveButton content="This is the name that displays when you submit a product review" />
+    The NotificationManager handles controlling and displaying notifications. It
+    should live in one place, likely in a common container - usually in the
+    header. 
+
+    <NotificationManager notifications={notifications} actions={notificationActions} />
 
 ## Import With
 
-`import Notification from 'progressive-web-sdk/dist/components/notification-manager/notification'`
+`import NotificationManager from 'components/notification-manager'`
