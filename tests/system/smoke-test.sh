@@ -1,5 +1,6 @@
 #!/bin/bash -eu
 set -o pipefail
+set -o nounset
 
 # Run automated system tests to verify that checkout still works.
 
@@ -30,4 +31,15 @@ else
 fi
 
 # Run the tests to verify that checkout flow still works.
-npm run nightwatch
+# Finds all test files to distribute evenly among machines for parallelism
+if [[  -z "${VALUE}" ]]; then
+    npm run test:e2e
+else
+  testfiles=$(find ./tests/system/workflows/ -name '*.js'| sort | awk "NR % ${CIRCLE_NODE_TOTAL} == ${CIRCLE_NODE_INDEX}")
+  if [ -z "$testfiles" ]
+  then
+      echo "more parallelism than tests"
+  else
+      npm run test:e2e --tests $testfiles
+  fi
+fi

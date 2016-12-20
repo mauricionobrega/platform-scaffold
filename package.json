@@ -102,6 +102,7 @@
     "smoke-test": "./tests/system/smoke-test.sh",
     "test": "cross-env NODE_ENV=test jest",
     "test:all": "npm run lint && npm test",
+    "test:e2e": "node ./node_modules/nightwatch/bin/runner.js -c ./tests/system/nightwatch-config.js --suiteRetries 1",
     "test:watch": "npm test -- --watch",
     "update-loader-routes": "sdk-get-routes"
   },
