@@ -66,12 +66,14 @@ const CartProductList = ({cart, onSaveLater}) => {
                                     idForLabel={`quantity-${idx}`}
                                     incrementIcon="plus"
                                     decrementIcon="minus"
+                                    initialValue={item.qty}
+                                    minimumValue={1}
                                 />
                             </Field>
 
                             <Field>
                                 <div className="u-text-align-end u-flex">
-                                    <div className="u-h5 u-color-accent u-text-semi-bold">$19.99</div>
+                                    <div className="u-h5 u-color-accent u-text-semi-bold">{item.product_price}</div>
                                     <div className="u-text-quiet"><em>Was $29.99</em></div>
                                 </div>
                             </Field>

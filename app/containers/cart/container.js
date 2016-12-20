@@ -118,7 +118,9 @@ class Cart extends React.Component {
         const contentsLoaded = this.props.miniCart.get('contentsLoaded')
         const {
             estimateShippingModal,
-            wishlistModal
+            wishlistModal,
+            countries,
+            stateProvinces
         } = this.props.cart.toJS()
         const isCartEmptyAndLoaded = cart.items.length === 0 && contentsLoaded
         const templateClassnames = classNames('t-cart u-bg-color-neutral-20', {
@@ -138,6 +140,8 @@ class Cart extends React.Component {
                 <CartEstimateShippingModal
                     isOpen={estimateShippingModal.isOpen}
                     closeModal={this.closeEstimateShippingModal}
+                    countries={countries}
+                    stateProvinces={stateProvinces}
                 />
 
                 <CartWishlistModal

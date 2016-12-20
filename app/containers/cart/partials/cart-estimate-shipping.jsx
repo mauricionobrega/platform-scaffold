@@ -9,7 +9,11 @@ import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/d
 
 
 const CartEstimateShippingModal = (props) => {
-    const {closeModal, isOpen} = props
+    const {closeModal,
+           isOpen,
+           countries,
+           stateProvinces
+        } = props
     return (
         <Sheet className="t-cart__estimate-shipping-modal" open={isOpen} onDismiss={closeModal} maskOpacity={0.7} effect="slide-right">
             <HeaderBar>
@@ -20,7 +24,7 @@ const CartEstimateShippingModal = (props) => {
                 </HeaderBarTitle>
 
                 <HeaderBarActions>
-                    <IconLabelButton iconName="close" onClick={closeModal} />
+                    <IconLabelButton iconName="close" label="" onClick={closeModal} />
                     <span className="u-visually-hidden">Close</span>
                 </HeaderBarActions>
             </HeaderBar>
@@ -29,7 +33,12 @@ const CartEstimateShippingModal = (props) => {
                 <FieldRow>
                     <Field label="Country">
                         <select>
-                            <option>United States</option>
+                            <option>Select</option>
+                            {countries.map((country, idx) => {
+                                return (
+                                    <option key={idx}>{country}</option>
+                                )
+                            })}
                         </select>
                     </Field>
                 </FieldRow>
@@ -38,6 +47,11 @@ const CartEstimateShippingModal = (props) => {
                     <Field label="State/Province">
                         <select>
                             <option>Select</option>
+                            {stateProvinces.map((stateProvince, idx) => {
+                                return (
+                                    <option key={idx}>{stateProvince}</option>
+                                )
+                            })}
                         </select>
                     </Field>
                 </FieldRow>
@@ -64,10 +78,14 @@ CartEstimateShippingModal.propTypes = {
      */
     closeModal: React.PropTypes.func,
 
+    countries: React.PropTypes.array,
+
     /**
      * Whether the modal is open or not
      */
     isOpen: React.PropTypes.bool,
+
+    stateProvinces: React.PropTypes.array
 }
 
 export default CartEstimateShippingModal
