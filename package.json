@@ -27,7 +27,7 @@
   "devDependencies": {
     "autoprefixer": "6.5.4",
     "babel-core": "6.21.0",
-    "babel-jest": "17.0.0",
+    "babel-jest": "18.0.0",
     "babel-loader": "6.2.10",
     "babel-plugin-transform-object-assign": "6.8.0",
     "babel-plugin-transform-object-rest-spread": "6.20.2",
@@ -52,7 +52,7 @@
     "html-to-json": "0.6.0",
     "ignore-styles": "5.0.1",
     "ip": "1.1.4",
-    "jest-cli": "17.0.1",
+    "jest-cli": "18.0.0",
     "jsdom": "9.9.1",
     "json-loader": "0.5.4",
     "lodash.assign": "4.2.0",
@@ -116,7 +116,7 @@
       "^.+\\.svg$": "<rootDir>/tests/emptyStringMock.js"
     },
     "setupFiles": [
-      "tests/jest-setup.js"
+      "<rootDir>/tests/jest-setup.js"
     ],
     "testPathIgnorePatterns": [
       "/webpack/",
