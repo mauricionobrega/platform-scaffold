@@ -40,7 +40,7 @@ $notification__easing: cubic-bezier(0.45, 0.1, 0.5, 1);
 
 .c-notification.c--dismissing {
     overflow: hidden; // 1
-    height: 0;
+    height: 0 !important;
     margin: 0;
 
     animation: visibility-hide $notification__duration 1 forwards;

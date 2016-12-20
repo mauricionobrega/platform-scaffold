@@ -63,8 +63,8 @@ class Notification extends React.Component {
         })
     }
 
-    removeNotification() {
-        if (this.state.dismissing) {
+    removeNotification(e) {
+        if (this.state.dismissing && e.target === this._notification) {
             this.props.removeNotification(this.props.id)
         }
     }
@@ -76,9 +76,9 @@ class Notification extends React.Component {
             showRemoveButton,
         } = this.props
 
-        const baseClass = 'u-flexbox u-margin-bottom-sm u-color-neutral-10 c-notification'
+        const baseClass = 'c-notification'
 
-        const classes = classNames(baseClass, 'u-align-center u-color-white', className, {
+        const classes = classNames(baseClass, 'u-align-center u-flexbox u-margin-bottom-sm u-color-neutral-10', className, {
             'c--dismissing': this.state.dismissing
         })
 
