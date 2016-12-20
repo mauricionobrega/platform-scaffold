@@ -1,7 +1,7 @@
 import {mount} from 'enzyme'
 import React from 'react'
 
-import Notification from './notification.jsx'
+import Notification from './index.jsx'
 
 test('Notification renders without errors', () => {
     const wrapper = mount(<Notification content="Test" />)
