@@ -11,7 +11,7 @@ test:
     override:
         - npm run lint
         - npm test -- --runInBand
-        - npm run test:pwa
+        - npm run test:pwa-ci
         # Enable smoke-test when automated workflow tests have been implemented.
         # - npm run smoke-test
     post:

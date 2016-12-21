@@ -5,7 +5,7 @@
 /tmp
 build.tar
 coverage
-lighthouse/audit.html
+lighthouse/audit*.html
 node_modules
 npm-debug.log
 

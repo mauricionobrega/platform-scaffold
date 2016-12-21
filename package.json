@@ -36,6 +36,7 @@
     "babel-register": "6.16.0",
     "chalk": "1.1.3",
     "classnames": "2.2.5",
+    "concurrently": "^3.1.0",
     "copy-webpack-plugin": "3.0.1",
     "cross-env": "3.1.3",
     "css-loader": "0.25.0",
@@ -103,7 +104,9 @@
     "test": "cross-env NODE_ENV=test jest",
     "test:all": "npm run lint && npm test",
     "test:e2e": "node ./node_modules/nightwatch/bin/runner.js -c ./tests/system/nightwatch-config.js --suiteRetries 1",
-    "test:pwa": "lighthouse --output=html --output-path=./lighthouse/audit.html https://www.merlinspotions.com",
+    "test:pwa-prod": "lighthouse --output=html --output-path=./lighthouse/audit-prod.html https://www.merlinspotions.com",
+    "test:pwa-ci": "concurrently --kill-others --success first --raw \"npm run dev\" \"sleep 20 && npm run test:pwa-local\"",
+    "test:pwa-local": "lighthouse --output=html --output-path=./lighthouse/audit-local.html 'https://www.merlinspotions.com/#mobify-override&mobify-path=true&mobify-url=https://localhost:8443/loader.js&mobify-global=true&mobify-domain=&mobify-all=true&mobify=1&mobify-debug=1&mobify-js=1'",
     "test:watch": "npm test -- --watch",
     "update-loader-routes": "sdk-get-routes"
   },
