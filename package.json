@@ -116,6 +116,14 @@
       "!styleguide/**/*.{js,jsx}",
       "!app/loader-routes.js"
     ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 26,
+        "functions": 39,
+        "lines": 54,
+        "statements": 50
+      }
+    },
     "moduleFileExtensions": [
       "js",
       "jsx",
