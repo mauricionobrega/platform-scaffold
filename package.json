@@ -97,6 +97,7 @@
     "lint:fix": "npm run lint:js -- --fix",
     "lint:js": "eslint '**/*.{js,jsx}'",
     "lint:sass": "sass-lint -c .sass-lint.yml 'app/**/*.scss' -v",
+    "postinstall": "scripts/install.sh",
     "prod:build": "rimraf build/ && sdk-get-routes && sdk-create-hash-manifest && webpack --config webpack/production.js -p --display-error-details",
     "push": "cross-env NODE_ENV=production npm run prod:build && sdk-upload",
     "styleguide": "styleguidist --config webpack/styleguide.config.js server",
@@ -106,8 +107,8 @@
     "test:all": "npm run lint && npm test",
     "test:e2e": "node ./node_modules/nightwatch/bin/runner.js -c ./tests/system/nightwatch-config.js --suiteRetries 1",
     "test:pwa-prod": "lighthouse --output=html --output-path=./lighthouse/audit-prod.html https://www.merlinspotions.com",
-    "test:pwa-ci": "concurrently --kill-others --success first --raw \"npm run dev\" \"sleep 20 && npm run test:pwa-local\"",
-    "test:pwa-local": "lighthouse --output=html --output-path=./lighthouse/audit-local.html 'https://www.merlinspotions.com/#mobify-override&mobify-path=true&mobify-url=https://localhost:8443/loader.js&mobify-global=true&mobify-domain=&mobify-all=true&mobify=1&mobify-debug=1&mobify-js=1'",
+    "test:pwa-ci": "concurrently --kill-others --success first --raw \"npm run dev\" \"sleep 30 && npm run test:pwa-local\"",
+    "test:pwa-local": "concurrently --kill-others --success first --raw \"mitmdump -R https://www.merlinspotions.com -p 8081 -s proxy/interceptor.py\" \"chrome-debug --allow-insecure-localhost\" \"sleep 5 && lighthouse --skip-autolaunch --output=html --output-path=./lighthouse/audit-local.html https://localhost:8081\"",
     "test:watch": "npm test -- --watch",
     "update-loader-routes": "sdk-get-routes"
   },
