@@ -37,7 +37,7 @@ export const onPageReceived = utils.createAction('On page received',
  */
 export const fetchPage = (url, pageComponent, routeName) => {
     return (dispatch, getState) => {
-        utils.makeRequest(url)
+        return utils.makeRequest(url)
             .then(jqueryResponse)
             .then((res) => {
                 const [$, $response] = res
