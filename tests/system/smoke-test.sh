@@ -31,7 +31,7 @@ else
 fi
 
 # Run the tests to verify that checkout flow still works.
-# If on CIRCLE, it will finds all test files to distribute evenly among machines for parallelism
+# If on CIRCLE, it will find all test files under /workflows to distribute evenly among machines for parallelism
 # If there is not, then it will run locally
 VALUE=${CIRCLECI:-}
 
