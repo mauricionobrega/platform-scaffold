@@ -60,6 +60,8 @@ const AppProvider = ({store}) => {
                 dispatchFetchPage(nextState)
             }
         }
+
+        store.dispatch(appActions.removeAllNotifications())
     }
 
     return (
