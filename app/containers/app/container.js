@@ -99,8 +99,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        openNavigation: navActions.openNavigation,
-        requestOpenMiniCart: miniCartActions.requestOpenMiniCart,
+        openNavigation: () => dispatch(navActions.openNavigation()),
+        requestOpenMiniCart: () => dispatch(miniCartActions.requestOpenMiniCart()),
         notificationActions: {
             removeNotification: (id) => dispatch(appActions.removeNotification(id))
         }
