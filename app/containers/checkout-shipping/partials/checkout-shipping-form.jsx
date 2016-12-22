@@ -8,9 +8,9 @@ import {Grid, GridSpan} from '../../../components/grid'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Link from 'progressive-web-sdk/dist/components/link'
 
-const renderEmailAddress = () => {
+const renderEmailAddress = (onEmailHintClick) => {
     const emailHint = (
-        <Button innerClassName="u-color-brand">
+        <Button innerClassName="u-color-brand" onClick={onEmailHintClick}>
             <Icon name="help" />
         </Button>
     )
@@ -217,6 +217,7 @@ const CheckoutShippingForm = (props) => {
         handleShowCompanyAndApt,
         handleSubmit,
         isCompanyOrAptShown,
+        onEmailHintClick
         // disabled,
         // submitting
     } = props
@@ -225,7 +226,7 @@ const CheckoutShippingForm = (props) => {
         <form className="t-checkout-shipping__form" onSubmit={handleSubmit} noValidate>
             <Grid className="u-center-piece">
                 <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 7}}>
-                    {renderEmailAddress()}
+                    {renderEmailAddress(onEmailHintClick)}
                     {renderShippingAddress(isCompanyOrAptShown, handleShowCompanyAndApt)}
                 </GridSpan>
 
@@ -261,7 +262,9 @@ CheckoutShippingForm.propTypes = {
     /**
      * Redux-form internal
      */
-    submitting: React.PropTypes.bool
+    submitting: React.PropTypes.bool,
+
+    onEmailHintClick: React.PropTypes.func,
 }
 
 const validate = (values) => {

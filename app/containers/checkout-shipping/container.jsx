@@ -30,8 +30,10 @@ class CheckoutShipping extends React.Component {
     render() {
         const {
             contentsLoaded,
-            isCompanyOrAptShown,
+            isCompanyOrAptShown
         } = this.props.checkoutShipping.toJS()
+        const {onEmailHintClick} = this.props
+
         const templateClassnames = classNames('t-checkout-shipping u-bg-color-neutral-20', {
             't--loaded': contentsLoaded
         })
@@ -53,6 +55,7 @@ class CheckoutShipping extends React.Component {
                     <CheckoutShippingReduxForm
                         isCompanyOrAptShown={isCompanyOrAptShown}
                         handleShowCompanyAndApt={this.handleShowCompanyAndApt}
+                        onEmailHintClick={onEmailHintClick}
                     />
                 }
             </div>
@@ -63,7 +66,9 @@ class CheckoutShipping extends React.Component {
 CheckoutShipping.propTypes = {
     checkoutShipping: PropTypes.instanceOf(Immutable.Map),
     fetchContents: PropTypes.func,
-    showCompanyAndApt: PropTypes.func
+    showCompanyAndApt: PropTypes.func,
+
+    onEmailHintClick: PropTypes.func,
 }
 
 const mapStateToProps = (state) => {
@@ -75,6 +80,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
     fetchContents: checkoutShippingActions.fetchContents,
     showCompanyAndApt: checkoutShippingActions.showCompanyAndApt,
+    onEmailHintClick: checkoutShippingActions.onEmailHintClick,
 }
 
 export default connect(
