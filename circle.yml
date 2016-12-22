@@ -28,7 +28,7 @@ stages:
           - /home/ubuntu/progressive-web-scaffold/node_modules
       - type: shell
         name: NPM Test
-        command: npm run lint && npm test -- --coverage
+        command: npm run test:all
       - type: artifacts-store
         path: coverage/
         destination: test-coverage
