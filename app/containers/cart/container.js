@@ -99,12 +99,12 @@ class Cart extends React.Component {
                             Your shopping cart is empty. Sign in to retrieve saved items or continue shopping.
                         </p>
 
-                        <Button className="c--primary u-text-uppercase u-h5 u-width-full u-margin-bottom-lg">
+                        <Button className="c--primary u-text-uppercase u-h5 u-width-full u-margin-bottom-lg" href="/customer/account/login/">
                             <Icon name="User" />
                             Sign In
                         </Button>
 
-                        <Button className="c--tertiary u-text-uppercase u-h5 u-width-full">
+                        <Button className="c--tertiary u-text-uppercase u-h5 u-width-full" href="/">
                             Continue Shopping
                         </Button>
                     </div>

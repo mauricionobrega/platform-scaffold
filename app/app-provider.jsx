@@ -70,7 +70,7 @@ const AppProvider = ({store}) => {
             <Router>
                 <Route path="/" component={App} onEnter={onEnter} onChange={onChange}>
                     <IndexRoute component={Home} routeName="home" />
-                    <Route component={Cart} path="checkout/cart/" routeName="cart" />
+                    <Route component={Cart} path="checkout/cart/" routeName="cart" fetchPage="false" />
                     <Route component={Login} path="customer/account/login/" routeName="signin" />
                     <Route component={Login} path="customer/account/create/" routeName="register" />
                     <Route component={PLP} path="potions.html" routeName="productListPage" />

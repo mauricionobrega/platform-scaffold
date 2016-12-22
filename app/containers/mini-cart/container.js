@@ -118,7 +118,7 @@ class MiniCart extends React.Component {
                             {hasItems ? this.renderList(cart) : this.renderEmpty()}
 
                             <div className="u-padding-top-lg u-flex-none">
-                                <Button href="#" className="c--primary u-width-full u-text-uppercase">
+                                <Button href="/checkout/cart/" className="c--primary u-width-full u-text-uppercase">
                                     Go To Checkout
                                 </Button>
                             </div>
