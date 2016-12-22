@@ -34,15 +34,17 @@ const renderEmailAddress = (onEmailHintClick) => {
 
                 {isSigningIn &&
                     <FieldRow>
-                        <ReduxForm.Field component={Field} name="email" label="Password" hint={passwordHint}>
-                            <input type="email" noValidate />
+                        <ReduxForm.Field component={Field} name="password" label="Password" hint={passwordHint}>
+                            <input type="password" noValidate />
                         </ReduxForm.Field>
                     </FieldRow>
                 }
 
                 {isSigningIn &&
                     <FieldRow>
-                        <Button className="c--secondary u-width-full u-text-uppercase">
+                        <Button
+                            className="c--secondary u-width-full u-text-uppercase"
+                            href="/customer/account/login/">
                             <Icon name="user" className="u-margin-end" />
                             Sign In
                         </Button>
@@ -83,7 +85,7 @@ const renderShippingAddress = (isCompanyOrAptShown, handleShowCompanyAndApt) => 
                 <FieldRow>
                     <ReduxForm.Field
                         component={Field}
-                        name="email"
+                        name="shipping-address"
                         label={<strong className="u-text-semi-bold">725 West Georgia</strong>}
                         caption={shippingAddress}
                     >
@@ -95,7 +97,7 @@ const renderShippingAddress = (isCompanyOrAptShown, handleShowCompanyAndApt) => 
                     <FieldRow>
                         <ReduxForm.Field
                             component={Field}
-                            name="email"
+                            name="address"
                             label={<strong className="u-text-semi-bold">Add a new address</strong>}
                         >
                             <input type="radio" checked noValidate />
@@ -103,7 +105,7 @@ const renderShippingAddress = (isCompanyOrAptShown, handleShowCompanyAndApt) => 
                     </FieldRow>
 
                     <FieldRow>
-                        <ReduxForm.Field component={Field} name="email" label="Full Name">
+                        <ReduxForm.Field component={Field} name="name" label="Full Name">
                             <input type="text" noValidate />
                         </ReduxForm.Field>
                     </FieldRow>
@@ -111,7 +113,7 @@ const renderShippingAddress = (isCompanyOrAptShown, handleShowCompanyAndApt) => 
                     <FieldRow>
                         <ReduxForm.Field
                             component={Field}
-                            name="email"
+                            name="address-line1"
                             label="Address"
                             caption={!isCompanyOrAptShown && addCompanyButton}
                         >
@@ -123,7 +125,7 @@ const renderShippingAddress = (isCompanyOrAptShown, handleShowCompanyAndApt) => 
                         <FieldRow>
                             <ReduxForm.Field
                                 component={Field}
-                                name="email"
+                                name="organization"
                                 label="Company"
                             >
                                 <input type="text" noValidate />
@@ -131,7 +133,7 @@ const renderShippingAddress = (isCompanyOrAptShown, handleShowCompanyAndApt) => 
 
                             <ReduxForm.Field
                                 component={Field}
-                                name="email"
+                                name="address-line2"
                                 label="Apt #, suite etc."
                             >
                                 <input type="text" noValidate />
@@ -140,13 +142,13 @@ const renderShippingAddress = (isCompanyOrAptShown, handleShowCompanyAndApt) => 
                     }
 
                     <FieldRow>
-                        <ReduxForm.Field component={Field} name="email" label="City">
+                        <ReduxForm.Field component={Field} name="shipping-city" label="City">
                             <input type="text" noValidate />
                         </ReduxForm.Field>
                     </FieldRow>
 
                     <FieldRow>
-                        <ReduxForm.Field component={Field} name="email" label="Country">
+                        <ReduxForm.Field component={Field} name="shipping-country" label="Country">
                             <select>
                                 <option>Canada</option>
                             </select>
@@ -154,13 +156,13 @@ const renderShippingAddress = (isCompanyOrAptShown, handleShowCompanyAndApt) => 
                     </FieldRow>
 
                     <FieldRow>
-                        <ReduxForm.Field component={Field} name="email" label="Province">
+                        <ReduxForm.Field component={Field} name="shipping-state" label="Province">
                             <input type="text" noValidate />
                         </ReduxForm.Field>
                     </FieldRow>
 
                     <FieldRow>
-                        <ReduxForm.Field component={Field} name="email" label="Postal Code">
+                        <ReduxForm.Field component={Field} name="shipping-postal-code" label="Postal Code">
                             <input type="text" noValidate />
                         </ReduxForm.Field>
                     </FieldRow>
@@ -168,11 +170,11 @@ const renderShippingAddress = (isCompanyOrAptShown, handleShowCompanyAndApt) => 
                     <FieldRow>
                         <ReduxForm.Field
                             component={Field}
-                            name="email"
+                            name="home-phone"
                             label="Phone"
                             caption="In case we need to contact you about your order"
                         >
-                            <input type="email" noValidate />
+                            <input type="tel" noValidate />
                         </ReduxForm.Field>
                     </FieldRow>
                 </div>
@@ -197,7 +199,7 @@ const renderShippingMethod = () => {
 
             <div className="u-padding-md u-border-light-top u-border-light-bottom u-bg-color-neutral-10">
                 <FieldRow>
-                    <ReduxForm.Field component={Field} name="email" label={methodLabel}>
+                    <ReduxForm.Field component={Field} name="shipping-method" label={methodLabel}>
                         <input type="radio" noValidate />
                     </ReduxForm.Field>
                 </FieldRow>
