@@ -2,6 +2,7 @@
 
 if [[ -z "${CI}" ]]; then
   pip install mitmproxy
-else
-  sudo pip install mitmproxy # CircleCI
+else # CircleCI
+  sudo pip install -U pip setuptools
+  sudo pip install mitmproxy
 fi
