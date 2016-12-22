@@ -124,10 +124,8 @@ const mapStateToProps = (state, props) => {
     }
 }
 
-export const mapDispatchToProps = (dispatch, props) => {
-    return {
-        toggleHeader: headerActions.toggleHeader
-    }
+const mapDispatchToProps = {
+    toggleHeader: headerActions.toggleHeader
 }
 
 export default connect(
