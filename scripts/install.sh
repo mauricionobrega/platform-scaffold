@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
 
-pip install mitmproxy
+if [[ -z "${CI}" ]]; then
+  pip install mitmproxy
+else
+  sudo pip install mitmproxy # CircleCI
+fi
