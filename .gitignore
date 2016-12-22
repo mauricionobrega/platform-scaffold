@@ -1,14 +1,6 @@
 .DS_Store
-.nyc_output
 
-/build
+build/
 tmp/
-build.tar
-coverage
 node_modules
 npm-debug.log
-
-tests/reports
-tests/screenshots
-
-webpack/tmp

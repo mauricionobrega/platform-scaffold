@@ -1,0 +1,7 @@
+.nyc_output
+build.tar
+
+coverage
+
+tests/reports
+tests/screenshots
