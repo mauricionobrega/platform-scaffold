@@ -2,7 +2,7 @@
 .nyc_output
 
 /build
-/tmp
+tmp/
 build.tar
 coverage
 node_modules
