@@ -100,13 +100,30 @@
     "save-credentials": "sdk-save-credentials",
     "smoke-test": "./tests/system/smoke-test.sh",
     "test": "cross-env NODE_ENV=test jest",
-    "test:all": "npm run lint && npm test",
+    "test:all": "npm run lint && npm test -- --coverage",
     "test:e2e": "node ./node_modules/nightwatch/bin/runner.js -c ./tests/system/nightwatch-config.js --suiteRetries 1",
     "test:watch": "npm test -- --watch",
     "update-loader-routes": "sdk-get-routes"
   },
   "jest": {
     "cacheDirectory": "./node_modules/.cache",
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}",
+      "!app/static/js/*.js",
+      "!app/containers/reducers.js",
+      "!app/**/container.js",
+      "!{dev-server,coverage,build,tests,webpack}/**/*.js",
+      "!styleguide/**/*.{js,jsx}",
+      "!app/loader-routes.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 26,
+        "functions": 39,
+        "lines": 54,
+        "statements": 50
+      }
+    },
     "moduleFileExtensions": [
       "js",
       "jsx",
@@ -123,7 +140,8 @@
       "/tmp/",
       "/node_modules/",
       "/app/static/",
-      "/dev-server/"
+      "/dev-server/",
+      "/coverage/"
     ],
     "testRegex": "\\.?(test|spec)\\.jsx?$"
   }
