@@ -25,7 +25,7 @@ stages:
       - type: cache-save
         key: progressive-web-scaffold-{{ .Branch }}
         paths:
-          - /home/ubuntu/progressive-web-scaffold/node_modules
+          - /home/ubuntu/progressive-web-scaffold/web/node_modules
       - type: shell
         name: NPM Test
         command: cd web && npm run test:all
