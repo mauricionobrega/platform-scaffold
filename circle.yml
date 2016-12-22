@@ -21,14 +21,14 @@ stages:
           apt-get --only-upgrade install google-chrome-stable
       - type: shell
         name: Install Dependencies
-        command: npm install
+        command: cd web && npm install
       - type: cache-save
         key: progressive-web-scaffold-{{ .Branch }}
         paths:
           - /home/ubuntu/progressive-web-scaffold/node_modules
       - type: shell
         name: NPM Test
-        command: npm run test:all
+        command: cd web && npm run test:all
       - type: artifacts-store
-        path: coverage/
+        path: web/coverage/
         destination: test-coverage
