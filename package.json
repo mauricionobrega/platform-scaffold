@@ -124,7 +124,7 @@
       "!app/static/js/*.js",
       "!app/containers/reducers.js",
       "!app/**/container.js",
-      "!{dev-server,coverage,build,tests,webpack}/**/*.js",
+      "!{dev-server,proxy,lighthouse,coverage,build,tests,webpack}/**/*.js",
       "!styleguide/**/*.{js,jsx}",
       "!app/loader-routes.js"
     ],
@@ -154,6 +154,7 @@
       "/app/static/",
       "/dev-server/",
       "/proxy/",
+      "/lighthouse/",
       "/coverage/"
     ],
     "testRegex": "\\.?(test|spec)\\.jsx?$"
