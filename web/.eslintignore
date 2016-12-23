@@ -1,6 +1,7 @@
 build
 coverage
 app/static
+app/vendor/astro-client.js
 tests/system/nightwatch-config.js
 tests/system/site.js
 tests/jest-setup.js
