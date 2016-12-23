@@ -110,6 +110,7 @@
     "collectCoverageFrom": [
       "**/*.{js,jsx}",
       "!app/static/js/*.js",
+      "!app/vendor/*.js",
       "!app/containers/reducers.js",
       "!app/**/container.js",
       "!{dev-server,coverage,build,tests,webpack}/**/*.js",
@@ -140,6 +141,7 @@
       "/tmp/",
       "/node_modules/",
       "/app/static/",
+      "/app/vendor/",
       "/dev-server/",
       "/coverage/"
     ],
