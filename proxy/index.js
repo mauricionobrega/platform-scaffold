@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 'use strict'
 
-const http = require('http')
-const https = require('https')
-const connect = require('connect')
-const httpProxy = require('http-proxy')
-const harmon = require('harmon')
-const process = require('process')
-const pem = require('pem')
+import http from 'http'
+import https from 'https'
+import connect from 'connect'
+import httpProxy from 'http-proxy'
+import harmon from 'harmon'
+import process from 'process'
+import pem from 'pem'
 
 process.setMaxListeners(0)
 
@@ -40,7 +40,7 @@ const runProxy = () => {
     const app = connect()
     app.use((req, res, next) => {
         res.writeHead(301,
-            {Location: 'https://localhost' + req.url}
+            {Location: `https://localhost${req.url}`}
         )
         res.end()
         next()

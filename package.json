@@ -133,7 +133,8 @@
       "/tmp/",
       "/node_modules/",
       "/app/static/",
-      "/dev-server/"
+      "/dev-server/",
+      "/proxy/"
     ],
     "testRegex": "\\.?(test|spec)\\.jsx?$"
   }
