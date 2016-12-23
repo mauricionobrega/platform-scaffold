@@ -8,7 +8,7 @@ import {Grid, GridSpan} from '../../../components/grid'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Link from 'progressive-web-sdk/dist/components/link'
 
-const renderEmailAddress = (onEmailHintClick) => {
+const renderEmailAddress = (onEmailHintClick, onShippingEmailRecognized) => {
     const emailHint = (
         <Button innerClassName="u-color-brand" onClick={onEmailHintClick}>
             <Icon name="help" />
@@ -44,7 +44,7 @@ const renderEmailAddress = (onEmailHintClick) => {
                     <FieldRow>
                         <Button
                             className="c--secondary u-width-full u-text-uppercase"
-                            href="/customer/account/login/">
+                            onClick={onShippingEmailRecognized}>
                             <Icon name="user" className="u-margin-end" />
                             Sign In
                         </Button>
@@ -219,7 +219,8 @@ const CheckoutShippingForm = (props) => {
         handleShowCompanyAndApt,
         handleSubmit,
         isCompanyOrAptShown,
-        onEmailHintClick
+        onEmailHintClick,
+        onShippingEmailRecognized,
         // disabled,
         // submitting
     } = props
@@ -228,7 +229,7 @@ const CheckoutShippingForm = (props) => {
         <form className="t-checkout-shipping__form" onSubmit={handleSubmit} noValidate>
             <Grid className="u-center-piece">
                 <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 7}}>
-                    {renderEmailAddress(onEmailHintClick)}
+                    {renderEmailAddress(onEmailHintClick, onShippingEmailRecognized)}
                     {renderShippingAddress(isCompanyOrAptShown, handleShowCompanyAndApt)}
                 </GridSpan>
 
@@ -267,6 +268,7 @@ CheckoutShippingForm.propTypes = {
     submitting: React.PropTypes.bool,
 
     onEmailHintClick: React.PropTypes.func,
+    onShippingEmailRecognized: React.PropTypes.func,
 }
 
 const validate = (values) => {

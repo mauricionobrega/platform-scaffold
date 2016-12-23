@@ -26,7 +26,17 @@ export const onEmailHintClick = () => {
     return (dispatch) => {
         dispatch(addNotification({
             content: 'This is where we will send your order confirmation.',
-            id: 'emailHintMessage',
+            id: 'shippingEmailHintMessage',
+            showRemoveButton: true
+        }))
+    }
+}
+
+export const onShippingEmailRecognized = () => {
+    return (dispatch) => {
+        dispatch(addNotification({
+            content: `Welcome back! Sign in for a faster checkout or continue as a guest.`,
+            id: 'shippingWelcomeBackMessage',
             showRemoveButton: true
         }))
     }

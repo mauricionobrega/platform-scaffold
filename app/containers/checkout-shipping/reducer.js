@@ -5,8 +5,7 @@ import * as checkoutShippingActions from './actions'
 const initialState = Immutable.fromJS({
     body: '',
     contentsLoaded: true,
-    testText: 'Shipping',
-    isCompanyOrAptShown: false
+    isCompanyOrAptShown: false,
 })
 
 export default createReducer({
