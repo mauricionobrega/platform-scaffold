@@ -21,7 +21,7 @@ stages:
           apt-get --only-upgrade install google-chrome-stable
       - type: shell
         name: Install Dependencies
-        command: cd web && npm install
+        command: cd web && npm install --progress false
       - type: cache-save
         key: progressive-web-scaffold-{{ .Branch }}
         paths:
