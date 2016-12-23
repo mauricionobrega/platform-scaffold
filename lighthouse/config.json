@@ -45,6 +45,7 @@
 
     "audits": [
         "is-on-https",
+        "redirects-http",
         "service-worker",
         "works-offline",
         "viewport",
@@ -166,6 +167,10 @@
             "description": "Security is an important part of the web for both developers and users. Moving forward, Transport Layer Security (TLS) support will be required for many APIs.",
             "audits": {
                 "is-on-https": {
+                    "expectedValue": true,
+                    "weight": 1
+                },
+                "redirects-http": {
                     "expectedValue": true,
                     "weight": 1
                 }
