@@ -110,7 +110,7 @@
     "test:e2e": "node ./node_modules/nightwatch/bin/runner.js -c ./tests/system/nightwatch-config.js --suiteRetries 1",
     "test:pwa-prod": "lighthouse --config-path=./lighthouse/config.json --output=html --output-path=./lighthouse/audit-prod.html https://www.merlinspotions.com",
     "test:pwa-ci": "concurrently --kill-others --success first --raw \"npm run dev\" \"sleep 30 && npm run test:pwa-local\"",
-    "test:pwa-local": "sudo concurrently --kill-others --success first --raw \"npm run proxy\" \"chrome-debug --allow-insecure-localhost\" \"sleep 5 && lighthouse --config-path=./lighthouse/config.json --skip-autolaunch --output=html --output-path=./lighthouse/audit-local.html https://localhost\"",
+    "test:pwa-local": "sudo ./node_modules/.bin/concurrently --kill-others --success first --raw \"npm run proxy\" \"chrome-debug --allow-insecure-localhost\" \"sleep 5 && lighthouse --config-path=./lighthouse/config.json --skip-autolaunch --output=html --output-path=./lighthouse/audit-local.html https://localhost\"",
     "test:watch": "npm test -- --watch",
     "proxy": "sudo node ./proxy/index.js",
     "update-loader-routes": "sdk-get-routes"
