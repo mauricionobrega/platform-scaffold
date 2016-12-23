@@ -80,12 +80,12 @@ npm run test:pwa-prod
 When you develop it might be helpful to run the same test against your local files: 
 
 ```
-npm run test:pwa-local
+sudo npm run test:pwa-local
 ```
 
 You **must** keep running `npm run dev` at the same time. 
 
-There is also `test:pwa-ci` task for CI that runs `dev` and `pwa-local` in parallel.
+There is also `test:pwa-ci` task (also requires `sudo`) for CI that runs `dev` and `pwa-local` in parallel.
 
 ## Developing against `develop` of the Progressive Web SDK
 
