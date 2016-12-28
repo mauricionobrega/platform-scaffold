@@ -1,6 +1,8 @@
 build
 coverage
+lighthouse
 app/static
+proxy
 tests/system/nightwatch-config.js
 tests/system/site.js
 tests/jest-setup.js

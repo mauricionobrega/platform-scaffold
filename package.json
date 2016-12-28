@@ -17,7 +17,7 @@
     "react": "15.4.1",
     "react-dom": "15.4.1",
     "react-redux": "4.4.5",
-    "react-router": "^2.7.0",
+    "react-router": "2.7.0",
     "redux": "3.6.0",
     "redux-act": "1.1.0",
     "redux-thunk": "2.1.0",
@@ -38,6 +38,8 @@
     "chalk": "1.1.3",
     "classnames": "2.2.5",
     "copy-webpack-plugin": "4.0.1",
+    "concurrently": "3.1.0",
+    "connect": "3.5.0",
     "cross-env": "3.1.3",
     "css-loader": "0.26.1",
     "enzyme": "2.6.0",
@@ -49,12 +51,15 @@
     "exports-loader": "0.6.3",
     "express": "4.14.0",
     "extract-text-webpack-plugin": "2.0.0-beta.4",
+    "harmon": "1.3.2",
     "html-to-json": "0.6.0",
+    "http-proxy": "1.15.1",
     "ignore-styles": "5.0.1",
     "ip": "1.1.4",
     "jest-cli": "18.0.0",
     "jsdom": "9.9.1",
     "json-loader": "0.5.4",
+    "lighthouse": "1.3.0",
     "lodash.assign": "4.2.0",
     "lodash.throttle": "4.1.1",
     "minimist": "1.2.0",
@@ -62,6 +67,7 @@
     "nightwatch": "0.9.8",
     "nightwatch-commands": "2.0.0",
     "node-sass": "4.1.1",
+    "pem": "1.8.3",
     "postcss-loader": "1.2.1",
     "progressive-web-sdk": "0.10.10",
     "prompt": "1.0.0",
@@ -83,6 +89,9 @@
     "webpack-dev-server": "1.16.2",
     "webpack-hot-middleware": "2.13.0"
   },
+  "config": {
+    "min_lighthouse_score": 40
+  },
   "scripts": {
     "add:component": "sdk-generate component",
     "add:form": "sdk-generate form",
@@ -90,7 +99,6 @@
     "build-sprites": "npm run clean-svgs && svg-sprite --symbol --symbol-dest='.' --symbol-sprite='sprite.svg' --shape-id-generator='shoppicon-%s' --dest=./app/static/svg/sprite-dist ./app/static/svg/sprite-source/*.svg",
     "clean-svgs": "node_modules/.bin/svgo --enable='removeUselessStrokeAndFill' -f ./app/static/svg/sprite-source",
     "dev": "sdk-get-routes && sdk-create-hash-manifest && node ./dev-server/index.js",
-    "prod:build": "rimraf build/ && sdk-get-routes && sdk-create-hash-manifest && webpack --config webpack/production.js -p --display-error-details",
     "lint": "npm run lint:js && npm run lint:sass",
     "lint:fix": "npm run lint:js -- --fix",
     "lint:js": "eslint '**/*.{js,jsx}'",
@@ -102,7 +110,11 @@
     "test": "cross-env NODE_ENV=test jest",
     "test:all": "npm run lint && npm test -- --coverage",
     "test:e2e": "node ./node_modules/nightwatch/bin/runner.js -c ./tests/system/nightwatch-config.js --suiteRetries 1",
+    "test:pwa-prod": "lighthouse --config-path=./lighthouse/config.json --output=html --output-path=./lighthouse/audit-prod.html https://www.merlinspotions.com",
+    "test:pwa-ci": "concurrently --kill-others --success first --raw \"npm run dev\" \"sleep 35 && npm run test:pwa-local\" && ./lighthouse/check-score.js",
+    "test:pwa-local": "concurrently --kill-others --success first --raw \"npm run proxy\" \"chrome-debug --allow-insecure-localhost\" \"sleep 5 && lighthouse --config-path=./lighthouse/config.json --skip-autolaunch --output=html --output-path=./lighthouse/audit-local.html https://localhost\"",
     "test:watch": "npm test -- --watch",
+    "proxy": "node ./proxy/index.js",
     "update-loader-routes": "sdk-get-routes"
   },
   "jest": {
@@ -112,7 +124,7 @@
       "!app/static/js/*.js",
       "!app/containers/reducers.js",
       "!app/**/container.js",
-      "!{dev-server,coverage,build,tests,webpack}/**/*.js",
+      "!{dev-server,proxy,lighthouse,coverage,build,tests,webpack}/**/*.js",
       "!styleguide/**/*.{js,jsx}",
       "!app/loader-routes.js"
     ],
@@ -141,6 +153,8 @@
       "/node_modules/",
       "/app/static/",
       "/dev-server/",
+      "/proxy/",
+      "/lighthouse/",
       "/coverage/"
     ],
     "testRegex": "\\.?(test|spec)\\.jsx?$"
