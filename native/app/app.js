@@ -1,23 +1,11 @@
 // Astro
 import Application from 'astro/application'
-import AnchoredLayoutPlugin from 'astro/plugins/anchoredLayoutPlugin'
-import TabBarPlugin from 'astro/plugins/tabBarPlugin'
 
-import TabBarConfig from './config/tabBarConfig'
+import TabBarController from './controllers/tabBarController'
 
 window.run = async function() {
-    // Build all the main plugins we need for the layout
-    const [
-        tabBar,
-        mainLayout
-    ] = await Promise.all([
-        TabBarPlugin.init(),
-        AnchoredLayoutPlugin.init()
-    ])
-
-    await tabBar.setItems(TabBarConfig.items)
-    await mainLayout.addBottomView(tabBar)
-    await Application.setMainViewPlugin(mainLayout)
+    const tabBarController = await TabBarController.init()
+    await Application.setMainViewPlugin(tabBarController.viewPlugin)
 
     Application.dismissLaunchImage()
 }
