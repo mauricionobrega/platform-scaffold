@@ -10,7 +10,7 @@ dependencies:
 test:
     override:
         - npm run lint
-        - npm test -- --runInBand
+        - npm test:all
         # Enable smoke-test when automated workflow tests have been implemented.
         # - npm run smoke-test
         #    parallel: true
