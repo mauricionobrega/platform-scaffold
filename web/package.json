@@ -117,6 +117,9 @@
       "!styleguide/**/*.{js,jsx}",
       "!app/loader-routes.js"
     ],
+    "coveragePathIgnorePatterns": [
+      "app/vendor/*.js"
+    ],
     "coverageThreshold": {
       "global": {
         "branches": 26,
