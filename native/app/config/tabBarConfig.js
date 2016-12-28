@@ -3,26 +3,26 @@ const tabConfig = {
         {
             id: 'shop',
             title: 'Shop',
-            imageUrl: '',
-            selectedImageUrl: ''
+            imageUrl: 'file:///wand.png',
+            selectedImageUrl: 'file:///wand.png'
         },
         {
             id: 'stores',
             title: 'Stores',
-            imageUrl: '',
-            selectedImageUrl: ''
+            imageUrl: 'file:///map.png',
+            selectedImageUrl: 'file:///map.png'
         },
         {
             id: 'account',
             title: 'Account',
-            imageUrl: '',
-            selectedImageUrl: ''
+            imageUrl: 'file:///user.png',
+            selectedImageUrl: 'file:///user.png'
         },
         {
             id: 'more',
             title: 'More',
-            imageUrl: '',
-            selectedImageUrl: ''
+            imageUrl: 'file:///more.png',
+            selectedImageUrl: 'file:///more.png'
         }
     ]
 }

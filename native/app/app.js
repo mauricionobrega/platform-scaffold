@@ -10,14 +10,15 @@ window.run = async function() {
     const [
         tabBar,
         mainLayout
-    ] = await Promise.all(
+    ] = await Promise.all([
         TabBarPlugin.init(),
         AnchoredLayoutPlugin.init()
-    )
+    ])
 
     await tabBar.setItems(TabBarConfig.items)
     await mainLayout.addBottomView(tabBar)
     await Application.setMainViewPlugin(mainLayout)
+
     Application.dismissLaunchImage()
 }
 
