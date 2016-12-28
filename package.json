@@ -114,6 +114,7 @@
     "test:pwa-ci": "concurrently --kill-others --success first --raw \"npm run dev\" \"sleep 35 && npm run test:pwa-local\" && ./lighthouse/check-score.js",
     "test:pwa-local": "concurrently --kill-others --success first --raw \"npm run proxy\" \"chrome-debug --allow-insecure-localhost\" \"sleep 5 && lighthouse --config-path=./lighthouse/config.json --skip-autolaunch --output=html --output-path=./lighthouse/audit-local.html https://localhost\"",
     "test:watch": "npm test -- --watch",
+    "prod:build": "rimraf build/ && sdk-get-routes && sdk-create-hash-manifest && webpack --config webpack/production.js -p --display-error-details",
     "proxy": "node ./proxy/index.js",
     "update-loader-routes": "sdk-get-routes"
   },
