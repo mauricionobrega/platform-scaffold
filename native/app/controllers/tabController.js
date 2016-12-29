@@ -29,6 +29,10 @@ TabController.init = async function(tabItem) {
 
     await layout.addTopView(headerBar)
     await layout.setContentView(navigationView)
+    await navigationView.setHeaderBar(headerBar)
+    headerBar.on('click:back', () => {
+        navigationView.back()
+    })
 
     return new TabController(tabItem, layout, headerBar, navigationView)
 }
