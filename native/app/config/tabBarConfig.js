@@ -1,4 +1,4 @@
-const tabConfig = {
+const tabBarConfig = {
     items: [
         {
             id: 'shop',
@@ -32,4 +32,16 @@ const tabConfig = {
     ]
 }
 
-export default tabConfig
+const getInitialTabId = function() {
+    const initialTabItem = tabBarConfig.items.find((item) => {
+        return typeof item.isInitialTab === 'boolean' && item.isInitialTab
+    })
+
+    if (initialTabItem) {
+        return initialTabItem.id
+    }
+
+    return undefined
+}
+
+export {tabBarConfig, getInitialTabId}

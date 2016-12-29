@@ -13,6 +13,7 @@ const TabController = function(tabItem, layout, headerBar, navigationView) {
 
     this.isActive = false
     this.loaded = false
+    console.log('TabController constructor finished')
 }
 
 TabController.init = async function(tabItem) {

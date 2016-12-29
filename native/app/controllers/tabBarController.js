@@ -1,7 +1,7 @@
 import AnchoredLayoutPlugin from 'astro/plugins/anchoredLayoutPlugin'
 import TabBarPlugin from 'astro/plugins/tabBarPlugin'
 
-import TabBarConfig from '../config/tabBarConfig'
+import {tabBarConfig} from '../config/tabBarConfig'
 import TabController from './tabController'
 
 const TabBarController = function(tabBar, layout, tabControllers) {
@@ -11,8 +11,6 @@ const TabBarController = function(tabBar, layout, tabControllers) {
     this.activeTabId = Object.keys(tabControllers).find((key) => {
         return tabControllers[key].isActive
     })
-
-    window.AstroActiveTab = this.activeTabId
 
     this._tabControllers = tabControllers
 
@@ -25,19 +23,15 @@ TabBarController.init = async function() {
 
     const tabControllers = {}
 
-    const tabControllerPromises = TabBarConfig.items.map((item) => {
+    const tabControllerPromises = tabBarConfig.items.map((item) => {
         return TabController.init(item).then((controller) => {
-            // Activate the tab that has been marked as the initial tab
-            if (typeof item.isInitialTab === 'boolean' && item.isInitialTab) {
-                controller.activate()
-            }
             tabControllers[item.id] = controller
         })
     })
 
     await Promise.all(tabControllerPromises)
 
-    await tabBar.setItems(TabBarConfig.items)
+    await tabBar.setItems(tabBarConfig.items)
     await layout.addBottomView(tabBar)
 
     return new TabBarController(tabBar, layout, tabControllers)
