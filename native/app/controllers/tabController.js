@@ -61,15 +61,19 @@ TabController.prototype.reload = async function() {
     this.loaded = true
 }
 
-TabController.prototype.activate = async function() {
-    this.isActive = true
+TabController.prototype.activate = function() {
+    if (this.isActive) {
+        this.navigationView.popToRoot({animated: true})
+    } else {
+        this.isActive = true
 
-    if (!this.loaded) {
-        await this.reload()
+        if (!this.loaded) {
+            this.reload()
+        }
     }
 }
 
-TabController.prototype.deactivate = async function() {
+TabController.prototype.deactivate = function() {
     this.isActive = false
 }
 
