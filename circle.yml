@@ -7,6 +7,10 @@ dependencies:
         - sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
         - sudo apt-get update
         - sudo apt-get --only-upgrade install google-chrome-stable
+        - npm install:
+            pwd: web
+        - npm install:
+            pwd: native
 test:
     override:
         - npm run lint:
