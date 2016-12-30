@@ -1,5 +1,5 @@
-import AnchoredLayoutPlugin from 'astro/plugins/anchoredLayoutPlugin'
-import TabBarPlugin from 'astro/plugins/tabBarPlugin'
+import AnchoredLayoutPlugin from 'progressive-app-sdk/plugins/anchoredLayoutPlugin'
+import TabBarPlugin from 'progressive-app-sdk/plugins/tabBarPlugin'
 
 import {tabBarConfig} from '../config/tabBarConfig'
 import TabController from './tabController'
