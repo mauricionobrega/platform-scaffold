@@ -5,14 +5,22 @@ import Application from 'astro/application'
 import MobifyPreviewPlugin from 'astro/plugins/mobifyPreviewPlugin'
 import PreviewController from 'astro/controllers/previewController'
 
+// Local
 import baseConfig from './config/baseConfig'
 import TabBarController from './controllers/tabBarController'
 import {getInitialTabId} from './config/tabBarConfig'
+import OnboardingModalController from './controllers/onboarding/onboardingModalController'
 
 window.run = async function() {
     const runApp = async function() {
-        const tabBarController = await TabBarController.init()
+        const onboardingModalController = await OnboardingModalController.init()
 
+        // The onboarding modal can be configured to show only once
+        // (on first launch) by setting `{forced: false}` as the
+        // parameter for onboardingModalController.show()
+        onboardingModalController.show({forced: true})
+
+        const tabBarController = await TabBarController.init()
         await Application.setMainViewPlugin(tabBarController.viewPlugin)
 
         const initialTabId = getInitialTabId()
