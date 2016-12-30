@@ -13,8 +13,9 @@ dependencies:
     override:
         - npm install:
             pwd: web
-        - npm install:
-            pwd: native
+        # Disabling native `npm install` for now as we aren't set up to `npm install` a git dep yet
+        #- npm install:
+        #    pwd: native
 test:
     override:
         - npm run lint:
