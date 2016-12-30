@@ -11,6 +11,9 @@ var outDir = path.resolve(rootDir, 'app/build');
 var isProd = process.env.NODE_ENV === 'production';
 var analyzeBundle = process.env.ASTRO_ANALYZE === 'true';
 
+// resolve.symlinks = false so that we can `npm link` node modules
+//                          in and not get lint errors from linting them.
+
 var config = {
     entry: entry,
     output: {
@@ -22,7 +25,8 @@ var config = {
             astro: path.resolve(rootDir, 'node_modules/mobify-progressive-app-sdk/js/src/'),
             vendor: path.resolve(rootDir, 'node_modules/mobify-progressive-app-sdk/js/vendor/'),
             bluebird: path.resolve(rootDir, 'node_modules/bluebird')
-        }
+        },
+        symlinks: false
     },
     plugins: [
         new webpack.optimize.LimitChunkCountPlugin({
