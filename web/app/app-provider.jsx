@@ -33,7 +33,9 @@ const AppProvider = ({store}) => {
         ].join('')
     }
 
-    const pwaNavigate = Astro.jsRpcMethod('pwa-navigate', ['url'])
+    const pwaNavigate = Astro.isRunningInApp()
+        ? Astro.jsRpcMethod('pwa-navigate', ['url'])
+        : () => {}
 
     const shouldFetchPage = (routerState) => routerState.routes[1].fetchPage !== 'false'
 
