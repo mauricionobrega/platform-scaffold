@@ -33,6 +33,8 @@ const AppProvider = ({store}) => {
         ].join('')
     }
 
+    const pwaNavigate = Astro.jsRpcMethod('pwa-navigate', ['url'])
+
     const shouldFetchPage = (routerState) => routerState.routes[1].fetchPage !== 'false'
 
     const getPageComponent = (routerState) => getComponentType(routerState.routes[1].component)
@@ -51,19 +53,34 @@ const AppProvider = ({store}) => {
         }
     }
 
-    const onChange = (prevState, nextState) => {
+    const onChange = (prevState, nextState, replace, callback) => {
         const prevURL = getURL(prevState)
         const nextURL = getURL(nextState)
+        const coordinateWithNativeApp = Astro.isRunningInApp() && nextState.location.action !== 'POP'
 
-        if (nextURL !== prevURL) {
-            if (nextState.location.action.toLowerCase() !== 'pop' && Astro.isRunningInApp()) {
-                Astro.trigger('pwa-navigate', {
-                    url: nextURL
-                })
-            }
+        const triggerChange = () => {
             dispatchRouteChanged(nextState)
             if (shouldFetchPage(nextState)) {
                 dispatchFetchPage(nextState)
+            }
+        }
+
+        if (!coordinateWithNativeApp) {
+            callback()
+        }
+
+        if (nextURL !== prevURL) {
+            if (coordinateWithNativeApp) {
+                pwaNavigate(nextURL).then(() => {
+                    callback()
+                    triggerChange()
+                    store.dispatch(appActions.removeAllNotifications())
+                })
+
+                // If we're coordinating with Astro, we wait to do anything more
+                return
+            } else {
+                triggerChange()
             }
         }
 
