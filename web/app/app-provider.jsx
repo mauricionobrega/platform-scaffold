@@ -4,6 +4,7 @@ import {triggerMobifyPageView} from 'progressive-web-sdk/dist/analytics'
 import {Provider} from 'react-redux'
 import * as appActions from './containers/app/actions'
 import {getComponentType} from './utils/utils'
+
 import Astro from './vendor/astro-client'
 
 // Containers
@@ -33,6 +34,11 @@ const AppProvider = ({store}) => {
         ].join('')
     }
 
+    /**
+     * Provides coordination with the native app (Astro)
+     * If we aren't in a native app then the function
+     * is just a no-op.
+     */
     const pwaNavigate = Astro.isRunningInApp()
         ? Astro.jsRpcMethod('pwa-navigate', ['url'])
         : () => {}
