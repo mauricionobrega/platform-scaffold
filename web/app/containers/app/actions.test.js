@@ -47,7 +47,7 @@ test('fetchPage fetches the given page', () => {
 
 test('fetchPage does not throw on error', () => {
     global.fetch.mockClear()
-    global.fetch.mockReturnValueOnce(Promise.reject(new Error()))
+    global.fetch.mockReturnValueOnce(Promise.reject(new Error('Mock error for testing!')))
 
     const thunk = fetchPage('url', 'pageType', '/')
     expect(typeof thunk).toBe('function')
