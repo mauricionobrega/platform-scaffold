@@ -32,7 +32,7 @@ class CheckoutShipping extends React.Component {
             contentsLoaded,
             isCompanyOrAptShown
         } = this.props.checkoutShipping.toJS()
-        const {onEmailHintClick, onShippingEmailRecognized} = this.props
+        const {onShippingEmailRecognized} = this.props
 
         const templateClassnames = classNames('t-checkout-shipping u-bg-color-neutral-20', {
             't--loaded': contentsLoaded
@@ -55,7 +55,6 @@ class CheckoutShipping extends React.Component {
                     <CheckoutShippingReduxForm
                         isCompanyOrAptShown={isCompanyOrAptShown}
                         handleShowCompanyAndApt={this.handleShowCompanyAndApt}
-                        onEmailHintClick={onEmailHintClick}
                         onShippingEmailRecognized={onShippingEmailRecognized}
                     />
                 }
@@ -69,7 +68,6 @@ CheckoutShipping.propTypes = {
     fetchContents: PropTypes.func,
     showCompanyAndApt: PropTypes.func,
 
-    onEmailHintClick: PropTypes.func,
     onShippingEmailRecognized: PropTypes.func,
 }
 
@@ -82,7 +80,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
     fetchContents: checkoutShippingActions.fetchContents,
     showCompanyAndApt: checkoutShippingActions.showCompanyAndApt,
-    onEmailHintClick: checkoutShippingActions.onEmailHintClick,
     onShippingEmailRecognized: checkoutShippingActions.onShippingEmailRecognized,
 }
 

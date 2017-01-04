@@ -8,12 +8,7 @@ import {Grid, GridSpan} from '../../../components/grid'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Link from 'progressive-web-sdk/dist/components/link'
 
-const renderEmailAddress = (onEmailHintClick, onShippingEmailRecognized) => {
-    const emailHint = (
-        <Button innerClassName="u-color-brand" onClick={onEmailHintClick}>
-            <Icon name="help" />
-        </Button>
-    )
+const renderEmailAddress = (onShippingEmailRecognized) => {
     const passwordHint = (
         <Link className="u-color-brand" href="/customer/account/forgotpassword/">
             Forgot password
@@ -27,7 +22,7 @@ const renderEmailAddress = (onEmailHintClick, onShippingEmailRecognized) => {
 
             <div className="u-padding-md u-border-light-top u-border-light-bottom u-bg-color-neutral-10">
                 <FieldRow>
-                    <ReduxForm.Field component={Field} className="pw--overlayed-hint" name="email" label="Email my receipt to" hint={emailHint}>
+                    <ReduxForm.Field component={Field} className="pw--overlayed-hint" name="email" label="Email my receipt to">
                         <input type="email" noValidate />
                     </ReduxForm.Field>
                 </FieldRow>
@@ -219,7 +214,6 @@ const CheckoutShippingForm = (props) => {
         handleShowCompanyAndApt,
         handleSubmit,
         isCompanyOrAptShown,
-        onEmailHintClick,
         onShippingEmailRecognized,
         // disabled,
         // submitting
@@ -229,7 +223,7 @@ const CheckoutShippingForm = (props) => {
         <form className="t-checkout-shipping__form" onSubmit={handleSubmit} noValidate>
             <Grid className="u-center-piece">
                 <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 7}}>
-                    {renderEmailAddress(onEmailHintClick, onShippingEmailRecognized)}
+                    {renderEmailAddress(onShippingEmailRecognized)}
                     {renderShippingAddress(isCompanyOrAptShown, handleShowCompanyAndApt)}
                 </GridSpan>
 
@@ -267,7 +261,6 @@ CheckoutShippingForm.propTypes = {
      */
     submitting: React.PropTypes.bool,
 
-    onEmailHintClick: React.PropTypes.func,
     onShippingEmailRecognized: React.PropTypes.func,
 }
 

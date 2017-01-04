@@ -22,16 +22,6 @@ export const fetchContents = () => {
     }
 }
 
-export const onEmailHintClick = () => {
-    return (dispatch) => {
-        dispatch(addNotification({
-            content: 'This is where we will send your order confirmation.',
-            id: 'shippingEmailHintMessage',
-            showRemoveButton: true
-        }))
-    }
-}
-
 export const onShippingEmailRecognized = () => {
     return (dispatch) => {
         dispatch(addNotification({
