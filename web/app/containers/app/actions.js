@@ -44,6 +44,6 @@ export const fetchPage = (url, pageComponent, routeName) => {
                 const currentURL = getState().app.get(CURRENT_URL)
                 dispatch(onPageReceived($, $response, pageComponent, url, currentURL, routeName))
             })
-            .catch((error) => { console.info(error.message) })
+            .catch((error) => { console.error(error.message) })
     }
 }
