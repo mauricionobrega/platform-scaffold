@@ -66,63 +66,69 @@ class Header extends React.Component {
 
         return (
             <header className="t-header">
-                <HeaderBar className="t-header__bar">
-                    <HeaderBarActions>
-                        <div role="navigation">
-                            <Button id="header-navigation" innerClassName={innerButtonClassName} onClick={onMenuClick}>
-                                <IconLabel label="Menu" iconName="menu" iconSize="medium" />
-                            </Button>
+                <div className="t-header__bar">
+                    <HeaderBar >
+                        <HeaderBarActions>
+                            <div role="navigation">
+                                <Button id="header-navigation" innerClassName={innerButtonClassName} onClick={onMenuClick}>
+                                    <IconLabel label="Menu" iconName="menu" iconSize="medium" />
+                                </Button>
+                            </div>
+                        </HeaderBarActions>
+
+                        <div className="t-header__placeholder" />
+
+                        <div className="u-flex">
+                            <HeaderBarTitle>
+                                <Link href="/" className={linkClassName}>
+                                    <DangerousHTML html={logo}>
+                                        {(htmlObj) => <div className="t-header__logo" dangerouslySetInnerHTML={htmlObj} />}
+                                    </DangerousHTML>
+                                    <h1 className="u-visually-hidden">Merlin's Potions</h1>
+                                </Link>
+                            </HeaderBarTitle>
                         </div>
-                    </HeaderBarActions>
 
-                    <div className="t-header__placeholder" />
+                        <HeaderBarActions>
+                            <Button innerClassName={innerButtonClassName}>
+                                <IconLabel label="Stores" iconName="map" iconSize="medium" />
+                            </Button>
+                        </HeaderBarActions>
 
-                    <div className="u-flex">
-                        <HeaderBarTitle>
-                            <Link href="/" className={linkClassName}>
-                                <DangerousHTML html={logo}>
-                                    {(htmlObj) => <div className="t-header__logo" dangerouslySetInnerHTML={htmlObj} />}
-                                </DangerousHTML>
-                                <h1 className="u-visually-hidden">Merlin's Potions</h1>
-                            </Link>
-                        </HeaderBarTitle>
-                    </div>
-
-                    <HeaderBarActions>
-                        <Button innerClassName={innerButtonClassName}>
-                            <IconLabel label="Stores" iconName="map" iconSize="medium" />
-                        </Button>
-                    </HeaderBarActions>
-
-                    <HeaderBarActions>
-                        <Button className="u-position-relative" innerClassName={innerButtonClassName} onClick={onMiniCartClick}>
-                            <IconLabel label="Cart" iconName="cart" iconSize="medium" />
-                            {cartCounterBadge}
-                        </Button>
-                    </HeaderBarActions>
-                </HeaderBar>
+                        <HeaderBarActions>
+                            <Button className="u-position-relative" innerClassName={innerButtonClassName} onClick={onMiniCartClick}>
+                                <IconLabel label="Cart" iconName="cart" iconSize="medium" />
+                                {cartCounterBadge}
+                            </Button>
+                        </HeaderBarActions>
+                    </HeaderBar>
+                </div>
             </header>
         )
     }
 }
 
 Header.propTypes = {
+    appState: PropTypes.object,
     header: PropTypes.object,
     isCollapsed: PropTypes.bool,
     toggleHeader: PropTypes.func,
+
     onMenuClick: PropTypes.func,
     onMiniCartClick: PropTypes.func,
 }
 
-const mapStateToProps = ({header}) => {
+const mapStateToProps = (state, props) => {
     return {
-        header
+        header: state.header
     }
+}
+
+const mapDispatchToProps = {
+    toggleHeader: headerActions.toggleHeader
 }
 
 export default connect(
     mapStateToProps,
-    {
-        toggleHeader: headerActions.toggleHeader
-    }
+    mapDispatchToProps
 )(Header)

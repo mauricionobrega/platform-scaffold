@@ -71,7 +71,8 @@ class PLP extends React.Component {
                             alt="Heading logo"
                             height="60px"
                             width="60px"
-                            src={getAssetUrl(`static/img/categories/${title.trim().toLowerCase()}@2x.png`)}
+                            src={getAssetUrl(`static/img/categories/${title.trim().replace(/\s+/g, '-')
+                            .toLowerCase()}@2x.png`)}
                         />
                     }
                 </div>

@@ -19,6 +19,26 @@ npm run dev
 npm run add:page
 ```
 
+## Adding a component
+
+```
+npm run add:component
+```
+
+## Using the notification system
+
+The scaffold comes with a system to notify users with messages that drop down
+from the header, and can be dismissed. To make your own, add the following code
+to the actions file of your component in the desired action. Example:
+
+```
+dispatch(addNotification({
+    content: 'The notification message.',
+    id: 'uniqueIdForTheNotification',
+    showRemoveButton: true
+}))
+```
+
 ## Docs with Styleguide
 
 To run the project documentation, including a live styleguide, use:
@@ -68,6 +88,24 @@ To verify that changes do not break the checkout flow:
 ```
 npm run smoke-test
 ```
+
+## Lighthouse tests
+
+You can run [Lighthouse](https://github.com/GoogleChrome/lighthouse) test against production with:
+
+```
+npm run test:pwa-prod
+```
+
+When you develop it might be helpful to run the same test against your local files: 
+
+```
+sudo npm run test:pwa-local
+```
+
+You **must** keep running `npm run dev` at the same time. 
+
+There is also `test:pwa-ci` task (also requires `sudo`) for CI that runs `dev` and `pwa-local` in parallel.
 
 ## Developing against `develop` of the Progressive Web SDK
 
