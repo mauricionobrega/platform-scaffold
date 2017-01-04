@@ -1,4 +1,7 @@
-import {generateCartCounterBadge} from './container'
+import {mount} from 'enzyme'
+import React from 'react'
+
+import {RawHeader as Header, generateCartCounterBadge} from './container'
 import Badge from 'progressive-web-sdk/dist/components/badge'
 
 describe('The cart badge', () => {
@@ -23,5 +26,26 @@ describe('The cart badge', () => {
         expect(twoItemsResult.type).toBe(Badge)
         expect(twoItemsResult.props.children).toBe(2)
         expect(twoItemsResult.props.title).toMatch(/2/)
+    })
+})
+
+describe('The header', () => {
+    test('Should not render header at all if running in an Astro app', () => {
+        const header = mount(<Header isRunningInAstro={true} />)
+        expect(header.children().length).toBe(0)
+    })
+
+    test('Should render header if not running in an Astro app', () => {
+        const headerData = {
+            toJS: function() {
+                return {
+                    isCollapsed: false,
+                    cart: []
+                }
+            }
+        }
+
+        const header = mount(<Header isRunningInAstro={false} header={headerData} />)
+        expect(header.children().length).toBe(1)
     })
 })

@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import throttle from 'lodash.throttle'
 import classnames from 'classnames'
 import * as headerActions from './actions'
+import {IS_IN_ASTRO_APP} from '../app/constants'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import IconLabel from 'progressive-web-sdk/dist/components/icon-label'
@@ -52,6 +53,10 @@ class Header extends React.Component {
     }
 
     render() {
+        if (this.props.isRunningInAstro) {
+            return false
+        }
+
         const {onMenuClick, onMiniCartClick} = this.props
         const {isCollapsed, cart} = this.props.header.toJS()
         const cartCounterBadge = generateCartCounterBadge(cart)
@@ -112,21 +117,25 @@ Header.propTypes = {
     appState: PropTypes.object,
     header: PropTypes.object,
     isCollapsed: PropTypes.bool,
+    isRunningInAstro: PropTypes.bool,
     toggleHeader: PropTypes.func,
 
     onMenuClick: PropTypes.func,
     onMiniCartClick: PropTypes.func,
 }
 
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state) => {
     return {
-        header: state.header
+        header: state.header,
+        isRunningInAstro: state.app.get(IS_IN_ASTRO_APP)
     }
 }
 
 const mapDispatchToProps = {
     toggleHeader: headerActions.toggleHeader
 }
+
+export {Header as RawHeader}
 
 export default connect(
     mapStateToProps,
