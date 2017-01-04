@@ -8,7 +8,7 @@ describe('the plp parser', () => {
     it('should extract the plp content from the rendered HTML', () => {
         const expected = {
             hasProducts: true,
-            isPlaceholder: false,
+            contentsLoaded: true,
             noResultsText: '',
             numItems: '7',
             title: 'Potions',

@@ -9,7 +9,7 @@ import plpParser from './parsers/plp'
 import PLP from './container'
 
 export const initialState = Immutable.fromJS({
-    isPlaceholder: true,
+    contentsLoaded: false,
     hasProducts: true,
     numItems: '',
     noResultsText: '',

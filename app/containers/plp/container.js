@@ -40,7 +40,7 @@ class PLP extends React.Component {
     render() {
         const {
             hasProducts,
-            isPlaceholder,
+            contentsLoaded,
             noResultsText,
             numItems,
             title
@@ -57,10 +57,10 @@ class PLP extends React.Component {
                         </div>
 
                         <div className="u-margin-top-md">
-                            {isPlaceholder ?
-                                <SkeletonText lines={1} type="h1" width="100px" />
-                            :
+                            {contentsLoaded ?
                                 <h1 className="u-text-lighter u-text-uppercase">{title}</h1>
+                            :
+                                <SkeletonText lines={1} type="h1" width="100px" />
                             }
                         </div>
                     </div>
@@ -79,10 +79,10 @@ class PLP extends React.Component {
 
                 <div className="t-plp__container u-padding-end u-padding-bottom-lg u-padding-start">
                     <div className="t-plp__num-results u-padding-md">
-                        {isPlaceholder ?
-                            <SkeletonBlock height="20px" />
-                        :
+                        {contentsLoaded ?
                             <span className="u-text-semi-bold">{numItems} Results</span>
+                        :
+                            <SkeletonBlock height="20px" />
                         }
                     </div>
 

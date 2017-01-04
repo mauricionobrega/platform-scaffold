@@ -10,7 +10,7 @@ const plpParser = ($, $html) => {
 
     return {
         hasProducts: productUrls.length > 0,
-        isPlaceholder: false,
+        contentsLoaded: true,
         noResultsText: $html.find('.message.empty').text(),
         numItems: $numItems.length > 0 ? $numItems.text() : '0',
         productUrls,
