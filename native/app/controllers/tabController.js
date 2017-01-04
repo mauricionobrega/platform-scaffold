@@ -1,8 +1,8 @@
 import Promise from 'bluebird'
 
-import AnchoredLayoutPlugin from 'astro/plugins/anchoredLayoutPlugin'
-import HeaderBarPlugin from 'astro/plugins/headerBarPlugin'
-import NavigationPlugin from 'astro/plugins/navigationPlugin'
+import AnchoredLayoutPlugin from 'progressive-app-sdk/plugins/anchoredLayoutPlugin'
+import HeaderBarPlugin from 'progressive-app-sdk/plugins/headerBarPlugin'
+import NavigationPlugin from 'progressive-app-sdk/plugins/navigationPlugin'
 
 const TabController = function(tabItem, layout, headerBar, navigationView) {
     this.tabItem = tabItem

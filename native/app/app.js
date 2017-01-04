@@ -1,9 +1,9 @@
 /* global AstroNative */
 
 // Astro
-import Application from 'astro/application'
-import MobifyPreviewPlugin from 'astro/plugins/mobifyPreviewPlugin'
-import PreviewController from 'astro/controllers/previewController'
+import Application from 'progressive-app-sdk/application'
+import MobifyPreviewPlugin from 'progressive-app-sdk/plugins/mobifyPreviewPlugin'
+import PreviewController from 'progressive-app-sdk/controllers/previewController'
 
 import baseConfig from './config/baseConfig'
 import TabBarController from './controllers/tabBarController'
