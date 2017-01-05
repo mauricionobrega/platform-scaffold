@@ -8,7 +8,8 @@ const initialState = Map({
     [FETCH_IN_PROGRESS]: false,
     [CURRENT_URL]: false,
         // If we use a regular array, React doesn't seem to catch all the updates
-    notifications: List()
+    notifications: List(),
+    fetchError: null
 })
 
 export default createReducer({
@@ -39,5 +40,11 @@ export default createReducer({
     },
     [appActions.removeAllNotifications]: (state) => {
         return state.set('notifications', List())
+    },
+    [appActions.setPageFetchError]: (state, payload) => {
+        return state.mergeDeep(payload)
+    },
+    [appActions.clearPageFetchError]: (state) => {
+        return state.set('fetchError', null)
     }
 }, initialState)

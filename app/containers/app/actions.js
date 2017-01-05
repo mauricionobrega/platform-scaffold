@@ -31,6 +31,9 @@ export const onPageReceived = utils.createAction('On page received',
     'routeName'
 )
 
+export const setPageFetchError = utils.createAction('Set page fetch error', 'fetchError')
+export const clearPageFetchError = utils.createAction('Clear page fetch error')
+
 /**
  * Fetch the content for a 'global' page render. This should be driven
  * by react-router, ideally.
@@ -42,8 +45,12 @@ export const fetchPage = (url, pageComponent, routeName) => {
             .then((res) => {
                 const [$, $response] = res
                 const currentURL = getState().app.get(CURRENT_URL)
+                dispatch(clearPageFetchError())
                 dispatch(onPageReceived($, $response, pageComponent, url, currentURL, routeName))
             })
-            .catch((error) => { console.info(error.message) })
+            .catch((error) => {
+                console.info(error.message)
+                dispatch(setPageFetchError({message: error.message}))
+            })
     }
 }
