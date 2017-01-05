@@ -1,0 +1,8 @@
+{
+  "name": "Merlin's Potions",
+  "short_name": "Merlin's",
+  "start_url": "https://www.merlinspotions.com/",
+  "background_color": "#fff",
+  "theme_color":" #4e439b",
+  "display": "standalone"
+}

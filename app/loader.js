@@ -64,6 +64,11 @@ if (isReactRoute()) {
             onload: 'window.Progressive.stylesheetLoaded = true;'
         })
 
+        loadAsset('link', {
+            href: getAssetUrl('static/manifest.json'),
+            rel: 'manifest'
+        })
+
         const script = document.createElement('script')
         script.id = 'progressive-web-script'
         // Setting UTF-8 as our encoding ensures that certain strings (i.e.
