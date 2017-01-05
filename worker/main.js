@@ -33,20 +33,6 @@ const cacheNames = [baseCacheName, bundleCache.name, imageCache.name]
 
 toolbox.precache(precacheUrls)
 
-// Utility functions
-const jsonResponse = (data) => {
-    return new Response(
-        new Blob(
-            [JSON.stringify(data)],
-            {type: 'application/json'}
-        ),
-        {
-            status: 200,
-            statusText: 'OK'
-        }
-    )
-}
-
 // Lifecycle Handlers
 
 self.addEventListener('install', (e) => {
