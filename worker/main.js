@@ -6,14 +6,13 @@ import toolbox from 'sw-toolbox'
 const cachebreaker = /b=([^&]+)/.exec(self.location.search)[1]
 const CAPTURING_URL = 'https://cdn.mobify.com/capturejs/capture-latest.min.js'
 
-const version = '0.1.0'
+const version = '0.1.1'
 // For offline mode this needs to store the main.js, main.css, loader,
 // and capturing in the bundle cache. For now we can't due to CORS limitations
 const precacheUrls = [
     // `https://localhost:8443/main.css?${cachebreaker}`,
     // `https://localhost:8443/main.js?${cachebreaker}`
 ]
-const manifest = {}
 
 const baseCacheName = `${PROJECT_SLUG}-v${version}`
 toolbox.options.cache.name = baseCacheName
@@ -69,10 +68,6 @@ self.addEventListener('activate', (e) => {
 })
 
 // Path Handlers
-toolbox.router.get('/manifest.json', () => {
-    return jsonResponse(manifest)
-})
-
 toolbox.router.get(/\.(?:png|gif|svg|jpe?g)$/, toolbox.fastest, {cache: imageCache})
 
 toolbox.router.get(/cdn\.mobify\.com\/.*\?[a-f\d]+$/, toolbox.cacheFirst, {cache: bundleCache})
