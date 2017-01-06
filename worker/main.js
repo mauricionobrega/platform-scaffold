@@ -70,7 +70,7 @@ toolbox.router.get(/(?:cdn\.mobify\.com|localhost:8443)\/.*loader\.js$/, toolbox
 toolbox.router.get(/fonts.gstatic.com\/.*\.woff2$/, toolbox.cacheFirst, {cache: bundleCache})
 toolbox.router.get(/fonts.googleapis.com\/css/, toolbox.networkFirst, {cache: bundleCache})
 
-// Main page is needed for offline
+// Main page is needed for installed app when offline
 toolbox.router.get('/', toolbox.networkFirst, {cache: bundleCache})
 
 toolbox.router.default = toolbox.networkFirst
