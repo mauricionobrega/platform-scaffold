@@ -9,6 +9,7 @@ import List from 'progressive-web-sdk/dist/components/list'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import ProductTile from './partials/product-tile'
+import {isOffline} from '../app/reducer'
 import {getRoutedState} from '../../utils/router-utils'
 
 const renderResults = (products) => {
@@ -34,7 +35,7 @@ const renderNoResults = (bodyText) => {
 
 class PLP extends React.Component {
     shouldComponentUpdate(nextProps) {
-        return !Immutable.is(this.props.routedState, nextProps.routedState)
+        return !Immutable.is(this.props.routedState, nextProps.routedState) || (this.props.isOffline !== nextProps.isOffline)
     }
 
     render() {
@@ -129,6 +130,7 @@ PLP.propTypes = {
 const mapStateToProps = (state) => {
     const routedState = getRoutedState(state.plp)
     return {
+        isOffline: isOffline(state),
         routedState,
         ...routedState.toJS()
     }

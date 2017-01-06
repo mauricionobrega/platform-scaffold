@@ -12,6 +12,10 @@ const initialState = Map({
     fetchError: null
 })
 
+// This will need to become more complicated when
+// we handle more types of errors, but will do for now
+export const isOffline = (state) => !!state.app.get('fetchError')
+
 export default createReducer({
     [appActions.onRouteChanged]: (state, {currentURL}) => {
         return state.set(FETCH_IN_PROGRESS, true).set(CURRENT_URL, currentURL)
