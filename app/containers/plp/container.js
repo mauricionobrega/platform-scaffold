@@ -109,9 +109,17 @@ class PLP extends React.Component {
 
 PLP.propTypes = {
     /**
+     * Fires a fetchPage action.
+     */
+    fetchPage: PropTypes.func.isRequired,
+    /**
      * When there were products found on the page, this is set to true
      */
     hasProducts: PropTypes.bool.isRequired,
+    /**
+     * Whether the device is thought to be offline
+     */
+    isOffline: PropTypes.bool.isRequired,
     /**
      * Whether we are currently in a placeholder state, or have page content to
      * display
@@ -129,6 +137,10 @@ PLP.propTypes = {
      * The array of parsed products
      */
     products: PropTypes.array.isRequired,
+    /**
+     * The route object from react-router
+     */
+    route: PropTypes.object.isRequired,
     /**
      * The Immutable.js state object, for use with shouldComponentUpdate
      */

@@ -2,12 +2,12 @@ import React, {PropTypes} from 'react'
 import classNames from 'classnames'
 
 import Button from 'progressive-web-sdk/dist/components/button'
-import ListTile from 'progressive-web-sdk/dist/components/link'
 
 const componentClass = 'c-offline'
 
 /**
- * INSERT_DESCRIPTION_HERE
+ * UI to be shown instead of the page contents while offline and no
+ * contents are available.
  */
 
 const Offline = ({
@@ -32,6 +32,10 @@ Offline.propTypes = {
      */
     className: PropTypes.string,
 
+    /**
+     * Callback to retry the page load
+     */
+    retry: PropTypes.func
 }
 
 export default Offline
