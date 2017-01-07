@@ -11,7 +11,9 @@ import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import ProductTile from './partials/product-tile'
 import Offline from '../../components/offline'
 import {isOffline} from '../app/reducer'
+import {fetchPage} from '../app/actions'
 import {getRoutedState} from '../../utils/router-utils'
+import {getComponentType} from '../../utils/utils'
 
 const renderResults = (products) => {
     return products.map((product, idx) => <ProductTile key={idx} product={product} />)
@@ -48,11 +50,14 @@ class PLP extends React.Component {
             noResultsText,
             numItems,
             products,
-            title
+            title,
+            route,
+            fetchPage
         } = this.props
 
         if (isOffline && isPlaceholder) {
-            return <Offline />
+            const reload = () => fetchPage(window.location.href, getComponentType(route.component), route.routeName)
+            return <Offline retry={reload} />
         }
 
         return (
@@ -143,6 +148,9 @@ const mapStateToProps = (state) => {
     }
 }
 
+const mapDispatchToProps = {fetchPage}
+
 export default connect(
-    mapStateToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(PLP)

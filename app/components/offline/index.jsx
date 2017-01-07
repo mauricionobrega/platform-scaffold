@@ -1,7 +1,8 @@
 import React, {PropTypes} from 'react'
 import classNames from 'classnames'
 
-import Link from 'progressive-web-sdk/dist/components/link'
+import Button from 'progressive-web-sdk/dist/components/button'
+import ListTile from 'progressive-web-sdk/dist/components/link'
 
 const componentClass = 'c-offline'
 
@@ -10,6 +11,7 @@ const componentClass = 'c-offline'
  */
 
 const Offline = ({
+    retry,
     className
 }) => {
     const classes = classNames(componentClass, className)
@@ -18,7 +20,7 @@ const Offline = ({
         <div className={classes}>
             <h1>Offline!</h1>
 
-            We can not currently reach the Internet. <Link href={window.location.href}>Click here to try again</Link>
+            We can not currently reach the Internet. <Button onClick={retry}>Click here to try again</Button>
         </div>
     )
 }
