@@ -41,8 +41,13 @@ if (isReactRoute()) {
     loadAsset('meta', {
         name: 'viewport',
         content: 'width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'
-    });
+    })
     /* eslint-enable max-len */
+
+    loadAsset('meta', {
+        name: 'theme-color',
+        content: '#4e439b'
+    });
 
     // load the worker if available
     // if no worker is available, we have to assume that promises might not be either.
@@ -57,6 +62,11 @@ if (isReactRoute()) {
             // Tell us when the stylesheet has loaded so we know when it's safe to
             // display the app! This prevents a flash of unstyled content.
             onload: 'window.Progressive.stylesheetLoaded = true;'
+        })
+
+        loadAsset('link', {
+            href: getAssetUrl('static/manifest.json'),
+            rel: 'manifest'
         })
 
         const script = document.createElement('script')
