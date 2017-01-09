@@ -42,6 +42,10 @@ TabController.init = async function(tabItem) {
         navigationView.back()
     })
 
+    navigationView.defaultWebViewPluginOptions = {
+        disableLoader: []
+    }
+
     return new TabController(tabItem, layout, headerBar, navigationView)
 }
 
