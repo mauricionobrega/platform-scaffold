@@ -1,5 +1,5 @@
-import AnchoredLayoutPlugin from 'astro/plugins/anchoredLayoutPlugin'
-import TabBarPlugin from 'astro/plugins/tabBarPlugin'
+import AnchoredLayoutPlugin from 'progressive-app-sdk/plugins/anchoredLayoutPlugin'
+import TabBarPlugin from 'progressive-app-sdk/plugins/tabBarPlugin'
 
 import {tabBarConfig} from '../config/tabBarConfig'
 import TabController from './tabController'
@@ -38,22 +38,17 @@ TabBarController.init = async function() {
 }
 
 TabBarController.prototype._tabSelected = function(tabId) {
+    const newTabController = this._tabControllers[tabId]
     if (this.activeTabId !== tabId) {
-        // activeTabId is undefined during startup
         const oldTabController = this.getActiveController()
         if (oldTabController) {
             oldTabController.deactivate()
         }
 
         this.activeTabId = tabId
-        const activeTabController = this._tabControllers[tabId]
-
-        activeTabController.activate()
-
-        this.viewPlugin.setContentView(activeTabController.viewPlugin)
-    } else {
-        this.getActiveNavigationView().popToRoot({animated: true})
+        this.viewPlugin.setContentView(newTabController.viewPlugin)
     }
+    newTabController.activate()
 }
 
 TabBarController.prototype.selectTab = function(tabId) {

@@ -1,6 +1,6 @@
 /* global AstroNative */
 
-import Astro from 'astro/astro-full'
+import Astro from 'progressive-app-sdk/astro-full'
 
 // TODO: Update <local_ip> if running on Android
 const localPreviewUrl = Astro.isRunningInIOSApp()
