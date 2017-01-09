@@ -43,10 +43,6 @@ TabController.init = async function(tabItem) {
         navigationView.back()
     })
 
-    headerBar.on('click:cart', () => {
-        console.log('Cart has been clicked')
-    })
-
     return new TabController(tabItem, layout, headerBar, navigationView)
 }
 
