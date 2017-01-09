@@ -4,19 +4,14 @@ import AnchoredLayoutPlugin from 'astro/plugins/anchoredLayoutPlugin'
 import HeaderBarPlugin from 'astro/plugins/headerBarPlugin'
 import NavigationPlugin from 'astro/plugins/navigationPlugin'
 
-import ModalWebViewPlugin from 'astro/plugins/modalViewPlugin'
-import WebViewPlugin from 'astro/plugins/webViewPlugin'
-
 import baseConfig from '../config/baseConfig'
 
-const TabController = function(tabItem, layout, headerBar, navigationView, cartWebView, modalView) {
+const TabController = function(tabItem, layout, headerBar, navigationView) {
     this.tabItem = tabItem
     this.id = tabItem.id
     this.viewPlugin = layout
     this.headerBar = headerBar
     this.navigationView = navigationView
-    this.cartWebView = cartWebView
-    this.modalView = modalView
 
     this.isActive = false
     this.loaded = false
@@ -28,14 +23,10 @@ TabController.init = async function(tabItem) {
         layout,
         headerBar,
         navigationView,
-        cartWebView,
-        modalView,
     ] = await Promise.all([
         AnchoredLayoutPlugin.init(),
         HeaderBarPlugin.init(),
         NavigationPlugin.init(),
-        WebViewPlugin.init(),
-        ModalWebViewPlugin.init(),
     ])
 
     await layout.addTopView(headerBar)
@@ -43,20 +34,14 @@ TabController.init = async function(tabItem) {
     await navigationView.setHeaderBar(headerBar)
 
     await headerBar.setCenterIcon(baseConfig.logoUrl, 'logo')
-    await headerBar.setRightIcon(baseConfig.cartUrl, 'cart')
+    await headerBar.setRightIcon(baseConfig.cartIconUrl, 'cart')
     await headerBar.setTextColor(baseConfig.colors.whiteColor)
     await headerBar.setBackgroundColor(baseConfig.colors.primaryColor)
     await headerBar.setOpaque()
 
-    await cartWebView.navigate('https://google.ca')
-    await modalView.setContentView(cartWebView)
 
     headerBar.on('click:back', () => {
         navigationView.back()
-    })
-
-    headerBar.on('click:cart', () => {
-        modalView.show()
     })
 
     return new TabController(tabItem, layout, headerBar, navigationView)
