@@ -34,6 +34,7 @@ TabController.init = async function(tabItem) {
     await navigationView.setHeaderBar(headerBar)
 
     await headerBar.setCenterIcon(baseConfig.logoUrl, 'logo')
+    await headerBar.setRightIcon(baseConfig.cartUrl, 'cart')
     await headerBar.setTextColor(baseConfig.colors.whiteColor)
     await headerBar.setBackgroundColor(baseConfig.colors.primaryColor)
     await headerBar.setOpaque()
