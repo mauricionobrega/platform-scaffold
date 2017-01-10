@@ -40,12 +40,26 @@ export const clearPageFetchError = utils.createAction('Clear page fetch error')
  */
 export const fetchPage = (url, pageComponent, routeName) => {
     return (dispatch, getState) => {
+        let isOffline = false
         return utils.makeRequest(url)
+            .then((response) => {
+                isOffline = response.headers.get('x-mobify-progressive') === 'offline'
+                return response
+            })
             .then(jqueryResponse)
             .then((res) => {
                 const [$, $response] = res
                 const currentURL = getState().app.get(CURRENT_URL)
-                dispatch(clearPageFetchError())
+
+                if (isOffline) {
+                    dispatch(addNotification({
+                        content: 'THIS IS THE OFFLINE MESSAGE TEXT',
+                        id: 'offline-mode',
+                        showRemoveButton: true
+                    }))
+                } else {
+                    dispatch(clearPageFetchError())
+                }
                 dispatch(onPageReceived($, $response, pageComponent, url, currentURL, routeName))
             })
             .catch((error) => {

@@ -3,6 +3,9 @@
 
 import toolbox from 'sw-toolbox'
 
+// Just in case we end up overriding this later via a custom strategy
+const successResponses = toolbox.options.successResponses
+
 const cachebreaker = /b=([^&]+)/.exec(self.location.search)[1]
 const CAPTURING_URL = 'https://cdn.mobify.com/capturejs/capture-latest.min.js'
 
@@ -73,4 +76,67 @@ toolbox.router.get(/fonts.googleapis.com\/css/, toolbox.networkFirst, {cache: bu
 // Main page is needed for installed app when offline
 toolbox.router.get('/', toolbox.networkFirst, {cache: bundleCache})
 
-toolbox.router.default = toolbox.networkFirst
+/**
+ * It's unfortunate that the toolbox doesn't provide a way to add on custom response
+ * headers, because that's all we need this for. This isn't as robust as their networkFirst
+ * strategy.
+ *
+ * Basically, we fetch and cache - if it fails we try the cache, but add a
+ * `x-mobify-progressive: offline` header for use by the application
+ */
+toolbox.router.get(/.*/, (request) => {
+    let originalResponse
+
+    return fetch(request.clone())
+        .then((response) => {
+            originalResponse = response
+
+            // This is lifted from https://github.com/GoogleChrome/sw-toolbox/blob/master/lib/strategies/networkFirst.js#L59
+            if (successResponses.test(response.status)) {
+                caches.open(baseCacheName).then((cache) => {
+                    cache.put(request, originalResponse)
+                })
+
+                return originalResponse.clone()
+            }
+
+            toolbox.options.debug && console.error(`Response was an HTTP error: ${response.statusText}`)
+            throw new Error('Bad response')
+        })
+        .catch((error) => {
+            toolbox.options.debug && console.error(`Network or response error, fallback to cache [${request.url}]`)
+
+            /* eslint-disable max-nested-callbacks */
+            return caches.open(baseCacheName).then((cache) => {
+                return cache.match(request).then((response) => {
+                    if (response) {
+                        const newOptions = {
+                            status: 200,
+                            statusText: 'OK',
+                            headers: {
+                                'X-mobify-progressive': 'offline'
+                            }
+                        }
+
+                        // Add the original headers from the response to our
+                        // new response
+                        response.headers.forEach((v, k) => {
+                            newOptions.headers[k] = v
+                        })
+
+                        return response.text().then((body) => {
+                            return new Response(body, newOptions)
+                        })
+                    }
+
+                    if (originalResponse) {
+                        return originalResponse
+                    }
+
+
+                    throw error
+                })
+            })
+            /* eslint-enable max-nested-callbacks */
+        })
+})
