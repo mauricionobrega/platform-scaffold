@@ -33,7 +33,7 @@ class App extends React.Component {
     render() {
         const {requestOpenMiniCart, openNavigation, history, children, app, notificationActions} = this.props
         const currentTemplateProps = children.props
-        const currentTemplate = `t-${currentTemplateProps.route.routeName}`
+        const currentTemplate = `app--${currentTemplateProps.route.routeName}`
         const CurrentHeader = currentTemplateProps.route.Header || Header
         const CurrentFooter = currentTemplateProps.route.Footer || Footer
         const {notifications} = app.toJS()

@@ -1,7 +1,7 @@
 // Sheet
 // ===
 
-.c-sheet {
+.pw-sheet {
     //
 }
 
@@ -9,7 +9,7 @@
 // Mask
 // ---
 
-.c-sheet__mask {
+.pw-sheet__mask {
     background: $neutral-70;
 }
 
@@ -17,6 +17,16 @@
 // Wrapper
 // ---
 
-.c-sheet__wrapper {
+.pw-sheet__wrapper {
     box-shadow: $box-shadow;
+}
+
+
+// States
+// ---
+
+.pw-sheet.pw--no-shadow {
+    .pw-sheet__wrapper {
+        box-shadow: none;
+    }
 }
