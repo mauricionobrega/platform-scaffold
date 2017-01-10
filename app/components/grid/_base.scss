@@ -73,10 +73,13 @@ $grid__DESKTOP_BREAKPOINT: 'desktop';
         margin-right: -($tablet-gutters / 2); // 1
         margin-left: -($tablet-gutters / 2); // 1
     }
-    @include susy-breakpoint($desktop-breakpoint, $desktop-layout) {
-        margin-right: -($desktop-gutters / 2); // 1
-        margin-left: -($desktop-gutters / 2); // 1
-    }
+    // If you want the desktop breakpoint to also include the negative margin,
+    // uncomment the below block.
+    //
+    // @include susy-breakpoint($desktop-breakpoint, $desktop-layout) {
+    //     margin-right: -($desktop-gutters / 2); // 1
+    //     margin-left: -($desktop-gutters / 2); // 1
+    // }
 }
 
 
