@@ -1,6 +1,5 @@
-
 import HeaderBarPlugin from 'astro/plugins/headerBarPlugin'
-import CartConfig from '../config/cartConfig'
+import cartConfig from '../config/cartConfig'
 
 const CartHeaderController = function(headerBar) {
     this.viewPlugin = headerBar
@@ -8,7 +7,11 @@ const CartHeaderController = function(headerBar) {
 
 CartHeaderController.init = async function() {
     const headerBar = await HeaderBarPlugin.init()
-    await headerBar.setRightIcon(CartConfig.closeIcon.imageUrl, CartConfig.closeIcon.id)
+    await headerBar.setRightIcon(cartConfig.closeIcon.imageUrl, cartConfig.closeIcon.id)
+    await headerBar.setTextColor(cartConfig.colors.textColor)
+    await headerBar.setBackgroundColor(cartConfig.colors.backgroundColor)
+    await headerBar.setLeftTitle('SHOPPING CART', 'title')      // Not necessary, design?
+    await headerBar.setOpaque()
     return new CartHeaderController(headerBar)
 }
 
@@ -16,7 +19,7 @@ CartHeaderController.prototype.registerCloseEvents = function(callback) {
     if (!callback) {
         return
     }
-    this.viewPlugin.on(`click:${CartConfig.closeIcon.id}`, callback)
+    this.viewPlugin.on(`click:${cartConfig.closeIcon.id}`, callback)
 }
 
 export default CartHeaderController

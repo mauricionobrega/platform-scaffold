@@ -23,11 +23,13 @@ CartModalController.init = async function() {
         CartController.init(),
         CartHeaderController.init(),
     ])
+
     await anchoredLayout.addTopView(cartHeaderController.viewPlugin)
     await anchoredLayout.setContentView(cartController.viewPlugin)
     await modalView.setContentView(anchoredLayout)                // load the view in to the modal
 
     const cartModalController = new CartModalController(modalView, cartController)
+
     cartHeaderController.registerCloseEvents(() => {
         cartModalController.hide()
     })

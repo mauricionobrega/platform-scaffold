@@ -21,7 +21,6 @@ const baseConfig = {
         : '//cdn.mobify.com/sites/progressive-web-scaffold/production/loader.js',
     colors,
     logoUrl: 'file:///logo.png',
-    cartIconUrl: 'file:///logo.png'
 }
 
 export default baseConfig
