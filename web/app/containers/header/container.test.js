@@ -1,4 +1,4 @@
-import {mount} from 'enzyme'
+import {shallow} from 'enzyme'
 import React from 'react'
 
 import {RawHeader as Header, generateCartCounterBadge} from './container'
@@ -31,7 +31,7 @@ describe('The cart badge', () => {
 
 describe('The header', () => {
     test('Should not render header at all if running in an Astro app', () => {
-        const header = mount(<Header isRunningInAstro={true} />)
+        const header = shallow(<Header isRunningInAstro={true} />)
         expect(header.children().length).toBe(0)
     })
 
@@ -45,7 +45,7 @@ describe('The header', () => {
             }
         }
 
-        const header = mount(<Header isRunningInAstro={false} header={headerData} />)
+        const header = shallow(<Header isRunningInAstro={false} header={headerData} />)
         expect(header.children().length).not.toBe(0)
     })
 })
