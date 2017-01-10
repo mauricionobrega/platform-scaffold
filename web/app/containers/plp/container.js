@@ -45,37 +45,40 @@ class PLP extends React.Component {
             noResultsText,
             numItems,
             products,
-            title
+            title,
+            isRunningInAstro
         } = this.props
 
         return (
             <div className="t-plp">
-                <div className="u-flexbox u-align-bottom">
-                    <div className="u-flex u-padding-top-lg u-padding-bottom-lg u-padding-start-md">
-                        <div className="t-plp__breadcrumb">
-                            <Link href="/" className="u-text-small">Home</Link>
+                {!isRunningInAstro &&
+                    <div className="u-flexbox u-align-bottom">
+                        <div className="u-flex u-padding-top-lg u-padding-bottom-lg u-padding-start-md">
+                            <div className="t-plp__breadcrumb">
+                                <Link href="/" className="u-text-small">Home</Link>
+                            </div>
+
+                            <div className="u-margin-top-md">
+                                {isPlaceholder ?
+                                    <SkeletonText lines={1} type="h1" width="100px" />
+                                :
+                                    <h1 className="u-text-lighter u-text-uppercase">{title}</h1>
+                                }
+                            </div>
                         </div>
 
-                        <div className="u-margin-top-md">
-                            {isPlaceholder ?
-                                <SkeletonText lines={1} type="h1" width="100px" />
-                            :
-                                <h1 className="u-text-lighter u-text-uppercase">{title}</h1>
-                            }
-                        </div>
+                        {title &&
+                            <Image
+                                className="u-flex-none u-padding-end u-padding-bottom-sm"
+                                alt="Heading logo"
+                                height="60px"
+                                width="60px"
+                                src={getAssetUrl(`static/img/categories/${title.trim().replace(/\s+/g, '-')
+                                .toLowerCase()}@2x.png`)}
+                            />
+                        }
                     </div>
-
-                    {title &&
-                        <Image
-                            className="u-flex-none u-padding-end u-padding-bottom-sm"
-                            alt="Heading logo"
-                            height="60px"
-                            width="60px"
-                            src={getAssetUrl(`static/img/categories/${title.trim().replace(/\s+/g, '-')
-                            .toLowerCase()}@2x.png`)}
-                        />
-                    }
-                </div>
+                }
 
                 <div className="t-plp__container u-padding-end u-padding-bottom-lg u-padding-start">
                     <div className="t-plp__num-results u-padding-md">
@@ -124,13 +127,18 @@ PLP.propTypes = {
     /**
      * The PLP title (i.e. Potions, Ingredients, etc.)
      */
-    title: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
+    /**
+     * Defines whether we're being hosted in an Astro app
+     */
+    isRunningInAstro: PropTypes.bool,
 }
 
 const mapStateToProps = (state) => {
     const routedState = getRoutedState(state.plp)
     return {
         routedState,
+        isRunningInAstro: state.app.get(IS_IN_ASTRO_APP),
         ...routedState.toJS()
     }
 }
