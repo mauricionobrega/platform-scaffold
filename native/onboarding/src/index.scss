@@ -1,0 +1,12 @@
+//Import the stylesheet from the web scaffold, to maintain consistency
+@import '../../../web/app/stylesheet';
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  background-color: #F7F7F7;
+  margin: 0;
+  padding: 0;
+}

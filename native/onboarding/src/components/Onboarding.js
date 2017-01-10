@@ -1,0 +1,58 @@
+import React, {Component} from 'react'
+import CarouselItem from 'progressive-web-sdk/dist/components/carousel/carousel-item'
+import Carousel from 'progressive-web-sdk/dist/components/carousel'
+import Button from 'progressive-web-sdk/dist/components/button'
+import Image from 'progressive-web-sdk/dist/components/image'
+import carouselData from './data/onboarding.json'
+import './Onboarding.scss'
+
+class Onboarding extends Component {
+    render() {
+        const carouselItems = carouselData.map((data, index) => {
+            return <OnboardingScreen data={data} index={index} isLast={index === carouselData.length - 1}/>
+        })
+        return (
+            <Carousel>
+                {carouselItems}
+            </Carousel>
+        )
+    }
+}
+
+function OnboardingScreen(props) {
+    const data = props.data
+    const item =  
+    <CarouselItem caption="Get started" key={props.index} className="carousel-item" allowLooping="false">
+        <div className="carousel-item-wrapper u-direction-column">
+            <div className="u-flex u-flexbox u-align-center u-justify-center">
+                <div>
+                    <Image src={data.imageURL} width="129px" />
+                    {data.title &&
+                        <h2 className="item-title u-text-font-family u-text-semi-bold">{data.title}</h2>    
+                    }
+                    <p className="item-subtitle u-text-font-family">{data.subtitle}</p>
+                </div>
+            </div>
+            {!!data.primaryButtonTitle &&
+                <div className="u-flexbox u-flexbox-gutters button-wrapper">
+                    <Button text={data.primaryButtonTitle} className="c--primary u-flex" />
+                </div>
+            }
+            
+            <div className="u-flexbox u-flexbox-gutters button-wrapper">
+                {props.isLast &&
+                    <Button className="c--tertiary u-flex" text={data.laterButtonTitle} onClick={onLaterTapped} />
+                }
+                <Button className="c--secondary u-flex" text={data.rightButtonTitle} />
+            </div>
+        </div>
+    </CarouselItem>
+    return item
+}
+
+function onLaterTapped(event) {
+    //Dismiss the modal VC
+    console.log("Later button tapped");
+}
+
+export default Onboarding

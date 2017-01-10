@@ -1,0 +1,21 @@
+[
+    {
+        "imageURL": "image/location.png",
+        "title": "Find the best deals near you!",
+        "subtitle": "Enable location services to see your local stores, product availability, and local deals.",
+        "rightButtonTitle": "ENABLE"
+    },
+    {
+        "imageURL": "image/notifications.png",
+        "title": "Stay in the loop!",
+        "subtitle": "Hear about the latest deals, promotions, specials, and exclusive offers through Notifications!",
+        "rightButtonTitle": "ENABLE"
+    },
+    {
+        "imageURL": "image/header.png",
+        "subtitle": "Speed up your shopping experience, save your address information and more by registering with Merlin's Potions.",
+        "laterButtonTitle": "LATER",
+        "rightButtonTitle": "SIGN IN",
+        "primaryButtonTitle": "REGISTER NOW"
+    }
+]
