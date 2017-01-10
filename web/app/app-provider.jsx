@@ -64,8 +64,10 @@ const AppProvider = ({store}) => {
     const onChange = (prevState, nextState, replace, callback) => {
         const prevURL = getURL(prevState)
         const nextURL = getURL(nextState)
-        const coordinateWithNativeApp = Astro.isRunningInApp() && nextState.location.action !== 'POP'
+        const coordinateWithNativeApp = Astro.isRunningInApp() &&
+                                        nextState.location.action !== 'POP'
 
+        // TODO: Would love to figure out a simpler callback scheme here
         const triggerChange = () => {
             dispatchRouteChanged(nextState)
             if (shouldFetchPage(nextState)) {
