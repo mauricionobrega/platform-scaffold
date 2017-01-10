@@ -9,7 +9,10 @@ import MiniCart from '../../containers/mini-cart/container'
 import Navigation from '../../containers/navigation/container'
 import * as navActions from '../../containers/navigation/actions'
 import * as miniCartActions from '../../containers/mini-cart/actions'
-import sprite from '../../static/sprite/sprite.svg'
+import sprite from '../../static/svg/sprite-dist/sprite.svg'
+import * as appActions from '../app/actions'
+
+import NotificationManager from '../../components/notification-manager'
 
 const hidePreloaderWhenCSSIsLoaded = () => {
     if (window.Progressive.stylesheetLoaded) {
@@ -28,8 +31,12 @@ class App extends React.Component {
     }
 
     render() {
-        const {requestOpenMiniCart, openNavigation, history} = this.props
-        const currentTemplate = `t-${this.props.children.props.route.routeName}`
+        const {requestOpenMiniCart, openNavigation, history, children, app, notificationActions} = this.props
+        const currentTemplateProps = children.props
+        const currentTemplate = `t-${currentTemplateProps.route.routeName}`
+        const CurrentHeader = currentTemplateProps.route.Header || Header
+        const CurrentFooter = currentTemplateProps.route.Footer || Footer
+        const {notifications} = app.toJS()
 
         const skipLinksItems = [
             // Customize your list of SkipLinks here. These are necessary to
@@ -50,7 +57,11 @@ class App extends React.Component {
 
                 <div id="app-wrap" className={currentTemplate}>
                     <div id="app-header" role="banner">
-                        <Header onMenuClick={openNavigation} onMiniCartClick={requestOpenMiniCart} />
+                        <CurrentHeader onMenuClick={openNavigation} onMiniCartClick={requestOpenMiniCart} />
+                        {notifications &&
+                            <NotificationManager notifications={notifications} actions={notificationActions} />
+                        }
+
                         <Navigation history={history} />
                         <MiniCart />
                     </div>
@@ -60,7 +71,7 @@ class App extends React.Component {
                     </main>
 
                     <div id="app-footer">
-                        <Footer />
+                        <CurrentFooter />
                     </div>
                 </div>
             </div>
@@ -73,20 +84,27 @@ App.propTypes = {
     /**
      * The react-router history object
      */
+    app: PropTypes.object,
     history: PropTypes.object,
+    notificationActions: PropTypes.object,
     openNavigation: PropTypes.func,
     requestOpenMiniCart: PropTypes.func,
 }
 
 const mapStateToProps = (state) => {
     return {
-        ...state.app,
+        app: state.app,
     }
 }
 
-const mapDispatchToProps = {
-    openNavigation: navActions.openNavigation,
-    requestOpenMiniCart: miniCartActions.requestOpenMiniCart,
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        openNavigation: () => dispatch(navActions.openNavigation()),
+        requestOpenMiniCart: () => dispatch(miniCartActions.requestOpenMiniCart()),
+        notificationActions: {
+            removeNotification: (id) => dispatch(appActions.removeNotification(id))
+        }
+    }
 }
 
 export default connect(
