@@ -3,15 +3,17 @@ import Promise from 'bluebird'
 import AnchoredLayoutPlugin from 'astro/plugins/anchoredLayoutPlugin'
 import HeaderBarPlugin from 'astro/plugins/headerBarPlugin'
 import NavigationPlugin from 'astro/plugins/navigationPlugin'
+import CartModalController from './cartModalController'
 
 import baseConfig from '../config/baseConfig'
 
-const TabController = function(tabItem, layout, headerBar, navigationView) {
+const TabController = function(tabItem, layout, headerBar, navigationView, cartModalController) {
     this.tabItem = tabItem
     this.id = tabItem.id
     this.viewPlugin = layout
     this.headerBar = headerBar
     this.navigationView = navigationView
+    this.cartModalController = cartModalController
 
     this.isActive = false
     this.loaded = false
@@ -23,10 +25,12 @@ TabController.init = async function(tabItem) {
         layout,
         headerBar,
         navigationView,
+        cartModalController,
     ] = await Promise.all([
         AnchoredLayoutPlugin.init(),
         HeaderBarPlugin.init(),
         NavigationPlugin.init(),
+        CartModalController.init()
     ])
 
     await layout.addTopView(headerBar)
@@ -42,6 +46,10 @@ TabController.init = async function(tabItem) {
 
     headerBar.on('click:back', () => {
         navigationView.back()
+    })
+
+    headerBar.on('click:cart', () => {
+        cartModalController.show()
     })
 
     return new TabController(tabItem, layout, headerBar, navigationView)
