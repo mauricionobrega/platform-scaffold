@@ -47,7 +47,7 @@ class MiniCart extends React.Component {
 
         return (
             <div className="u-padding-md">
-                <Button href="/checkout/cart/" className="c--tertiary u-width-full u-margin-bottom u-text-capitalize">
+                <Button href="#" className="c--tertiary u-width-full u-margin-bottom u-text-capitalize">
                     View and edit cart
                 </Button>
 
@@ -118,7 +118,7 @@ class MiniCart extends React.Component {
                             {hasItems ? this.renderList(cart) : this.renderEmpty()}
 
                             <div className="u-padding-top-lg u-flex-none">
-                                <Button href="/checkout/cart/" className="c--primary u-width-full u-text-uppercase">
+                                <Button href="#" className="c--primary u-width-full u-text-uppercase">
                                     Go To Checkout
                                 </Button>
                             </div>

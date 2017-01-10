@@ -36,7 +36,7 @@ const PDPItemAddedModal = ({open, onDismiss, quantity, product: {title, price, c
 
             <div className="u-flex-none">
                 <Button
-                    href="/checkout/cart/"
+                    href="#"
                     className="c--primary u-width-full u-margin-bottom-md u-text-uppercase"
                     innerClassName="u-text-align-center">
                     Go To Checkout
