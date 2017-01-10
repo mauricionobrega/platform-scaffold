@@ -1,20 +1,10 @@
 import BaseConfig from './baseConfig'
 
-const url = 'https://merlinspotions.com'            // must get url
-
-const closeTitle = {
-    id: 'closeTitle_id',
-    title: 'close'
-}
+const url = 'https://www.merlinspotions.com/checkout/cart/'         // must get url
 
 const closeIcon = {
     id: 'closeCart_id',
     imageUrl: 'file:///close.png'            // need to change this to correct url
-}
-
-const cartTitle = {                         // this title must be under the icon
-    id: 'cartTitle_id',
-    title: 'cart'
 }
 
 const cartIcon = {
@@ -27,4 +17,4 @@ const colors = {
     backgroundColor: BaseConfig.colors.primaryColor
 }
 
-export default {url, closeTitle, closeIcon, cartTitle, cartIcon, colors}
+export default {url, closeIcon, cartIcon, colors}
