@@ -70,7 +70,6 @@ Footer.propTypes = {
 const mapStateToProps = (state) => {
     return {
         footer: state.footer,
-        isRunningInAstro: state.app.get(IS_IN_ASTRO_APP),
     }
 }
 

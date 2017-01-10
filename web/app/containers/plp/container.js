@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import Immutable from 'immutable'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
+import {IS_IN_ASTRO_APP} from '../app/constants'
 
 import Image from 'progressive-web-sdk/dist/components/image'
 import Link from 'progressive-web-sdk/dist/components/link'

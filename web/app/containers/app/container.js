@@ -10,9 +10,12 @@ import Navigation from '../../containers/navigation/container'
 import * as navActions from '../../containers/navigation/actions'
 import * as miniCartActions from '../../containers/mini-cart/actions'
 import sprite from '../../static/svg/sprite-dist/sprite.svg'
-import * as appActions from '../app/actions'
+import * as appActions from './actions'
+import {IS_IN_ASTRO_APP} from './constants'
 
 import NotificationManager from '../../components/notification-manager'
+
+import Astro from '../../vendor/astro-client'
 
 const hidePreloaderWhenCSSIsLoaded = () => {
     if (window.Progressive.stylesheetLoaded) {
@@ -31,7 +34,16 @@ class App extends React.Component {
     }
 
     render() {
-        const {requestOpenMiniCart, openNavigation, history, children, app, notificationActions} = this.props
+        const {
+            requestOpenMiniCart,
+            openNavigation,
+            history,
+            children,
+            app,
+            notificationActions,
+            isRunningInAstro
+        } = this.props
+
         const currentTemplateProps = children.props
         const currentTemplate = `t-${currentTemplateProps.route.routeName}`
         const CurrentHeader = currentTemplateProps.route.Header || Header
@@ -57,7 +69,7 @@ class App extends React.Component {
 
                 <div id="app-wrap" className={currentTemplate}>
                     <div id="app-header" role="banner">
-                        <CurrentHeader onMenuClick={openNavigation} onMiniCartClick={requestOpenMiniCart} />
+                        <CurrentHeader onMenuClick={openNavigation} onMiniCartClick={requestOpenMiniCart} isRunningInAstro={isRunningInAstro} />
                         {notifications &&
                             <NotificationManager notifications={notifications} actions={notificationActions} />
                         }
@@ -71,7 +83,7 @@ class App extends React.Component {
                     </main>
 
                     <div id="app-footer">
-                        <CurrentFooter />
+                        <CurrentFooter isRunningInAstro={isRunningInAstro} />
                     </div>
                 </div>
             </div>
@@ -89,11 +101,16 @@ App.propTypes = {
     notificationActions: PropTypes.object,
     openNavigation: PropTypes.func,
     requestOpenMiniCart: PropTypes.func,
+    /**
+     * Defines whether we're being hosted in an Astro app
+     */
+    isRunningInAstro: PropTypes.bool,
 }
 
 const mapStateToProps = (state) => {
     return {
         app: state.app,
+        isRunningInAstro: state.app.get(IS_IN_ASTRO_APP),
     }
 }
 

@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import throttle from 'lodash.throttle'
 import classnames from 'classnames'
 import * as headerActions from './actions'
-import {IS_IN_ASTRO_APP} from '../app/constants'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import IconLabel from 'progressive-web-sdk/dist/components/icon-label'
@@ -117,6 +116,9 @@ Header.propTypes = {
     appState: PropTypes.object,
     header: PropTypes.object,
     isCollapsed: PropTypes.bool,
+    /**
+     * Defines whether we're being hosted in an Astro app
+     */
     isRunningInAstro: PropTypes.bool,
     toggleHeader: PropTypes.func,
 
@@ -127,7 +129,6 @@ Header.propTypes = {
 const mapStateToProps = (state) => {
     return {
         header: state.header,
-        isRunningInAstro: state.app.get(IS_IN_ASTRO_APP),
     }
 }
 
