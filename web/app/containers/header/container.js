@@ -127,7 +127,7 @@ Header.propTypes = {
 const mapStateToProps = (state) => {
     return {
         header: state.header,
-        isRunningInAstro: state.app.get(IS_IN_ASTRO_APP)
+        isRunningInAstro: state.app.get(IS_IN_ASTRO_APP),
     }
 }
 

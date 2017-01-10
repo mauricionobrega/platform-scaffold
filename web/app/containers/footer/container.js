@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react'
 import Immutable from 'immutable'
 import {connect} from 'react-redux'
 import * as actions from './actions'
+import {IS_IN_ASTRO_APP} from '../app/constants'
 
 import FooterNewsletterSubscription from './partials/footer-newsletter-subscription'
 import FooterSocialIcons from './partials/footer-social-icons'
@@ -32,10 +33,13 @@ class Footer extends React.Component {
     }
 
     render() {
+        if (this.props.isRunningInAstro) {
+            return false
+        }
+
         const {footer} = this.props
         const navigation = footer.get('navigation')
         const newsletter = footer.get('newsletter')
-
 
         return (
             <footer className="t-footer">
@@ -55,19 +59,26 @@ Footer.propTypes = {
     /**
      * Submit the newsletter subscription form to the backend
      */
-    submitNewsletter: PropTypes.func
+    submitNewsletter: PropTypes.func,
+    /**
+     * Defines whether we're being hosted in an Astro app
+     */
+    isRunningInAstro: PropTypes.bool,
 }
 
 
 const mapStateToProps = (state) => {
     return {
         footer: state.footer,
+        isRunningInAstro: state.app.get(IS_IN_ASTRO_APP),
     }
 }
 
 const mapDispatchToProps = {
     submitNewsletter: actions.signUpToNewsletter
 }
+
+export {Footer as RawFooter}
 
 export default connect(
     mapStateToProps,

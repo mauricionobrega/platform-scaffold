@@ -46,6 +46,6 @@ describe('The header', () => {
         }
 
         const header = mount(<Header isRunningInAstro={false} header={headerData} />)
-        expect(header.children().length).toBe(1)
+        expect(header.children().length).not.toBe(0)
     })
 })
