@@ -1,4 +1,4 @@
-import {shallow} from 'enzyme';
+import {shallow} from 'enzyme'
 import React from 'react'
 
 import {RawFooter as Footer} from './container'
@@ -11,7 +11,7 @@ describe('The footer', () => {
 
     test('Should render footer if not running in an Astro app', () => {
         const footerData = {
-            get: function(key) {
+            get: (key) => {
                 return {key}
             }
         }

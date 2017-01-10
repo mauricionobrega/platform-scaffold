@@ -15,8 +15,6 @@ import {IS_IN_ASTRO_APP} from './constants'
 
 import NotificationManager from '../../components/notification-manager'
 
-import Astro from '../../vendor/astro-client'
-
 const hidePreloaderWhenCSSIsLoaded = () => {
     if (window.Progressive.stylesheetLoaded) {
         hidePreloader()
@@ -98,13 +96,13 @@ App.propTypes = {
      */
     app: PropTypes.object,
     history: PropTypes.object,
-    notificationActions: PropTypes.object,
-    openNavigation: PropTypes.func,
-    requestOpenMiniCart: PropTypes.func,
     /**
      * Defines whether we're being hosted in an Astro app
      */
     isRunningInAstro: PropTypes.bool,
+    notificationActions: PropTypes.object,
+    openNavigation: PropTypes.func,
+    requestOpenMiniCart: PropTypes.func,
 }
 
 const mapStateToProps = (state) => {

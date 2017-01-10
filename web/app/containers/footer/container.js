@@ -2,7 +2,6 @@ import React, {PropTypes} from 'react'
 import Immutable from 'immutable'
 import {connect} from 'react-redux'
 import * as actions from './actions'
-import {IS_IN_ASTRO_APP} from '../app/constants'
 
 import FooterNewsletterSubscription from './partials/footer-newsletter-subscription'
 import FooterSocialIcons from './partials/footer-social-icons'
@@ -57,13 +56,13 @@ Footer.propTypes = {
      */
     footer: PropTypes.object,
     /**
-     * Submit the newsletter subscription form to the backend
-     */
-    submitNewsletter: PropTypes.func,
-    /**
      * Defines whether we're being hosted in an Astro app
      */
     isRunningInAstro: PropTypes.bool,
+    /**
+     * Submit the newsletter subscription form to the backend
+     */
+    submitNewsletter: PropTypes.func,
 }
 
 

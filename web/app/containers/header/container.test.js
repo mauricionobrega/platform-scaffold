@@ -37,7 +37,7 @@ describe('The header', () => {
 
     test('Should render header if not running in an Astro app', () => {
         const headerData = {
-            toJS: function() {
+            toJS: () => {
                 return {
                     isCollapsed: false,
                     cart: []
