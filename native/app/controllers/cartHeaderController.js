@@ -8,7 +8,7 @@ const CartHeaderController = function(headerBar) {
 
 CartHeaderController.init = async function() {
     const headerBar = await HeaderBarPlugin.init()
-    await headerBar.setIcon(CartConfig.closeIcon.imageUrl, CartConfig.closeIcon.id)
+    await headerBar.setRightIcon(CartConfig.closeIcon.imageUrl, CartConfig.closeIcon.id)
     return new CartHeaderController(headerBar)
 }
 
