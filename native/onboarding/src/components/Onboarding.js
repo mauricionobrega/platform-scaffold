@@ -33,7 +33,7 @@ function OnboardingScreen(props) {
                     <p className="item-subtitle u-text-font-family">{data.subtitle}</p>
                 </div>
             </div>
-            {!!data.primaryButtonTitle &&
+            {data.primaryButtonTitle &&
                 <div className="u-flexbox u-flexbox-gutters button-wrapper">
                     <Button text={data.primaryButtonTitle} className="c--primary u-flex" />
                 </div>
