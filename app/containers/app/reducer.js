@@ -1,4 +1,4 @@
-import {createReducer} from 'redux-act'
+import {handleActions} from 'redux-actions'
 import {Map, List} from 'immutable'
 
 import * as appActions from './actions'
@@ -11,14 +11,14 @@ const initialState = Map({
     notifications: List()
 })
 
-export default createReducer({
-    [appActions.onRouteChanged]: (state, {currentURL}) => {
+export default handleActions({
+    [appActions.onRouteChanged]: (state, {payload: {currentURL}}) => {
         return state.set(FETCH_IN_PROGRESS, true).set(CURRENT_URL, currentURL)
     },
     [appActions.onPageReceived]: (state) => {
         return state.set(FETCH_IN_PROGRESS, false)
     },
-    [appActions.addNotification]: (state, payload) => {
+    [appActions.addNotification]: (state, {payload}) => {
         return state.update('notifications', (notifications) => {
             // Don't allow duplicate notifications to be added
             const existingNotification = notifications.find((notification) => {
@@ -32,7 +32,7 @@ export default createReducer({
             }
         })
     },
-    [appActions.removeNotification]: (state, payload) => {
+    [appActions.removeNotification]: (state, {payload}) => {
         return state.update('notifications', (notifications) => {
             return notifications.filterNot((notification) => notification.id === payload)
         })
