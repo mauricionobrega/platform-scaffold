@@ -1,4 +1,4 @@
-import {createReducer} from 'redux-act'
+import {handleActions} from 'redux-actions'
 import Immutable from 'immutable'
 import * as appActions from '../app/actions'
 import * as navActions from './actions'
@@ -11,8 +11,8 @@ export const initialState = Immutable.Map({
 })
 
 
-export const reducer = createReducer({
-    [appActions.onPageReceived]: (state, payload) => {
+export const reducer = handleActions({
+    [appActions.onPageReceived]: (state, {payload}) => {
         const {$, $response} = payload
         const parsed = Immutable.fromJS(parser.parseNavigation($, $response))
         return state.merge(parsed)

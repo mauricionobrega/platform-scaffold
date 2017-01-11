@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import {createReducer} from 'redux-act'
+import {handleActions} from 'redux-actions'
 
 import {isPageType} from '../../utils/router-utils'
 
@@ -131,9 +131,9 @@ const merge = (object1, object2) => {
     return {...object1, ...object2}
 }
 
-export default createReducer({
-    [onPageReceived]: (state, action) => {
-        const {$, $response, pageComponent, routeName} = action
+export default handleActions({
+    [onPageReceived]: (state, {payload}) => {
+        const {$, $response, pageComponent, routeName} = payload
         if (isPageType(pageComponent, Login)) {
             let newState
 
@@ -154,11 +154,11 @@ export default createReducer({
             return state
         }
     },
-    [openInfoModal]: (state, action) => {
-        return state.updateIn([formatSectionName(action.sectionName), 'infoModalOpen'], () => true)
+    [openInfoModal]: (state, {payload}) => {
+        return state.updateIn([formatSectionName(payload.sectionName), 'infoModalOpen'], () => true)
     },
-    [closeInfoModal]: (state, action) => {
-        return state.updateIn([formatSectionName(action.sectionName), 'infoModalOpen'], () => false)
+    [closeInfoModal]: (state, {payload}) => {
+        return state.updateIn([formatSectionName(payload.sectionName), 'infoModalOpen'], () => false)
     }
 
 }, initialState)
