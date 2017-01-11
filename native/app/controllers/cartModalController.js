@@ -6,6 +6,7 @@ import NavigationPlugin from 'astro/plugins/navigationPlugin'
 
 // import CartController from './cartController'
 import CartHeaderController from './cartHeaderController'
+import CartConfig from '../config/cartConfig'
 
 const CartModalController = function(modalView, navigationView) {
     this.isShowing = false
@@ -28,6 +29,7 @@ CartModalController.init = async function() {
 
     await anchoredLayout.addTopView(cartHeaderController.viewPlugin)
     await anchoredLayout.setContentView(navigationView)
+    await navigationView.navigateToUrl(CartConfig.url, {}, {})
     await navigationView.setHeaderBar(cartHeaderController.viewPlugin)
 
     await modalView.setContentView(anchoredLayout)                // load the view in to the modal
@@ -45,7 +47,7 @@ CartModalController.init = async function() {
     return cartModalController
 }
 
-CartModalController.prototype.show = function() {
+CartModalController.prototype.show = async function() {
     if (this.isShowing) {
         return
     }
@@ -54,10 +56,9 @@ CartModalController.prototype.show = function() {
 }
 
 CartModalController.prototype.hide = async function() {
-//    const topPlugin = await this.navigationView.getTopPlugin()
-
     this.isShowing = false
-    this.viewPlugin.hide({animated: true})
+    await this.navigationView.popToRoot({})
+    await this.viewPlugin.hide({animated: true})
 }
 
 CartModalController.prototype.isActiveItem = function() {
@@ -68,7 +69,7 @@ CartModalController.prototype.back = function() {
     this.navigationView.back()
 }
 
-CartModalController.prototype.navigate = function (url, headerOptions, webViewOptions) {
+CartModalController.prototype.navigate = function(url, headerOptions, webViewOptions) {
     this.navigationView.navigateToUrl(url, headerOptions, webViewOptions)
 }
 
