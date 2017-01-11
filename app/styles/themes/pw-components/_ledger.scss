@@ -1,0 +1,59 @@
+// Ledger
+// ===
+//
+// 1. Remove the default table margin
+
+.pw-ledger {
+    margin: 0; // 1
+}
+
+
+// Item Action
+// ---
+
+.pw-ledger__item .pw-ledger__action {
+    color: $neutral-50;
+    font-size: 12px;
+}
+
+
+// Value
+// ---
+
+.pw-ledger__value {
+    flex: 0 0 auto;
+
+    font-weight: 600; // semi-bold
+    font-size: 16px;
+}
+
+
+// Row
+// ---
+
+.pw-ledger__row {
+    padding: $unit * 1.5;
+
+    &:not(:first-of-type) {
+        border-top: 1px solid $neutral-30;
+    }
+}
+
+
+// Total
+// ---
+
+.pw-ledger__row.pw--total {
+    justify-content: center;
+
+    font-weight: 600; // semi-bold
+
+    &,
+    .pw-ledger__value {
+        font-size: 20px;
+    }
+
+    .pw-ledger__item::after {
+        content: ':\00A0';
+    }
+}

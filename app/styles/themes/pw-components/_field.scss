@@ -5,28 +5,81 @@
 
 $field__caution-icon: 'data:image/svg+xml;utf8,<svg width="20px" height="20px" fill="#dc0a3c" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><g stroke="none" stroke-width="1" fill-rule="evenodd"><g><path d="M10,3 L18,17 L2,17 L10,3 Z M10.7604457,13 L9.23955432,13 L9,7 L11,7 L10.7604457,13 Z M9,15 C9,14.7080853 9.09536447,14.4684428 9.28609626,14.2810651 C9.47682805,14.0936874 9.71479358,14 10,14 C10.2852064,14 10.523172,14.0936874 10.7139037,14.2810651 C10.9046355,14.4684428 11,14.7080853 11,15 C11,15.2919147 10.9046355,15.5315572 10.7139037,15.7189349 C10.523172,15.9063126 10.2852064,16 10,16 C9.71479358,16 9.47682805,15.9063126 9.28609626,15.7189349 C9.09536447,15.5315572 9,15.2919147 9,15 Z"></path></g></g></svg>';
 
-.c-field {
-    &.c--error {
-        .c-field__label {
+.pw-field {
+    &.pw--error {
+        .pw-field__label {
             color: $font-color; // 1
         }
     }
 }
 
-// Label
+
+// Inner
 // ---
 
-.c-field__label {
+.pw-field__inner {
+    display: inline-block;
     width: 100%;
+}
+
+
+// Label Wrap
+// ---
+//
+// 1. Position context so the child `pw-field__hint` can be absolutely positioned
+
+.pw-field__label-wrap {
+    position: relative; // 1
+
+    display: flex;
+    flex: 1 1 auto;
+}
+
+
+// Label
+// ---
+//
+// @TODO: Add `pw-field__label` to the SDK component
+
+.c-field__label,
+.pw-field__label {
+    flex: 1 1 auto;
+    width: 100%;
+    margin-bottom: $unit;
 
     font-weight: 600;
+    font-size: $font-size;
+    line-height: 1em;
+}
+
+
+// Hint
+// ---
+
+.pw-field__hint {
+    flex: 0 0 auto;
+
+    font-size: 12px;
+}
+
+
+// Caption
+// ---
+
+.pw-field__caption {
+    @include text-quiet();
+
+    padding-top: $unit/2;
+
+    font-size: 12px; // @TODO: Remove this line once text-quiet uses a $font-size-small var
+    line-height: 16px;
 }
 
 
 // Error
 // ---
 
-.c-field__error {
+.pw-field__error {
     margin-top: $unit;
 
     &::before {
@@ -49,7 +102,32 @@ $field__caution-icon: 'data:image/svg+xml;utf8,<svg width="20px" height="20px" f
 
 // States
 // ---
+//
+// 1. Align the caption with its checkbox or radio
+// 2. Positioned relative to the parent `pw-field__label-wrap` container
+// 3. Position the hint button to sit directly on top of the field input
+// 4. Margin no longer needed, since we know there is no input below it (the
+//    input is the checkbox/radio on the side in this state)
 
-.c-field.c--error {
+.pw-field.pw--error {
     border-color: $error-color;
+}
+
+.pw-field.pw--is-check-radio {
+    .pw-field__caption {
+        padding-left: $unit * 4; // 1
+    }
+
+    .c-field__label,
+    .pw-field__label {
+        margin-bottom: 0; // 4
+    }
+}
+
+.pw-field.pw--overlayed-hint {
+    .pw-field__hint {
+        position: absolute; // 2
+        top: 100%; // 3
+        right: 0; // 3
+    }
 }
