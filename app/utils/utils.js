@@ -1,5 +1,5 @@
 import {createAction as createReduxAction} from 'redux-actions'
-import fromPairs from 'lodash/fromPairs'
+import fromPairs from 'lodash.frompairs'
 
 // simplify redux-actions createAction method.
 // usage: createAction('Update Campaign', 'id', 'update')
