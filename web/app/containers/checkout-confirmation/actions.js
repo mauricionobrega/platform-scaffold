@@ -6,7 +6,7 @@ export const receiveContents = createAction('Received CheckoutConfirmation Conte
 
 export const receiveResponse = (response) => {
     return (dispatch) => {
-        jqueryResponse(response)
+        return jqueryResponse(response)
             .then(([$, $responseText]) => {
                 dispatch(receiveContents(checkoutConfirmationParser($, $responseText)))
             })
@@ -15,7 +15,7 @@ export const receiveResponse = (response) => {
 
 export const fetchContents = () => {
     return (dispatch) => {
-        makeRequest(window.location.href)
+        return makeRequest(window.location.href)
             .then((response) => dispatch(receiveResponse(response)))
     }
 }

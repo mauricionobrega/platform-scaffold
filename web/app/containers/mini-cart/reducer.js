@@ -5,7 +5,10 @@ import * as cartActions from '../cart/actions'
 
 const initialState = Immutable.fromJS({
     isOpen: false,
-    contentsLoaded: false
+    contentsLoaded: false,
+    cart: {
+        items: []
+    }
 })
 
 export default createReducer({

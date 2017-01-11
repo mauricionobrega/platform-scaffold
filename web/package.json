@@ -125,7 +125,7 @@
       "!app/static/js/*.js",
       "!app/vendor/*.js",
       "!app/containers/reducers.js",
-      "!app/**/container.js",
+      "!app/**/container.{js,jsx}",
       "!{dev-server,proxy,lighthouse,coverage,build,tests,webpack}/**/*.js",
       "!styleguide/**/*.{js,jsx}",
       "!app/loader-routes.js"
