@@ -92,6 +92,8 @@ const AppProvider = ({store}) => {
             } else {
                 triggerChange()
             }
+        } else {
+            callback()
         }
 
         store.dispatch(appActions.removeAllNotifications())
