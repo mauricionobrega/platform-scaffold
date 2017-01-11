@@ -6,7 +6,6 @@ import NavigationPlugin from 'astro/plugins/navigationPlugin'
 
 // import CartController from './cartController'
 import CartHeaderController from './cartHeaderController'
-import CartConfig from '../config/cartConfig'
 
 const CartModalController = function(modalView, navigationView) {
     this.isShowing = false
@@ -39,6 +38,10 @@ CartModalController.init = async function() {
         cartModalController.hide()
     })
 
+    cartHeaderController.viewPlugin.on('click:back', () => {
+        cartModalController.back()
+    })
+
     return cartModalController
 }
 
@@ -47,13 +50,13 @@ CartModalController.prototype.show = function() {
         return
     }
     this.isShowing = true
-    this.navigationView.navigate(CartConfig.url)
     this.viewPlugin.show({animated: true})
 }
 
-CartModalController.prototype.hide = function() {
+CartModalController.prototype.hide = async function() {
+//    const topPlugin = await this.navigationView.getTopPlugin()
+
     this.isShowing = false
-    this.navigationView.popToRoot()
     this.viewPlugin.hide({animated: true})
 }
 
@@ -63,6 +66,10 @@ CartModalController.prototype.isActiveItem = function() {
 
 CartModalController.prototype.back = function() {
     this.navigationView.back()
+}
+
+CartModalController.prototype.navigate = function (url, headerOptions, webViewOptions) {
+    this.navigationView.navigateToUrl(url, headerOptions, webViewOptions)
 }
 
 export default CartModalController
