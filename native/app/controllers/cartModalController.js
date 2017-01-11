@@ -57,7 +57,6 @@ CartModalController.prototype.show = async function() {
 
 CartModalController.prototype.hide = async function() {
     this.isShowing = false
-    await this.navigationView.popToRoot({})
     await this.viewPlugin.hide({animated: true})
 }
 

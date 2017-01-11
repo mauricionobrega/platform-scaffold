@@ -25,12 +25,10 @@ TabController.init = async function(tabItem) {
         layout,
         headerBar,
         navigationView,
-        cartModalController
     ] = await Promise.all([
         AnchoredLayoutPlugin.init(),
         HeaderBarPlugin.init(),
         NavigationPlugin.init(),
-        CartModalController.init()
     ])
 
     await layout.addTopView(headerBar)
@@ -47,7 +45,8 @@ TabController.init = async function(tabItem) {
         navigationView.back()
     })
 
-    headerBar.on(`click:${cartConfig.cartIcon.id}`, () => {
+    headerBar.on(`click:${cartConfig.cartIcon.id}`, async () => {
+        const cartModalController = await CartModalController.init()
         cartModalController.show()
     })
 
