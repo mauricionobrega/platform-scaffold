@@ -75,12 +75,10 @@ const AppProvider = ({store}) => {
             }
         }
 
-        if (!isCoordinatingWithNativeApp) {
-            callback()
-        }
+        const urlHasChanged = nextURL !== prevURL
 
-        if (nextURL !== prevURL) {
-            if (isCoordinatingWithNativeApp) {
+        if (isCoordinatingWithNativeApp) {
+            if (urlHasChanged) {
                 pwaNavigate(nextURL).then(() => {
                     callback()
                     triggerChange()
@@ -90,10 +88,15 @@ const AppProvider = ({store}) => {
                 // If we're coordinating with Astro, we wait to do anything more
                 return
             } else {
-                triggerChange()
+                // We need to call this to allow react to continue
+                callback()
             }
         } else {
             callback()
+
+            if (urlHasChanged) {
+                triggerChange()
+            }
         }
 
         store.dispatch(appActions.removeAllNotifications())
