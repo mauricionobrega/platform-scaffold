@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import CarouselItem from 'progressive-web-sdk/dist/components/carousel/carousel-item'
 import Carousel from 'progressive-web-sdk/dist/components/carousel'
 import Button from 'progressive-web-sdk/dist/components/button'
-import Image from 'progressive-web-sdk/dist/components/image'
 import Astro from 'mobify-progressive-app-sdk/js/build/astro-client.js'
 import carouselData from './data/onboarding.json'
 import './Onboarding.scss'
@@ -29,7 +28,7 @@ function OnboardingScreen(props) {
         <div className="carousel-item-wrapper u-direction-column">
             <div className="u-flex u-flexbox u-align-center u-justify-center">
                 <div>
-                    <Image src={data.imageURL} width="129px" />
+                    <img src={data.imageURL} width="129px" alt={data.imageAlt}/>
                     {data.title &&
                         <h2 className="item-title u-text-font-family u-text-semi-bold">{data.title}</h2>    
                     }
