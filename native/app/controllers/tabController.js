@@ -4,18 +4,16 @@ import AnchoredLayoutPlugin from 'astro/plugins/anchoredLayoutPlugin'
 import HeaderBarPlugin from 'astro/plugins/headerBarPlugin'
 import NavigationPlugin from 'astro/plugins/navigationPlugin'
 import CartModalController from './cartModalController'
-import CounterBadgePlugin from 'astro/plugins/counterBadgePlugin'
 
 import baseConfig from '../config/baseConfig'
 import cartConfig from '../config/cartConfig'
 
-const TabController = function(tabItem, layout, headerBar, navigationView, counterBadgePlugin) {
+const TabController = function(tabItem, layout, headerBar, navigationView) {
     this.tabItem = tabItem
     this.id = tabItem.id
     this.viewPlugin = layout
     this.headerBar = headerBar
     this.navigationView = navigationView
-    this.counterBadgePlugin = counterBadgePlugin
 
     this.isActive = false
     this.loaded = false
@@ -27,23 +25,18 @@ TabController.init = async function(tabItem) {
         layout,
         headerBar,
         navigationView,
-        counterBadgePlugin,
     ] = await Promise.all([
         AnchoredLayoutPlugin.init(),
         HeaderBarPlugin.init(),
         NavigationPlugin.init(),
-        CounterBadgePlugin.init()
     ])
 
     await layout.addTopView(headerBar)
     await layout.setContentView(navigationView)
     await navigationView.setHeaderBar(headerBar)
 
-    await counterBadgePlugin.setImagePath(cartConfig.cartIcon.imageUrl)
-    await counterBadgePlugin.setCount(1)
-
     await headerBar.setCenterIcon(baseConfig.logoUrl, 'logo')
-    await headerBar.setRightPlugin(counterBadgePlugin, cartConfig.cartIcon.id)
+    await headerBar.setRightIcon(cartConfig.cartIcon.imageUrl, cartConfig.cartIcon.id)
     await headerBar.setTextColor(baseConfig.colors.whiteColor)
     await headerBar.setBackgroundColor(baseConfig.colors.primaryColor)
     await headerBar.setOpaque()
@@ -94,10 +87,6 @@ TabController.prototype.activate = async function() {
 
 TabController.prototype.deactivate = async function() {
     this.isActive = false
-}
-
-TabController.prototype.setCartCounter = async function(count) {
-    await this.counterBadgePlugin.setCount(count)
 }
 
 export default TabController
