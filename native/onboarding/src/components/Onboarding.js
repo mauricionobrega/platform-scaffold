@@ -3,8 +3,11 @@ import CarouselItem from 'progressive-web-sdk/dist/components/carousel/carousel-
 import Carousel from 'progressive-web-sdk/dist/components/carousel'
 import Button from 'progressive-web-sdk/dist/components/button'
 import Image from 'progressive-web-sdk/dist/components/image'
+import Astro from 'mobify-progressive-app-sdk/js/build/astro-client.js'
 import carouselData from './data/onboarding.json'
 import './Onboarding.scss'
+
+import RpcEventNames from '../../../app/global/app-event-names'
 
 class Onboarding extends Component {
     render() {
@@ -51,8 +54,7 @@ function OnboardingScreen(props) {
 }
 
 function onLaterTapped(event) {
-    //Dismiss the modal VC
-    console.log("Later button tapped");
+    Astro.jsRpcMethod(RpcEventNames.onboardingHide, [])();
 }
 
 export default Onboarding

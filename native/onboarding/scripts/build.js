@@ -149,8 +149,6 @@ function build(previousSizeMap) {
 }
 
 function copyPublicFolder() {
-  console.log("TEST: " + paths.appPublic);
-  console.log("TEST: " + paths.appBuild);
   fs.copySync(paths.appPublic, paths.appBuild, {
     dereference: true,
     filter: file => file !== paths.appHtml

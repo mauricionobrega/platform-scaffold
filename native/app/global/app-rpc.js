@@ -1,12 +1,9 @@
 import Astro from 'astro/astro-full'
+import RpcEventNames from './app-event-names'
 
 const AppRpc = {}
 
-AppRpc.names = {
-    onboardingShow: 'onboardingShow',
-    onboardingHide: 'onboardingHide',
-    onboardingHasHeader: 'onboardingHasHeader'
-}
+AppRpc.names = RpcEventNames
 
 AppRpc.onboardingShow = Astro.jsRpcMethod(AppRpc.names.onboardingShow, [])
 AppRpc.onboardingHide = Astro.jsRpcMethod(AppRpc.names.onboardingHide, [])
