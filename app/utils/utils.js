@@ -5,7 +5,7 @@ import fromPairs from 'lodash/fromPairs'
 // simplify redux-act createAction method.
 // usage: createAction('Update Campaign', 'id', 'update')
 // instead of: createAction('Update Campaign', (id, update) => ({id, update}))
-export const createAction = (description, ...argNames) => {
+export const createLegacyAction = (description, ...argNames) => {
     let payloadReducer
 
     if (argNames.length) {
@@ -23,7 +23,7 @@ export const createAction = (description, ...argNames) => {
     return actionCreator(description, payloadReducer)
 }
 
-export const createRAAction = (description, ...argNames) => {
+export const createAction = (description, ...argNames) => {
     return reduxAction(
         description,
         argNames.length ?
