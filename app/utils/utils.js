@@ -1,4 +1,6 @@
 import {createAction as actionCreator} from 'redux-act'
+import {createAction as reduxAction} from 'redux-actions'
+import fromPairs from 'lodash/fromPairs'
 
 // simplify redux-act createAction method.
 // usage: createAction('Update Campaign', 'id', 'update')
@@ -19,6 +21,15 @@ export const createAction = (description, ...argNames) => {
     }
 
     return actionCreator(description, payloadReducer)
+}
+
+export const createRAAction = (description, ...argNames) => {
+    return reduxAction(
+        description,
+        argNames.length ?
+            (...args) => fromPairs(argNames.map((arg, idx) => [arg, args[idx]]))
+            : null
+    )
 }
 
 export const makeRequest = (url, options) => {
