@@ -4,6 +4,7 @@ import {triggerMobifyPageView} from 'progressive-web-sdk/dist/analytics'
 import {Provider} from 'react-redux'
 import * as appActions from './containers/app/actions'
 import {getComponentType} from './utils/utils'
+
 import Astro from './vendor/astro-client'
 
 // Containers
@@ -33,6 +34,15 @@ const AppProvider = ({store}) => {
         ].join('')
     }
 
+    /**
+     * Provides coordination with the native app (Astro)
+     * If we aren't in a native app then the function
+     * is just a no-op.
+     */
+    const pwaNavigate = Astro.isRunningInApp()
+        ? Astro.jsRpcMethod('pwa-navigate', ['url'])
+        : () => {}
+
     const shouldFetchPage = (routerState) => routerState.routes[1].fetchPage !== 'false'
 
     const getPageComponent = (routerState) => getComponentType(routerState.routes[1].component)
@@ -51,19 +61,41 @@ const AppProvider = ({store}) => {
         }
     }
 
-    const onChange = (prevState, nextState) => {
+    const onChange = (prevState, nextState, replace, callback) => {
         const prevURL = getURL(prevState)
         const nextURL = getURL(nextState)
+        const isCoordinatingWithNativeApp = Astro.isRunningInApp() &&
+                                            nextState.location.action !== 'POP'
 
-        if (nextURL !== prevURL) {
-            if (nextState.location.action.toLowerCase() !== 'pop' && Astro.isRunningInApp()) {
-                Astro.trigger('pwa-navigate', {
-                    url: nextURL
-                })
-            }
+        // TODO: Would love to figure out a simpler callback scheme here
+        const triggerChange = () => {
             dispatchRouteChanged(nextState)
             if (shouldFetchPage(nextState)) {
                 dispatchFetchPage(nextState)
+            }
+        }
+
+        const urlHasChanged = nextURL !== prevURL
+
+        if (isCoordinatingWithNativeApp) {
+            if (urlHasChanged) {
+                pwaNavigate(nextURL).then(() => {
+                    callback()
+                    triggerChange()
+                    store.dispatch(appActions.removeAllNotifications())
+                })
+
+                // If we're coordinating with Astro, we wait to do anything more
+                return
+            } else {
+                // We need to call this to allow react to continue
+                callback()
+            }
+        } else {
+            callback()
+
+            if (urlHasChanged) {
+                triggerChange()
             }
         }
 

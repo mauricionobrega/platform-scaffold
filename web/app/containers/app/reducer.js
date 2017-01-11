@@ -2,11 +2,14 @@ import {createReducer} from 'redux-act'
 import {Map, List} from 'immutable'
 
 import * as appActions from './actions'
-import {FETCH_IN_PROGRESS, CURRENT_URL} from './constants'
+import {FETCH_IN_PROGRESS, CURRENT_URL, IS_IN_ASTRO_APP} from './constants'
+
+import Astro from '../../vendor/astro-client'
 
 const initialState = Map({
     [FETCH_IN_PROGRESS]: false,
     [CURRENT_URL]: false,
+    [IS_IN_ASTRO_APP]: Astro.isRunningInApp(),
         // If we use a regular array, React doesn't seem to catch all the updates
     notifications: List()
 })

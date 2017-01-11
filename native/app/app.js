@@ -21,6 +21,7 @@ window.run = async function() {
         }
 
         Application.dismissLaunchImage()
+        Application.setStatusBarLightText()
     }
 
     // Preview support
