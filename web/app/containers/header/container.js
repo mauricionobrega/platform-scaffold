@@ -53,7 +53,7 @@ class Header extends React.Component {
 
     render() {
         if (this.props.isRunningInAstro) {
-            return false
+            return null
         }
 
         const {onMenuClick, onMiniCartClick} = this.props

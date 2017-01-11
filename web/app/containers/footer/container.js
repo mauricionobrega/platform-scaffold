@@ -33,7 +33,7 @@ class Footer extends React.Component {
 
     render() {
         if (this.props.isRunningInAstro) {
-            return false
+            return null
         }
 
         const {footer} = this.props
