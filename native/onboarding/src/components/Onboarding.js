@@ -28,7 +28,7 @@ function OnboardingScreen(props) {
         <div className="carousel-item-wrapper u-direction-column">
             <div className="u-flex u-flexbox u-align-center u-justify-center">
                 <div>
-                    <img src={data.imageURL} width="129px" alt={data.imageAlt}/>
+                    <img src={data.imageURL} className="carousel-item-image" alt={data.imageAlt}/>
                     {data.title &&
                         <h2 className="item-title u-text-font-family u-text-semi-bold">{data.title}</h2>    
                     }
