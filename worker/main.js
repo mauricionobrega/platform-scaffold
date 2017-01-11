@@ -73,8 +73,94 @@ toolbox.router.get(/(?:cdn\.mobify\.com|localhost:8443)\/.*loader\.js$/, toolbox
 toolbox.router.get(/fonts.gstatic.com\/.*\.woff2$/, toolbox.cacheFirst, {cache: bundleCache})
 toolbox.router.get(/fonts.googleapis.com\/css/, toolbox.networkFirst, {cache: bundleCache})
 
-// Main page is needed for installed app when offline
-toolbox.router.get('/', toolbox.networkFirst, {cache: bundleCache})
+/**
+ * Makes a fetch for the given request, and caches it in the given cacheName cache
+ * Resolves on a successful fetch, and rejects if there is a network error or a
+ * non-success response status code (i.e. 403, 404, etc.)
+ *
+ * @param {Request} request - Request object (like that provided by a `fetch`
+ * event listener or as the first argument from `toolbox.router.get`)
+ * @param {string} cacheName - The name of the cache to store the request/response in
+ * @returns {Promise}
+ */
+const fetchAndCache = (request, cacheName) => {
+    return new Promise((resolve, reject) => {
+        fetch(request.clone())
+            .then((response) => {
+                // This is lifted from https://github.com/GoogleChrome/sw-toolbox/blob/master/lib/strategies/networkFirst.js#L59
+                if (successResponses.test(response.status)) {
+                    caches.open(cacheName).then((cache) => {
+                        cache.put(request, response)
+                    })
+
+                    resolve(response.clone())
+                } else {
+                    toolbox.options.debug && console.error(`Response was an HTTP error: ${response.statusText}`)
+                    reject(['Bad response', request, response])
+                }
+            })
+            // This should happen if there's a network failure
+            .catch((error) => {
+                toolbox.options.debug && console.error(error)
+                reject([error, request])
+            })
+    })
+}
+
+/**
+ * Provides a response from the cache if the network failed to retrieve it, with
+ * a custom header for use by the application
+ *
+ * Expects to be used when catching rejection/error from `fetchAndCache`. Throws
+ * the provided error message if there was a network failure and no cache hit
+ * was found.
+ *
+ * @param {Error} error - The error object provided by fetch
+ * @param {Request} request - the Request from the fetch the worker is proxying
+ * @param {Response} response - the Response for the given Request
+ * @param {string} cacheName - the name of the cache to look for the Request in
+ * @param {Promise}
+ */
+const cacheFallback = (error, request, response, cacheName) => {
+    toolbox.options.debug && console.error(`Network or response error, fallback to cache [${request.url}]`)
+
+    /* eslint-disable max-nested-callbacks */
+    return caches.open(cacheName).then((cache) => {
+        return cache.match(request).then((cachedResponse) => {
+            if (cachedResponse) {
+                const newOptions = {
+                    status: 200,
+                    statusText: 'OK',
+                    headers: {
+                        // We look for this in the application to determine if
+                        // we're offline
+                        'X-mobify-progressive': 'offline'
+                    }
+                }
+
+                // Add the original headers from the response to our
+                // new response
+                cachedResponse.headers.forEach((value, key) => {
+                    newOptions.headers[key] = value
+                })
+
+                return cachedResponse.blob().then((responseBodyAsBlob) => {
+                    return new Response(responseBodyAsBlob, newOptions)
+                })
+            }
+
+            // In the case of a non-cached HTTP error, we still have a response,
+            // so pass it down to the application
+            if (response) {
+                return response
+            }
+
+            // This should happen if there was a network failure and no cache hit
+            throw error
+        })
+    })
+    /* eslint-enable max-nested-callbacks */
+}
 
 /**
  * It's unfortunate that the toolbox doesn't provide a way to add on custom response
@@ -84,59 +170,20 @@ toolbox.router.get('/', toolbox.networkFirst, {cache: bundleCache})
  * Basically, we fetch and cache - if it fails we try the cache, but add a
  * `x-mobify-progressive: offline` header for use by the application
  */
-toolbox.router.get(/.*/, (request) => {
-    let originalResponse
+const customNetworkFirst = function(request) {
+    // `this` is the `Route` object passed to by `toolbox.router.get`
+    const cacheName = this.options.cache.name
 
-    return fetch(request.clone())
-        .then((response) => {
-            originalResponse = response
+    return fetchAndCache(request, cacheName)
+        .catch(([error, originalRequest, originalResponse]) => cacheFallback(error, originalRequest, originalResponse, cacheName))
+}
 
-            // This is lifted from https://github.com/GoogleChrome/sw-toolbox/blob/master/lib/strategies/networkFirst.js#L59
-            if (successResponses.test(response.status)) {
-                caches.open(baseCacheName).then((cache) => {
-                    cache.put(request, originalResponse)
-                })
+// Main page is needed for installed app when offline
+toolbox.router.get('/', customNetworkFirst, {
+    cache: bundleCache
+})
 
-                return originalResponse.clone()
-            }
-
-            toolbox.options.debug && console.error(`Response was an HTTP error: ${response.statusText}`)
-            throw new Error('Bad response')
-        })
-        .catch((error) => {
-            toolbox.options.debug && console.error(`Network or response error, fallback to cache [${request.url}]`)
-
-            /* eslint-disable max-nested-callbacks */
-            return caches.open(baseCacheName).then((cache) => {
-                return cache.match(request).then((response) => {
-                    if (response) {
-                        const newOptions = {
-                            status: 200,
-                            statusText: 'OK',
-                            headers: {
-                                'X-mobify-progressive': 'offline'
-                            }
-                        }
-
-                        // Add the original headers from the response to our
-                        // new response
-                        response.headers.forEach((v, k) => {
-                            newOptions.headers[k] = v
-                        })
-
-                        return response.text().then((body) => {
-                            return new Response(body, newOptions)
-                        })
-                    }
-
-                    if (originalResponse) {
-                        return originalResponse
-                    }
-
-
-                    throw error
-                })
-            })
-            /* eslint-enable max-nested-callbacks */
-        })
+// Cache all other requests that aren't already matched by previous handlers
+toolbox.router.get(/.*/, customNetworkFirst, {
+    cache: toolbox.options.cache
 })
