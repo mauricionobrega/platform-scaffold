@@ -128,7 +128,7 @@ Header.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        header: state.header,
+        header: state.header
     }
 }
 

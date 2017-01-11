@@ -62,7 +62,7 @@ Footer.propTypes = {
     /**
      * Submit the newsletter subscription form to the backend
      */
-    submitNewsletter: PropTypes.func,
+    submitNewsletter: PropTypes.func
 }
 
 
