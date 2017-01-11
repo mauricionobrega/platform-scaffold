@@ -1,10 +1,10 @@
 import BaseConfig from './baseConfig'
 
-const url = 'https://www.merlinspotions.com/checkout/cart/'         // must get url
+const url = 'https://www.merlinspotions.com/checkout/cart/'
 
 const closeIcon = {
     id: 'closeCart_id',
-    imageUrl: 'file:///close.png'            // need to change this to correct url
+    imageUrl: 'file:///close.png'
 }
 
 const cartIcon = {
