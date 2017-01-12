@@ -5,7 +5,4 @@ export const getPdp = createSelector(
     globalSelectors.getUi,
     ({pdp}) => pdp
 )
-export const getCatalog = createSelector(
-    globalSelectors.getUi,
-    ({catalog}) => catalog
-)
+export const getCatalog = globalSelectors.getCatalog
