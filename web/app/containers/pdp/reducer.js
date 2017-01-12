@@ -7,24 +7,14 @@ import PDP from './container'
 import pdpParser from './parsers/pdp'
 import * as pdpActions from './actions'
 
-import PLP from '../plp/container'
-import {basicPlpParser} from './parsers/basic-plp'
-
 import {onPageReceived, onRouteChanged} from '../app/actions'
 import {SELECTOR, PLACEHOLDER} from '../app/constants'
 
 export const initialState = Immutable.fromJS({
-    isPlaceholder: true,
     contentsLoaded: false,
     itemQuantity: 1,
     itemAddedModalOpen: false,
-    quantityAdded: 0,
-    product: {
-        title: '',
-        price: '',
-        description: '',
-        carouselItems: []
-    }
+    quantityAdded: 0
 })
 
 const reducer = createReducer({
@@ -39,7 +29,7 @@ const reducer = createReducer({
                 // Update the store using location.href as key and the result from
                 // the parser as our value -- even if it isn't the page we're
                 // currently viewing
-                s.set(url, parsed)
+                s.mergeDeepIn([url], parsed)
 
                 // Also set the store's current selector to location.href so we
                 // can access it in our container, but only if we're on that href
@@ -47,9 +37,6 @@ const reducer = createReducer({
                     s.set(SELECTOR, url)
                 }
             })
-        } else if (RouterUtils.isPageType(pageComponent, PLP)) {
-            const parsedPlp = basicPlpParser($, $response)
-            return Immutable.fromJS(parsedPlp).mergeDeep(state)
         } else {
             return state
         }
@@ -58,7 +45,12 @@ const reducer = createReducer({
         const {pageComponent, currentURL} = action
 
         if (RouterUtils.isPageType(pageComponent, PDP)) {
-            return state.set(SELECTOR, RouterUtils.getNextSelector(state, currentURL))
+            return state.withMutations((s) => {
+                if (!state.has(currentURL)) {
+                    s.set(currentURL, initialState)
+                }
+                s.set(SELECTOR, currentURL)
+            })
         } else {
             return state
         }
