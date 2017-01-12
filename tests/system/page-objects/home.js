@@ -1,5 +1,5 @@
 const selectors = {
-    wrapper: '.t-home',
+    wrapper: '.t-home__container',
     skipLinks: '.pw-skip-links',
     skipToMain: '.pw-skip-links__anchor:first-of-type',
     skipToNav: '.pw-skip-links__anchor:nth-child(2n)',

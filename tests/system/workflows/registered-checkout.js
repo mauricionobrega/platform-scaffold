@@ -10,6 +10,10 @@ let plp
 // let cart
 // let checkout
 
+/*eslint-disable */
+const PRODUCT_INDEX = process.env.PRODUCT_INDEX || 1
+/*eslint-disable */
+
 export default {
     '@tags': ['checkout'],
 
@@ -41,7 +45,7 @@ export default {
 
 /* TODO: Uncomment the following once the Progressive Web build for Merlin's Potions has been completed.
     'Checkout - Registered - Step 3 - Navigate from PLP to PDP': (browser) => {
-        plp.navigateToPDP()
+        plp.navigateToPDP(PRODUCT_INDEX)
         browser
             .waitForElementVisible(pdp.selectors.pdpTemplateIdentifier)
             .assert.visible(pdp.selectors.pdpTemplateIdentifier)

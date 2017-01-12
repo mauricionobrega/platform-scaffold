@@ -1,6 +1,6 @@
 const selectors = {
-    pdpTemplateIdentifier: '.t-pdp', // Used in workflow to assert you have reached the page
-    addItemButton: '.add .item .button',
+    pdpTemplateIdentifier: '.t-pdp', 
+    addItemButton: '.t-pdp__add-to-cart',
     cartIcon: '.cart .icon .selector',
     goToCart: '.goto .cart .selector'
 }

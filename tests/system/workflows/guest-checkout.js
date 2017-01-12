@@ -10,6 +10,10 @@ let plp
 // let cart
 // let checkout
 
+/*eslint-disable */
+const PRODUCT_INDEX = process.env.PRODUCT_INDEX || 1
+/*eslint-disable */
+
 export default {
     '@tags': ['checkout'],
 
