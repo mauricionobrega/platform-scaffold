@@ -1,5 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
+import {createStructuredSelector} from 'reselect'
+
 import {hidePreloader} from 'progressive-web-sdk/dist/preloader'
 import {IconSprite} from 'progressive-web-sdk/dist/components/icon'
 import SkipLinks from 'progressive-web-sdk/dist/components/skip-links'
@@ -11,6 +13,7 @@ import * as navActions from '../../containers/navigation/actions'
 import * as miniCartActions from '../../containers/mini-cart/actions'
 import sprite from '../../static/svg/sprite-dist/sprite.svg'
 import * as appActions from '../app/actions'
+import * as selectors from './selectors'
 
 import NotificationManager from '../../components/notification-manager'
 
@@ -108,13 +111,11 @@ App.propTypes = {
     requestOpenMiniCart: PropTypes.func,
 }
 
-const mapStateToProps = (state) => {
-    return {
-        app: state.app,
-    }
-}
+const mapStateToProps = createStructuredSelector({
+    app: selectors.getApp
+})
 
-const mapDispatchToProps = (dispatch, props) => {
+const mapDispatchToProps = (dispatch) => {
     return {
         openNavigation: () => dispatch(navActions.openNavigation()),
         requestOpenMiniCart: () => dispatch(miniCartActions.requestOpenMiniCart()),

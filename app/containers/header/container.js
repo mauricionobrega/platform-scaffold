@@ -1,8 +1,10 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
+import {createStructuredSelector} from 'reselect'
 import throttle from 'lodash.throttle'
 import classnames from 'classnames'
 import * as headerActions from './actions'
+import * as selectors from './selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import IconLabel from 'progressive-web-sdk/dist/components/icon-label'
@@ -118,11 +120,9 @@ Header.propTypes = {
     onMiniCartClick: PropTypes.func,
 }
 
-const mapStateToProps = (state, props) => {
-    return {
-        header: state.header
-    }
-}
+const mapStateToProps = createStructuredSelector({
+    header: selectors.getHeader
+})
 
 const mapDispatchToProps = {
     toggleHeader: headerActions.toggleHeader

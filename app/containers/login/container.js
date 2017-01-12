@@ -10,6 +10,7 @@ import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import {Tabs, TabsPanel} from 'progressive-web-sdk/dist/components/tabs'
 
 import * as actions from './actions'
+import * as selectors from './selectors'
 
 class Login extends React.Component {
 
@@ -148,7 +149,7 @@ class Login extends React.Component {
 
 const mapStateToProps = (state, props) => {
     return {
-        ...state.login.toJS()
+        ...selectors.getLogin(state).toJS()
     }
 }
 

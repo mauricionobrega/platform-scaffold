@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import Immutable from 'immutable'
 import classNames from 'classnames'
+import {createStructuredSelector} from 'reselect'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -10,6 +11,7 @@ import Sheet from 'progressive-web-sdk/dist/components/sheet'
 import List from 'progressive-web-sdk/dist/components/list'
 import Image from 'progressive-web-sdk/dist/components/image'
 import ProductItem from '../../components/product-item'
+import * as selectors from './selectors'
 import * as miniCartActions from './actions'
 import * as cartActions from '../cart/actions'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
@@ -136,7 +138,9 @@ MiniCart.propTypes = {
     fetchContents: PropTypes.func,
 }
 
-const mapStateToProps = ({miniCart}) => ({miniCart})
+const mapStateToProps = createStructuredSelector({
+    miniCart: selectors.getMiniCart
+})
 
 const mapDispatchToProps = {
     fetchContents: cartActions.getCart,
