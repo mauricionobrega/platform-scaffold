@@ -35,16 +35,38 @@ const CheckoutPaymentProductList = ({cart}) => (
                         key={idx}
                         image={productImage}
                     >
-                        <div className="u-flexbox">
-                            <div className="u-flex-none">
-                                <p className="u-color-neutral-50">Color: Maroon</p>
-                                <p className="u-margin-bottom-sm u-color-neutral-50">Size: XL</p>
-                                <p className="u-margin-bottom-sm u-color-neutral-50">Quantity: x</p>
+                        <div className="u-flexbox u-align-bottom">
+                            <div className="u-flex-none u-color-neutral-50">
+                                {item.options.map(({label, value}, idx) => (
+                                    <p
+                                        className={idx > 0 ? 'u-margin-top-sm' : ''}
+                                        key={`${item.item_id}-option-${idx}`}
+                                    >
+                                        {label}: {value}
+                                    </p>
+                                ))}
+
+                                <p className={item.options > 0 ? 'u-margin-top-sm' : ''}>
+                                    Qty: {item.qty}
+                                </p>
                             </div>
 
                             <div className="u-text-align-end u-flex">
-                                <div className="u-h5 u-color-accent u-text-semi-bold">$19.99</div>
-                                <div className="u-text-quiet"><em>Was $29.99</em></div>
+                                {item.onSale ?
+                                    <div>
+                                        <div className="u-h5 u-color-accent u-text-semi-bold">
+                                            {item.product_sale_price}
+                                        </div>
+
+                                        <div className="u-text-quiet">
+                                            <em>Was {item.product_old_price}</em>
+                                        </div>
+                                    </div>
+                                :
+                                    <div className="u-h5 u-text-semi-bold">
+                                        {item.product_price}
+                                    </div>
+                                }
                             </div>
                         </div>
                     </ProductItem>
@@ -59,28 +81,40 @@ const CheckoutPaymentProductList = ({cart}) => (
                     value={cart.subtotal_excl_tax}
                 />
 
-                <LedgerRow
-                    label="Shipping (Flat - Fixed Rate)"
-                    value="$10.00"
-                />
+                {cart.shipping_rate &&
+                    <LedgerRow
+                        label={`Shipping (${cart.shipping_rate_label})`}
+                        value={cart.shipping_rate}
+                    />
+                }
+
+                {cart.promo_rate &&
+                    <LedgerRow
+                        className="u-border-light-bottom"
+                        label={`Shipping (${cart.promo_rate_label})`}
+                        value={cart.promo_rate}
+                    />
+                }
             </Ledger>
 
-            <Accordion>
-                <AccordionItem header="Accordion Item #1">
-                    <FieldRow>
-                        <Field label="Enter discount code">
-                            <input type="text" placeholder="Enter discount code" />
-                            <Button className="c--tertiary">Apply</Button>
-                        </Field>
-                    </FieldRow>
-                </AccordionItem>
-            </Accordion>
+            {!cart.promo_rate &&
+                <Accordion>
+                    <AccordionItem header="Promo code">
+                        <FieldRow>
+                            <Field label="Enter discount code">
+                                <input type="text" placeholder="Enter discount code" />
+                                <Button className="c--tertiary">Apply</Button>
+                            </Field>
+                        </FieldRow>
+                    </AccordionItem>
+                </Accordion>
+            }
 
             <Ledger>
                 <LedgerRow
                     label="Total"
                     isTotal={true}
-                    value={cart.subtotal_incl_tax}
+                    value={cart.total_incl_tax}
                 />
             </Ledger>
 
