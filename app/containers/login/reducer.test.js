@@ -1,12 +1,16 @@
 import {Map, is} from 'immutable'
 
 import reducer from './reducer'
+import Login from './container'
+import Home from '../home/container'
+
+import {getComponentType} from '../../utils/utils'
 
 import * as appActions from '../app/actions'
 import * as loginActions from './actions'
 
-jest.mock('./parsers/login')
-import loginParser from './parsers/login'
+jest.mock('./parsers/signin')
+import signinParser from './parsers/signin'
 
 test('unknown action type leaves state unchanged', () => {
     const action = {
@@ -20,46 +24,61 @@ test('unknown action type leaves state unchanged', () => {
     expect(reducer(inputState, action)).toBe(inputState)
 })
 
-test('appActions.onPageReceived does nothing when pageType !== Login', () => {
-    const action = appActions.onPageReceived($, $(), 'Home')
+test('appActions.onPageReceived does nothing when pageComponent !== Login', () => {
+    const action = appActions.onPageReceived($, $(), getComponentType(Home))
+    const inputState = Map()
+
+    expect(reducer(inputState, action)).toEqual(inputState)
+})
+
+test('appActions.onPageReceived does nothing when pageComponent !== Login and different route name', () => {
+    const action = appActions.onPageReceived($, $(), getComponentType(Home), null, null, 'productListPage')
     const inputState = Map()
 
     expect(reducer(inputState, action)).toEqual(inputState)
 })
 
 test('appActions.onPageReceived sets loaded to true', () => {
-    const action = appActions.onPageReceived($, $(), 'Login')
-    const inputState = Map()
+    const inputState = Map({
+        signinSection: Map({}),
+        registerSection: Map({})
+    })
 
-    expect(reducer(inputState, action).get('loaded')).toBe(true)
+    const signinAction = appActions.onPageReceived($, $(), getComponentType(Login), null, null, 'signin')
+    expect(reducer(inputState, signinAction).get('loaded')).toBe(true)
+
+    const registerAction = appActions.onPageReceived($, $(), getComponentType(Login), null, null, 'register')
+    expect(reducer(inputState, registerAction).get('loaded')).toBe(true)
 })
 
 test('appActions.onPageReceived causes the page to be parsed into the state', () => {
     const $html = $('<body><hr /></body')
-    const action = appActions.onPageReceived($, $html, 'Login')
-    const inputState = Map()
+    const action = appActions.onPageReceived($, $html, getComponentType(Login), null, null, 'signin')
+    const inputState = Map({
+        signinSection: Map({})
+    })
 
-    loginParser.mockClear()
-    const parsedPage = {test: true, title: 'Customer Login', loaded: true}
-    loginParser.mockReturnValueOnce(parsedPage)
+    signinParser.mockClear()
+    const parsedPage = {test: true, title: 'Customer Login'}
+    signinParser.mockReturnValueOnce(parsedPage)
 
     const result = reducer(inputState, action)
 
-    expect(loginParser).toBeCalledWith($, $html)
-    expect(result.get('test')).toBe(true)
-    expect(is(result, Map(parsedPage))).toBe(true)
+    expect(signinParser).toBeCalledWith($, $html)
+    expect(result.get('signinSection').get('test')).toBe(true)
+    expect(is(result, Map({signinSection: Map({...parsedPage, ...{infoModalOpen: false}}), loaded: true}))).toBe(true)
 })
 
 test('loginActions.openInfoModal opens the info modal', () => {
-    const action = loginActions.openInfoModal()
+    const action = loginActions.openInfoModal('signin')
     const inputState = Map()
 
-    expect(is(reducer(inputState, action), Map({infoModalOpen: true}))).toBe(true)
+    expect(is(reducer(inputState, action), Map({signinSection: Map({infoModalOpen: true})}))).toBe(true)
 })
 
 test('loginActions.closeInfoModal closes the info modal', () => {
-    const action = loginActions.closeInfoModal()
-    const inputState = Map({infoModalOpen: true})
+    const action = loginActions.closeInfoModal('signin')
+    const inputState = Map({signinSection: Map({infoModalOpen: true})})
 
-    expect(is(reducer(inputState, action), Map({infoModalOpen: false}))).toBe(true)
+    expect(is(reducer(inputState, action), Map({signinSection: Map({infoModalOpen: false})}))).toBe(true)
 })

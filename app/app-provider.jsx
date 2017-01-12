@@ -3,7 +3,7 @@ import {Router, Route, IndexRoute} from 'progressive-web-sdk/dist/routing'
 import {triggerMobifyPageView} from 'progressive-web-sdk/dist/analytics'
 import {Provider} from 'react-redux'
 import * as appActions from './containers/app/actions'
-import {getComponentName} from './utils/utils'
+import {getComponentType} from './utils/utils'
 
 // Containers
 import App from './containers/app/container'
@@ -11,7 +11,11 @@ import Home from './containers/home/container'
 import Login from './containers/login/container'
 import PLP from './containers/plp/container'
 import PDP from './containers/pdp/container'
-
+import CheckoutShipping from './containers/checkout-shipping/container'
+import CheckoutPayment from './containers/checkout-payment/container'
+import CheckoutConfirmation from './containers/checkout-confirmation/container'
+import CheckoutHeader from './containers/checkout-header/container'
+import CheckoutFooter from './containers/checkout-footer/container'
 
 const AppProvider = ({store}) => {
     /**
@@ -28,16 +32,22 @@ const AppProvider = ({store}) => {
         ].join('')
     }
 
-    const getPageType = (routerState) => getComponentName(routerState.routes[1].component)
+    const shouldFetchPage = (routerState) => routerState.routes[1].fetchPage !== 'false'
 
-    const dispatchRouteChanged = (nextState) => store.dispatch(appActions.onRouteChanged(getURL(nextState), getPageType(nextState)))
+    const getPageComponent = (routerState) => getComponentType(routerState.routes[1].component)
 
-    const dispatchFetchPage = (nextState) => store.dispatch(appActions.fetchPage(getURL(nextState), getPageType(nextState)))
+    const getRouteName = (routerState) => routerState.routes[1].routeName
+
+    const dispatchRouteChanged = (nextState) => store.dispatch(appActions.onRouteChanged(getURL(nextState), getPageComponent(nextState)))
+
+    const dispatchFetchPage = (nextState) => store.dispatch(appActions.fetchPage(getURL(nextState), getPageComponent(nextState), getRouteName(nextState)))
 
     const onEnter = (nextState) => {
         triggerMobifyPageView(nextState.routes[1].routeName)
         dispatchRouteChanged(nextState)
-        dispatchFetchPage(nextState)
+        if (shouldFetchPage(nextState)) {
+            dispatchFetchPage(nextState)
+        }
     }
 
     const onChange = (prevState, nextState) => {
@@ -46,8 +56,12 @@ const AppProvider = ({store}) => {
 
         if (nextURL !== prevURL) {
             dispatchRouteChanged(nextState)
-            dispatchFetchPage(nextState)
+            if (shouldFetchPage(nextState)) {
+                dispatchFetchPage(nextState)
+            }
         }
+
+        store.dispatch(appActions.removeAllNotifications())
     }
 
     return (
@@ -55,13 +69,17 @@ const AppProvider = ({store}) => {
             <Router>
                 <Route path="/" component={App} onEnter={onEnter} onChange={onChange}>
                     <IndexRoute component={Home} routeName="home" />
-                    <Route component={Login} path="customer/account/login/" routeName="login" />
+                    <Route component={Login} path="customer/account/login/" routeName="signin" />
+                    <Route component={Login} path="customer/account/create/" routeName="register" />
                     <Route component={PLP} path="potions.html" routeName="productListPage" />
                     <Route component={PLP} path="books.html" routeName="productListPage" />
                     <Route component={PLP} path="ingredients.html" routeName="productListPage" />
                     <Route component={PLP} path="supplies.html" routeName="productListPage" />
                     <Route component={PLP} path="new-arrivals.html" routeName="productListPage" />
                     <Route component={PDP} path="*.html" routeName="productDetailsPage" />
+                    <Route component={CheckoutShipping} path="checkout/shipping/" routeName="checkingShipping" fetchPage="false" Header={CheckoutHeader} Footer={CheckoutFooter} />
+                    <Route component={CheckoutPayment} path="checkout/payment/" routeName="checkingPayment" fetchPage="false" Header={CheckoutHeader} Footer={CheckoutFooter} />
+                    <Route component={CheckoutConfirmation} path="checkout/confirmation/" routeName="checkingConfirmation" fetchPage="false" Header={CheckoutHeader} Footer={CheckoutFooter} />
                 </Route>
             </Router>
         </Provider>

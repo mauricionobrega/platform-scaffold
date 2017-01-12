@@ -6,6 +6,7 @@ const assign = require('lodash.assign')
 
 const baseLoaderConfig = require('./base.loader')
 const baseMainConfig = require('./base.main')
+const workerConfig = require('./base.worker')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 // Add production flag to main app config
@@ -18,13 +19,19 @@ const productionMainConfig = assign(baseMainConfig, {
     ])
 })
 
-baseMainConfig.module.loaders = baseMainConfig.module.loaders.concat({
+baseMainConfig.module.rules = baseMainConfig.module.rules.concat({
     test: /\.scss$/,
-    loader: ExtractTextPlugin.extract(['css?-autoprefixer&-url&minification', 'postcss', 'sass']),
+    loader: ExtractTextPlugin.extract(['css-loader?-autoprefixer&-url&minification', 'postcss-loader', 'sass-loader']),
     include: [
         /progressive-web-sdk/,
         /app/
     ]
 })
 
-module.exports = [productionMainConfig, baseLoaderConfig]
+workerConfig.plugins = workerConfig.plugins.concat([
+    new webpack.DefinePlugin({
+        DEBUG: false
+    })
+])
+
+module.exports = [productionMainConfig, baseLoaderConfig, workerConfig]

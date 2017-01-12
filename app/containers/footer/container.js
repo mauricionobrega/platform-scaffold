@@ -8,10 +8,10 @@ import FooterSocialIcons from './partials/footer-social-icons'
 import FooterNavigation from './partials/footer-navigation'
 
 const social = [
-    ['http://www.facebook.com/#TODO', 'static/img/facebook.svg', 'Facebook'],
-    ['http://www.twitter.com/#TODO', 'static/img/twitter.svg', 'Twitter'],
-    ['http://plus.google.com/#TODO', 'static/img/googleplus.svg', 'Google+'],
-    ['http://www.youtube.com/#TODO', 'static/img/youtube.svg', 'Youtube'],
+    ['http://www.facebook.com/#TODO', 'static/svg/facebook.svg', 'Facebook'],
+    ['http://www.twitter.com/#TODO', 'static/svg/twitter.svg', 'Twitter'],
+    ['http://plus.google.com/#TODO', 'static/svg/googleplus.svg', 'Google+'],
+    ['http://www.youtube.com/#TODO', 'static/svg/youtube.svg', 'Youtube'],
 ]
 
 class Footer extends React.Component {
@@ -24,7 +24,7 @@ class Footer extends React.Component {
     onSubmitNewsletter(data) {
         const method = this.props.footer.getIn(['newsletter', 'method'], '')
         const action = this.props.footer.getIn(['newsletter', 'action'], '')
-        this.props.submitNewsletter(method, action, data)
+        this.props.submitNewsletter(action, method, data)
     }
 
     shouldComponentUpdate(nextProps) {
@@ -65,12 +65,9 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        submitNewsletter: (action, method, data) => dispatch(actions.signUpToNewsletter(action, method, data))
-    }
+const mapDispatchToProps = {
+    submitNewsletter: actions.signUpToNewsletter
 }
-
 
 export default connect(
     mapStateToProps,

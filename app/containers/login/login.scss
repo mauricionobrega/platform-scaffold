@@ -1,6 +1,8 @@
 // Login
 // ===
 
+@import 'node_modules/progressive-web-sdk/dist/components/tabs/base';
+
 .t-login {
     // Root Class. Contains all core styles, typically for the template's
     // wrapper element.
@@ -22,6 +24,14 @@
     right: 0;
     bottom: 0;
     left: 0;
+}
 
-    padding: 12px;
+
+// Registration
+// ---
+
+.t-login__register-fieldset {
+    &:not(:first-of-type) {
+        margin-top: $unit*4;
+    }
 }

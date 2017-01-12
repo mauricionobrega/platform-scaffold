@@ -1,4 +1,4 @@
-import {getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
+import {getBuildOrigin, getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
 import cacheHashManifest from '../tmp/loader-cache-hash-manifest.json'
 
@@ -12,11 +12,21 @@ const isReactRoute = () => {
 
 initCacheManifest(cacheHashManifest)
 
-const CAPTURING_CDN = '//cdn.mobify.com/capturejs/capture-latest.min.js'
+// This isn't accurate but does describe the case where the PR currently works
+const IS_PREVIEW = getBuildOrigin().indexOf('localhost') !== -1
 
-import preloadHTML from 'raw!./preloader/preload.html'
-import preloadCSS from 'css?minimize!./preloader/preload.css'
-import preloadJS from 'raw!./preloader/preload.js' // eslint-disable-line import/default
+const CAPTURING_CDN = '//cdn.mobify.com/capturejs/capture-latest.min.js'
+const SW_LOADER_PATH = `/service-worker-loader.js?preview=${IS_PREVIEW}&b=${cacheHashManifest.buildDate}`
+
+import preloadHTML from 'raw-loader!./preloader/preload.html'
+import preloadCSS from 'css-loader?minimize!./preloader/preload.css'
+import preloadJS from 'raw-loader!./preloader/preload.js' // eslint-disable-line import/default
+
+const loadWorker = () => (
+      navigator.serviceWorker.register(SW_LOADER_PATH)
+        .then(() => navigator.serviceWorker.ready)
+        .catch(() => {})
+)
 
 if (isReactRoute()) {
     displayPreloader(preloadCSS, preloadHTML, preloadJS)
@@ -34,34 +44,51 @@ if (isReactRoute()) {
     })
     /* eslint-enable max-len */
 
-    loadAsset('link', {
-        href: getAssetUrl('main.css'),
-        rel: 'stylesheet',
-        type: 'text/css',
-        // Tell us when the stylesheet has loaded so we know when it's safe to
-        // display the app! This prevents a flash of unstyled content.
-        onload: 'window.Progressive.stylesheetLoaded = true;'
+    loadAsset('meta', {
+        name: 'theme-color',
+        content: '#4e439b'
+    });
+
+    // load the worker if available
+    // if no worker is available, we have to assume that promises might not be either.
+    (('serviceWorker' in navigator)
+     ? loadWorker()
+     : {then: (fn) => setTimeout(fn)}
+    ).then(() => {
+        loadAsset('link', {
+            href: getAssetUrl('main.css'),
+            rel: 'stylesheet',
+            type: 'text/css',
+            // Tell us when the stylesheet has loaded so we know when it's safe to
+            // display the app! This prevents a flash of unstyled content.
+            onload: 'window.Progressive.stylesheetLoaded = true;'
+        })
+
+        loadAsset('link', {
+            href: getAssetUrl('static/manifest.json'),
+            rel: 'manifest'
+        })
+
+        const script = document.createElement('script')
+        script.id = 'progressive-web-script'
+        // Setting UTF-8 as our encoding ensures that certain strings (i.e.
+        // Japanese text) are not improperly converted to something else.
+        script.charset = 'utf-8'
+        script.src = getAssetUrl('main.js')
+        body.appendChild(script)
+
+        const jQuery = document.createElement('script')
+        jQuery.async = true
+        jQuery.id = 'progressive-web-jquery'
+        jQuery.src = getAssetUrl('static/js/jquery.min.js')
+        body.appendChild(jQuery)
+
+        const capturing = document.createElement('script')
+        capturing.async = true
+        capturing.id = 'progressive-web-capture'
+        capturing.src = CAPTURING_CDN
+        body.appendChild(capturing)
     })
-
-    const script = document.createElement('script')
-    script.id = 'progressive-web-script'
-    // Setting UTF-8 as our encoding ensures that certain strings (i.e.
-    // Japanese text) are not improperly converted to something else.
-    script.charset = 'utf-8'
-    script.src = getAssetUrl('main.js')
-    body.appendChild(script)
-
-    const jQuery = document.createElement('script')
-    jQuery.async = true
-    jQuery.id = 'progressive-web-jquery'
-    jQuery.src = getAssetUrl('static/js/jquery.min.js')
-    body.appendChild(jQuery)
-
-    const capturing = document.createElement('script')
-    capturing.async = true
-    capturing.id = 'progressive-web-capture'
-    capturing.src = CAPTURING_CDN
-    body.appendChild(capturing)
 } else {
     const capturing = document.createElement('script')
     capturing.async = true
