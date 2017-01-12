@@ -8,6 +8,12 @@ import CheckoutPaymentReduxForm from './partials/checkout-payment-form'
 import {ProgressSteps, ProgressStepsItem} from 'progressive-web-sdk/dist/components/progress-steps'
 
 class CheckoutPayment extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.handleShowCompanyAndApt = this.handleShowCompanyAndApt.bind(this)
+    }
+
     componentDidMount() {
         // this.props.fetchContents()
     }
@@ -18,10 +24,15 @@ class CheckoutPayment extends React.Component {
         return checkoutPaymentChanged || miniCartChanged
     }
 
+    handleShowCompanyAndApt() {
+        this.props.showCompanyAndApt()
+    }
+
     render() {
         const cart = this.props.miniCart.get('cart').toJS()
         const {
-            contentsLoaded
+            contentsLoaded,
+            isCompanyOrAptShown
         } = this.props.checkoutPayment.toJS()
 
         return contentsLoaded && (
@@ -37,7 +48,11 @@ class CheckoutPayment extends React.Component {
                     </div>
                 </div>
 
-                <CheckoutPaymentReduxForm cart={cart} />
+                <CheckoutPaymentReduxForm
+                    cart={cart}
+                    isCompanyOrAptShown={isCompanyOrAptShown}
+                    handleShowCompanyAndApt={this.handleShowCompanyAndApt}
+                />
             </div>
         )
     }
@@ -46,7 +61,8 @@ class CheckoutPayment extends React.Component {
 CheckoutPayment.propTypes = {
     checkoutPayment: PropTypes.instanceOf(Immutable.Map),
     fetchContents: PropTypes.func,
-    miniCart: PropTypes.object
+    miniCart: PropTypes.object,
+    showCompanyAndApt: PropTypes.func,
 }
 
 const mapStateToProps = (state) => {
@@ -57,7 +73,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    fetchContents: checkoutPaymentActions.fetchContents
+    fetchContents: checkoutPaymentActions.fetchContents,
+    showCompanyAndApt: checkoutPaymentActions.showCompanyAndApt,
 }
 
 export default connect(
