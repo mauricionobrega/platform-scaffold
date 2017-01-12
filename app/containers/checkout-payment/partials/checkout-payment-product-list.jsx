@@ -11,7 +11,7 @@ import {Ledger, LedgerRow} from 'progressive-web-sdk/dist/components/ledger'
 import List from 'progressive-web-sdk/dist/components/list'
 import ProductItem from '../../../components/product-item'
 
-const CheckoutPaymentProductList = ({cart}) => (
+const CheckoutPaymentProductList = ({cart, isFixedPlaceOrderShown}) => (
     <div className="t-checkout-payment__product-list">
         <div className="t-checkout-payment__title u-padding-top-lg u-padding-bottom-lg">
             <h2 className="u-h4">Order Summary</h2>
@@ -118,11 +118,30 @@ const CheckoutPaymentProductList = ({cart}) => (
                 />
             </Ledger>
 
+            {/* This is the statically positioned "Place Your Order" container */}
             <div className="u-padding-end-md u-padding-bottom-lg u-padding-start-md">
-                <Button className="c--primary u-flex-none u-width-full">
+                <Button className="c--primary u-flex-none u-width-full u-text-all-caps">
                     <Icon name="lock" />
                     Place Your Order
                 </Button>
+            </div>
+
+            {/* This is the FIXED positioned "Place Your Order" container */}
+            <div
+                className={`t-checkout-payment__fixed-place-order ${isFixedPlaceOrderShown && 't--show'}`}
+                tabIndex="-1"
+                aria-hidden="true"
+            >
+                <div className="u-padding-md u-bg-color-neutral-10 u-text-align-center">
+                    <Button className="c--primary u-flex-none u-width-full u-text-all-caps">
+                        <Icon name="lock" />
+                        Place Your Order
+                    </Button>
+
+                    <p className="u-margin-top-md">
+                        Total: <strong>{cart.total_incl_tax}</strong>
+                    </p>
+                </div>
             </div>
 
             <div className="u-padding-top-lg u-padding-bottom-lg u-text-align-center">
@@ -139,6 +158,7 @@ const CheckoutPaymentProductList = ({cart}) => (
 
 CheckoutPaymentProductList.propTypes = {
     cart: PropTypes.object,
+    isFixedPlaceOrderShown: PropTypes.bool,
 }
 
 export default CheckoutPaymentProductList

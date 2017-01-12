@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import Immutable from 'immutable'
+import throttle from 'lodash.throttle'
 
 import * as checkoutPaymentActions from './actions'
 import CheckoutPaymentReduxForm from './partials/checkout-payment-form'
@@ -12,16 +13,36 @@ class CheckoutPayment extends React.Component {
         super(props)
 
         this.handleShowCompanyAndApt = this.handleShowCompanyAndApt.bind(this)
+        this.handleScroll = throttle(this.handleScroll.bind(this), 200)
     }
 
     componentDidMount() {
         // this.props.fetchContents()
+        window.addEventListener('scroll', this.handleScroll.bind(this))
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.handleScroll.bind(this))
     }
 
     shouldComponentUpdate(newProps) {
         const checkoutPaymentChanged = !Immutable.is(this.props.checkoutPayment, newProps.checkoutPayment)
         const miniCartChanged = !Immutable.is(this.props.miniCart, newProps.miniCart)
         return checkoutPaymentChanged || miniCartChanged
+    }
+
+    handleScroll() {
+        const {isFixedPlaceOrderShown} = this.props.checkoutPayment.toJS()
+        const footerHeight = 200
+        const scrollPosition = window.pageYOffset
+        const windowSize = window.innerHeight
+        const bodyHeight = document.body.offsetHeight
+        const distanceFromBottom = Math.max(bodyHeight - (scrollPosition + windowSize), 0)
+        const newIsFixedPlaceOrderShown = distanceFromBottom > footerHeight
+
+        if (newIsFixedPlaceOrderShown !== isFixedPlaceOrderShown) {  // Saves triggering the action
+            this.props.toggleFixedPlaceOrder(newIsFixedPlaceOrderShown)
+        }
     }
 
     handleShowCompanyAndApt() {
@@ -32,7 +53,8 @@ class CheckoutPayment extends React.Component {
         const cart = this.props.miniCart.get('cart').toJS()
         const {
             contentsLoaded,
-            isCompanyOrAptShown
+            isCompanyOrAptShown,
+            isFixedPlaceOrderShown,
         } = this.props.checkoutPayment.toJS()
 
         return contentsLoaded && (
@@ -51,6 +73,7 @@ class CheckoutPayment extends React.Component {
                 <CheckoutPaymentReduxForm
                     cart={cart}
                     isCompanyOrAptShown={isCompanyOrAptShown}
+                    isFixedPlaceOrderShown={isFixedPlaceOrderShown}
                     handleShowCompanyAndApt={this.handleShowCompanyAndApt}
                 />
             </div>
@@ -61,8 +84,10 @@ class CheckoutPayment extends React.Component {
 CheckoutPayment.propTypes = {
     checkoutPayment: PropTypes.instanceOf(Immutable.Map),
     fetchContents: PropTypes.func,
+    isFixedPlaceOrderShown: PropTypes.bool,
     miniCart: PropTypes.object,
     showCompanyAndApt: PropTypes.func,
+    toggleFixedPlaceOrder: PropTypes.func,
 }
 
 const mapStateToProps = (state) => {
@@ -75,6 +100,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
     fetchContents: checkoutPaymentActions.fetchContents,
     showCompanyAndApt: checkoutPaymentActions.showCompanyAndApt,
+    toggleFixedPlaceOrder: checkoutPaymentActions.toggleFixedPlaceOrder,
 }
 
 export default connect(

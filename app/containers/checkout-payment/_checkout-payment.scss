@@ -39,6 +39,30 @@
 }
 
 
+// Fixed Place Order
+// ---
+
+.t-checkout-payment__fixed-place-order {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    opacity: 0;
+    box-shadow: rgba($neutral-70, 0.15) 0 0 12px;
+
+    transform: translateY(100%);
+
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+
+    &.t--show {
+        opacity: 1;
+
+        transform: translateY(0);
+    }
+}
+
+
 // Mobile Styles
 // ---
 
@@ -53,13 +77,15 @@
 // ---
 
 // @include susy-breakpoint($tablet-breakpoint, $tablet-layout) {
-//
+//     //
 // }
 
 
 // Desktop Styles
 // ---
 
-// @include susy-breakpoint($desktop-breakpoint, $desktop-layout) {
-//
-// }
+@include susy-breakpoint($desktop-breakpoint, $desktop-layout) {
+    .t-checkout-payment__fixed-place-order {
+        display: none;
+    }
+}

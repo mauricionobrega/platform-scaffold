@@ -217,6 +217,7 @@ const CheckoutPaymentForm = (props) => {
         handleShowCompanyAndApt,
         handleSubmit,
         isCompanyOrAptShown,
+        isFixedPlaceOrderShown,
         // disabled,
         // submitting
     } = props
@@ -230,7 +231,10 @@ const CheckoutPaymentForm = (props) => {
                 </GridSpan>
 
                 <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 5}}>
-                    <CheckoutPaymentProductList cart={cart} />
+                    <CheckoutPaymentProductList
+                        cart={cart}
+                        isFixedPlaceOrderShown={isFixedPlaceOrderShown}
+                    />
                 </GridSpan>
             </Grid>
         </form>
@@ -262,6 +266,11 @@ CheckoutPaymentForm.propTypes = {
      * Whether the "Company" and "Apt #" fields display
      */
     isCompanyOrAptShown: React.PropTypes.bool,
+
+    /**
+     * Whether the fixed "Place Order" container displays
+     */
+    isFixedPlaceOrderShown: React.PropTypes.bool,
 
     /**
      * Redux-form internal

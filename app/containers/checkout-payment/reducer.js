@@ -9,6 +9,7 @@ const initialState = Immutable.fromJS({
         cart: {}
     },
     isCompanyOrAptShown: false,
+    isFixedPlaceOrderShown: true,
 })
 
 export default createReducer({
@@ -17,5 +18,8 @@ export default createReducer({
     },
     [checkoutPaymentActions.showCompanyAndApt]: (state) => {
         return state.merge({isCompanyOrAptShown: true})
+    },
+    [checkoutPaymentActions.toggleFixedPlaceOrder]: (state, payload) => {
+        return state.merge({isFixedPlaceOrderShown: payload})
     },
 }, initialState)
