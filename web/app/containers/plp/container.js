@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import Immutable from 'immutable'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
+import {IS_IN_ASTRO_APP} from '../app/constants'
 
 import Image from 'progressive-web-sdk/dist/components/image'
 import Link from 'progressive-web-sdk/dist/components/link'
@@ -47,35 +48,38 @@ class PLP extends React.Component {
         } = this.props.plp.toJS()
 
         const products = this.props.products
+        const isRunningInAstro = this.props.isRunningInAstro
 
         return (
             <div className="t-plp">
-                <div className="u-flexbox u-align-bottom">
-                    <div className="u-flex u-padding-top-lg u-padding-bottom-lg u-padding-start-md">
-                        <div className="t-plp__breadcrumb">
-                            <Link href="/" className="u-text-small">Home</Link>
+                {!isRunningInAstro &&
+                    <div className="u-flexbox u-align-bottom">
+                        <div className="u-flex u-padding-top-lg u-padding-bottom-lg u-padding-start-md">
+                            <div className="t-plp__breadcrumb">
+                                <Link href="/" className="u-text-small">Home</Link>
+                            </div>
+
+                            <div className="u-margin-top-md">
+                                {contentsLoaded ?
+                                    <h1 className="u-text-lighter u-text-uppercase">{title}</h1>
+                                :
+                                    <SkeletonText lines={1} type="h1" width="100px" />
+                                }
+                            </div>
                         </div>
 
-                        <div className="u-margin-top-md">
-                            {contentsLoaded ?
-                                <h1 className="u-text-lighter u-text-uppercase">{title}</h1>
-                            :
-                                <SkeletonText lines={1} type="h1" width="100px" />
-                            }
-                        </div>
+                        {title &&
+                            <Image
+                                className="u-flex-none u-padding-end u-padding-bottom-sm"
+                                alt="Heading logo"
+                                height="60px"
+                                width="60px"
+                                src={getAssetUrl(`static/img/categories/${title.trim().replace(/\s+/g, '-')
+                                .toLowerCase()}@2x.png`)}
+                            />
+                        }
                     </div>
-
-                    {title &&
-                        <Image
-                            className="u-flex-none u-padding-end u-padding-bottom-sm"
-                            alt="Heading logo"
-                            height="60px"
-                            width="60px"
-                            src={getAssetUrl(`static/img/categories/${title.trim().replace(/\s+/g, '-')
-                            .toLowerCase()}@2x.png`)}
-                        />
-                    }
-                </div>
+                }
 
                 <div className="t-plp__container u-padding-end u-padding-bottom-lg u-padding-start">
                     <div className="t-plp__num-results u-padding-md">
@@ -103,7 +107,11 @@ PLP.propTypes = {
     /**
      * Product data from state (Catalog -> Products), filtered by the productUrls in the Plp state object
      */
-    products: PropTypes.array.isRequired
+    products: PropTypes.array.isRequired,
+    /**
+     * Defines whether we're being hosted in an Astro app
+     */
+    isRunningInAstro: PropTypes.bool,
 }
 
 const mapStateToProps = ({catalog, plp}) => {
@@ -116,7 +124,8 @@ const mapStateToProps = ({catalog, plp}) => {
     })
     return {
         products,
-        plp: routedPlp
+        plp: routedPlp,
+        isRunningInAstro: state.app.get(IS_IN_ASTRO_APP),
     }
 }
 

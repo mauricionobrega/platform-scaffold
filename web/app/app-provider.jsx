@@ -65,8 +65,10 @@ const AppProvider = ({store}) => {
     const onChange = (prevState, nextState, replace, callback) => {
         const prevURL = getURL(prevState)
         const nextURL = getURL(nextState)
-        const coordinateWithNativeApp = Astro.isRunningInApp() && nextState.location.action !== 'POP'
+        const isCoordinatingWithNativeApp = Astro.isRunningInApp() &&
+                                            nextState.location.action !== 'POP'
 
+        // TODO: Would love to figure out a simpler callback scheme here
         const triggerChange = () => {
             dispatchRouteChanged(nextState)
             if (shouldFetchPage(nextState)) {
@@ -74,12 +76,10 @@ const AppProvider = ({store}) => {
             }
         }
 
-        if (!coordinateWithNativeApp) {
-            callback()
-        }
+        const urlHasChanged = nextURL !== prevURL
 
-        if (nextURL !== prevURL) {
-            if (coordinateWithNativeApp) {
+        if (isCoordinatingWithNativeApp) {
+            if (urlHasChanged) {
                 pwaNavigate(nextURL).then(() => {
                     callback()
                     triggerChange()
@@ -89,6 +89,13 @@ const AppProvider = ({store}) => {
                 // If we're coordinating with Astro, we wait to do anything more
                 return
             } else {
+                // We need to call this to allow react to continue
+                callback()
+            }
+        } else {
+            callback()
+
+            if (urlHasChanged) {
                 triggerChange()
             }
         }

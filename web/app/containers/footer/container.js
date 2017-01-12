@@ -32,10 +32,13 @@ class Footer extends React.Component {
     }
 
     render() {
+        if (this.props.isRunningInAstro) {
+            return null
+        }
+
         const {footer} = this.props
         const navigation = footer.get('navigation')
         const newsletter = footer.get('newsletter')
-
 
         return (
             <footer className="t-footer">
@@ -53,6 +56,10 @@ Footer.propTypes = {
      */
     footer: PropTypes.object,
     /**
+     * Defines whether we're being hosted in an Astro app
+     */
+    isRunningInAstro: PropTypes.bool,
+    /**
      * Submit the newsletter subscription form to the backend
      */
     submitNewsletter: PropTypes.func
@@ -68,6 +75,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
     submitNewsletter: actions.signUpToNewsletter
 }
+
+export {Footer as RawFooter}
 
 export default connect(
     mapStateToProps,
