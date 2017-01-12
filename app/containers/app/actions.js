@@ -1,6 +1,6 @@
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import * as utils from '../../utils/utils'
-import {CURRENT_URL} from './constants'
+import * as selectors from './selectors'
 
 export const addNotification = utils.createAction('Add Notification')
 export const removeNotification = utils.createAction('Remove Notification')
@@ -41,7 +41,7 @@ export const fetchPage = (url, pageComponent, routeName) => {
             .then(jqueryResponse)
             .then((res) => {
                 const [$, $response] = res
-                const currentURL = getState().app.get(CURRENT_URL)
+                const currentURL = selectors.getCurrentUrl(getState())
                 dispatch(onPageReceived($, $response, pageComponent, url, currentURL, routeName))
             })
             .catch((error) => { console.info(error.message) })
