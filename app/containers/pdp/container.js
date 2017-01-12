@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import Immutable from 'immutable'
+import {createSelector} from 'reselect'
 
 import PDPHeading from './partials/pdp-heading'
 import PDPCarousel from './partials/pdp-carousel'
@@ -9,6 +10,7 @@ import PDPAddToCart from './partials/pdp-add-to-cart'
 import PDPItemAddedModal from './partials/pdp-item-added-modal'
 import {stripEvent} from '../../utils/utils'
 import * as pdpActions from './actions'
+import * as selectors from './selectors'
 import {getSelectorFromState} from '../../utils/router-utils'
 
 class PDP extends React.Component {
@@ -92,13 +94,17 @@ PDP.propTypes = {
     setQuantity: PropTypes.func.isRequired,
 }
 
-export const mapStateToProps = ({catalog, pdp}) => {
-    const selector = getSelectorFromState(pdp)
-    return {
-        catalogProduct: catalog.products.get(selector),
-        pdp: pdp.get(selector)
+export const mapStateToProps = createSelector(
+    selectors.getCatalog,
+    selectors.getPdp,
+    (catalog, pdp) => {
+        const selector = getSelectorFromState(pdp)
+        return {
+            catalogProduct: catalog.products.get(selector),
+            pdp: pdp.get(selector)
+        }
     }
-}
+)
 
 const mapDispatchToProps = {
     setQuantity: pdpActions.setItemQuantity,

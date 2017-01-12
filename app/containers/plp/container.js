@@ -2,7 +2,9 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import Immutable from 'immutable'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
+import {createSelector} from 'reselect'
 
+import * as selectors from './selectors'
 import Image from 'progressive-web-sdk/dist/components/image'
 import Link from 'progressive-web-sdk/dist/components/link'
 import List from 'progressive-web-sdk/dist/components/list'
@@ -106,19 +108,23 @@ PLP.propTypes = {
     products: PropTypes.array.isRequired
 }
 
-const mapStateToProps = ({catalog, plp}) => {
-    const selector = getSelectorFromState(plp)
-    const routedPlp = plp.get(selector)
-    const productUrls = routedPlp.get('productUrls').toJS()
-    const catalogProducts = catalog.products
-    const products = productUrls.map((url) => {
-        return catalogProducts.get(url).toJS()
-    })
-    return {
-        products,
-        plp: routedPlp
+const mapStateToProps = createSelector(
+    selectors.getCatalog,
+    selectors.getPlp,
+    (catalog, plp) => {
+        const selector = getSelectorFromState(plp)
+        const routedPlp = plp.get(selector)
+        const productUrls = routedPlp.get('productUrls').toJS()
+        const catalogProducts = catalog.products
+        const products = productUrls.map((url) => {
+            return catalogProducts.get(url).toJS()
+        })
+        return {
+            products,
+            plp: routedPlp
+        }
     }
-}
+)
 
 export default connect(
     mapStateToProps
