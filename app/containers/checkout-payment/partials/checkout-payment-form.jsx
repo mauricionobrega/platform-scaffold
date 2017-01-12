@@ -2,47 +2,54 @@ import React from 'react'
 import * as ReduxForm from 'redux-form'
 
 import CheckoutPaymentProductList from './checkout-payment-product-list'
+import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 import {Grid, GridSpan} from '../../../components/grid'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
+import Image from 'progressive-web-sdk/dist/components/image'
+
+const CREDIT_CARDS = { /* eslint-disable key-spacing */
+    amex:       ['cc-american-express@3x.png', 'hint-amex@3x.png', 'Amex logo'],
+    discovery:  ['cc-discovery@3x.png', 'hint-visa-mc@3x.png', 'Discovery logo'],
+    mastercard: ['cc-mastercard@3x.png', 'hint-visa-mc@3x.png', 'Mastercard logo'],
+    unionpay:   ['cc-unionpay@3x.png', 'hint-visa-mc@3x.png', 'UnionPay logo'],
+    visa:       ['cc-visa@3x.png', 'hint-visa-mc@3x.png', 'Visa logo'],
+} /* eslint-enable key-spacing */
 
 const renderCreditCartForm = () => {
-    const cvvHint = (
-        <Button innerClassName="u-color-brand">
-            <Icon name="help" />
-            <span className="u-visually-hidden">What is the CVV&#63;</span>
-        </Button>
-    )
+    const currentCard = CREDIT_CARDS.visa
+    const ccHint = <Image src={getAssetUrl(`static/img/checkout/${currentCard[0]}`)} alt={currentCard[2]} height="29px" width="48px" />
+    const cvvHint = <Image src={getAssetUrl(`static/img/checkout/${currentCard[1]}`)} alt="Demonstrating that the CCV is on the back of the Credit Card" height="29px" width="48px" />
     const creditCardForm = (
         <div>
             <FieldRow>
-                <ReduxForm.Field component={Field} name="email" label="Cardholder Name">
+                <ReduxForm.Field component={Field} name="name" label="Cardholder Name">
                     <input type="text" noValidate />
                 </ReduxForm.Field>
             </FieldRow>
 
             <FieldRow>
-                <ReduxForm.Field component={Field} name="email" label="Card number">
+                <ReduxForm.Field component={Field} className="pw--overlayed-hint t-checkout-payment__credit-card-hints" name="ccnumber" label="Card number" hint={ccHint}>
                     <input type="tel" noValidate />
                 </ReduxForm.Field>
             </FieldRow>
 
             <FieldRow>
-                <ReduxForm.Field component={Field} name="email" label="Expiry" placeholder="mm/yyyy">
+                <ReduxForm.Field component={Field} name="ccexpiry" label="Expiry" placeholder="mm/yyyy">
                     <input type="number" noValidate />
                 </ReduxForm.Field>
 
-                <ReduxForm.Field component={Field} className="pw--overlayed-hint" name="email" label="CVV" hint={cvvHint}>
+                <ReduxForm.Field component={Field} className="pw--overlayed-hint t-checkout-payment__credit-card-hints" name="cvv" label="CVV" hint={cvvHint}>
                     <input type="tel" noValidate />
                 </ReduxForm.Field>
             </FieldRow>
         </div>
     )
     const hasExistingCreditCard = true
-    const isNewCartSelected = true
+    const isNewCardInputSelected = true
 
     return (
         <div>
@@ -55,41 +62,31 @@ const renderCreditCartForm = () => {
                     <FieldRow>
                         <ReduxForm.Field
                             component={Field}
-                            name="email"
-                            label={<strong className="u-text-normal">VISA **** 5678</strong>}
+                            name="selectCreditCard"
+                            label={<strong className="u-text-normal">VISA **** **** **** 5678</strong>}
                             caption="John Appleseed"
                         >
                             <input type="radio" noValidate />
                         </ReduxForm.Field>
                     </FieldRow>
 
-                    {isNewCartSelected ?
-                        <div className="u-padding-md u-margin-top-md u-border-light">
-                            <FieldRow className="u-margin-bottom-md">
-                                <ReduxForm.Field
-                                    component={Field}
-                                    name="email"
-                                    label={<strong className="u-text-semi-bold">Add a new card</strong>}
-                                >
-                                    <input type="radio" checked noValidate />
-                                </ReduxForm.Field>
-                            </FieldRow>
+                    <div className={isNewCardInputSelected ? 'u-padding-md u-margin-top-md u-border-light' : 'u-margin-top-md'}>
+                        <FieldRow>
+                            <ReduxForm.Field
+                                component={Field}
+                                name="selectCreditCard"
+                                label={<span className={isNewCardInputSelected && 'u-text-semi-bold'}>Add a new card</span>}
+                            >
+                                <input type="radio" checked={isNewCardInputSelected} noValidate />
+                            </ReduxForm.Field>
+                        </FieldRow>
 
-                            {creditCardForm}
-                        </div>
-                    :
-                        <div className="u-padding-md u-margin-top-md u-border-light">
-                            <FieldRow>
-                                <ReduxForm.Field
-                                    component={Field}
-                                    name="email"
-                                    label={<strong className="u-text-semi-bold">Add a new card</strong>}
-                                >
-                                    <input type="radio" noValidate />
-                                </ReduxForm.Field>
-                            </FieldRow>
-                        </div>
-                    }
+                        {isNewCardInputSelected &&
+                            <div className="u-margin-top-md">
+                                {creditCardForm}
+                            </div>
+                        }
+                    </div>
                 </div>
             :
                 <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg u-border-light-top u-border-light-bottom u-bg-color-neutral-10">
@@ -140,25 +137,25 @@ const renderBillingAddress = () => {
                 {newShippingAddressIsEnabled &&
                     <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg u-border-light-top">
                         <FieldRow>
-                            <ReduxForm.Field component={Field} name="email" label="Full name">
+                            <ReduxForm.Field component={Field} name="fullName" label="Full name">
                                 <input type="text" noValidate />
                             </ReduxForm.Field>
                         </FieldRow>
 
                         <FieldRow>
-                            <ReduxForm.Field component={Field} name="email" label="Address" caption={addDetails}>
+                            <ReduxForm.Field component={Field} name="address" label="Address" caption={addDetails}>
                                 <input type="text" noValidate />
                             </ReduxForm.Field>
                         </FieldRow>
 
                         <FieldRow>
-                            <ReduxForm.Field component={Field} name="email" label="City">
+                            <ReduxForm.Field component={Field} name="city" label="City">
                                 <input type="text" noValidate />
                             </ReduxForm.Field>
                         </FieldRow>
 
                         <FieldRow>
-                            <ReduxForm.Field component={Field} name="email" label="State/Province">
+                            <ReduxForm.Field component={Field} name="state" label="State/Province">
                                 <select>
                                     <option>Select option</option>
                                 </select>
@@ -166,13 +163,13 @@ const renderBillingAddress = () => {
                         </FieldRow>
 
                         <FieldRow>
-                            <ReduxForm.Field component={Field} name="email" label="Zip/Postal code">
+                            <ReduxForm.Field component={Field} name="zip" label="Zip/Postal code">
                                 <input type="text" noValidate />
                             </ReduxForm.Field>
                         </FieldRow>
 
                         <FieldRow>
-                            <ReduxForm.Field component={Field} name="email" label="Country">
+                            <ReduxForm.Field component={Field} name="country" label="Country">
                                 <select>
                                     <option>United States</option>
                                 </select>

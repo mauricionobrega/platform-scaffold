@@ -3,13 +3,18 @@
 //
 
 .pw-accordion {
-    border-top: $border;
-    border-bottom: $border;
+    border-top: 1px solid $neutral-30;
+    border-bottom: 1px solid $neutral-30;
+}
+
+.pw-accordion__item {
+    &:not(:last-of-type) {
+        border-bottom: 1px solid $neutral-30;
+    }
 }
 
 .pw-accordion__header {
     padding: $unit*1.5;
-    border-bottom: $border;
 }
 
 .pw-accordion__open-icon,
@@ -19,6 +24,8 @@
     align-items: center;
     width: $unit*4;
     height: $unit*4;
+
+    color: $brand-color;
 }
 
 .pw-accordion__inner-header {

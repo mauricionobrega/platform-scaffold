@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
+import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/accordion'
 import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
@@ -64,14 +65,16 @@ const CheckoutPaymentProductList = ({cart}) => (
                 />
             </Ledger>
 
-            <div className="u-padding-start-md u-padding-end-md">
-                <FieldRow>
-                    <Field label="Enter discount code">
-                        <input type="text" placeholder="Enter discount code" />
-                        <Button className="c--tertiary">Apply</Button>
-                    </Field>
-                </FieldRow>
-            </div>
+            <Accordion>
+                <AccordionItem header="Accordion Item #1">
+                    <FieldRow>
+                        <Field label="Enter discount code">
+                            <input type="text" placeholder="Enter discount code" />
+                            <Button className="c--tertiary">Apply</Button>
+                        </Field>
+                    </FieldRow>
+                </AccordionItem>
+            </Accordion>
 
             <Ledger>
                 <LedgerRow
