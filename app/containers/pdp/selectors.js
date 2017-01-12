@@ -1,2 +1,11 @@
-export const getPdp = ({pdp}) => pdp
-export const getCatalog = ({catalog}) => catalog
+import {createSelector} from 'reselect'
+import * as globalSelectors from '../../store/selectors'
+
+export const getPdp = createSelector(
+    globalSelectors.getUi,
+    ({pdp}) => pdp
+)
+export const getCatalog = createSelector(
+    globalSelectors.getUi,
+    ({catalog}) => catalog
+)

@@ -16,7 +16,7 @@ import miniCart from './mini-cart/reducer'
 import navigation from './navigation/reducer'
 import pdp from './pdp/reducer'
 import plp from './plp/reducer'
-import {reducer as formReducer} from 'redux-form'
+// import {reducer as formReducer} from 'redux-form'
 
 
 const rootReducer = combineReducers({
@@ -34,7 +34,7 @@ const rootReducer = combineReducers({
     navigation,
     pdp,
     plp,
-    form: formReducer,
+    // form: formReducer,
 
 })
 
