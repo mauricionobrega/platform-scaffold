@@ -8,6 +8,7 @@ import Astro from './vendor/astro-client'
 
 // Containers
 import App from './containers/app/container'
+import Cart from './containers/cart/container'
 import Home from './containers/home/container'
 import Login from './containers/login/container'
 import PLP from './containers/plp/container'
@@ -75,6 +76,7 @@ const AppProvider = ({store}) => {
             <Router>
                 <Route path="/" component={App} onEnter={onEnter} onChange={onChange}>
                     <IndexRoute component={Home} routeName="home" />
+                    <Route component={Cart} path="checkout/cart/" routeName="cart" fetchPage="false" />
                     <Route component={Login} path="customer/account/login/" routeName="signin" />
                     <Route component={Login} path="customer/account/create/" routeName="register" />
                     <Route component={PLP} path="potions.html" routeName="productListPage" />
@@ -82,6 +84,7 @@ const AppProvider = ({store}) => {
                     <Route component={PLP} path="ingredients.html" routeName="productListPage" />
                     <Route component={PLP} path="supplies.html" routeName="productListPage" />
                     <Route component={PLP} path="new-arrivals.html" routeName="productListPage" />
+                    <Route component={PLP} path="charms.html" routeName="productListPage" />
                     <Route component={PDP} path="*.html" routeName="productDetailsPage" />
                     <Route component={CheckoutShipping} path="checkout/shipping/" routeName="checkingShipping" fetchPage="false" Header={CheckoutHeader} Footer={CheckoutFooter} />
                     <Route component={CheckoutPayment} path="checkout/payment/" routeName="checkingPayment" fetchPage="false" Header={CheckoutHeader} Footer={CheckoutFooter} />
