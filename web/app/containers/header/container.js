@@ -12,17 +12,26 @@ import logo from '../../static/svg/logo.svg'
 import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
 import Badge from 'progressive-web-sdk/dist/components/badge'
 
+import Astro from '../../vendor/astro-client'
+
 export const generateCartCounterBadge = (cartContents) => {
-    if (cartContents && cartContents.summary_count && cartContents.summary_count > 0) {
-        return (
-            <Badge className="t-header__badge" title={`${cartContents.summary_count} items in the cart`}>
-                {cartContents.summary_count}
-            </Badge>
-        )
-    } else {
-        return (
-            <p className="u-visually-hidden">No items in the cart.</p>
-        )
+    if (cartContents && cartContents.summary_count) {
+        Astro.trigger('update-cart', {
+            count: cartContents.summary_count
+        })
+
+        if (cartContents.summary_count > 0) {
+            return (
+                <Badge className="t-header__badge" title={`${cartContents.summary_count} items in the cart`}>
+                    {cartContents.summary_count}
+                </Badge>
+            )
+        }
+        else {
+            return (
+                <p className="u-visually-hidden">No items in the cart.</p>
+            )
+        }
     }
 }
 
@@ -52,13 +61,15 @@ class Header extends React.Component {
     }
 
     render() {
+        const {isCollapsed, cart} = this.props.header.toJS()
+        const cartCounterBadge = generateCartCounterBadge(cart)
+
         if (this.props.isRunningInAstro) {
             return null
         }
 
         const {onMenuClick, onMiniCartClick} = this.props
-        const {isCollapsed, cart} = this.props.header.toJS()
-        const cartCounterBadge = generateCartCounterBadge(cart)
+
 
         const innerButtonClassName = classnames('t-header__inner-button', 'u-padding-0', {
             't--hide-label': isCollapsed
