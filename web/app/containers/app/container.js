@@ -11,7 +11,8 @@ import * as navActions from '../../containers/navigation/actions'
 import * as miniCartActions from '../../containers/mini-cart/actions'
 import sprite from '../../static/svg/sprite-dist/sprite.svg'
 import * as appActions from './actions'
-import {IS_IN_ASTRO_APP} from './constants'
+
+import {isRunningInAstro} from '../utils/astro-integration'
 
 import NotificationManager from '../../components/notification-manager'
 
@@ -38,8 +39,7 @@ class App extends React.Component {
             history,
             children,
             app,
-            notificationActions,
-            isRunningInAstro
+            notificationActions
         } = this.props
 
         const currentTemplateProps = children.props
@@ -96,10 +96,6 @@ App.propTypes = {
      */
     app: PropTypes.object,
     history: PropTypes.object,
-    /**
-     * Defines whether we're being hosted in an Astro app
-     */
-    isRunningInAstro: PropTypes.bool,
     notificationActions: PropTypes.object,
     openNavigation: PropTypes.func,
     requestOpenMiniCart: PropTypes.func,
@@ -108,7 +104,6 @@ App.propTypes = {
 const mapStateToProps = (state) => {
     return {
         app: state.app,
-        isRunningInAstro: state.app.get(IS_IN_ASTRO_APP),
     }
 }
 
