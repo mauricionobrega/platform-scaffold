@@ -12,6 +12,9 @@ import logo from '../../static/svg/logo.svg'
 import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
 import Badge from 'progressive-web-sdk/dist/components/badge'
 
+import NavigationAction from './partials/navigation-action'
+import HeaderTitle from './partials/header-title'
+
 export const generateCartCounterBadge = (cartContents) => {
     if (cartContents && cartContents.summary_count && cartContents.summary_count > 0) {
         return (
@@ -67,28 +70,10 @@ class Header extends React.Component {
         return (
             <header className="t-header">
                 <div className="t-header__bar">
-                    <HeaderBar >
-                        <HeaderBarActions>
-                            <div role="navigation">
-                                <Button id="header-navigation" innerClassName={innerButtonClassName} onClick={onMenuClick}>
-                                    <IconLabel label="Menu" iconName="menu" iconSize="medium" />
-                                </Button>
-                            </div>
-                        </HeaderBarActions>
-
+                    <HeaderBar>
+                        <NavigationAction innerButtonClassName={innerButtonClassName} onClick={onMenuClick} />
                         <div className="t-header__placeholder" />
-
-                        <div className="u-flex">
-                            <HeaderBarTitle>
-                                <Link href="/" className={linkClassName}>
-                                    <DangerousHTML html={logo}>
-                                        {(htmlObj) => <div className="t-header__logo" dangerouslySetInnerHTML={htmlObj} />}
-                                    </DangerousHTML>
-                                    <h1 className="u-visually-hidden">Merlin's Potions</h1>
-                                </Link>
-                            </HeaderBarTitle>
-                        </div>
-
+                        <HeaderTitle linkClassName={linkClassName} logo={logo} />
                         <HeaderBarActions>
                             <Button innerClassName={innerButtonClassName}>
                                 <IconLabel label="Stores" iconName="map" iconSize="medium" />
