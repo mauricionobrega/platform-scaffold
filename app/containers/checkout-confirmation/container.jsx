@@ -26,8 +26,10 @@ class CheckoutConfirmation extends React.Component {
     render() {
         const {
             contentsLoaded,
+            emailAddress,
             isLoggedIn,
             isModalShown,
+            orderNumber,
         } = this.props.checkoutConfirmation.toJS()
 
         const gridSettings = {
@@ -77,8 +79,8 @@ class CheckoutConfirmation extends React.Component {
 
                                 <div className="u-text-content">
                                     <p>We’ve sent you an email confirmation along with your order receipt.</p>
-                                    <p>Your order # is: <strong>000000005</strong>.</p>
-                                    <p>Email: <strong>mlenton@mobify.com</strong></p>
+                                    <p>Your order # is: <strong>{orderNumber}</strong>.</p>
+                                    <p>Email: <strong>{emailAddress}</strong></p>
                                 </div>
                             </div>
                         </GridSpan>
@@ -148,18 +150,20 @@ class CheckoutConfirmation extends React.Component {
 
 CheckoutConfirmation.propTypes = {
     checkoutConfirmation: PropTypes.instanceOf(Immutable.Map),
+    emailAddress: PropTypes.string,
     fetchContents: PropTypes.func,
     hideModal: PropTypes.func,
     isLoggedIn: PropTypes.bool,
     isModalShown: PropTypes.bool,
+    orderNumber: PropTypes.string,
     showModal: PropTypes.func,
 }
 
 const mapStateToProps = (state) => {
     return {
         checkoutConfirmation: state.checkoutConfirmation,
-        isLoggedIn: state.isLoggedIn,
-        isModalShown: state.isModalShown,
+        // isLoggedIn: state.isLoggedIn,
+        // isModalShown: state.isModalShown,
     }
 }
 

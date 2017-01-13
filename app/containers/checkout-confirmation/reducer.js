@@ -5,8 +5,10 @@ import * as checkoutConfirmationActions from './actions'
 const initialState = Immutable.fromJS({
     body: '',
     contentsLoaded: true,
+    emailAddress: 'mlenton@mobify.com',
     isLoggedIn: true,
     isModalShown: false,
+    orderNumber: '000000005',
 })
 
 export default createReducer({
