@@ -6,7 +6,9 @@ export const createImmutableComparingSelector = createSelectorCreator(
     Immutable.is
 )
 
-export const createToJSSelector = (...args) => createImmutableComparingSelector(
-    createSelector(...args),
+export const selectorToJS = (selector) => createImmutableComparingSelector(
+    selector,
     (raw) => raw.toJS()
 )
+
+export const createToJSSelector = (...args) => selectorToJS(createSelector(...args))
