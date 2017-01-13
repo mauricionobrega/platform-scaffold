@@ -12,9 +12,14 @@ const cartIcon = {
     imageUrl: 'file:///cart.png'
 }
 
+const shoppingCart = {
+    id: 'shoppingCart_title',
+    title: 'Shopping Cart'
+}
+
 const colors = {
     textColor: baseConfig.colors.whiteColor,
     backgroundColor: baseConfig.colors.primaryColor
 }
 
-export default {url, closeIcon, cartIcon, colors}
+export default {url, closeIcon, cartIcon, shoppingCart, colors}

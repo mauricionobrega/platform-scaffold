@@ -10,7 +10,7 @@ CartHeaderController.init = async function() {
     await headerBar.setRightIcon(cartConfig.closeIcon.imageUrl, cartConfig.closeIcon.id)
     await headerBar.setTextColor(cartConfig.colors.textColor)
     await headerBar.setBackgroundColor(cartConfig.colors.backgroundColor)
-    await headerBar.setLeftTitle('SHOPPING CART', 'title')      // Not necessary?
+    await headerBar.setCenterTitle(cartConfig.shoppingCart.title, cartConfig.shoppingCart.id)      // Not necessary?
     await headerBar.setOpaque()
     return new CartHeaderController(headerBar)
 }
