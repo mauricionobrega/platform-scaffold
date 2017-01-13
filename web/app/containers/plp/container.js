@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import Immutable from 'immutable'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
-import {IS_IN_ASTRO_APP} from '../app/constants'
+import {isRunningInAstro} from '../../utils/astro-integration'
 
 import Image from 'progressive-web-sdk/dist/components/image'
 import Link from 'progressive-web-sdk/dist/components/link'
@@ -48,7 +48,6 @@ class PLP extends React.Component {
         } = this.props.plp.toJS()
 
         const products = this.props.products
-        const isRunningInAstro = this.props.isRunningInAstro
 
         return (
             <div className="t-plp">
@@ -108,10 +107,6 @@ PLP.propTypes = {
      * Product data from state (Catalog -> Products), filtered by the productUrls in the Plp state object
      */
     products: PropTypes.array.isRequired,
-    /**
-     * Defines whether we're being hosted in an Astro app
-     */
-    isRunningInAstro: PropTypes.bool,
 }
 
 const mapStateToProps = ({catalog, plp}) => {
@@ -125,7 +120,6 @@ const mapStateToProps = ({catalog, plp}) => {
     return {
         products,
         plp: routedPlp,
-        isRunningInAstro: state.app.get(IS_IN_ASTRO_APP),
     }
 }
 
