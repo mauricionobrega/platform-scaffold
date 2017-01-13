@@ -54,8 +54,8 @@ export default {
     'Checkout - Registered - Step 4 - Add item to Shopping Cart': (browser) => {
         pdp.addItemToCart()
         browser
-            .waitForElementVisible(pdp.selectors.cartIconTemplateIdentifier)
-            .assert.visible(pdp.selectors.cartIconTemplateIdentifier)
+            .waitForElementVisible(pdp.selectors.itemAdded)
+            .assert.visible(pdp.selectors.itemAdded)
     },
 
 /* TODO: Uncomment the following once the Progressive Web build for Merlin's Potions has been completed.

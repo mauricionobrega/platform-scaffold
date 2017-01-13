@@ -1,7 +1,7 @@
 const selectors = {
     pdpTemplateIdentifier: '.t-pdp', 
-    addItemButton: '.t-pdp__add-to-cart',
-    cartIcon: '.cart .icon .selector',
+    addItem: '.t-pdp__add-to-cart:not([disabled])',
+    itemAdded: '.t-plp__item-added-modal',
     goToCart: '.goto .cart .selector'
 }
 
