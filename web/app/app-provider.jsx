@@ -5,7 +5,7 @@ import {Provider} from 'react-redux'
 import * as appActions from './containers/app/actions'
 import {getComponentType} from './utils/utils'
 
-import Astro from './vendor/astro-client'
+import {isRunningInAstro, pwaNavigate} from './utils/astro-integration'
 
 // Containers
 import App from './containers/app/container'
@@ -35,15 +35,6 @@ const AppProvider = ({store}) => {
         ].join('')
     }
 
-    /**
-     * Provides coordination with the native app (Astro)
-     * If we aren't in a native app then the function
-     * is just a no-op.
-     */
-    const pwaNavigate = Astro.isRunningInApp()
-        ? Astro.jsRpcMethod('pwa-navigate', ['url'])
-        : () => {}
-
     const shouldFetchPage = (routerState) => routerState.routes[1].fetchPage !== 'false'
 
     const getPageComponent = (routerState) => getComponentType(routerState.routes[1].component)
@@ -65,7 +56,7 @@ const AppProvider = ({store}) => {
     const onChange = (prevState, nextState, replace, callback) => {
         const prevURL = getURL(prevState)
         const nextURL = getURL(nextState)
-        const isCoordinatingWithNativeApp = Astro.isRunningInApp() &&
+        const isCoordinatingWithNativeApp = isRunningInAstro &&
                                             nextState.location.action !== 'POP'
 
         // TODO: Would love to figure out a simpler callback scheme here
@@ -78,8 +69,8 @@ const AppProvider = ({store}) => {
 
         const urlHasChanged = nextURL !== prevURL
 
-        if (isCoordinatingWithNativeApp) {
-            if (urlHasChanged) {
+        if (urlHasChanged) {
+            if (isCoordinatingWithNativeApp) {
                 pwaNavigate(nextURL).then(() => {
                     callback()
                     triggerChange()
@@ -91,13 +82,11 @@ const AppProvider = ({store}) => {
             } else {
                 // We need to call this to allow react to continue
                 callback()
-            }
-        } else {
-            callback()
-
-            if (urlHasChanged) {
                 triggerChange()
             }
+        } else {
+            // We need to call this to allow react to continue
+            callback()
         }
 
         store.dispatch(appActions.removeAllNotifications())
