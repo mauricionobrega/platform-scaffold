@@ -2,6 +2,8 @@ import React, {PropTypes} from 'react'
 import Immutable from 'immutable'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
+import {selectorToJS} from '../../utils/selector-utils'
+
 import * as actions from './actions'
 import * as selectors from './selectors'
 
@@ -24,20 +26,13 @@ class Footer extends React.Component {
     }
 
     onSubmitNewsletter(data) {
-        const method = this.props.footer.getIn(['newsletter', 'method'], '')
-        const action = this.props.footer.getIn(['newsletter', 'action'], '')
+        const {method, action} = this.props.footer.newsletter
         this.props.submitNewsletter(method, action, data)
-    }
-
-    shouldComponentUpdate(nextProps) {
-        return !Immutable.is(this.props.footer, nextProps.footer)
     }
 
     render() {
         const {footer} = this.props
-        const navigation = footer.get('navigation')
-        const newsletter = footer.get('newsletter')
-
+        const {navigation, newsletter} = footer
 
         return (
             <footer className="t-footer">
@@ -62,7 +57,7 @@ Footer.propTypes = {
 
 
 const mapStateToProps = createStructuredSelector({
-    footer: selectors.getFooter
+    footer: selectorToJS(selectors.getFooter)
 })
 
 const mapDispatchToProps = {
