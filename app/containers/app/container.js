@@ -59,7 +59,7 @@ class App extends React.Component {
         return (
             <div
                 id="app"
-                className={`t-app app--${currentTemplateProps.route.routeName}`}
+                className={`t-app t-app--${currentTemplateProps.route.routeName}`}
                 style={{display: 'none'}}
             >
                 <IconSprite sprite={sprite} />
