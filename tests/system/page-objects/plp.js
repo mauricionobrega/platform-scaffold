@@ -1,7 +1,7 @@
 const selectors = {
     plpTemplateIdentifier: '.t-plp__container',
     pdpItem(index) {
-        return `.pw-list .t-plp__product-tile:nth-child(${index})`
+        return `.pw-list .t-plp__product-tile:nth-child(${index}) .pw--is-loaded`
     }
 }
 

@@ -1,5 +1,5 @@
 const selectors = {
-    cartTemplateIdentifier: '.t-cart', 
+    cartTemplateIdentifier: '.t-cart',
     cartCheckout: '.cart .checkout .selector',
     removeItem: '.t-cart__remove',
     emptyCart: '.t-cart__empty'
@@ -30,11 +30,11 @@ Cart.prototype.removeItems = function() {
                     .log('Removing item from cart')
                     .click(selectors.removeItem)
                     .waitUntilMobified();
-                self.cleanUp();
+                self.cleanUp()
             }
         })
-        .waitForElementVisible(selectors.emptyCart);
-    return this;
+        .waitForElementVisible(selectors.emptyCart)
+    return this
 }
 
 export default Cart
