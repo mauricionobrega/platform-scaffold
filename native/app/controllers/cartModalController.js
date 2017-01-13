@@ -25,7 +25,7 @@ CartModalController.init = async function() {
         NavigationPlugin.init(),
         CartHeaderController.init(),
     ])
-
+    
     await anchoredLayout.addTopView(cartHeaderController.viewPlugin)
     await anchoredLayout.setContentView(navigationView)
     await navigationView.navigateToUrl(CartConfig.url, {}, {})
