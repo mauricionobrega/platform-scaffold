@@ -13,7 +13,7 @@ const CheckountConfirmationModal = (props) => {
 
     return (
         <Sheet
-            className="t-cart__estimate-shipping-modal"
+            className="t-checkout-confirmation__account-created-modal pw--no-shadow"
             open={isOpen}
             onDismiss={closeModal}
             maskOpacity={0.7}
