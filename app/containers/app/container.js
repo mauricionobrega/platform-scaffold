@@ -66,7 +66,7 @@ class App extends React.Component {
                 <SkipLinks items={skipLinksItems} />
 
                 <div id="app-wrap" className="t-app__wrapper u-flexbox u-direction-column">
-                    <div id="app-header" className="t-app__header u-flex-none" role="banner">
+                    <div id="app-header" className="u-flex-none" role="banner">
                         <CurrentHeader
                             onMenuClick={openNavigation}
                             onMiniCartClick={requestOpenMiniCart}
@@ -83,11 +83,11 @@ class App extends React.Component {
                         <MiniCart />
                     </div>
 
-                    <main id="app-main" className="t-app__main u-flex" role="main">
+                    <main id="app-main" className="u-flex" role="main">
                         {this.props.children}
                     </main>
 
-                    <div id="app-footer" className="t-app__footer u-flex-none">
+                    <div id="app-footer" className="u-flex-none">
                         <CurrentFooter />
                     </div>
                 </div>
