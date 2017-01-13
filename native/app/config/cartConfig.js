@@ -1,6 +1,6 @@
-import BaseConfig from './baseConfig'
+import baseConfig from './baseConfig'
 
-const url = 'https://www.merlinspotions.com/checkout/cart/'
+const url = baseConfig.baseURL.concat('/checkout/cart/')
 
 const closeIcon = {
     id: 'closeCart_id',
@@ -13,8 +13,8 @@ const cartIcon = {
 }
 
 const colors = {
-    textColor: BaseConfig.colors.whiteColor,
-    backgroundColor: BaseConfig.colors.primaryColor
+    textColor: baseConfig.colors.whiteColor,
+    backgroundColor: baseConfig.colors.primaryColor
 }
 
 export default {url, closeIcon, cartIcon, colors}

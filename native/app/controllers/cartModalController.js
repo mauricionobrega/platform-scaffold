@@ -1,10 +1,9 @@
 import Promise from 'bluebird'
 
-import AnchoredLayoutPlugin from 'astro/plugins/anchoredLayoutPlugin'
-import ModalViewPlugin from 'astro/plugins/modalViewPlugin'
-import NavigationPlugin from 'astro/plugins/navigationPlugin'
+import AnchoredLayoutPlugin from 'progressive-app-sdk/plugins/anchoredLayoutPlugin'
+import ModalViewPlugin from 'progressive-app-sdk/plugins/modalViewPlugin'
+import NavigationPlugin from 'progressive-app-sdk/plugins/navigationPlugin'
 
-// import CartController from './cartController'
 import CartHeaderController from './cartHeaderController'
 import CartConfig from '../config/cartConfig'
 
@@ -29,8 +28,8 @@ CartModalController.init = async function() {
 
     await anchoredLayout.addTopView(cartHeaderController.viewPlugin)
     await anchoredLayout.setContentView(navigationView)
-    await navigationView.navigateToUrl(CartConfig.url, {}, {})
     await navigationView.setHeaderBar(cartHeaderController.viewPlugin)
+    await navigationView.navigateToUrl(CartConfig.url, {}, {})
 
     await modalView.setContentView(anchoredLayout)                // load the view in to the modal
 

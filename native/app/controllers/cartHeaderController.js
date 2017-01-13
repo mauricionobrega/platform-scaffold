@@ -1,4 +1,4 @@
-import HeaderBarPlugin from 'astro/plugins/headerBarPlugin'
+import HeaderBarPlugin from 'progressive-app-sdk/plugins/headerBarPlugin'
 import cartConfig from '../config/cartConfig'
 
 const CartHeaderController = function(headerBar) {

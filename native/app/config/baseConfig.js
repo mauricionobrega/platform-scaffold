@@ -15,7 +15,6 @@ const colors = {
 
 const baseConfig = {
     baseURL: 'https://www.merlinspotions.com',
-    cartUrl: 'https://google.ca',
     previewBundle: AstroNative.Configuration.DEBUG
         ? localPreviewUrl
         : '//cdn.mobify.com/sites/progressive-web-scaffold/production/loader.js',
