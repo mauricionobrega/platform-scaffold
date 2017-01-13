@@ -38,7 +38,7 @@ class CheckoutConfirmation extends React.Component {
         const Checklist = ({children}) => (
             <div className="u-flexbox u-align-center u-padding-top u-padding-bottom">
                 <Icon name="check" className="u-flex-none u-margin-end-md u-color-brand" />
-                <div>{children}</div>
+                <div className="u-flex">{children}</div>
             </div>
         )
 
