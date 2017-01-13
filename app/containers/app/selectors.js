@@ -11,3 +11,8 @@ export const getCurrentUrl = createSelector(
     getApp,
     (app) => app.get(CURRENT_URL)
 )
+
+export const getNotifications = createSelector(
+    getApp,
+    (app) => app.get('notifications')
+)

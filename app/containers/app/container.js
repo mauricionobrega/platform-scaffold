@@ -36,17 +36,16 @@ class App extends React.Component {
 
     render() {
         const {
-            app,
             children,
             history,
             notificationActions,
+            notifications,
             openNavigation,
             requestOpenMiniCart,
         } = this.props
         const currentTemplateProps = children.props
         const CurrentHeader = currentTemplateProps.route.Header || Header
         const CurrentFooter = currentTemplateProps.route.Footer || Footer
-        const {notifications} = app
 
         const skipLinksItems = [
             // Customize your list of SkipLinks here. These are necessary to
@@ -105,15 +104,15 @@ App.propTypes = {
     /**
      * The react-router history object
      */
-    app: PropTypes.object,
     history: PropTypes.object,
+    notifications: PropTypes.array,
     notificationActions: PropTypes.object,
     openNavigation: PropTypes.func,
     requestOpenMiniCart: PropTypes.func,
 }
 
 const mapStateToProps = createStructuredSelector({
-    app: selectorToJS(selectors.getApp)
+    notifications: selectorToJS(selectors.getNotifications)
 })
 
 const mapDispatchToProps = (dispatch) => {
