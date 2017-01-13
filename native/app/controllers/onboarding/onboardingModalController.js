@@ -59,10 +59,9 @@ OnboardingModalController.prototype.show = async function(params) {
         this.isShowing = true
         this.modalView.show({animated: true})
 
-        // Promise will be resolved when weonboardinglcome modal is dismissed
+        // Promise will be resolved when onboarding modal is dismissed
         AppEvents.on(OnboardingModalEvents.onboardingHidden, () => {
-            SettingsStore.set(shouldShowOnboardingModalKey, 'false') // We should extend the SettingsStore to not only take strings in
-            return
+            SettingsStore.set(shouldShowOnboardingModalKey, 'false')
         })
         AppEvents.trigger(OnboardingModalEvents.onboardingShown)
     } else {

@@ -45,7 +45,7 @@ function OnboardingScreen(props) {
                 {props.isLast &&
                     <Button className="c--tertiary u-flex" text={data.laterButtonTitle} onClick={onLaterTapped} />
                 }
-                <Button className="c--secondary u-flex" text={data.rightButtonTitle} />
+                <Button className="c--secondary u-flex" text={data.actionButtonTitle} />
             </div>
         </div>
     </CarouselItem>
