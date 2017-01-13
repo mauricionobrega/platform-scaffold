@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import Immutable from 'immutable'
+import throttle from 'lodash.throttle'
 
 import * as checkoutPaymentActions from './actions'
 import CheckoutPaymentReduxForm from './partials/checkout-payment-form'
@@ -8,8 +9,20 @@ import CheckoutPaymentReduxForm from './partials/checkout-payment-form'
 import {ProgressSteps, ProgressStepsItem} from 'progressive-web-sdk/dist/components/progress-steps'
 
 class CheckoutPayment extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.handleShowCompanyAndApt = this.handleShowCompanyAndApt.bind(this)
+        this.handleScroll = throttle(this.handleScroll.bind(this), 200)
+    }
+
     componentDidMount() {
         // this.props.fetchContents()
+        window.addEventListener('scroll', this.handleScroll.bind(this))
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.handleScroll.bind(this))
     }
 
     shouldComponentUpdate(newProps) {
@@ -18,10 +31,30 @@ class CheckoutPayment extends React.Component {
         return checkoutPaymentChanged || miniCartChanged
     }
 
+    handleScroll() {
+        const {isFixedPlaceOrderShown} = this.props.checkoutPayment.toJS()
+        const footerHeight = 200
+        const scrollPosition = window.pageYOffset
+        const windowSize = window.innerHeight
+        const bodyHeight = document.body.offsetHeight
+        const distanceFromBottom = Math.max(bodyHeight - (scrollPosition + windowSize), 0)
+        const newIsFixedPlaceOrderShown = distanceFromBottom > footerHeight
+
+        if (newIsFixedPlaceOrderShown !== isFixedPlaceOrderShown) {  // Saves triggering the action
+            this.props.toggleFixedPlaceOrder(newIsFixedPlaceOrderShown)
+        }
+    }
+
+    handleShowCompanyAndApt() {
+        this.props.showCompanyAndApt()
+    }
+
     render() {
         const cart = this.props.miniCart.get('cart').toJS()
         const {
-            contentsLoaded
+            contentsLoaded,
+            isCompanyOrAptShown,
+            isFixedPlaceOrderShown,
         } = this.props.checkoutPayment.toJS()
 
         return contentsLoaded && (
@@ -29,15 +62,20 @@ class CheckoutPayment extends React.Component {
                 <div className="u-bg-color-neutral-10 u-border-light-bottom">
                     <div className="t-checkout-payment__progress">
                         <ProgressSteps>
-                            <ProgressStepsItem icon="cart-full" title="Cart" href="#" />
-                            <ProgressStepsItem icon="shipping" title="Shipping" />
+                            <ProgressStepsItem icon="cart-full" title="Cart" href="/checkout/cart/" />
+                            <ProgressStepsItem icon="shipping" title="Shipping" href="/checkout/shipping/" />
                             <ProgressStepsItem icon="payment-full" title="Payment" current />
                             <ProgressStepsItem icon="done" title="Done" />
                         </ProgressSteps>
                     </div>
                 </div>
 
-                <CheckoutPaymentReduxForm cart={cart} />
+                <CheckoutPaymentReduxForm
+                    cart={cart}
+                    isCompanyOrAptShown={isCompanyOrAptShown}
+                    isFixedPlaceOrderShown={isFixedPlaceOrderShown}
+                    handleShowCompanyAndApt={this.handleShowCompanyAndApt}
+                />
             </div>
         )
     }
@@ -46,7 +84,10 @@ class CheckoutPayment extends React.Component {
 CheckoutPayment.propTypes = {
     checkoutPayment: PropTypes.instanceOf(Immutable.Map),
     fetchContents: PropTypes.func,
-    miniCart: PropTypes.object
+    isFixedPlaceOrderShown: PropTypes.bool,
+    miniCart: PropTypes.object,
+    showCompanyAndApt: PropTypes.func,
+    toggleFixedPlaceOrder: PropTypes.func,
 }
 
 const mapStateToProps = (state) => {
@@ -57,7 +98,9 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    fetchContents: checkoutPaymentActions.fetchContents
+    fetchContents: checkoutPaymentActions.fetchContents,
+    showCompanyAndApt: checkoutPaymentActions.showCompanyAndApt,
+    toggleFixedPlaceOrder: checkoutPaymentActions.toggleFixedPlaceOrder,
 }
 
 export default connect(

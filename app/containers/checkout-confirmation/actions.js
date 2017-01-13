@@ -3,6 +3,8 @@ import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import checkoutConfirmationParser from './checkout-confirmation-parser'
 
 export const receiveContents = createAction('Received CheckoutConfirmation Contents')
+export const showModal = createAction('Showing modal')
+export const hideModal = createAction('Hiding modal')
 
 export const receiveResponse = (response) => {
     return (dispatch) => {
