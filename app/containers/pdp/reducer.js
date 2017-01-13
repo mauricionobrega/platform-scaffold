@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import {createReducer} from 'redux-act'
+import {handleActions} from 'redux-actions'
 
 import * as RouterUtils from '../../utils/router-utils'
 
@@ -17,9 +17,9 @@ export const initialState = Immutable.fromJS({
     quantityAdded: 0
 })
 
-const reducer = createReducer({
-    [onPageReceived]: (state, action) => {
-        const {$, $response, pageComponent, url, currentURL} = action
+const reducer = handleActions({
+    [onPageReceived]: (state, {payload}) => {
+        const {$, $response, pageComponent, url, currentURL} = payload
 
         if (RouterUtils.isPageType(pageComponent, PDP)) {
             const parsed = Immutable.fromJS(pdpParser($, $response))
@@ -41,8 +41,8 @@ const reducer = createReducer({
             return state
         }
     },
-    [onRouteChanged]: (state, action) => {
-        const {pageComponent, currentURL} = action
+    [onRouteChanged]: (state, {payload}) => {
+        const {pageComponent, currentURL} = payload
 
         if (RouterUtils.isPageType(pageComponent, PDP)) {
             return state.withMutations((s) => {
@@ -55,7 +55,7 @@ const reducer = createReducer({
             return state
         }
     },
-    [pdpActions.setItemQuantity]: (state, payload) => {
+    [pdpActions.setItemQuantity]: (state, {payload}) => {
         return RouterUtils.setInToRoutedState(state, 'itemQuantity', payload)
     },
     [pdpActions.openItemAddedModal]: (state) => {

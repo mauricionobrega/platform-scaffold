@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import {createReducer} from 'redux-act'
+import {handleActions} from 'redux-actions'
 
 import {baseInitialState, isPageType, getNextSelector} from '../../utils/router-utils'
 import {onPageReceived, onRouteChanged} from '../app/actions'
@@ -17,9 +17,9 @@ export const initialState = Immutable.fromJS({
     title: ''
 })
 
-const plpReducer = createReducer({
-    [onPageReceived]: (state, action) => {
-        const {$, $response, pageComponent, url, currentURL} = action
+const plpReducer = handleActions({
+    [onPageReceived]: (state, {payload}) => {
+        const {$, $response, pageComponent, url, currentURL} = payload
 
         if (isPageType(pageComponent, PLP)) {
             const parsed = Immutable.fromJS(plpParser($, $response))
@@ -41,8 +41,8 @@ const plpReducer = createReducer({
             return state
         }
     },
-    [onRouteChanged]: (state, action) => {
-        const {pageComponent, currentURL} = action
+    [onRouteChanged]: (state, {payload}) => {
+        const {pageComponent, currentURL} = payload
 
         return isPageType(pageComponent, PLP) ? state.set(SELECTOR, getNextSelector(state, currentURL)) : state
     }

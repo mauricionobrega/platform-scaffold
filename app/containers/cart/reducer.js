@@ -1,4 +1,4 @@
-import {createReducer} from 'redux-act'
+import {handleActions} from 'redux-actions'
 import Immutable from 'immutable'
 import * as cartActions from './actions'
 
@@ -24,15 +24,15 @@ const initialState = Immutable.fromJS({
     ]
 })
 
-export default createReducer({
-    [cartActions.toggleEstimateShippingModal]: (state, payload) => {
+export default handleActions({
+    [cartActions.toggleEstimateShippingModal]: (state, {payload}) => {
         return state.mergeDeep({
             estimateShippingModal: {
                 isOpen: payload.isOpen
             }
         })
     },
-    [cartActions.toggleWishlistModal]: (state, payload) => {
+    [cartActions.toggleWishlistModal]: (state, {payload}) => {
         return state.mergeDeep({
             wishlistModal: {
                 isOpen: payload.isOpen

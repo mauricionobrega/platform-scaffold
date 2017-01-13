@@ -1,4 +1,4 @@
-import {createReducer} from 'redux-act'
+import {handleActions} from 'redux-actions'
 import {fromJS} from 'immutable'
 
 import {isPageType} from '../../utils/router-utils'
@@ -13,9 +13,9 @@ const initialState = fromJS({
     banners: []
 })
 
-export default createReducer({
-    [onPageReceived]: (state, action) => {
-        const {$, $response, pageComponent} = action
+export default handleActions({
+    [onPageReceived]: (state, {payload}) => {
+        const {$, $response, pageComponent} = payload
 
         if (isPageType(pageComponent, Home)) {
             return state.mergeDeep(homeParser($, $response))
