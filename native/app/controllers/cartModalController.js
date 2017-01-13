@@ -28,8 +28,8 @@ CartModalController.init = async function() {
 
     await anchoredLayout.addTopView(cartHeaderController.viewPlugin)
     await anchoredLayout.setContentView(navigationView)
-    await navigationView.setHeaderBar(cartHeaderController.viewPlugin)
     await navigationView.navigateToUrl(CartConfig.url, {}, {})
+    await navigationView.setHeaderBar(cartHeaderController.viewPlugin)
 
     await modalView.setContentView(anchoredLayout)                // load the view in to the modal
 
@@ -40,7 +40,7 @@ CartModalController.init = async function() {
     })
 
     cartHeaderController.viewPlugin.on('click:back', () => {
-        cartModalController.back()
+        navigationView.back()
     })
 
     return cartModalController
@@ -55,20 +55,12 @@ CartModalController.prototype.show = async function() {
 }
 
 CartModalController.prototype.hide = async function() {
-    this.isShowing = false
     await this.viewPlugin.hide({animated: true})
+    this.isShowing = false
 }
 
 CartModalController.prototype.isActiveItem = function() {
     return this.isShowing
-}
-
-CartModalController.prototype.back = function() {
-    this.navigationView.back()
-}
-
-CartModalController.prototype.navigate = function(url, headerOptions, webViewOptions) {
-    this.navigationView.navigateToUrl(url, headerOptions, webViewOptions)
 }
 
 export default CartModalController
