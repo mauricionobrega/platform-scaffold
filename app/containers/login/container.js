@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router'
+import {selectorToJS} from '../../utils/selector-utils'
 
 import SignInForm from './partials/signin'
 import RegisterForm from './partials/register'
@@ -147,9 +148,11 @@ class Login extends React.Component {
     }
 }
 
+const loginJSSelector = selectorToJS(selectors.getLogin)
+
 const mapStateToProps = (state, props) => {
     return {
-        ...selectors.getLogin(state).toJS()
+        ...loginJSSelector(state)
     }
 }
 

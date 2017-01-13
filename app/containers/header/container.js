@@ -3,6 +3,8 @@ import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import throttle from 'lodash.throttle'
 import classnames from 'classnames'
+import {selectorToJS} from '../../utils/selector-utils'
+
 import * as headerActions from './actions'
 import * as selectors from './selectors'
 
@@ -33,8 +35,8 @@ class Header extends React.Component {
     }
 
     handleScroll() {
-        const {isCollapsed} = this.props.header.toJS()
-        const newIsCollapsed = window.pageYOffset > this.headerHeight
+        const {isCollapsed} = this.props.header
+        const newIsCollapsed = window.pageYOffset > headerHeight
 
         // Don't trigger the action unless things have changed
         if (newIsCollapsed !== isCollapsed) {
@@ -44,7 +46,7 @@ class Header extends React.Component {
 
     render() {
         const {onMenuClick, onMiniCartClick} = this.props
-        const {isCollapsed, itemCount} = this.props.header.toJS()
+        const {isCollapsed, itemCount} = this.props.header
 
         const innerButtonClassName = classnames('t-header__inner-button', 'u-padding-0', {
             't--hide-label': isCollapsed
@@ -75,7 +77,7 @@ Header.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
-    header: selectors.getHeader
+    header: selectorToJS(selectors.getHeader)
 })
 
 const mapDispatchToProps = {

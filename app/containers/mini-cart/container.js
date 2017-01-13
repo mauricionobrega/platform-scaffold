@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 import {createStructuredSelector} from 'reselect'
+import {selectorToJS} from '../../utils/selector-utils'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -97,7 +98,7 @@ class MiniCart extends React.Component {
 
     render() {
         const {miniCart, closeMiniCart} = this.props
-        const {cart, contentsLoaded, isOpen} = miniCart.toJS()
+        const {cart, contentsLoaded, isOpen} = miniCart
         const hasItems = cart ? cart.items.length > 0 : false
 
         return (
@@ -139,7 +140,7 @@ MiniCart.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
-    miniCart: selectors.getMiniCart
+    miniCart: selectorToJS(selectors.getMiniCart)
 })
 
 const mapDispatchToProps = {

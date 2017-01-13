@@ -1,6 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
+import {selectorToJS} from '../../utils/selector-utils'
+
 import Nav from 'progressive-web-sdk/dist/components/nav'
 import NavMenu from 'progressive-web-sdk/dist/components/nav-menu'
 import NavItem from 'progressive-web-sdk/dist/components/nav-item'
@@ -28,9 +30,7 @@ const itemFactory = (type, props) => {
 
 const Navigation = (props) => {
     const {navigation, closeNavigation, router} = props
-    const path = navigation.get('path')
-    const isOpen = navigation.get('isOpen')
-    const root = navigation.get('root') && navigation.get('root').toJS()
+    const {path, isOpen, root} = navigation
 
     const onPathChange = (path) => {
         const url = new URL(path)
@@ -82,7 +82,7 @@ Navigation.propTypes = {
 
 
 const mapStateToProps = createStructuredSelector({
-    navigation: selectors.getNavigation
+    navigation: selectorToJS(selectors.getNavigation)
 })
 
 export default connect(
