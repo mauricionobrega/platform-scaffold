@@ -10,7 +10,7 @@ const PDP = function(browser) {
     this.selectors = selectors
 }
 
-PDP.prototype.addItemTocart = function() {
+PDP.prototype.addItemToCart = function() {
     // Add an item to the cart
     this.browser
         .log('Adding item to cart')
@@ -20,7 +20,7 @@ PDP.prototype.addItemTocart = function() {
     return this
 }
 
-PDP.prototype.navigateTocart = function() {
+PDP.prototype.navigateToCart = function() {
     // Navigate from PDP to Cart
     this.browser
         .log('Navigating to cart')
