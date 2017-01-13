@@ -12,7 +12,7 @@ import * as miniCartActions from '../../containers/mini-cart/actions'
 import sprite from '../../static/svg/sprite-dist/sprite.svg'
 import * as appActions from './actions'
 
-import {isRunningInAstro} from '../utils/astro-integration'
+import {isRunningInAstro} from '../../utils/astro-integration'
 
 import NotificationManager from '../../components/notification-manager'
 
