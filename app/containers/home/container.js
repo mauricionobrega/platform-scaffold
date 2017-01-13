@@ -8,7 +8,7 @@ import * as selectors from './selectors'
 import HomeCarousel from './partials/home-carousel'
 import HomeCategories from './partials/home-categories'
 
-class Home extends React.PureComponent {
+class Home extends React.Component {
     render() {
         const {banners, categories} = this.props.home
 

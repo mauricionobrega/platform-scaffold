@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
+import {selectorToJS} from '../../utils/selector-utils'
 
 import {hidePreloader} from 'progressive-web-sdk/dist/preloader'
 import {IconSprite} from 'progressive-web-sdk/dist/components/icon'
@@ -45,7 +46,7 @@ class App extends React.Component {
         const currentTemplateProps = children.props
         const CurrentHeader = currentTemplateProps.route.Header || Header
         const CurrentFooter = currentTemplateProps.route.Footer || Footer
-        const {notifications} = app.toJS()
+        const {notifications} = app
 
         const skipLinksItems = [
             // Customize your list of SkipLinks here. These are necessary to
@@ -112,7 +113,7 @@ App.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
-    app: selectors.getApp
+    app: selectorToJS(selectors.getApp)
 })
 
 const mapDispatchToProps = (dispatch) => {

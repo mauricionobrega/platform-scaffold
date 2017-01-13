@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import Immutable from 'immutable'
 import {createStructuredSelector} from 'reselect'
+import {selectorToJS} from '../../utils/selector-utils'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import classNames from 'classnames'
 
@@ -25,12 +26,6 @@ class Cart extends React.Component {
         this.closeEstimateShippingModal = this.closeEstimateShippingModal.bind(this)
         this.openWishlistModal = this.openWishlistModal.bind(this)
         this.closeWishlistModal = this.closeWishlistModal.bind(this)
-    }
-
-    shouldComponentUpdate(newProps) {
-        const miniCartChanged = !Immutable.is(newProps.miniCart, this.props.miniCart)
-        const cartChanged = !Immutable.is(newProps.cart, this.props.cart)
-        return miniCartChanged || cartChanged
     }
 
     openEstimateShippingModal() {
@@ -116,14 +111,13 @@ class Cart extends React.Component {
     }
 
     render() {
-        const cart = this.props.miniCart.get('cart').toJS()
-        const contentsLoaded = this.props.miniCart.get('contentsLoaded')
+        const {cart, contentsLoaded} = this.props.miniCart
         const {
             estimateShippingModal,
             wishlistModal,
             countries,
             stateProvinces
-        } = this.props.cart.toJS()
+        } = this.props.cart
         const isCartEmptyAndLoaded = cart.items.length === 0 && contentsLoaded
         const templateClassnames = classNames('t-cart u-bg-color-neutral-20', {
             't--loaded': contentsLoaded
@@ -163,8 +157,8 @@ Cart.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
-    cart: selectors.getCart,
-    miniCart: selectors.getMiniCart
+    cart: selectorToJS(selectors.getCart),
+    miniCart: selectorToJS(selectors.getMiniCart)
 })
 
 const mapDispatchToProps = {
