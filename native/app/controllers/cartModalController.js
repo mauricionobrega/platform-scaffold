@@ -35,11 +35,11 @@ CartModalController.init = async function() {
 
     const cartModalController = new CartModalController(modalView, navigationView)
 
-    cartHeaderController.registerCloseEvents(() => {
+    cartHeaderController.on('close', () => {
         cartModalController.hide()
     })
 
-    cartHeaderController.viewPlugin.on('click:back', () => {
+    cartHeaderController.on('back', () => {
         navigationView.back()
     })
 
