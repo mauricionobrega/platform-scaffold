@@ -193,6 +193,7 @@ const renderBillingAddress = (isCompanyOrAptShown, handleShowCompanyAndApt) => {
 
                         <FieldRow>
                             <ReduxForm.Field component={Field} name="zip" label="Zip/Postal code">
+                                {/* @TODO: Set Type to text or tel based on country! */}
                                 <input type="text" noValidate />
                             </ReduxForm.Field>
                         </FieldRow>

@@ -8,7 +8,7 @@
 }
 
 .pw-accordion__item {
-    &:not(:last-of-type) {
+    &:not(:last-child) {
         border-bottom: 1px solid $neutral-30;
     }
 }

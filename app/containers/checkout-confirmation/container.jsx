@@ -45,10 +45,13 @@ class CheckoutConfirmation extends React.Component {
         )
 
         const QuestionLink = ({children, href}) => (
-            <ListTile href={href}>
+            <ListTile
+                href={href}
+                endAction={<Icon name="chevron-right" className="u-flex-none" />}
+                includeEndActionInPrimary
+            >
                 <div className="u-flexbox">
                     <div className="u-flex">{children}</div>
-                    <Icon name="chevron-right" className="u-flex-none" />
                 </div>
             </ListTile>
         )
@@ -135,7 +138,7 @@ class CheckoutConfirmation extends React.Component {
 
                     <GridSpan {...gridSettings}>
                         <div className="u-padding-lg">
-                            <Button href="/" className="c--tertiary u-width-full u-text-all-caps u-text-center">
+                            <Button href="/" className="c--tertiary u-width-full u-text-all-caps">
                                 Continue Shopping
                             </Button>
                         </div>
