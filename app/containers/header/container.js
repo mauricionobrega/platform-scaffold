@@ -8,7 +8,6 @@ import Button from 'progressive-web-sdk/dist/components/button'
 import IconLabel from 'progressive-web-sdk/dist/components/icon-label'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 import Link from 'progressive-web-sdk/dist/components/link'
-import logo from '../../static/svg/logo.svg'
 import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
 import Badge from 'progressive-web-sdk/dist/components/badge'
 
@@ -65,17 +64,13 @@ class Header extends React.Component {
             't--hide-label': isCollapsed
         })
 
-        const linkClassName = classnames('t-header__link', {
-            't--fade-sparkles': isCollapsed
-        })
-
         return (
             <header className="t-header">
                 <div className="t-header__bar">
                     <HeaderBar>
                         <NavigationAction innerButtonClassName={innerButtonClassName} onClick={onMenuClick} />
                         <div className="t-header__placeholder" />
-                        <HeaderTitle linkClassName={linkClassName} logo={logo} />
+                        <HeaderTitle isCollapsed={isCollapsed} />
                         <StoresAction innerButtonClassName={innerButtonClassName} />
                         <CartAction innerButtonClassName={innerButtonClassName} onClick={onMiniCartClick} cartCounterBadge={cartCounterBadge} />
                     </HeaderBar>
