@@ -86,9 +86,7 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
-    appState: PropTypes.object,
     header: PropTypes.object,
-    isCollapsed: PropTypes.bool,
     toggleHeader: PropTypes.func,
 
     onMenuClick: PropTypes.func,
