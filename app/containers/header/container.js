@@ -42,7 +42,7 @@ class Header extends React.Component {
 
     render() {
         const {onMenuClick, onMiniCartClick} = this.props
-        const {isCollapsed, cart} = this.props.header.toJS()
+        const {isCollapsed, itemCount} = this.props.header.toJS()
 
         const innerButtonClassName = classnames('t-header__inner-button', 'u-padding-0', {
             't--hide-label': isCollapsed
@@ -56,7 +56,7 @@ class Header extends React.Component {
                         <div className="t-header__placeholder" />
                         <HeaderTitle isCollapsed={isCollapsed} />
                         <StoresAction innerButtonClassName={innerButtonClassName} />
-                        <CartAction innerButtonClassName={innerButtonClassName} onClick={onMiniCartClick} itemCount={cart && cart.summary_count} />
+                        <CartAction innerButtonClassName={innerButtonClassName} onClick={onMiniCartClick} itemCount={itemCount} />
                     </HeaderBar>
                 </div>
             </header>
