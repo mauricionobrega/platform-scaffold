@@ -9,26 +9,11 @@ import IconLabel from 'progressive-web-sdk/dist/components/icon-label'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 import Link from 'progressive-web-sdk/dist/components/link'
 import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
-import Badge from 'progressive-web-sdk/dist/components/badge'
 
 import NavigationAction from './partials/navigation-action'
 import HeaderTitle from './partials/header-title'
 import StoresAction from './partials/stores-action'
 import CartAction from './partials/cart-action'
-
-export const generateCartCounterBadge = (cartContents) => {
-    if (cartContents && cartContents.summary_count && cartContents.summary_count > 0) {
-        return (
-            <Badge className="t-header__badge" title={`${cartContents.summary_count} items in the cart`}>
-                {cartContents.summary_count}
-            </Badge>
-        )
-    } else {
-        return (
-            <p className="u-visually-hidden">No items in the cart.</p>
-        )
-    }
-}
 
 class Header extends React.Component {
     constructor(props) {
@@ -58,7 +43,6 @@ class Header extends React.Component {
     render() {
         const {onMenuClick, onMiniCartClick} = this.props
         const {isCollapsed, cart} = this.props.header.toJS()
-        const cartCounterBadge = generateCartCounterBadge(cart)
 
         const innerButtonClassName = classnames('t-header__inner-button', 'u-padding-0', {
             't--hide-label': isCollapsed
@@ -72,7 +56,7 @@ class Header extends React.Component {
                         <div className="t-header__placeholder" />
                         <HeaderTitle isCollapsed={isCollapsed} />
                         <StoresAction innerButtonClassName={innerButtonClassName} />
-                        <CartAction innerButtonClassName={innerButtonClassName} onClick={onMiniCartClick} cartCounterBadge={cartCounterBadge} />
+                        <CartAction innerButtonClassName={innerButtonClassName} onClick={onMiniCartClick} itemCount={cart && cart.summary_count} />
                     </HeaderBar>
                 </div>
             </header>
