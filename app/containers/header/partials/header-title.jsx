@@ -1,8 +1,7 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 import classNames from 'classnames'
 
 import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
-import IconLabel from 'progressive-web-sdk/dist/components/icon-label'
 import Link from 'progressive-web-sdk/dist/components/link'
 import {HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 
@@ -25,6 +24,10 @@ const HeaderTitle = ({isCollapsed}) => {
             </HeaderBarTitle>
         </div>
     )
+}
+
+HeaderTitle.propTypes = {
+    isCollapsed: PropTypes.bool
 }
 
 export default HeaderTitle

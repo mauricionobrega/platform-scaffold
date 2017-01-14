@@ -4,11 +4,7 @@ import throttle from 'lodash.throttle'
 import classnames from 'classnames'
 import * as headerActions from './actions'
 
-import Button from 'progressive-web-sdk/dist/components/button'
-import IconLabel from 'progressive-web-sdk/dist/components/icon-label'
-import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
-import Link from 'progressive-web-sdk/dist/components/link'
-import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
+import {HeaderBar} from 'progressive-web-sdk/dist/components/header-bar'
 
 import NavigationAction from './partials/navigation-action'
 import HeaderTitle from './partials/header-title'

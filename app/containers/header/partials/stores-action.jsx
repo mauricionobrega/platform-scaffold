@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import IconLabel from 'progressive-web-sdk/dist/components/icon-label'
@@ -11,5 +11,9 @@ const StoresAction = ({innerButtonClassName}) => (
         </Button>
     </HeaderBarActions>
 )
+
+StoresAction.propTypes = {
+    innerButtonClassName: PropTypes.string
+}
 
 export default StoresAction

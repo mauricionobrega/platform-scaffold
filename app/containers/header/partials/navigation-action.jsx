@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import IconLabel from 'progressive-web-sdk/dist/components/icon-label'
@@ -13,5 +13,10 @@ const NavigationAction = ({innerButtonClassName, onClick}) => (
         </div>
     </HeaderBarActions>
 )
+
+NavigationAction.propTypes = {
+    innerButtonClassName: PropTypes.string,
+    onClick: PropTypes.func
+}
 
 export default NavigationAction
