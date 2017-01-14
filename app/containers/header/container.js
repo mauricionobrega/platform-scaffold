@@ -15,11 +15,14 @@ import HeaderTitle from './partials/header-title'
 import StoresAction from './partials/stores-action'
 import CartAction from './partials/cart-action'
 
+const HEADER_HEIGHT = 52
+const SCROLL_CHECK_INTERVAL = 200
+
 class Header extends React.Component {
     constructor(props) {
         super(props)
 
-        this.handleScroll = throttle(this.handleScroll.bind(this), 200)
+        this.handleScroll = throttle(this.handleScroll.bind(this), SCROLL_CHECK_INTERVAL)
     }
 
     componentDidMount() {
@@ -32,10 +35,10 @@ class Header extends React.Component {
 
     handleScroll() {
         const {isCollapsed} = this.props.header.toJS()
-        const headerHeight = 52
-        const newIsCollapsed = window.pageYOffset > headerHeight
+        const newIsCollapsed = window.pageYOffset > HEADER_HEIGHT
 
-        if (newIsCollapsed !== isCollapsed) {  // Saves triggering the action
+        // Don't trigger the action unless things have changed
+        if (newIsCollapsed !== isCollapsed) {
             this.props.toggleHeader(newIsCollapsed)
         }
     }
