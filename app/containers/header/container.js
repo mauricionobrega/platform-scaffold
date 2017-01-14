@@ -14,6 +14,8 @@ import Badge from 'progressive-web-sdk/dist/components/badge'
 
 import NavigationAction from './partials/navigation-action'
 import HeaderTitle from './partials/header-title'
+import StoresAction from './partials/stores-action'
+import CartAction from './partials/cart-action'
 
 export const generateCartCounterBadge = (cartContents) => {
     if (cartContents && cartContents.summary_count && cartContents.summary_count > 0) {
@@ -74,18 +76,8 @@ class Header extends React.Component {
                         <NavigationAction innerButtonClassName={innerButtonClassName} onClick={onMenuClick} />
                         <div className="t-header__placeholder" />
                         <HeaderTitle linkClassName={linkClassName} logo={logo} />
-                        <HeaderBarActions>
-                            <Button innerClassName={innerButtonClassName}>
-                                <IconLabel label="Stores" iconName="map" iconSize="medium" />
-                            </Button>
-                        </HeaderBarActions>
-
-                        <HeaderBarActions>
-                            <Button className="u-position-relative" innerClassName={innerButtonClassName} onClick={onMiniCartClick}>
-                                <IconLabel label="Cart" iconName="cart" iconSize="medium" />
-                                {cartCounterBadge}
-                            </Button>
-                        </HeaderBarActions>
+                        <StoresAction innerButtonClassName={innerButtonClassName} />
+                        <CartAction innerButtonClassName={innerButtonClassName} onClick={onMiniCartClick} cartCounterBadge={cartCounterBadge} />
                     </HeaderBar>
                 </div>
             </header>
