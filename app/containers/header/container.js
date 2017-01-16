@@ -11,7 +11,6 @@ import HeaderTitle from './partials/header-title'
 import StoresAction from './partials/stores-action'
 import CartAction from './partials/cart-action'
 
-const HEADER_HEIGHT = 52
 const SCROLL_CHECK_INTERVAL = 200
 
 class Header extends React.Component {
@@ -19,6 +18,8 @@ class Header extends React.Component {
         super(props)
 
         this.handleScroll = throttle(this.handleScroll.bind(this), SCROLL_CHECK_INTERVAL)
+        // Start off uncollapsed
+        this.headerHeight = Number.MAX_VALUE
     }
 
     componentDidMount() {
@@ -31,7 +32,7 @@ class Header extends React.Component {
 
     handleScroll() {
         const {isCollapsed} = this.props.header.toJS()
-        const newIsCollapsed = window.pageYOffset > HEADER_HEIGHT
+        const newIsCollapsed = window.pageYOffset > this.headerHeight
 
         // Don't trigger the action unless things have changed
         if (newIsCollapsed !== isCollapsed) {
@@ -48,7 +49,7 @@ class Header extends React.Component {
         })
 
         return (
-            <header className="t-header">
+            <header className="t-header" ref={(el) => { this.headerHeight = el ? el.scrollHeight : Number.MAX_VALUE }}>
                 <div className="t-header__bar">
                     <HeaderBar>
                         <NavigationAction innerButtonClassName={innerButtonClassName} onClick={onMenuClick} />
