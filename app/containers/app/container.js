@@ -105,8 +105,8 @@ App.propTypes = {
      * The react-router history object
      */
     history: PropTypes.object,
-    notifications: PropTypes.array,
     notificationActions: PropTypes.object,
+    notifications: PropTypes.array,
     openNavigation: PropTypes.func,
     requestOpenMiniCart: PropTypes.func,
 }

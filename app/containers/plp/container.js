@@ -82,14 +82,14 @@ const PLP = ({hasProducts, contentsLoaded, noResultsText, numItems, title, produ
 
 
 PLP.propTypes = {
-    contentsLoaded: PropTypes.bool,
-    hasProducts: PropTypes.bool,
-    noResultsText: PropTypes.string,
-    numItems: PropTypes.string,
     /**
      * Product data from state (Catalog -> Products), filtered by the productUrls in the Plp state object
      */
     products: PropTypes.array.isRequired,
+    contentsLoaded: PropTypes.bool,
+    hasProducts: PropTypes.bool,
+    noResultsText: PropTypes.string,
+    numItems: PropTypes.string,
     title: PropTypes.string
 }
 

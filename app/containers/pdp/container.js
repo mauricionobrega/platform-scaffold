@@ -59,11 +59,15 @@ PDP.propTypes = {
      * Function to submit the add-to-cart form
      */
     addToCart: PropTypes.func.isRequired,
-    carouselItems: PropTypes.array,
     /**
      * Callback when the added-to-cart modal closes
      */
     closeItemAddedModal: PropTypes.func.isRequired,
+    /**
+     * Function to update the item quantity when user changes it
+     */
+    setQuantity: PropTypes.func.isRequired,
+    carouselItems: PropTypes.array,
     contentsLoaded: PropTypes.bool,
     description: PropTypes.string,
     formInfo: PropTypes.object,
@@ -71,10 +75,6 @@ PDP.propTypes = {
     itemQuantity: PropTypes.number,
     price: PropTypes.string,
     quantityAdded: PropTypes.number,
-    /**
-     * Function to update the item quantity when user changes it
-     */
-    setQuantity: PropTypes.func.isRequired,
     title: PropTypes.string
 }
 

@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import throttle from 'lodash.throttle'
 import classnames from 'classnames'
-import {selectorToJS} from '../../utils/selector-utils'
 
 import * as headerActions from './actions'
 import * as selectors from './selectors'

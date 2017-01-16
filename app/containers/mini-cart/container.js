@@ -129,10 +129,10 @@ class MiniCart extends React.Component {
 
 MiniCart.propTypes = {
     cart: PropTypes.object.isRequired,
-    contentsLoaded: PropTypes.bool,
-    isOpen: PropTypes.bool,
     closeMiniCart: PropTypes.func,
+    contentsLoaded: PropTypes.bool,
     fetchContents: PropTypes.func,
+    isOpen: PropTypes.bool,
 }
 
 const mapStateToProps = createStructuredSelector({
