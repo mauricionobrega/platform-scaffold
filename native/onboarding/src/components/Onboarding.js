@@ -6,7 +6,7 @@ import Astro from 'mobify-progressive-app-sdk/js/build/astro-client.js'
 import carouselData from './data/onboarding.json'
 import './Onboarding.scss'
 
-import RpcEventNames from '../../../app/global/app-event-names'
+import rpcMethodNames from '../../../app/global/app-rpc-method-names'
 
 class Onboarding extends Component {
     render() {
@@ -53,7 +53,7 @@ function OnboardingScreen(props) {
 }
 
 function onLaterTapped(event) {
-    Astro.jsRpcMethod(RpcEventNames.onboardingHide, [])();
+    Astro.jsRpcMethod(rpcMethodNames.onboardingHide, [])();
 }
 
 export default Onboarding

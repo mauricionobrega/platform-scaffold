@@ -42,5 +42,5 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   ownNodeModules: resolveApp('node_modules'),
   nodePaths: nodePaths,
-  eventNames: resolveApp('../app/global/app-event-names.js')
+  rpcMethodNames: resolveApp('../app/global/app-rpc-method-names.js')
 };

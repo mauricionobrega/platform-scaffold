@@ -117,7 +117,7 @@ module.exports = {
       // Process JS with Babel.
       {
         test: /\.(js|jsx)$/,
-        include: [paths.appSrc, paths.eventNames],
+        include: [paths.appSrc, paths.rpcMethodNames],
         loader: 'babel',
         
       },

@@ -1,6 +1,7 @@
-const RpcEventNames = {
+
+const rpcMethodNames = {
     onboardingShow: 'onboardingShow',
     onboardingHide: 'onboardingHide'
 }
 
-export default RpcEventNames
+export default rpcMethodNames
