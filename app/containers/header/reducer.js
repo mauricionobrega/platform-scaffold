@@ -1,11 +1,11 @@
 import Immutable from 'immutable'
 import {handleActions} from 'redux-actions'
-// import * as appActions from '../app/actions'
 import * as headerActions from './actions'
 import * as cartActions from '../cart/actions'
 
 export const initialState = Immutable.fromJS({
-    isCollapsed: false
+    isCollapsed: false,
+    itemCount: 0
 })
 
 const header = handleActions({
@@ -15,7 +15,7 @@ const header = handleActions({
     },
 
     [cartActions.receiveCartContents]: (state, {payload}) => {
-        return state.mergeDeep(payload)
+        return state.set('itemCount', payload.cart.summary_count)
     },
 
 }, initialState)
