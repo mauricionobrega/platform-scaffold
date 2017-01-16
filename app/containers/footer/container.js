@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react'
-import Immutable from 'immutable'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import {selectorToJS} from '../../utils/selector-utils'

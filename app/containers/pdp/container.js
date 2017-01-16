@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import Immutable from 'immutable'
 import {createStructuredSelector} from 'reselect'
 import {selectorToJS} from '../../utils/selector-utils'
 
@@ -13,59 +12,49 @@ import {stripEvent} from '../../utils/utils'
 import * as pdpActions from './actions'
 import * as selectors from './selectors'
 
-class PDP extends React.Component {
-    render() {
-        const {
-            setQuantity,
-            addToCart,
-            closeItemAddedModal,
-            pdp,
-            catalogProduct: product
-        } = this.props
+const PDP = ({setQuantity, addToCart, closeItemAddedModal, pdp, product}) => {
+    const {
+        itemQuantity,
+        quantityAdded,
+        itemAddedModalOpen,
+        formInfo,
+        contentsLoaded
+    } = pdp
 
-        const {
-            itemQuantity,
-            quantityAdded,
-            itemAddedModalOpen,
-            formInfo,
-            contentsLoaded
-        } = pdp
-
-        const {
-            title,
-            price,
-            description,
-            carouselItems
-        } = product
+    const {
+        title,
+        price,
+        description,
+        carouselItems
+    } = product
 
 
-        return (
-            <div className="t-pdp">
-                <PDPHeading title={title} price={price} />
+    return (
+        <div className="t-pdp">
+            <PDPHeading title={title} price={price} />
 
-                <PDPCarousel items={carouselItems} contentsLoaded={contentsLoaded} />
+            <PDPCarousel items={carouselItems} contentsLoaded={contentsLoaded} />
 
-                <PDPDescription description={description} />
+            <PDPDescription description={description} />
 
-                <PDPAddToCart
-                    formInfo={formInfo}
-                    quantity={itemQuantity}
-                    setQuantity={setQuantity}
-                    onSubmit={addToCart}
-                    disabled={!contentsLoaded}
+            <PDPAddToCart
+                formInfo={formInfo}
+                quantity={itemQuantity}
+                setQuantity={setQuantity}
+                onSubmit={addToCart}
+                disabled={!contentsLoaded}
                 />
 
-                {contentsLoaded &&
-                    <PDPItemAddedModal
-                        open={itemAddedModalOpen}
-                        onDismiss={closeItemAddedModal}
-                        product={product}
-                        quantity={quantityAdded}
+            {contentsLoaded &&
+                <PDPItemAddedModal
+                    open={itemAddedModalOpen}
+                    onDismiss={closeItemAddedModal}
+                    product={product}
+                    quantity={quantityAdded}
                     />
                 }
-            </div>
-        )
-    }
+        </div>
+    )
 }
 
 PDP.propTypes = {
@@ -73,10 +62,6 @@ PDP.propTypes = {
      * Function to submit the add-to-cart form
      */
     addToCart: PropTypes.func.isRequired,
-    /**
-     * Product data from state (Catalog -> Products)
-     */
-    catalogProduct: PropTypes.object.isRequired,
     /**
      * Callback when the added-to-cart modal closes
      */
@@ -86,13 +71,17 @@ PDP.propTypes = {
      */
     pdp: PropTypes.object.isRequired,
     /**
+     * Product data from state (Catalog -> Products)
+     */
+    product: PropTypes.object.isRequired,
+    /**
      * Function to update the item quantity when user changes it
      */
     setQuantity: PropTypes.func.isRequired,
 }
 
 export const mapStateToProps = createStructuredSelector({
-    catalogProduct: selectorToJS(selectors.getSelectedProduct),
+    product: selectorToJS(selectors.getSelectedProduct),
     pdp: selectorToJS(selectors.getSelectedPdp)
 })
 
