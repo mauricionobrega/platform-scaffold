@@ -1,7 +1,8 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import Immutable from 'immutable'
-import {createSelector} from 'reselect'
+import {createStructuredSelector} from 'reselect'
+import {selectorToJS} from '../../utils/selector-utils'
 
 import PDPHeading from './partials/pdp-heading'
 import PDPCarousel from './partials/pdp-carousel'
@@ -11,23 +12,24 @@ import PDPItemAddedModal from './partials/pdp-item-added-modal'
 import {stripEvent} from '../../utils/utils'
 import * as pdpActions from './actions'
 import * as selectors from './selectors'
-import {getSelectorFromState} from '../../utils/router-utils'
 
 class PDP extends React.Component {
-    shouldComponentUpdate(newProps) {
-        return !Immutable.is(newProps.pdp, this.props.pdp) || !Immutable.is(newProps.catalogProduct, this.props.catalogProduct)
-    }
-
     render() {
+        const {
+            setQuantity,
+            addToCart,
+            closeItemAddedModal,
+            pdp,
+            catalogProduct: product
+        } = this.props
+
         const {
             itemQuantity,
             quantityAdded,
             itemAddedModalOpen,
             formInfo,
             contentsLoaded
-        } = this.props.pdp.toJS()
-
-        const product = this.props.catalogProduct.toJS()
+        } = pdp
 
         const {
             title,
@@ -36,11 +38,6 @@ class PDP extends React.Component {
             carouselItems
         } = product
 
-        const {
-            setQuantity,
-            addToCart,
-            closeItemAddedModal
-        } = this.props
 
         return (
             <div className="t-pdp">
@@ -94,17 +91,10 @@ PDP.propTypes = {
     setQuantity: PropTypes.func.isRequired,
 }
 
-export const mapStateToProps = createSelector(
-    selectors.getCatalog,
-    selectors.getPdp,
-    (catalog, pdp) => {
-        const selector = getSelectorFromState(pdp)
-        return {
-            catalogProduct: catalog.products.get(selector),
-            pdp: pdp.get(selector)
-        }
-    }
-)
+export const mapStateToProps = createStructuredSelector({
+    catalogProduct: selectorToJS(selectors.getSelectedProduct),
+    pdp: selectorToJS(selectors.getSelectedPdp)
+})
 
 const mapDispatchToProps = {
     setQuantity: pdpActions.setItemQuantity,
