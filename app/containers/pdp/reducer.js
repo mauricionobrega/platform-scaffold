@@ -12,6 +12,7 @@ import {SELECTOR, PLACEHOLDER} from '../app/constants'
 
 export const initialState = Immutable.fromJS({
     contentsLoaded: false,
+    formInfo: {},
     itemQuantity: 1,
     itemAddedModalOpen: false,
     quantityAdded: 0
