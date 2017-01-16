@@ -1,10 +1,4 @@
-import React, {PropTypes} from 'react'
-import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
-import {selectorToJS} from '../../utils/selector-utils'
-
-import * as actions from './actions'
-import * as selectors from './selectors'
+import React from 'react'
 
 import FooterNewsletterSubscription from './partials/footer-newsletter-subscription'
 import FooterSocialIcons from './partials/footer-social-icons'
@@ -17,39 +11,14 @@ const social = [
     ['http://www.youtube.com/#TODO', 'static/svg/youtube.svg', 'Youtube'],
 ]
 
-const Footer = ({footer, submitNewsletter}) => {
-    const {navigation, newsletter} = footer
-
+const Footer = () => {
     return (
         <footer className="t-footer">
-            <FooterNewsletterSubscription newsletter={newsletter} onSubmit={submitNewsletter} />
+            <FooterNewsletterSubscription />
             <FooterSocialIcons social={social} />
-            <FooterNavigation navigation={navigation} />
+            <FooterNavigation />
         </footer>
     )
 }
 
-Footer.propTypes = {
-    /**
-     * Slice into the global app state
-     */
-    footer: PropTypes.object,
-    /**
-     * Submit the newsletter subscription form to the backend
-     */
-    submitNewsletter: PropTypes.func
-}
-
-
-const mapStateToProps = createStructuredSelector({
-    footer: selectorToJS(selectors.getFooter)
-})
-
-const mapDispatchToProps = {
-    submitNewsletter: actions.signUpToNewsletter
-}
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Footer)
+export default Footer

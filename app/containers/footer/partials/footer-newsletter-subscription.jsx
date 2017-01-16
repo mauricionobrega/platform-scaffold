@@ -1,7 +1,9 @@
 import React, {PropTypes} from 'react'
 import {createStructuredSelector} from 'reselect'
 import * as selectors from '../selectors'
+import * as actions from '../actions'
 import {selectorToJS} from '../../../utils/selector-utils'
+import {connect} from 'react-redux'
 
 import NewsletterForm from './newsletter-form'
 
@@ -38,4 +40,15 @@ FooterNewsletterSubscription.propTypes = {
     onSubmit: PropTypes.func
 }
 
-export default FooterNewsletterSubscription
+const mapStateToProps = createStructuredSelector({
+    newsletter: selectors.getNewsletter
+})
+
+const mapDispatchToProps = {
+    onSubmit: actions.signUpToNewsletter
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(FooterNewsletterSubscription)

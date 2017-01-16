@@ -1,4 +1,8 @@
 import React, {PropTypes} from 'react'
+import {createStructuredSelector} from 'reselect'
+import * as selectors from '../selectors'
+import {selectorToJS} from '../../../utils/selector-utils'
+import {connect} from 'react-redux'
 
 import Divider from 'progressive-web-sdk/dist/components/divider'
 import ListTile from 'progressive-web-sdk/dist/components/list-tile'
@@ -29,4 +33,8 @@ FooterNavigation.propTypes = {
     navigation: PropTypes.array
 }
 
-export default FooterNavigation
+const mapStateToProps = createStructuredSelector({
+    navigation: selectorToJS(selectors.getNavigation)
+})
+
+export default connect(mapStateToProps)(FooterNavigation)
