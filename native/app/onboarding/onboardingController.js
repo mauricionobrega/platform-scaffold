@@ -1,29 +1,19 @@
 
 import WebViewPlugin from 'astro/plugins/webViewPlugin'
-import AnchoredLayoutPlugin from 'astro/plugins/anchoredLayoutPlugin'
 import onboardingConfig from './onboardingConfig'
 
-const OnboardingController = function(navigationView, layout) {
-    this.viewPlugin = layout
-    this.navigationView = navigationView
+const OnboardingController = function(navigationView) {
+    this.viewPlugin = navigationView
 }
 
 OnboardingController.init = async function() {
-    const [
-        webView,
-        layout
-    ] = await Promise.all([
-        WebViewPlugin.init(),
-        AnchoredLayoutPlugin.init()
-    ])
+    const webView = await WebViewPlugin.init()
 
     // Disable webview loader when first loading onboarding page
     webView.disableLoader()
     webView.disableScrolling()
 
-    layout.setContentView(webView)
-
-    const onboardingController = new OnboardingController(webView, layout)
+    const onboardingController = new OnboardingController(webView)
     onboardingController.navigate(onboardingConfig.url)
 
     return onboardingController
@@ -34,15 +24,15 @@ OnboardingController.prototype.navigate = function(url) {
         return
     }
 
-    this.navigationView.navigate(url)
+    this.viewPlugin.navigate(url)
 }
 
 OnboardingController.prototype.back = function() {
-    this.navigationView.back()
+    this.viewPlugin.back()
 }
 
 OnboardingController.prototype.canGoBack = function() {
-    return this.navigationView.canGoBack()
+    return this.viewPlugin.canGoBack()
 }
 
 export default OnboardingController
