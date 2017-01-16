@@ -36,7 +36,7 @@ class Header extends React.Component {
 
     handleScroll() {
         const {isCollapsed} = this.props.header
-        const newIsCollapsed = window.pageYOffset > headerHeight
+        const newIsCollapsed = window.pageYOffset > this.headerHeight
 
         // Don't trigger the action unless things have changed
         if (newIsCollapsed !== isCollapsed) {
