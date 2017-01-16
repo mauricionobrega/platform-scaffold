@@ -18,7 +18,7 @@
         "imageAlt": "Merlin's Potions",
         "subtitle": "Speed up your shopping experience, save your address information and more by registering with Merlin's Potions.",
         "laterButtonTitle": "LATER",
-        "rightButtonTitle": "SIGN IN",
-        "actionButtonTitle": "REGISTER NOW"
+        "actionButtonTitle": "SIGN IN",
+        "primaryButtonTitle": "REGISTER NOW"
     }
 ]
