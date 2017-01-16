@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {createStructuredSelector} from 'reselect'
 import Nav from 'progressive-web-sdk/dist/components/nav'
 import NavMenu from 'progressive-web-sdk/dist/components/nav-menu'
 import NavItem from 'progressive-web-sdk/dist/components/nav-item'
@@ -7,6 +8,7 @@ import Sheet from 'progressive-web-sdk/dist/components/sheet'
 import * as navActions from './actions'
 import IconLabelButton from '../../components/icon-label-button'
 import * as merlinsNavItem from '../../components/nav-item'
+import * as selectors from './selectors'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 import {withRouter} from 'react-router'
 
@@ -79,12 +81,9 @@ Navigation.propTypes = {
 }
 
 
-const mapStateToProps = (state) => {
-    return {
-        navigation: state.navigation,
-    }
-}
-
+const mapStateToProps = createStructuredSelector({
+    navigation: selectors.getNavigation
+})
 
 export default connect(
     mapStateToProps,

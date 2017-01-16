@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import Immutable from 'immutable'
+import {createStructuredSelector} from 'reselect'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import classNames from 'classnames'
 
@@ -10,6 +11,7 @@ import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Image from 'progressive-web-sdk/dist/components/image'
 
 import * as actions from './actions'
+import * as selectors from './selectors'
 import CartProductList from './partials/cart-product-list'
 import CartSummary from './partials/cart-summary'
 import CartEstimateShippingModal from './partials/cart-estimate-shipping'
@@ -160,12 +162,10 @@ Cart.propTypes = {
     toggleWishlistModal: PropTypes.func,
 }
 
-const mapStateToProps = (state) => {
-    return {
-        cart: state.cart,
-        miniCart: state.miniCart,
-    }
-}
+const mapStateToProps = createStructuredSelector({
+    cart: selectors.getCart,
+    miniCart: selectors.getMiniCart
+})
 
 const mapDispatchToProps = {
     toggleEstimateShippingModal: actions.toggleEstimateShippingModal,

@@ -1,7 +1,9 @@
 import React, {PropTypes} from 'react'
 import Immutable from 'immutable'
 import {connect} from 'react-redux'
+import {createStructuredSelector} from 'reselect'
 import * as actions from './actions'
+import * as selectors from './selectors'
 
 import FooterNewsletterSubscription from './partials/footer-newsletter-subscription'
 import FooterSocialIcons from './partials/footer-social-icons'
@@ -59,11 +61,9 @@ Footer.propTypes = {
 }
 
 
-const mapStateToProps = (state) => {
-    return {
-        footer: state.footer,
-    }
-}
+const mapStateToProps = createStructuredSelector({
+    footer: selectors.getFooter
+})
 
 const mapDispatchToProps = {
     submitNewsletter: actions.signUpToNewsletter

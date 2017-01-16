@@ -1,17 +1,19 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import Immutable from 'immutable'
+import {createStructuredSelector} from 'reselect'
 
+import * as selectors from './selectors'
 import HomeCarousel from './partials/home-carousel'
 import HomeCategories from './partials/home-categories'
 
 class Home extends React.Component {
     shouldComponentUpdate(nextProps) {
-        return !Immutable.is(this.props.homeState, nextProps.homeState)
+        return !Immutable.is(this.props.home, nextProps.home)
     }
 
     render() {
-        const {banners, categories} = this.props
+        const {banners, categories} = this.props.home.toJS()
 
         return (
             <div className="t-home__container">
@@ -23,20 +25,12 @@ class Home extends React.Component {
 }
 
 Home.propTypes = {
-    banners: PropTypes.oneOfType([
-        PropTypes.bool,
-        PropTypes.array
-    ]).isRequired,
-    categories: PropTypes.array.isRequired,
-    homeState: PropTypes.object.isRequired
+    home: PropTypes.object.isRequired
 }
 
-const mapStateToProps = (state) => {
-    return {
-        homeState: state.home,
-        ...state.home.toJS()
-    }
-}
+const mapStateToProps = createStructuredSelector({
+    home: selectors.getHome
+})
 
 export default connect(
     mapStateToProps

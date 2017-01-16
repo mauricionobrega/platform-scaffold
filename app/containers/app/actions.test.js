@@ -30,7 +30,7 @@ test('fetchPage fetches the given page', () => {
     expect(typeof thunk).toBe('function')
 
     const fakeDispatch = jest.fn()
-    const getState = () => ({app: Immutable.fromJS({[CURRENT_URL]: 'test'})})
+    const getState = () => ({ui: {app: Immutable.fromJS({[CURRENT_URL]: 'test'})}})
 
     return thunk(fakeDispatch, getState)
         .then(() => {
@@ -53,7 +53,7 @@ test('fetchPage does not throw on error', () => {
     expect(typeof thunk).toBe('function')
 
     const fakeDispatch = jest.fn()
-    const getState = () => ({app: Immutable.fromJS({[CURRENT_URL]: 'test'})})
+    const getState = () => ({ui: {app: Immutable.fromJS({[CURRENT_URL]: 'test'})}})
 
     return thunk(fakeDispatch, getState)
         .catch(() => expect('The catch clause was called').toEqual('catch was not called'))

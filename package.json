@@ -22,6 +22,7 @@
     "redux": "3.6.0",
     "redux-actions": "1.2.0",
     "redux-thunk": "2.1.0",
+    "reselect": "2.5.4",
     "sw-toolbox": "3.4.0",
     "whatwg-fetch": "1.0.0"
   },
