@@ -2,7 +2,8 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import Immutable from 'immutable'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
-import {createSelector} from 'reselect'
+import {createStructuredSelector} from 'reselect'
+import {selectorToJS} from '../../utils/selector-utils'
 
 import * as selectors from './selectors'
 import Image from 'progressive-web-sdk/dist/components/image'
@@ -36,7 +37,7 @@ const renderNoResults = (bodyText) => {
 
 class PLP extends React.Component {
     shouldComponentUpdate(nextProps) {
-        return !Immutable.is(this.props.plp, nextProps.plp) || !Immutable.is(nextProps.products, this.props.products)
+        return this.props.plp !== nextProps.plp || !Immutable.is(nextProps.products, this.props.products)
     }
 
     render() {
@@ -46,7 +47,7 @@ class PLP extends React.Component {
             noResultsText,
             numItems,
             title
-        } = this.props.plp.toJS()
+        } = this.props.plp
 
         const products = this.props.products
 
@@ -108,23 +109,10 @@ PLP.propTypes = {
     products: PropTypes.array.isRequired
 }
 
-const mapStateToProps = createSelector(
-    selectors.getCatalog,
-    selectors.getPlp,
-    (catalog, plp) => {
-        const selector = getSelectorFromState(plp)
-        const routedPlp = plp.get(selector)
-        const productUrls = routedPlp.get('productUrls').toJS()
-        const catalogProducts = catalog.products
-        const products = productUrls.map((url) => {
-            return catalogProducts.get(url).toJS()
-        })
-        return {
-            products,
-            plp: routedPlp
-        }
-    }
-)
+const mapStateToProps = createStructuredSelector({
+    products: selectorToJS(selectors.getPlpProducts),
+    plp: selectorToJS(selectors.getSelectedPlp)
+})
 
 export default connect(
     mapStateToProps
