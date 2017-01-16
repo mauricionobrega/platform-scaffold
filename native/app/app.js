@@ -9,7 +9,7 @@ import PreviewController from 'astro/controllers/previewController'
 import baseConfig from './config/baseConfig'
 import TabBarController from './controllers/tabBarController'
 import {getInitialTabId} from './config/tabBarConfig'
-import OnboardingModalController from './controllers/onboarding/onboardingModalController'
+import OnboardingModalController from './onboarding/onboardingModalController'
 
 window.run = async function() {
     const runApp = async function() {

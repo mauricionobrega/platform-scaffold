@@ -1,7 +1,7 @@
 
 import WebViewPlugin from 'astro/plugins/webViewPlugin'
 import AnchoredLayoutPlugin from 'astro/plugins/anchoredLayoutPlugin'
-import onboardingConfig from '../../config/onboardingConfig'
+import onboardingConfig from './onboardingConfig'
 
 const OnboardingController = function(navigationView, layout) {
     this.viewPlugin = layout

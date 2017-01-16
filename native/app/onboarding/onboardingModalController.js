@@ -4,8 +4,8 @@ import Astro from 'astro/astro-full'
 import ModalViewPlugin from 'astro/plugins/modalViewPlugin'
 import SettingsStore from 'astro/settings-store'
 import OnboardingController from './onboardingController'
-import AppRpc from '../../global/app-rpc'
-import AppEvents from '../../global/app-events'
+import AppRpc from '../global/app-rpc'
+import AppEvents from '../global/app-events'
 
 const OnboardingModalEvents = {
     // raised when onboarding modal is hidden
