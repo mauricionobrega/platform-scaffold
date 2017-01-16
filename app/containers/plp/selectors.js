@@ -22,6 +22,11 @@ export const getSelectedPlp = createSelector(
 )
 
 export const getProductUrls = createGetSelector(getSelectedPlp, 'productUrls')
+export const getHasProducts = createGetSelector(getSelectedPlp, 'hasProducts')
+export const getPlpContentsLoaded = createGetSelector(getSelectedPlp, 'contentsLoaded')
+export const getNoResultsText = createGetSelector(getSelectedPlp, 'getNoResultsText')
+export const getNumItems = createGetSelector(getSelectedPlp, 'numItems')
+export const getPlpTitle = createGetSelector(getSelectedPlp, 'title')
 
 export const getPlpProducts = createSelector(
     globalSelectors.getCatalogProducts,
