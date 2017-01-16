@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import {selectorToJS} from '../../utils/selector-utils'
@@ -29,8 +29,7 @@ const itemFactory = (type, props) => {
 
 
 const Navigation = (props) => {
-    const {navigation, closeNavigation, router} = props
-    const {path, isOpen, root} = navigation
+    const {path, isOpen, root, closeNavigation, router} = props
 
     const onPathChange = (path) => {
         const url = new URL(path)
@@ -43,7 +42,7 @@ const Navigation = (props) => {
 
     return (
         <Sheet className="t-navigation" open={isOpen} onDismiss={closeNavigation} maskOpacity={0.7}>
-            <Nav root={root} path={path} onPathChange={onPathChange}>
+            <Nav root={root.title ? root : null} path={path} onPathChange={onPathChange}>
                 <HeaderBar>
                     <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
                         <h2 className="t-navigation__title u-heading-family u-text-uppercase">
@@ -67,22 +66,22 @@ Navigation.propTypes = {
     /**
      * A function used to set the navigation-sheet's state to closed
      */
-    closeNavigation: React.PropTypes.func,
+    closeNavigation: PropTypes.func,
 
-    /**
-     * The immutableJS data for the nav.
-     */
-    navigation: React.PropTypes.object,
-
+    isOpen: PropTypes.bool,
+    path: PropTypes.string,
+    root: PropTypes.object,
     /**
      * The react-router router object.
      */
-    router: React.PropTypes.object,
+    router: PropTypes.object,
 }
 
 
 const mapStateToProps = createStructuredSelector({
-    navigation: selectorToJS(selectors.getNavigation)
+    path: selectors.getPath,
+    isOpen: selectors.getNavigationIsOpen,
+    root: selectorToJS(selectors.getNavigationRoot)
 })
 
 export default connect(

@@ -4,10 +4,10 @@ import * as appActions from '../app/actions'
 import * as navActions from './actions'
 import * as parser from './parsers/parser'
 
-export const initialState = Immutable.Map({
+export const initialState = Immutable.fromJS({
     isOpen: false,
     path: undefined,
-    root: undefined,
+    root: {},
 })
 
 
