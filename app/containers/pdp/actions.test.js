@@ -23,7 +23,7 @@ test('submitCartForm makes a request and dispatches updates', () => {
     const thunk = submitCartForm()
     expect(typeof thunk).toBe('function')
 
-    const getStore = () => ({pdp: {
+    const getStore = () => ({ui: {pdp: {
         get: () => {
             return Immutable.fromJS({
                 contentsLoaded: true,
@@ -35,8 +35,7 @@ test('submitCartForm makes a request and dispatches updates', () => {
                 itemQuantity: 1
             })
         }
-    }
-    })
+    }}})
 
     const mockDispatch = jest.fn()
     return thunk(mockDispatch, getStore)
