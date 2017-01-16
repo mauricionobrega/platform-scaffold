@@ -50,22 +50,19 @@ OnboardingModalController.init = async function() {
 
 OnboardingModalController.prototype.show = async function(params) {
     params = Astro.Utils.extend({forced: false}, params)
-    const shouldShowOnboardingModalKey = 'shouldShowOnboardingModal'
+    const isFirstRunKey = 'isFirstRunKey'
 
-    const isFirstRun = await SettingsStore.get(shouldShowOnboardingModalKey) === null
+    const isFirstRun = await SettingsStore.get(isFirstRunKey) === null
 
     // Onboarding modal should be triggered when the app first runs
     if (isFirstRun || params.forced) {
         this.isShowing = true
         this.modalView.show({animated: true})
 
-        // Promise will be resolved when onboarding modal is dismissed
         AppEvents.on(OnboardingModalEvents.onboardingHidden, () => {
-            SettingsStore.set(shouldShowOnboardingModalKey, 'false')
+            SettingsStore.set(isFirstRunKey, 'false')
         })
         AppEvents.trigger(OnboardingModalEvents.onboardingShown)
-    } else {
-        throw new Error()
     }
 }
 

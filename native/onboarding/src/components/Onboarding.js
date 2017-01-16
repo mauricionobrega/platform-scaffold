@@ -30,7 +30,7 @@ function OnboardingScreen(props) {
                 <div>
                     <img src={data.imageURL} className="carousel-item-image" alt={data.imageAlt}/>
                     {data.title &&
-                        <h2 className="item-title u-text-font-family u-text-semi-bold">{data.title}</h2>    
+                        <h2 className="item-title u-color-neutral-60 u-text-font-family u-text-semi-bold">{data.title}</h2>    
                     }
                     <p className="item-subtitle u-text-font-family">{data.subtitle}</p>
                 </div>

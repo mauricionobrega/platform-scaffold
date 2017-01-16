@@ -1,7 +1,6 @@
 const RpcEventNames = {
     onboardingShow: 'onboardingShow',
-    onboardingHide: 'onboardingHide',
-    onboardingHasHeader: 'onboardingHasHeader'
+    onboardingHide: 'onboardingHide'
 }
 
 export default RpcEventNames
