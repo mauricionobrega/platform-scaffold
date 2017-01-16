@@ -1,4 +1,5 @@
 import {createSelector} from 'reselect'
+import {createGetSelector} from '../../utils/selector-utils'
 import * as globalSelectors from '../../store/selectors'
 import {getSelectorFromState} from '../../utils/router-utils'
 
@@ -20,10 +21,7 @@ export const getSelectedPlp = createSelector(
     (plp, plpSelector) => plp.get(plpSelector)
 )
 
-export const getProductUrls = createSelector(
-    getSelectedPlp,
-    (plp) => plp.get('productUrls')
-)
+export const getProductUrls = createGetSelector(getSelectedPlp, 'productUrls')
 
 export const getPlpProducts = createSelector(
     globalSelectors.getCatalogProducts,
