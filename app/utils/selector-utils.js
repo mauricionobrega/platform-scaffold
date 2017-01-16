@@ -8,7 +8,7 @@ export const createImmutableComparingSelector = createSelectorCreator(
 
 export const selectorToJS = (selector) => createImmutableComparingSelector(
     selector,
-    (raw) => raw.toJS()
+    (raw) => { return raw ? raw.toJS() : null }
 )
 
 export const createToJSSelector = (...args) => selectorToJS(createSelector(...args))
