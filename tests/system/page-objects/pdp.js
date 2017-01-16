@@ -1,5 +1,5 @@
 const selectors = {
-    pdpTemplateIdentifier: '.t-pdp', 
+    pdpTemplateIdentifier: '.t-pdp',
     addItem: '.t-pdp__add-to-cart:not([disabled])',
     itemAdded: '.t-plp__item-added-modal .u-h4',
     goToCart: '.t-plp__item-added-modal a[href*="cart"]'

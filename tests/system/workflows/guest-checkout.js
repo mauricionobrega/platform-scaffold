@@ -1,14 +1,14 @@
 import Home from '../page-objects/home'
 import PLP from '../page-objects/plp'
 import PDP from '../page-objects/pdp'
-import Cart from '../page-objects/cart'
-import Checkout from '../page-objects/checkout'
+// import Cart from '../page-objects/cart'
+// import Checkout from '../page-objects/checkout'
 
 let home
 let plp
 let pdp
-let cart
-let checkout
+// let cart
+// let checkout
 
 /*eslint-disable */
 const PLP_INDEX = process.env.PLP_INDEX || 2
@@ -22,8 +22,8 @@ export default {
         home = new Home(browser)
         plp = new PLP(browser)
         pdp = new PDP(browser)
-        cart = new Cart(browser)
-        checkout = new Checkout(browser)
+        // cart = new Cart(browser)
+        // checkout = new Checkout(browser)
     },
 
     after: (browser) => {

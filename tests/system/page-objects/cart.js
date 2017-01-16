@@ -24,12 +24,12 @@ Cart.prototype.removeItems = function() {
     // Remove all items from the cart
     this.browser
         .log('Removing item')
-        .element('css selector', selectors.removeItem, function(result) {
+        .element('css selector', selectors.removeItem, (result) => {
             if (result.value && result.value.ELEMENT) {
                 self.browser
                     .log('Removing item from cart')
                     .click(selectors.removeItem)
-                    .waitUntilMobified();
+                    .waitUntilMobified()
                 self.cleanUp()
             }
         })
