@@ -1,6 +1,6 @@
 
 const onboardingConfig = {
-    url: 'file:///build/index.html'
+    url: 'file:///onboarding-build/index.html'
 }
 
 export default onboardingConfig
