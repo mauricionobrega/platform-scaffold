@@ -36,10 +36,6 @@ const renderNoResults = (bodyText) => {
 }
 
 class PLP extends React.Component {
-    shouldComponentUpdate(nextProps) {
-        return this.props.plp !== nextProps.plp || !Immutable.is(nextProps.products, this.props.products)
-    }
-
     render() {
         const {
             hasProducts,
