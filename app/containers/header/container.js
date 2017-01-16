@@ -4,103 +4,59 @@ import throttle from 'lodash.throttle'
 import classnames from 'classnames'
 import * as headerActions from './actions'
 
-import Button from 'progressive-web-sdk/dist/components/button'
-import IconLabel from 'progressive-web-sdk/dist/components/icon-label'
-import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
-import Link from 'progressive-web-sdk/dist/components/link'
-import logo from '../../static/svg/logo.svg'
-import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
-import Badge from 'progressive-web-sdk/dist/components/badge'
+import {HeaderBar} from 'progressive-web-sdk/dist/components/header-bar'
 
-export const generateCartCounterBadge = (cartContents) => {
-    if (cartContents && cartContents.summary_count && cartContents.summary_count > 0) {
-        return (
-            <Badge className="t-header__badge" title={`${cartContents.summary_count} items in the cart`}>
-                {cartContents.summary_count}
-            </Badge>
-        )
-    } else {
-        return (
-            <p className="u-visually-hidden">No items in the cart.</p>
-        )
-    }
-}
+import NavigationAction from './partials/navigation-action'
+import HeaderTitle from './partials/header-title'
+import StoresAction from './partials/stores-action'
+import CartAction from './partials/cart-action'
+
+const SCROLL_CHECK_INTERVAL = 200
 
 class Header extends React.Component {
     constructor(props) {
         super(props)
 
-        this.handleScroll = throttle(this.handleScroll.bind(this), 200)
+        this.handleScroll = throttle(this.handleScroll.bind(this), SCROLL_CHECK_INTERVAL)
+        // Start off uncollapsed
+        this.headerHeight = Number.MAX_VALUE
     }
 
     componentDidMount() {
-        window.addEventListener('scroll', this.handleScroll.bind(this))
+        window.addEventListener('scroll', this.handleScroll)
     }
 
     componentWillUnmount() {
-        window.removeEventListener('scroll', this.handleScroll.bind(this))
+        window.removeEventListener('scroll', this.handleScroll)
     }
 
     handleScroll() {
         const {isCollapsed} = this.props.header.toJS()
-        const headerHeight = 52
-        const newIsCollapsed = window.pageYOffset > headerHeight
+        const newIsCollapsed = window.pageYOffset > this.headerHeight
 
-        if (newIsCollapsed !== isCollapsed) {  // Saves triggering the action
+        // Don't trigger the action unless things have changed
+        if (newIsCollapsed !== isCollapsed) {
             this.props.toggleHeader(newIsCollapsed)
         }
     }
 
     render() {
         const {onMenuClick, onMiniCartClick} = this.props
-        const {isCollapsed, cart} = this.props.header.toJS()
-        const cartCounterBadge = generateCartCounterBadge(cart)
+        const {isCollapsed, itemCount} = this.props.header.toJS()
 
         const innerButtonClassName = classnames('t-header__inner-button', 'u-padding-0', {
             't--hide-label': isCollapsed
         })
 
-        const linkClassName = classnames('t-header__link', {
-            't--fade-sparkles': isCollapsed
-        })
-
         return (
-            <header className="t-header">
+            <header className="t-header" ref={(el) => { this.headerHeight = el ? el.scrollHeight : Number.MAX_VALUE }}>
                 <div className="t-header__bar">
-                    <HeaderBar >
-                        <HeaderBarActions>
-                            <div role="navigation">
-                                <Button id="header-navigation" innerClassName={innerButtonClassName} onClick={onMenuClick}>
-                                    <IconLabel label="Menu" iconName="menu" iconSize="medium" />
-                                </Button>
-                            </div>
-                        </HeaderBarActions>
-
+                    <HeaderBar>
+                        <NavigationAction innerButtonClassName={innerButtonClassName} onClick={onMenuClick} />
                         <div className="t-header__placeholder" />
-
-                        <div className="u-flex">
-                            <HeaderBarTitle>
-                                <Link href="/" className={linkClassName}>
-                                    <DangerousHTML html={logo}>
-                                        {(htmlObj) => <div className="t-header__logo" dangerouslySetInnerHTML={htmlObj} />}
-                                    </DangerousHTML>
-                                    <h1 className="u-visually-hidden">Merlin's Potions</h1>
-                                </Link>
-                            </HeaderBarTitle>
-                        </div>
-
-                        <HeaderBarActions>
-                            <Button innerClassName={innerButtonClassName}>
-                                <IconLabel label="Stores" iconName="map" iconSize="medium" />
-                            </Button>
-                        </HeaderBarActions>
-
-                        <HeaderBarActions>
-                            <Button className="u-position-relative" innerClassName={innerButtonClassName} onClick={onMiniCartClick}>
-                                <IconLabel label="Cart" iconName="cart" iconSize="medium" />
-                                {cartCounterBadge}
-                            </Button>
-                        </HeaderBarActions>
+                        <HeaderTitle isCollapsed={isCollapsed} />
+                        <StoresAction innerButtonClassName={innerButtonClassName} />
+                        <CartAction innerButtonClassName={innerButtonClassName} onClick={onMiniCartClick} itemCount={itemCount} />
                     </HeaderBar>
                 </div>
             </header>
@@ -109,9 +65,7 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
-    appState: PropTypes.object,
     header: PropTypes.object,
-    isCollapsed: PropTypes.bool,
     toggleHeader: PropTypes.func,
 
     onMenuClick: PropTypes.func,
