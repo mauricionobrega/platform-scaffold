@@ -17,30 +17,16 @@ const social = [
     ['http://www.youtube.com/#TODO', 'static/svg/youtube.svg', 'Youtube'],
 ]
 
-class Footer extends React.Component {
-    constructor(props) {
-        super(props)
+const Footer = ({footer, submitNewsletter}) => {
+    const {navigation, newsletter} = footer
 
-        this.onSubmitNewsletter = this.onSubmitNewsletter.bind(this)
-    }
-
-    onSubmitNewsletter(data) {
-        const {method, action} = this.props.footer.newsletter
-        this.props.submitNewsletter(method, action, data)
-    }
-
-    render() {
-        const {footer} = this.props
-        const {navigation, newsletter} = footer
-
-        return (
-            <footer className="t-footer">
-                <FooterNewsletterSubscription newsletter={newsletter} onSubmit={this.onSubmitNewsletter} />
-                <FooterSocialIcons social={social} />
-                <FooterNavigation navigation={navigation} />
-            </footer>
-        )
-    }
+    return (
+        <footer className="t-footer">
+            <FooterNewsletterSubscription newsletter={newsletter} onSubmit={submitNewsletter} />
+            <FooterSocialIcons social={social} />
+            <FooterNavigation navigation={navigation} />
+        </footer>
+    )
 }
 
 Footer.propTypes = {
