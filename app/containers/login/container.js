@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
+import {createStructuredSelector} from 'reselect'
 import {withRouter} from 'react-router'
 import {selectorToJS} from '../../utils/selector-utils'
 
@@ -148,13 +149,12 @@ class Login extends React.Component {
     }
 }
 
-const loginJSSelector = selectorToJS(selectors.getLogin)
-
-const mapStateToProps = (state, props) => {
-    return {
-        ...loginJSSelector(state)
-    }
-}
+const mapStateToProps = createStructuredSelector({
+    title: selectors.getLoginTitle,
+    signinSection: selectorToJS(selectors.getSigninSection),
+    registerSection: selectorToJS(selectors.getRegisterSection),
+    loaded: selectors.getLoginLoaded
+})
 
 const mapDispatchToProps = {
     submitSignInForm: actions.submitSignInForm,
