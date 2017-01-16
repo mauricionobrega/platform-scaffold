@@ -35,7 +35,7 @@ class Header extends React.Component {
     }
 
     handleScroll() {
-        const {isCollapsed} = this.props.header
+        const {isCollapsed} = this.props
         const newIsCollapsed = window.pageYOffset > this.headerHeight
 
         // Don't trigger the action unless things have changed
@@ -45,8 +45,7 @@ class Header extends React.Component {
     }
 
     render() {
-        const {onMenuClick, onMiniCartClick} = this.props
-        const {isCollapsed, itemCount} = this.props.header
+        const {onMenuClick, onMiniCartClick, isCollapsed, itemCount} = this.props
 
         const innerButtonClassName = classnames('t-header__inner-button', 'u-padding-0', {
             't--hide-label': isCollapsed
@@ -69,7 +68,8 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
-    header: PropTypes.object,
+    isCollapsed: PropTypes.bool,
+    itemCount: PropTypes.number,
     toggleHeader: PropTypes.func,
 
     onMenuClick: PropTypes.func,
@@ -77,7 +77,8 @@ Header.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
-    header: selectorToJS(selectors.getHeader)
+    isCollapsed: selectors.getIsCollapsed,
+    itemCount: selectors.getItemCount
 })
 
 const mapDispatchToProps = {

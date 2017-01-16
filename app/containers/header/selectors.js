@@ -4,3 +4,13 @@ export const getHeader = createSelector(
     globalSelectors.getUi,
     ({header}) => header
 )
+
+export const getIsCollapsed = createSelector(
+    getHeader,
+    (header) => header.get('isCollapsed')
+)
+
+export const getItemCount = createSelector(
+    getHeader,
+    (header) => header.get('itemCount')
+)
