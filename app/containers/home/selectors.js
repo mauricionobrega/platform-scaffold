@@ -1,4 +1,5 @@
 import {createSelector} from 'reselect'
+import {createGetSelector} from '../../utils/selector-utils'
 import * as globalSelectors from '../../store/selectors'
 
 export const getHome = createSelector(
@@ -6,12 +7,5 @@ export const getHome = createSelector(
     ({home}) => home
 )
 
-export const getHomeBanners = createSelector(
-    getHome,
-    (home) => home.get('banners')
-)
-
-export const getHomeCategories = createSelector(
-    getHome,
-    (home) => home.get('categories')
-)
+export const getHomeBanners = createGetSelector(getHome, 'banners')
+export const getHomeCategories = createGetSelector(getHome, 'categories')

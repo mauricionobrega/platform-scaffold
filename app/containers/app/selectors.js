@@ -9,8 +9,4 @@ export const getApp = createSelector(
 )
 
 export const getCurrentUrl = createGetSelector(getApp, CURRENT_URL)
-
-export const getNotifications = createSelector(
-    getApp,
-    (app) => app.get('notifications')
-)
+export const getNotifications = createGetSelector(getApp, 'notifications')
