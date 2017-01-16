@@ -1,6 +1,6 @@
 import {createSelector} from 'reselect'
 import * as globalSelectors from '../../store/selectors'
-import {SELECTOR} from '../app/constants'
+import {getSelectorFromState} from '../../utils/router-utils'
 
 export const getPdp = createSelector(
     globalSelectors.getUi,
@@ -9,7 +9,7 @@ export const getPdp = createSelector(
 
 export const getPdpSelector = createSelector(
     getPdp,
-    (pdp) => pdp.get(SELECTOR)
+    getSelectorFromState
 )
 
 export const getSelectedPdp = createSelector(
