@@ -1,6 +1,6 @@
 const selectors = {
-    cartTemplateIdentifier: '.t-cart',
-    cartCheckout: '.cart .checkout .selector',
+    cartTemplateIdentifier: '.cart-container',
+    cartCheckout: 'button.checkout',
     removeItem: '.t-cart__remove',
     emptyCart: '.t-cart__empty'
 }
