@@ -23,7 +23,6 @@ const PDP = ({
     contentsLoaded,
     title,
     price,
-    description,
     carouselItems
 }) => {
     return (
@@ -32,7 +31,7 @@ const PDP = ({
 
             <PDPCarousel items={carouselItems} contentsLoaded={contentsLoaded} />
 
-            <PDPDescription description={description} />
+            <PDPDescription />
 
             <PDPAddToCart
                 formInfo={formInfo}
@@ -46,7 +45,7 @@ const PDP = ({
                 <PDPItemAddedModal
                     open={itemAddedModalOpen}
                     onDismiss={closeItemAddedModal}
-                    product={{title, price, description, carouselItems}}
+                    product={{title, price, carouselItems}}
                     quantity={quantityAdded}
                     />
                 }
