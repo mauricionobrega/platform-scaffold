@@ -1,5 +1,5 @@
 
-import WebViewPlugin from 'astro/plugins/webViewPlugin'
+import WebViewPlugin from 'progressive-app-sdk/plugins/webViewPlugin'
 import onboardingConfig from './onboardingConfig'
 
 const OnboardingController = function(navigationView) {
