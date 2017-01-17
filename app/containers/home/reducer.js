@@ -9,7 +9,7 @@ import Home from './container'
 const CATEGORY_PLACEHOLDER_COUNT = 6
 
 const initialState = fromJS({
-    categories: new Array(CATEGORY_PLACEHOLDER_COUNT).fill(''),
+    categories: new Array(CATEGORY_PLACEHOLDER_COUNT).fill({}),
     banners: []
 })
 

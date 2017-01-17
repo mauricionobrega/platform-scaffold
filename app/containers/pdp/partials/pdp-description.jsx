@@ -1,4 +1,8 @@
 import React, {PropTypes} from 'react'
+import {connect} from 'react-redux'
+import {createStructuredSelector} from 'reselect'
+import * as selectors from '../selectors'
+
 import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/accordion'
 
 const PDPDescription = ({description}) => (
@@ -13,4 +17,8 @@ PDPDescription.propTypes = {
     description: PropTypes.string
 }
 
-export default PDPDescription
+const mapStateToProps = createStructuredSelector({
+    description: selectors.getProductDescription
+})
+
+export default connect(mapStateToProps)(PDPDescription)
