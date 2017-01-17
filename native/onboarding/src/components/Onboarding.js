@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import CarouselItem from 'progressive-web-sdk/dist/components/carousel/carousel-item'
 import Carousel from 'progressive-web-sdk/dist/components/carousel'
 import Button from 'progressive-web-sdk/dist/components/button'
-import Astro from 'mobify-progressive-app-sdk/js/build/astro-client.js'
+import Astro from 'mobify-progressive-app-sdk/dist/astro-client.js'
 import carouselData from './data/onboarding.json'
 import './Onboarding.scss'
 
