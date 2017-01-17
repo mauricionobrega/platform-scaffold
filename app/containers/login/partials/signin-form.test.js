@@ -1,5 +1,5 @@
 import React from 'react'
-import SignInForm from './signin'
+import SignInForm from './signin-form'
 import {shallow} from 'enzyme'
 
 test('renders without errors', () => {

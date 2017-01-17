@@ -4,6 +4,7 @@ import {handleActions} from 'redux-actions'
 import {isPageType} from '../../utils/router-utils'
 
 import Login from './container'
+import {SIGN_IN_SECTION, REGISTER_SECTION} from './constants'
 import {openInfoModal, closeInfoModal} from './actions'
 
 import {onPageReceived} from '../app/actions'
@@ -139,11 +140,11 @@ export default handleActions({
 
             const infoModalOpen = !!state.get(formatSectionName(routeName)).get('infoModalOpen')
 
-            if (routeName === Login.SIGN_IN_SECTION) {
+            if (routeName === SIGN_IN_SECTION) {
                 newState = {
                     signinSection: merge(signinParser($, $response), {infoModalOpen})
                 }
-            } else if (routeName === Login.REGISTER_SECTION) {
+            } else if (routeName === REGISTER_SECTION) {
                 newState = {
                     registerSection: merge(registerParser($, $response), {infoModalOpen})
                 }
