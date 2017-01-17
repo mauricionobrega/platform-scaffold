@@ -1,12 +1,19 @@
 import React, {PropTypes} from 'react'
+import {connect} from 'react-redux'
+import {createStructuredSelector} from 'reselect'
+import * as selectors from '../selectors'
+import * as actions from '../actions'
+import {stripEvent} from '../../../utils/utils'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import ProductItem from '../../../components/product-item'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
-const PDPItemAddedModal = ({open, onDismiss, quantity, product: {title, price, carouselItems}}) => (
+const PDPItemAddedModal = ({open, onDismiss, quantity, title, price, productImage}) => (
     <Sheet open={open} onDismiss={onDismiss} effect="slide-bottom" className="t-plp__item-added-modal" coverage="50%">
+
+        {/* Modal header */}
         <div className="u-flex-none u-border-bottom">
             <div className="u-flexbox u-align-center">
                 <h1 className="u-flex u-padding-lg u-h4 u-text-uppercase">
@@ -22,10 +29,11 @@ const PDPItemAddedModal = ({open, onDismiss, quantity, product: {title, price, c
         </div>
 
         <div className="u-flexbox u-column u-flex u-padding-md">
+            {/* Modal product information */}
             <div className="u-flex u-margin-bottom-md">
                 <ProductItem
                     title={<h2 className="c-h4">{title}</h2>}
-                    image={<img role="presentation" src={carouselItems[0].img} alt="" width="60px" />}
+                    image={<img role="presentation" src={productImage} alt="" width="60px" />}
                 >
                     <div className="u-flexbox u-justify-between u-padding-top-sm">
                         <p>Qty: {quantity}</p>
@@ -34,6 +42,7 @@ const PDPItemAddedModal = ({open, onDismiss, quantity, product: {title, price, c
                 </ProductItem>
             </div>
 
+            {/* Buttons */}
             <div className="u-flex-none">
                 <Button
                     href="#"
@@ -52,9 +61,26 @@ const PDPItemAddedModal = ({open, onDismiss, quantity, product: {title, price, c
 
 PDPItemAddedModal.propTypes = {
     open: PropTypes.bool,
-    product: PropTypes.object,
+    price: PropTypes.string,
+    productImage: PropTypes.string,
     quantity: PropTypes.number,
+    title: PropTypes.string,
     onDismiss: PropTypes.func
 }
 
-export default PDPItemAddedModal
+const mapStateToProps = createStructuredSelector({
+    productImage: selectors.getFirstProductImage,
+    open: selectors.getItemAddedModalOpen,
+    quantity: selectors.getQuantityAdded,
+    title: selectors.getProductTitle,
+    price: selectors.getProductPrice
+})
+
+const mapDispatchToProps = {
+    onDismiss: stripEvent(actions.closeItemAddedModal)
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(PDPItemAddedModal)

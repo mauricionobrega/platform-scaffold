@@ -1,4 +1,5 @@
 import {createSelector} from 'reselect'
+import Immutable from 'immutable'
 import {createGetSelector} from '../../utils/selector-utils'
 import * as globalSelectors from '../../store/selectors'
 import {getSelectorFromState} from '../../utils/router-utils'
@@ -35,3 +36,8 @@ export const getProductTitle = createGetSelector(getSelectedProduct, 'title')
 export const getProductPrice = createGetSelector(getSelectedProduct, 'price')
 export const getProductDescription = createGetSelector(getSelectedProduct, 'description')
 export const getProductCarouselItems = createGetSelector(getSelectedProduct, 'carouselItems')
+export const getFirstProductCarouselItem = createSelector(
+    getProductCarouselItems,
+    (carouselItems) => carouselItems.get(0, Immutable.Map())
+)
+export const getFirstProductImage = createGetSelector(getFirstProductCarouselItem, 'img')
