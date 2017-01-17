@@ -1,8 +1,8 @@
 
 import Promise from 'bluebird'
-import Astro from 'astro/astro-full'
-import ModalViewPlugin from 'astro/plugins/modalViewPlugin'
-import SettingsStore from 'astro/settings-store'
+import Astro from 'progressive-app-sdk/astro-full'
+import ModalViewPlugin from 'progressive-app-sdk/plugins/modalViewPlugin'
+import SettingsStore from 'progressive-app-sdk/settings-store'
 import OnboardingController from './onboardingController'
 import AppRpc from '../global/app-rpc'
 import AppEvents from '../global/app-events'

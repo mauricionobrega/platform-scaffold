@@ -1,4 +1,4 @@
-import Astro from 'astro/astro-full'
+import Astro from 'progressive-app-sdk/astro-full'
 import rpcMethodNames from './app-rpc-method-names'
 
 const AppRpc = {}
