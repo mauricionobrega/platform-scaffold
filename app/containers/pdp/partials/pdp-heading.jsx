@@ -1,4 +1,8 @@
 import React, {PropTypes} from 'react'
+import {connect} from 'react-redux'
+import {createStructuredSelector} from 'reselect'
+import * as selectors from '../selectors'
+
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
 const PDPHeading = ({title, price}) => (
@@ -22,4 +26,9 @@ PDPHeading.propTypes = {
     title: PropTypes.string
 }
 
-export default PDPHeading
+const mapStateToProps = createStructuredSelector({
+    title: selectors.getProductTitle,
+    price: selectors.getProductPrice
+})
+
+export default connect(mapStateToProps)(PDPHeading)

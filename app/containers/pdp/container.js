@@ -28,7 +28,7 @@ const PDP = ({
 }) => {
     return (
         <div className="t-pdp">
-            <PDPHeading title={title} price={price} />
+            <PDPHeading />
 
             <PDPCarousel items={carouselItems} contentsLoaded={contentsLoaded} />
 
