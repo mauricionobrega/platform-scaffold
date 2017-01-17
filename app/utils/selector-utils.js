@@ -17,3 +17,8 @@ export const createGetSelector = (selector, key) => createSelector(
     selector,
     (obj) => obj.get(key)
 )
+
+export const invertSelector = (selector) => createSelector(
+    selector,
+    (bool) => !bool
+)
