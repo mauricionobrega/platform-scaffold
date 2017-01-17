@@ -44,7 +44,7 @@ class Header extends React.Component {
     }
 
     render() {
-        const {onMenuClick, onMiniCartClick, isCollapsed, itemCount} = this.props
+        const {onMenuClick, onMiniCartClick, isCollapsed} = this.props
 
         const innerButtonClassName = classnames('t-header__inner-button', 'u-padding-0', {
             't--hide-label': isCollapsed
@@ -58,7 +58,7 @@ class Header extends React.Component {
                         <div className="t-header__placeholder" />
                         <HeaderTitle isCollapsed={isCollapsed} />
                         <StoresAction innerButtonClassName={innerButtonClassName} />
-                        <CartAction innerButtonClassName={innerButtonClassName} onClick={onMiniCartClick} itemCount={itemCount} />
+                        <CartAction innerButtonClassName={innerButtonClassName} onClick={onMiniCartClick} />
                     </HeaderBar>
                 </div>
             </header>
@@ -68,16 +68,14 @@ class Header extends React.Component {
 
 Header.propTypes = {
     isCollapsed: PropTypes.bool,
-    itemCount: PropTypes.number,
     toggleHeader: PropTypes.func,
 
     onMenuClick: PropTypes.func,
-    onMiniCartClick: PropTypes.func,
+    onMiniCartClick: PropTypes.func
 }
 
 const mapStateToProps = createStructuredSelector({
-    isCollapsed: selectors.getIsCollapsed,
-    itemCount: selectors.getItemCount
+    isCollapsed: selectors.getIsCollapsed
 })
 
 const mapDispatchToProps = {
