@@ -2,7 +2,6 @@ import React, {PropTypes} from 'react'
 import {createStructuredSelector} from 'reselect'
 import * as selectors from '../selectors'
 import * as actions from '../actions'
-import {selectorToJS} from '../../../utils/selector-utils'
 import {connect} from 'react-redux'
 
 import NewsletterForm from './newsletter-form'
@@ -20,7 +19,7 @@ class FooterNewsletterSubscription extends React.Component {
     }
 
     render() {
-        const {newsletter, onSubmit} = this.props
+        const {newsletter} = this.props
         return (
             <div className="t-footer__newsletter u-padding-md u-padding-top-lg u-padding-bottom-lg">
                 <div>
