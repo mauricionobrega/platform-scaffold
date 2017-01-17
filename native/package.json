@@ -20,6 +20,7 @@
     "webpack-bundle-analyzer": "^2.2.1"
   },
   "scripts": {
+    "deps": "./scripts/build-dependencies.sh",
     "build": "webpack --config webpack.app.config.js",
     "build-analyze": "ASTRO_ANALYZE=true npm run build"
   }
