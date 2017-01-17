@@ -1,5 +1,8 @@
 import React, {PropTypes} from 'react'
 import classNames from 'classnames'
+import {connect} from 'react-redux'
+import {createStructuredSelector} from 'reselect'
+import {selectorToJS} from '../../../utils/selector-utils'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
@@ -7,6 +10,7 @@ import Image from 'progressive-web-sdk/dist/components/image'
 import ListTile from 'progressive-web-sdk/dist/components/list-tile'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
+import * as selectors from '../selectors'
 
 const getImage = (alt) => {
     return alt ? (
@@ -66,4 +70,8 @@ HomeCategories.propTypes = {
     categories: PropTypes.array.isRequired,
 }
 
-export default HomeCategories
+const mapStateToProps = createStructuredSelector({
+    categories: selectorToJS(selectors.getHomeCategories)
+})
+
+export default connect(mapStateToProps)(HomeCategories)
