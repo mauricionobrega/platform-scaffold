@@ -1,3 +1,4 @@
+import process from 'process'
 import Home from '../page-objects/home'
 import PLP from '../page-objects/plp'
 import PDP from '../page-objects/pdp'
