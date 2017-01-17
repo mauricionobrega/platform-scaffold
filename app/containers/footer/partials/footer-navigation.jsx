@@ -7,10 +7,9 @@ import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 const FooterNavigation = ({navigation}) => {
     return (
         <div className="t-footer__navigation u-padding-lg u-text-align-center">
-            {navigation.map((item, key) => {
-                const title = item.get('title')
+            {navigation.map(({title, href}, index) => {
                 return (
-                    <ListTile href={item.get('href')} key={key}>
+                    <ListTile href={href} key={index}>
                         {title || <SkeletonText width="135px" style={{lineHeight: '20px'}} />}
                     </ListTile>
                 )
@@ -27,7 +26,7 @@ const FooterNavigation = ({navigation}) => {
 }
 
 FooterNavigation.propTypes = {
-    navigation: PropTypes.object
+    navigation: PropTypes.array
 }
 
 export default FooterNavigation
