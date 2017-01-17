@@ -12,23 +12,20 @@ import {stripEvent} from '../../utils/utils'
 import * as pdpActions from './actions'
 import * as selectors from './selectors'
 
-const PDP = ({setQuantity, addToCart, closeItemAddedModal, pdp, product}) => {
-    const {
-        itemQuantity,
-        quantityAdded,
-        itemAddedModalOpen,
-        formInfo,
-        contentsLoaded
-    } = pdp
-
-    const {
-        title,
-        price,
-        description,
-        carouselItems
-    } = product
-
-
+const PDP = ({
+    setQuantity,
+    addToCart,
+    closeItemAddedModal,
+    itemQuantity,
+    quantityAdded,
+    itemAddedModalOpen,
+    formInfo,
+    contentsLoaded,
+    title,
+    price,
+    description,
+    carouselItems
+}) => {
     return (
         <div className="t-pdp">
             <PDPHeading title={title} price={price} />
@@ -49,7 +46,7 @@ const PDP = ({setQuantity, addToCart, closeItemAddedModal, pdp, product}) => {
                 <PDPItemAddedModal
                     open={itemAddedModalOpen}
                     onDismiss={closeItemAddedModal}
-                    product={product}
+                    product={{title, price, description, carouselItems}}
                     quantity={quantityAdded}
                     />
                 }
@@ -67,22 +64,30 @@ PDP.propTypes = {
      */
     closeItemAddedModal: PropTypes.func.isRequired,
     /**
-     * The Immutable.js PDP state object
-     */
-    pdp: PropTypes.object.isRequired,
-    /**
-     * Product data from state (Catalog -> Products)
-     */
-    product: PropTypes.object.isRequired,
-    /**
      * Function to update the item quantity when user changes it
      */
     setQuantity: PropTypes.func.isRequired,
+    carouselItems: PropTypes.array,
+    contentsLoaded: PropTypes.bool,
+    description: PropTypes.string,
+    formInfo: PropTypes.object,
+    itemAddedModalOpen: PropTypes.bool,
+    itemQuantity: PropTypes.number,
+    price: PropTypes.string,
+    quantityAdded: PropTypes.number,
+    title: PropTypes.string
 }
 
 export const mapStateToProps = createStructuredSelector({
-    product: selectorToJS(selectors.getSelectedProduct),
-    pdp: selectorToJS(selectors.getSelectedPdp)
+    title: selectors.getProductTitle,
+    price: selectors.getProductPrice,
+    description: selectors.getProductDescription,
+    carouselItems: selectorToJS(selectors.getProductCarouselItems),
+    itemQuantity: selectors.getItemQuantity,
+    quantityAdded: selectors.getQuantityAdded,
+    itemAddedModalOpen: selectors.getItemAddedModalOpen,
+    formInfo: selectorToJS(selectors.getFormInfo),
+    contentsLoaded: selectors.getPdpContentsLoaded
 })
 
 const mapDispatchToProps = {

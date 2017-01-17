@@ -7,8 +7,7 @@ import * as selectors from './selectors'
 import HomeCarousel from './partials/home-carousel'
 import HomeCategories from './partials/home-categories'
 
-const Home = ({home}) => {
-    const {banners, categories} = home
+const Home = ({banners, categories}) => {
 
     return (
         <div className="t-home__container">
@@ -19,11 +18,13 @@ const Home = ({home}) => {
 }
 
 Home.propTypes = {
-    home: PropTypes.object.isRequired
+    banners: PropTypes.array.isRequired,
+    categories: PropTypes.array.isRequired
 }
 
 const mapStateToProps = createStructuredSelector({
-    home: selectorToJS(selectors.getHome)
+    banners: selectorToJS(selectors.getHomeBanners),
+    categories: selectorToJS(selectors.getHomeCategories)
 })
 
 export default connect(

@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import Immutable from 'immutable'
 import classNames from 'classnames'
 import {createStructuredSelector} from 'reselect'
 import {selectorToJS} from '../../utils/selector-utils'
@@ -29,10 +28,6 @@ export const productSubtotal = (price, quantity) => {
 class MiniCart extends React.Component {
     componentDidMount() {
         this.props.fetchContents()
-    }
-
-    shouldComponentUpdate(newProps) {
-        return !Immutable.is(newProps.miniCart, this.props.miniCart)
     }
 
     renderList(cart) {
@@ -97,8 +92,7 @@ class MiniCart extends React.Component {
     }
 
     render() {
-        const {miniCart, closeMiniCart} = this.props
-        const {cart, contentsLoaded, isOpen} = miniCart
+        const {cart, contentsLoaded, isOpen, closeMiniCart} = this.props
         const hasItems = cart ? cart.items.length > 0 : false
 
         return (
@@ -134,13 +128,17 @@ class MiniCart extends React.Component {
 }
 
 MiniCart.propTypes = {
-    miniCart: PropTypes.object.isRequired,
+    cart: PropTypes.object.isRequired,
     closeMiniCart: PropTypes.func,
+    contentsLoaded: PropTypes.bool,
     fetchContents: PropTypes.func,
+    isOpen: PropTypes.bool,
 }
 
 const mapStateToProps = createStructuredSelector({
-    miniCart: selectorToJS(selectors.getMiniCart)
+    cart: selectorToJS(selectors.getCartObject),
+    contentsLoaded: selectors.getMiniCartContentsLoaded,
+    isOpen: selectors.getMiniCartIsOpen
 })
 
 const mapDispatchToProps = {

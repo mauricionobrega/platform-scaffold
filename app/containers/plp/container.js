@@ -33,15 +33,7 @@ const renderNoResults = (bodyText) => {
     )
 }
 
-const PLP = ({plp, products}) => {
-    const {
-        hasProducts,
-        contentsLoaded,
-        noResultsText,
-        numItems,
-        title
-    } = plp
-
+const PLP = ({hasProducts, contentsLoaded, noResultsText, numItems, title, products}) => {
     return (
         <div className="t-plp">
             <div className="u-flexbox u-align-bottom">
@@ -91,18 +83,23 @@ const PLP = ({plp, products}) => {
 
 PLP.propTypes = {
     /**
-     * The Immutable.js PLP state object
-     */
-    plp: PropTypes.object.isRequired,
-    /**
      * Product data from state (Catalog -> Products), filtered by the productUrls in the Plp state object
      */
-    products: PropTypes.array.isRequired
+    products: PropTypes.array.isRequired,
+    contentsLoaded: PropTypes.bool,
+    hasProducts: PropTypes.bool,
+    noResultsText: PropTypes.string,
+    numItems: PropTypes.string,
+    title: PropTypes.string
 }
 
 const mapStateToProps = createStructuredSelector({
-    products: selectorToJS(selectors.getPlpProducts),
-    plp: selectorToJS(selectors.getSelectedPlp)
+    hasProducts: selectors.getHasProducts,
+    contentsLoaded: selectors.getPlpContentsLoaded,
+    noResultsText: selectors.getNoResultsText,
+    numItems: selectors.getNumItems,
+    title: selectors.getPlpTitle,
+    products: selectorToJS(selectors.getPlpProducts)
 })
 
 export default connect(
