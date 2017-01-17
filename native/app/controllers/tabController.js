@@ -1,8 +1,10 @@
 import Promise from 'bluebird'
 
-import AnchoredLayoutPlugin from 'astro/plugins/anchoredLayoutPlugin'
-import HeaderBarPlugin from 'astro/plugins/headerBarPlugin'
-import NavigationPlugin from 'astro/plugins/navigationPlugin'
+import AnchoredLayoutPlugin from 'progressive-app-sdk/plugins/anchoredLayoutPlugin'
+import HeaderBarPlugin from 'progressive-app-sdk/plugins/headerBarPlugin'
+import NavigationPlugin from 'progressive-app-sdk/plugins/navigationPlugin'
+
+import baseConfig from '../config/baseConfig'
 
 const TabController = function(tabItem, layout, headerBar, navigationView) {
     this.tabItem = tabItem
@@ -30,9 +32,19 @@ TabController.init = async function(tabItem) {
     await layout.addTopView(headerBar)
     await layout.setContentView(navigationView)
     await navigationView.setHeaderBar(headerBar)
+
+    await headerBar.setCenterIcon(baseConfig.logoUrl, 'logo')
+    await headerBar.setTextColor(baseConfig.colors.whiteColor)
+    await headerBar.setBackgroundColor(baseConfig.colors.primaryColor)
+    await headerBar.setOpaque()
+
     headerBar.on('click:back', () => {
         navigationView.back()
     })
+
+    navigationView.defaultWebViewPluginOptions = {
+        disableLoader: []
+    }
 
     return new TabController(tabItem, layout, headerBar, navigationView)
 }
@@ -61,15 +73,19 @@ TabController.prototype.reload = async function() {
     this.loaded = true
 }
 
-TabController.prototype.activate = async function() {
-    this.isActive = true
+TabController.prototype.activate = function() {
+    if (this.isActive) {
+        this.navigationView.popToRoot({animated: true})
+    } else {
+        this.isActive = true
 
-    if (!this.loaded) {
-        await this.reload()
+        if (!this.loaded) {
+            this.reload()
+        }
     }
 }
 
-TabController.prototype.deactivate = async function() {
+TabController.prototype.deactivate = function() {
     this.isActive = false
 }
 

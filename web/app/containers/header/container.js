@@ -52,6 +52,10 @@ class Header extends React.Component {
     }
 
     render() {
+        if (this.props.isRunningInAstro) {
+            return null
+        }
+
         const {onMenuClick, onMiniCartClick} = this.props
         const {isCollapsed, cart} = this.props.header.toJS()
         const cartCounterBadge = generateCartCounterBadge(cart)
@@ -112,13 +116,17 @@ Header.propTypes = {
     appState: PropTypes.object,
     header: PropTypes.object,
     isCollapsed: PropTypes.bool,
+    /**
+     * Defines whether we're being hosted in an Astro app
+     */
+    isRunningInAstro: PropTypes.bool,
     toggleHeader: PropTypes.func,
 
     onMenuClick: PropTypes.func,
     onMiniCartClick: PropTypes.func,
 }
 
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state) => {
     return {
         header: state.header
     }
@@ -127,6 +135,8 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = {
     toggleHeader: headerActions.toggleHeader
 }
+
+export {Header as RawHeader}
 
 export default connect(
     mapStateToProps,

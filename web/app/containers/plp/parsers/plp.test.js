@@ -8,12 +8,19 @@ describe('the plp parser', () => {
     it('should extract the plp content from the rendered HTML', () => {
         const expected = {
             hasProducts: true,
-            isPlaceholder: false,
+            contentsLoaded: true,
             noResultsText: '',
             numItems: '7',
             title: 'Potions',
-            productKeys: ['link', 'image', 'price'],
-            imageKeys: ['title', 'alt', 'src']
+            productUrls: [
+                'http://www.merlinspotions.com/eye-of-newt.html',
+                'http://www.merlinspotions.com/unicorn-blood.html',
+                'http://www.merlinspotions.com/aging-potion.html',
+                'http://www.merlinspotions.com/aging-potion-1.html',
+                'http://www.merlinspotions.com/aging-potion-2.html',
+                'http://www.merlinspotions.com/aging-potion-3.html',
+                'http://www.merlinspotions.com/aging-potion-4.html',
+            ]
         }
 
         // Test that the shallow properties of the plp object are correct
@@ -22,11 +29,5 @@ describe('the plp parser', () => {
                 expect(parsedContent[key]).toEqual(expected[key])
             }
         }
-
-        // Test that the product keys are all there
-        parsedContent.products.forEach((product) => {
-            expect(Object.keys(product)).toEqual(expected.productKeys)
-            expect(Object.keys(product.image)).toEqual(expected.imageKeys)
-        })
     })
 })

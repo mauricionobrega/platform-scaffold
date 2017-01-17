@@ -1,34 +1,39 @@
-version: 2
-executorType: docker
-containerInfo:
-  - image: node:6.9.2
-stages:
-  build:
-    workDir: /home/ubuntu/progressive-web-scaffold
-    steps:
-      - type: checkout
-      - type: shell
-        name: Pre-Dep
-        command: mkdir /home/ubuntu/artifacts
-      - type: cache-restore
-        key: progressive-web-scaffold-{{ .Branch }}
-      - type: shell
-        name: Install Chrome
-        command: |
-          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-          sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-          apt-get update
-          apt-get --only-upgrade install google-chrome-stable
-      - type: shell
-        name: Install Dependencies
-        command: cd web && npm install --progress false
-      - type: cache-save
-        key: progressive-web-scaffold-{{ .Branch }}
-        paths:
-          - /home/ubuntu/progressive-web-scaffold/web/node_modules
-      - type: shell
-        name: NPM Test
-        command: cd web && npm run test:all
-      - type: artifacts-store
-        path: web/coverage/
-        destination: test-coverage
+machine:
+    node:
+        version: 6.9.2
+dependencies:
+    cache_directories:
+        - "web/node_modules"
+        - "native/node_modules"
+    pre:
+        - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+        - sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+        - sudo apt-get update
+        - sudo apt-get --only-upgrade install google-chrome-stable
+    override:
+        - npm install:
+            pwd: web
+        # Disabling native `npm install` for now as we aren't set up to `npm install` a git dep yet
+        #- npm install:
+        #    pwd: native
+test:
+    override:
+        - npm run lint:
+            pwd: web
+        - npm test -- --runInBand:
+            pwd: web
+        - sudo env "PATH=$PATH" npm run test:pwa-ci:
+            pwd: web
+        # Enable smoke-test when automated workflow tests have been implemented.
+        # - npm run smoke-test:
+        #    parallel: true
+        #    pwd: web
+    post:
+        - cp -R lighthouse/* $CIRCLE_ARTIFACTS:
+            pwd: web
+experimental:
+    notify:
+        branches:
+            only:
+                - master
+                - develop

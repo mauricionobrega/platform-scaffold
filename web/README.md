@@ -89,6 +89,24 @@ To verify that changes do not break the checkout flow:
 npm run smoke-test
 ```
 
+## Lighthouse tests
+
+You can run [Lighthouse](https://github.com/GoogleChrome/lighthouse) test against production with:
+
+```
+npm run test:pwa-prod
+```
+
+When you develop it might be helpful to run the same test against your local files: 
+
+```
+sudo npm run test:pwa-local
+```
+
+You **must** keep running `npm run dev` at the same time. 
+
+There is also `test:pwa-ci` task (also requires `sudo`) for CI that runs `dev` and `pwa-local` in parallel.
+
 ## Developing against `develop` of the Progressive Web SDK
 
 If you are wanting to improve or add a library/component in the [Progressive Web SDK](https://github.com/mobify/progressive-web-sdk),

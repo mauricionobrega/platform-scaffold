@@ -10,7 +10,9 @@ import Navigation from '../../containers/navigation/container'
 import * as navActions from '../../containers/navigation/actions'
 import * as miniCartActions from '../../containers/mini-cart/actions'
 import sprite from '../../static/svg/sprite-dist/sprite.svg'
-import * as appActions from '../app/actions'
+import * as appActions from './actions'
+
+import {isRunningInAstro} from '../../utils/astro-integration'
 
 import NotificationManager from '../../components/notification-manager'
 
@@ -31,9 +33,17 @@ class App extends React.Component {
     }
 
     render() {
-        const {requestOpenMiniCart, openNavigation, history, children, app, notificationActions} = this.props
+        const {
+            requestOpenMiniCart,
+            openNavigation,
+            history,
+            children,
+            app,
+            notificationActions
+        } = this.props
+
         const currentTemplateProps = children.props
-        const currentTemplate = `t-${currentTemplateProps.route.routeName}`
+        const currentTemplate = `app--${currentTemplateProps.route.routeName}`
         const CurrentHeader = currentTemplateProps.route.Header || Header
         const CurrentFooter = currentTemplateProps.route.Footer || Footer
         const {notifications} = app.toJS()
@@ -57,7 +67,7 @@ class App extends React.Component {
 
                 <div id="app-wrap" className={currentTemplate}>
                     <div id="app-header" role="banner">
-                        <CurrentHeader onMenuClick={openNavigation} onMiniCartClick={requestOpenMiniCart} />
+                        <CurrentHeader onMenuClick={openNavigation} onMiniCartClick={requestOpenMiniCart} isRunningInAstro={isRunningInAstro} />
                         {notifications &&
                             <NotificationManager notifications={notifications} actions={notificationActions} />
                         }
@@ -71,7 +81,7 @@ class App extends React.Component {
                     </main>
 
                     <div id="app-footer">
-                        <CurrentFooter />
+                        <CurrentFooter isRunningInAstro={isRunningInAstro} />
                     </div>
                 </div>
             </div>
