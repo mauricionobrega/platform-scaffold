@@ -9,6 +9,12 @@ import ChatWindow from '../chat-window'
  */
 
 class Clippy extends React.Component {
+    constructor() {
+        super()
+        this.state = {
+            sheetOpen: false
+        }
+    }
     componentDidMount() {
         clippy.load('Clippy', `.${componentClass}__agent`, (agent) => {
             // Do anything with the loaded agent
@@ -30,11 +36,18 @@ class Clippy extends React.Component {
             sendMessageToClippy
         } = this.props
 
+        const openSheet = () => {
+            this.setState({sheetOpen: true})
+        }
+
+        const closeSheet = () => {
+            this.setState({sheetOpen: false})
+        }
         const classes = classNames(componentClass, className)
 
         return (
             <div className={classes}>
-                <div className="u-flexbox">
+                <div onClick={() => openSheet()} className="u-flexbox">
                     <div className={`${componentClass}__card u-padding-md`}>
                         <div className={`${componentClass}__message`}>
                             Clippy's most recent message will go here
@@ -43,7 +56,7 @@ class Clippy extends React.Component {
                     <div className={`${componentClass}__agent`} />
                 </div>
 
-                <ChatWindow messages={messages} sendMessageToClippy={sendMessageToClippy} />
+                <ChatWindow messages={messages} closeSheet={closeSheet} sheetOpen={this.state.sheetOpen} sendMessageToClippy={sendMessageToClippy} />
             </div>
         )
     }

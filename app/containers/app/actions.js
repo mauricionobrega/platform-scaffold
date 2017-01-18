@@ -57,6 +57,9 @@ export const receiveMessageFromClippy = utils.createAction('Receive message from
 
 export const receiveProductInMessage = utils.createAction('Receive product in message')
 
+// required to make session sticky
+let watsonChatContext = {}
+
 export const sendMessageToClippy = (message) => {
     return (dispatch) => {
         dispatch(receiveMessageFromUser(message))
@@ -67,12 +70,15 @@ export const sendMessageToClippy = (message) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                message
+                message,
+                context: watsonChatContext
             })
         }
         return utils.makeRequest(clippyAPI, options)
             .then((response) => response.json())
             .then((json) => {
+                watsonChatContext = json.context
+
                 if (json.isPDP) {
                     // fetch the PDP and show a preview of it
                     // shouldn't wait for the fetch to show clippy's response
