@@ -191,7 +191,13 @@ class ChatWindow extends React.Component {
                         })}
 
                         <div className="sendClippyMessage">
-                            <div className="u-flexbox">
+                            <form
+                                className="u-flexbox"
+                                onSubmit={(e) => {
+                                    e.preventDefault()
+                                    sendMessage(inputValue)}
+                                }
+                            >
                                 <input
                                     type="text"
                                     className="u-flex"
@@ -208,12 +214,11 @@ class ChatWindow extends React.Component {
                                 </Button>
                                 <Button
                                     className="u-flex-none clippyButton"
-                                    type="button"
-                                    onClick={() => sendMessage(inputValue)}
+                                    type="submit"
                                 >
                                     Send
                                 </Button>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </Sheet>
