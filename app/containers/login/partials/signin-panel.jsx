@@ -7,49 +7,7 @@ import * as actions from '../actions'
 import {SIGN_IN_SECTION} from '../constants'
 
 import SignInForm from './signin-form'
-
-import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
-import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
-
-const SignInPanelHeading = ({heading}) => {
-    if (heading) {
-        return (
-            <h2 className="u-h3 u-color-brand u-text-font-family u-text-normal">
-                {heading}
-            </h2>
-        )
-    } else {
-        return (<SkeletonBlock height="24px" width="50%" className="u-margin-bottom" />)
-    }
-}
-
-SignInPanelHeading.propTypes = {
-    heading: PropTypes.string
-}
-
-const SignInPanelDescription = ({description}) => {
-    if (description) {
-        return (<p>{description}</p>)
-    } else {
-        return (<SkeletonText lines={2} size="14px" width="100%" />)
-    }
-}
-
-SignInPanelDescription.propTypes = {
-    description: PropTypes.string
-}
-
-const SignInPanelRequiredText = ({requiredText}) => {
-    if (requiredText) {
-        return (<span>{requiredText}</span>)
-    } else {
-        return (<SkeletonText lines={1} size="14px" width="33%" />)
-    }
-}
-
-SignInPanelRequiredText.propTypes = {
-    requiredText: PropTypes.string
-}
+import {PanelHeading, PanelDescription, PanelRequiredText} from './common'
 
 class SignInPanel extends React.Component {
     constructor(props) {
@@ -81,13 +39,13 @@ class SignInPanel extends React.Component {
             <div className="t-login__signin-panel">
                 <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
                     <div className="u-margin-bottom">
-                        <SignInPanelHeading heading={heading} />
+                        <PanelHeading heading={heading} />
                     </div>
 
-                    <SignInPanelDescription description={description} />
+                    <PanelDescription description={description} />
 
                     <div className="u-margin-top">
-                        <SignInPanelRequiredText requiredText={requiredText} />
+                        <PanelRequiredText requiredText={requiredText} />
                     </div>
                 </div>
 

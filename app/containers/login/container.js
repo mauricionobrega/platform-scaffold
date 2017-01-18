@@ -5,7 +5,7 @@ import {withRouter} from 'react-router'
 import {selectorToJS} from '../../utils/selector-utils'
 
 import SignInPanel from './partials/signin-panel'
-import RegisterForm from './partials/register'
+import RegisterPanel from './partials/register-panel'
 
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
@@ -49,39 +49,7 @@ const Login = ({
                     <SignInPanel />
                 </TabsPanel>
                 <TabsPanel title={SECTION_NAMES[REGISTER_SECTION]}>
-                    <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
-                        {registerSection.heading ?
-                            <h3 className="u-margin-bottom u-color-brand u-text-font-family u-text-normal">
-                                {registerSection.heading}
-                            </h3>
-                        :
-                            <SkeletonBlock height="24px" width="50%" className="u-margin-bottom" />
-                        }
-
-                        {registerSection.description ?
-                            <p>{registerSection.description}</p>
-                        :
-                            <SkeletonText lines={3} size="14px" width="100%" />
-                        }
-
-                        <div className="u-margin-top">
-                            {registerSection.requiredText ?
-                                registerSection.requiredText
-                            :
-                                <SkeletonText lines={1} size="14px" width="33%" />
-                            }
-                        </div>
-                    </div>
-
-                    <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
-                        <RegisterForm {...registerSection.form}
-                            disabled={!registerSection.form.href}
-                            submitForm={submitRegisterForm}
-                            openModal={openRegisterModal}
-                            closeModal={closeRegisterModal}
-                            modalOpen={registerSection.infoModalOpen}
-                        />
-                    </div>
+                    <RegisterPanel registerSection={registerSection} openRegisterModal={openRegisterModal} closeRegisterModal={closeRegisterModal} submitRegisterForm={submitRegisterForm} />
                 </TabsPanel>
             </Tabs>
         </div>
