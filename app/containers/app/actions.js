@@ -122,7 +122,16 @@ export const sendMessageToClippy = (message) => {
                 }
 
                 if (json.shouldAddToCart) {
-                    dispatch(clippyAddToCart())
+                    if (lastProductUrl) {
+                        dispatch(clippyAddToCart())
+                        dispatch(receiveMessageFromClippy(json))
+                    } else {
+                        dispatch(receiveMessageFromClippy({
+                            response: 'Which product?'
+                        }))
+                    }
+
+                    return
                 }
 
                 dispatch(receiveMessageFromClippy(json))
