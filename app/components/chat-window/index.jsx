@@ -3,6 +3,10 @@ import classNames from 'classnames'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
+import ListTile from 'progressive-web-sdk/dist/components/list-tile'
+import Image from 'progressive-web-sdk/dist/components/image'
+
+import ProductTile from '../../containers/plp/partials/product-tile'
 
 const componentClass = 'c-chat-window'
 
@@ -40,14 +44,34 @@ class ChatWindow extends React.Component {
                 coverage="95%"
             >
                 <div className="chatContainer">
+                    {messages && messages.map((message, index) => {
+                        const productImage = message.product && <Image
+                            src={message.product.carouselItems[0].img}
+                            className="c-chat-window__product-image"
+                        />
 
-                    {messages && messages.map((message, index) =>
-                        <div key={index} className={message.from === 'user' ? 'messageWrapperUser' : 'messageWrapperClippy'}>
-                            <div className={message.from === 'user' ? 'fromUser' : 'clippyMessage'}>
-                                {message.text}
+                        return (
+                            <div>
+                                <div key={index} className={message.from === 'user' ? 'messageWrapperUser' : 'messageWrapperClippy'}>
+                                    <div className={message.from === 'user' ? 'fromUser' : 'clippyMessage'}>
+                                        {message.text}
+                                    </div>
+                                </div>
+
+                               {message.product &&
+                                    <ListTile
+                                        href={message.url}
+                                        className="u-bg-color-neutral-10"
+                                    >
+                                        <ProductTile
+                                            {...message.product}
+                                            image={productImage}
+                                        />
+                                    </ListTile>
+                                }
                             </div>
-                        </div>
-                    )}
+                        )
+                    })}
 
                     <div className="sendClippyMessage">
                         <div className="u-flexbox">

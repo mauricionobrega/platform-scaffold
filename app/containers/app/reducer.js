@@ -55,8 +55,29 @@ export default createReducer({
         return state.updateIn(['clippy', 'messages'], (messages) => {
             return messages.push({
                 from: 'clippy',
-                text: payload
+                text: payload.response,
+                hasProduct: payload.isPDP,
+                url: payload.redirectURL
             })
+        })
+    },
+    [appActions.receiveProductInMessage]: (state, payload) => {
+        return state.updateIn(['clippy', 'messages'], (messages) => {
+            let newMessages = messages
+
+            const messageToUpdate = messages.findIndex((message) => {
+                return message.url === payload.url
+            })
+
+            if (messageToUpdate !== -1) {
+                const message = newMessages.get(messageToUpdate)
+                newMessages = newMessages.set(messageToUpdate, {
+                    ...message,
+                    product: payload.data
+                })
+            }
+
+            return newMessages
         })
     }
 }, initialState)

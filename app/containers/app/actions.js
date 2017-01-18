@@ -2,6 +2,8 @@ import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import * as utils from '../../utils/utils'
 import {CURRENT_URL} from './constants'
 
+import {pdpParser} from '../catalog/products/parser'
+
 export const addNotification = utils.createAction('Add Notification')
 export const removeNotification = utils.createAction('Remove Notification')
 export const removeAllNotifications = utils.createAction('Remove All Notifications')
@@ -53,6 +55,8 @@ const clippyAPI = 'https://mobify-merlin-clippy.herokuapp.com/talk'
 export const receiveMessageFromUser = utils.createAction('Receive message from User')
 export const receiveMessageFromClippy = utils.createAction('Receive message from Clippy')
 
+export const receiveProductInMessage = utils.createAction('Receive product in message')
+
 export const sendMessageToClippy = (message) => {
     return (dispatch) => {
         dispatch(receiveMessageFromUser(message))
@@ -69,7 +73,31 @@ export const sendMessageToClippy = (message) => {
         return utils.makeRequest(clippyAPI, options)
             .then((response) => response.json())
             .then((json) => {
-                dispatch(receiveMessageFromClippy(json.response))
+                if (json.isPDP) {
+                    // fetch the PDP and show a preview of it
+                    // shouldn't wait for the fetch to show clippy's response
+                    // should the product preview come as a different message?
+                    // ideally just show a loading indicator
+                    // and update the message after the fact
+
+                    // use the url to determine which product has loaded
+                    // because multiple requests should be able to make use of the same load
+                    // ideally use the catalog but like
+                    // that's hard
+
+                    utils.makeRequest(json.redirectURL)
+                        .then(jqueryResponse)
+                        .then(([$, $responseText]) => {
+                            const payload = {
+                                data: pdpParser($, $responseText),
+                                url: json.redirectURL
+                            }
+
+                            dispatch(receiveProductInMessage(payload))
+                        })
+                }
+
+                dispatch(receiveMessageFromClippy(json))
             })
             .catch(() => {
                 dispatch(receiveMessageFromClippy('Network error, please try again'))
