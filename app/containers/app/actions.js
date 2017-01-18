@@ -53,6 +53,9 @@ const clippyAPI = 'https://mobify-merlin-clippy.herokuapp.com/talk'
 export const receiveMessageFromUser = utils.createAction('Receive message from User')
 export const receiveMessageFromClippy = utils.createAction('Receive message from Clippy')
 
+// required to make session sticky
+let watsonChatContext = {}
+
 export const sendMessageToClippy = (message) => {
     return (dispatch) => {
         dispatch(receiveMessageFromUser(message))
@@ -63,12 +66,14 @@ export const sendMessageToClippy = (message) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                message
+                message,
+                context: watsonChatContext
             })
         }
         return utils.makeRequest(clippyAPI, options)
             .then((response) => response.json())
             .then((json) => {
+                watsonChatContext = json.context
                 dispatch(receiveMessageFromClippy(json.response))
             })
             .catch(() => {
