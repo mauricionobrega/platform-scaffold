@@ -1,6 +1,7 @@
 import {createAction, makeFormEncodedRequest} from '../../utils/utils'
 import isEmail from 'validator/lib/isEmail'
 import {SubmissionError} from 'redux-form'
+import {getLogin} from './selectors'
 
 const validateSignInForm = (formValues) => {
     const errors = {
@@ -99,7 +100,7 @@ export const submitSignInForm = (formValues, resolve, reject) => {
         if (errors._error || Object.keys(errors.login).length) {
             return reject(new SubmissionError(errors))
         }
-        const loginData = getStore().login.toJS()
+        const loginData = getLogin(getStore()).toJS()
         const {href, hiddenInputs} = loginData.signinSection.form
 
         hiddenInputs.forEach((input) => {
@@ -116,7 +117,7 @@ export const submitRegisterForm = (formValues, resolve, reject) => {
         if (errors._error || Object.keys(errors).length) {
             return reject(new SubmissionError(errors))
         }
-        const loginData = getStore().login.toJS()
+        const loginData = getLogin(getStore()).toJS()
         const {href, hiddenInputs} = loginData.registerSection.form
 
         hiddenInputs.forEach((input) => {
