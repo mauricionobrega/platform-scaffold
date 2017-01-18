@@ -1,6 +1,6 @@
 
 var clippy = {};
-window.clippy = clippy
+window.clippy = clippy;
 /******
  *
  *
