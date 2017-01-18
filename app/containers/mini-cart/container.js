@@ -93,26 +93,6 @@ class MiniCart extends React.Component {
         )
     }
 
-    renderButton(hasItems) {
-        if (hasItems) {
-            return (
-                <div className="u-padding-top-lg u-flex-none">
-                    <Button href="#" className="c--primary u-width-full u-text-uppercase">
-                        Go To Checkout
-                    </Button>
-                </div>
-            )
-        } else {
-            return (
-                <div className="u-padding-top-lg u-flex-none">
-                    <Button href="#" className="c--primary u-width-full u-text-uppercase">
-                        Continue Shopping
-                    </Button>
-                </div>
-            )
-        }
-    }
-
     render() {
         const {miniCart, closeMiniCart} = this.props
         const {cart, contentsLoaded, isOpen} = miniCart.toJS()
@@ -137,7 +117,11 @@ class MiniCart extends React.Component {
                         <div className="t-mini-cart__content u-flexbox u-column u-padding-md">
                             {hasItems ? this.renderList(cart) : this.renderEmpty()}
 
-                            {this.renderButton(hasItems)}
+                            <div className="u-padding-top-lg u-flex-none">
+                                <Button href="#" className="c--primary u-width-full u-text-uppercase">
+                                    {hasItems ? 'Go To Checkout' : 'Continue Shopping'}
+                                </Button>
+                            </div>
                         </div>
                     )
                 : false}
