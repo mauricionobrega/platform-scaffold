@@ -2,7 +2,9 @@ import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import * as utils from '../../utils/utils'
 import {CURRENT_URL} from './constants'
 
-import {pdpParser} from '../catalog/products/parser'
+import {pdpParser as productParser} from '../catalog/products/parser'
+import pdpParser from '../pdp/parsers/pdp'
+import {getCart} from '../cart/actions'
 
 export const addNotification = utils.createAction('Add Notification')
 export const removeNotification = utils.createAction('Remove Notification')
@@ -52,13 +54,35 @@ export const fetchPage = (url, pageComponent, routeName) => {
 
 const clippyAPI = 'https://mobify-merlin-clippy.herokuapp.com/talk'
 
+// required to make session sticky
+let watsonChatContext = {}
+let lastProductUrl = ''
+
 export const receiveMessageFromUser = utils.createAction('Receive message from User')
 export const receiveMessageFromClippy = utils.createAction('Receive message from Clippy')
 
 export const receiveProductInMessage = utils.createAction('Receive product in message')
 
-// required to make session sticky
-let watsonChatContext = {}
+export const clippyAddToCart = () => {
+    return (dispatch) => {
+        utils.makeRequest(lastProductUrl)
+            .then(jqueryResponse)
+            .then(([$, $responseText]) => {
+                const state = pdpParser($, $responseText)
+                const formInfo = state.formInfo
+                const qty = state.itemQuantity
+
+                return utils.makeFormEncodedRequest(formInfo.submitUrl, {
+                    ...formInfo.hiddenInputs,
+                    qty
+                }, {
+                    method: formInfo.method
+                }).then(() => {
+                    dispatch(getCart())
+                })
+            })
+    }
+}
 
 export const sendMessageToClippy = (message) => {
     return (dispatch) => {
@@ -80,27 +104,22 @@ export const sendMessageToClippy = (message) => {
                 watsonChatContext = json.context
 
                 if (json.isPDP) {
-                    // fetch the PDP and show a preview of it
-                    // shouldn't wait for the fetch to show clippy's response
-                    // should the product preview come as a different message?
-                    // ideally just show a loading indicator
-                    // and update the message after the fact
-
-                    // use the url to determine which product has loaded
-                    // because multiple requests should be able to make use of the same load
-                    // ideally use the catalog but like
-                    // that's hard
+                    lastProductUrl = json.redirectURL
 
                     utils.makeRequest(json.redirectURL)
                         .then(jqueryResponse)
                         .then(([$, $responseText]) => {
                             const payload = {
-                                data: pdpParser($, $responseText),
+                                data: productParser($, $responseText),
                                 url: json.redirectURL
                             }
 
                             dispatch(receiveProductInMessage(payload))
                         })
+                }
+
+                if (json.shouldAddToCart) {
+                    dispatch(clippyAddToCart())
                 }
 
                 dispatch(receiveMessageFromClippy(json))
