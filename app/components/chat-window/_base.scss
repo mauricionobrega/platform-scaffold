@@ -8,20 +8,8 @@
 // ---
 
 .c-chat-window {
-    // Root Class. Contains all core styles, typically for the component's
-    // wrapper element.
-    // display: none;
-    top: 0;
-    min-height: 100%;
-    background-color: #4e439b;
-    min-width: 100%;
-    position: fixed;
-
-    .chatContainer {
-        min-height: 75%;
-        margin-top: 25%;
-        min-width: 100%;
-        position: fixed;
+    .c-sheet__content {
+        background-color: #4e439b;
     }
 
     .sendClippyMessage {
