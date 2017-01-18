@@ -4,6 +4,8 @@ import clippy from './clippy'
 const componentClass = 'c-clippy'
 import ChatWindow from '../chat-window'
 
+import PDPItemAddedModal from '../../containers/pdp/partials/pdp-item-added-modal'
+
 /**
  * Your annoying assistant
  */
@@ -46,7 +48,10 @@ class Clippy extends React.Component {
         const {
             className,
             messages,
-            sendMessageToClippy
+            sendMessageToClippy,
+            product,
+            itemAddedModalOpen,
+            closeItemAddedModal
         } = this.props
 
         const openSheet = () => {
@@ -71,6 +76,15 @@ class Clippy extends React.Component {
                 </div>
 
                 <ChatWindow messages={messages} closeSheet={closeSheet} sheetOpen={this.state.sheetOpen} sendMessageToClippy={sendMessageToClippy} />
+
+                {product &&
+                    <PDPItemAddedModal
+                        open={itemAddedModalOpen}
+                        onDismiss={closeItemAddedModal}
+                        product={product}
+                        quantity={1}
+                    />
+                }
             </div>
         )
     }

@@ -128,7 +128,8 @@ const mapDispatchToProps = (dispatch, props) => {
             removeNotification: (id) => dispatch(appActions.removeNotification(id))
         },
         clippyActions: {
-            sendMessageToClippy: (message) => dispatch(appActions.sendMessageToClippy(message))
+            sendMessageToClippy: (message) => dispatch(appActions.sendMessageToClippy(message)),
+            closeItemAddedModal: () => dispatch(appActions.closeItemAddedModal())
         }
     }
 }

@@ -138,84 +138,86 @@ class ChatWindow extends React.Component {
         }
 
         return (
-            <Sheet
-                className={classes}
-                open={sheetOpen}
-                effect="slide-bottom"
-                coverage="95%"
-            >
-                <div className="chatContainer">
-                    <Button
-                        className="closeSheet"
-                        type="button"
-                        onClick={() => closeSheet()}
-                    >
-                        X
-                    </Button>
+            <div>
+                <Sheet
+                    className={classes}
+                    open={sheetOpen}
+                    effect="slide-bottom"
+                    coverage="95%"
+                >
+                    <div className="chatContainer">
+                        <Button
+                            className="closeSheet"
+                            type="button"
+                            onClick={() => closeSheet()}
+                        >
+                            X
+                        </Button>
 
-                    {messages && messages.map((message, index) => {
-                        // Need to reorder props to work with ProductTile
-                        const productProps = message.hasProduct && {
-                            ...message.product,
-                            link: {
-                                text: message.product.title
-                            },
-                            image: message.product.carouselItems ? {
-                                src: message.product.carouselItems[0].img
-                            } : {}
-                        }
+                        {messages && messages.map((message, index) => {
+                            // Need to reorder props to work with ProductTile
+                            const productProps = message.hasProduct && {
+                                ...message.product,
+                                link: {
+                                    text: message.product.title
+                                },
+                                image: message.product.carouselItems ? {
+                                    src: message.product.carouselItems[0].img
+                                } : {}
+                            }
 
-                        const classes = message.from === 'user' ? 'messageWrapperUser' : 'messageWrapperClippy'
+                            const classes = message.from === 'user' ? 'messageWrapperUser' : 'messageWrapperClippy'
 
-                        const onClick = () => {
-                            browserHistory.push(message.url)
-                            closeSheet()
-                        }
+                            const onClick = () => {
+                                browserHistory.push(message.url)
+                                closeSheet()
+                            }
 
-                        return (
-                            <div key={index}>
-                                <Link onClick={onClick} className={classes}>
-                                    <div className={message.from === 'user' ? 'fromUser' : 'clippyMessage'}>
-                                        {message.text}
-                                    </div>
-                                </Link>
+                            return (
+                                <div key={index}>
+                                    <Link onClick={onClick} className={classes}>
+                                        <div className={message.from === 'user' ? 'fromUser' : 'clippyMessage'}>
+                                            {message.text}
+                                        </div>
+                                    </Link>
 
-                               {message.hasProduct &&
-                                    <ListTile onClick={onClick}>
-                                        <ProductTile product={productProps} />
-                                    </ListTile>
-                                }
+                                   {message.hasProduct &&
+                                        <ListTile onClick={onClick}>
+                                            <ProductTile product={productProps} />
+                                        </ListTile>
+                                    }
+                                </div>
+                            )
+                        })}
+
+                        <div className="sendClippyMessage">
+                            <div className="u-flexbox">
+                                <input
+                                    type="text"
+                                    className="u-flex"
+                                    value={inputValue}
+                                    placeholder="Ask Clippy a question..."
+                                    onChange={(e) => this.setState({inputValue: e.target.value})}
+                                />
+                                <Button
+                                    className="u-flex-none clippyButton"
+                                    type="button"
+                                    onClick={() => startRecording()}
+                                >
+                                    {this.state.isRecording ? '🔴' : '🎙'}
+                                </Button>
+                                <Button
+                                    className="u-flex-none clippyButton"
+                                    type="button"
+                                    onClick={() => sendMessage(inputValue)}
+                                >
+                                    Send
+                                </Button>
                             </div>
-                        )
-                    })}
-
-                    <div className="sendClippyMessage">
-                        <div className="u-flexbox">
-                            <input
-                                type="text"
-                                className="u-flex"
-                                value={inputValue}
-                                placeholder="Ask Clippy a question..."
-                                onChange={(e) => this.setState({inputValue: e.target.value})}
-                            />
-                            <Button
-                                className="u-flex-none clippyButton"
-                                type="button"
-                                onClick={() => startRecording()}
-                            >
-                                {this.state.isRecording ? '🔴' : '🎙'}
-                            </Button>
-                            <Button
-                                className="u-flex-none clippyButton"
-                                type="button"
-                                onClick={() => sendMessage(inputValue)}
-                            >
-                                Send
-                            </Button>
                         </div>
                     </div>
-                </div>
-            </Sheet>
+                </Sheet>
+            </div>
         )
     }
 }

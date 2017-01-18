@@ -10,7 +10,8 @@ const initialState = Map({
         // If we use a regular array, React doesn't seem to catch all the updates
     notifications: List(),
     clippy: Map({
-        messages: List()
+        messages: List(),
+        itemAddedModalOpen: false
     })
 })
 
@@ -63,7 +64,7 @@ export default createReducer({
         })
     },
     [appActions.receiveProductInMessage]: (state, payload) => {
-        return state.updateIn(['clippy', 'messages'], (messages) => {
+        let newState = state.updateIn(['clippy', 'messages'], (messages) => {
             const newMessages = messages.toJS().map((message) => {
                 const newMessage = message
 
@@ -76,5 +77,15 @@ export default createReducer({
 
             return List(newMessages)
         })
+
+        newState = newState.setIn(['clippy', 'product'], payload.data)
+
+        return newState
+    },
+    [appActions.openItemAddedModal]: (state) => {
+        return state.setIn(['clippy', 'itemAddedModalOpen'], true)
+    },
+    [appActions.closeItemAddedModal]: (state) => {
+        return state.setIn(['clippy', 'itemAddedModalOpen'], false)
     }
 }, initialState)

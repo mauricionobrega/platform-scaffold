@@ -62,6 +62,8 @@ export const receiveMessageFromUser = utils.createAction('Receive message from U
 export const receiveMessageFromClippy = utils.createAction('Receive message from Clippy')
 
 export const receiveProductInMessage = utils.createAction('Receive product in message')
+export const openItemAddedModal = utils.createAction('Open item added modal')
+export const closeItemAddedModal = utils.createAction('Close item added modal')
 
 export const clippyAddToCart = () => {
     return (dispatch) => {
@@ -78,6 +80,7 @@ export const clippyAddToCart = () => {
                 }, {
                     method: formInfo.method
                 }).then(() => {
+                    dispatch(openItemAddedModal())
                     dispatch(getCart())
                 })
             })
