@@ -6,14 +6,14 @@ window.clippy = clippy;
  *
  * @constructor
  */
-clippy.Agent = function (path, data, sounds) {
+clippy.Agent = function (path, data, sounds, parentSelector) {
     this.path = path;
 
     this._queue = new clippy.Queue($.proxy(this._onQueueEmpty, this));
 
     this._el = $('<div class="clippy"></div>').hide();
 
-    $(document.body).append(this._el);
+    $(parentSelector).append(this._el);
 
     this._animator = new clippy.Animator(this._el, path, data, sounds);
 
@@ -847,7 +847,7 @@ clippy.Balloon.prototype = {
 
 clippy.BASE_PATH = '//s3.amazonaws.com/clippy.js/Agents/';
 
-clippy.load = function (name, successCb, failCb) {
+clippy.load = function (name, parentSelector, successCb, failCb) {
     var path = clippy.BASE_PATH + name;
 
     var mapDfd = clippy.load._loadMap(path);
@@ -867,7 +867,7 @@ clippy.load = function (name, successCb, failCb) {
 
     // wrapper to the success callback
     var cb = function () {
-        var a = new clippy.Agent(path, data,sounds);
+        var a = new clippy.Agent(path, data, sounds, parentSelector);
         successCb(a);
     };
 

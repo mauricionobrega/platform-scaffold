@@ -9,7 +9,7 @@ const componentClass = 'c-clippy'
 
 class Clippy extends React.Component {
     componentDidMount() {
-      clippy.load('Clippy', function(agent) {
+      clippy.load('Clippy', `.${componentClass}__agent`, function(agent) {
           // Do anything with the loaded agent
           agent.show();
           function timeout() {
@@ -24,7 +24,6 @@ class Clippy extends React.Component {
     }
     render() {
         const {
-            text,
             className
         } = this.props
 
@@ -32,7 +31,14 @@ class Clippy extends React.Component {
 
         return (
             <div className={classes}>
-                I am an example! {text}
+                <div className="u-flexbox">
+                    <div className={`${componentClass}__card u-padding-md`}>
+                        <div className={`${componentClass}__message`}>
+                            Clippy's most recent message will go here
+                        </div>
+                    </div>
+                    <div className={`${componentClass}__agent`} />
+                </div>
             </div>
         )
     }
@@ -40,12 +46,6 @@ class Clippy extends React.Component {
 
 
 Clippy.propTypes = {
-    /**
-     * PropTypes comments are REQUIRED for components to be included
-     * in the styleguide
-     */
-    text: PropTypes.string.isRequired,
-
     /**
      * Adds values to the `class` attribute of the root element
      */
