@@ -36,8 +36,10 @@ class ChatWindow extends React.Component {
                 <div className="chatContainer">
 
                     {messages && messages.map((message, index) =>
-                        <div key={index} className={message.from === 'user' ? 'fromUser' : 'clippyMessage'}>
-                            {message.text}
+                        <div key={index} className={message.from === 'user' ? 'messageWrapperUser' : 'messageWrapperClippy'}>
+                            <div className={message.from === 'user' ? 'fromUser' : 'clippyMessage'}>
+                                {message.text}
+                            </div>
                         </div>
                     )}
 
@@ -52,7 +54,7 @@ class ChatWindow extends React.Component {
                         Send
                     </Button>
                 </div>
-                
+
             </div>
         )
     }
