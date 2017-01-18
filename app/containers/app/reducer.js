@@ -8,7 +8,10 @@ const initialState = Map({
     [FETCH_IN_PROGRESS]: false,
     [CURRENT_URL]: false,
         // If we use a regular array, React doesn't seem to catch all the updates
-    notifications: List()
+    notifications: List(),
+    clippy: Map({
+        messages: List()
+    })
 })
 
 export default createReducer({
@@ -39,5 +42,21 @@ export default createReducer({
     },
     [appActions.removeAllNotifications]: (state) => {
         return state.set('notifications', List())
+    },
+    [appActions.receiveMessageFromUser]: (state, payload) => {
+        return state.updateIn(['clippy', 'messages'], (messages) => {
+            return messages.push({
+                from: 'user',
+                text: payload
+            })
+        })
+    },
+    [appActions.receiveMessageFromClippy]: (state, payload) => {
+        return state.updateIn(['clippy', 'messages'], (messages) => {
+            return messages.push({
+                from: 'clippy',
+                text: payload
+            })
+        })
     }
 }, initialState)

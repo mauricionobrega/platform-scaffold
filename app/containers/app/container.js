@@ -39,11 +39,12 @@ class App extends React.Component {
             notificationActions,
             openNavigation,
             requestOpenMiniCart,
+            clippyActions
         } = this.props
         const currentTemplateProps = children.props
         const CurrentHeader = currentTemplateProps.route.Header || Header
         const CurrentFooter = currentTemplateProps.route.Footer || Footer
-        const {notifications} = app.toJS()
+        const {notifications, clippy} = app.toJS()
 
         const skipLinksItems = [
             // Customize your list of SkipLinks here. These are necessary to
@@ -92,7 +93,7 @@ class App extends React.Component {
                         <CurrentFooter />
                     </div>
 
-                    <Clippy />
+                    <Clippy {...clippy} {...clippyActions} />
                 </div>
             </div>
         )
@@ -105,6 +106,8 @@ App.propTypes = {
      * The react-router history object
      */
     app: PropTypes.object,
+    clippy: PropTypes.object,
+    clippyActions: PropTypes.object,
     history: PropTypes.object,
     notificationActions: PropTypes.object,
     openNavigation: PropTypes.func,
@@ -123,6 +126,9 @@ const mapDispatchToProps = (dispatch, props) => {
         requestOpenMiniCart: () => dispatch(miniCartActions.requestOpenMiniCart()),
         notificationActions: {
             removeNotification: (id) => dispatch(appActions.removeNotification(id))
+        },
+        clippyActions: {
+            sendMessageToClippy: (message) => dispatch(appActions.sendMessageToClippy(message))
         }
     }
 }

@@ -8,24 +8,38 @@ const componentClass = 'c-clippy'
  */
 
 class Clippy extends React.Component {
-    componentDidMount() {
-      clippy.load('Clippy', `.${componentClass}__agent`, function(agent) {
-          // Do anything with the loaded agent
-          agent.show();
-          function timeout() {
-              setTimeout(function () {
-                  agent.animate();
-                  timeout();
-              }, 2000);
-          }
+    constructor(props) {
+        super(props)
 
-          timeout();
-      })
+        this.state = {
+            inputValue: ''
+        }
+    }
+
+    componentDidMount() {
+        clippy.load('Clippy', `.${componentClass}__agent`, (agent) => {
+            // Do anything with the loaded agent
+            agent.show()
+            const timeout = () => {
+                setTimeout(() => {
+                    agent.animate()
+                    timeout()
+                }, 2000)
+            }
+
+            timeout()
+        })
     }
     render() {
         const {
-            className
+            className,
+            messages,
+            sendMessageToClippy
         } = this.props
+
+        const {
+            inputValue
+        } = this.state
 
         const classes = classNames(componentClass, className)
 
@@ -39,6 +53,19 @@ class Clippy extends React.Component {
                     </div>
                     <div className={`${componentClass}__agent`} />
                 </div>
+
+                <input
+                    type="text"
+                    value={inputValue}
+                    onChange={(e) => this.setState({ inputValue: e.target.value })}
+                />
+                <button onClick={() => sendMessageToClippy(inputValue)}>
+                    send
+                </button>
+
+                {messages && messages.map((message, index) =>
+                    <div key={index}>{message.text}</div>
+                )}
             </div>
         )
     }
@@ -51,6 +78,9 @@ Clippy.propTypes = {
      */
     className: PropTypes.string,
 
+    messages: PropTypes.array,
+
+    sendMessageToClippy: PropTypes.func
 }
 
 export default Clippy
