@@ -23,7 +23,9 @@ class ChatWindow extends React.Component {
         const {
             messages,
             sendMessageToClippy,
-            className
+            className,
+            sheetOpen,
+            closeSheet
         } = this.props
 
         const {
@@ -32,15 +34,26 @@ class ChatWindow extends React.Component {
 
         const classes = classNames(componentClass, className)
 
+        const sendMessage = (inputValue) => {
+            sendMessageToClippy(inputValue)
+            this.state.inputValue = ''
+        }
+
         return (
             <Sheet
                 className={classes}
-                open={true}
+                open={sheetOpen}
                 effect="slide-bottom"
                 coverage="95%"
             >
                 <div className="chatContainer">
-
+                    <Button
+                        className="closeSheet"
+                        type="button"
+                        onClick={() => closeSheet()}
+                    >
+                        X
+                    </Button>
                     {messages && messages.map((message, index) =>
                         <div key={index} className={message.from === 'user' ? 'messageWrapperUser' : 'messageWrapperClippy'}>
                             <div className={message.from === 'user' ? 'fromUser' : 'clippyMessage'}>
@@ -59,8 +72,9 @@ class ChatWindow extends React.Component {
                                 onChange={(e) => this.setState({inputValue: e.target.value})}
                             />
                             <Button
-                                className="u-flex-none"
-                                onClick={() => sendMessageToClippy(inputValue)}
+                                className="u-flex-none clippyButton"
+                                type="button"
+                                onClick={() => sendMessage(inputValue)}
                             >
                                 Send
                             </Button>

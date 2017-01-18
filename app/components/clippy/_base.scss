@@ -25,7 +25,7 @@
 
     z-index: 10; // 2
 
-    background: $neutral-10;
+    background: none;
 }
 
 
@@ -34,7 +34,9 @@
 //
 
 .c-clippy__card {
+    border-radius: 25px;
     color: $neutral-50;
+    background-color: #fff;
 }
 
 
