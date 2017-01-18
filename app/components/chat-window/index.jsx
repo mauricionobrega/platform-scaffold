@@ -23,7 +23,17 @@ class ChatWindow extends React.Component {
 
         return (
             <div className={classes}>
-              THIS IS THE CHAT WINDOW{text}
+              <div className="chatContainer">
+                <div className="clippyMessage">
+                  FROM CLIPPY
+                </div>
+                <div className="fromUser">
+                  FROM USER{text}
+                </div>
+                <input type="text" placeholder="Ask Clippy a question..." className="sendClippyMessage">
+
+                </input>
+              </div>
             </div>
         )
     }

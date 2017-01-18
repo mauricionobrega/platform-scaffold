@@ -26,17 +26,20 @@
 }
 
 
-// Modifiers
+// Clippy card
 // ---
 //
-// .c-clippy.c--modifier {
-//     ...
-// }
+
+.c-clippy__card {
+    color: $neutral-50;
+}
 
 
-// Sub components
+// Clippy agent
 // ---
 //
-// .c-clippy__sub-component {
-//     ...
-// }
+// 1. When switching between animations, there are a couple frames where Clippy shrinks
+
+.c-clippy__agent {
+    min-width: 125px; // 1
+}

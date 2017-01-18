@@ -2,7 +2,6 @@ import React, {PropTypes} from 'react'
 import classNames from 'classnames'
 import clippy from './clippy'
 const componentClass = 'c-clippy'
-import ChatWindow from '../chat-window'
 
 /**
  * Your annoying assistant
@@ -37,10 +36,9 @@ class Clippy extends React.Component {
                   <div className={`${componentClass}__message`}>
                     Clippy's most recent message will go here
                   </div>
+                    </div>
+                    <div className={`${componentClass}__agent`} />
                 </div>
-                <div className={`${componentClass}__agent`} />
-              </div>
-              <ChatWindow />
             </div>
         )
     }
