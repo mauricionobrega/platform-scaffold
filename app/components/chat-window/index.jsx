@@ -60,10 +60,16 @@ class ChatWindow extends React.Component {
                     </Button>
 
                     {messages && messages.map((message, index) => {
-                        const productImage = message.product && <Image
-                            src={message.product.carouselItems[0].img}
-                            className="c-chat-window__product-image"
-                        />
+                        // Need to reorder props to work with ProductTile
+                        const productProps = message.hasProduct && {
+                            ...message.product,
+                            link: {
+                                text: message.product.title
+                            },
+                            image: message.product.carouselItems ? {
+                                src: message.product.carouselItems[0].img
+                            } : {}
+                        }
 
                         return (
                             <div>
@@ -73,15 +79,11 @@ class ChatWindow extends React.Component {
                                     </div>
                                 </div>
 
-                               {message.product &&
+                               {message.hasProduct &&
                                     <ListTile
                                         href={message.url}
-                                        className="u-bg-color-neutral-10"
                                     >
-                                        <ProductTile
-                                            {...message.product}
-                                            image={productImage}
-                                        />
+                                        <ProductTile product={productProps} />
                                     </ListTile>
                                 }
                             </div>

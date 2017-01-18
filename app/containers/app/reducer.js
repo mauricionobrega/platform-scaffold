@@ -57,6 +57,7 @@ export default createReducer({
                 from: 'clippy',
                 text: payload.response,
                 hasProduct: payload.isPDP,
+                product: {},
                 url: payload.redirectURL
             })
         })
