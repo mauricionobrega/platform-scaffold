@@ -24,7 +24,7 @@ class Footer extends React.Component {
     onSubmitNewsletter(data) {
         const method = this.props.footer.getIn(['newsletter', 'method'], '')
         const action = this.props.footer.getIn(['newsletter', 'action'], '')
-        this.props.submitNewsletter(method, action, data)
+        this.props.submitNewsletter(action, method, data)
     }
 
     shouldComponentUpdate(nextProps) {
