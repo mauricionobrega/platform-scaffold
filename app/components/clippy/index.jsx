@@ -32,10 +32,7 @@ class Clippy extends React.Component {
         return (
             <div className={classes}>
                 <div className="u-flexbox">
-                    <div className={`${componentClass}__card`}>
-                        <div className={`${componentClass}__name`}>
-                            Clippy
-                        </div>
+                    <div className={`${componentClass}__card u-padding-md`}>
                         <div className={`${componentClass}__message`}>
                             Clippy's most recent message will go here
                         </div>
