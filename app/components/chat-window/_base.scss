@@ -1,0 +1,55 @@
+// ChatWindow
+// ===
+//
+// Component description here
+
+
+// Variables
+// ---
+
+
+// ChatWindow root
+// ---
+
+.c-chat-window {
+    // Root Class. Contains all core styles, typically for the component's
+    // wrapper element.
+    // display: none;
+    position: fixed;
+    top: 0;
+    min-height: 100%;
+    background-color: #4e439b;
+    min-width: 100%;
+
+    .chatContainer {
+      position: fixed;
+      display: block;
+      min-height: 75%;
+      margin-top: 25%;
+    }
+    .sendClippyMessage {
+
+    }
+    .clippyMessage {
+
+    }
+    .fromUser {
+
+    }
+}
+
+
+// Modifiers
+// ---
+//
+// .c-chat-window.c--modifier {
+//     ...
+// }
+
+
+// Sub components
+// ---
+//
+// .c-chat-window__sub-component {
+//     ...
+// }
