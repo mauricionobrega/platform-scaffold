@@ -31,7 +31,7 @@ class SignInPanel extends React.Component {
             description,
             heading,
             requiredText,
-            submitSignInForm,
+            submitForm,
             infoModalOpen
         } = this.props
 
@@ -52,7 +52,7 @@ class SignInPanel extends React.Component {
                 <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
                     <SignInForm {...signinFormInfo}
                         disabled={!signinFormInfo.href}
-                        submitForm={submitSignInForm}
+                        submitForm={submitForm}
                         openModal={this.openSignInModal}
                         closeModal={this.closeSignInModal}
                         modalOpen={infoModalOpen}
@@ -71,7 +71,7 @@ SignInPanel.propTypes = {
     openInfoModal: PropTypes.func,
     requiredText: PropTypes.string,
     signinFormInfo: PropTypes.object,
-    submitSignInForm: PropTypes.func
+    submitForm: PropTypes.func
 }
 
 const mapStateToProps = createStructuredSelector({
@@ -85,7 +85,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = {
     closeInfoModal: actions.closeInfoModal,
     openInfoModal: actions.openInfoModal,
-    submitSignInForm: actions.submitSignInForm
+    submitForm: actions.submitSignInForm
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignInPanel)

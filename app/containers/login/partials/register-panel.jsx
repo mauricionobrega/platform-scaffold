@@ -9,33 +9,75 @@ import {REGISTER_SECTION} from '../constants'
 import RegisterForm from './register-form'
 import {PanelHeading, PanelDescription, PanelRequiredText} from './common'
 
-const RegisterPanel = ({registerSection, submitRegisterForm, openRegisterModal, closeRegisterModal}) => (
-    <div className="t-login__register-panel">
-        <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
-            <PanelHeading heading={registerSection.heading} />
-            <PanelDescription description={registerSection.description} />
-            <div className="u-margin-top">
-                <PanelRequiredText requiredText={registerSection.requiredText} />
-            </div>
-        </div>
+class RegisterPanel extends React.Component {
+    constructor(props) {
+        super(props)
 
-        <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
-            <RegisterForm {...registerSection.form}
-                disabled={!registerSection.form.href}
-                submitForm={submitRegisterForm}
-                openModal={openRegisterModal}
-                closeModal={closeRegisterModal}
-                modalOpen={registerSection.infoModalOpen}
-                />
-        </div>
-    </div>
-)
+        this.openRegisterModal = this.openRegisterModal.bind(this)
+        this.closeRegisterModal = this.closeRegisterModal.bind(this)
+    }
+
+    openRegisterModal() {
+        this.props.openInfoModal(REGISTER_SECTION)
+    }
+
+    closeRegisterModal() {
+        this.props.closeInfoModal(REGISTER_SECTION)
+    }
+
+    render() {
+        const {
+            registerSection,
+            submitRegisterForm
+        } = this.props
+
+        const {
+            heading,
+            description,
+            requiredText,
+            form,
+            infoModalOpen
+        } = registerSection
+
+        return (
+            <div className="t-login__register-panel">
+                <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
+                    <PanelHeading heading={heading} />
+                    <PanelDescription description={description} />
+                    <div className="u-margin-top">
+                        <PanelRequiredText requiredText={requiredText} />
+                    </div>
+                </div>
+
+                <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
+                    <RegisterForm {...form}
+                        disabled={!form.href}
+                        submitForm={submitRegisterForm}
+                        openModal={this.openRegisterModal}
+                        closeModal={this.closeRegisterModal}
+                        modalOpen={infoModalOpen}
+                        />
+                </div>
+            </div>
+        )
+    }
+}
 
 RegisterPanel.propTypes = {
-    closeRegisterModal: PropTypes.func,
-    openRegisterModal: PropTypes.func,
+    closeInfoModal: PropTypes.func,
+    openInfoModal: PropTypes.func,
     registerSection: PropTypes.object,
     submitRegisterForm: PropTypes.func
 }
 
-export default RegisterPanel
+const mapStateToProps = createStructuredSelector({
+    registerSection: selectorToJS(selectors.getRegisterSection)
+})
+
+const mapDispatchToProps = {
+    submitRegisterForm: actions.submitRegisterForm,
+    closeInfoModal: actions.closeInfoModal,
+    openInfoModal: actions.openInfoModal
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterPanel)
