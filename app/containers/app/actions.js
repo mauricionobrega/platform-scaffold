@@ -47,3 +47,32 @@ export const fetchPage = (url, pageComponent, routeName) => {
             .catch((error) => { console.info(error.message) })
     }
 }
+
+const clippyAPI = 'https://mobify-merlin-clippy.herokuapp.com/talk'
+
+export const receiveMessageFromUser = utils.createAction('Receive message from User')
+export const receiveMessageFromClippy = utils.createAction('Receive message from Clippy')
+
+export const sendMessageToClippy = (message) => {
+    return (dispatch) => {
+        dispatch(receiveMessageFromUser(message))
+
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                message
+            })
+        }
+        return utils.makeRequest(clippyAPI, options)
+            .then((response) => response.json())
+            .then((json) => {
+                dispatch(receiveMessageFromClippy(json.response))
+            })
+            .catch(() => {
+                dispatch(receiveMessageFromClippy('Network error, please try again'))
+            })
+    }
+}

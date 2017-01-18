@@ -10,37 +10,40 @@ import ChatWindow from '../chat-window'
 
 class Clippy extends React.Component {
     componentDidMount() {
-      clippy.load('Clippy', `.${componentClass}__agent`, function(agent) {
-          // Do anything with the loaded agent
-          agent.show();
-          function timeout() {
-              setTimeout(function () {
-                  agent.animate();
-                  timeout();
-              }, 2000);
-          }
+        clippy.load('Clippy', `.${componentClass}__agent`, (agent) => {
+            // Do anything with the loaded agent
+            agent.show()
+            const timeout = () => {
+                setTimeout(() => {
+                    agent.animate()
+                    timeout()
+                }, 2000)
+            }
 
-          timeout();
-      })
+            timeout()
+        })
     }
     render() {
         const {
-            className
+            className,
+            messages,
+            sendMessageToClippy
         } = this.props
 
         const classes = classNames(componentClass, className)
 
         return (
             <div className={classes}>
-              <div className="u-flexbox">
-                <div className={`${componentClass}__card u-padding-md`}>
-                  <div className={`${componentClass}__message`}>
-                    Clippy's most recent message will go here
-                  </div>
+                <div className="u-flexbox">
+                    <div className={`${componentClass}__card u-padding-md`}>
+                        <div className={`${componentClass}__message`}>
+                            Clippy's most recent message will go here
+                        </div>
+                    </div>
+                    <div className={`${componentClass}__agent`} />
                 </div>
-                <div className={`${componentClass}__agent`} />
-              </div>
-              <ChatWindow />
+
+                <ChatWindow messages={messages} sendMessageToClippy={sendMessageToClippy} />
             </div>
         )
     }
@@ -53,6 +56,9 @@ Clippy.propTypes = {
      */
     className: PropTypes.string,
 
+    messages: PropTypes.array,
+
+    sendMessageToClippy: PropTypes.func
 }
 
 export default Clippy

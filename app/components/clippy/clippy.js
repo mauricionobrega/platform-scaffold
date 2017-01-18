@@ -1,3 +1,4 @@
+/* eslint-disable */
 
 var clippy = {};
 window.clippy = clippy;
@@ -1016,3 +1017,5 @@ clippy.Queue.prototype = {
 
 
 export default clippy
+
+/* eslint-enable */
