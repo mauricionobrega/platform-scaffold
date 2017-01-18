@@ -1,21 +1,3 @@
-// Clippy
-// ===
-//
-// Component description here
-
-
-// Variables
-// ---
-
-
-// Clippy root
-// ---
-
-.c-clippy {
-    // Root Class. Contains all core styles, typically for the component's
-    // wrapper element.
-}
-
 .clippy, .clippy-balloon {
     position: fixed;
     z-index: 1000;
@@ -78,18 +60,3 @@
     background-position: 0px -16px;
 }
 
-
-// Modifiers
-// ---
-//
-// .c-clippy.c--modifier {
-//     ...
-// }
-
-
-// Sub components
-// ---
-//
-// .c-clippy__sub-component {
-//     ...
-// }

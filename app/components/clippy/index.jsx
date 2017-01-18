@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
 import classNames from 'classnames'
-
+import clippy from './clippy'
 const componentClass = 'c-clippy'
 
 /**
@@ -8,6 +8,20 @@ const componentClass = 'c-clippy'
  */
 
 class Clippy extends React.Component {
+    componentDidMount() {
+      clippy.load('Clippy', function(agent) {
+          // Do anything with the loaded agent
+          agent.show();
+          function timeout() {
+              setTimeout(function () {
+                  agent.animate();
+                  timeout();
+              }, 2000);
+          }
+
+          timeout();
+      })
+    }
     render() {
         const {
             text,
