@@ -40,6 +40,7 @@ class ChatWindow extends React.Component {
                 coverage="95%"
             >
                 <div className="chatContainer">
+
                     {messages && messages.map((message, index) =>
                         <div key={index} className={message.from === 'user' ? 'fromUser' : 'clippyMessage'}>
                             {message.text}
