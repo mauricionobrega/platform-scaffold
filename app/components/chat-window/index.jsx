@@ -7,6 +7,7 @@ import Button from 'progressive-web-sdk/dist/components/button'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 import ListTile from 'progressive-web-sdk/dist/components/list-tile'
 import Image from 'progressive-web-sdk/dist/components/image'
+import Link from 'progressive-web-sdk/dist/components/link'
 
 import ProductTile from '../../containers/plp/partials/product-tile'
 
@@ -73,21 +74,23 @@ class ChatWindow extends React.Component {
                             } : {}
                         }
 
+                        const classes = message.from === 'user' ? 'messageWrapperUser' : 'messageWrapperClippy'
+
+                        const onClick = () => {
+                            browserHistory.push(message.url)
+                            closeSheet()
+                        }
+
                         return (
-                            <div>
-                                <div key={index} className={message.from === 'user' ? 'messageWrapperUser' : 'messageWrapperClippy'}>
+                            <div key={index}>
+                                <Link onClick={onClick} className={classes}>
                                     <div className={message.from === 'user' ? 'fromUser' : 'clippyMessage'}>
                                         {message.text}
                                     </div>
-                                </div>
+                                </Link>
 
                                {message.hasProduct &&
-                                    <ListTile
-                                        onClick={() => {
-                                            browserHistory.push(message.url)
-                                            closeSheet()
-                                        }}
-                                    >
+                                    <ListTile onClick={onClick}>
                                         <ProductTile product={productProps} />
                                     </ListTile>
                                 }
