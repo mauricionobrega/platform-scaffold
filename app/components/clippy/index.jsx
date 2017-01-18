@@ -9,14 +9,6 @@ import ChatWindow from '../chat-window'
  */
 
 class Clippy extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            inputValue: ''
-        }
-    }
-
     componentDidMount() {
         clippy.load('Clippy', `.${componentClass}__agent`, (agent) => {
             // Do anything with the loaded agent
@@ -38,10 +30,6 @@ class Clippy extends React.Component {
             sendMessageToClippy
         } = this.props
 
-        const {
-            inputValue
-        } = this.state
-
         const classes = classNames(componentClass, className)
 
         return (
@@ -55,20 +43,7 @@ class Clippy extends React.Component {
                     <div className={`${componentClass}__agent`} />
                 </div>
 
-                <ChatWindow />
-
-                <input
-                    type="text"
-                    value={inputValue}
-                    onChange={(e) => this.setState({ inputValue: e.target.value })}
-                />
-                <button onClick={() => sendMessageToClippy(inputValue)}>
-                    send
-                </button>
-
-                {messages && messages.map((message, index) =>
-                    <div key={index}>{message.text}</div>
-                )}
+                <ChatWindow messages={messages} sendMessageToClippy={sendMessageToClippy} />
             </div>
         )
     }

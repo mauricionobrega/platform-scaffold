@@ -1,6 +1,8 @@
 import React, {PropTypes} from 'react'
 import classNames from 'classnames'
 
+import Button from 'progressive-web-sdk/dist/components/button'
+
 const componentClass = 'c-chat-window'
 
 /**
@@ -8,32 +10,47 @@ const componentClass = 'c-chat-window'
  */
 
 class ChatWindow extends React.Component {
-    shouldComponentUpdate(nextProps, nextState) {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            inputValue: ''
+        }
     }
 
     render() {
         const {
-            text,
+            messages,
+            sendMessageToClippy,
             className
         } = this.props
 
-        const classes = classNames(componentClass, className, {
-            // 'c--modifier': bool ? true : false
-        })
+        const {
+            inputValue
+        } = this.state
+
+        const classes = classNames(componentClass, className)
 
         return (
             <div className={classes}>
-              <div className="chatContainer">
-                <div className="clippyMessage">
-                  FROM CLIPPY
-                </div>
-                <div className="fromUser">
-                  FROM USER{text}
-                </div>
-                <input type="text" placeholder="Ask Clippy a question..." className="sendClippyMessage">
+                <div className="chatContainer">
+                    {messages && messages.map((message, index) =>
+                        <div key={index} className={message.from === 'user' ? 'fromUser' : 'clippyMessage'}>
+                            {message.text}
+                        </div>
+                    )}
 
-                </input>
-              </div>
+                    <input
+                        className="sendClippyMessage"
+                        type="text"
+                        value={inputValue}
+                        placeholder="Ask Clippy a question..."
+                        onChange={(e) => this.setState({inputValue: e.target.value})}
+                    />
+                    <Button onClick={() => sendMessageToClippy(inputValue)}>
+                        Send
+                    </Button>
+                </div>
             </div>
         )
     }
@@ -42,16 +59,13 @@ class ChatWindow extends React.Component {
 
 ChatWindow.propTypes = {
     /**
-     * PropTypes comments are REQUIRED for components to be included
-     * in the styleguide
-     */
-    text: PropTypes.string.isRequired,
-
-    /**
      * Adds values to the `class` attribute of the root element
      */
     className: PropTypes.string,
 
+    messages: PropTypes.array,
+
+    sendMessageToClippy: PropTypes.func
 }
 
 export default ChatWindow
