@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react'
 import classNames from 'classnames'
 
 import Button from 'progressive-web-sdk/dist/components/button'
+import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
 const componentClass = 'c-chat-window'
 
@@ -32,7 +33,12 @@ class ChatWindow extends React.Component {
         const classes = classNames(componentClass, className)
 
         return (
-            <div className={classes}>
+            <Sheet
+                className={classes}
+                open={true}
+                effect="slide-bottom"
+                coverage="95%"
+            >
                 <div className="chatContainer">
                     {messages && messages.map((message, index) =>
                         <div key={index} className={message.from === 'user' ? 'fromUser' : 'clippyMessage'}>
@@ -51,7 +57,7 @@ class ChatWindow extends React.Component {
                         Send
                     </Button>
                 </div>
-            </div>
+            </Sheet>
         )
     }
 }
