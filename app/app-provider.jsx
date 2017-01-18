@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react'
 import {Router, Route, IndexRoute} from 'progressive-web-sdk/dist/routing'
+import {browserHistory} from 'react-router'
 import {triggerMobifyPageView} from 'progressive-web-sdk/dist/analytics'
 import {Provider} from 'react-redux'
 import * as appActions from './containers/app/actions'
@@ -67,7 +68,7 @@ const AppProvider = ({store}) => {
 
     return (
         <Provider store={store}>
-            <Router>
+            <Router history={browserHistory}>
                 <Route path="/" component={App} onEnter={onEnter} onChange={onChange}>
                     <IndexRoute component={Home} routeName="home" />
                     <Route component={Cart} path="checkout/cart/" routeName="cart" fetchPage="false" />

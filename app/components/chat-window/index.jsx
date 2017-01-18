@@ -1,6 +1,8 @@
 import React, {PropTypes} from 'react'
 import classNames from 'classnames'
 
+import {browserHistory} from 'react-router'
+
 import Button from 'progressive-web-sdk/dist/components/button'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 import ListTile from 'progressive-web-sdk/dist/components/list-tile'
@@ -81,7 +83,10 @@ class ChatWindow extends React.Component {
 
                                {message.hasProduct &&
                                     <ListTile
-                                        href={message.url}
+                                        onClick={() => {
+                                            browserHistory.push(message.url)
+                                            closeSheet()
+                                        }}
                                     >
                                         <ProductTile product={productProps} />
                                     </ListTile>
