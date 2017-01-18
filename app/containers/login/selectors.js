@@ -9,5 +9,10 @@ export const getLogin = createSelector(
 
 export const getLoginTitle = createGetSelector(getLogin, 'title')
 export const getSigninSection = createGetSelector(getLogin, 'signinSection')
+export const getSigninSectionDescription = createGetSelector(getSigninSection, 'description')
+export const getSigninSectionHeading = createGetSelector(getSigninSection, 'heading')
+export const getSigninSectionRequiredText = createGetSelector(getSigninSection, 'requiredText')
+export const getSigninFormInfo = createGetSelector(getSigninSection, 'form')
+export const getSigninInfoModalOpen = createGetSelector(getSigninSection, 'infoModalOpen')
 export const getRegisterSection = createGetSelector(getLogin, 'registerSection')
 export const getLoginLoaded = createGetSelector(getLogin, 'loaded')
