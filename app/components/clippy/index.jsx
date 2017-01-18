@@ -4,22 +4,17 @@ import classNames from 'classnames'
 const componentClass = 'c-clippy'
 
 /**
- * INSERT_DESCRIPTION_HERE
+ * Your annoying assistant
  */
 
 class Clippy extends React.Component {
-    shouldComponentUpdate(nextProps, nextState) {
-    }
-
     render() {
         const {
             text,
             className
         } = this.props
 
-        const classes = classNames(componentClass, className, {
-            // 'c--modifier': bool ? true : false
-        })
+        const classes = classNames(componentClass, className)
 
         return (
             <div className={classes}>

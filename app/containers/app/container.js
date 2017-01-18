@@ -13,6 +13,7 @@ import sprite from '../../static/svg/sprite-dist/sprite.svg'
 import * as appActions from '../app/actions'
 
 import NotificationManager from '../../components/notification-manager'
+import Clippy from '../../components/clippy'
 
 const hidePreloaderWhenCSSIsLoaded = () => {
     if (window.Progressive.stylesheetLoaded) {
@@ -90,6 +91,8 @@ class App extends React.Component {
                     <div id="app-footer" className="u-flex-none">
                         <CurrentFooter />
                     </div>
+
+                    <Clippy />
                 </div>
             </div>
         )
