@@ -64,21 +64,17 @@ export default createReducer({
     },
     [appActions.receiveProductInMessage]: (state, payload) => {
         return state.updateIn(['clippy', 'messages'], (messages) => {
-            let newMessages = messages
+            const newMessages = messages.toJS().map((message) => {
+                const newMessage = message
 
-            const messageToUpdate = messages.findIndex((message) => {
-                return message.url === payload.url
+                if (message.url === payload.url) {
+                    newMessage.product = payload.data
+                }
+
+                return newMessage
             })
 
-            if (messageToUpdate !== -1) {
-                const message = newMessages.get(messageToUpdate)
-                newMessages = newMessages.set(messageToUpdate, {
-                    ...message,
-                    product: payload.data
-                })
-            }
-
-            return newMessages
+            return List(newMessages)
         })
     }
 }, initialState)
