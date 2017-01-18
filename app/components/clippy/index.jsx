@@ -31,7 +31,7 @@ class Clippy extends React.Component {
 
         return (
             <div className={classes}>
-                <div className="u-flexbox">
+                <div className="u-flexbox u-align-center">
                     <div className={`${componentClass}__card u-padding-md`}>
                         <div className={`${componentClass}__message`}>
                             Clippy's most recent message will go here
