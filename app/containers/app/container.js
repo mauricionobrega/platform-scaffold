@@ -14,6 +14,7 @@ import * as appActions from '../app/actions'
 
 import NotificationManager from '../../components/notification-manager'
 import Clippy from '../../components/clippy'
+import ChatWindow from '../../components/chat-window'
 
 const hidePreloaderWhenCSSIsLoaded = () => {
     if (window.Progressive.stylesheetLoaded) {
@@ -59,40 +60,40 @@ class App extends React.Component {
 
         return (
             <div
-                id="app"
-                className={`t-app t-app--${currentTemplateProps.route.routeName}`}
-                style={{display: 'none'}}
+              id="app"
+              className={`t-app t-app--${currentTemplateProps.route.routeName}`}
+              style={{display: 'none'}}
             >
-                <IconSprite sprite={sprite} />
-                <SkipLinks items={skipLinksItems} />
+              <IconSprite sprite={sprite} />
+              <SkipLinks items={skipLinksItems} />
 
-                <div id="app-wrap" className="t-app__wrapper u-flexbox u-direction-column">
-                    <div id="app-header" className="u-flex-none" role="banner">
-                        <CurrentHeader
-                            onMenuClick={openNavigation}
-                            onMiniCartClick={requestOpenMiniCart}
-                        />
+              <div id="app-wrap" className="t-app__wrapper u-flexbox u-direction-column">
+                <div id="app-header" className="u-flex-none" role="banner">
+                  <CurrentHeader
+                    onMenuClick={openNavigation}
+                    onMiniCartClick={requestOpenMiniCart}
+                  />
 
-                        {notifications &&
-                            <NotificationManager
-                                notifications={notifications}
-                                actions={notificationActions}
-                            />
-                        }
+                  {notifications &&
+                    <NotificationManager
+                      notifications={notifications}
+                      actions={notificationActions}
+                    />
+                  }
 
-                        <Navigation history={history} />
-                        <MiniCart />
-                    </div>
+                  <Navigation history={history} />
+                  <MiniCart />
+                </div>
 
-                    <main id="app-main" className="u-flex" role="main">
-                        {this.props.children}
-                    </main>
+                <main id="app-main" className="u-flex" role="main">
+                  {this.props.children}
+                </main>
 
-                    <div id="app-footer" className="u-flex-none">
-                        <CurrentFooter />
-                    </div>
+                <div id="app-footer" className="u-flex-none">
+                  <CurrentFooter />
+                </div>
 
-                    <Clippy />
+                <Clippy />
                 </div>
             </div>
         )
