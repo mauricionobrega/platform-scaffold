@@ -13,38 +13,64 @@ import * as actions from './actions'
 import * as selectors from './selectors'
 import {SIGN_IN_SECTION, REGISTER_SECTION, SECTION_NAMES, INDEX_FOR_SECTION, SECTION_FOR_INDEX} from './constants'
 
-const Login = ({
-    title,
-    navigateToSection,
-    route: {routeName},
-    router,
-    routes
-}) => {
-
-    return (
-        <div className="t-login">
-            <div className="u-bg-color-neutral-20 u-padding-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
-                {title ?
-                    <h1 className="u-text-uppercase u-text-normal">
-                        {title}
-                    </h1>
-                :
-                    <div className="u-padding-md">
-                        <SkeletonBlock height="32px" width="50%" />
-                    </div>
-                }
+const LoginTitle = ({title}) => {
+    if (title) {
+        return (
+            <h1 className="u-text-uppercase u-text-normal">
+                {title}
+            </h1>
+        )
+    } else {
+        return (
+            <div className="u-padding-md">
+                <SkeletonBlock height="32px" width="50%" />
             </div>
+        )
+    }
+}
 
-            <Tabs activeIndex={INDEX_FOR_SECTION[routeName]} className="t-login__navigation" onChange={(index) => navigateToSection(router, routes, SECTION_FOR_INDEX[index])}>
-                <TabsPanel title={SECTION_NAMES[SIGN_IN_SECTION]}>
-                    <SignInPanel />
-                </TabsPanel>
-                <TabsPanel title={SECTION_NAMES[REGISTER_SECTION]}>
-                    <RegisterPanel />
-                </TabsPanel>
-            </Tabs>
-        </div>
-    )
+LoginTitle.propTypes = {
+    title: PropTypes.string
+}
+
+class Login extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.navigateToSection = this.navigateToSection.bind(this)
+    }
+
+    navigateToSection(index) {
+        this.props.navigateToSection(
+            this.props.router,
+            this.props.routes,
+            SECTION_FOR_INDEX[index]
+        )
+    }
+
+    render() {
+        const {
+            title,
+            route: {routeName}
+        } = this.props
+
+        return (
+            <div className="t-login">
+                <div className="u-bg-color-neutral-20 u-padding-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
+                    <LoginTitle title={title} />
+                </div>
+
+                <Tabs activeIndex={INDEX_FOR_SECTION[routeName]} className="t-login__navigation" onChange={this.navigateToSection}>
+                    <TabsPanel title={SECTION_NAMES[SIGN_IN_SECTION]}>
+                        <SignInPanel />
+                    </TabsPanel>
+                    <TabsPanel title={SECTION_NAMES[REGISTER_SECTION]}>
+                        <RegisterPanel />
+                    </TabsPanel>
+                </Tabs>
+            </div>
+        )
+    }
 }
 
 const mapStateToProps = createStructuredSelector({
