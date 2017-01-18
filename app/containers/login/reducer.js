@@ -90,9 +90,9 @@ const registerSigninFields = [
     },
 ]
 
-const initialState = Immutable.Map({
+const initialState = Immutable.fromJS({
     title: 'Customer Login',
-    signinSection: Immutable.Map({
+    signinSection: {
         href: '',
         heading: '',
         description: '',
@@ -104,8 +104,8 @@ const initialState = Immutable.Map({
             submitText: ''
         },
         infoModalOpen: false
-    }),
-    registerSection: Immutable.Map({
+    },
+    registerSection: {
         href: '',
         heading: '',
         description: '',
@@ -123,7 +123,7 @@ const initialState = Immutable.Map({
             }]
         },
         infoModalOpen: false
-    })
+    }
 })
 
 const formatSectionName = (sectionName) => `${sectionName}Section`
