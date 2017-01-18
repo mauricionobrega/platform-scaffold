@@ -49,16 +49,23 @@ class ChatWindow extends React.Component {
                         </div>
                     )}
 
-                    <input
-                        className="sendClippyMessage"
-                        type="text"
-                        value={inputValue}
-                        placeholder="Ask Clippy a question..."
-                        onChange={(e) => this.setState({inputValue: e.target.value})}
-                    />
-                    <Button onClick={() => sendMessageToClippy(inputValue)}>
-                        Send
-                    </Button>
+                    <div className="sendClippyMessage">
+                        <div className="u-flexbox">
+                            <input
+                                type="text"
+                                className="u-flex"
+                                value={inputValue}
+                                placeholder="Ask Clippy a question..."
+                                onChange={(e) => this.setState({inputValue: e.target.value})}
+                            />
+                            <Button
+                                className="u-flex-none"
+                                onClick={() => sendMessageToClippy(inputValue)}
+                            >
+                                Send
+                            </Button>
+                        </div>
+                    </div>
                 </div>
             </Sheet>
         )
