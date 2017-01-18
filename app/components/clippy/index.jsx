@@ -12,7 +12,8 @@ class Clippy extends React.Component {
     constructor() {
         super()
         this.state = {
-            sheetOpen: false
+            sheetOpen: false,
+            bubbleOpen: false
         }
     }
     componentDidMount() {
@@ -25,8 +26,20 @@ class Clippy extends React.Component {
                     timeout()
                 }, 2000)
             }
-
+            const bubbleClose = () => {
+                setTimeout(() => {
+                    this.setState({bubbleOpen: false})
+                    bubbleOpen()
+                }, 10000)
+            }
+            const bubbleOpen = () => {
+                setTimeout(() => {
+                    this.setState({bubbleOpen: true})
+                    bubbleClose()
+                }, 10000)
+            }
             timeout()
+            bubbleOpen()
         })
     }
     render() {
@@ -43,14 +56,15 @@ class Clippy extends React.Component {
         const closeSheet = () => {
             this.setState({sheetOpen: false})
         }
+
         const classes = classNames(componentClass, className)
 
         return (
             <div className={classes}>
                 <div onClick={() => openSheet()} className="u-flexbox">
-                    <div className={`${componentClass}__card u-padding-md`}>
+                    <div className={this.state.bubbleOpen ? `${componentClass}__card u-padding-md` : `${componentClass}__card u-padding-md vishid`}>
                         <div className={`${componentClass}__message`}>
-                            Clippy's most recent message will go here
+                            Hey, I'm Clippy! Click me. Please.
                         </div>
                     </div>
                     <div className={`${componentClass}__agent`} />

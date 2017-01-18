@@ -54,9 +54,6 @@
         -webkit-justify-content: flex-end;
         justify-content: flex-end;
     }
-    .messageWrapperClippy:last-child {
-        margin-bottom: 120px; // input was blocking
-    }
     .messageWrapperUser {
         display: -webkit-flex;
         display: flex;
