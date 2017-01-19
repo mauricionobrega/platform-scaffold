@@ -26,9 +26,18 @@ CartModalController.init = async function() {
         CartHeaderController.init(),
     ])
 
+    const headerOptions = {
+        header: {
+            rightIcon: {
+                id: CartConfig.closeIcon.id,
+                imageUrl: CartConfig.closeIcon.imageUrl
+            }
+        }
+    }
+
     await anchoredLayout.addTopView(cartHeaderController.viewPlugin)
     await anchoredLayout.setContentView(navigationView)
-    await navigationView.navigateToUrl(CartConfig.url, {}, {})
+    await navigationView.navigateToUrl(CartConfig.url, headerOptions, {})
     await navigationView.setHeaderBar(cartHeaderController.viewPlugin)
 
     await modalView.setContentView(anchoredLayout)                // load the view in to the modal
