@@ -6,7 +6,6 @@ import {selectorToJS} from '../../utils/selector-utils'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
 import Button from 'progressive-web-sdk/dist/components/button'
-import IconLabelButton from '../../components/icon-label-button'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 import List from 'progressive-web-sdk/dist/components/list'
 import Image from 'progressive-web-sdk/dist/components/image'
@@ -14,8 +13,9 @@ import ProductItem from '../../components/product-item'
 import * as selectors from './selectors'
 import * as miniCartActions from './actions'
 import * as cartActions from '../cart/actions'
-import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 import {stripEvent} from '../../utils/utils'
+
+import MiniCartHeader from './partials/mini-cart-header'
 
 // Parses strings in the format: $Dollars.Cents
 // Dollar amounts only, cents must be specified.
@@ -88,24 +88,6 @@ const MiniCartEmpty = () => (
     </div>
 )
 
-const MiniCartHeader = ({closeMiniCart}) => (
-    <HeaderBar>
-        <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
-            <h2 className="t-mini-cart__title u-heading-family u-text-uppercase">
-                <span className="u-text-lighter">Shopping</span> Cart
-            </h2>
-        </HeaderBarTitle>
-
-        <HeaderBarActions>
-            <IconLabelButton iconName="close" label="close" onClick={closeMiniCart}>Close</IconLabelButton>
-        </HeaderBarActions>
-    </HeaderBar>
-)
-
-MiniCartHeader.propTypes = {
-    closeMiniCart: PropTypes.func
-}
-
 const MiniCartMain = ({hasItems, cart}) => (
     <div className="t-mini-cart__content u-flexbox u-column u-padding-md">
         {hasItems ? <MiniCartProductList cart={cart} /> : <MiniCartEmpty />}
@@ -134,7 +116,7 @@ class MiniCart extends React.Component {
 
         return (
             <Sheet className="t-mini-cart" open={isOpen} onDismiss={closeMiniCart} maskOpacity={0.7} effect="slide-right">
-                <MiniCartHeader closeMiniCart={closeMiniCart} />
+                <MiniCartHeader />
 
                 {contentsLoaded && <MiniCartMain hasItems={hasItems} cart={cart} />}
             </Sheet>
