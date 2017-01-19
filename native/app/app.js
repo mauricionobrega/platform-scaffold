@@ -40,6 +40,15 @@ window.run = async function() {
             tabBarController.showSignIn()
         })
 
+        // Android hardware back
+        const setupHardwareBackButton = async (alternativeBackFunction) => {
+            Application.on('backButtonPressed', () => {
+                alternativeBackFunction()
+            })
+        }
+
+        setupHardwareBackButton(tabBarController.backActiveItem.bind(tabBarController))
+
         Application.dismissLaunchImage()
     }
 
