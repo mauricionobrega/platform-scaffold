@@ -12,3 +12,7 @@ export const getMiniCartContentsLoaded = createGetSelector(getMiniCart, 'content
 export const getMiniCartIsOpen = createGetSelector(getMiniCart, 'isOpen')
 export const getMiniCartItems = createGetSelector(getCartObject, 'items')
 export const getMiniCartSubtotal = createGetSelector(getCartObject, 'subtotal')
+export const getMiniCartHasItems = createSelector(
+    getMiniCartItems,
+    (items) => items.size > 0
+)

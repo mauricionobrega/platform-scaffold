@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
-import {selectorToJS} from '../../utils/selector-utils'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -52,8 +51,7 @@ class MiniCart extends React.Component {
     }
 
     render() {
-        const {cart, contentsLoaded, isOpen, closeMiniCart} = this.props
-        const hasItems = cart ? cart.items.length > 0 : false
+        const {hasItems, contentsLoaded, isOpen, closeMiniCart} = this.props
 
         return (
             <Sheet className="t-mini-cart" open={isOpen} onDismiss={closeMiniCart} maskOpacity={0.7} effect="slide-right">
@@ -66,17 +64,17 @@ class MiniCart extends React.Component {
 }
 
 MiniCart.propTypes = {
-    cart: PropTypes.object.isRequired,
     closeMiniCart: PropTypes.func,
     contentsLoaded: PropTypes.bool,
     fetchContents: PropTypes.func,
+    hasItems: PropTypes.bool,
     isOpen: PropTypes.bool,
 }
 
 const mapStateToProps = createStructuredSelector({
-    cart: selectorToJS(selectors.getCartObject),
     contentsLoaded: selectors.getMiniCartContentsLoaded,
-    isOpen: selectors.getMiniCartIsOpen
+    isOpen: selectors.getMiniCartIsOpen,
+    hasItems: selectors.getMiniCartHasItems
 })
 
 const mapDispatchToProps = {
