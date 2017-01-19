@@ -19,7 +19,12 @@ class Clippy extends React.Component {
         }
     }
     componentDidMount() {
-        clippy.load('Clippy', `.${componentClass}__agent`, (agent) => {
+        this.pollFor$()
+    }
+
+    pollFor$ () {
+        if (window.$) {
+            clippy.load('Clippy', `.${componentClass}__agent`, (agent) => {
             // Do anything with the loaded agent
             agent.show()
             const timeout = () => {
@@ -43,7 +48,11 @@ class Clippy extends React.Component {
             timeout()
             bubbleOpen()
         })
+        } else {
+            setTimeout(this.pollFor$, 100)
+        }
     }
+
     render() {
         const {
             className,
