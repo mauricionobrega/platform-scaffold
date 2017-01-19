@@ -1,5 +1,11 @@
 import React, {PropTypes} from 'react'
 import {Field, reduxForm} from 'redux-form'
+import {createStructuredSelector} from 'reselect'
+import {connect} from 'react-redux'
+import {selectorToJS} from '../../../utils/selector-utils'
+import * as selectors from '../selectors'
+import * as actions from '../actions'
+import {SIGN_IN_SECTION} from '../constants'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import FieldComponent from 'progressive-web-sdk/dist/components/field'
@@ -162,4 +168,8 @@ const ReduxSignInForm = reduxForm({
     form: 'signin-form'
 })(SignInForm)
 
-export default ReduxSignInForm
+const mapStateToProps = createStructuredSelector({
+    modalOpen: selectors.getSigninInfoModalOpen
+})
+
+export default connect(mapStateToProps)(ReduxSignInForm)

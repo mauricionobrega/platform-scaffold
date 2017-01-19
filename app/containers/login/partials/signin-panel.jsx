@@ -31,8 +31,7 @@ class SignInPanel extends React.Component {
             description,
             heading,
             requiredText,
-            submitForm,
-            infoModalOpen
+            submitForm
         } = this.props
 
         return (
@@ -55,7 +54,6 @@ class SignInPanel extends React.Component {
                         submitForm={submitForm}
                         openModal={this.openSignInModal}
                         closeModal={this.closeSignInModal}
-                        modalOpen={infoModalOpen}
                         />
                 </div>
             </div>
@@ -67,7 +65,6 @@ SignInPanel.propTypes = {
     closeInfoModal: PropTypes.func,
     description: PropTypes.string,
     heading: PropTypes.string,
-    infoModalOpen: PropTypes.bool,
     openInfoModal: PropTypes.func,
     requiredText: PropTypes.string,
     signinFormInfo: PropTypes.object,

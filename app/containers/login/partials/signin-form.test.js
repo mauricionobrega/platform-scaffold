@@ -1,6 +1,8 @@
 import React from 'react'
-import SignInForm from './signin-form'
+import ConnectedSignInForm from './signin-form'
 import {shallow} from 'enzyme'
+
+const SignInForm = ConnectedSignInForm.WrappedComponent
 
 test('renders without errors', () => {
     const wrapper = shallow(<SignInForm />)
