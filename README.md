@@ -47,15 +47,24 @@ To run the project documentation, including a live styleguide, use:
 npm run docs:dev
 ```
 
-## Add, remove, or edit svg icons
+## SVG Images and Icons
 
-To update the SVG sprite to match any additions, removals, or changes made to SVG icons from `app/static/svg`, run the following command to create new spritesheet. (This spritesheet lives in `app/sprite/sprite.svg`.)
+The SVG directory can be found in `app/static/svg/`. There are three purposes for this directory:
 
-_SVG is an icon system to replace icon fonts. SVG Sprite is a series of icons stored in one file._
+1. Store any **static SVG images**
+    * These are stored in the `app/static/svg/` directory's root. These files are ignored by the SVG optimization task (for now).
+2. Store **icon source files**
+    * These are stored in the `app/static/svg/sprite-source/` directory and are the targets for the SVG optimization and Sprite building tasks.
+3. Store the **generated icon sprite**
+    * This is stored in the `app/static/svg/sprite-dist` directory as the destination for the generated icon sprite.
+
+When adding, removing or modifying SVG icons, it is up to the developer to run the following command to generate the new SVG sprite sheet and commit the change.
 
 ```
 npm run build-sprites
 ```
+
+Icon sprites are a technique for creating easy to use icons. [Learn more here](https://medium.com/@webprolific/why-and-how-i-m-using-svg-over-fonts-for-icons-7241dab890f0#.1v9l7c7q2) about the technique and why we use it over icon fonts.
 
 ## Tests
 
