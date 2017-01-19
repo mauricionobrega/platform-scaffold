@@ -97,6 +97,14 @@ class ChatWindow extends React.Component {
         }
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.messages.length !== this.props.messages.length) {
+            // scroll to the bottom
+            const sheetInner = this.container.querySelector('.c-sheet__inner')
+            sheetInner.scrollTop = this.container.querySelector('.c-sheet__content').clientHeight
+        }
+    }
+
     render() {
         const {
             messages,
@@ -137,8 +145,13 @@ class ChatWindow extends React.Component {
             }
         }
 
+        const onSubmit = (e) => {
+            e.preventDefault()
+            sendMessage(inputValue)
+        }
+
         return (
-            <div>
+            <div ref={(el) => { this.container = el }}>
                 <Sheet
                     className={classes}
                     open={sheetOpen}
@@ -193,10 +206,7 @@ class ChatWindow extends React.Component {
                         <div className="sendClippyMessage">
                             <form
                                 className="u-flexbox"
-                                onSubmit={(e) => {
-                                    e.preventDefault()
-                                    sendMessage(inputValue)}
-                                }
+                                onSubmit={onSubmit}
                             >
                                 <input
                                     type="text"
