@@ -56,7 +56,7 @@ const clippyAPI = 'https://mobify-merlin-clippy.herokuapp.com/talk'
 
 // required to make session sticky
 let watsonChatContext = {}
-let lastProductUrl = ''
+let lastProductData
 
 export const receiveMessageFromUser = utils.createAction('Receive message from User')
 export const receiveMessageFromClippy = utils.createAction('Receive message from Clippy')
@@ -67,23 +67,19 @@ export const closeItemAddedModal = utils.createAction('Close item added modal')
 
 export const clippyAddToCart = () => {
     return (dispatch) => {
-        utils.makeRequest(lastProductUrl)
-            .then(jqueryResponse)
-            .then(([$, $responseText]) => {
-                const state = pdpParser($, $responseText)
-                const formInfo = state.formInfo
-                const qty = state.itemQuantity
+        const state = lastProductData
+        const formInfo = state.formInfo
+        const qty = state.itemQuantity
 
-                return utils.makeFormEncodedRequest(formInfo.submitUrl, {
-                    ...formInfo.hiddenInputs,
-                    qty
-                }, {
-                    method: formInfo.method
-                }).then(() => {
-                    dispatch(openItemAddedModal())
-                    dispatch(getCart())
-                })
-            })
+        return utils.makeFormEncodedRequest(formInfo.submitUrl, {
+            ...formInfo.hiddenInputs,
+            qty
+        }, {
+            method: formInfo.method
+        }).then(() => {
+            dispatch(openItemAddedModal())
+            dispatch(getCart())
+        })
     }
 }
 
@@ -107,8 +103,6 @@ export const sendMessageToClippy = (message) => {
                 watsonChatContext = json.context
 
                 if (json.isPDP) {
-                    lastProductUrl = json.redirectURL
-
                     utils.makeRequest(json.redirectURL)
                         .then(jqueryResponse)
                         .then(([$, $responseText]) => {
@@ -117,12 +111,14 @@ export const sendMessageToClippy = (message) => {
                                 url: json.redirectURL
                             }
 
+                            lastProductData = pdpParser($, $responseText)
+
                             dispatch(receiveProductInMessage(payload))
                         })
                 }
 
                 if (json.shouldAddToCart) {
-                    if (lastProductUrl) {
+                    if (lastProductData) {
                         dispatch(clippyAddToCart())
                         dispatch(receiveMessageFromClippy(json))
                     } else {
