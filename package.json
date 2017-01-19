@@ -86,7 +86,7 @@
     "svgo": "0.7.1",
     "text-loader": "0.0.1",
     "validator": "6.2.0",
-    "webpack": "2.2",
+    "webpack": "2.2.0",
     "webpack-dev-server": "1.16.2",
     "webpack-hot-middleware": "2.13.0"
   },
