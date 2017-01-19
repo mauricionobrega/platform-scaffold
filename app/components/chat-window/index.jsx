@@ -13,10 +13,14 @@ import ProductTile from '../../containers/plp/partials/product-tile'
 
 const componentClass = 'c-chat-window'
 
+import recorder from '../../static/svg/recorder.svg'
+import recorderActive from '../../static/svg/recorderactive.svg'
+import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
+
 /**
  * WebSpeechRecognition
  *
- * L33t copy and paste from 
+ * L33t copy and paste from
  * - https://github.com/GoogleChrome/webplatform-samples/blob/master/webspeechdemo/webspeechdemo.html
  * - https://developers.google.com/web/updates/2013/01/Voice-Driven-Web-Apps-Introduction-to-the-Web-Speech-API
  */
@@ -78,7 +82,7 @@ class ChatWindow extends React.Component {
                     // might have more results
                     return;
                 }
-                this.setState({inputValue: final_transcript});
+                this.setState({'inputValue': ''})
             };
             recognition.onresult = (event) => {
                 console.log("Recongnition.onresult")
@@ -91,8 +95,10 @@ class ChatWindow extends React.Component {
                     interim_transcript += event.results[i][0].transcript;
                   }
                 }
+                console.log("all");
+                interim_transcript = capitalize(interim_transcript);
                 final_transcript = capitalize(final_transcript);
-                this.setState({inputValue: final_transcript});
+                this.setState({inputValue: final_transcript || interim_transcript});
             };
         }
     }
@@ -115,7 +121,8 @@ class ChatWindow extends React.Component {
         } = this.props
 
         const {
-            inputValue
+            inputValue,
+            isRecording
         } = this.state
 
         const classes = classNames(componentClass, className)
@@ -140,6 +147,7 @@ class ChatWindow extends React.Component {
                     recognition.stop();
                     if (inputValue && inputValue.trim()) {
                         sendMessage(inputValue)
+                        this.setState({'inputValue': ''})
                     }
                 }
             }
@@ -220,9 +228,16 @@ class ChatWindow extends React.Component {
                                     type="button"
                                     onClick={() => startRecording()}
                                 >
-                                    {this.state.isRecording ? '🔴' : '🎙'}
-                                </Button>
-                                <Button
+                                    {!isRecording ?
+                                        <DangerousHTML html={recorder}>
+                                            {(htmlObj) => <div dangerouslySetInnerHTML={htmlObj} />}
+                                        </DangerousHTML>
+                                    :
+                                        <DangerousHTML html={recorderActive}>
+                                            {(htmlObj) => <div dangerouslySetInnerHTML={htmlObj} />}
+                                        </DangerousHTML>
+                                    }
+                                </Button>                                <Button
                                     className="u-flex-none clippyButton"
                                     type="submit"
                                 >
