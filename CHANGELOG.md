@@ -1,3 +1,7 @@
+## 0.10.0 (January 8, 2017)
+- Implement the Progressive Checkout UI components
+- Fix inconsistencies between the generator and best practices
+
 ## 0.9.1 (November 14, 2016)
 - Use SDK version 0.10.4
 

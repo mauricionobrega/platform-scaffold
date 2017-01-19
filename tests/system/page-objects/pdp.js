@@ -1,8 +1,8 @@
 const selectors = {
-    pdpTemplateIdentifier: '.t-pdp', // Used in workflow to assert you have reached the page
-    addItemButton: '.add .item .button',
-    cartIcon: '.cart .icon .selector',
-    goToCart: '.goto .cart .selector'
+    pdpTemplateIdentifier: '.t-pdp',
+    addItem: '.t-pdp__add-to-cart:not([disabled])',
+    itemAdded: '.t-plp__item-added-modal .u-h4',
+    goToCart: '.t-plp__item-added-modal a[href*="cart"]'
 }
 
 const PDP = function(browser) {
@@ -10,7 +10,7 @@ const PDP = function(browser) {
     this.selectors = selectors
 }
 
-PDP.prototype.addItemTocart = function() {
+PDP.prototype.addItemToCart = function() {
     // Add an item to the cart
     this.browser
         .log('Adding item to cart')
@@ -20,7 +20,7 @@ PDP.prototype.addItemTocart = function() {
     return this
 }
 
-PDP.prototype.navigateTocart = function() {
+PDP.prototype.navigateToCart = function() {
     // Navigate from PDP to Cart
     this.browser
         .log('Navigating to cart')
