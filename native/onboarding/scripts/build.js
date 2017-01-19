@@ -145,6 +145,10 @@ function build(previousSizeMap) {
     console.log();
     printFileSizes(stats, previousSizeMap);
     console.log();
+
+    // Delete from app-www
+    fs.removeSync(paths.appWWW);
+    copyToAppWWW();
   });
 }
 
@@ -152,5 +156,11 @@ function copyPublicFolder() {
   fs.copySync(paths.appPublic, paths.appBuild, {
     dereference: true,
     filter: file => file !== paths.appHtml
+  });
+}
+
+function copyToAppWWW() {
+  fs.copySync(paths.appBuild, paths.appWWW, {
+    dereference: true
   });
 }

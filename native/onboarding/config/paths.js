@@ -43,5 +43,6 @@ module.exports = {
   ownNodeModules: resolveApp('node_modules'),
   nodePaths: nodePaths,
   rpcMethodNames: resolveApp('../app/global/app-rpc-method-names.js'),
-  mobifyProgressiveAppSdk: resolveApp('../node_modules/mobify-progressive-app-sdk')
+  mobifyProgressiveAppSdk: resolveApp('../node_modules/mobify-progressive-app-sdk'),
+  appWWW: resolveApp('../app/build/app-www/onboarding')
 };
