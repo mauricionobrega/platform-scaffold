@@ -9,32 +9,44 @@ import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Link from 'progressive-web-sdk/dist/components/link'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
+const FieldLabel = ({label, required, type, forgotPassword}) => (
+    <span>
+        {label} {required && <span>*</span>}
+
+        {type === 'password' && forgotPassword &&
+            <Link className="u-float-end u-text-normal" href={forgotPassword.href}>
+                {forgotPassword.title}
+            </Link>
+        }
+    </span>
+)
+
+FieldLabel.propTypes = {
+    forgotPassword: PropTypes.shape({
+        href: PropTypes.string,
+        title: PropTypes.string
+    }),
+    label: PropTypes.string,
+    required: PropTypes.bool,
+    type: PropTypes.string,
+}
+
+const SheetHeader = ({label, closeModal}) => (
+    <div className="u-width-full u-bg-color-brand u-color-neutral-10 u-flexbox">
+        <h1 className="u-flex u-padding-md u-h4 u-text-uppercase">
+            {label}
+        </h1>
+
+        <Button onClick={closeModal}>
+            <Icon name="close" />
+            <span className="u-visually-hidden">Close</span>
+        </Button>
+    </div>
+)
+
 const renderFields = (fields, forgotPassword, openModal, closeModal, modalOpen) => {
     return fields.map(({label, name, type, required, tooltip, disabled}, idx) => {
-        const labelNode = (
-            <span>
-                {label} {required && <span>*</span>}
-
-                {type === 'password' && forgotPassword &&
-                    <Link className="u-float-end u-text-normal" href={forgotPassword.href}>
-                        {forgotPassword.title}
-                    </Link>
-                }
-            </span>
-        )
-
-        const headerContent = (
-            <div className="u-width-full u-bg-color-brand u-color-neutral-10 u-flexbox">
-                <h1 className="u-flex u-padding-md u-h4 u-text-uppercase">
-                    {label}
-                </h1>
-
-                <Button onClick={closeModal}>
-                    <Icon name="close" />
-                    <span className="u-visually-hidden">Close</span>
-                </Button>
-            </div>
-        )
+        const labelNode = (<FieldLabel label={label} required={required} type={type} forgotPassword={forgotPassword} />)
 
         return (
             <FieldRow key={idx}>
@@ -57,7 +69,7 @@ const renderFields = (fields, forgotPassword, openModal, closeModal, modalOpen) 
                             open={modalOpen}
                             onDismiss={closeModal}
                             effect="slide-bottom"
-                            headerContent={headerContent}
+                            headerContent={<SheetHeader label={label} closeModal={closeModal} />}
                         >
                             <div id="remember-me" className="u-padding-md">
                                 {tooltip.content}
