@@ -7,7 +7,7 @@
   "display": "standalone",
   "icons": [
     {
-      "src": "https://cdn.mobify.com/sites/progressive-web-scaffold/production/static/img/app-icon.png",
+      "src": "https://cdn.mobify.com/sites/progressive-web-scaffold/production/static/img/global/app-icon.png",
       "sizes": "192x192"
     }
   ]

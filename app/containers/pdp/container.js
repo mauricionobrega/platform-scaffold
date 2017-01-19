@@ -9,37 +9,40 @@ import PDPAddToCart from './partials/pdp-add-to-cart'
 import PDPItemAddedModal from './partials/pdp-item-added-modal'
 import {stripEvent} from '../../utils/utils'
 import * as pdpActions from './actions'
-import {getRoutedState} from '../../utils/router-utils'
+import {getSelectorFromState} from '../../utils/router-utils'
 
 class PDP extends React.Component {
     shouldComponentUpdate(newProps) {
-        return !Immutable.is(newProps.routedState, this.props.routedState)
+        return !Immutable.is(newProps.pdp, this.props.pdp) || !Immutable.is(newProps.catalogProduct, this.props.catalogProduct)
     }
 
     render() {
         const {
-            product,
             itemQuantity,
             quantityAdded,
             itemAddedModalOpen,
             formInfo,
-            isPlaceholder,
             contentsLoaded
-        } = this.props.routedState.toJS()
+        } = this.props.pdp.toJS()
+
+        const product = this.props.catalogProduct.toJS()
+
+        const {
+            title,
+            price,
+            description,
+            carouselItems
+        } = product
+
         const {
             setQuantity,
             addToCart,
             closeItemAddedModal
         } = this.props
 
-        const {
-            carouselItems,
-            description
-        } = product
-
         return (
             <div className="t-pdp">
-                <PDPHeading {...product} />
+                <PDPHeading title={title} price={price} />
 
                 <PDPCarousel items={carouselItems} contentsLoaded={contentsLoaded} />
 
@@ -53,7 +56,7 @@ class PDP extends React.Component {
                     disabled={!contentsLoaded}
                 />
 
-                {!isPlaceholder && contentsLoaded &&
+                {contentsLoaded &&
                     <PDPItemAddedModal
                         open={itemAddedModalOpen}
                         onDismiss={closeItemAddedModal}
@@ -72,20 +75,30 @@ PDP.propTypes = {
      */
     addToCart: PropTypes.func.isRequired,
     /**
+     * Product data from state (Catalog -> Products)
+     */
+    catalogProduct: PropTypes.object.isRequired,
+    /**
      * Callback when the added-to-cart modal closes
      */
     closeItemAddedModal: PropTypes.func.isRequired,
     /**
-     * The Immutable.js state object, for use with shouldComponentUpdate
+     * The Immutable.js PDP state object
      */
-    routedState: PropTypes.object.isRequired,
+    pdp: PropTypes.object.isRequired,
     /**
      * Function to update the item quantity when user changes it
      */
     setQuantity: PropTypes.func.isRequired,
 }
 
-export const mapStateToProps = ({pdp}) => ({routedState: getRoutedState(pdp)})
+export const mapStateToProps = ({catalog, pdp}) => {
+    const selector = getSelectorFromState(pdp)
+    return {
+        catalogProduct: catalog.products.get(selector),
+        pdp: pdp.get(selector)
+    }
+}
 
 const mapDispatchToProps = {
     setQuantity: pdpActions.setItemQuantity,

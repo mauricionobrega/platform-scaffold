@@ -90,7 +90,9 @@
 }
 
 .u-text-quiet {
-    @include text-quiet(true);
+    @include text-quiet(true); // @TODO: Tweak to use a $font-size-small var
+
+    font-size: 12px !important; // @TODO: Remove this line after above todo is done
 }
 
 .u-text-lighter {
@@ -122,8 +124,21 @@
 // ---
 
 .u-text-letter-spacing {
-    letter-spacing: 1px;
+    letter-spacing: 1px !important; // @TODO: Add to spline
 }
+
+.u-text-letter-spacing-normal {
+    letter-spacing: initial !important; // @TODO: Add to spline
+}
+
+
+// Line Height
+// ---
+
+.u-text-line-height-0 {
+    line-height: 0 !important; // @TODO: Add to spline
+}
+
 
 // Font Family
 // ---

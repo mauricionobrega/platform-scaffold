@@ -6,7 +6,7 @@ class Logo extends React.Component {
     constructor(props) {
         super(props)
 
-        this.logoURL = getAssetUrl('static/img/logo.png')
+        this.logoURL = getAssetUrl('static/img/global/logo.png')
     }
 
     render() {
