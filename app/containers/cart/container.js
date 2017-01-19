@@ -12,6 +12,7 @@ import Image from 'progressive-web-sdk/dist/components/image'
 
 import * as actions from './actions'
 import * as selectors from './selectors'
+import * as miniCartSelectors from '../mini-cart/selectors'
 import CartProductList from './partials/cart-product-list'
 import CartSummary from './partials/cart-summary'
 import CartEstimateShippingModal from './partials/cart-estimate-shipping'
@@ -110,13 +111,14 @@ class Cart extends React.Component {
     }
 
     render() {
-        const {cart, contentsLoaded} = this.props.miniCart
         const {
-            estimateShippingModal,
+            cart,
+            isEstimateShippingModalOpen,
             wishlistModal,
             countries,
-            stateProvinces
-        } = this.props.cart
+            stateProvinces,
+            contentsLoaded
+        } = this.props
         const isCartEmptyAndLoaded = cart.items.length === 0 && contentsLoaded
         const templateClassnames = classNames('t-cart u-bg-color-neutral-20', {
             't--loaded': contentsLoaded
@@ -133,7 +135,7 @@ class Cart extends React.Component {
                 </Grid>
 
                 <CartEstimateShippingModal
-                    isOpen={estimateShippingModal.isOpen}
+                    isOpen={isEstimateShippingModalOpen}
                     closeModal={this.closeEstimateShippingModal}
                     countries={countries}
                     stateProvinces={stateProvinces}
@@ -150,14 +152,19 @@ class Cart extends React.Component {
 
 Cart.propTypes = {
     cart: PropTypes.object,
-    miniCart: PropTypes.object,
+    contentsLoaded: PropTypes.bool,
+    isEstimateShippingModalOpen: PropTypes.bool,
     toggleEstimateShippingModal: PropTypes.func,
     toggleWishlistModal: PropTypes.func,
 }
 
 const mapStateToProps = createStructuredSelector({
-    cart: selectorToJS(selectors.getCart),
-    miniCart: selectorToJS(selectors.getMiniCart)
+    cart: selectorToJS(miniCartSelectors.getCartObject),
+    contentsLoaded: miniCartSelectors.getMiniCartContentsLoaded,
+    countries: selectorToJS(selectors.getCountries),
+    isEstimateShippingModalOpen: selectors.getIsEstimateShippingModalOpen,
+    stateProvinces: selectorToJS(selectors.getStateProvinces),
+    wishlistModal: selectorToJS(selectors.getWishlistModal)
 })
 
 const mapDispatchToProps = {
