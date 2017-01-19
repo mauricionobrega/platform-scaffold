@@ -1,6 +1,6 @@
 import baseConfig from './baseConfig'
 
-const url = baseConfig.baseURL.concat('/checkout/cart/')
+const url = `${baseConfig.baseURL}/checkout/cart/`
 
 const closeIcon = {
     id: 'closeCart_id',
