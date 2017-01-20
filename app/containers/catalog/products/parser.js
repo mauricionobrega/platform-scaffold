@@ -6,7 +6,7 @@ const parseBreadcrumbs = ($breadcrumbsLinks) => {
         .map((breadcrumbLink) => {
             return {
                 href: $(breadcrumbLink).attr('href'),
-                text: $(breadcrumbLink).text()
+                text: $(breadcrumbLink).text().trim()
             }
         })
 }

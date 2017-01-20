@@ -5,7 +5,7 @@ import Breadcrumbs from 'progressive-web-sdk/dist/components/breadcrumbs'
 const PDPHeading = ({breadcrumbs, title, price}) => (
     <div className="t-pdp-heading u-padding-md u-box-shadow u-position-relative u-z-index-1">
         {breadcrumbs ?
-            <Breadcrumbs className="t-pdp__breadcrumbs u-margin-bottom-md" items={breadcrumbs}  />
+            <Breadcrumbs className="t-pdp__breadcrumbs u-margin-bottom-md" items={breadcrumbs} />
         :
             <SkeletonBlock width="50%" height="12px" className="u-margin-bottom-md" />
         }
