@@ -16,6 +16,46 @@ import CartProductList from './partials/cart-product-list'
 import CartSummary from './partials/cart-summary'
 import CartEstimateShippingModal from './partials/cart-estimate-shipping'
 import CartWishlistModal from './partials/cart-wishlist'
+import CartItems from './partials/cart-items'
+
+const EmptyCartContents = ({hide}) => {
+    const emptyCartClassnames = classNames('t-cart__empty u-flexbox u-flex u-direction-column u-align-center u-justify-center', {
+        'u-visually-hidden': hide,
+        't--hide': hide
+    })
+    return (
+        <GridSpan>
+            <div className={emptyCartClassnames}>
+                <Image
+                    className="u-margin-bottom-md"
+                    height="140px"
+                    width="140px"
+                    alt="Illustrated upside-down top hat with a bug flying out"
+                    src={getAssetUrl(`static/img/cart/empty-cart@2x.png`)}
+                    />
+
+                <div className="u-padding-md">
+                    <p className="u-padding-top u-padding-start-lg u-padding-end-lg u-text-align-center u-margin-bottom-lg">
+                        Your shopping cart is empty. Sign in to retrieve saved items or continue shopping.
+                    </p>
+
+                    <Button className="c--primary u-text-uppercase u-h5 u-width-full u-margin-bottom-lg" href="/customer/account/login/">
+                        <Icon name="User" />
+                        Sign In
+                    </Button>
+
+                    <Button className="c--tertiary u-text-uppercase u-h5 u-width-full" href="/">
+                        Continue Shopping
+                    </Button>
+                </div>
+            </div>
+        </GridSpan>
+    )
+}
+
+EmptyCartContents.propTypes = {
+    hide: PropTypes.bool
+}
 
 class Cart extends React.Component {
     constructor(props) {
@@ -43,78 +83,12 @@ class Cart extends React.Component {
         this.props.toggleWishlistModal(false)
     }
 
-    renderItems(cart) {
-        const isCartEmpty = cart.items.length === 0
-        const summaryClassnames = classNames('t-cart__summary-wrapper', {
-            'u-visually-hidden': isCartEmpty,
-            't--hide': isCartEmpty,
-        })
-        return (
-            <div>
-                <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 7}}>
-                    <CartProductList
-                        cart={cart}
-                        onSaveLater={this.openWishlistModal}
-                    />
-                </GridSpan>
-
-                <GridSpan className={summaryClassnames} tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 5}}>
-                    <CartSummary
-                        cart={cart}
-                        onCalculateClick={this.openEstimateShippingModal}
-                    />
-
-                    <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg">
-                        <Button className="c--tertiary u-width-full u-text-uppercase">
-                            Continue Shopping
-                        </Button>
-                    </div>
-                </GridSpan>
-            </div>
-        )
-    }
-
-    renderEmpty(isCartEmptyAndLoaded) {
-        const emptyCartClassnames = classNames('t-cart__empty u-flexbox u-flex u-direction-column u-align-center u-justify-center', {
-            'u-visually-hidden': !isCartEmptyAndLoaded,
-            't--hide': !isCartEmptyAndLoaded,
-        })
-        return (
-            <GridSpan>
-                <div className={emptyCartClassnames}>
-                    <Image
-                        className="u-margin-bottom-md"
-                        height="140px"
-                        width="140px"
-                        alt="Illustrated upside-down top hat with a bug flying out"
-                        src={getAssetUrl(`static/img/cart/empty-cart@2x.png`)}
-                    />
-
-                    <div className="u-padding-md">
-                        <p className="u-padding-top u-padding-start-lg u-padding-end-lg u-text-align-center u-margin-bottom-lg">
-                            Your shopping cart is empty. Sign in to retrieve saved items or continue shopping.
-                        </p>
-
-                        <Button className="c--primary u-text-uppercase u-h5 u-width-full u-margin-bottom-lg" href="/customer/account/login/">
-                            <Icon name="User" />
-                            Sign In
-                        </Button>
-
-                        <Button className="c--tertiary u-text-uppercase u-h5 u-width-full" href="/">
-                            Continue Shopping
-                        </Button>
-                    </div>
-                </div>
-            </GridSpan>
-        )
-    }
-
     render() {
         const {
-            cart,
-            contentsLoaded
+            contentsLoaded,
+            hasItems
         } = this.props
-        const isCartEmptyAndLoaded = cart.items.length === 0 && contentsLoaded
+        const isCartEmptyAndLoaded = !hasItems && contentsLoaded
         const templateClassnames = classNames('t-cart u-bg-color-neutral-20', {
             't--loaded': contentsLoaded
         })
@@ -123,10 +97,10 @@ class Cart extends React.Component {
             <div className={templateClassnames}>
                 <Grid className="u-center-piece">
                     {!isCartEmptyAndLoaded &&
-                        this.renderItems(cart)
+                        <CartItems openWishlistModal={this.openWishlistModal} openEstimateShippingModal={this.openEstimateShippingModal} />
                     }
 
-                    {this.renderEmpty(isCartEmptyAndLoaded)}
+                    <EmptyCartContents hide={!isCartEmptyAndLoaded} />
                 </Grid>
 
                 <CartEstimateShippingModal closeModal={this.closeEstimateShippingModal} />
@@ -138,15 +112,15 @@ class Cart extends React.Component {
 }
 
 Cart.propTypes = {
-    cart: PropTypes.object,
     contentsLoaded: PropTypes.bool,
+    hasItems: PropTypes.bool,
     toggleEstimateShippingModal: PropTypes.func,
     toggleWishlistModal: PropTypes.func,
 }
 
 const mapStateToProps = createStructuredSelector({
-    cart: selectorToJS(miniCartSelectors.getCartObject),
     contentsLoaded: miniCartSelectors.getMiniCartContentsLoaded,
+    hasItems: miniCartSelectors.getMiniCartHasItems
 })
 
 const mapDispatchToProps = {
