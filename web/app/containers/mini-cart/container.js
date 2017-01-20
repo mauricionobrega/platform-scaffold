@@ -119,7 +119,7 @@ class MiniCart extends React.Component {
 
                             <div className="u-padding-top-lg u-flex-none">
                                 <Button href="#" className="c--primary u-width-full u-text-uppercase">
-                                    Go To Checkout
+                                    {hasItems ? 'Go To Checkout' : 'Continue Shopping'}
                                 </Button>
                             </div>
                         </div>
