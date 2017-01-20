@@ -27,12 +27,10 @@ export const generateCartCounterBadge = (cartContents) => {
                 </Badge>
             )
         }
-        else {
-            return (
-                <p className="u-visually-hidden">No items in the cart.</p>
-            )
-        }
     }
+    return (
+        <p className="u-visually-hidden">No items in the cart.</p>
+    )
 }
 
 class Header extends React.Component {
