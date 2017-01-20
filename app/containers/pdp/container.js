@@ -76,10 +76,6 @@ PDP.propTypes = {
      */
     addToCart: PropTypes.func.isRequired,
     /**
-     * Boolean set when add to cart is processing
-     */
-    addToCartInProgress: PropTypes.bool.isRequired,
-    /**
      * Product data from state (Catalog -> Products)
      */
     catalogProduct: PropTypes.object.isRequired,

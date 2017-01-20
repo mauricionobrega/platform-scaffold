@@ -11,11 +11,11 @@ import {onPageReceived, onRouteChanged} from '../app/actions'
 import {SELECTOR, PLACEHOLDER} from '../app/constants'
 
 export const initialState = Immutable.fromJS({
+    addToCartInProgress: false,
     contentsLoaded: false,
     itemQuantity: 1,
     itemAddedModalOpen: false,
     quantityAdded: 0,
-    addToCartInProgress: false
 })
 
 const reducer = createReducer({

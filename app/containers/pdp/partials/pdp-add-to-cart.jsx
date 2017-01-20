@@ -6,16 +6,11 @@ import Stepper from 'progressive-web-sdk/dist/components/stepper'
 const PDPAddToCart = ({quantity, setQuantity, onSubmit, disabled}) => {
     const stepperProps = {
         decrementIcon: 'minus',
+        disabled,
         incrementIcon: 'plus',
         initialValue: quantity,
         minimumValue: 1,
         onChange: setQuantity,
-    }
-
-    if (disabled) {
-        stepperProps.initialValue = 0
-        stepperProps.minimumValue = 0
-        stepperProps.maximumValue = 0
     }
 
     return (
