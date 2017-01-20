@@ -6,6 +6,7 @@ import SettingsStore from 'progressive-app-sdk/settings-store'
 import OnboardingController from './onboardingController'
 import AppRpc from '../global/app-rpc'
 import AppEvents from '../global/app-events'
+import Application from 'progressive-app-sdk/application'
 
 const OnboardingModalEvents = {
     // raised when onboarding modal is hidden
@@ -57,7 +58,8 @@ OnboardingModalController.prototype.show = async function(params) {
     // Onboarding modal should be triggered when the app first runs
     if (isFirstRun || params.forced) {
         this.isShowing = true
-        this.modalView.show({animated: true})
+        await this.modalView.show({animated: true})
+        await Application.setStatusBarDarkText()
 
         AppEvents.on(OnboardingModalEvents.onboardingHidden, () => {
             SettingsStore.set(isFirstRunKey, 'false')
@@ -69,6 +71,7 @@ OnboardingModalController.prototype.show = async function(params) {
 OnboardingModalController.prototype.hide = function() {
     this.isShowing = false
     this.modalView.hide({animated: true})
+
     AppEvents.trigger(OnboardingModalEvents.onboardingHidden)
 }
 
@@ -80,4 +83,4 @@ OnboardingModalController.prototype.canGoBack = function() {
     return this.onboardingController.canGoBack()
 }
 
-export default OnboardingModalController
+export {OnboardingModalController, OnboardingModalEvents}

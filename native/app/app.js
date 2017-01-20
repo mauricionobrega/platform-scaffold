@@ -9,7 +9,8 @@ import PreviewController from 'progressive-app-sdk/controllers/previewController
 import baseConfig from './config/baseConfig'
 import TabBarController from './controllers/tabBarController'
 import {getInitialTabId} from './config/tabBarConfig'
-import OnboardingModalController from './onboarding/onboardingModalController'
+import {OnboardingModalController, OnboardingModalEvents} from './onboarding/onboardingModalController'
+import AppEvents from './global/app-events'
 
 window.run = async function() {
     const runApp = async function() {
@@ -28,8 +29,11 @@ window.run = async function() {
             tabBarController.selectTab(initialTabId)
         }
 
+        AppEvents.on(OnboardingModalEvents.onboardingHidden, () => {
+            Application.setStatusBarLightText()
+        })
+
         Application.dismissLaunchImage()
-        Application.setStatusBarLightText()
     }
 
     // Preview support
