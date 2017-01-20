@@ -155,3 +155,11 @@ Then navigate back to your project root directory and run:
 ```
 npm link progressive-web-sdk
 ```
+
+In order for the scaffold to automatically pick up changes that you make to the SDK, run
+the following in your SDK root directory:
+```
+npm run dev:watch
+```
+
+Then run `npm run dev` in your project root directory as usual.
