@@ -61,7 +61,7 @@ TabController.init = async function(tabItem) {
         disableLoader: []
     }
 
-    navigationView.on('update-cart', async (data) => {
+    navigationView.on('cart-updated', async (data) => {
         await counterBadgeController.updateCounterValue(data.count)
     })
 

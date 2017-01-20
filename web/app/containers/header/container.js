@@ -16,7 +16,7 @@ import Astro from '../../vendor/astro-client'
 
 export const generateCartCounterBadge = (cartContents) => {
     if (cartContents && cartContents.summary_count) {
-        Astro.trigger('update-cart', {
+        Astro.trigger('cart-updated', {
             count: cartContents.summary_count
         })
 
@@ -69,7 +69,6 @@ class Header extends React.Component {
         }
 
         const {onMenuClick, onMiniCartClick} = this.props
-
 
         const innerButtonClassName = classnames('t-header__inner-button', 'u-padding-0', {
             't--hide-label': isCollapsed
