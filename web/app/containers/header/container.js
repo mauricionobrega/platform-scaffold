@@ -53,8 +53,6 @@ class Header extends React.Component {
             return null
         }
 
-        const {onMenuClick, onMiniCartClick} = this.props
-
         const innerButtonClassName = classnames('t-header__inner-button', 'u-padding-0', {
             't--hide-label': isCollapsed
         })
