@@ -4,7 +4,10 @@ import AnchoredLayoutPlugin from 'progressive-app-sdk/plugins/anchoredLayoutPlug
 import HeaderBarPlugin from 'progressive-app-sdk/plugins/headerBarPlugin'
 import NavigationPlugin from 'progressive-app-sdk/plugins/navigationPlugin'
 
+import CartModalController from './cartModalController'
+
 import baseConfig from '../config/baseConfig'
+import cartConfig from '../config/cartConfig'
 
 const TabController = function(tabItem, layout, headerBar, navigationView) {
     this.tabItem = tabItem
@@ -22,11 +25,11 @@ TabController.init = async function(tabItem) {
     const [
         layout,
         headerBar,
-        navigationView
+        navigationView,
     ] = await Promise.all([
         AnchoredLayoutPlugin.init(),
         HeaderBarPlugin.init(),
-        NavigationPlugin.init()
+        NavigationPlugin.init(),
     ])
 
     await layout.addTopView(headerBar)
@@ -34,12 +37,18 @@ TabController.init = async function(tabItem) {
     await navigationView.setHeaderBar(headerBar)
 
     await headerBar.setCenterIcon(baseConfig.logoUrl, 'logo')
+    await headerBar.setRightIcon(cartConfig.cartIcon.imageUrl, cartConfig.cartIcon.id)
     await headerBar.setTextColor(baseConfig.colors.whiteColor)
     await headerBar.setBackgroundColor(baseConfig.colors.primaryColor)
     await headerBar.setOpaque()
 
     headerBar.on('click:back', () => {
         navigationView.back()
+    })
+
+    headerBar.on(`click:${cartConfig.cartIcon.id}`, async () => {
+        const cartModalController = await CartModalController.init()
+        cartModalController.show()
     })
 
     navigationView.defaultWebViewPluginOptions = {

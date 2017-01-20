@@ -19,7 +19,7 @@ const baseConfig = {
         ? localPreviewUrl
         : '//cdn.mobify.com/sites/progressive-web-scaffold/production/loader.js',
     colors,
-    logoUrl: 'file:///logo.png'
+    logoUrl: 'file:///logo.png',
 }
 
 export default baseConfig
