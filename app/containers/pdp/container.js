@@ -22,7 +22,8 @@ class PDP extends React.Component {
             quantityAdded,
             itemAddedModalOpen,
             formInfo,
-            contentsLoaded
+            contentsLoaded,
+            addToCartInProgress
         } = this.props.pdp.toJS()
 
         const product = this.props.catalogProduct.toJS()
@@ -53,7 +54,7 @@ class PDP extends React.Component {
                     quantity={itemQuantity}
                     setQuantity={setQuantity}
                     onSubmit={addToCart}
-                    disabled={!contentsLoaded}
+                    disabled={!contentsLoaded || addToCartInProgress}
                 />
 
                 {contentsLoaded &&
@@ -74,6 +75,10 @@ PDP.propTypes = {
      * Function to submit the add-to-cart form
      */
     addToCart: PropTypes.func.isRequired,
+    /**
+     * Boolean set when add to cart is processing
+     */
+    addToCartInProgress: PropTypes.bool.isRequired,
     /**
      * Product data from state (Catalog -> Products)
      */

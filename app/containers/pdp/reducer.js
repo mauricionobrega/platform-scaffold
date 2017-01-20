@@ -14,7 +14,8 @@ export const initialState = Immutable.fromJS({
     contentsLoaded: false,
     itemQuantity: 1,
     itemAddedModalOpen: false,
-    quantityAdded: 0
+    quantityAdded: 0,
+    addToCartInProgress: false
 })
 
 const reducer = createReducer({
@@ -68,6 +69,12 @@ const reducer = createReducer({
     },
     [pdpActions.closeItemAddedModal]: (state) => {
         return RouterUtils.setInToRoutedState(state, 'itemAddedModalOpen', false)
+    },
+    [pdpActions.addToCartStarted]: (state) => {
+        return RouterUtils.setInToRoutedState(state, 'addToCartInProgress', true)
+    },
+    [pdpActions.addToCartComplete]: (state) => {
+        return RouterUtils.setInToRoutedState(state, 'addToCartInProgress', false)
     }
 }, RouterUtils.baseInitialState.set(PLACEHOLDER, initialState))
 
