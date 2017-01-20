@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
+import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/accordion'
 import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
@@ -10,7 +11,7 @@ import {Ledger, LedgerRow} from 'progressive-web-sdk/dist/components/ledger'
 import List from 'progressive-web-sdk/dist/components/list'
 import ProductItem from '../../../components/product-item'
 
-const CheckoutPaymentProductList = ({cart}) => (
+const CheckoutPaymentProductList = ({cart, isFixedPlaceOrderShown}) => (
     <div className="t-checkout-payment__product-list">
         <div className="t-checkout-payment__title u-padding-top-lg u-padding-bottom-lg">
             <h2 className="u-h4">Order Summary</h2>
@@ -34,16 +35,38 @@ const CheckoutPaymentProductList = ({cart}) => (
                         key={idx}
                         image={productImage}
                     >
-                        <div className="u-flexbox">
-                            <div className="u-flex-none">
-                                <p className="u-color-neutral-50">Color: Maroon</p>
-                                <p className="u-margin-bottom-sm u-color-neutral-50">Size: XL</p>
-                                <p className="u-margin-bottom-sm u-color-neutral-50">Quantity: x</p>
+                        <div className="u-flexbox u-align-bottom">
+                            <div className="u-flex-none u-color-neutral-50">
+                                {item.options.map(({label, value}, idx) => (
+                                    <p
+                                        className={idx > 0 ? 'u-margin-top-sm' : ''}
+                                        key={`${item.item_id}-option-${idx}`}
+                                    >
+                                        {label}: {value}
+                                    </p>
+                                ))}
+
+                                <p className={item.options > 0 ? 'u-margin-top-sm' : ''}>
+                                    Qty: {item.qty}
+                                </p>
                             </div>
 
                             <div className="u-text-align-end u-flex">
-                                <div className="u-h5 u-color-accent u-text-semi-bold">$19.99</div>
-                                <div className="u-text-quiet"><em>Was $29.99</em></div>
+                                {item.onSale ?
+                                    <div>
+                                        <div className="u-h5 u-color-accent u-text-semi-bold">
+                                            {item.product_sale_price}
+                                        </div>
+
+                                        <div className="u-text-quiet">
+                                            <em>Was {item.product_old_price}</em>
+                                        </div>
+                                    </div>
+                                :
+                                    <div className="u-h5 u-text-semi-bold">
+                                        {item.product_price}
+                                    </div>
+                                }
                             </div>
                         </div>
                     </ProductItem>
@@ -58,34 +81,67 @@ const CheckoutPaymentProductList = ({cart}) => (
                     value={cart.subtotal_excl_tax}
                 />
 
-                <LedgerRow
-                    label="Shipping (Flat - Fixed Rate)"
-                    value="$10.00"
-                />
+                {cart.shipping_rate &&
+                    <LedgerRow
+                        label={`Shipping (${cart.shipping_rate_label})`}
+                        value={cart.shipping_rate}
+                    />
+                }
+
+                {cart.promo_rate &&
+                    <LedgerRow
+                        className="u-border-light-bottom"
+                        label={`Shipping (${cart.promo_rate_label})`}
+                        value={cart.promo_rate}
+                    />
+                }
             </Ledger>
 
-            <div className="u-padding-start-md u-padding-end-md">
-                <FieldRow>
-                    <Field label="Enter discount code">
-                        <input type="text" placeholder="Enter discount code" />
-                        <Button className="c--tertiary">Apply</Button>
-                    </Field>
-                </FieldRow>
-            </div>
+            {!cart.promo_rate &&
+                <Accordion>
+                    <AccordionItem header="Promo code">
+                        <FieldRow>
+                            <Field label="Enter discount code">
+                                <input type="text" placeholder="Enter discount code" />
+                                <Button className="c--tertiary">Apply</Button>
+                            </Field>
+                        </FieldRow>
+                    </AccordionItem>
+                </Accordion>
+            }
 
             <Ledger>
                 <LedgerRow
                     label="Total"
                     isTotal={true}
-                    value={cart.subtotal_incl_tax}
+                    value={cart.total_incl_tax}
                 />
             </Ledger>
 
+            {/* This is the statically positioned "Place Your Order" container */}
             <div className="u-padding-end-md u-padding-bottom-lg u-padding-start-md">
-                <Button className="c--primary u-flex-none u-width-full">
+                <Button className="c--primary u-flex-none u-width-full u-text-all-caps">
                     <Icon name="lock" />
                     Place Your Order
                 </Button>
+            </div>
+
+            {/* This is the FIXED positioned "Place Your Order" container */}
+            <div
+                className={`t-checkout-payment__fixed-place-order ${isFixedPlaceOrderShown && 't--show'}`}
+                tabIndex="-1"
+                aria-hidden="true"
+            >
+                <div className="u-padding-md u-bg-color-neutral-10 u-text-align-center">
+                    <Button className="c--primary u-flex-none u-width-full u-text-all-caps">
+                        <Icon name="lock" />
+                        Place Your Order
+                    </Button>
+
+                    <p className="u-margin-top-md">
+                        Total: <strong>{cart.total_incl_tax}</strong>
+                    </p>
+                </div>
             </div>
 
             <div className="u-padding-top-lg u-padding-bottom-lg u-text-align-center">
@@ -102,6 +158,7 @@ const CheckoutPaymentProductList = ({cart}) => (
 
 CheckoutPaymentProductList.propTypes = {
     cart: PropTypes.object,
+    isFixedPlaceOrderShown: PropTypes.bool,
 }
 
 export default CheckoutPaymentProductList
