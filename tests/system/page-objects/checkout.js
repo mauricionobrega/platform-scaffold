@@ -1,5 +1,5 @@
 const selectors = {
-    checkoutTemplateIdentifier: '.t-checkout', // Used in workflow to assert you have reached the page
+    checkoutTemplateIdentifier: '.t-checkout-shipping',
     checkoutAccountTemplateIdentifier: '.t-account', // Used in workflow to assert you have reached the page
     continueAsGuest: '.continue .guest .selector',
     continueAsRegistered: '.continue .registered .selector',

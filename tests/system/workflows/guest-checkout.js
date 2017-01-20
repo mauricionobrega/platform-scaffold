@@ -1,14 +1,18 @@
+import process from 'process'
 import Home from '../page-objects/home'
 import PLP from '../page-objects/plp'
-// import PDP from '../page-objects/pdp'
+import PDP from '../page-objects/pdp'
 // import Cart from '../page-objects/cart'
 // import Checkout from '../page-objects/checkout'
 
 let home
 let plp
-// let pdp
+let pdp
 // let cart
 // let checkout
+
+const PLP_INDEX = process.env.PLP_INDEX || 2
+const PRODUCT_INDEX = process.env.PRODUCT_INDEX || 1
 
 export default {
     '@tags': ['checkout'],
@@ -16,7 +20,7 @@ export default {
     before: (browser) => {
         home = new Home(browser)
         plp = new PLP(browser)
-        // pdp = new PDP(browser)
+        pdp = new PDP(browser)
         // cart = new Cart(browser)
         // checkout = new Checkout(browser)
     },
@@ -33,15 +37,14 @@ export default {
     },
 
     'Checkout - Guest - Step 2 - Navigate from Home to PLP': (browser) => {
-        home.navigateToPLP()
+        home.navigateToPLP(PLP_INDEX)
         browser
             .waitForElementVisible(plp.selectors.plpTemplateIdentifier)
             .assert.visible(plp.selectors.plpTemplateIdentifier)
     },
 
-/* TODO: Uncomment the following once the Progressive Web build for Merlin's Potions has been completed.
     'Checkout - Guest - Step 3 - Navigate from PLP to PDP': (browser) => {
-        plp.navigateToPDP()
+        plp.navigateToPDP(PRODUCT_INDEX)
         browser
             .waitForElementVisible(pdp.selectors.pdpTemplateIdentifier)
             .assert.visible(pdp.selectors.pdpTemplateIdentifier)
@@ -50,9 +53,11 @@ export default {
     'Checkout - Guest - Step 4 - Add item to Shopping Cart': (browser) => {
         pdp.addItemToCart()
         browser
-            .waitForElementVisible(pdp.selectors.cartIconTemplateIdentifier)
-            .assert.visible(pdp.selectors.cartIconTemplateIdentifier)
+            .waitForElementVisible(pdp.selectors.itemAdded)
+            .assert.visible(pdp.selectors.itemAdded)
     },
+
+/* TODO: Uncomment the following once the Progressive Web build for Merlin's Potions has been completed.
 
     'Checkout - Guest - Step 5 - Navigate from PDP to Shopping Cart': (browser) => {
         pdp.navigateToCart()
