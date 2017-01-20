@@ -114,7 +114,6 @@ class Cart extends React.Component {
         const {
             cart,
             isEstimateShippingModalOpen,
-            wishlistModal,
             countries,
             stateProvinces,
             contentsLoaded
@@ -141,10 +140,7 @@ class Cart extends React.Component {
                     stateProvinces={stateProvinces}
                 />
 
-                <CartWishlistModal
-                    isOpen={wishlistModal.isOpen}
-                    closeModal={this.closeWishlistModal}
-                />
+                <CartWishlistModal closeModal={this.closeWishlistModal} />
             </div>
         )
     }
@@ -164,7 +160,6 @@ const mapStateToProps = createStructuredSelector({
     countries: selectorToJS(selectors.getCountries),
     isEstimateShippingModalOpen: selectors.getIsEstimateShippingModalOpen,
     stateProvinces: selectorToJS(selectors.getStateProvinces),
-    wishlistModal: selectorToJS(selectors.getWishlistModal)
 })
 
 const mapDispatchToProps = {

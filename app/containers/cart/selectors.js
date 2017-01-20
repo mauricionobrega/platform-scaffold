@@ -10,5 +10,6 @@ export const getCart = createSelector(
 export const getEstimateShippingModal = createGetSelector(getCart, 'estimateShippingModal')
 export const getIsEstimateShippingModalOpen = createGetSelector(getEstimateShippingModal, 'isOpen')
 export const getWishlistModal = createGetSelector(getCart, 'wishlistModal')
+export const getIsWishlistModalOpen = createGetSelector(getWishlistModal, 'isOpen')
 export const getCountries = createGetSelector(getCart, 'countries')
 export const getStateProvinces = createGetSelector(getCart, 'stateProvinces')
