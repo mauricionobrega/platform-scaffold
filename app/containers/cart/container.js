@@ -11,7 +11,6 @@ import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Image from 'progressive-web-sdk/dist/components/image'
 
 import * as actions from './actions'
-import * as selectors from './selectors'
 import * as miniCartSelectors from '../mini-cart/selectors'
 import CartProductList from './partials/cart-product-list'
 import CartSummary from './partials/cart-summary'
@@ -113,9 +112,6 @@ class Cart extends React.Component {
     render() {
         const {
             cart,
-            isEstimateShippingModalOpen,
-            countries,
-            stateProvinces,
             contentsLoaded
         } = this.props
         const isCartEmptyAndLoaded = cart.items.length === 0 && contentsLoaded
@@ -133,12 +129,7 @@ class Cart extends React.Component {
                     {this.renderEmpty(isCartEmptyAndLoaded)}
                 </Grid>
 
-                <CartEstimateShippingModal
-                    isOpen={isEstimateShippingModalOpen}
-                    closeModal={this.closeEstimateShippingModal}
-                    countries={countries}
-                    stateProvinces={stateProvinces}
-                />
+                <CartEstimateShippingModal closeModal={this.closeEstimateShippingModal} />
 
                 <CartWishlistModal closeModal={this.closeWishlistModal} />
             </div>
@@ -149,7 +140,6 @@ class Cart extends React.Component {
 Cart.propTypes = {
     cart: PropTypes.object,
     contentsLoaded: PropTypes.bool,
-    isEstimateShippingModalOpen: PropTypes.bool,
     toggleEstimateShippingModal: PropTypes.func,
     toggleWishlistModal: PropTypes.func,
 }
@@ -157,9 +147,6 @@ Cart.propTypes = {
 const mapStateToProps = createStructuredSelector({
     cart: selectorToJS(miniCartSelectors.getCartObject),
     contentsLoaded: miniCartSelectors.getMiniCartContentsLoaded,
-    countries: selectorToJS(selectors.getCountries),
-    isEstimateShippingModalOpen: selectors.getIsEstimateShippingModalOpen,
-    stateProvinces: selectorToJS(selectors.getStateProvinces),
 })
 
 const mapDispatchToProps = {
