@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
-import {selectorToJS} from '../../utils/selector-utils'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import classNames from 'classnames'
 
@@ -10,10 +9,7 @@ import {Grid, GridSpan} from '../../components/grid'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Image from 'progressive-web-sdk/dist/components/image'
 
-import * as actions from './actions'
 import * as miniCartSelectors from '../mini-cart/selectors'
-import CartProductList from './partials/cart-product-list'
-import CartSummary from './partials/cart-summary'
 import CartEstimateShippingModal from './partials/cart-estimate-shipping'
 import CartWishlistModal from './partials/cart-wishlist'
 import CartItems from './partials/cart-items'
@@ -57,65 +53,29 @@ EmptyCartContents.propTypes = {
     hide: PropTypes.bool
 }
 
-class Cart extends React.Component {
-    constructor(props) {
-        super(props)
+const Cart = ({contentsLoaded, hasItems}) => {
+    const isCartEmptyAndLoaded = !hasItems && contentsLoaded
+    const templateClassnames = classNames('t-cart u-bg-color-neutral-20', {
+        't--loaded': contentsLoaded
+    })
 
-        this.openEstimateShippingModal = this.openEstimateShippingModal.bind(this)
-        this.closeEstimateShippingModal = this.closeEstimateShippingModal.bind(this)
-        this.openWishlistModal = this.openWishlistModal.bind(this)
-        this.closeWishlistModal = this.closeWishlistModal.bind(this)
-    }
+    return (
+        <div className={templateClassnames}>
+            <Grid className="u-center-piece">
+                {!isCartEmptyAndLoaded && <CartItems />}
 
-    openEstimateShippingModal() {
-        this.props.toggleEstimateShippingModal(true)
-    }
+                <EmptyCartContents hide={!isCartEmptyAndLoaded} />
+            </Grid>
 
-    closeEstimateShippingModal() {
-        this.props.toggleEstimateShippingModal(false)
-    }
-
-    openWishlistModal() {
-        this.props.toggleWishlistModal(true)
-    }
-
-    closeWishlistModal() {
-        this.props.toggleWishlistModal(false)
-    }
-
-    render() {
-        const {
-            contentsLoaded,
-            hasItems
-        } = this.props
-        const isCartEmptyAndLoaded = !hasItems && contentsLoaded
-        const templateClassnames = classNames('t-cart u-bg-color-neutral-20', {
-            't--loaded': contentsLoaded
-        })
-
-        return (
-            <div className={templateClassnames}>
-                <Grid className="u-center-piece">
-                    {!isCartEmptyAndLoaded &&
-                        <CartItems openWishlistModal={this.openWishlistModal} openEstimateShippingModal={this.openEstimateShippingModal} />
-                    }
-
-                    <EmptyCartContents hide={!isCartEmptyAndLoaded} />
-                </Grid>
-
-                <CartEstimateShippingModal closeModal={this.closeEstimateShippingModal} />
-
-                <CartWishlistModal closeModal={this.closeWishlistModal} />
-            </div>
-        )
-    }
+            <CartEstimateShippingModal />
+            <CartWishlistModal />
+        </div>
+    )
 }
 
 Cart.propTypes = {
     contentsLoaded: PropTypes.bool,
     hasItems: PropTypes.bool,
-    toggleEstimateShippingModal: PropTypes.func,
-    toggleWishlistModal: PropTypes.func,
 }
 
 const mapStateToProps = createStructuredSelector({
@@ -123,12 +83,4 @@ const mapStateToProps = createStructuredSelector({
     hasItems: miniCartSelectors.getMiniCartHasItems
 })
 
-const mapDispatchToProps = {
-    toggleEstimateShippingModal: actions.toggleEstimateShippingModal,
-    toggleWishlistModal: actions.toggleWishlistModal,
-}
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Cart)
+export default connect(mapStateToProps)(Cart)

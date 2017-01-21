@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import {selectorToJS} from '../../../utils/selector-utils'
 import * as selectors from '../selectors'
+import * as actions from '../actions'
 
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -92,4 +93,8 @@ const mapStateToProps = createStructuredSelector({
     stateProvinces: selectorToJS(selectors.getStateProvinces)
 })
 
-export default connect(mapStateToProps)(CartEstimateShippingModal)
+const mapDispatchToProps = {
+    closeModal: () => actions.toggleEstimateShippingModal(false)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartEstimateShippingModal)

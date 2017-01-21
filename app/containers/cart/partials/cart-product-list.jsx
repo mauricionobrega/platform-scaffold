@@ -1,4 +1,9 @@
 import React, {PropTypes} from 'react'
+import {connect} from 'react-redux'
+import {createStructuredSelector} from 'reselect'
+import * as selectors from '../selectors'
+import * as miniCartSelectors from '../../mini-cart/selectors'
+import {selectorToJS} from '../../../utils/selector-utils'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
@@ -12,15 +17,20 @@ import Stepper from 'progressive-web-sdk/dist/components/stepper'
 
 const productItemClassNames = 'u-padding-top-lg u-padding-bottom-lg u-padding-start u-padding-end'
 
-const renderProductImage = (src, alt) => (
+const ProductImage = ({src, alt}) => (
     <Image src={src} alt={alt} width="104px" height="104px" />
 )
 
-const renderProductSkeleton = () => (
+ProductImage.propTypes = {
+    alt: PropTypes.string,
+    src: PropTypes.string
+}
+
+const ProductSkeleton = () => (
     <ProductItem
         className={productItemClassNames}
         title={<SkeletonText type="h3" className="u-margin-bottom-sm" />}
-        image={renderProductImage('null', 'null')}
+        image={<ProductImage src="null" alt="null" />}
     >
         <SkeletonText width="60%" style={{lineHeight: '20px'}} />
         <SkeletonText width="60%" style={{lineHeight: '20px'}} className="u-margin-bottom-sm" />
@@ -28,15 +38,73 @@ const renderProductSkeleton = () => (
     </ProductItem>
 )
 
-const CartProductList = ({cart, onSaveLater}) => {
-    const isCartEmpty = cart.items.length === 0
+/* eslint-disable camelcase */
+
+const CartProductItem = ({product_name, product_image, idx, qty, product_price, onSaveLater}) => (
+    <ProductItem
+        className={productItemClassNames}
+        title={<h2 className="u-h3">{product_name}</h2>}
+        key={idx}
+        image={<ProductImage {...product_image} />}
+        >
+        <p className="u-color-neutral-50">Color: Maroon</p>
+        <p className="u-margin-bottom-sm u-color-neutral-50">Size: XL</p>
+
+        <FieldRow className="u-align-bottom">
+            <Field label="Quantity" idFor={`quantity-${idx}`}>
+                <Stepper
+                    className="pw--simple t-cart__product-stepper"
+                    idForLabel={`quantity-${idx}`}
+                    incrementIcon="plus"
+                    decrementIcon="minus"
+                    initialValue={qty}
+                    minimumValue={1}
+                    />
+            </Field>
+
+            <Field>
+                <div className="u-text-align-end u-flex">
+                    <div className="u-h5 u-color-accent u-text-semi-bold">{product_price}</div>
+                    <div className="u-text-quiet"><em>Was $29.99</em></div>
+                </div>
+            </Field>
+        </FieldRow>
+
+        <div className="u-flexbox">
+            <Button
+                className="u-text-small u-color-brand u-flex-none"
+                innerClassName="c--no-min-width u-padding-start-0 u-padding-bottom-0"
+                >
+                Edit
+            </Button>
+
+            <Button
+                className="u-text-small u-color-brand u-padding-start-0 u-padding-end-0"
+                innerClassName="u-padding-bottom-0"
+                onClick={onSaveLater}
+                >
+                Save for Later
+            </Button>
+
+            <Button
+                className="u-text-small u-color-brand"
+                innerClassName="u-padding-end-0 u-padding-bottom-0"
+                >
+                Remove
+            </Button>
+        </div>
+    </ProductItem>
+)
+
+const CartProductList = ({items, summaryCount, onSaveLater}) => {
+    const isCartEmpty = items.length === 0
 
     return (
         <div className="t-cart__product-list">
             <div className="t-cart__product-list-title u-padding-top-md u-padding-bottom-md">
                 <div className="u-flexbox u-align-center">
                     <h1 className="u-flex">
-                        Cart {cart.summary_count > 0 && <span>({cart.summary_count} Items)</span>}
+                        Cart {summaryCount > 0 && <span>({summaryCount} Items)</span>}
                     </h1>
 
                     <Button className="u-flex-none u-color-brand">
@@ -47,71 +115,23 @@ const CartProductList = ({cart, onSaveLater}) => {
             </div>
 
             <List className="u-bg-color-neutral-10 u-border-light-top u-border-light-bottom">
-                {isCartEmpty && renderProductSkeleton()}
+                {isCartEmpty && <ProductSkeleton />}
 
-                {cart.items.map((item, idx) => (
-                    <ProductItem
-                        className={productItemClassNames}
-                        title={<h2 className="u-h3">{item.product_name}</h2>}
-                        key={idx}
-                        image={renderProductImage(item.product_image.src, item.product_image.alt)}
-                    >
-                        <p className="u-color-neutral-50">Color: Maroon</p>
-                        <p className="u-margin-bottom-sm u-color-neutral-50">Size: XL</p>
-
-                        <FieldRow className="u-align-bottom">
-                            <Field label="Quantity" idFor={`quantity-${idx}`}>
-                                <Stepper
-                                    className="pw--simple t-cart__product-stepper"
-                                    idForLabel={`quantity-${idx}`}
-                                    incrementIcon="plus"
-                                    decrementIcon="minus"
-                                    initialValue={item.qty}
-                                    minimumValue={1}
-                                />
-                            </Field>
-
-                            <Field>
-                                <div className="u-text-align-end u-flex">
-                                    <div className="u-h5 u-color-accent u-text-semi-bold">{item.product_price}</div>
-                                    <div className="u-text-quiet"><em>Was $29.99</em></div>
-                                </div>
-                            </Field>
-                        </FieldRow>
-
-                        <div className="u-flexbox">
-                            <Button
-                                className="u-text-small u-color-brand u-flex-none"
-                                innerClassName="c--no-min-width u-padding-start-0 u-padding-bottom-0"
-                            >
-                                Edit
-                            </Button>
-
-                            <Button
-                                className="u-text-small u-color-brand u-padding-start-0 u-padding-end-0"
-                                innerClassName="u-padding-bottom-0"
-                                onClick={onSaveLater}
-                            >
-                                Save for Later
-                            </Button>
-
-                            <Button
-                                className="u-text-small u-color-brand"
-                                innerClassName="u-padding-end-0 u-padding-bottom-0"
-                            >
-                                Remove
-                            </Button>
-                        </div>
-                    </ProductItem>
-                ))}
+                {items.map((item, idx) => (<CartProductItem {...item} key={idx} idx={idx} onSaveLater={onSaveLater} />))}
             </List>
         </div>
     )
 }
 
 CartProductList.propTypes = {
-    cart: PropTypes.object,
+    items: PropTypes.array,
+    summaryCount: PropTypes.number,
     onSaveLater: PropTypes.func,
 }
 
-export default CartProductList
+const mapStateToProps = createStructuredSelector({
+    items: selectorToJS(miniCartSelectors.getMiniCartItems),
+    summaryCount: miniCartSelectors.getMiniCartSummaryCount
+})
+
+export default connect(mapStateToProps)(CartProductList)

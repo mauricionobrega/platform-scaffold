@@ -16,3 +16,4 @@ export const getMiniCartHasItems = createSelector(
     getMiniCartItems,
     (items) => items.size > 0
 )
+export const getMiniCartSummaryCount = createGetSelector(getCartObject, 'summary_count')

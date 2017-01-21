@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import * as selectors from '../selectors'
+import * as actions from '../actions'
 
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -64,4 +65,8 @@ const mapStateToProps = createStructuredSelector({
     isOpen: selectors.getIsWishlistModalOpen
 })
 
-export default connect(mapStateToProps)(CartWishlistModal)
+const mapDispatchToProps = {
+    closeModal: () => actions.toggleWishlistModal(false)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartWishlistModal)
