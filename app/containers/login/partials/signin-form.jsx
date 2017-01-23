@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react'
-import {Field, reduxForm} from 'redux-form'
+import {Field as ReduxFormField, reduxForm} from 'redux-form'
 import {createStructuredSelector} from 'reselect'
 import {connect} from 'react-redux'
 import {selectorToJS} from '../../../utils/selector-utils'
@@ -8,99 +8,33 @@ import * as actions from '../actions'
 import {SIGN_IN_SECTION} from '../constants'
 
 import Button from 'progressive-web-sdk/dist/components/button'
-import FieldComponent from 'progressive-web-sdk/dist/components/field'
+import Field from 'progressive-web-sdk/dist/components/field'
 import FieldSet from 'progressive-web-sdk/dist/components/field-set'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
-import {Icon} from 'progressive-web-sdk/dist/components/icon'
-import Link from 'progressive-web-sdk/dist/components/link'
-import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
-const FieldLabel = ({label, required, type, forgotPassword}) => (
-    <span>
-        {label} {required && <span>*</span>}
+import {LoginFieldTooltip, LoginFieldLabel} from './common'
 
-        {type === 'password' && forgotPassword &&
-            <Link className="u-float-end u-text-normal" href={forgotPassword.href}>
-                {forgotPassword.title}
-            </Link>
-        }
-    </span>
+const SigninField = ({label, required, type, forgotPassword, name, tooltip, openModal, closeModal, modalOpen}) => (
+    <FieldRow>
+        <ReduxFormField
+            name={name}
+            label={<LoginFieldLabel label={label} required={required} type={type} forgotPassword={forgotPassword} />}
+            component={Field}
+            >
+            <input type={type} />
+        </ReduxFormField>
+
+        {tooltip && <LoginFieldTooltip tooltip={tooltip} label={label} openModal={openModal} closeModal={closeModal} modalOpen={modalOpen} />}
+    </FieldRow>
 )
 
-FieldLabel.propTypes = {
-    forgotPassword: PropTypes.shape({
-        href: PropTypes.string,
-        title: PropTypes.string
-    }),
-    label: PropTypes.string,
-    required: PropTypes.bool,
-    type: PropTypes.string,
-}
-
-const SheetHeader = ({label, closeModal}) => (
-    <div className="u-width-full u-bg-color-brand u-color-neutral-10 u-flexbox">
-        <h1 className="u-flex u-padding-md u-h4 u-text-uppercase">
-            {label}
-        </h1>
-
-        <Button onClick={closeModal}>
-            <Icon name="close" />
-            <span className="u-visually-hidden">Close</span>
-        </Button>
+const SigninFields = ({fields, forgotPassword, openModal, closeModal, modalOpen}) => (
+    <div>
+        {fields.map((field, idx) =>
+            <SigninField {...field} key={idx} openModal={openModal} closeModal={closeModal} modalOpen={modalOpen} forgotPassword={forgotPassword} />
+        )}
     </div>
 )
-
-SheetHeader.propTypes = {
-    closeModal: PropTypes.func,
-    label: PropTypes.string
-}
-
-const renderFields = (fields, forgotPassword, openModal, closeModal, modalOpen) => {
-    return fields.map(({label, name, type, required, tooltip, disabled}, idx) => {
-        const labelNode = (<FieldLabel label={label} required={required} type={type} forgotPassword={forgotPassword} />)
-
-        return (
-            <FieldRow key={idx}>
-                {/*
-                    Actually ReduxFormField from 'redux-form' into
-                    which we pass the Progressive Web SDK Field component
-                */}
-                <Field name={name} label={labelNode} component={FieldComponent}>
-                    <input type={type} />
-                </Field>
-
-                {tooltip &&
-                    <div>
-                        <a href="#remember-me" onClick={openModal}>
-                            {tooltip.title}
-                        </a>
-
-                        <Sheet
-                            className="t-login__remember-me-modal"
-                            open={modalOpen}
-                            onDismiss={closeModal}
-                            effect="slide-bottom"
-                            headerContent={<SheetHeader label={label} closeModal={closeModal} />}
-                        >
-                            <div id="remember-me" className="u-padding-md">
-                                {tooltip.content}
-                            </div>
-
-                            <div className="t-login__remember-me-button u-padding-md">
-                                <Button
-                                    className="c-button c--secondary u-text-uppercase u-margin-top-lg u-width-full"
-                                    onClick={closeModal}
-                                >
-                                    Continue
-                                </Button>
-                            </div>
-                        </Sheet>
-                    </div>
-                }
-            </FieldRow>
-        )
-    })
-}
 
 class SignInForm extends React.Component {
     constructor(props) {
@@ -108,6 +42,7 @@ class SignInForm extends React.Component {
 
         this.openSignInModal = this.openSignInModal.bind(this)
         this.closeSignInModal = this.closeSignInModal.bind(this)
+        this.onSubmit = this.onSubmit.bind(this)
     }
 
     openSignInModal() {
@@ -118,30 +53,31 @@ class SignInForm extends React.Component {
         this.props.closeInfoModal(SIGN_IN_SECTION)
     }
 
+    onSubmit() {
+        this.props.handleSubmit((values) =>
+            new Promise((resolve, reject) => {
+                this.props.submitForm(values, resolve, reject)
+            })
+        )
+    }
+
     render() {
         const {
             // redux-form
-            handleSubmit,
             error,
             submitting,
-            // props from parent
+            // props from store
             href,
             fields,
             submitText,
             forgotPassword,
-            submitForm,
-            // Handlers
             modalOpen
         } = this.props
 
         return (
             <form
                 noValidate={true}
-                onSubmit={handleSubmit((values) =>
-                    new Promise((resolve, reject) => {
-                        submitForm(values, resolve, reject)
-                    })
-                )}
+                onSubmit={this.onSubmit}
             >
                 {error &&
                     <div className="u-margin-bottom-md u-color-error">
@@ -150,7 +86,7 @@ class SignInForm extends React.Component {
                 }
 
                 <FieldSet className="t-login__signin-fieldset">
-                    {renderFields(fields, forgotPassword, this.openSignInModal, this.closeSignInModal, modalOpen)}
+                    {<SigninFields fields={fields} forgotPassword={forgotPassword} openModal={this.openSignInModal} closeModal={this.closeSignInModal} modalOpen={modalOpen} />}
 
                     <FieldRow>
                         <Button

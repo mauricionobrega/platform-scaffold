@@ -5,30 +5,13 @@ import Button from 'progressive-web-sdk/dist/components/button'
 import FieldComponent from 'progressive-web-sdk/dist/components/field'
 import FieldSet from 'progressive-web-sdk/dist/components/field-set'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
-import {Icon} from 'progressive-web-sdk/dist/components/icon'
-import Sheet from 'progressive-web-sdk/dist/components/sheet'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
+
+import {LoginFieldTooltip, LoginFieldLabel} from './common'
 
 const renderFields = (fields, openModal, closeModal, modalOpen) => {
     return fields.map(({label, name, type, required, tooltip}, idx) => {
-        const labelNode = (
-            <span>
-                {label} {required && <span>*</span>}
-            </span>
-        )
-
-        const headerContent = (
-            <div className="u-width-full u-bg-color-brand u-color-neutral-10 u-flexbox">
-                <h1 className="u-flex u-padding-md u-h4 u-text-uppercase">
-                    {label}
-                </h1>
-
-                <Button onClick={closeModal}>
-                    <Icon name="close" />
-                    <span className="u-visually-hidden">Close</span>
-                </Button>
-            </div>
-        )
+        const labelNode = (<LoginFieldLabel label={label} required={required} />)
 
         return (
             <FieldRow key={idx}>
@@ -40,34 +23,7 @@ const renderFields = (fields, openModal, closeModal, modalOpen) => {
                     <input type={type} />
                 </Field>
 
-                {tooltip &&
-                    <div>
-                        <a href="#remember-me" onClick={openModal}>
-                            {tooltip.title}
-                        </a>
-
-                        <Sheet
-                            className="t-login__remember-me-modal"
-                            open={modalOpen}
-                            onDismiss={closeModal}
-                            effect="slide-bottom"
-                            headerContent={headerContent}
-                        >
-                            <div id="remember-me" className="u-padding-md">
-                                {tooltip.content}
-                            </div>
-
-                            <div className="t-login__remember-me-button u-padding-md">
-                                <Button
-                                    className="c-button c--secondary u-text-uppercase u-margin-top-lg u-width-full"
-                                    onClick={closeModal}
-                                >
-                                    Continue
-                                </Button>
-                            </div>
-                        </Sheet>
-                    </div>
-                }
+                {tooltip && <LoginFieldTooltip tooltip={tooltip} label={label} openModal={openModal} closeModal={closeModal} modalOpen={modalOpen} />}
             </FieldRow>
         )
     })
