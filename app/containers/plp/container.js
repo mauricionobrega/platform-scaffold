@@ -24,7 +24,7 @@ const renderNoResults = (bodyText) => {
                 alt="Crystal Ball"
                 width="122px"
                 height="110px"
-                src={getAssetUrl('static/img/no-results.png')} />
+                src={getAssetUrl('static/img/global/no-results.png')} />
 
             <div className="t-plp__no-results-text u-text-align-center">
                 {bodyText}
