@@ -5,6 +5,8 @@ import throttle from 'lodash.throttle'
 import classnames from 'classnames'
 
 import * as headerActions from './actions'
+import * as miniCartActions from '../mini-cart/actions'
+import * as navActions from '../../containers/navigation/actions'
 import * as selectors from './selectors'
 
 import {HeaderBar} from 'progressive-web-sdk/dist/components/header-bar'
@@ -79,6 +81,8 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = {
+    onMenuClick: navActions.openNavigation,
+    onMiniCartClick: miniCartActions.requestOpenMiniCart,
     toggleHeader: headerActions.toggleHeader
 }
 
