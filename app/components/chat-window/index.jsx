@@ -6,37 +6,21 @@ import {browserHistory} from 'react-router'
 import Button from 'progressive-web-sdk/dist/components/button'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 import ListTile from 'progressive-web-sdk/dist/components/list-tile'
-import Image from 'progressive-web-sdk/dist/components/image'
 import Link from 'progressive-web-sdk/dist/components/link'
 
 import ProductTile from '../../containers/plp/partials/product-tile'
+import SpeechToText from '../speech-to-text'
 
 const componentClass = 'c-chat-window'
 
-import recorder from '../../static/svg/recorder.svg'
-import recorderActive from '../../static/svg/recorderactive.svg'
-import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
-
-/**
- * WebSpeechRecognition
- *
- * L33t copy and paste from
- * - https://github.com/GoogleChrome/webplatform-samples/blob/master/webspeechdemo/webspeechdemo.html
- * - https://developers.google.com/web/updates/2013/01/Voice-Driven-Web-Apps-Introduction-to-the-Web-Speech-API
- */
-
-let recognition = null;
-
-const first_char = /\S/;
-function capitalize(s) {
-    return s.replace(first_char, function(m) { return m.toUpperCase(); });
+const capitalize = (s) => {
+    return s.replace(/^\S/, (m) => m.toUpperCase())
 }
 
 
 /**
  * INSERT_DESCRIPTION_HERE
  */
-let final_transcript = ''
 
 class ChatWindow extends React.Component {
     constructor(props) {
@@ -45,61 +29,6 @@ class ChatWindow extends React.Component {
         this.state = {
             inputValue: '',
             isRecording: false
-        }
-    }
-
-    componentDidMount() {
-        if ('webkitSpeechRecognition' in window) {
-            //start_button.style.display = 'inline-block';
-            recognition = new webkitSpeechRecognition();
-            recognition.continuous = true;
-            recognition.interimResults = true;
-
-            recognition.onstart = function() {
-                // XXX: TODO: change state here
-                // recognizing = true;
-                // showInfo('info_speak_now');
-                // start_img.src = 'mic-animate.gif';
-                console.log("Recongnition.onstart")
-                final_transcript = ''
-            };
-            recognition.onerror = function(event) {
-                if (event.error == 'no-speech') {
-                    // XXX: TODO: change state here
-                }
-                if (event.error == 'audio-capture') {
-                    // XXX: TODO: change state here
-                }
-                if (event.error == 'not-allowed') {
-                    // XXX: TODO: change state here
-                    ignore_onend = true;
-                }
-            };
-            recognition.onend = () => {
-                console.log("Recongnition.onend")
-                // XXX: TODO: change state here
-                if (!final_transcript) {
-                    // might have more results
-                    return;
-                }
-                this.setState({'inputValue': ''})
-            };
-            recognition.onresult = (event) => {
-                console.log("Recongnition.onresult")
-                var interim_transcript = '';
-                for (var i = event.resultIndex; i < event.results.length; ++i) {
-                  console.log(event.results[i][0].transcript)
-                  if (event.results[i].isFinal) {
-                    final_transcript += event.results[i][0].transcript;
-                  } else {
-                    interim_transcript += event.results[i][0].transcript;
-                  }
-                }
-                console.log("all");
-                interim_transcript = capitalize(interim_transcript);
-                final_transcript = capitalize(final_transcript);
-                this.setState({inputValue: final_transcript || interim_transcript});
-            };
         }
     }
 
@@ -121,8 +50,7 @@ class ChatWindow extends React.Component {
         } = this.props
 
         const {
-            inputValue,
-            isRecording
+            inputValue
         } = this.state
 
         const classes = classNames(componentClass, className)
@@ -130,27 +58,6 @@ class ChatWindow extends React.Component {
         const sendMessage = (inputValue) => {
             sendMessageToClippy(inputValue)
             this.state.inputValue = ''
-        }
-
-        const startRecording = () => {
-            if (recognition) {
-                if (!this.state.isRecording) {
-                    console.log('Start recording....')
-                    this.setState({
-                        isRecording: true,
-                        inputValue: ''
-                    })
-                    recognition.start();
-                } else {
-                    console.log('Stop recording....')
-                    this.setState({'isRecording': false})
-                    recognition.stop();
-                    if (inputValue && inputValue.trim()) {
-                        sendMessage(inputValue)
-                        this.setState({'inputValue': ''})
-                    }
-                }
-            }
         }
 
         const onSubmit = (e) => {
@@ -213,7 +120,7 @@ class ChatWindow extends React.Component {
 
                         <div className="sendClippyMessage">
                             <form
-                                className="u-flexbox"
+                                className="u-flexbox u-bg-color-neutral-10"
                                 onSubmit={onSubmit}
                             >
                                 <input
@@ -223,21 +130,11 @@ class ChatWindow extends React.Component {
                                     placeholder="Ask Clippy a question..."
                                     onChange={(e) => this.setState({inputValue: e.target.value})}
                                 />
+                                <SpeechToText
+                                    onChange={(result) => this.setState({inputValue: result})}
+                                    onComplete={(result) => sendMessage(result)}
+                                />
                                 <Button
-                                    className="u-flex-none clippyButton"
-                                    type="button"
-                                    onClick={() => startRecording()}
-                                >
-                                    {!isRecording ?
-                                        <DangerousHTML html={recorder}>
-                                            {(htmlObj) => <div dangerouslySetInnerHTML={htmlObj} />}
-                                        </DangerousHTML>
-                                    :
-                                        <DangerousHTML html={recorderActive}>
-                                            {(htmlObj) => <div dangerouslySetInnerHTML={htmlObj} />}
-                                        </DangerousHTML>
-                                    }
-                                </Button>                                <Button
                                     className="u-flex-none clippyButton"
                                     type="submit"
                                 >

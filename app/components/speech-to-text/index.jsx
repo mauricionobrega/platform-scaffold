@@ -8,6 +8,10 @@ import {Icon} from 'progressive-web-sdk/dist/components/icon'
 
 /**
  * This component handles speech to text input
+ *
+ * L33t copy and paste from
+ * - https://github.com/GoogleChrome/webplatform-samples/blob/master/webspeechdemo/webspeechdemo.html
+ * - https://developers.google.com/web/updates/2013/01/Voice-Driven-Web-Apps-Introduction-to-the-Web-Speech-API
  */
 
 class SpeechToText extends React.Component {
