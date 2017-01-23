@@ -34,6 +34,12 @@ export const onPageReceived = utils.createAction('On page received',
 export const setPageFetchError = utils.createAction('Set page fetch error', 'fetchError')
 export const clearPageFetchError = utils.createAction('Clear page fetch error')
 
+const offlineModeNotification = addNotification({
+    content: 'THIS IS THE OFFLINE MESSAGE TEXT',
+    id: 'offline-mode',
+    showRemoveButton: true
+})
+
 /**
  * Fetch the content for a 'global' page render. This should be driven
  * by react-router, ideally.
@@ -52,11 +58,7 @@ export const fetchPage = (url, pageComponent, routeName) => {
                 const currentURL = getState().app.get(CURRENT_URL)
 
                 if (isOffline) {
-                    dispatch(addNotification({
-                        content: 'THIS IS THE OFFLINE MESSAGE TEXT',
-                        id: 'offline-mode',
-                        showRemoveButton: true
-                    }))
+                    dispatch(offlineModeNotification)
                 } else {
                     dispatch(clearPageFetchError())
                 }
@@ -64,6 +66,7 @@ export const fetchPage = (url, pageComponent, routeName) => {
             })
             .catch((error) => {
                 console.info(error.message)
+                dispatch(offlineModeNotification)
                 dispatch(setPageFetchError({message: error.message}))
             })
     }
