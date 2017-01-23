@@ -74,8 +74,7 @@ class Login extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-    title: selectors.getLoginTitle,
-    loaded: selectors.getLoginLoaded
+    title: selectors.getLoginTitle
 })
 
 const mapDispatchToProps = {

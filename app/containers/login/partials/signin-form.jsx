@@ -50,6 +50,11 @@ const SheetHeader = ({label, closeModal}) => (
     </div>
 )
 
+SheetHeader.propTypes = {
+    closeModal: PropTypes.func,
+    label: PropTypes.string
+}
+
 const renderFields = (fields, forgotPassword, openModal, closeModal, modalOpen) => {
     return fields.map(({label, name, type, required, tooltip, disabled}, idx) => {
         const labelNode = (<FieldLabel label={label} required={required} type={type} forgotPassword={forgotPassword} />)
@@ -97,59 +102,73 @@ const renderFields = (fields, forgotPassword, openModal, closeModal, modalOpen) 
     })
 }
 
-const SignInForm = (props) => {
-    const {
-        // redux-form
-        handleSubmit,
-        error,
-        submitting,
-        // props from parent
-        fields,
-        submitText,
-        forgotPassword,
-        submitForm,
-        disabled,
-        // Handlers
-        openModal,
-        closeModal,
-        modalOpen
-    } = props
+class SignInForm extends React.Component {
+    constructor(props) {
+        super(props)
 
-    return (
-        <form
-            noValidate={true}
-            onSubmit={handleSubmit((values) =>
-                new Promise((resolve, reject) => {
-                    submitForm(values, resolve, reject)
-                })
-            )}
-        >
-            {error &&
-                <div className="u-margin-bottom-md u-color-error">
-                    {error}
-                </div>
-            }
+        this.openSignInModal = this.openSignInModal.bind(this)
+        this.closeSignInModal = this.closeSignInModal.bind(this)
+    }
 
-            <FieldSet className="t-login__signin-fieldset">
-                {renderFields(fields, forgotPassword, openModal, closeModal, modalOpen)}
+    openSignInModal() {
+        this.props.openInfoModal(SIGN_IN_SECTION)
+    }
 
-                <FieldRow>
-                    <Button
-                        className="c--primary u-width-full"
-                        type="submit"
-                        disabled={submitting || disabled}
-                    >
-                        <span className="u-text-uppercase">{submitText || 'Login'}</span>
-                    </Button>
-                </FieldRow>
-            </FieldSet>
-        </form>
-    )
+    closeSignInModal() {
+        this.props.closeInfoModal(SIGN_IN_SECTION)
+    }
+
+    render() {
+        const {
+            // redux-form
+            handleSubmit,
+            error,
+            submitting,
+            // props from parent
+            href,
+            fields,
+            submitText,
+            forgotPassword,
+            submitForm,
+            // Handlers
+            modalOpen
+        } = this.props
+
+        return (
+            <form
+                noValidate={true}
+                onSubmit={handleSubmit((values) =>
+                    new Promise((resolve, reject) => {
+                        submitForm(values, resolve, reject)
+                    })
+                )}
+            >
+                {error &&
+                    <div className="u-margin-bottom-md u-color-error">
+                        {error}
+                    </div>
+                }
+
+                <FieldSet className="t-login__signin-fieldset">
+                    {renderFields(fields, forgotPassword, this.openSignInModal, this.closeSignInModal, modalOpen)}
+
+                    <FieldRow>
+                        <Button
+                            className="c--primary u-width-full"
+                            type="submit"
+                            disabled={submitting || !href}
+                        >
+                            <span className="u-text-uppercase">{submitText || 'Login'}</span>
+                        </Button>
+                    </FieldRow>
+                </FieldSet>
+            </form>
+        )
+    }
 }
 
 SignInForm.propTypes = {
-    closeModal: PropTypes.func,
-    disabled: PropTypes.bool,
+    closeInfoModal: PropTypes.func,
     error: PropTypes.string,
     fields: PropTypes.array,
     forgotPassword: PropTypes.object,
@@ -157,7 +176,7 @@ SignInForm.propTypes = {
     href: PropTypes.string,
     invalid: PropTypes.bool,
     modalOpen: PropTypes.bool,
-    openModal: PropTypes.func,
+    openInfoModal: PropTypes.func,
     submitForm: PropTypes.func,
     submitText: PropTypes.string,
     submitting: PropTypes.bool,
@@ -169,7 +188,16 @@ const ReduxSignInForm = reduxForm({
 })(SignInForm)
 
 const mapStateToProps = createStructuredSelector({
-    modalOpen: selectors.getSigninInfoModalOpen
+    fields: selectorToJS(selectors.getSigninFormFields),
+    href: selectors.getSigninFormHref,
+    modalOpen: selectors.getSigninInfoModalOpen,
+    submitText: selectors.getSigninFormSubmitText,
+    forgotPassword: selectorToJS(selectors.getSigninFormForgotPassword)
 })
 
-export default connect(mapStateToProps)(ReduxSignInForm)
+const mapDispatchToProps = {
+    closeInfoModal: actions.closeInfoModal,
+    openInfoModal: actions.openInfoModal
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReduxSignInForm)
