@@ -1,32 +1,14 @@
 import React, {PropTypes} from 'react'
-import {Field, reduxForm} from 'redux-form'
+import {reduxForm} from 'redux-form'
 
 import Button from 'progressive-web-sdk/dist/components/button'
-import FieldComponent from 'progressive-web-sdk/dist/components/field'
 import FieldSet from 'progressive-web-sdk/dist/components/field-set'
-import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
-import {LoginFieldTooltip, LoginFieldLabel} from './common'
+import {LoginField} from './common'
 
 const renderFields = (fields, openModal, closeModal, modalOpen) => {
-    return fields.map(({label, name, type, required, tooltip}, idx) => {
-        const labelNode = (<LoginFieldLabel label={label} required={required} />)
-
-        return (
-            <FieldRow key={idx}>
-                {/*
-                    Actually ReduxFormField from 'redux-form' into
-                    which we pass the Progressive Web SDK Field component
-                */}
-                <Field name={name} label={labelNode} component={FieldComponent}>
-                    <input type={type} />
-                </Field>
-
-                {tooltip && <LoginFieldTooltip tooltip={tooltip} label={label} openModal={openModal} closeModal={closeModal} modalOpen={modalOpen} />}
-            </FieldRow>
-        )
-    })
+    return fields.map((field, idx) => <LoginField {...field} key={idx} modalInfo={{openModal, closeModal, modalOpen}} />)
 }
 
 const RegisterForm = (props) => {

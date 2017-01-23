@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react'
-import {Field as ReduxFormField, reduxForm} from 'redux-form'
+import {reduxForm} from 'redux-form'
 import {createStructuredSelector} from 'reselect'
 import {connect} from 'react-redux'
 import {selectorToJS} from '../../../utils/selector-utils'
@@ -8,33 +8,10 @@ import * as actions from '../actions'
 import {SIGN_IN_SECTION} from '../constants'
 
 import Button from 'progressive-web-sdk/dist/components/button'
-import Field from 'progressive-web-sdk/dist/components/field'
 import FieldSet from 'progressive-web-sdk/dist/components/field-set'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 
-import {LoginFieldTooltip, LoginFieldLabel} from './common'
-
-const SigninField = ({label, required, type, forgotPassword, name, tooltip, openModal, closeModal, modalOpen}) => (
-    <FieldRow>
-        <ReduxFormField
-            name={name}
-            label={<LoginFieldLabel label={label} required={required} type={type} forgotPassword={forgotPassword} />}
-            component={Field}
-            >
-            <input type={type} />
-        </ReduxFormField>
-
-        {tooltip && <LoginFieldTooltip tooltip={tooltip} label={label} openModal={openModal} closeModal={closeModal} modalOpen={modalOpen} />}
-    </FieldRow>
-)
-
-const SigninFields = ({fields, forgotPassword, openModal, closeModal, modalOpen}) => (
-    <div>
-        {fields.map((field, idx) =>
-            <SigninField {...field} key={idx} openModal={openModal} closeModal={closeModal} modalOpen={modalOpen} forgotPassword={forgotPassword} />
-        )}
-    </div>
-)
+import {LoginField} from './common'
 
 class SignInForm extends React.Component {
     constructor(props) {
@@ -74,6 +51,12 @@ class SignInForm extends React.Component {
             modalOpen
         } = this.props
 
+        const modalInfo = {
+            openModal: this.openSignInModal,
+            closeModal: this.closeSignInModal,
+            modalOpen
+        }
+
         return (
             <form
                 noValidate={true}
@@ -86,7 +69,9 @@ class SignInForm extends React.Component {
                 }
 
                 <FieldSet className="t-login__signin-fieldset">
-                    {<SigninFields fields={fields} forgotPassword={forgotPassword} openModal={this.openSignInModal} closeModal={this.closeSignInModal} modalOpen={modalOpen} />}
+                    {fields.map((field, idx) =>
+                        <LoginField {...field} key={idx} modalInfo={modalInfo} forgotPassword={forgotPassword} />
+                    )}
 
                     <FieldRow>
                         <Button

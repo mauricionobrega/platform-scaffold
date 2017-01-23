@@ -1,6 +1,9 @@
 import React, {PropTypes} from 'react'
+import {Field as ReduxFormField} from 'redux-form'
 
 import Button from 'progressive-web-sdk/dist/components/button'
+import Field from 'progressive-web-sdk/dist/components/field'
+import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Link from 'progressive-web-sdk/dist/components/link'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
@@ -122,4 +125,31 @@ LoginFieldLabel.propTypes = {
     label: PropTypes.string,
     required: PropTypes.bool,
     type: PropTypes.string,
+}
+
+export const LoginField = ({label, required, type, forgotPassword, name, tooltip, modalInfo}) => (
+    <FieldRow>
+        <ReduxFormField
+            name={name}
+            label={<LoginFieldLabel label={label} required={required} type={type} forgotPassword={forgotPassword} />}
+            component={Field}
+            >
+            <input type={type} />
+        </ReduxFormField>
+
+        {tooltip && <LoginFieldTooltip tooltip={tooltip} label={label} {...modalInfo} />}
+    </FieldRow>
+)
+
+LoginField.propTypes = {
+    label: PropTypes.string.isRequired,
+    modalInfo: PropTypes.object.isRequired,
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    forgotPassword: PropTypes.object,
+    required: PropTypes.bool,
+    tooltip: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.bool
+    ])
 }
