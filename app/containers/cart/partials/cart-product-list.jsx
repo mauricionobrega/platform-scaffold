@@ -96,7 +96,7 @@ const CartProductList = ({cart, onSaveLater}) => {
                             </Button>
 
                             <Button
-                                className="u-text-small u-color-brand"
+                                className="u-text-small u-color-brand qa-cart-remove-item"
                                 innerClassName="u-padding-end-0 u-padding-bottom-0"
                             >
                                 Remove
