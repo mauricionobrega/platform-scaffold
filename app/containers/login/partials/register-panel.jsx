@@ -1,77 +1,43 @@
 import React, {PropTypes} from 'react'
 import {createStructuredSelector} from 'reselect'
 import {connect} from 'react-redux'
-import {selectorToJS} from '../../../utils/selector-utils'
 import * as selectors from '../selectors'
 import * as actions from '../actions'
-import {REGISTER_SECTION} from '../constants'
 
 import RegisterForm from './register-form'
 import {PanelHeading, PanelDescription, PanelRequiredText} from './common'
 
-class RegisterPanel extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.openRegisterModal = this.openRegisterModal.bind(this)
-        this.closeRegisterModal = this.closeRegisterModal.bind(this)
-    }
-
-    openRegisterModal() {
-        this.props.openInfoModal(REGISTER_SECTION)
-    }
-
-    closeRegisterModal() {
-        this.props.closeInfoModal(REGISTER_SECTION)
-    }
-
-    render() {
-        const {
-            registerSection,
-            submitRegisterForm
-        } = this.props
-
-        const {
-            heading,
-            description,
-            requiredText
-        } = registerSection
-
-        return (
-            <div className="t-login__register-panel">
-                <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
-                    <PanelHeading heading={heading} />
-                    <PanelDescription description={description} />
-                    <div className="u-margin-top">
-                        <PanelRequiredText requiredText={requiredText} />
-                    </div>
-                </div>
-
-                <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
-                    <RegisterForm
-                        submitForm={submitRegisterForm}
-                        />
-                </div>
+const RegisterPanel = ({heading, description, requiredText, submitForm}) => (
+    <div className="t-login__register-panel">
+        <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
+            <PanelHeading heading={heading} />
+            <PanelDescription description={description} />
+            <div className="u-margin-top">
+                <PanelRequiredText requiredText={requiredText} />
             </div>
-        )
-    }
-}
+        </div>
+
+        <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
+            <RegisterForm submitForm={submitForm} />
+        </div>
+    </div>
+)
 
 RegisterPanel.propTypes = {
-    closeInfoModal: PropTypes.func,
-    openInfoModal: PropTypes.func,
-    registerSection: PropTypes.object,
-    submitRegisterForm: PropTypes.func
+    description: PropTypes.string,
+    heading: PropTypes.string,
+    requiredText: PropTypes.string,
+    submitForm: PropTypes.func
 }
 
 const mapStateToProps = createStructuredSelector({
-    registerSection: selectorToJS(selectors.getRegisterSection)
+    description: selectors.getRegisterSectionDescription,
+    heading: selectors.getRegisterSectionHeading,
+    requiredText: selectors.getSigninSectionRequiredText
 })
 
 const mapDispatchToProps = {
-    submitRegisterForm: actions.submitRegisterForm,
-    closeInfoModal: actions.closeInfoModal,
-    openInfoModal: actions.openInfoModal
+    submitForm: actions.submitRegisterForm
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterPanel)

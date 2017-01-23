@@ -28,10 +28,8 @@ const SignInPanel = ({description, heading, requiredText, submitForm}) => (
 )
 
 SignInPanel.propTypes = {
-    closeInfoModal: PropTypes.func,
     description: PropTypes.string,
     heading: PropTypes.string,
-    openInfoModal: PropTypes.func,
     requiredText: PropTypes.string,
     submitForm: PropTypes.func
 }
@@ -39,7 +37,6 @@ SignInPanel.propTypes = {
 const mapStateToProps = createStructuredSelector({
     description: selectors.getSigninSectionDescription,
     heading: selectors.getSigninSectionHeading,
-    infoModalOpen: selectors.getSigninInfoModalOpen,
     requiredText: selectors.getSigninSectionRequiredText
 })
 
