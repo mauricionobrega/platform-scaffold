@@ -1,5 +1,11 @@
 import React, {PropTypes} from 'react'
 import {reduxForm} from 'redux-form'
+import {createStructuredSelector} from 'reselect'
+import {connect} from 'react-redux'
+import {selectorToJS} from '../../../utils/selector-utils'
+import * as selectors from '../selectors'
+import * as actions from '../actions'
+import {REGISTER_SECTION} from '../constants'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import FieldSet from 'progressive-web-sdk/dist/components/field-set'
@@ -7,79 +13,104 @@ import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
 import {LoginField} from './common'
 
-const renderFields = (fields, openModal, closeModal, modalOpen) => {
-    return fields.map((field, idx) => <LoginField {...field} key={idx} modalInfo={{openModal, closeModal, modalOpen}} />)
-}
+class RegisterForm extends React.Component {
+    constructor(props) {
+        super(props)
 
-const RegisterForm = (props) => {
-    const {
-        // redux-form
-        handleSubmit,
-        error,
-        submitting,
-        // props from parent
-        sections,
-        submitText,
-        submitForm,
-        disabled,
-        // handlers
-        openModal,
-        closeModal,
-        modalOpen
-    } = props
-    return (
-        <form
-            noValidate={true}
-            onSubmit={handleSubmit((values) =>
-                new Promise((resolve, reject) => {
-                    submitForm(values, resolve, reject)
-                })
-            )}
-        >
-            {error &&
-                <div className="u-margin-bottom-md u-color-error">
-                    {error}
-                </div>
+        this.openRegisterModal = this.openRegisterModal.bind(this)
+        this.closeRegisterModal = this.closeRegisterModal.bind(this)
+        this.onSubmit = this.onSubmit.bind(this)
+
+        this.modalInfo = {
+            openModal: this.openRegisterModal,
+            closeModal: this.closeRegisterModal
+        }
+    }
+
+    openRegisterModal() {
+        this.props.openInfoModal(REGISTER_SECTION)
+    }
+
+    closeRegisterModal() {
+        this.props.closeInfoModal(REGISTER_SECTION)
+    }
+
+    onSubmit() {
+        this.props.handleSubmit((values) =>
+            new Promise((resolve, reject) => {
+                this.props.submitForm(values, resolve, reject)
+            })
+        )
+    }
+
+    render() {
+        const {
+            // redux-form
+            error,
+            submitting,
+            // props from parent
+            sections,
+            submitText,
+            href,
+            modalOpen
+        } = this.props
+
+        // Ensure that modalInfo changes if and only if modalOpen changes.
+        if (modalOpen !== this.modalInfo.modalOpen) {
+            this.modalInfo = {
+                ...this.modalInfo,
+                modalOpen
             }
+        }
 
-            {sections.map(({heading, fields}, idx) => {
-                return (
-                    <FieldSet className="t-login__register-fieldset" key={idx}>
-                        <div className="u-margin-bottom">
-                            {heading ?
-                                <h3 className="u-color-brand u-text-font-family u-text-normal">
-                                    {heading}
-                                </h3>
-                            :
-                                <SkeletonBlock height="24px" width="50%" />
-                            }
-                        </div>
+        return (
+            <form noValidate={true} onSubmit={this.onSubmit}>
+                {error &&
+                    <div className="u-margin-bottom-md u-color-error">
+                        {error}
+                    </div>
+                }
 
-                        {renderFields(fields, openModal, closeModal, modalOpen)}
-                    </FieldSet>
-                )
-            })}
+                {sections.map(({heading, fields}, idx) => {
+                    return (
+                        <FieldSet className="t-login__register-fieldset" key={idx}>
+                            <div className="u-margin-bottom">
+                                {heading ?
+                                    <h3 className="u-color-brand u-text-font-family u-text-normal">
+                                        {heading}
+                                    </h3>
+                                :
+                                    <SkeletonBlock height="24px" width="50%" />
+                                }
+                            </div>
 
-            <Button
-                className="c--primary u-width-full u-margin-top-lg"
-                type="submit"
-                disabled={submitting || disabled}
-            >
-                <span className="u-text-uppercase">{submitText || 'Create an Account'}</span>
-            </Button>
-        </form>
-    )
+                            {fields.map((field, idx) =>
+                                <LoginField {...field} key={idx} modalInfo={this.modalInfo} />
+                            )}
+                        </FieldSet>
+                    )
+                })}
+
+                <Button
+                    className="c--primary u-width-full u-margin-top-lg"
+                    type="submit"
+                    disabled={submitting || !href}
+                >
+                    <span className="u-text-uppercase">{submitText || 'Create an Account'}</span>
+                </Button>
+            </form>
+        )
+    }
 }
 
 RegisterForm.propTypes = {
-    closeModal: PropTypes.func,
-    disabled: PropTypes.bool,
+    closeInfoModal: PropTypes.func,
     error: PropTypes.string,
     handleSubmit: PropTypes.func,
     href: PropTypes.string,
     invalid: PropTypes.bool,
     modalOpen: PropTypes.bool,
-    openModal: PropTypes.func,
+    openInfoModal: PropTypes.func,
     sections: PropTypes.array,
     submitForm: PropTypes.func,
     submitText: PropTypes.string,
@@ -91,4 +122,16 @@ const ReduxRegisterForm = reduxForm({
     form: 'register-form'
 })(RegisterForm)
 
-export default ReduxRegisterForm
+const mapStateToProps = createStructuredSelector({
+    sections: selectorToJS(selectors.getRegisterFormSections),
+    href: selectors.getRegisterFormHref,
+    modalOpen: selectors.getRegisterInfoModalOpen,
+    submitText: selectors.getRegisterFormSubmitText
+})
+
+const mapDispatchToProps = {
+    closeInfoModal: actions.closeInfoModal,
+    openInfoModal: actions.openInfoModal
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReduxRegisterForm)

@@ -34,9 +34,7 @@ class RegisterPanel extends React.Component {
         const {
             heading,
             description,
-            requiredText,
-            form,
-            infoModalOpen
+            requiredText
         } = registerSection
 
         return (
@@ -50,12 +48,8 @@ class RegisterPanel extends React.Component {
                 </div>
 
                 <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
-                    <RegisterForm {...form}
-                        disabled={!form.href}
+                    <RegisterForm
                         submitForm={submitRegisterForm}
-                        openModal={this.openRegisterModal}
-                        closeModal={this.closeRegisterModal}
-                        modalOpen={infoModalOpen}
                         />
                 </div>
             </div>

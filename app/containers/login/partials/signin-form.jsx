@@ -20,6 +20,12 @@ class SignInForm extends React.Component {
         this.openSignInModal = this.openSignInModal.bind(this)
         this.closeSignInModal = this.closeSignInModal.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
+
+        this.modalInfo = {
+            openModal: this.openSigninModal,
+            closeModal: this.closeSigninModal
+        }
+
     }
 
     openSignInModal() {
@@ -51,17 +57,16 @@ class SignInForm extends React.Component {
             modalOpen
         } = this.props
 
-        const modalInfo = {
-            openModal: this.openSignInModal,
-            closeModal: this.closeSignInModal,
-            modalOpen
+        // Ensure that modalInfo changes if and only if modalOpen changes.
+        if (modalOpen !== this.modalInfo.modalOpen) {
+            this.modalInfo.modalOpen = {
+                ...this.modalInfo,
+                modalOpen
+            }
         }
 
         return (
-            <form
-                noValidate={true}
-                onSubmit={this.onSubmit}
-            >
+            <form noValidate={true} onSubmit={this.onSubmit}>
                 {error &&
                     <div className="u-margin-bottom-md u-color-error">
                         {error}
@@ -70,7 +75,7 @@ class SignInForm extends React.Component {
 
                 <FieldSet className="t-login__signin-fieldset">
                     {fields.map((field, idx) =>
-                        <LoginField {...field} key={idx} modalInfo={modalInfo} forgotPassword={forgotPassword} />
+                        <LoginField {...field} key={idx} modalInfo={this.modalInfo} forgotPassword={forgotPassword} />
                     )}
 
                     <FieldRow>
