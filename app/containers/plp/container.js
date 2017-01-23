@@ -10,10 +10,11 @@ import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import ProductTile from './partials/product-tile'
 import Offline from '../../components/offline'
+
 import {isOffline} from '../app/reducer'
 import {fetchPage} from '../app/actions'
-import {getRoutedState} from '../../utils/router-utils'
 import {getComponentType} from '../../utils/utils'
+import {getSelectorFromState} from '../../utils/router-utils'
 
 const renderResults = (products) => {
     return products.map((product, idx) => <ProductTile key={idx} product={product} />)
@@ -27,7 +28,7 @@ const renderNoResults = (bodyText) => {
                 alt="Crystal Ball"
                 width="122px"
                 height="110px"
-                src={getAssetUrl('static/img/no-results.png')} />
+                src={getAssetUrl('static/img/global/no-results.png')} />
 
             <div className="t-plp__no-results-text u-text-align-center">
                 {bodyText}
@@ -38,24 +39,29 @@ const renderNoResults = (bodyText) => {
 
 class PLP extends React.Component {
     shouldComponentUpdate(nextProps) {
-        return !Immutable.is(this.props.routedState, nextProps.routedState) ||
+        return !Immutable.is(this.props.plp, nextProps.plp) ||
+            !Immutable.is(nextProps.products, this.props.products) ||
             (this.props.isOffline !== nextProps.isOffline)
     }
 
     render() {
         const {
-            hasProducts,
             isOffline,
-            isPlaceholder,
-            noResultsText,
-            numItems,
-            products,
-            title,
             route,
             fetchPage
         } = this.props
 
-        if (isOffline && isPlaceholder) {
+        const {
+            hasProducts,
+            contentsLoaded,
+            noResultsText,
+            numItems,
+            title
+        } = this.props.plp.toJS()
+
+        const products = this.props.products
+
+        if (isOffline && !contentsLoaded) {
             const reload = () => fetchPage(window.location.href, getComponentType(route.component), route.routeName)
             return <Offline retry={reload} />
         }
@@ -69,10 +75,10 @@ class PLP extends React.Component {
                         </div>
 
                         <div className="u-margin-top-md">
-                            {isPlaceholder ?
-                                <SkeletonText lines={1} type="h1" width="100px" />
-                            :
+                            {contentsLoaded ?
                                 <h1 className="u-text-lighter u-text-uppercase">{title}</h1>
+                            :
+                                <SkeletonText lines={1} type="h1" width="100px" />
                             }
                         </div>
                     </div>
@@ -91,10 +97,10 @@ class PLP extends React.Component {
 
                 <div className="t-plp__container u-padding-end u-padding-bottom-lg u-padding-start">
                     <div className="t-plp__num-results u-padding-md">
-                        {isPlaceholder ?
-                            <SkeletonBlock height="20px" />
-                        :
+                        {contentsLoaded ?
                             <span className="u-text-semi-bold">{numItems} Results</span>
+                        :
+                            <SkeletonBlock height="20px" />
                         }
                     </div>
 
@@ -113,50 +119,35 @@ PLP.propTypes = {
      */
     fetchPage: PropTypes.func.isRequired,
     /**
-     * When there were products found on the page, this is set to true
-     */
-    hasProducts: PropTypes.bool.isRequired,
-    /**
      * Whether the device is thought to be offline
      */
     isOffline: PropTypes.bool.isRequired,
     /**
-     * Whether we are currently in a placeholder state, or have page content to
-     * display
+     * The Immutable.js PLP state object
      */
-    isPlaceholder: PropTypes.bool.isRequired,
+    plp: PropTypes.object.isRequired,
     /**
-     * The text to display when no products were found
-     */
-    noResultsText: PropTypes.string.isRequired,
-    /**
-     * The number of products found
-     */
-    numItems: PropTypes.string.isRequired,
-    /**
-     * The array of parsed products
+     * Product data from state (Catalog -> Products), filtered by the productUrls in the Plp state object
      */
     products: PropTypes.array.isRequired,
     /**
      * The route object from react-router
      */
-    route: PropTypes.object.isRequired,
-    /**
-     * The Immutable.js state object, for use with shouldComponentUpdate
-     */
-    routedState: PropTypes.object.isRequired,
-    /**
-     * The PLP title (i.e. Potions, Ingredients, etc.)
-     */
-    title: PropTypes.string.isRequired
+    route: PropTypes.object.isRequired
 }
 
-const mapStateToProps = (state) => {
-    const routedState = getRoutedState(state.plp)
+const mapStateToProps = ({app, catalog, plp}) => {
+    const selector = getSelectorFromState(plp)
+    const routedPlp = plp.get(selector)
+    const productUrls = routedPlp.get('productUrls').toJS()
+    const catalogProducts = catalog.products
+    const products = productUrls.map((url) => {
+        return catalogProducts.get(url).toJS()
+    })
     return {
-        isOffline: isOffline(state),
-        routedState,
-        ...routedState.toJS()
+        isOffline: isOffline({app}),
+        products,
+        plp: routedPlp
     }
 }
 

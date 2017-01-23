@@ -3,6 +3,7 @@
 import {combineReducers} from 'redux'
 
 import app from './app/reducer'
+import catalog from './catalog/reducer'
 import cart from './cart/reducer'
 import checkoutConfirmation from './checkout-confirmation/reducer'
 import checkoutPayment from './checkout-payment/reducer'
@@ -20,6 +21,7 @@ import {reducer as formReducer} from 'redux-form'
 
 const rootReducer = combineReducers({
     app,
+    catalog,
     cart,
     checkoutConfirmation,
     checkoutPayment,

@@ -31,9 +31,15 @@ class App extends React.Component {
     }
 
     render() {
-        const {requestOpenMiniCart, openNavigation, history, children, app, notificationActions} = this.props
+        const {
+            app,
+            children,
+            history,
+            notificationActions,
+            openNavigation,
+            requestOpenMiniCart,
+        } = this.props
         const currentTemplateProps = children.props
-        const currentTemplate = `t-${currentTemplateProps.route.routeName}`
         const CurrentHeader = currentTemplateProps.route.Header || Header
         const CurrentFooter = currentTemplateProps.route.Footer || Footer
         const {notifications} = app.toJS()
@@ -51,26 +57,37 @@ class App extends React.Component {
         ]
 
         return (
-            <div id="app" className="t-app" style={{display: 'none'}}>
+            <div
+                id="app"
+                className={`t-app t-app--${currentTemplateProps.route.routeName}`}
+                style={{display: 'none'}}
+            >
                 <IconSprite sprite={sprite} />
                 <SkipLinks items={skipLinksItems} />
 
-                <div id="app-wrap" className={currentTemplate}>
-                    <div id="app-header" role="banner">
-                        <CurrentHeader onMenuClick={openNavigation} onMiniCartClick={requestOpenMiniCart} />
+                <div id="app-wrap" className="t-app__wrapper u-flexbox u-direction-column">
+                    <div id="app-header" className="u-flex-none" role="banner">
+                        <CurrentHeader
+                            onMenuClick={openNavigation}
+                            onMiniCartClick={requestOpenMiniCart}
+                        />
+
                         {notifications &&
-                            <NotificationManager notifications={notifications} actions={notificationActions} />
+                            <NotificationManager
+                                notifications={notifications}
+                                actions={notificationActions}
+                            />
                         }
 
                         <Navigation history={history} />
                         <MiniCart />
                     </div>
 
-                    <main id="app-main" role="main">
+                    <main id="app-main" className="u-flex" role="main">
                         {this.props.children}
                     </main>
 
-                    <div id="app-footer">
+                    <div id="app-footer" className="u-flex-none">
                         <CurrentFooter />
                     </div>
                 </div>

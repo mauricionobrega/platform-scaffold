@@ -2,6 +2,9 @@
 // ===
 
 @import '../containers/app/app';
+@import '../containers/cart/cart';
+@import '../containers/checkout-payment/checkout-payment';
+@import '../containers/checkout-shipping/checkout-shipping';
 @import '../containers/home/home';
 @import '../containers/plp/plp';
 @import '../containers/header/header';
