@@ -59,7 +59,7 @@ class SignInForm extends React.Component {
 
         // Ensure that modalInfo changes if and only if modalOpen changes.
         if (modalOpen !== this.modalInfo.modalOpen) {
-            this.modalInfo.modalOpen = {
+            this.modalInfo = {
                 ...this.modalInfo,
                 modalOpen
             }
