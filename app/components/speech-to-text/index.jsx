@@ -14,6 +14,12 @@ import {Icon} from 'progressive-web-sdk/dist/components/icon'
  * - https://developers.google.com/web/updates/2013/01/Voice-Driven-Web-Apps-Introduction-to-the-Web-Speech-API
  */
 
+
+const capitalize = (s) => {
+    return s.replace(/^\S/, (m) => m.toUpperCase())
+}
+
+
 class SpeechToText extends React.Component {
     constructor(props) {
         super(props)
@@ -29,7 +35,6 @@ class SpeechToText extends React.Component {
     componentDidMount() {
         const {
             onChange,
-            onComplete,
             onError
         } = this.props
 
@@ -50,7 +55,7 @@ class SpeechToText extends React.Component {
             }
 
             recognition.onerror = (event) => {
-                this.props.onError(event)
+                onError(event)
 
                 if (event.error === 'no-speech') {
                     // XXX: TODO: change state here
@@ -79,6 +84,9 @@ class SpeechToText extends React.Component {
                         interimTranscript += event.results[i][0].transcript
                     }
                 }
+
+                finalTranscript = capitalize(finalTranscript)
+                interimTranscript = capitalize(interimTranscript)
 
                 this.setState({
                     transcript: finalTranscript
@@ -136,6 +144,10 @@ SpeechToText.propTypes = {
      * Adds values to the `class` attribute of the root element
      */
     className: PropTypes.string,
+
+    onChange: PropTypes.func,
+    onComplete: PropTypes.func,
+    onError: PropTypes.func
 
 }
 
