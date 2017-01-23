@@ -1,17 +1,15 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
-import * as actions from '../actions'
 import * as miniCartSelectors from '../../mini-cart/selectors'
 import classNames from 'classnames'
-import {selectorToJS} from '../../../utils/selector-utils'
 
 import {GridSpan} from '../../../components/grid'
 import Button from 'progressive-web-sdk/dist/components/button'
 import CartProductList from './cart-product-list'
 import CartSummary from './cart-summary'
 
-const CartItems = ({cart, hasItems, openWishlistModal, openEstimateShippingModal}) => {
+const CartItems = ({hasItems}) => {
     const summaryClassnames = classNames('t-cart__summary-wrapper', {
         'u-visually-hidden': !hasItems,
         't--hide': !hasItems,
@@ -19,13 +17,11 @@ const CartItems = ({cart, hasItems, openWishlistModal, openEstimateShippingModal
     return (
         <div>
             <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 7}}>
-                <CartProductList onSaveLater={openWishlistModal} />
+                <CartProductList />
             </GridSpan>
 
             <GridSpan className={summaryClassnames} tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 5}}>
-                <CartSummary cart={cart}
-                    onCalculateClick={openEstimateShippingModal}
-                    />
+                <CartSummary />
 
                 <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg">
                     <Button className="c--tertiary u-width-full u-text-uppercase">
@@ -38,20 +34,11 @@ const CartItems = ({cart, hasItems, openWishlistModal, openEstimateShippingModal
 }
 
 CartItems.propTypes = {
-    cart: PropTypes.object,
     hasItems: PropTypes.bool,
-    openEstimateShippingModal: PropTypes.func,
-    openWishlistModal: PropTypes.func
 }
 
 const mapStateToProps = createStructuredSelector({
-    cart: selectorToJS(miniCartSelectors.getCartObject),
     hasItems: miniCartSelectors.getMiniCartHasItems
 })
 
-const mapDispatchToProps = {
-    openEstimateShippingModal: () => actions.toggleEstimateShippingModal(true),
-    openWishlistModal: () => actions.toggleWishlistModal(true)
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CartItems)
+export default connect(mapStateToProps)(CartItems)

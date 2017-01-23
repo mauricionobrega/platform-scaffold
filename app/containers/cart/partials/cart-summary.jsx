@@ -1,11 +1,15 @@
 import React, {PropTypes} from 'react'
+import {connect} from 'react-redux'
+import {createStructuredSelector} from 'reselect'
+import * as actions from '../actions'
+import * as miniCartSelectors from '../../mini-cart/selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import CartPromoForm from './cart-promo-form'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import {Ledger, LedgerRow} from 'progressive-web-sdk/dist/components/ledger'
 
-const CartSummary = ({cart, onCalculateClick}) => {
+const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, onCalculateClick}) => {
     const calculateButton = (
         <Button innerClassName="u-padding-end-0 u-color-brand" onClick={onCalculateClick}>
             Calculate <Icon name="chevron-right" />
@@ -29,8 +33,8 @@ const CartSummary = ({cart, onCalculateClick}) => {
 
                 <Ledger className="u-border-light-top">
                     <LedgerRow
-                        label={`Subtotal (${cart.summary_count} items)`}
-                        value={cart.subtotal_excl_tax}
+                        label={`Subtotal (${summaryCount} items)`}
+                        value={subtotalExclTax}
                     />
 
                     <LedgerRow
@@ -53,7 +57,7 @@ const CartSummary = ({cart, onCalculateClick}) => {
                     <LedgerRow
                         label="Total"
                         isTotal={true}
-                        value={cart.subtotal_incl_tax}
+                        value={subtotalInclTax}
                     />
                 </Ledger>
 
@@ -71,8 +75,20 @@ const CartSummary = ({cart, onCalculateClick}) => {
 }
 
 CartSummary.propTypes = {
-    cart: PropTypes.object,
+    subtotalExclTax: PropTypes.string,
+    subtotalInclTax: PropTypes.string,
+    summaryCount: PropTypes.number,
     onCalculateClick: PropTypes.func
 }
 
-export default CartSummary
+const mapStateToProps = createStructuredSelector({
+    subtotalExclTax: miniCartSelectors.getSubtotalExcludingTax,
+    subtotalInclTax: miniCartSelectors.getSubtotalIncludingTax,
+    summaryCount: miniCartSelectors.getMiniCartSummaryCount,
+})
+
+const mapDispatchToProps = {
+    onCalculateClick: () => actions.toggleEstimateShippingModal(true),
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartSummary)

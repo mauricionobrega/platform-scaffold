@@ -17,3 +17,5 @@ export const getMiniCartHasItems = createSelector(
     (items) => items.size > 0
 )
 export const getMiniCartSummaryCount = createGetSelector(getCartObject, 'summary_count')
+export const getSubtotalExcludingTax = createGetSelector(getCartObject, 'subtotao_excl_tax')
+export const getSubtotalIncludingTax = createGetSelector(getCartObject, 'subtotao_incl_tax')

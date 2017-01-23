@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
-import * as selectors from '../selectors'
+import * as actions from '../actions'
 import * as miniCartSelectors from '../../mini-cart/selectors'
 import {selectorToJS} from '../../../utils/selector-utils'
 
@@ -96,6 +96,15 @@ const CartProductItem = ({product_name, product_image, idx, qty, product_price, 
     </ProductItem>
 )
 
+CartProductItem.propTypes = {
+    idx: PropTypes.number,
+    product_image: PropTypes.object,
+    product_name: PropTypes.string,
+    product_price: PropTypes.string,
+    qty: PropTypes.number,
+    onSaveLater: PropTypes.func
+}
+
 const CartProductList = ({items, summaryCount, onSaveLater}) => {
     const isCartEmpty = items.length === 0
 
@@ -134,4 +143,8 @@ const mapStateToProps = createStructuredSelector({
     summaryCount: miniCartSelectors.getMiniCartSummaryCount
 })
 
-export default connect(mapStateToProps)(CartProductList)
+const mapDispatchToProps = {
+    onSaveLater: () => actions.toggleWishlistModal(true)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartProductList)
