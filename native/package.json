@@ -21,6 +21,7 @@
   },
   "scripts": {
     "build": "webpack --config webpack.app.config.js",
-    "build-analyze": "ASTRO_ANALYZE=true npm run build"
+    "build-analyze": "ASTRO_ANALYZE=true npm run build",
+    "postinstall": "cp -f node_modules/mobify-progressive-app-sdk/dist/astro-client.js ../web/app/vendor/astro-client.js"
   }
 }
