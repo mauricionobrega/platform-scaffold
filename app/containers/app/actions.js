@@ -1,6 +1,11 @@
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import * as utils from '../../utils/utils'
 import * as selectors from './selectors'
+import {isPageType} from '../../utils/router-utils'
+
+import Home from '../home/container'
+import Login from '../login/container'
+import * as homeActions from '../home/actions'
 
 export const addNotification = utils.createAction('Add Notification')
 export const removeNotification = utils.createAction('Remove Notification')
@@ -42,7 +47,12 @@ export const fetchPage = (url, pageComponent, routeName) => {
             .then((res) => {
                 const [$, $response] = res
                 const currentURL = selectors.getCurrentUrl(getState())
-                dispatch(onPageReceived($, $response, pageComponent, url, currentURL, routeName))
+                const receivedAction = onPageReceived($, $response, pageComponent, url, currentURL, routeName)
+                if (isPageType(pageComponent, Home)) {
+                    dispatch(homeActions.process(receivedAction))
+                } else {
+                    dispatch(receivedAction)
+                }
             })
             .catch((error) => { console.info(error.message) })
     }
