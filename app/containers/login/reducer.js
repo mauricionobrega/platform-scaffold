@@ -123,27 +123,19 @@ const initialState = Immutable.fromJS({
     }
 })
 
-const formatSectionName = (sectionName) => `${sectionName}Section`
-
-const merge = (object1, object2) => {
-    return {...object1, ...object2}
-}
-
 export default handleActions({
     [onPageReceived]: (state, {payload}) => {
         const {$, $response, pageComponent, routeName} = payload
         if (isPageType(pageComponent, Login)) {
             let newState
 
-            const infoModalOpen = !!state.get(formatSectionName(routeName)).get('infoModalOpen')
-
             if (routeName === SIGN_IN_SECTION) {
                 newState = {
-                    signinSection: merge(signinParser($, $response), {infoModalOpen})
+                    signinSection: signinParser($, $response)
                 }
             } else if (routeName === REGISTER_SECTION) {
                 newState = {
-                    registerSection: merge(registerParser($, $response), {infoModalOpen})
+                    registerSection: registerParser($, $response)
                 }
             }
 
