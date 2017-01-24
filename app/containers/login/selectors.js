@@ -1,6 +1,7 @@
 import {createSelector} from 'reselect'
 import {createGetSelector} from '../../utils/selector-utils'
 import * as globalSelectors from '../../store/selectors'
+import {SIGN_IN_SECTION, REGISTER_SECTION} from './constants'
 
 export const getLogin = createSelector(
     globalSelectors.getUi,
@@ -17,7 +18,7 @@ export const getSigninFormFields = createGetSelector(getSigninFormInfo, 'fields'
 export const getSigninFormHref = createGetSelector(getSigninFormInfo, 'href')
 export const getSigninFormSubmitText = createGetSelector(getSigninFormInfo, 'submitText')
 export const getSigninFormForgotPassword = createGetSelector(getSigninFormInfo, 'forgotPassword')
-export const getSigninInfoModalOpen = createGetSelector(getSigninSection, 'infoModalOpen')
+export const getSigninInfoModalOpen = globalSelectors.getModal(SIGN_IN_SECTION)
 export const getRegisterSection = createGetSelector(getLogin, 'registerSection')
 export const getRegisterSectionDescription = createGetSelector(getRegisterSection, 'description')
 export const getRegisterSectionHeading = createGetSelector(getRegisterSection, 'heading')
@@ -26,5 +27,5 @@ export const getRegisterFormInfo = createGetSelector(getRegisterSection, 'form')
 export const getRegisterFormSections = createGetSelector(getRegisterFormInfo, 'sections')
 export const getRegisterFormHref = createGetSelector(getRegisterFormInfo, 'href')
 export const getRegisterFormSubmitText = createGetSelector(getRegisterFormInfo, 'submitText')
-export const getRegisterInfoModalOpen = createGetSelector(getRegisterSection, 'infoModalOpen')
+export const getRegisterInfoModalOpen = globalSelectors.getModal(REGISTER_SECTION)
 export const getLoginLoaded = createGetSelector(getLogin, 'loaded')

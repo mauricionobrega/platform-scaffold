@@ -103,7 +103,6 @@ const initialState = Immutable.fromJS({
             hiddenInputs: [],
             submitText: ''
         },
-        infoModalOpen: false
     },
     registerSection: {
         href: '',
@@ -122,7 +121,6 @@ const initialState = Immutable.fromJS({
                 fields: registerSigninFields,
             }]
         },
-        infoModalOpen: false
     }
 })
 
@@ -155,11 +153,4 @@ export default handleActions({
             return state
         }
     },
-    [openInfoModal]: (state, {payload}) => {
-        return state.updateIn([formatSectionName(payload.sectionName), 'infoModalOpen'], () => true)
-    },
-    [closeInfoModal]: (state, {payload}) => {
-        return state.updateIn([formatSectionName(payload.sectionName), 'infoModalOpen'], () => false)
-    }
-
 }, initialState)

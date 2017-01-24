@@ -1,7 +1,8 @@
-import {createAction, makeFormEncodedRequest} from '../../utils/utils'
+import {makeFormEncodedRequest} from '../../utils/utils'
 import isEmail from 'validator/lib/isEmail'
 import {SubmissionError} from 'redux-form'
 import {getLogin} from './selectors'
+import * as modalActions from '../../store/modals/actions'
 
 const validateSignInForm = (formValues) => {
     const errors = {
@@ -142,5 +143,5 @@ export const navigateToSection = (router, routes, sectionName) => {
     }
 }
 
-export const openInfoModal = createAction('Open Info Sheet', 'sectionName')
-export const closeInfoModal = createAction('Close Info Sheet', 'sectionName')
+export const openInfoModal = modalActions.openModal
+export const closeInfoModal = modalActions.closeModal
