@@ -1,5 +1,5 @@
-import * as utils from '../../utils/utils'
+import * as modalActions from '../../store/modals/actions'
 
-export const openNavigation = utils.createAction('Open navigation')
+export const openNavigation = () => modalActions.openModal('navigation')
 
-export const closeNavigation = utils.createAction('Close navigation')
+export const closeNavigation = () => modalActions.closeModal('navigation')
