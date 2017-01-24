@@ -1,8 +1,8 @@
-import {createAction} from '../../utils/utils'
 import {getCart} from '../cart/actions'
+import * as modalActions from '../../store/modals/actions'
 
-export const openMiniCart = createAction('Open mini-cart')
-export const closeMiniCart = createAction('Close mini-cart')
+export const openMiniCart = () => modalActions.openModal('mini-cart')
+export const closeMiniCart = () => modalActions.closeModal('mini-cart')
 
 export const requestOpenMiniCart = () => (dispatch) => {
     dispatch(getCart())
