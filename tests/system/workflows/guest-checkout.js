@@ -2,13 +2,13 @@ import process from 'process'
 import Home from '../page-objects/home'
 import PLP from '../page-objects/plp'
 import PDP from '../page-objects/pdp'
-// import Cart from '../page-objects/cart'
+import Cart from '../page-objects/cart'
 // import Checkout from '../page-objects/checkout'
 
 let home
 let plp
 let pdp
-// let cart
+let cart
 // let checkout
 
 const PLP_INDEX = process.env.PLP_INDEX || 2
@@ -21,7 +21,7 @@ export default {
         home = new Home(browser)
         plp = new PLP(browser)
         pdp = new PDP(browser)
-        // cart = new Cart(browser)
+        cart = new Cart(browser)
         // checkout = new Checkout(browser)
     },
 
@@ -57,7 +57,6 @@ export default {
             .assert.visible(pdp.selectors.itemAdded)
     },
 
-/* TODO: Uncomment the following once the Progressive Web build for Merlin's Potions has been completed.
 
     'Checkout - Guest - Step 5 - Navigate from PDP to Shopping Cart': (browser) => {
         pdp.navigateToCart()
@@ -65,6 +64,7 @@ export default {
             .waitForElementVisible(cart.selectors.cartTemplateIdentifier)
             .assert.visible(cart.selectors.cartTemplateIdentifier)
     },
+/* TODO: Uncomment the following once the Progressive Web build for Merlin's Potions has been completed.
 
     'Checkout - Guest - Step 6 - Navigate from Shopping Cart to Checkout Sign In or Continue as Guest page': (browser) => {
         cart.navigateToCheckout()

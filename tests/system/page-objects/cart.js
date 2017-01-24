@@ -1,5 +1,5 @@
 const selectors = {
-    cartTemplateIdentifier: '.cart-container',
+    cartTemplateIdentifier: '.t-cart',
     cartCheckout: 'button.checkout',
     removeItem: '.t-cart__remove',
     emptyCart: '.t-cart__empty'
@@ -22,8 +22,10 @@ Cart.prototype.navigateToCheckout = function() {
 
 Cart.prototype.removeItems = function() {
     // Remove all items from the cart
+    var self = this
     this.browser
         .log('Removing item')
+        .url('https://www.merlinspotions.com/checkout/cart/')
         .element('css selector', selectors.removeItem, (result) => {
             if (result.value && result.value.ELEMENT) {
                 self.browser
