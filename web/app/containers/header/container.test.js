@@ -2,7 +2,6 @@ import {shallow} from 'enzyme'
 import React from 'react'
 
 import {RawHeader as Header} from './container'
-import Badge from 'progressive-web-sdk/dist/components/badge'
 
 describe('The header', () => {
     test('Should not render header at all if running in an Astro app', () => {
