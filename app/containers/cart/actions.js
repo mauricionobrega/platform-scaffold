@@ -7,15 +7,20 @@
  */
 import parse from './parser/parser'
 import * as utils from '../../utils/utils'
+import * as modalActions from '../../store/modals/actions.js'
+import {CART_ESTIMATE_SHIPPING, CART_WISHLIST} from './constants'
 
 const baseHeaders = {
     Accept: 'application/json',
 }
 
 export const receiveCartContents = utils.createAction('Received Cart Contents')
-export const toggleEstimateShippingModal = utils.createAction('Toggled Estimate Shipping modal', 'isOpen')
-export const toggleWishlistModal = utils.createAction('Toggled Wishlist modal', 'isOpen')
-
+export const toggleEstimateShippingModal = (isOpen) => {
+    return (isOpen ? modalActions.openModal : modalActions.closeModal)(CART_ESTIMATE_SHIPPING)
+}
+export const toggleWishlistModal = (isOpen) => {
+    return (isOpen ? modalActions.openModal : modalActions.closeModal)(CART_WISHLIST)
+}
 /**
  * Get the contents of the users cart
  */
