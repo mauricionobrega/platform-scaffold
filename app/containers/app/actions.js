@@ -6,6 +6,7 @@ import {isPageType} from '../../utils/router-utils'
 import Home from '../home/container'
 import Login from '../login/container'
 import * as homeActions from '../home/actions'
+import * as loginActions from '../login/actions'
 
 export const addNotification = utils.createAction('Add Notification')
 export const removeNotification = utils.createAction('Remove Notification')
@@ -50,9 +51,10 @@ export const fetchPage = (url, pageComponent, routeName) => {
                 const receivedAction = onPageReceived($, $response, pageComponent, url, currentURL, routeName)
                 if (isPageType(pageComponent, Home)) {
                     dispatch(homeActions.process(receivedAction))
-                } else {
-                    dispatch(receivedAction)
+                } else if (isPageType(pageComponent, Login)) {
+                    dispatch(loginActions.process(receivedAction))
                 }
+                dispatch(receivedAction)
             })
             .catch((error) => { console.info(error.message) })
     }

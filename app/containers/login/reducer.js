@@ -1,14 +1,7 @@
 import Immutable from 'immutable'
 import {handleActions} from 'redux-actions'
 
-import {isPageType} from '../../utils/router-utils'
-
-import Login from './container'
-import {SIGN_IN_SECTION, REGISTER_SECTION} from './constants'
-
-import {onPageReceived} from '../app/actions'
-import signinParser from './parsers/signin'
-import registerParser from './parsers/register'
+import * as loginActions from './actions'
 
 const signinFields = [
     {
@@ -124,24 +117,5 @@ const initialState = Immutable.fromJS({
 })
 
 export default handleActions({
-    [onPageReceived]: (state, {payload}) => {
-        const {$, $response, pageComponent, routeName} = payload
-        if (isPageType(pageComponent, Login)) {
-            let newState
-
-            if (routeName === SIGN_IN_SECTION) {
-                newState = {
-                    signinSection: signinParser($, $response)
-                }
-            } else if (routeName === REGISTER_SECTION) {
-                newState = {
-                    registerSection: registerParser($, $response)
-                }
-            }
-
-            return state.merge(Immutable.fromJS(newState)).set('loaded', true)
-        } else {
-            return state
-        }
-    },
+    [loginActions.receiveData]: (state, {payload}) => state.mergeDeep(payload)
 }, initialState)
