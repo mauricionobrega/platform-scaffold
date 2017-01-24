@@ -57,20 +57,33 @@ class ChatWindow extends React.Component {
                 } : {}
             }
 
-            const classes = message.from === 'user' ? 'messageWrapperUser' : 'messageWrapperClippy'
-
             const onClick = () => {
                 browserHistory.push(message.url)
                 closeSheet()
             }
 
+            const fromUser = message.from === 'user'
+
+            const messageClasses = classNames('c-chat-window__message', {
+                'c--user': fromUser,
+                'c--clippy': !fromUser
+            })
+
             return (
                 <div key={index}>
-                    <Link onClick={onClick} className={classes}>
-                        <div className={message.from === 'user' ? 'fromUser' : 'clippyMessage'}>
-                            {message.text}
+                    <div className={`u-flexbox ${!fromUser ? 'u-justify-end' : ''}`}>
+                        <div className="c-chat-window__message-container u-flex-none u-margin-end-lg u-margin-start-lg u-margin-bottom">
+                            <div className="u-color-neutral-10 u-text-small">
+                                timestamp
+                            </div>
+
+                            <Link onClick={onClick}>
+                                <div className={messageClasses}>
+                                    {message.text}
+                                </div>
+                            </Link>
                         </div>
-                    </Link>
+                    </div>
 
                     {message.hasProduct &&
                         <ListTile onClick={onClick}>
@@ -94,7 +107,7 @@ class ChatWindow extends React.Component {
             inputValue
         } = this.state
 
-        const classes = classNames(componentClass, className)
+        const classes = classNames(componentClass, className, 'c--bg-color-brand')
 
         const sendMessage = () => {
             sendMessageToClippy(this.state.inputValue)
@@ -108,6 +121,49 @@ class ChatWindow extends React.Component {
             sendMessage()
         }
 
+        const sheetHeader = (
+            <div className="u-bg-color-brand u-text-align-end">
+                <Button
+                    className="u-text-all-caps u-text-small u-color-neutral-10"
+                    type="button"
+                    onClick={() => closeSheet()}
+                >
+                    Done
+                </Button>
+            </div>
+        )
+
+        const sheetFooter = (
+            <div className="sendClippyMessage">
+                <form
+                    className="u-flexbox u-bg-color-neutral-10"
+                    onSubmit={onSubmit}
+                >
+                    <Field>
+                        <input
+                            type="text"
+                            className="u-border-0"
+                            value={inputValue}
+                            placeholder="Ask Clippy a question..."
+                            onChange={(e) => this.setState({inputValue: e.target.value})}
+                        />
+                    </Field>
+
+                    <SpeechToText
+                        onChange={(result) => this.setState({inputValue: result})}
+                        onComplete={() => sendMessage()}
+                    />
+
+                    <Button
+                        className="u-flex-none clippyButton"
+                        type="submit"
+                        icon="chevron-right"
+                        title="Send"
+                    />
+                </form>
+            </div>
+        )
+
         return (
             <div ref={(el) => { this.container = el }}>
                 <Sheet
@@ -115,46 +171,11 @@ class ChatWindow extends React.Component {
                     open={sheetOpen}
                     effect="slide-bottom"
                     coverage="95%"
+                    headerContent={sheetHeader}
+                    footerContent={sheetFooter}
                 >
-                    <div className="chatContainer">
-                        <Button
-                            className="closeSheet"
-                            type="button"
-                            onClick={() => closeSheet()}
-                        >
-                            X
-                        </Button>
-
+                    <div className="chatContainer u-bg-color-brand">
                         {this.renderMessages()}
-
-                        <div className="sendClippyMessage">
-                            <form
-                                className="u-flexbox u-bg-color-neutral-10"
-                                onSubmit={onSubmit}
-                            >
-                                <Field>
-                                    <input
-                                        type="text"
-                                        className="u-flex"
-                                        value={inputValue}
-                                        placeholder="Ask Clippy a question..."
-                                        onChange={(e) => this.setState({inputValue: e.target.value})}
-                                    />
-                                </Field>
-
-                                <SpeechToText
-                                    onChange={(result) => this.setState({inputValue: result})}
-                                    onComplete={() => sendMessage()}
-                                />
-
-                                <Button
-                                    className="u-flex-none clippyButton"
-                                    type="submit"
-                                >
-                                    Send
-                                </Button>
-                            </form>
-                        </div>
                     </div>
                 </Sheet>
             </div>

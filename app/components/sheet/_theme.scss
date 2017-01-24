@@ -1,0 +1,72 @@
+// Sheet
+// ===
+
+
+// Root
+// ---
+
+.c-sheet {
+    //
+}
+
+// Sheet Inner
+// ---
+//
+// 1. We have fixed sheet header and footers.
+//    We'll be moving the iOS scroll fix styles into `.c-sheet__content` instead.
+
+.c-sheet__inner {
+    overflow: hidden; // 1
+
+    -webkit-overflow-scrolling: initial; // 1
+
+    &::after {
+        display: none; // 1
+    }
+}
+
+
+// Sheet Content
+// ---
+//
+// 1. Add back iOS scroll fix that was removed from `.c-sheet__inner`
+
+.c-sheet__content {
+    overflow-y: auto;
+    flex: 1 1 auto;
+
+    -webkit-overflow-scrolling: touch;
+
+    &::after {
+        content: '';
+
+        display: block;
+        width: 100%; // 1
+        height: 1px; // 1
+        margin-bottom: -1px; // 1
+    }
+}
+
+
+// Sheet Footer
+// ---
+//
+// 1. Currently sheet footer doesn't allow us to completely
+//    override its contents. We'll hide the default sheet <h1> if its
+//    not populated
+
+.c-sheet__footer {
+    flex: 0 0 auto;
+
+    h1:empty {
+        display: none; // 1
+    }
+}
+
+
+
+.c-sheet.c--bg-color-brand {
+    .c-sheet__content {
+        background: $brand-color;
+    }
+}

@@ -11,9 +11,9 @@
 // Clippy root
 // ---
 //
-// 1. When switching between animations, there are a couple frames where Clippy shrinks
+// 1. Needs to be higher than the header for the sheet to work correctly
+// 2. When switching between animations, there are a couple frames where Clippy shrinks
 //    Set a minimum height to make this less noticable
-// 2. Needs to be higher than the header for the sheet to work correctly
 
 .c-clippy {
     position: fixed;
@@ -21,11 +21,12 @@
     bottom: 0;
     left: 0;
 
-    min-height: 100px; // 1
+    z-index: 10; // 1
 
-    z-index: 10; // 2
+    min-height: 100px; // 2
 
     background: none;
+
     .vishid {
         visibility: hidden;
     }
@@ -38,8 +39,8 @@
 
 .c-clippy__card {
     border-radius: 25px;
+    background-color: $neutral-10;
     color: $neutral-50;
-    background-color: #fff;
 }
 
 
@@ -49,6 +50,6 @@
 // 1. When switching between animations, there are a couple frames where Clippy shrinks
 
 .c-clippy__agent {
-    padding-left: 40px;
     min-width: 125px; // 1
+    padding-left: 40px;
 }
