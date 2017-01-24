@@ -5,7 +5,6 @@ import {isPageType} from '../../utils/router-utils'
 
 import Login from './container'
 import {SIGN_IN_SECTION, REGISTER_SECTION} from './constants'
-import {openInfoModal, closeInfoModal} from './actions'
 
 import {onPageReceived} from '../app/actions'
 import signinParser from './parsers/signin'
