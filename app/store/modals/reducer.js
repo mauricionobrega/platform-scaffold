@@ -2,6 +2,7 @@ import {handleActions} from 'redux-actions'
 import {Map} from 'immutable'
 
 import * as modalActions from './actions'
+import * as appActions from '../../containers/app/actions'
 
 const initialState = Map()
 
@@ -10,7 +11,9 @@ const modalReducer = handleActions({
         state.set(modalName, true),
     [modalActions.closeModal]: (state, {payload: modalName}) =>
         state.set(modalName, false),
-    [modalActions.closeAllModals]: (state) => initialState
+    [modalActions.closeAllModals]: () => initialState,
+    [appActions.onRouteChanged]: () => initialState
+
 }, initialState)
 
 export default modalReducer
