@@ -1,6 +1,4 @@
 import React, {PropTypes} from 'react'
-import {connect} from 'react-redux'
-import {stripEvent} from '../../../utils/utils'
 
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 import IconLabelButton from '../../../components/icon-label-button'
@@ -25,8 +23,4 @@ MiniCartHeader.propTypes = {
     closeMiniCart: PropTypes.func
 }
 
-const mapDispatchToProps = {
-    closeMiniCart: stripEvent(actions.closeMiniCart)
-}
-
-export default connect(() => ({}), mapDispatchToProps)(MiniCartHeader)
+export default MiniCartHeader

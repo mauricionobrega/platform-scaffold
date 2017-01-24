@@ -55,7 +55,7 @@ class MiniCart extends React.Component {
 
         return (
             <Sheet className="t-mini-cart" open={isOpen} onDismiss={closeMiniCart} maskOpacity={0.7} effect="slide-right">
-                <MiniCartHeader />
+                <MiniCartHeader closeMiniCart={closeMiniCart} />
 
                 {contentsLoaded && <MiniCartMain hasItems={hasItems} />}
             </Sheet>
