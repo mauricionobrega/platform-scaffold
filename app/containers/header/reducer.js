@@ -8,7 +8,7 @@ export const initialState = Immutable.fromJS({
 })
 
 const header = handleActions({
-    [headerActions.toggleHeader]: mergePayload,
+    [headerActions.toggleHeader]: mergePayload
 }, initialState)
 
 
