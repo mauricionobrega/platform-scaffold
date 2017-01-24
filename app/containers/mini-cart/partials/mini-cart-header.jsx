@@ -3,8 +3,6 @@ import React, {PropTypes} from 'react'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 import IconLabelButton from '../../../components/icon-label-button'
 
-import * as actions from '../actions'
-
 const MiniCartHeader = ({closeMiniCart}) => (
     <HeaderBar>
         <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
