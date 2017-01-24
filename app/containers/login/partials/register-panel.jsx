@@ -33,7 +33,7 @@ RegisterPanel.propTypes = {
 const mapStateToProps = createStructuredSelector({
     description: selectors.getRegisterSectionDescription,
     heading: selectors.getRegisterSectionHeading,
-    requiredText: selectors.getSigninSectionRequiredText
+    requiredText: selectors.getRegisterSectionRequiredText
 })
 
 const mapDispatchToProps = {
