@@ -56,6 +56,7 @@ const AppProvider = ({store}) => {
         const nextURL = getURL(nextState)
 
         if (nextURL !== prevURL) {
+            triggerMobifyPageView(nextState.routes[1].routeName)
             dispatchRouteChanged(nextState)
             if (shouldFetchPage(nextState)) {
                 dispatchFetchPage(nextState)
