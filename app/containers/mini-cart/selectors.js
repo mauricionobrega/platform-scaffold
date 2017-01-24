@@ -9,7 +9,7 @@ export const getMiniCart = createSelector(
 
 export const getCartObject = createGetSelector(getMiniCart, 'cart')
 export const getMiniCartContentsLoaded = createGetSelector(getMiniCart, 'contentsLoaded')
-export const getMiniCartIsOpen = globalSelectors.getModal('mini-cart')
+export const getMiniCartIsOpen = globalSelectors.isModalOpen('mini-cart')
 export const getMiniCartItems = createGetSelector(getCartObject, 'items')
 export const getMiniCartSubtotal = createGetSelector(getCartObject, 'subtotal')
 export const getMiniCartHasItems = createSelector(

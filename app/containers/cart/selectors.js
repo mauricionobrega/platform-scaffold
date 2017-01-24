@@ -8,7 +8,7 @@ export const getCart = createSelector(
     ({cart}) => cart
 )
 
-export const getIsEstimateShippingModalOpen = globalSelectors.getModal(CART_ESTIMATE_SHIPPING)
-export const getIsWishlistModalOpen = globalSelectors.getModal(CART_WISHLIST)
+export const getIsEstimateShippingModalOpen = globalSelectors.isModalOpen(CART_ESTIMATE_SHIPPING)
+export const getIsWishlistModalOpen = globalSelectors.isModalOpen(CART_WISHLIST)
 export const getCountries = createGetSelector(getCart, 'countries')
 export const getStateProvinces = createGetSelector(getCart, 'stateProvinces')

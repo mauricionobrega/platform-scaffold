@@ -7,7 +7,7 @@ export const getCatalogProducts = createSelector(
     ({products}) => products
 )
 export const getModals = ({modals}) => modals
-export const getModal = (modalName) => createSelector(
+export const isModalOpen = (modalName) => createSelector(
     getModals,
     (modals) => modals.get(modalName, false)
 )
