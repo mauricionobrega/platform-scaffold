@@ -22,8 +22,8 @@ class SignInForm extends React.Component {
         this.onSubmit = this.onSubmit.bind(this)
 
         this.modalInfo = {
-            openModal: this.openSigninModal,
-            closeModal: this.closeSigninModal
+            openModal: this.openSignInModal,
+            closeModal: this.closeSignInModal
         }
 
     }
