@@ -27,8 +27,8 @@ export const getSelectedProduct = createSelector(
 )
 
 export const getItemQuantity = createGetSelector(getSelectedPdp, 'itemQuantity')
-export const getQuantityAdded = createGetSelector(getSelectedPdp, 'quantityAdded')
-export const getItemAddedModalOpen = createGetSelector(getSelectedPdp, 'itemAddedModalOpen')
+export const getQuantityAdded = createGetSelector(getSelectedPdp, 'itemQuantity')
+export const getItemAddedModalOpen = globalSelectors.isModalOpen('pdp-item-added')
 export const getFormInfo = createGetSelector(getSelectedPdp, 'formInfo')
 export const getPdpContentsLoaded = createGetSelector(getSelectedPdp, 'contentsLoaded')
 
