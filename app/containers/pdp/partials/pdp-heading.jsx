@@ -1,14 +1,17 @@
 import React, {PropTypes} from 'react'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import Breadcrumbs from 'progressive-web-sdk/dist/components/breadcrumbs'
+import Link from 'progressive-web-sdk/dist/components/link'
 
 const PDPHeading = ({breadcrumbs, title, price}) => (
     <div className="t-pdp-heading u-padding-md u-box-shadow u-position-relative u-z-index-1">
-        {breadcrumbs ?
-            <Breadcrumbs className="t-pdp__breadcrumbs u-margin-bottom-md" items={breadcrumbs} />
-        :
-            <SkeletonBlock width="50%" height="12px" className="u-margin-bottom-md" />
-        }
+        <div className="t-pdp__breadcrumbs u-margin-bottom-md">
+            {breadcrumbs ?
+                <Breadcrumbs items={breadcrumbs} />
+            :
+                <Link href="/">Home &gt; ...</Link>
+            }
+        </div>
 
         {title ?
             <h1 className="t-pdp-heading__title u-text-uppercase u-margin-bottom">{title}</h1>
