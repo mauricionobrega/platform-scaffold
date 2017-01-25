@@ -86,7 +86,8 @@ const mapStateToProps = createStructuredSelector({
     root: selectorToJS(selectors.getNavigationRoot)
 })
 
-export default connect(
-    mapStateToProps,
-    {closeNavigation: () => closeModal(NAVIGATION_MODAL)}
-)(withRouter(Navigation))
+const mapDispatchToProps = {
+    closeNavigation: () => closeModal(NAVIGATION_MODAL)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Navigation))
