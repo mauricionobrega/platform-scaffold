@@ -4,7 +4,8 @@ import {createStructuredSelector} from 'reselect'
 import {connect} from 'react-redux'
 import {selectorToJS} from '../../../utils/selector-utils'
 import * as selectors from '../selectors'
-import * as actions from '../actions'
+import {isModalOpen} from '../../../store/selectors'
+import {openModal, closeModal} from '../../../store/modals/actions'
 import {REGISTER_SECTION} from '../constants'
 
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -17,22 +18,12 @@ class RegisterForm extends React.Component {
     constructor(props) {
         super(props)
 
-        this.openRegisterModal = this.openRegisterModal.bind(this)
-        this.closeRegisterModal = this.closeRegisterModal.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
 
         this.modalInfo = {
-            openModal: this.openRegisterModal,
-            closeModal: this.closeRegisterModal
+            openModal: props.openInfoModal,
+            closeModal: props.closeInfoModal
         }
-    }
-
-    openRegisterModal() {
-        this.props.openInfoModal(REGISTER_SECTION)
-    }
-
-    closeRegisterModal() {
-        this.props.closeInfoModal(REGISTER_SECTION)
     }
 
     onSubmit() {
@@ -125,13 +116,13 @@ const ReduxRegisterForm = reduxForm({
 const mapStateToProps = createStructuredSelector({
     sections: selectorToJS(selectors.getRegisterFormSections),
     href: selectors.getRegisterFormHref,
-    modalOpen: selectors.getRegisterInfoModalOpen,
+    modalOpen: isModalOpen(REGISTER_SECTION),
     submitText: selectors.getRegisterFormSubmitText
 })
 
 const mapDispatchToProps = {
-    closeInfoModal: actions.closeInfoModal,
-    openInfoModal: actions.openInfoModal
+    closeInfoModal: () => closeModal(REGISTER_SECTION),
+    openInfoModal: () => openModal(REGISTER_SECTION)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReduxRegisterForm)
