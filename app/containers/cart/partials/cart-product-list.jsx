@@ -87,7 +87,7 @@ const CartProductItem = ({product_name, product_image, idx, qty, product_price, 
             </Button>
 
             <Button
-                className="u-text-small u-color-brand"
+                className="u-text-small u-color-brand qa-cart__remove-item"
                 innerClassName="u-padding-end-0 u-padding-bottom-0"
                 >
                 Remove
