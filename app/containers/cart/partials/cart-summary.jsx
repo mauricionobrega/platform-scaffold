@@ -1,8 +1,9 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
-import * as actions from '../actions'
 import * as miniCartSelectors from '../../mini-cart/selectors'
+import {CART_ESTIMATE_SHIPPING_MODAL} from '../constants'
+import {openModal} from '../../../store/modals/actions'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import CartPromoForm from './cart-promo-form'
@@ -88,7 +89,7 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = {
-    onCalculateClick: () => actions.toggleEstimateShippingModal(true),
+    onCalculateClick: () => openModal(CART_ESTIMATE_SHIPPING_MODAL)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartSummary)
