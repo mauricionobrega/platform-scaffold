@@ -13,7 +13,6 @@ import {PLACEHOLDER} from '../../app/constants'
 
 export const initialState = Immutable.fromJS({
     [PLACEHOLDER]: {
-        breadcrumbs: [],
         title: '',
         price: '',
         link: {
