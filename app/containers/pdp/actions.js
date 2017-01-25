@@ -16,10 +16,9 @@ export const process = ({payload}) => {
     // Update the store using location.href as key and the result from
     // the parser as our value -- even if it isn't the page we're
     // currently viewing
-
+    const output = {[url]: parsed}
     // Also set the store's current selector to location.href so we
     // can access it in our container, but only if we're on that href
-    const output = {[url]: parsed}
     if (url === currentURL) {
         output[SELECTOR] = url
     }
