@@ -1,4 +1,4 @@
-import {createAction, makeFormEncodedRequest} from '../../utils/utils'
+import {makeFormEncodedRequest} from '../../utils/utils'
 import isEmail from 'validator/lib/isEmail'
 import {SubmissionError} from 'redux-form'
 import {getLogin} from './selectors'
@@ -141,6 +141,3 @@ export const navigateToSection = (router, routes, sectionName) => {
         router.push(findPathForRoute(routes, sectionName))
     }
 }
-
-export const openInfoModal = createAction('Open Info Sheet', 'sectionName')
-export const closeInfoModal = createAction('Close Info Sheet', 'sectionName')

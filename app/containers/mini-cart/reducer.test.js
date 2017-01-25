@@ -1,9 +1,7 @@
 import {Map, fromJS} from 'immutable'
 
 import reducer from './reducer'
-import * as miniCartActions from './actions'
 import {receiveCartContents} from '../cart/actions'
-
 
 test('unknown action type leaves state unchanged', () => {
     const action = {
@@ -54,38 +52,6 @@ test('cartActions.receiveCartContents merges in its payload', () => {
             detail1: 'one',
             detail2: 'two'
         }
-    })
-
-    expect(reducer(initialState, action).equals(finalState)).toBe(true)
-})
-
-test('openMiniCart sets the isOpen flag', () => {
-    const action = miniCartActions.openMiniCart()
-
-    const initialState = Map({
-        isOpen: false,
-        bystander: 'data'
-    })
-
-    const finalState = Map({
-        isOpen: true,
-        bystander: 'data'
-    })
-
-    expect(reducer(initialState, action).equals(finalState)).toBe(true)
-})
-
-test('closeMiniCart clears the isOpen flag', () => {
-    const action = miniCartActions.closeMiniCart()
-
-    const initialState = Map({
-        isOpen: true,
-        bystander: 'data'
-    })
-
-    const finalState = Map({
-        isOpen: false,
-        bystander: 'data'
     })
 
     expect(reducer(initialState, action).equals(finalState)).toBe(true)

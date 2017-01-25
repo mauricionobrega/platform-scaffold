@@ -3,7 +3,9 @@ import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import {selectorToJS} from '../../../utils/selector-utils'
 import * as selectors from '../selectors'
-import * as actions from '../actions'
+import {CART_ESTIMATE_SHIPPING_MODAL} from '../constants'
+import {closeModal} from '../../../store/modals/actions'
+import {isModalOpen} from '../../../store/selectors'
 
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -89,12 +91,12 @@ CartEstimateShippingModal.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
     countries: selectorToJS(selectors.getCountries),
-    isOpen: selectors.getIsEstimateShippingModalOpen,
+    isOpen: isModalOpen(CART_ESTIMATE_SHIPPING_MODAL),
     stateProvinces: selectorToJS(selectors.getStateProvinces)
 })
 
 const mapDispatchToProps = {
-    closeModal: () => actions.toggleEstimateShippingModal(false)
+    closeModal: () => closeModal(CART_ESTIMATE_SHIPPING_MODAL)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartEstimateShippingModal)

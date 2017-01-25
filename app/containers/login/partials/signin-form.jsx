@@ -4,7 +4,8 @@ import {createStructuredSelector} from 'reselect'
 import {connect} from 'react-redux'
 import {selectorToJS} from '../../../utils/selector-utils'
 import * as selectors from '../selectors'
-import * as actions from '../actions'
+import {isModalOpen} from '../../../store/selectors'
+import {openModal, closeModal} from '../../../store/modals/actions'
 import {SIGN_IN_SECTION} from '../constants'
 
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -17,23 +18,14 @@ class SignInForm extends React.Component {
     constructor(props) {
         super(props)
 
-        this.openSignInModal = this.openSignInModal.bind(this)
-        this.closeSignInModal = this.closeSignInModal.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
 
+        // Props from `mapDispatchToProps` should never change
+        // so it's OK that we do this once and for all
         this.modalInfo = {
-            openModal: this.openSignInModal,
-            closeModal: this.closeSignInModal
+            openModal: props.openInfoModal,
+            closeModal: props.closeInfoModal
         }
-
-    }
-
-    openSignInModal() {
-        this.props.openInfoModal(SIGN_IN_SECTION)
-    }
-
-    closeSignInModal() {
-        this.props.closeInfoModal(SIGN_IN_SECTION)
     }
 
     onSubmit() {
@@ -116,14 +108,14 @@ const ReduxSignInForm = reduxForm({
 const mapStateToProps = createStructuredSelector({
     fields: selectorToJS(selectors.getSigninFormFields),
     href: selectors.getSigninFormHref,
-    modalOpen: selectors.getSigninInfoModalOpen,
+    modalOpen: isModalOpen(SIGN_IN_SECTION),
     submitText: selectors.getSigninFormSubmitText,
     forgotPassword: selectorToJS(selectors.getSigninFormForgotPassword)
 })
 
 const mapDispatchToProps = {
-    closeInfoModal: actions.closeInfoModal,
-    openInfoModal: actions.openInfoModal
+    closeInfoModal: () => closeModal(SIGN_IN_SECTION),
+    openInfoModal: () => openModal(SIGN_IN_SECTION)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReduxSignInForm)

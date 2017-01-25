@@ -2,8 +2,10 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import * as selectors from '../selectors'
-import * as actions from '../actions'
 import {stripEvent} from '../../../utils/utils'
+import {isModalOpen} from '../../../store/selectors'
+import {PDP_ITEM_ADDED_MODAL} from '../constants'
+import {closeModal} from '../../../store/modals/actions'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
@@ -70,14 +72,14 @@ PDPItemAddedModal.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
     productImage: selectors.getFirstProductImage,
-    open: selectors.getItemAddedModalOpen,
+    open: isModalOpen(PDP_ITEM_ADDED_MODAL),
     quantity: selectors.getQuantityAdded,
     title: selectors.getProductTitle,
     price: selectors.getProductPrice
 })
 
 const mapDispatchToProps = {
-    onDismiss: stripEvent(actions.closeItemAddedModal)
+    onDismiss: stripEvent(() => closeModal(PDP_ITEM_ADDED_MODAL))
 }
 
 export default connect(

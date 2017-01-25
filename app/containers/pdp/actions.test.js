@@ -1,6 +1,8 @@
 import Immutable from 'immutable'
 
-import {openItemAddedModal, submitCartForm} from './actions'
+import {submitCartForm} from './actions'
+import {PDP_ITEM_ADDED_MODAL} from './constants'
+import {openModal} from '../../store/modals/actions'
 
 import * as utils from '../../utils/utils'
 
@@ -47,7 +49,7 @@ test('submitCartForm makes a request and dispatches updates', () => {
 
             expect(mockDispatch).toBeCalled()
             expect(mockDispatch.mock.calls[0][0])
-                .toEqual(openItemAddedModal())
+                .toEqual(openModal(PDP_ITEM_ADDED_MODAL))
             expect(getCart).toBeCalled()
         })
 })

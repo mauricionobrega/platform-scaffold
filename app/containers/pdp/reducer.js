@@ -13,9 +13,7 @@ import {SELECTOR, PLACEHOLDER} from '../app/constants'
 export const initialState = Immutable.fromJS({
     contentsLoaded: false,
     formInfo: {},
-    itemQuantity: 1,
-    itemAddedModalOpen: false,
-    quantityAdded: 0
+    itemQuantity: 1
 })
 
 const reducer = handleActions({
@@ -58,17 +56,6 @@ const reducer = handleActions({
     },
     [pdpActions.setItemQuantity]: (state, {payload}) => {
         return RouterUtils.setInToRoutedState(state, 'itemQuantity', payload)
-    },
-    [pdpActions.openItemAddedModal]: (state) => {
-        const selector = RouterUtils.getSelectorFromState(state)
-        const routedState = RouterUtils.getRoutedState(state)
-        return state.set(selector, routedState.mergeDeep({
-            itemAddedModalOpen: true,
-            quantityAdded: routedState.get('itemQuantity')
-        }))
-    },
-    [pdpActions.closeItemAddedModal]: (state) => {
-        return RouterUtils.setInToRoutedState(state, 'itemAddedModalOpen', false)
     }
 }, RouterUtils.baseInitialState.set(PLACEHOLDER, initialState))
 

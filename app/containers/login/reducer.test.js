@@ -7,7 +7,6 @@ import Home from '../home/container'
 import {getComponentType} from '../../utils/utils'
 
 import * as appActions from '../app/actions'
-import * as loginActions from './actions'
 
 jest.mock('./parsers/signin')
 import signinParser from './parsers/signin'
@@ -66,19 +65,5 @@ test('appActions.onPageReceived causes the page to be parsed into the state', ()
 
     expect(signinParser).toBeCalledWith($, $html)
     expect(result.get('signinSection').get('test')).toBe(true)
-    expect(is(result, Map({signinSection: Map({...parsedPage, ...{infoModalOpen: false}}), loaded: true}))).toBe(true)
-})
-
-test('loginActions.openInfoModal opens the info modal', () => {
-    const action = loginActions.openInfoModal('signin')
-    const inputState = Map()
-
-    expect(is(reducer(inputState, action), Map({signinSection: Map({infoModalOpen: true})}))).toBe(true)
-})
-
-test('loginActions.closeInfoModal closes the info modal', () => {
-    const action = loginActions.closeInfoModal('signin')
-    const inputState = Map({signinSection: Map({infoModalOpen: true})})
-
-    expect(is(reducer(inputState, action), Map({signinSection: Map({infoModalOpen: false})}))).toBe(true)
+    expect(is(result, Map({signinSection: Map({...parsedPage}), loaded: true}))).toBe(true)
 })

@@ -5,7 +5,6 @@ import {isPageType} from '../../utils/router-utils'
 
 import Login from './container'
 import {SIGN_IN_SECTION, REGISTER_SECTION} from './constants'
-import {openInfoModal, closeInfoModal} from './actions'
 
 import {onPageReceived} from '../app/actions'
 import signinParser from './parsers/signin'
@@ -103,7 +102,6 @@ const initialState = Immutable.fromJS({
             hiddenInputs: [],
             submitText: ''
         },
-        infoModalOpen: false
     },
     registerSection: {
         href: '',
@@ -122,15 +120,8 @@ const initialState = Immutable.fromJS({
                 fields: registerSigninFields,
             }]
         },
-        infoModalOpen: false
     }
 })
-
-const formatSectionName = (sectionName) => `${sectionName}Section`
-
-const merge = (object1, object2) => {
-    return {...object1, ...object2}
-}
 
 export default handleActions({
     [onPageReceived]: (state, {payload}) => {
@@ -138,15 +129,13 @@ export default handleActions({
         if (isPageType(pageComponent, Login)) {
             let newState
 
-            const infoModalOpen = !!state.get(formatSectionName(routeName)).get('infoModalOpen')
-
             if (routeName === SIGN_IN_SECTION) {
                 newState = {
-                    signinSection: merge(signinParser($, $response), {infoModalOpen})
+                    signinSection: signinParser($, $response)
                 }
             } else if (routeName === REGISTER_SECTION) {
                 newState = {
-                    registerSection: merge(registerParser($, $response), {infoModalOpen})
+                    registerSection: registerParser($, $response)
                 }
             }
 
@@ -155,11 +144,4 @@ export default handleActions({
             return state
         }
     },
-    [openInfoModal]: (state, {payload}) => {
-        return state.updateIn([formatSectionName(payload.sectionName), 'infoModalOpen'], () => true)
-    },
-    [closeInfoModal]: (state, {payload}) => {
-        return state.updateIn([formatSectionName(payload.sectionName), 'infoModalOpen'], () => false)
-    }
-
 }, initialState)

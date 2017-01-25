@@ -4,12 +4,6 @@ import * as cartActions from './actions'
 
 const initialState = Immutable.fromJS({
     items: [],
-    estimateShippingModal: {
-        isOpen: false
-    },
-    wishlistModal: {
-        isOpen: false
-    },
     // Do we want to store static data like this elsewhere?
     countries: [
         'Canada',
@@ -25,18 +19,5 @@ const initialState = Immutable.fromJS({
 })
 
 export default handleActions({
-    [cartActions.toggleEstimateShippingModal]: (state, {payload}) => {
-        return state.mergeDeep({
-            estimateShippingModal: {
-                isOpen: payload.isOpen
-            }
-        })
-    },
-    [cartActions.toggleWishlistModal]: (state, {payload}) => {
-        return state.mergeDeep({
-            wishlistModal: {
-                isOpen: payload.isOpen
-            }
-        })
-    }
+    [cartActions.receiveCartContents]: (state) => state
 }, initialState)

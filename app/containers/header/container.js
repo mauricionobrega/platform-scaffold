@@ -6,7 +6,8 @@ import classnames from 'classnames'
 
 import * as headerActions from './actions'
 import * as miniCartActions from '../mini-cart/actions'
-import * as navActions from '../../containers/navigation/actions'
+import {openModal} from '../../store/modals/actions'
+import {NAVIGATION_MODAL} from '../navigation/constants'
 import * as selectors from './selectors'
 
 import {HeaderBar} from 'progressive-web-sdk/dist/components/header-bar'
@@ -81,7 +82,7 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = {
-    onMenuClick: navActions.openNavigation,
+    onMenuClick: () => openModal(NAVIGATION_MODAL),
     onMiniCartClick: miniCartActions.requestOpenMiniCart,
     toggleHeader: headerActions.toggleHeader
 }
