@@ -1,0 +1,12 @@
+// Breadcrumbs theme
+// ===
+
+.c-breadcrumbs__item {
+    &:not(:last-of-type)::after {
+        content: '>';
+
+        margin: 0 $unit;
+
+        color: $brand-color;
+    }
+}

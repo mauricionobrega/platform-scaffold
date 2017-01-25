@@ -6,38 +6,6 @@
     // wrapper element.
 }
 
-// Breadcrumbs
-// ---
-//
-// 1. Visually hide the label
-
-.t-pdp__breadcrumbs {
-    .c-breadcrumbs__label { // 1
-        position: absolute !important;
-
-        overflow: hidden;
-        clip: rect(1px, 1px, 1px, 1px);
-        width: 1px;
-        height: 1px;
-    }
-
-    .c-breadcrumbs__list {
-        display: flex;
-    }
-
-    .c-breadcrumbs__item {
-        display: block;
-        flex: 0 1 auto;
-    }
-
-    .c-breadcrumbs__item:not(:first-child)::before {
-        content: '>';
-
-        margin: 0 $unit;
-
-        color: $brand-color;
-    }
-}
 
 // Price
 // ---
