@@ -7,10 +7,12 @@ import Nav from 'progressive-web-sdk/dist/components/nav'
 import NavMenu from 'progressive-web-sdk/dist/components/nav-menu'
 import NavItem from 'progressive-web-sdk/dist/components/nav-item'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
-import * as navActions from './actions'
 import IconLabelButton from '../../components/icon-label-button'
 import * as merlinsNavItem from '../../components/nav-item'
 import * as selectors from './selectors'
+import {NAVIGATION_MODAL} from './constants'
+import {isModalOpen} from '../../store/selectors'
+import {closeModal} from '../../store/modals/actions'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 import {withRouter} from 'react-router'
 
@@ -80,14 +82,11 @@ Navigation.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
     path: selectors.getPath,
-    isOpen: selectors.getNavigationIsOpen,
+    isOpen: isModalOpen(NAVIGATION_MODAL),
     root: selectorToJS(selectors.getNavigationRoot)
 })
 
 export default connect(
     mapStateToProps,
-    {
-        openNavigation: navActions.openNavigation,
-        closeNavigation: navActions.closeNavigation,
-    }
+    {closeNavigation: () => closeModal(NAVIGATION_MODAL)}
 )(withRouter(Navigation))

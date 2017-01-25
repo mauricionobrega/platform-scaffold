@@ -8,5 +8,4 @@ export const getNavigation = createSelector(
 )
 
 export const getPath = createGetSelector(getNavigation, 'path')
-export const getNavigationIsOpen = globalSelectors.isModalOpen('navigation')
 export const getNavigationRoot = createGetSelector(getNavigation, 'root')
