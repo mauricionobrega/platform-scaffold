@@ -1,8 +1,7 @@
 import {handleActions} from 'redux-actions'
 import Immutable from 'immutable'
-import * as appActions from '../app/actions'
-import * as parser from './parsers/parser'
-
+import {receiveData} from './actions'
+import {mergePayload} from '../../utils/reducer-utils'
 export const initialState = Immutable.fromJS({
     path: undefined,
     root: {},
@@ -10,11 +9,7 @@ export const initialState = Immutable.fromJS({
 
 
 export const reducer = handleActions({
-    [appActions.onPageReceived]: (state, {payload}) => {
-        const {$, $response} = payload
-        const parsed = Immutable.fromJS(parser.parseNavigation($, $response))
-        return state.merge(parsed)
-    },
+    [receiveData]: mergePayload
 }, initialState)
 
 
