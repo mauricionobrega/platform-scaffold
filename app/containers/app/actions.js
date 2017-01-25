@@ -13,6 +13,7 @@ import * as pdpActions from '../pdp/actions'
 import * as plpActions from '../plp/actions'
 import * as footerActions from '../footer/actions'
 import * as navigationActions from '../navigation/actions'
+import * as productsActions from '../catalog/products/actions'
 
 export const addNotification = utils.createAction('Add Notification')
 export const removeNotification = utils.createAction('Remove Notification')
@@ -43,6 +44,9 @@ export const onPageReceived = utils.createAction('On page received',
     'routeName'
 )
 
+export const completeFetch = utils.createAction('Fetch is completed')
+
+
 /**
  * Fetch the content for a 'global' page render. This should be driven
  * by react-router, ideally.
@@ -61,12 +65,14 @@ export const fetchPage = (url, pageComponent, routeName) => {
                     dispatch(loginActions.process(receivedAction))
                 } else if (isPageType(pageComponent, PDP)) {
                     dispatch(pdpActions.process(receivedAction))
+                    dispatch(productsActions.processPdp(receivedAction))
                 } else if (isPageType(pageComponent, PLP)) {
                     dispatch(plpActions.process(receivedAction))
+                    dispatch(productsActions.processPlp(receivedAction))
                 }
-                dispatch(receivedAction)
                 dispatch(footerActions.process(receivedAction))
                 dispatch(navigationActions.process(receivedAction))
+                dispatch(completeFetch())
             })
             .catch((error) => { console.info(error.message) })
     }

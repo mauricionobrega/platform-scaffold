@@ -2,13 +2,12 @@ import Immutable from 'immutable'
 import {handleActions} from 'redux-actions'
 
 import {isPageType} from '../../../utils/router-utils'
+import {mergePayload} from '../../../utils/reducer-utils'
 
-import PLP from '../../plp/container'
 import PDP from '../../pdp/container'
-import {plpParser, pdpParser} from './parser'
+import {receivePlpProductData, receivePdpProductData} from './actions'
 
-
-import {onPageReceived, onRouteChanged} from '../../app/actions'
+import {onRouteChanged} from '../../app/actions'
 import {PLACEHOLDER} from '../../app/constants'
 
 export const initialState = Immutable.fromJS({
@@ -31,28 +30,9 @@ export const initialState = Immutable.fromJS({
 })
 
 const productsReducer = handleActions({
-    [onPageReceived]: (state, {payload}) => {
-        const {$, $response, pageComponent, url} = payload
-
-        if (isPageType(pageComponent, PLP)) {
-            const parsedProducts = plpParser($, $response)
-            const merger = (prev, next) => {
-                if (prev) {
-                    return prev
-                } else {
-                    return next
-                }
-            }
-            return state.mergeDeepWith(merger, Immutable.fromJS(parsedProducts))
-        } else if (isPageType(pageComponent, PDP)) {
-            const parsedProduct = {
-                [url]: pdpParser($, $response)
-            }
-            return state.mergeDeep(Immutable.fromJS(parsedProduct))
-        } else {
-            return state
-        }
-    },
+    [receivePlpProductData]: (state, {payload}) =>
+        state.mergeDeepWith((prev, next) => prev || next, payload),
+    [receivePdpProductData]: mergePayload,
     [onRouteChanged]: (state, {payload}) => {
         const {pageComponent, currentURL} = payload
 

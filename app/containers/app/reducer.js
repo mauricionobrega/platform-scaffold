@@ -15,7 +15,7 @@ export default handleActions({
     [appActions.onRouteChanged]: (state, {payload: {currentURL}}) => {
         return state.set(FETCH_IN_PROGRESS, true).set(CURRENT_URL, currentURL)
     },
-    [appActions.onPageReceived]: (state) => {
+    [appActions.completeFetch]: (state) => {
         return state.set(FETCH_IN_PROGRESS, false)
     },
     [appActions.addNotification]: (state, {payload}) => {
