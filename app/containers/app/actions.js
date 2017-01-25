@@ -38,7 +38,6 @@ export const onRouteChanged = utils.createAction('On route changed', 'currentURL
 export const onPageReceived = utils.createAction('On page received',
     '$',
     '$response',
-    'pageComponent',
     'url',
     'currentURL',
     'routeName'
@@ -58,7 +57,7 @@ export const fetchPage = (url, pageComponent, routeName) => {
             .then((res) => {
                 const [$, $response] = res
                 const currentURL = selectors.getCurrentUrl(getState())
-                const receivedAction = onPageReceived($, $response, pageComponent, url, currentURL, routeName)
+                const receivedAction = onPageReceived($, $response, url, currentURL, routeName)
                 if (isPageType(pageComponent, Home)) {
                     dispatch(homeActions.process(receivedAction))
                 } else if (isPageType(pageComponent, Login)) {
