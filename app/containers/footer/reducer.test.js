@@ -1,8 +1,6 @@
 import reducer, {initialState} from './reducer'
 import * as actions from './actions'
-import * as appActions from '../app/actions'
 import * as constants from './constants'
-import {jquerifyHtmlFile} from 'progressive-web-sdk/dist/test-utils'
 
 describe('The Footer reducer', () => {
     test('sets the signup status on newsletterSignupComplete', () => {
