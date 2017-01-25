@@ -58,35 +58,3 @@ test('cartActions.receiveCartContents merges in its payload', () => {
 
     expect(reducer(initialState, action).equals(finalState)).toBe(true)
 })
-
-test('openMiniCart sets the isOpen flag', () => {
-    const action = miniCartActions.openMiniCart()
-
-    const initialState = Map({
-        isOpen: false,
-        bystander: 'data'
-    })
-
-    const finalState = Map({
-        isOpen: true,
-        bystander: 'data'
-    })
-
-    expect(reducer(initialState, action).equals(finalState)).toBe(true)
-})
-
-test('closeMiniCart clears the isOpen flag', () => {
-    const action = miniCartActions.closeMiniCart()
-
-    const initialState = Map({
-        isOpen: true,
-        bystander: 'data'
-    })
-
-    const finalState = Map({
-        isOpen: false,
-        bystander: 'data'
-    })
-
-    expect(reducer(initialState, action).equals(finalState)).toBe(true)
-})
