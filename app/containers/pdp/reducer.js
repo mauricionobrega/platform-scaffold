@@ -4,10 +4,9 @@ import {handleActions} from 'redux-actions'
 import * as RouterUtils from '../../utils/router-utils'
 
 import PDP from './container'
-import pdpParser from './parsers/pdp'
 import * as pdpActions from './actions'
 
-import {onPageReceived, onRouteChanged} from '../app/actions'
+import {onRouteChanged} from '../app/actions'
 import {SELECTOR, PLACEHOLDER} from '../app/constants'
 
 export const initialState = Immutable.fromJS({
@@ -17,29 +16,7 @@ export const initialState = Immutable.fromJS({
 })
 
 const reducer = handleActions({
-    [onPageReceived]: (state, {payload}) => {
-        const {$, $response, pageComponent, url, currentURL} = payload
-
-        if (RouterUtils.isPageType(pageComponent, PDP)) {
-            const parsed = Immutable.fromJS(pdpParser($, $response))
-
-            // `.withMutations` allows us to batch together changes to state
-            return state.withMutations((s) => {
-                // Update the store using location.href as key and the result from
-                // the parser as our value -- even if it isn't the page we're
-                // currently viewing
-                s.mergeDeepIn([url], parsed)
-
-                // Also set the store's current selector to location.href so we
-                // can access it in our container, but only if we're on that href
-                if (url === currentURL) {
-                    s.set(SELECTOR, url)
-                }
-            })
-        } else {
-            return state
-        }
-    },
+    [pdpActions.receiveData]: (state, {payload}) => state.mergeDeep(payload),
     [onRouteChanged]: (state, {payload}) => {
         const {pageComponent, currentURL} = payload
 

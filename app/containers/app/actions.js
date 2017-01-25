@@ -5,8 +5,10 @@ import {isPageType} from '../../utils/router-utils'
 
 import Home from '../home/container'
 import Login from '../login/container'
+import PDP from '../pdp/container'
 import * as homeActions from '../home/actions'
 import * as loginActions from '../login/actions'
+import * as pdpActions from '../pdp/actions'
 
 export const addNotification = utils.createAction('Add Notification')
 export const removeNotification = utils.createAction('Remove Notification')
@@ -53,6 +55,8 @@ export const fetchPage = (url, pageComponent, routeName) => {
                     dispatch(homeActions.process(receivedAction))
                 } else if (isPageType(pageComponent, Login)) {
                     dispatch(loginActions.process(receivedAction))
+                } else if (isPageType(pageComponent, PDP)) {
+                    dispatch(pdpActions.process(receivedAction))
                 }
                 dispatch(receivedAction)
             })
