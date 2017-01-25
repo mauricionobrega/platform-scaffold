@@ -40,10 +40,7 @@ class PDP extends React.Component {
             closeItemAddedModal
         } = this.props
 
-        var coverage = "50%"
-        if(window.innerWidth <= 320) {
-            coverage = "60%"
-        }
+        const coverage = window.innerWidth > 320 ? "50%" : "60%"
 
         return (
             <div className="t-pdp">
