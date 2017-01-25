@@ -43,9 +43,6 @@ export const onPageReceived = utils.createAction('On page received',
     'routeName'
 )
 
-export const completeFetch = utils.createAction('Fetch is completed')
-
-
 /**
  * Fetch the content for a 'global' page render. This should be driven
  * by react-router, ideally.
@@ -71,7 +68,6 @@ export const fetchPage = (url, pageComponent, routeName) => {
                 }
                 dispatch(footerActions.process(receivedAction))
                 dispatch(navigationActions.process(receivedAction))
-                dispatch(completeFetch())
             })
             .catch((error) => { console.info(error.message) })
     }
