@@ -26,7 +26,7 @@ class Clippy extends React.Component {
 
     pollFor$() {
         if (window.$) {
-            clippy.load('Clippy', `.${componentClass}__agent`, (agent) => {
+            clippy.load('Merlin', `.${componentClass}__agent`, (agent) => {
                 // Do anything with the loaded agent
                 agent.show()
                 let bubbleClose = () => {}
@@ -86,7 +86,7 @@ class Clippy extends React.Component {
                 <Button onClick={() => openSheet()} className="u-flexbox">
                     <div className={this.state.bubbleOpen ? `${componentClass}__card u-padding-md` : `${componentClass}__card u-padding-md vishid`}>
                         <div className={`${componentClass}__message`}>
-                            Hey, I'm Clippy! Click me. Please.
+                            Hey, I'm Merlin! Click me for assistance.
                         </div>
                     </div>
                     <div className={`${componentClass}__agent`} />
