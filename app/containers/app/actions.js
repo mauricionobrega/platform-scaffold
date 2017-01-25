@@ -11,6 +11,7 @@ import * as homeActions from '../home/actions'
 import * as loginActions from '../login/actions'
 import * as pdpActions from '../pdp/actions'
 import * as plpActions from '../plp/actions'
+import * as footerActions from '../footer/actions'
 
 export const addNotification = utils.createAction('Add Notification')
 export const removeNotification = utils.createAction('Remove Notification')
@@ -63,6 +64,7 @@ export const fetchPage = (url, pageComponent, routeName) => {
                     dispatch(plpActions.process(receivedAction))
                 }
                 dispatch(receivedAction)
+                dispatch(footerActions.process(receivedAction))
             })
             .catch((error) => { console.info(error.message) })
     }

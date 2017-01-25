@@ -1,5 +1,6 @@
 import {handleActions} from 'redux-actions'
 import {fromJS} from 'immutable'
+import {mergePayload} from '../../utils/reducer-utils'
 
 import {receiveData} from './actions'
 
@@ -11,5 +12,5 @@ const initialState = fromJS({
 })
 
 export default handleActions({
-    [receiveData]: (state, {payload}) => state.mergeDeep(payload)
+    [receiveData]: mergePayload
 }, initialState)
