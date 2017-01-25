@@ -7,7 +7,6 @@ import Home from '../home/container'
 import {getComponentType} from '../../utils/utils'
 
 import * as appActions from '../app/actions'
-import * as loginActions from './actions'
 
 jest.mock('./parsers/signin')
 import signinParser from './parsers/signin'

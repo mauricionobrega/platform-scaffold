@@ -1,9 +1,7 @@
 import {Map, fromJS} from 'immutable'
 
 import reducer from './reducer'
-import * as miniCartActions from './actions'
 import {receiveCartContents} from '../cart/actions'
-
 
 test('unknown action type leaves state unchanged', () => {
     const action = {
