@@ -9,6 +9,9 @@ import Image from 'progressive-web-sdk/dist/components/image'
 import * as selectors from './selectors'
 import * as miniCartActions from './actions'
 import * as cartActions from '../cart/actions'
+import {isModalOpen} from '../../store/selectors'
+import {closeModal} from '../../store/modals/actions'
+import {MINI_CART_MODAL} from './constants'
 import {stripEvent} from '../../utils/utils'
 
 import MiniCartHeader from './partials/mini-cart-header'
@@ -73,13 +76,13 @@ MiniCart.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
     contentsLoaded: selectors.getMiniCartContentsLoaded,
-    isOpen: selectors.getMiniCartIsOpen,
+    isOpen: isModalOpen(MINI_CART_MODAL),
     hasItems: selectors.getMiniCartHasItems
 })
 
 const mapDispatchToProps = {
     fetchContents: cartActions.getCart,
-    closeMiniCart: stripEvent(miniCartActions.closeMiniCart)
+    closeMiniCart: stripEvent(() => closeModal(MINI_CART_MODAL))
 }
 
 export default connect(
