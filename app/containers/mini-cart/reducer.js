@@ -8,11 +8,7 @@ const initialState = Immutable.fromJS({
     contentsLoaded: false,
     cart: {
         items: [],
-        shipping_rate_label: 'Flat Rate - Fixed',
-        shipping_rate: '$25.00',
-        promo_rate_label: false, // 'Promo discount',
-        promo_rate: null, // '-$5.00',
-        total_incl_tax: '$146.00',
+        subtotal: ''
     }
 })
 

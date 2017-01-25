@@ -1,4 +1,9 @@
 import React from 'react'
+import {connect} from 'react-redux'
+import {createStructuredSelector} from 'reselect'
+import {selectorToJS} from '../../../utils/selector-utils'
+import * as selectors from '../selectors'
+import * as actions from '../actions'
 
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -7,13 +12,7 @@ import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 import IconLabelButton from '../../../components/icon-label-button'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 
-
-const CartEstimateShippingModal = (props) => {
-    const {closeModal,
-           isOpen,
-           countries,
-           stateProvinces
-        } = props
+const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateProvinces}) => {
     return (
         <Sheet className="t-cart__estimate-shipping-modal" open={isOpen} onDismiss={closeModal} maskOpacity={0.7} effect="slide-right">
             <HeaderBar>
@@ -88,4 +87,14 @@ CartEstimateShippingModal.propTypes = {
     stateProvinces: React.PropTypes.array
 }
 
-export default CartEstimateShippingModal
+const mapStateToProps = createStructuredSelector({
+    countries: selectorToJS(selectors.getCountries),
+    isOpen: selectors.getIsEstimateShippingModalOpen,
+    stateProvinces: selectorToJS(selectors.getStateProvinces)
+})
+
+const mapDispatchToProps = {
+    closeModal: () => actions.toggleEstimateShippingModal(false)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartEstimateShippingModal)

@@ -1,6 +1,8 @@
 import React from 'react'
-import RegisterForm from './register'
+import ConnectedRegisterForm from './register-form'
 import {shallow} from 'enzyme'
+
+const RegisterForm = ConnectedRegisterForm.WrappedComponent
 
 test('renders without errors', () => {
     const wrapper = shallow(<RegisterForm />)
