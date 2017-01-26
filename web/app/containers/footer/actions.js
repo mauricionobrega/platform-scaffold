@@ -16,15 +16,7 @@ export const signUpToNewsletter = (action, method, data) => {
             dispatch(newsletterSignupComplete(constants.SIGNUP_FAILED))
         }
 
-        const opts = {
-            method,
-            body: utils.formEncode(data),
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        }
-
-        return utils.makeRequest(action, opts)
+        return utils.makeFormEncodedRequest(action, data, {method})
             .then(onSuccess)
             .catch(onFail)
     }
