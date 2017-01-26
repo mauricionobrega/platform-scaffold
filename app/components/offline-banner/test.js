@@ -1,10 +1,22 @@
 import {mount, shallow} from 'enzyme'
+import {Provider} from 'react-redux'
 import React from 'react'
 
 import OfflineBanner from './index.jsx'
 
 test('OfflineBanner renders without errors', () => {
-    const wrapper = mount(<OfflineBanner />)
+    const store = {
+        subscribe: () => {},
+        dispatch: () => {},
+        getState: () => ({})
+    }
+
+    const wrapper = mount(
+        <Provider store={store}>
+            <OfflineBanner />
+        </Provider>
+    )
+
     expect(wrapper.length).toBe(1)
 })
 
