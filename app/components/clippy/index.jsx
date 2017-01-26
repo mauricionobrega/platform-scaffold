@@ -20,19 +20,19 @@ class Clippy extends React.Component {
             bubbleOpen: false
         }
 
-        this.clippyLoaded = false
+        this.loadingClippy = false
     }
     componentDidUpdate() {
-        if (this.props.isVisible && !this.clippyLoaded) {
+        if (this.props.isVisible && !this.loadingClippy) {
             this.pollFor$()
         }
     }
 
     pollFor$() {
+        this.loadingClippy = true
+
         if (window.$) {
             clippy.load('Merlin', `.${componentClass}__agent`, (agent) => {
-                this.clippyLoaded = true
-
                 // Do anything with the loaded agent
                 agent.show()
                 let bubbleClose = () => {}
