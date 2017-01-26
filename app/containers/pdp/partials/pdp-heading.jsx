@@ -9,7 +9,7 @@ const PDPHeading = ({breadcrumbs, title, price}) => (
             {breadcrumbs ?
                 <Breadcrumbs items={breadcrumbs} />
             :
-                <Link href="/">Home &gt; ...</Link>
+                <Breadcrumbs items={[{href: '/', text: 'Home'}, {text: '...'}]} />
             }
         </div>
 
