@@ -1,10 +1,8 @@
 import {handleActions} from 'redux-actions'
 import {fromJS} from 'immutable'
+import {mergePayloadForActions} from '../../utils/reducer-utils'
 
-import {isPageType} from '../../utils/router-utils'
-import {onPageReceived} from '../app/actions'
-import homeParser from './parsers/home'
-import Home from './container'
+import {receiveData} from './actions'
 
 const CATEGORY_PLACEHOLDER_COUNT = 6
 
@@ -14,13 +12,5 @@ const initialState = fromJS({
 })
 
 export default handleActions({
-    [onPageReceived]: (state, {payload}) => {
-        const {$, $response, pageComponent} = payload
-
-        if (isPageType(pageComponent, Home)) {
-            return state.mergeDeep(homeParser($, $response))
-        } else {
-            return state
-        }
-    }
+    ...mergePayloadForActions(receiveData)
 }, initialState)
