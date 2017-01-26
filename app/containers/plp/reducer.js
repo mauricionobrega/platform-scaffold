@@ -5,14 +5,11 @@ import {onRouteChanged} from '../app/actions'
 import {SELECTOR} from '../app/constants'
 
 import PLP from './container'
-import * as plpActions from './actions'
+import {setCurrentPLPUrl} from './actions'
+import {mergePayloadForActions} from '../../utils/reducer-utils'
 
 const plpReducer = handleActions({
-    // ...mergePayloadForActions(plpActions.receiveData),
-    [plpActions.receiveData]: (state, {payload}) => {
-        const {selector} = payload
-        return state.mergeDeep({selector})
-    },
+    ...mergePayloadForActions(setCurrentPLPUrl),
     [onRouteChanged]: (state, {payload}) => {
         const {pageComponent, currentURL} = payload
 
