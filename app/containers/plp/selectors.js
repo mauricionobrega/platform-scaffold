@@ -27,7 +27,7 @@ export const getHasProducts = createSelector(
     (urls) => urls.length > 0
 )
 export const getPlpContentsLoaded = createGetSelector(getSelectedPlp, 'contentsLoaded')
-export const getNoResultsText = createGetSelector(getSelectedPlp, 'getNoResultsText')
+export const getNoResultsText = createGetSelector(getSelectedPlp, 'noResultsText')
 export const getNumItems = createGetSelector(getSelectedPlp, 'numItems')
 export const getPlpTitle = createGetSelector(getSelectedPlp, 'title')
 
