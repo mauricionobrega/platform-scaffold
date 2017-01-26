@@ -10,7 +10,6 @@ import * as plpActions from './actions'
 
 export const initialState = Immutable.fromJS({
     contentsLoaded: false,
-    hasProducts: true,
     numItems: '',
     noResultsText: '',
     productUrls: [PLACEHOLDER, PLACEHOLDER, PLACEHOLDER, PLACEHOLDER],
