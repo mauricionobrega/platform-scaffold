@@ -16,20 +16,12 @@ export default handleActions({
     [appActions.addNotification]: (state, {payload}) => {
         return state.update('notifications', (notifications) => {
             // Don't allow duplicate notifications to be added
-            const existingNotification = notifications.find((notification) => {
-                return notification.id === payload.id
-            })
-
-            if (existingNotification) {
-                return notifications
-            } else {
-                return notifications.push(payload)
-            }
+            return notifications.every(({id}) => id !== payload.id) ? notifications.push(payload) : notifications
         })
     },
     [appActions.removeNotification]: (state, {payload}) => {
         return state.update('notifications', (notifications) => {
-            return notifications.filterNot((notification) => notification.id === payload)
+            return notifications.filterNot(({id}) => id === payload)
         })
     },
     [appActions.removeAllNotifications]: (state) => {
