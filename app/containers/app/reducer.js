@@ -9,7 +9,8 @@ const initialState = Map({
     [CURRENT_URL]: false,
         // If we use a regular array, React doesn't seem to catch all the updates
     notifications: List(),
-    fetchError: null
+    fetchError: null,
+    fetchedUrls: Map(),
 })
 
 // This will need to become more complicated when
@@ -20,8 +21,8 @@ export default createReducer({
     [appActions.onRouteChanged]: (state, {currentURL}) => {
         return state.set(FETCH_IN_PROGRESS, true).set(CURRENT_URL, currentURL)
     },
-    [appActions.onPageReceived]: (state) => {
-        return state.set(FETCH_IN_PROGRESS, false)
+    [appActions.onPageReceived]: (state, {url}) => {
+        return state.set(FETCH_IN_PROGRESS, false).set('fetchedUrls', state.get('fetchedUrls').set(url, true))
     },
     [appActions.addNotification]: (state, payload) => {
         return state.update('notifications', (notifications) => {
