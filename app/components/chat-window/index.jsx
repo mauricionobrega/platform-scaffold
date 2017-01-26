@@ -107,7 +107,7 @@ class ChatWindow extends React.Component {
             inputValue
         } = this.state
 
-        const classes = classNames(componentClass, className, 'c--bg-color-brand')
+        const classes = classNames(componentClass, className, 'pw--bg-color-brand')
 
         const sendMessage = () => {
             sendMessageToClippy(this.state.inputValue)
