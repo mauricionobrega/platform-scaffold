@@ -1,5 +1,5 @@
 import {createAction} from '../../utils/utils'
-import plpParser from '../../containers/plp/parsers/plp'
+import plpParser from './parsers/plp'
 
 export const receiveCategory = createAction('Receive Category Data')
 
