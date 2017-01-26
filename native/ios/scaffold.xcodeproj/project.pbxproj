@@ -91,6 +91,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3FACDAF31E3A6BA900556E22 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CBC6D60B1D19B7E900DC3785 /* PushClient.framework */,
+				87132A1E1B6016FF00FC74A4 /* Astro.framework */,
+				87132A1F1B6016FF00FC74A4 /* Cordova.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		6E4715201CA1DAA500A359FE /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
@@ -103,9 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				2A398BB11E31406F00220ED4 /* app-www */,
-				CBC6D60B1D19B7E900DC3785 /* PushClient.framework */,
-				87132A1E1B6016FF00FC74A4 /* Astro.framework */,
-				87132A1F1B6016FF00FC74A4 /* Cordova.framework */,
+				3FACDAF31E3A6BA900556E22 /* Frameworks */,
 				87C6A8D61B430E15001876CE /* Cordova */,
 				87C6A8881B43044D001876CE /* scaffold */,
 				87C6A89E1B43044D001876CE /* scaffoldTests */,
