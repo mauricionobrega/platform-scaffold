@@ -3,40 +3,21 @@ import classNames from 'classnames'
 
 import {browserHistory} from 'react-router'
 
+import Field from 'progressive-web-sdk/dist/components/field'
 import Button from 'progressive-web-sdk/dist/components/button'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 import ListTile from 'progressive-web-sdk/dist/components/list-tile'
-import Image from 'progressive-web-sdk/dist/components/image'
 import Link from 'progressive-web-sdk/dist/components/link'
 
 import ProductTile from '../../containers/plp/partials/product-tile'
+import SpeechToText from '../speech-to-text'
 
 const componentClass = 'c-chat-window'
-
-import recorder from '../../static/svg/recorder.svg'
-import recorderActive from '../../static/svg/recorderactive.svg'
-import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
-
-/**
- * WebSpeechRecognition
- *
- * L33t copy and paste from
- * - https://github.com/GoogleChrome/webplatform-samples/blob/master/webspeechdemo/webspeechdemo.html
- * - https://developers.google.com/web/updates/2013/01/Voice-Driven-Web-Apps-Introduction-to-the-Web-Speech-API
- */
-
-let recognition = null;
-
-const first_char = /\S/;
-function capitalize(s) {
-    return s.replace(first_char, function(m) { return m.toUpperCase(); });
-}
 
 
 /**
  * INSERT_DESCRIPTION_HERE
  */
-let final_transcript = ''
 
 class ChatWindow extends React.Component {
     constructor(props) {
@@ -46,74 +27,76 @@ class ChatWindow extends React.Component {
             inputValue: '',
             isRecording: false
         }
-    }
 
-    componentDidMount() {
-        if ('webkitSpeechRecognition' in window) {
-            //start_button.style.display = 'inline-block';
-            recognition = new webkitSpeechRecognition();
-            recognition.continuous = true;
-            recognition.interimResults = true;
-
-            recognition.onstart = function() {
-                // XXX: TODO: change state here
-                // recognizing = true;
-                // showInfo('info_speak_now');
-                // start_img.src = 'mic-animate.gif';
-                console.log("Recongnition.onstart")
-                final_transcript = ''
-            };
-            recognition.onerror = function(event) {
-                if (event.error == 'no-speech') {
-                    // XXX: TODO: change state here
-                }
-                if (event.error == 'audio-capture') {
-                    // XXX: TODO: change state here
-                }
-                if (event.error == 'not-allowed') {
-                    // XXX: TODO: change state here
-                    ignore_onend = true;
-                }
-            };
-            recognition.onend = () => {
-                console.log("Recongnition.onend")
-                // XXX: TODO: change state here
-                if (!final_transcript) {
-                    // might have more results
-                    return;
-                }
-                this.setState({'inputValue': ''})
-            };
-            recognition.onresult = (event) => {
-                console.log("Recongnition.onresult")
-                var interim_transcript = '';
-                for (var i = event.resultIndex; i < event.results.length; ++i) {
-                  console.log(event.results[i][0].transcript)
-                  if (event.results[i].isFinal) {
-                    final_transcript += event.results[i][0].transcript;
-                  } else {
-                    interim_transcript += event.results[i][0].transcript;
-                  }
-                }
-                console.log("all");
-                interim_transcript = capitalize(interim_transcript);
-                final_transcript = capitalize(final_transcript);
-                this.setState({inputValue: final_transcript || interim_transcript});
-            };
-        }
+        this.renderMessages = this.renderMessages.bind(this)
     }
 
     componentDidUpdate(prevProps) {
         if (prevProps.messages.length !== this.props.messages.length) {
-            // scroll to the bottom
+            // Scroll to the bottom
             const sheetInner = this.container.querySelector('.c-sheet__inner')
             sheetInner.scrollTop = this.container.querySelector('.c-sheet__content').clientHeight
         }
     }
 
-    render() {
+    renderMessages() {
         const {
             messages,
+            closeSheet
+        } = this.props
+
+        return messages && messages.map((message, index) => {
+            // Need to reorder props to work with ProductTile
+            const productProps = message.hasProduct && {
+                ...message.product,
+                link: {
+                    text: message.product.title
+                },
+                image: message.product.carouselItems ? {
+                    src: message.product.carouselItems[0].img
+                } : {}
+            }
+
+            const onClick = () => {
+                browserHistory.push(message.url)
+                closeSheet()
+            }
+
+            const fromUser = message.from === 'user'
+
+            const messageClasses = classNames('c-chat-window__message', {
+                'c--user': fromUser,
+                'c--clippy': !fromUser
+            })
+
+            return (
+                <div key={index}>
+                    <div className={`u-flexbox ${!fromUser ? 'u-justify-end' : ''}`}>
+                        <div className="c-chat-window__message-container u-flex-none u-margin-end-lg u-margin-start-lg u-margin-bottom">
+                            <div className="u-color-neutral-10 u-text-small">
+                                timestamp
+                            </div>
+
+                            <Link onClick={onClick}>
+                                <div className={messageClasses}>
+                                    {message.text}
+                                </div>
+                            </Link>
+                        </div>
+                    </div>
+
+                    {message.hasProduct &&
+                        <ListTile onClick={onClick}>
+                            <ProductTile product={productProps} />
+                        </ListTile>
+                    }
+                </div>
+            )
+        })
+    }
+
+    render() {
+        const {
             sendMessageToClippy,
             className,
             sheetOpen,
@@ -121,42 +104,65 @@ class ChatWindow extends React.Component {
         } = this.props
 
         const {
-            inputValue,
-            isRecording
+            inputValue
         } = this.state
 
-        const classes = classNames(componentClass, className)
+        const classes = classNames(componentClass, className, 'c--bg-color-brand')
 
-        const sendMessage = (inputValue) => {
-            sendMessageToClippy(inputValue)
-            this.state.inputValue = ''
-        }
-
-        const startRecording = () => {
-            if (recognition) {
-                if (!this.state.isRecording) {
-                    console.log('Start recording....')
-                    this.setState({
-                        isRecording: true,
-                        inputValue: ''
-                    })
-                    recognition.start();
-                } else {
-                    console.log('Stop recording....')
-                    this.setState({'isRecording': false})
-                    recognition.stop();
-                    if (inputValue && inputValue.trim()) {
-                        sendMessage(inputValue)
-                        this.setState({'inputValue': ''})
-                    }
-                }
-            }
+        const sendMessage = () => {
+            sendMessageToClippy(this.state.inputValue)
+            this.setState({
+                inputValue: ''
+            })
         }
 
         const onSubmit = (e) => {
             e.preventDefault()
-            sendMessage(inputValue)
+            sendMessage()
         }
+
+        const sheetHeader = (
+            <div className="u-bg-color-brand u-text-align-end">
+                <Button
+                    className="u-text-all-caps u-text-small u-color-neutral-10"
+                    type="button"
+                    onClick={() => closeSheet()}
+                >
+                    Done
+                </Button>
+            </div>
+        )
+
+        const sheetFooter = (
+            <div className="sendClippyMessage">
+                <form
+                    className="u-flexbox u-bg-color-neutral-10"
+                    onSubmit={onSubmit}
+                >
+                    <Field>
+                        <input
+                            type="text"
+                            className="u-border-0"
+                            value={inputValue}
+                            placeholder="Ask Clippy a question..."
+                            onChange={(e) => this.setState({inputValue: e.target.value})}
+                        />
+                    </Field>
+
+                    <SpeechToText
+                        onChange={(result) => this.setState({inputValue: result})}
+                        onComplete={() => sendMessage()}
+                    />
+
+                    <Button
+                        className="u-flex-none clippyButton"
+                        type="submit"
+                        icon="chevron-right"
+                        title="Send"
+                    />
+                </form>
+            </div>
+        )
 
         return (
             <div ref={(el) => { this.container = el }}>
@@ -165,86 +171,11 @@ class ChatWindow extends React.Component {
                     open={sheetOpen}
                     effect="slide-bottom"
                     coverage="95%"
+                    headerContent={sheetHeader}
+                    footerContent={sheetFooter}
                 >
-                    <div className="chatContainer">
-                        <Button
-                            className="closeSheet"
-                            type="button"
-                            onClick={() => closeSheet()}
-                        >
-                            X
-                        </Button>
-
-                        {messages && messages.map((message, index) => {
-                            // Need to reorder props to work with ProductTile
-                            const productProps = message.hasProduct && {
-                                ...message.product,
-                                link: {
-                                    text: message.product.title
-                                },
-                                image: message.product.carouselItems ? {
-                                    src: message.product.carouselItems[0].img
-                                } : {}
-                            }
-
-                            const classes = message.from === 'user' ? 'messageWrapperUser' : 'messageWrapperClippy'
-
-                            const onClick = () => {
-                                browserHistory.push(message.url)
-                                closeSheet()
-                            }
-
-                            return (
-                                <div key={index}>
-                                    <Link onClick={onClick} className={classes}>
-                                        <div className={message.from === 'user' ? 'fromUser' : 'clippyMessage'}>
-                                            {message.text}
-                                        </div>
-                                    </Link>
-
-                                   {message.hasProduct &&
-                                        <ListTile onClick={onClick}>
-                                            <ProductTile product={productProps} />
-                                        </ListTile>
-                                    }
-                                </div>
-                            )
-                        })}
-
-                        <div className="sendClippyMessage">
-                            <form
-                                className="u-flexbox"
-                                onSubmit={onSubmit}
-                            >
-                                <input
-                                    type="text"
-                                    className="u-flex"
-                                    value={inputValue}
-                                    placeholder="Ask Clippy a question..."
-                                    onChange={(e) => this.setState({inputValue: e.target.value})}
-                                />
-                                <Button
-                                    className="u-flex-none clippyButton"
-                                    type="button"
-                                    onClick={() => startRecording()}
-                                >
-                                    {!isRecording ?
-                                        <DangerousHTML html={recorder}>
-                                            {(htmlObj) => <div dangerouslySetInnerHTML={htmlObj} />}
-                                        </DangerousHTML>
-                                    :
-                                        <DangerousHTML html={recorderActive}>
-                                            {(htmlObj) => <div dangerouslySetInnerHTML={htmlObj} />}
-                                        </DangerousHTML>
-                                    }
-                                </Button>                                <Button
-                                    className="u-flex-none clippyButton"
-                                    type="submit"
-                                >
-                                    Send
-                                </Button>
-                            </form>
-                        </div>
+                    <div className="chatContainer u-bg-color-brand">
+                        {this.renderMessages()}
                     </div>
                 </Sheet>
             </div>
@@ -259,9 +190,25 @@ ChatWindow.propTypes = {
      */
     className: PropTypes.string,
 
+    /**
+     * Dispatches an action which closes the chat window sheet
+     */
+    closeSheet: PropTypes.func,
+
+    /**
+     * The messages to display
+     */
     messages: PropTypes.array,
 
-    sendMessageToClippy: PropTypes.func
+    /**
+     * Dispatches an action that sends a message to Clippy
+     */
+    sendMessageToClippy: PropTypes.func,
+
+    /**
+     * Indicates if the chat window sheet is open
+     */
+    sheetOpen: PropTypes.bool
 }
 
 export default ChatWindow

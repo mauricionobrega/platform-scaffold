@@ -4,6 +4,8 @@ import clippy from './clippy'
 const componentClass = 'c-clippy'
 import ChatWindow from '../chat-window'
 
+import Button from 'progressive-web-sdk/dist/components/button'
+
 import PDPItemAddedModal from '../../containers/pdp/partials/pdp-item-added-modal'
 
 /**
@@ -22,32 +24,38 @@ class Clippy extends React.Component {
         this.pollFor$()
     }
 
-    pollFor$ () {
+    pollFor$() {
         if (window.$) {
             clippy.load('Merlin', `.${componentClass}__agent`, (agent) => {
-            // Do anything with the loaded agent
-            agent.show()
-            const timeout = () => {
-                setTimeout(() => {
-                    agent.animate()
-                    timeout()
-                }, 2000)
-            }
-            const bubbleClose = () => {
-                setTimeout(() => {
-                    this.setState({bubbleOpen: false})
-                    bubbleOpen()
-                }, 10000)
-            }
-            const bubbleOpen = () => {
-                setTimeout(() => {
-                    this.setState({bubbleOpen: true})
-                    bubbleClose()
-                }, 10000)
-            }
-            timeout()
-            bubbleOpen()
-        })
+                // Do anything with the loaded agent
+                agent.show()
+                let bubbleClose = () => {}
+                let bubbleOpen = () => {}
+
+                const timeout = () => {
+                    setTimeout(() => {
+                        agent.animate()
+                        timeout()
+                    }, 2000)
+                }
+
+                bubbleClose = () => {
+                    setTimeout(() => {
+                        this.setState({bubbleOpen: false})
+                        bubbleOpen()
+                    }, 10000)
+                }
+
+                bubbleOpen = () => {
+                    setTimeout(() => {
+                        this.setState({bubbleOpen: true})
+                        bubbleClose()
+                    }, 10000)
+                }
+
+                timeout()
+                bubbleOpen()
+            })
         } else {
             setTimeout(this.pollFor$, 100)
         }
@@ -75,14 +83,14 @@ class Clippy extends React.Component {
 
         return (
             <div className={classes}>
-                <div onClick={() => openSheet()} className="u-flexbox">
+                <Button onClick={() => openSheet()} className="u-flexbox">
                     <div className={this.state.bubbleOpen ? `${componentClass}__card u-padding-md` : `${componentClass}__card u-padding-md vishid`}>
                         <div className={`${componentClass}__message`}>
                             Hey, I'm Merlin! Click me for assistance.
                         </div>
                     </div>
                     <div className={`${componentClass}__agent`} />
-                </div>
+                </Button>
 
                 <ChatWindow messages={messages} closeSheet={closeSheet} sheetOpen={this.state.sheetOpen} sendMessageToClippy={sendMessageToClippy} />
 
@@ -106,7 +114,13 @@ Clippy.propTypes = {
      */
     className: PropTypes.string,
 
+    closeItemAddedModal: PropTypes.func,
+
+    itemAddedModalOpen: PropTypes.bool,
+
     messages: PropTypes.array,
+
+    product: PropTypes.object,
 
     sendMessageToClippy: PropTypes.func
 }

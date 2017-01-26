@@ -2,82 +2,49 @@
 // ===
 //
 // Component description here
-// Variables
-// ---
+
+$clippy-message-color: #fa5ad0;
+
 // ChatWindow root
 // ---
 
 .c-chat-window {
-    .closeSheet {
-        color: white;
-        float: right;
-        font-size: 24px;
-    }
-    .c-sheet__content {
-        background-color: #4e439b;
-    }
-    .chatContainer {
-        margin-bottom: 100px;
-    }
-    .sendClippyMessage {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
+
+}
+
+
+// Chat Message Container
+// ---
+// 
+
+.c-chat-window__message-container {
+    min-width: 50%;
+    max-width: 85%;
+}
+
+
+// Chat Message
+// ---
+// 
+
+.c-chat-window__message {
+    padding: $unit*1.5 $unit*2;
+
+    &.c--clippy {
+        background-color: $clippy-message-color;
+        color: $neutral-10;
     }
 
-    .clippyMessage {
-        background-color: #fa5ad0;
-        padding: 15px;
-        margin: 15px;
-        font-size: 16px;
-        max-width: 95%;
-        left: 0;
-        color: #fff;
-    }
-
-    .fromUser {
-        background-color: #fff;
-        padding: 15px;
-        border-radius: 5%;
-        margin: 15px;
-        font-size: 16px;
-        max-width: 95%;
-        color: #333;
-    }
-
-    .messageWrapperClippy {
-        display: -webkit-flex;
-        display: flex;
-        -webkit-flex-direction: row;
-        flex-direction: row;
-        -webkit-justify-content: flex-end;
-        justify-content: flex-end;
-    }
-    .messageWrapperUser {
-        display: -webkit-flex;
-        display: flex;
-        -webkit-flex-direction: row;
-        flex-direction: row;
-        -webkit-justify-content: flex-start;
-        justify-content: flex-start;
-    }
-    .clippyButton {
-        background-color: #fff !important; // lol
+    &.c--user {
+        background-color: $neutral-10;
+        color: $neutral-50;
     }
 }
-// Modifiers
+
+
+// Chat Message Product Image
 // ---
-//
-// .c-chat-window.c--modifier {
-//     ...
-// }
-// Sub components
-// ---
-//
-// .c-chat-window__sub-component {
-//     ...
-// }
+// 
 
 .c-chat-window__product-image {
     max-width: 100px;
