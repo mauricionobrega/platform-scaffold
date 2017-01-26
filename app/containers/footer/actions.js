@@ -1,6 +1,6 @@
 import * as constants from './constants'
 import * as utils from '../../utils/utils'
-import {showClippy} from '../app/actions'
+import {showClippy, addNotification} from '../app/actions'
 
 export const newsletterSignupComplete = utils.createAction('Newsletter signup complete',
     'signupStatus'
@@ -31,6 +31,11 @@ export const clickClippyEasterEgg = () => {
         // 100% arbitary number of clicks to show the Easter Egg
         if (easterEggClickCount >= 4) {
             dispatch(showClippy())
+            dispatch(addNotification({
+                content: `Merlin has heard your call for help!`,
+                id: 'activatedClippyMessage',
+                showRemoveButton: true
+            }))
         }
     }
 }
