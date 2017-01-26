@@ -4,9 +4,11 @@ const plpParser = ($, $html) => {
     const $numItems = $html.find('#toolbar-amount .toolbar-number').first()
 
     const $products = $html.find('.item.product-item')
-    const products = $.makeArray($products).map((product) => {
-        return parseTextLink($(product).find('.product-item-link')).href
-    }).map((href) => new URL(href).pathname)
+    const products = $.makeArray($products)
+          .map((product) => {
+              return parseTextLink($(product).find('.product-item-link')).href
+          })
+          .map((href) => new URL(href).pathname)
 
     return {
         noResultsText: $html.find('.message.empty').text(),

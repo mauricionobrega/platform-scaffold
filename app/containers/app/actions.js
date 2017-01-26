@@ -14,6 +14,7 @@ import * as plpActions from '../plp/actions'
 import * as footerActions from '../footer/actions'
 import * as navigationActions from '../navigation/actions'
 import * as productsActions from '../catalog/products/actions'
+import * as categoriesActions from '../../store/categories/actions'
 
 export const addNotification = utils.createAction('Add Notification')
 export const removeNotification = utils.createAction('Remove Notification')
@@ -64,6 +65,7 @@ export const fetchPage = (url, pageComponent, routeName) => {
                     dispatch(productsActions.processPdp(receivedAction))
                 } else if (isPageType(pageComponent, PLP)) {
                     dispatch(plpActions.process(receivedAction))
+                    dispatch(categoriesActions.process(receivedAction))
                     dispatch(productsActions.processPlp(receivedAction))
                 }
                 dispatch(footerActions.process(receivedAction))
