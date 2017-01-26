@@ -1,7 +1,7 @@
 const selectors = {
     cartTemplateIdentifier: '.t-cart',
     cartCheckout: 'button.checkout',
-    removeItem: '.t-cart__remove',
+    removeItem: '.qa-cart__remove-item',
     emptyCart: '.t-cart__empty'
 }
 
