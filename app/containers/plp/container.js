@@ -9,11 +9,6 @@ import List from 'progressive-web-sdk/dist/components/list'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import ProductTile from './partials/product-tile'
-import Offline from '../../components/offline'
-
-import {isOffline} from '../app/reducer'
-import {fetchPage} from '../app/actions'
-import {getComponentType} from '../../utils/utils'
 import {getSelectorFromState} from '../../utils/router-utils'
 
 const renderResults = (products) => {
@@ -39,18 +34,10 @@ const renderNoResults = (bodyText) => {
 
 class PLP extends React.Component {
     shouldComponentUpdate(nextProps) {
-        return !Immutable.is(this.props.plp, nextProps.plp) ||
-            !Immutable.is(nextProps.products, this.props.products) ||
-            (this.props.isOffline !== nextProps.isOffline)
+        return !Immutable.is(this.props.plp, nextProps.plp) || !Immutable.is(nextProps.products, this.props.products)
     }
 
     render() {
-        const {
-            isOffline,
-            route,
-            fetchPage
-        } = this.props
-
         const {
             hasProducts,
             contentsLoaded,
@@ -60,11 +47,6 @@ class PLP extends React.Component {
         } = this.props.plp.toJS()
 
         const products = this.props.products
-
-        if (isOffline && !contentsLoaded) {
-            const reload = () => fetchPage(window.location.href, getComponentType(route.component), route.routeName)
-            return <Offline retry={reload} />
-        }
 
         return (
             <div className="t-plp">
@@ -115,28 +97,16 @@ class PLP extends React.Component {
 
 PLP.propTypes = {
     /**
-     * Fires a fetchPage action.
-     */
-    fetchPage: PropTypes.func.isRequired,
-    /**
-     * Whether the device is thought to be offline
-     */
-    isOffline: PropTypes.bool.isRequired,
-    /**
      * The Immutable.js PLP state object
      */
     plp: PropTypes.object.isRequired,
     /**
      * Product data from state (Catalog -> Products), filtered by the productUrls in the Plp state object
      */
-    products: PropTypes.array.isRequired,
-    /**
-     * The route object from react-router
-     */
-    route: PropTypes.object.isRequired
+    products: PropTypes.array.isRequired
 }
 
-const mapStateToProps = ({app, catalog, plp}) => {
+const mapStateToProps = ({catalog, plp}) => {
     const selector = getSelectorFromState(plp)
     const routedPlp = plp.get(selector)
     const productUrls = routedPlp.get('productUrls').toJS()
@@ -145,15 +115,11 @@ const mapStateToProps = ({app, catalog, plp}) => {
         return catalogProducts.get(url).toJS()
     })
     return {
-        isOffline: isOffline({app}),
         products,
         plp: routedPlp
     }
 }
 
-const mapDispatchToProps = {fetchPage}
-
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
 )(PLP)

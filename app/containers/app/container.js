@@ -14,6 +14,11 @@ import * as appActions from '../app/actions'
 
 import NotificationManager from '../../components/notification-manager'
 
+// Offline support
+import {getComponentType} from '../../utils/utils'
+import Offline from '../../components/offline'
+import OfflineBanner from '../../components/offline-banner'
+
 const hidePreloaderWhenCSSIsLoaded = () => {
     if (window.Progressive.stylesheetLoaded) {
         hidePreloader()
@@ -22,12 +27,9 @@ const hidePreloaderWhenCSSIsLoaded = () => {
     }
 }
 
-
 class App extends React.Component {
     componentDidMount() {
         hidePreloaderWhenCSSIsLoaded()
-
-        // Dispatch an action to retrieve global content here
     }
 
     render() {
@@ -38,11 +40,15 @@ class App extends React.Component {
             notificationActions,
             openNavigation,
             requestOpenMiniCart,
+            fetchPage
         } = this.props
-        const currentTemplateProps = children.props
-        const CurrentHeader = currentTemplateProps.route.Header || Header
-        const CurrentFooter = currentTemplateProps.route.Footer || Footer
-        const {notifications} = app.toJS()
+
+        const routeProps = children.props.route
+        const CurrentHeader = routeProps.Header || Header
+        const CurrentFooter = routeProps.Footer || Footer
+        const {notifications, fetchError, currentURL, fetchedUrls} = app.toJS()
+
+        const reload = () => fetchPage(window.location.href, getComponentType(routeProps.component), routeProps.routeName)
 
         const skipLinksItems = [
             // Customize your list of SkipLinks here. These are necessary to
@@ -59,7 +65,7 @@ class App extends React.Component {
         return (
             <div
                 id="app"
-                className={`t-app t-app--${currentTemplateProps.route.routeName}`}
+                className={`t-app t-app--${routeProps.routeName}`}
                 style={{display: 'none'}}
             >
                 <IconSprite sprite={sprite} />
@@ -71,6 +77,7 @@ class App extends React.Component {
                             onMenuClick={openNavigation}
                             onMiniCartClick={requestOpenMiniCart}
                         />
+                        {fetchError && fetchedUrls[currentURL] && <OfflineBanner />}
 
                         {notifications &&
                             <NotificationManager
@@ -83,13 +90,19 @@ class App extends React.Component {
                         <MiniCart />
                     </div>
 
-                    <main id="app-main" className="u-flex" role="main">
-                        {this.props.children}
-                    </main>
+                    {(!fetchError || fetchedUrls[currentURL]) ?
+                        <div>
+                            <main id="app-main" className="u-flex" role="main">
+                                {this.props.children}
+                            </main>
 
-                    <div id="app-footer" className="u-flex-none">
-                        <CurrentFooter />
-                    </div>
+                            <div id="app-footer" className="u-flex-none">
+                                <CurrentFooter />
+                            </div>
+                        </div>
+                    :
+                        <Offline retry={reload} />
+                    }
                 </div>
             </div>
         )
@@ -120,7 +133,8 @@ const mapDispatchToProps = (dispatch, props) => {
         requestOpenMiniCart: () => dispatch(miniCartActions.requestOpenMiniCart()),
         notificationActions: {
             removeNotification: (id) => dispatch(appActions.removeNotification(id))
-        }
+        },
+        fetchPage: (url, pageComponent, routeName) => dispatch(appActions.fetchPage(url, pageComponent, routeName))
     }
 }
 
