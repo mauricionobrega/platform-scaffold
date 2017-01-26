@@ -32,7 +32,7 @@ class Footer extends React.Component {
     }
 
     render() {
-        const {footer} = this.props
+        const {footer, clickClippyEasterEgg} = this.props
         const navigation = footer.get('navigation')
         const newsletter = footer.get('newsletter')
 
@@ -41,13 +41,17 @@ class Footer extends React.Component {
             <footer className="t-footer">
                 <FooterNewsletterSubscription newsletter={newsletter} onSubmit={this.onSubmitNewsletter} />
                 <FooterSocialIcons social={social} />
-                <FooterNavigation navigation={navigation} />
+                <FooterNavigation navigation={navigation} onClickCopyright={clickClippyEasterEgg} />
             </footer>
         )
     }
 }
 
 Footer.propTypes = {
+    /**
+     * Update the user's progress towards unlocking the ultimate easter egg
+     */
+    clickClippyEasterEgg: PropTypes.func,
     /**
      * Slice into the global app state
      */
@@ -66,7 +70,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    submitNewsletter: actions.signUpToNewsletter
+    submitNewsletter: actions.signUpToNewsletter,
+    clickClippyEasterEgg: actions.clickClippyEasterEgg
 }
 
 export default connect(

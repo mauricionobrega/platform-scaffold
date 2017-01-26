@@ -10,6 +10,7 @@ const initialState = Map({
         // If we use a regular array, React doesn't seem to catch all the updates
     notifications: List(),
     clippy: Map({
+        isVisible: false,
         messages: List(),
         itemAddedModalOpen: false
     })
@@ -43,6 +44,12 @@ export default createReducer({
     },
     [appActions.removeAllNotifications]: (state) => {
         return state.set('notifications', List())
+    },
+    [appActions.showClippy]: (state) => {
+        return state.setIn(['clippy', 'isVisible'], true)
+    },
+    [appActions.hideClippy]: (state) => {
+        return state.setIn(['clippy', 'isVisible'], false)
     },
     [appActions.receiveMessageFromUser]: (state, payload) => {
         return state.updateIn(['clippy', 'messages'], (messages) => {

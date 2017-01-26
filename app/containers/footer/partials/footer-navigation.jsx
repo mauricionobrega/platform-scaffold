@@ -1,10 +1,11 @@
 import React, {PropTypes} from 'react'
 
+import Button from 'progressive-web-sdk/dist/components/button'
 import Divider from 'progressive-web-sdk/dist/components/divider'
 import ListTile from 'progressive-web-sdk/dist/components/list-tile'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 
-const FooterNavigation = ({navigation}) => {
+const FooterNavigation = ({navigation, onClickCopyright}) => {
     return (
         <div className="t-footer__navigation u-padding-lg u-text-align-center">
             {navigation.map((item, key) => {
@@ -19,7 +20,9 @@ const FooterNavigation = ({navigation}) => {
             <Divider />
 
             <div className="t-footer__copyright u-padding-top u-padding-bottom">
-                <p>Copyright Merlin&#39;s Potions 2016</p>
+                <Button className="u-text-small" onClick={onClickCopyright}>
+                    Copyright Merlin&#39;s Potions 2016
+                </Button>
                 <p className="u-margin-top">All rights reserved.</p>
             </div>
         </div>
@@ -27,7 +30,8 @@ const FooterNavigation = ({navigation}) => {
 }
 
 FooterNavigation.propTypes = {
-    navigation: PropTypes.object
+    navigation: PropTypes.object,
+    onClickCopyright: PropTypes.func
 }
 
 export default FooterNavigation

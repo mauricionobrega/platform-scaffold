@@ -19,14 +19,20 @@ class Clippy extends React.Component {
             sheetOpen: false,
             bubbleOpen: false
         }
+
+        this.clippyLoaded = false
     }
-    componentDidMount() {
-        this.pollFor$()
+    componentDidUpdate() {
+        if (this.props.isVisible && !this.clippyLoaded) {
+            this.pollFor$()
+        }
     }
 
     pollFor$() {
         if (window.$) {
             clippy.load('Merlin', `.${componentClass}__agent`, (agent) => {
+                this.clippyLoaded = true
+
                 // Do anything with the loaded agent
                 agent.show()
                 let bubbleClose = () => {}
@@ -68,7 +74,8 @@ class Clippy extends React.Component {
             sendMessageToClippy,
             product,
             itemAddedModalOpen,
-            closeItemAddedModal
+            closeItemAddedModal,
+            isVisible
         } = this.props
 
         const openSheet = () => {
@@ -81,7 +88,7 @@ class Clippy extends React.Component {
 
         const classes = classNames(componentClass, className)
 
-        return (
+        return isVisible && (
             <div className={classes}>
                 <Button onClick={() => openSheet()} className="u-flexbox">
                     <div className={this.state.bubbleOpen ? `${componentClass}__card u-padding-md` : `${componentClass}__card u-padding-md vishid`}>
@@ -115,6 +122,8 @@ Clippy.propTypes = {
     className: PropTypes.string,
 
     closeItemAddedModal: PropTypes.func,
+
+    isVisible: PropTypes.bool,
 
     itemAddedModalOpen: PropTypes.bool,
 

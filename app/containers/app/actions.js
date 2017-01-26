@@ -58,6 +58,9 @@ const clippyAPI = 'https://mobify-merlin-clippy.herokuapp.com/talk'
 let watsonChatContext = {}
 let lastProductData
 
+export const showClippy = utils.createAction('Show clippy')
+export const hideClippy = utils.createAction('Hide clippy')
+
 export const receiveMessageFromUser = utils.createAction('Receive message from User')
 export const receiveMessageFromClippy = utils.createAction('Receive message from Clippy')
 
