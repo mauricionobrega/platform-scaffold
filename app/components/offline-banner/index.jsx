@@ -2,42 +2,30 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import classNames from 'classnames'
 
-import {isOffline} from '../../containers/app/reducer'
-
 const componentClass = 'c-offline-banner'
 
 /**
- * INSERT_DESCRIPTION_HERE
+ * A banner displayed at the top of the page to let users know they are offline.
  */
 
 const OfflineBanner = ({
-    isOffline,
     className
 }) => {
-    const classes = classNames(componentClass, className, {
-        // 'c--modifier': bool ? true : false
-    })
+    const classes = classNames(componentClass, className)
 
-    return isOffline ? (
+    return (
         <div className={classes}>
             Currently browsing in offline mode
         </div>
-    ) : null
+    )
 }
-
 
 OfflineBanner.propTypes = {
     /**
      * Adds values to the `class` attribute of the root element
      */
-    className: PropTypes.string,
+    className: PropTypes.string
 
-}
-
-const mapStateToProps = (state) => {
-    return {
-        isOffline: isOffline(state)
-    }
 }
 
 const mapDispatchToProps = (dispatch, props) => {
@@ -48,6 +36,6 @@ const mapDispatchToProps = (dispatch, props) => {
 }
 
 export default connect(
-    mapStateToProps,
+    {},
     mapDispatchToProps
 )(OfflineBanner)
