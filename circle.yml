@@ -29,7 +29,7 @@ test:
         #    parallel: true
         #    pwd: web
     post:
-        - cp -R lighthouse/* $CIRCLE_ARTIFACTS:
+        - cp -R lighthouse/* $CIRCLE_ARTIFACTS/lighthouse/:
             pwd: web
 experimental:
     notify:
