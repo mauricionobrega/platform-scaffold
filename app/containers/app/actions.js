@@ -34,12 +34,6 @@ export const onPageReceived = utils.createAction('On page received',
 export const setPageFetchError = utils.createAction('Set page fetch error', 'fetchError')
 export const clearPageFetchError = utils.createAction('Clear page fetch error')
 
-const offlineModeNotification = addNotification({
-    content: 'THIS IS THE OFFLINE MESSAGE TEXT',
-    id: 'offline-mode',
-    showRemoveButton: true
-})
-
 /**
  * Fetch the content for a 'global' page render. This should be driven
  * by react-router, ideally.
@@ -47,9 +41,11 @@ const offlineModeNotification = addNotification({
 export const fetchPage = (url, pageComponent, routeName) => {
     return (dispatch, getState) => {
         let isOffline = false
+
         return utils.makeRequest(url)
             .then((response) => {
                 isOffline = response.headers.get('x-mobify-progressive') === 'offline'
+
                 return response
             })
             .then(jqueryResponse)
@@ -58,15 +54,15 @@ export const fetchPage = (url, pageComponent, routeName) => {
                 const currentURL = getState().app.get(CURRENT_URL)
 
                 if (isOffline) {
-                    dispatch(offlineModeNotification)
+                    dispatch(setPageFetchError({message: 'Failed to fetch, cached response provided'}))
                 } else {
                     dispatch(clearPageFetchError())
                 }
+
                 dispatch(onPageReceived($, $response, pageComponent, url, currentURL, routeName))
             })
             .catch((error) => {
                 console.info(error.message)
-                dispatch(offlineModeNotification)
                 dispatch(setPageFetchError({message: error.message}))
             })
     }
