@@ -18,9 +18,9 @@ const Offline = ({
 
     return (
         <div className={classes}>
-            <h1>Offline!</h1>
-
-            We can not currently reach the Internet. <Button onClick={retry}>Click here to try again</Button>
+            <div>Fiddlesticks! We couldn't load the next page on this connection.</div>
+            <div>Please try again.</div>
+            <Button onClick={retry}>Retry</Button>
         </div>
     )
 }
