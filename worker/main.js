@@ -131,18 +131,14 @@ const cacheFallback = (error, request, response, cacheName) => {
                 const newOptions = {
                     status: 200,
                     statusText: 'OK',
-                    headers: {
+                    // Add the original headers from the response to our
+                    // new response
+                    headers: Object.assign({}, cachedResponse.headers, {
                         // We look for this in the application to determine if
                         // we're offline
-                        'X-mobify-progressive': 'offline'
-                    }
+                        'x-mobify-progressive': 'offline'
+                    })
                 }
-
-                // Add the original headers from the response to our
-                // new response
-                cachedResponse.headers.forEach((value, key) => {
-                    newOptions.headers[key] = value
-                })
 
                 return cachedResponse.blob().then((responseBodyAsBlob) => {
                     return new Response(responseBodyAsBlob, newOptions)
