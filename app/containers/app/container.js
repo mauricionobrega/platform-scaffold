@@ -111,6 +111,7 @@ class App extends React.Component {
 
 App.propTypes = {
     children: PropTypes.element.isRequired,
+    fetchPage: PropTypes.func.isRequired,
     /**
      * The react-router history object
      */
@@ -118,7 +119,7 @@ App.propTypes = {
     history: PropTypes.object,
     notificationActions: PropTypes.object,
     openNavigation: PropTypes.func,
-    requestOpenMiniCart: PropTypes.func,
+    requestOpenMiniCart: PropTypes.func
 }
 
 const mapStateToProps = (state) => {
