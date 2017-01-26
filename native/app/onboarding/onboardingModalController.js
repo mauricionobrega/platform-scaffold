@@ -83,4 +83,6 @@ OnboardingModalController.prototype.canGoBack = function() {
     return this.onboardingController.canGoBack()
 }
 
-export {OnboardingModalController, OnboardingModalEvents}
+export {OnboardingModalEvents}
+
+export default OnboardingModalController

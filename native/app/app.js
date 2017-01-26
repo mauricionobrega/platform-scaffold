@@ -9,7 +9,7 @@ import PreviewController from 'progressive-app-sdk/controllers/previewController
 import baseConfig from './config/baseConfig'
 import TabBarController from './controllers/tabBarController'
 import {getInitialTabId} from './config/tabBarConfig'
-import {OnboardingModalController, OnboardingModalEvents} from './onboarding/onboardingModalController'
+import OnboardingModalController, {OnboardingModalEvents} from './onboarding/onboardingModalController'
 import AppEvents from './global/app-events'
 
 window.run = async function() {
