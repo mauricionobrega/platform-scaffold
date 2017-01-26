@@ -21,6 +21,7 @@
   },
   "scripts": {
     "build": "webpack --config webpack.app.config.js",
-    "build-analyze": "ASTRO_ANALYZE=true npm run build"
+    "build-analyze": "ASTRO_ANALYZE=true npm run build",
+    "postinstall": "scripts/update-web-astro-client.sh"
   }
 }
