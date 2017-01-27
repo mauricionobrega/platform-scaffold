@@ -3,13 +3,12 @@ import {createSelector} from 'reselect'
 import {createGetSelector} from '../../utils/selector-utils'
 import * as globalSelectors from '../../store/selectors'
 import * as appSelectors from '../app/selectors'
-import {getSelectorFromState} from '../../utils/router-utils'
 import {PLACEHOLDER} from '../app/constants'
 
 const PLACEHOLDER_URLS = Immutable.List(new Array(5).fill(PLACEHOLDER))
 
-const selectorToPath = (selector) => new URL(selector).pathname
 
+// This is temporary for while the PDP/product data is still keyed by the full URL
 const pathToSelector = (path) => `https://www.merlinspotions.com${path}`
 
 export const getCatalogProducts = globalSelectors.getCatalogProducts
@@ -19,20 +18,15 @@ export const getPlp = createSelector(
     ({plp}) => plp
 )
 
-export const getPlpSelectorPath = createSelector(
-    appSelectors.getCurrentUrl,
-    selectorToPath
-)
-
 export const getSelectedCategory = createSelector(
     globalSelectors.getCategories,
-    getPlpSelectorPath,
+    appSelectors.getCurrentPathKey,
     (categories, selectorPath) => categories.get(selectorPath, Immutable.Map())
 )
 
 export const getPlpContentsLoaded = createSelector(
     globalSelectors.getCategories,
-    getPlpSelectorPath,
+    appSelectors.getCurrentPathKey,
     (categories, path) => categories.has(path)
 )
 

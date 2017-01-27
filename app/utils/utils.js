@@ -34,3 +34,15 @@ export const getComponentType = (component) => {
  * @returns {function} - the wrapped action creator
  */
 export const stripEvent = (fn) => () => fn()
+
+
+/**
+ * Converts a full URL to the preferred format for keying the redux store,
+ * i.e. the path and query string
+ */
+
+export const urlToPathKey = (url) => {
+    const urlObject = new URL(url)
+
+    return `${urlObject.pathname}${urlObject.search}`
+}
