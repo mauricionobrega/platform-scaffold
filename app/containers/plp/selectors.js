@@ -2,12 +2,13 @@ import Immutable from 'immutable'
 import {createSelector} from 'reselect'
 import {createGetSelector} from '../../utils/selector-utils'
 import * as globalSelectors from '../../store/selectors'
+import * as appSelectors from '../app/selectors'
 import {getSelectorFromState} from '../../utils/router-utils'
 import {PLACEHOLDER} from '../app/constants'
 
 const PLACEHOLDER_URLS = Immutable.List(new Array(5).fill(PLACEHOLDER))
 
-const selectorToPath = (selector) => { return selector !== PLACEHOLDER ? new URL(selector).pathname : selector }
+const selectorToPath = (selector) => new URL(selector).pathname
 
 const pathToSelector = (path) => `https://www.merlinspotions.com${path}`
 
@@ -18,20 +19,9 @@ export const getPlp = createSelector(
     ({plp}) => plp
 )
 
-export const getPlpSelector = createSelector(
-    getPlp,
-    getSelectorFromState
-)
-
 export const getPlpSelectorPath = createSelector(
-    getPlpSelector,
+    appSelectors.getCurrentUrl,
     selectorToPath
-)
-
-export const getSelectedPlp = createSelector(
-    getPlp,
-    getPlpSelector,
-    (plp, plpSelector) => plp.get(plpSelector)
 )
 
 export const getSelectedCategory = createSelector(

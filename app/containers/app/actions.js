@@ -10,7 +10,6 @@ import PLP from '../plp/container'
 import * as homeActions from '../home/actions'
 import * as loginActions from '../login/actions'
 import * as pdpActions from '../pdp/actions'
-import * as plpActions from '../plp/actions'
 import * as footerActions from '../footer/actions'
 import * as navigationActions from '../navigation/actions'
 import * as productsActions from '../catalog/products/actions'
@@ -64,7 +63,6 @@ export const fetchPage = (url, pageComponent, routeName) => {
                     dispatch(pdpActions.process(receivedAction))
                     dispatch(productsActions.processPdp(receivedAction))
                 } else if (isPageType(pageComponent, PLP)) {
-                    dispatch(plpActions.process(receivedAction))
                     dispatch(categoriesActions.process(receivedAction))
                     dispatch(productsActions.processPlp(receivedAction))
                 }
