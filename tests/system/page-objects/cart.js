@@ -22,7 +22,7 @@ Cart.prototype.navigateToCheckout = function() {
 
 Cart.prototype.removeItems = function() {
     // Remove all items from the cart
-    var self = this
+    const self = this
     this.browser
         .log('Removing item')
         .url('https://www.merlinspotions.com/checkout/cart/')

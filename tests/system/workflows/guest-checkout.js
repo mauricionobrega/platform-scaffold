@@ -79,13 +79,13 @@ export default {
             .assert.valueContains(checkout.selectors.lastShippingInfo, checkout.userData.lastShippingInfo)
     },
 
-    'Checkout - Guest - Step 8 - Fill out Guest Checkout Payment Details form': (browser) => {
-        checkout.continueToPayment()
-        // checkout.fillPaymentDetails()
-        // browser
-        //     .waitForElementVisible(checkout.selectors.lastPaymentDetail)
-        //     .assert.valueContains(checkout.selectors.lastPaymentDetail, checkout.userData.lastPaymentDetail)
-    },
+    // 'Checkout - Guest - Step 8 - Fill out Guest Checkout Payment Details form': (browser) => {
+    //     checkout.continueToPayment()
+    //     checkout.fillPaymentDetails()
+    //     browser
+    //         .waitForElementVisible(checkout.selectors.lastPaymentDetail)
+    //         .assert.valueContains(checkout.selectors.lastPaymentDetail, checkout.userData.lastPaymentDetail)
+    // },
 
     // 'Checkout - Guest - Step 10 - Verify Submit Order button is visible': (browser) => {
     //     browser
