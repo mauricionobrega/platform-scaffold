@@ -52,7 +52,7 @@ const PLPContents = ({contentsLoaded, numItems, products, hasProducts, noResults
             }
         </div>
 
-        {hasProducts ? <ResultList products={products} /> : <NoResultsList bodyText={noResultsText} />}
+        {(hasProducts || !contentsLoaded) ? <ResultList products={products} /> : <NoResultsList bodyText={noResultsText} />}
     </div>
 )
 

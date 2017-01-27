@@ -73,7 +73,7 @@ PDPItemAddedModal.propTypes = {
 const mapStateToProps = createStructuredSelector({
     productImage: selectors.getFirstProductImage,
     open: isModalOpen(PDP_ITEM_ADDED_MODAL),
-    quantity: selectors.getQuantityAdded,
+    quantity: selectors.getItemQuantity,
     title: selectors.getProductTitle,
     price: selectors.getProductPrice
 })

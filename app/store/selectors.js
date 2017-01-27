@@ -11,3 +11,5 @@ export const isModalOpen = (modalName) => createSelector(
     getModals,
     (modals) => modals.get(modalName, false)
 )
+
+export const getCategories = ({categories}) => categories

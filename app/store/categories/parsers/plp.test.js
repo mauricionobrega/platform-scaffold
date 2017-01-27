@@ -2,7 +2,7 @@ import {jquerifyHtmlFile} from 'progressive-web-sdk/dist/test-utils'
 import plpParser from './plp'
 
 describe('the plp parser', () => {
-    const $content = jquerifyHtmlFile('app/containers/plp/parsers/plp.test.html')
+    const $content = jquerifyHtmlFile('app/store/categories/parsers/plp.test.html')
     const parsedContent = plpParser($, $content)
 
     it('should extract the plp content from the rendered HTML', () => {
@@ -10,7 +10,7 @@ describe('the plp parser', () => {
             hasProducts: true,
             contentsLoaded: true,
             noResultsText: '',
-            numItems: '7',
+            itemCount: '7',
             title: 'Potions',
             productUrls: [
                 'http://www.merlinspotions.com/eye-of-newt.html',

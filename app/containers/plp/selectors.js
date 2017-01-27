@@ -1,7 +1,15 @@
+import Immutable from 'immutable'
 import {createSelector} from 'reselect'
 import {createGetSelector} from '../../utils/selector-utils'
 import * as globalSelectors from '../../store/selectors'
-import {getSelectorFromState} from '../../utils/router-utils'
+import * as appSelectors from '../app/selectors'
+import {PLACEHOLDER} from '../app/constants'
+
+const PLACEHOLDER_URLS = Immutable.List(new Array(5).fill(PLACEHOLDER))
+
+
+// This is temporary for while the PDP/product data is still keyed by the full URL
+const pathToSelector = (path) => `https://www.merlinspotions.com${path}`
 
 export const getCatalogProducts = globalSelectors.getCatalogProducts
 
@@ -10,23 +18,34 @@ export const getPlp = createSelector(
     ({plp}) => plp
 )
 
-export const getPlpSelector = createSelector(
-    getPlp,
-    getSelectorFromState
+export const getSelectedCategory = createSelector(
+    globalSelectors.getCategories,
+    appSelectors.getCurrentPathKey,
+    (categories, selectorPath) => categories.get(selectorPath, Immutable.Map())
 )
 
-export const getSelectedPlp = createSelector(
-    getPlp,
-    getPlpSelector,
-    (plp, plpSelector) => plp.get(plpSelector)
+export const getPlpContentsLoaded = createSelector(
+    globalSelectors.getCategories,
+    appSelectors.getCurrentPathKey,
+    (categories, path) => categories.has(path)
 )
 
-export const getProductUrls = createGetSelector(getSelectedPlp, 'productUrls')
-export const getHasProducts = createGetSelector(getSelectedPlp, 'hasProducts')
-export const getPlpContentsLoaded = createGetSelector(getSelectedPlp, 'contentsLoaded')
-export const getNoResultsText = createGetSelector(getSelectedPlp, 'getNoResultsText')
-export const getNumItems = createGetSelector(getSelectedPlp, 'numItems')
-export const getPlpTitle = createGetSelector(getSelectedPlp, 'title')
+export const getProductPaths = createSelector(
+    getSelectedCategory,
+    (category) => category.get('products', PLACEHOLDER_URLS)
+)
+export const getHasProducts = createSelector(
+    getProductPaths,
+    (urls) => urls.size > 0
+)
+export const getProductUrls = createSelector(
+    getProductPaths,
+    (paths) => paths.map(pathToSelector)
+)
+
+export const getNumItems = createGetSelector(getSelectedCategory, 'itemCount')
+export const getPlpTitle = createGetSelector(getSelectedCategory, 'title')
+export const getNoResultsText = createGetSelector(getSelectedCategory, 'noResultsText')
 
 export const getPlpProducts = createSelector(
     globalSelectors.getCatalogProducts,

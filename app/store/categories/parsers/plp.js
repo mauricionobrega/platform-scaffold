@@ -4,16 +4,16 @@ const plpParser = ($, $html) => {
     const $numItems = $html.find('#toolbar-amount .toolbar-number').first()
 
     const $products = $html.find('.item.product-item')
-    const productUrls = $.makeArray($products).map((product) => {
-        return parseTextLink($(product).find('.product-item-link')).href
-    })
+    const products = $.makeArray($products)
+          .map((product) => {
+              return parseTextLink($(product).find('.product-item-link')).href
+          })
+          .map((href) => new URL(href).pathname)
 
     return {
-        hasProducts: productUrls.length > 0,
-        contentsLoaded: true,
         noResultsText: $html.find('.message.empty').text(),
-        numItems: $numItems.length > 0 ? $numItems.text() : '0',
-        productUrls,
+        itemCount: $numItems.length > 0 ? $numItems.text() : '0',
+        products,
         title: $html.find('.page-title').text().trim(), // eslint-disable-line newline-per-chained-call
     }
 }
