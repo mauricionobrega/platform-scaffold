@@ -35,7 +35,7 @@ describe('the PDP product parser', () => {
 })
 
 describe('the PLP product parser', () => {
-    const $content = jquerifyHtmlFile('app/containers/plp/parsers/plp.test.html')
+    const $content = jquerifyHtmlFile('app/store/categories/parsers/plp.test.html')
     const parsedContent = plpParser($, $content)
 
     it('should extract the plp content from the rendered HTML', () => {
