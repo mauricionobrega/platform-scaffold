@@ -18,6 +18,7 @@ class PDP extends React.Component {
 
     render() {
         const {
+            breadcrumbs,
             itemQuantity,
             quantityAdded,
             itemAddedModalOpen,
@@ -28,7 +29,6 @@ class PDP extends React.Component {
         const product = this.props.catalogProduct.toJS()
 
         const {
-            breadcrumbs,
             title,
             price,
             description,
