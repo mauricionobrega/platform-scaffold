@@ -22,9 +22,10 @@ test:
         # - npm run smoke-test:
         #    parallel: true
         #    pwd: web
-    post:
-        - cp -R lighthouse/* $CIRCLE_ARTIFACTS:
-            pwd: web
+    # Disabled on January 27, 2017. For some reason, Lighthouse can't connect to Chrome as of Chrome v56.
+    # post:
+    #    - cp -R lighthouse/* $CIRCLE_ARTIFACTS:
+    #        pwd: web
 experimental:
     notify:
         branches:
