@@ -119,12 +119,15 @@ To set this up, do the following:
 
 1. Open chrome on the computer running the webpack dev server
 2. Navigate to `chrome://inspect`
+
    ![Chrome: Inspect Screenshot](dev-server/assets/chrome-inspect.png)
+
 3. Click the **Port Forward** button beside the *Discover USB devices* checkbox
 4. Add a new entry mapping port **8443** to **localhost:8443** and hit <Enter>
-5. Make sure the checkbox **Enable port forwarding** at the bottom of the modal is
-   checked
+5. Make sure the checkbox **Enable port forwarding** at the bottom of the modal is checked
+
    ![Chrome: Inspect with port forward entry](dev-server/assets/chrome-inspect-port-forward.png)
+
 6. Click **Done**
 
 You can now preview on your Android device and use `https://localhost:8443/...`
