@@ -3,7 +3,7 @@
 //
 // This file contains all the imports necessary for styling the Progressive Web
 // SDK components, which includes their base styles from the SDK node module, as
-// well as imports for their project project specific themes.
+// well as imports for their project specific themes.
 //
 // Uncomment (or comment out) the imports below to include or exclude either a
 // component's base or local theme style.
@@ -26,8 +26,8 @@
 // Breadcrumbs
 // ---
 
-// @import 'node_modules/progressive-web-sdk/dist/components/breadcrumbs/base';
-// @import 'pw-components/breadcrumbs';
+@import 'node_modules/progressive-web-sdk/dist/components/breadcrumbs/base';
+@import 'pw-components/breadcrumbs';
 
 
 // Button

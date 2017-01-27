@@ -1,6 +1,17 @@
 import {extractMagentoJson} from '../../../utils/magento-utils'
 import {parseTextLink, parseImage} from '../../../utils/parser-utils'
 
+const parseBreadcrumbs = ($breadcrumbsLinks) => {
+    return $breadcrumbsLinks.get()
+        .map((breadcrumbLink) => {
+            return {
+                href: $(breadcrumbLink).attr('href'),
+                text: $(breadcrumbLink).text()
+                .trim()
+            }
+        })
+}
+
 const parseCarouselItems = (magentoObject) => {
     const carouselSetup = magentoObject
           .getIn(['[data-gallery-role=gallery-placeholder]', 'mage/gallery/gallery', 'data'])
@@ -32,9 +43,15 @@ export const plpParser = ($, $html) => {
 }
 
 export const pdpParser = ($, $html) => {
+    const $breadcrumbsContainer = $html.find('.breadcrumbs')
+    const $breadcrumbs = $breadcrumbsContainer
+        .find('li')
+        .not(':last-child')
+        .find('a')
     const $mainContent = $html.find('.page-main')
     const magentoObject = extractMagentoJson($html)
     return {
+        breadcrumbs: parseBreadcrumbs($breadcrumbs),
         title: $mainContent.find('.page-title-wrapper.product .page-title > span').text(),
         price: $mainContent.find('.product-info-price .price-wrapper .price').text(),
         carouselItems: parseCarouselItems(magentoObject),
