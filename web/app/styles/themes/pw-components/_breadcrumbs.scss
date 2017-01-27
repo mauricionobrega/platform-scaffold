@@ -4,10 +4,14 @@
 .c-breadcrumbs__item {
     font-size: $small-font-size;
 
+    & + & {
+        margin-left: 0;
+    }
+
     &:not(:last-of-type)::after {
         content: '>';
 
-        margin-left: $unit/2;
+        margin: 0 $unit;
 
         color: $brand-color;
     }
