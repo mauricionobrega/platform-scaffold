@@ -11,7 +11,6 @@ import {onPageReceived, onRouteChanged} from '../app/actions'
 import {SELECTOR, PLACEHOLDER} from '../app/constants'
 
 export const initialState = Immutable.fromJS({
-    breadcrumbs: [],
     contentsLoaded: false,
     itemQuantity: 1,
     itemAddedModalOpen: false,
