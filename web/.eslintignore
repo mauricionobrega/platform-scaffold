@@ -2,6 +2,7 @@ build
 coverage
 lighthouse
 app/static
+app/vendor/astro-client.js
 proxy
 tests/system/nightwatch-config.js
 tests/system/site.js
