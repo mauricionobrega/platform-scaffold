@@ -2,10 +2,10 @@
 
 Welcome to the Platform Scaffold. This repo is (currently) organized as follows:
 
-| Directory | Description                                                         |
-| --------- | ------------------------------------------------------------------- |
-| `/web`    | Contains the web (Mobify Progressive Web SDK) scaffold              |
-| `/native` | Contains the native (Mobify Progressive App SDK, or Astro) scaffold |
+| Directory          | Description                                                         |
+| ------------------ | ------------------------------------------------------------------- |
+| [/web](/web)       | Contains the web (Mobify Progressive Web SDK) scaffold              |
+| [/native](/native) | Contains the native (Mobify Progressive App SDK, or Astro) scaffold |
 
 ## Requirements
 
@@ -55,13 +55,13 @@ To set this up, do the following:
 1. Open chrome on the computer running the webpack dev server
 2. Navigate to `chrome://inspect`
 
-   ![Chrome: Inspect Screenshot](dev-server/assets/chrome-inspect.png)
+   ![Chrome: Inspect Screenshot](web/dev-server/assets/chrome-inspect.png)
 
 3. Click the **Port Forward** button beside the *Discover USB devices* checkbox
 4. Add a new entry mapping port **8443** to **localhost:8443** and hit <Enter>
 5. Make sure the checkbox **Enable port forwarding** at the bottom of the modal is checked
 
-   ![Chrome: Inspect with port forward entry](dev-server/assets/chrome-inspect-port-forward.png)
+   ![Chrome: Inspect with port forward entry](web/dev-server/assets/chrome-inspect-port-forward.png)
 
 6. Click **Done**
 
