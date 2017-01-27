@@ -28,6 +28,7 @@ class PDP extends React.Component {
         const product = this.props.catalogProduct.toJS()
 
         const {
+            breadcrumbs,
             title,
             price,
             description,
@@ -42,7 +43,7 @@ class PDP extends React.Component {
 
         return (
             <div className="t-pdp">
-                <PDPHeading title={title} price={price} />
+                <PDPHeading breadcrumbs={breadcrumbs} title={title} price={price} />
 
                 <PDPCarousel items={carouselItems} contentsLoaded={contentsLoaded} />
 
