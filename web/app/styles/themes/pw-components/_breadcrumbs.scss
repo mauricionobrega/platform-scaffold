@@ -1,6 +1,5 @@
 // Breadcrumbs theme
 // ===
-$spacing: 5px;
 
 .c-breadcrumbs__item {
     font-size: $small-font-size;
@@ -8,7 +7,7 @@ $spacing: 5px;
     &:not(:last-of-type)::after {
         content: '>';
 
-        margin-left: $spacing;
+        margin-left: $unit/2;
 
         color: $brand-color;
     }
