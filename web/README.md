@@ -80,7 +80,9 @@ To run tests in watch mode and only run test related to files you modify during 
 npm run test:watch
 ```
 
-## Prevent SSL Errors in Preview (on a Mac)
+## SSL
+
+### Prevent SSL Errors in Preview (on a Mac)
 
 The development server uses a self-signed SSL certificate which is
 valid, but treated as suspect by browsers. This means that we must
@@ -99,6 +101,33 @@ browsers accept it, do the following:
 
 This process will allow all projects hosted with `webpack-dev-server`
 version 1.15.0 and up to be trusted by your browsers.
+
+### Previewing on a device
+
+When you preview on a real device, or on the Android emulator, you are
+connecting from a "remote" computer. Even the Android emulator is a separate
+computer with its own IP. In order for your device to trust the SSL cert
+that the webpack dev server uses, you'll need to use Chrome port forwarding.
+
+_Note_: The webpack dev server uses a self-signed certificate for `localhost`
+        which cannot be trusted when connecting to it using your local
+        computer's IP address (ie. 192.168.2.2). Because of this you *have*
+        to use Chrome port forwarding to connect to the webpack dev server
+        from an Android device.
+
+To set this up, do the following:
+
+1. Open chrome on the computer running the webpack dev server
+2. Navigate to `chrome://inspect`.
+   ![Chrome: Inspect Screenshot](dev-server/assets/chrome-inspect.png)
+3. Click the **Port Forward** button beside the *Discover USB devices* checkbox
+4. Add a new entry mapping port **8443** to **localhost:8443** and hit <Enter>
+5. Make sure the checkbox **Enable port forwarding** at the bottom of the modal is
+   checked
+   ![Chrome: Inspect with port forward entry](dev-server/assets/chrome-inspect-port-forward.png)
+6. Click **Done**
+
+You can now preview on your Android device and use `https://localhost:8443/...`
 
 ## Tests
 
