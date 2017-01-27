@@ -118,7 +118,7 @@ _Note_: The webpack dev server uses a self-signed certificate for `localhost`
 To set this up, do the following:
 
 1. Open chrome on the computer running the webpack dev server
-2. Navigate to `chrome://inspect`.
+2. Navigate to `chrome://inspect`
    ![Chrome: Inspect Screenshot](dev-server/assets/chrome-inspect.png)
 3. Click the **Port Forward** button beside the *Discover USB devices* checkbox
 4. Add a new entry mapping port **8443** to **localhost:8443** and hit <Enter>
