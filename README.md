@@ -27,7 +27,7 @@ for certain use cases (such as service workers).
 To add the certificate to the Mac system trust store and make the
 browsers accept it, do the following:
 
-1. In the root of the project directory, run `open node_modules/webpack-dev-server/ssl/server.crt`.
+1. In the root of the project directory, run `open web/node_modules/webpack-dev-server/ssl/server.crt`.
 2. Open `Keychain Access` -> go to `Certificates` -> select `localhost`
 3. Right click on the entry and select `Get Info`
 4. Expand the `Trust` section
