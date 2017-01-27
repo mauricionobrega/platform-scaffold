@@ -1,4 +1,4 @@
-# Mobify Progress Web Scaffold
+# Mobify Progressive Web Scaffold
 
 ## Setup
 
