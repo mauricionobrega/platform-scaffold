@@ -144,7 +144,7 @@ class ChatWindow extends React.Component {
                             type="text"
                             className="u-border-0"
                             value={inputValue}
-                            placeholder="Ask Clippy a question..."
+                            placeholder="Ask Merlin a question..."
                             onChange={(e) => this.setState({inputValue: e.target.value})}
                         />
                     </Field>
