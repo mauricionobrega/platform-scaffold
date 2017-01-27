@@ -68,34 +68,28 @@ export default {
     'Checkout - Guest - Step 6 - Navigate from Shopping Cart to Checkout Sign In or Continue as Guest page': (browser) => {
         cart.navigateToCheckout()
         browser
-            .waitForElementVisible(checkout.selectors.checkoutAccountTemplateIdentifier)
-            .assert.visible(checkout.selectors.checkoutAccountTemplateIdentifier)
-    },
-
-    'Checkout - Guest - Step 7 - Continue to Guest Checkout': (browser) => {
-        checkout.continueAsGuest()
-        browser
             .waitForElementVisible(checkout.selectors.checkoutTemplateIdentifier)
             .assert.visible(checkout.selectors.checkoutTemplateIdentifier)
     },
 
-    'Checkout - Guest - Step 8 - Fill out Guest Checkout Shipping Info form': (browser) => {
+    'Checkout - Guest - Step 7 - Fill out Guest Checkout Shipping Info form': (browser) => {
         checkout.fillShippingInfo()
         browser
             .waitForElementVisible(checkout.selectors.lastShippingInfo)
-            .assert.containsValue(checkout.selectors.lastShippingInfo, checkout.userData.lastShippingInfo)
+            .assert.valueContains(checkout.selectors.lastShippingInfo, checkout.userData.lastShippingInfo)
     },
 
-    'Checkout - Guest - Step 9 - Fill out Guest Checkout Payment Details form': (browser) => {
-        checkout.fillPaymentDetails()
-        browser
-            .waitForElementVisible(checkout.selectors.lastPaymentDetail)
-            .assert.containsValue(checkout.selectors.lastPaymentDetail, checkout.userData.lastPaymentDetail)
+    'Checkout - Guest - Step 8 - Fill out Guest Checkout Payment Details form': (browser) => {
+        checkout.continueToPayment()
+        // checkout.fillPaymentDetails()
+        // browser
+        //     .waitForElementVisible(checkout.selectors.lastPaymentDetail)
+        //     .assert.valueContains(checkout.selectors.lastPaymentDetail, checkout.userData.lastPaymentDetail)
     },
 
-    'Checkout - Guest - Step 10 - Verify Submit Order button is visible': (browser) => {
-        browser
-            .waitForElementVisible(checkout.selectors.submitOrder)
-            .assert.visible(checkout.selectors.submitOrder)
-    }
+    // 'Checkout - Guest - Step 10 - Verify Submit Order button is visible': (browser) => {
+    //     browser
+    //         .waitForElementVisible(checkout.selectors.submitOrder)
+    //         .assert.visible(checkout.selectors.submitOrder)
+    // }
 }
