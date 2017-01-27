@@ -1,6 +1,6 @@
 # Platform Scaffold
 
-Welcome to the Platform Scaffold. This repo is (currently) organized as follows:
+Welcome to the Platform Scaffold. This repo is organized as follows:
 
 | Directory          | Description                                                         |
 | ------------------ | ------------------------------------------------------------------- |
