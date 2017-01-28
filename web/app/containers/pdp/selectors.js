@@ -31,7 +31,7 @@ export const getItemAddedModalOpen = globalSelectors.isModalOpen('pdp-item-added
 export const getFormInfo = createGetSelector(getSelectedPdp, 'formInfo')
 export const getPdpContentsLoaded = createGetSelector(getSelectedPdp, 'contentsLoaded')
 
-export const getProductBreadcrumbs = createGetSelector(getSelectedProduct, 'breadcrumbs')
+export const getPdpBreadcrumbs = createGetSelector(getSelectedPdp, 'breadcrumbs')
 export const getProductTitle = createGetSelector(getSelectedProduct, 'title')
 export const getProductPrice = createGetSelector(getSelectedProduct, 'price')
 export const getProductDescription = createGetSelector(getSelectedProduct, 'description')

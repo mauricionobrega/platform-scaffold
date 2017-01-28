@@ -10,7 +10,15 @@ import {onRouteChanged} from '../app/actions'
 import {SELECTOR, PLACEHOLDER} from '../app/constants'
 
 export const initialState = Immutable.fromJS({
-    breadcrumbs: [],
+    breadcrumbs: [
+        {
+            text: 'Home',
+            href: '/'
+        },
+        {
+            text: '...'
+        }
+    ],
     contentsLoaded: false,
     formInfo: {},
     itemQuantity: 1
