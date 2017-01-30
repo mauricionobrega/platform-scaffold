@@ -3,13 +3,11 @@ import {handleActions} from 'redux-actions'
 import * as footerActions from './actions'
 import * as constants from './constants'
 import {mergePayload} from '../../utils/reducer-utils'
+import {TextLink} from '../../utils/parser-utils'
 
 export const initialState = Immutable.fromJS({
     newsletter: null,
-    navigation: new Array(5).fill({
-        title: null,
-        href: null
-    }),
+    navigation: new Array(5).fill(TextLink()),
     signupStatus: constants.SIGNUP_NOT_ATTEMPTED
 })
 
