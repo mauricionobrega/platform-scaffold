@@ -42,6 +42,6 @@ describe('the footer parser', () => {
                 title: undefined
             })
         ]
-        expect(parser.parseNavigation($content)).toEqual(expected)
+        expect(parser.parseNavigation($, $content)).toEqual(expected)
     })
 })

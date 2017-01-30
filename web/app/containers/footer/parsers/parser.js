@@ -7,10 +7,7 @@ export const parseNewsLetter = ($content) => {
     return {action, method}
 }
 
-export const parseNavigation = ($content) => {
+export const parseNavigation = ($, $content) => {
     const $links = $content.find('footer .footer.links li a')
-    return Array.prototype.map.call($links, (link) => {
-        const $link = $(link)
-        return parseTextLink($link)
-    })
+    return [].map.call($links, (link) => parseTextLink($(link)))
 }

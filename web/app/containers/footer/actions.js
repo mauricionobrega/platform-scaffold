@@ -4,9 +4,9 @@ import * as utils from '../../utils/utils'
 
 export const receiveData = utils.createAction('Receive footer data')
 
-export const process = ({payload: {$response}}) => receiveData({
+export const process = ({payload: {$, $response}}) => receiveData({
     newsletter: parser.parseNewsLetter($response),
-    navigation: parser.parseNavigation($response)
+    navigation: parser.parseNavigation($, $response)
 })
 
 export const newsletterSignupComplete = utils.createAction('Newsletter signup complete',
