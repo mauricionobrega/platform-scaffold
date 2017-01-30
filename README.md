@@ -87,7 +87,6 @@ To verify that changes do not break the checkout flow:
 
 ```
 npm run smoke-test
-
 ```
 To manually run a workflow test:
 
