@@ -22,7 +22,6 @@ const shoppingCart = {
     title: 'Shopping Cart'
 }
 
-
 const colors = {
     textColor: baseConfig.colors.whiteColor,
     backgroundColor: baseConfig.colors.primaryColor
