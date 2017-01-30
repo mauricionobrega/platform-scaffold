@@ -47,5 +47,4 @@ TabHeaderController.prototype.updateCounter = function(count) {
     this.counterBadgeController.updateCounterValue(count)
 }
 
-// CounterBadgeController.init(cartConfig.cartIcon.imageUrl, 'headerId', {})
 export default TabHeaderController
