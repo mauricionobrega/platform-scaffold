@@ -5,11 +5,7 @@ import Breadcrumbs from 'progressive-web-sdk/dist/components/breadcrumbs'
 const PDPHeading = ({breadcrumbs, title, price}) => (
     <div className="t-pdp-heading u-padding-md u-box-shadow u-position-relative u-z-index-1">
         <div className="t-pdp__breadcrumbs u-margin-bottom-md">
-            {breadcrumbs ?
-                <Breadcrumbs items={breadcrumbs} />
-            :
-                <Breadcrumbs items={[{href: '/', text: 'Home'}, {text: '...'}]} />
-            }
+            <Breadcrumbs items={breadcrumbs} />
         </div>
 
         {title ?
