@@ -9,6 +9,8 @@ import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import {Tabs, TabsPanel} from 'progressive-web-sdk/dist/components/tabs'
 
+import {isRunningInAstro} from '../../utils/astro-integration'
+
 import * as actions from './actions'
 
 class Login extends React.Component {
@@ -54,6 +56,7 @@ class Login extends React.Component {
 
         return (
             <div className="t-login">
+                {!isRunningInAstro &&
                 <div className="u-bg-color-neutral-20 u-padding-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
                     {title ?
                         <h1 className="u-text-uppercase u-text-normal">
@@ -65,6 +68,7 @@ class Login extends React.Component {
                         </div>
                     }
                 </div>
+                }
 
                 <Tabs activeIndex={this.indexForSection(routeName)} className="t-login__navigation" onChange={(index) => navigateToSection(router, routes, this.sectionForIndex(index))}>
                     <TabsPanel title={Login.SECTION_NAMES[Login.SIGN_IN_SECTION]}>
