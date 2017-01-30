@@ -1,5 +1,6 @@
 import Immutable from 'immutable'
 import {handleActions} from 'redux-actions'
+import {TextLink} from '../../../utils/parser-utils'
 
 import {isPageType} from '../../../utils/router-utils'
 import {mergePayload} from '../../../utils/reducer-utils'
@@ -14,11 +15,7 @@ export const initialState = Immutable.fromJS({
     [PLACEHOLDER]: {
         title: '',
         price: '',
-        link: {
-            href: '',
-            text: '',
-            title: ''
-        },
+        link: TextLink(),
         image: {
             title: '',
             alt: '',
