@@ -11,10 +11,10 @@ import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 const FooterNavigation = ({navigation}) => {
     return (
         <div className="t-footer__navigation u-padding-lg u-text-align-center">
-            {navigation.map(({title, href}, index) => {
+            {navigation.map(({text, href}, index) => {
                 return (
                     <ListTile href={href} key={index}>
-                        {title || <SkeletonText width="135px" style={{lineHeight: '20px'}} />}
+                        {text || <SkeletonText width="135px" style={{lineHeight: '20px'}} />}
                     </ListTile>
                 )
             })}

@@ -1,3 +1,4 @@
+import {parseTextLink} from '../../../utils/parser-utils'
 
 export const parseNewsLetter = ($content) => {
     const $form = $content.find('footer .form.subscribe')
@@ -10,9 +11,6 @@ export const parseNavigation = ($content) => {
     const $links = $content.find('footer .footer.links li a')
     return Array.prototype.map.call($links, (link) => {
         const $link = $(link)
-        return {
-            title: $link.text(),
-            href: $link.attr('href')
-        }
+        return parseTextLink($link)
     })
 }
