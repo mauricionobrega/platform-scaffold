@@ -47,20 +47,6 @@ To run the project documentation, including a live styleguide, use:
 npm run docs:dev
 ```
 
-## Tests
-
-To run the full test suite, you can use:
-
-```
-npm run test:all
-```
-
-To run tests in watch mode and only run test related to files you modify during development, use:
-
-```
-npm run test:watch
-```
-
 ## Prevent SSL Errors in Preview (on a Mac)
 
 The development server uses a self-signed SSL certificate which is
@@ -81,12 +67,32 @@ browsers accept it, do the following:
 This process will allow all projects hosted with `webpack-dev-server`
 version 1.15.0 and up to be trusted by your browsers.
 
+## Tests
+
+To run the full test suite, you can use:
+
+```
+npm run test:all
+```
+
+To run tests in watch mode and only run test related to files you modify during development, use:
+
+```
+npm run test:watch
+```
+
 ## Automated end-to-end tests
 
 To verify that changes do not break the checkout flow:
 
 ```
 npm run smoke-test
+
+```
+To manually run a workflow test:
+
+```
+npm run nightwatch --test tests/system/workflows/TESTNAME.js
 ```
 
 ## Lighthouse tests
@@ -97,13 +103,13 @@ You can run [Lighthouse](https://github.com/GoogleChrome/lighthouse) test agains
 npm run test:pwa-prod
 ```
 
-When you develop it might be helpful to run the same test against your local files: 
+When you develop it might be helpful to run the same test against your local files:
 
 ```
 sudo npm run test:pwa-local
 ```
 
-You **must** keep running `npm run dev` at the same time. 
+You **must** keep running `npm run dev` at the same time.
 
 There is also `test:pwa-ci` task (also requires `sudo`) for CI that runs `dev` and `pwa-local` in parallel.
 
