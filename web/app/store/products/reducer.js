@@ -8,19 +8,19 @@ const initialState = Immutable.Map()
 
 const productReducer = handleActions({
     [receivePdpProductData]: (state, {payload}) => {
-        const fixedPayload = Immutable.Map().withMutations((p) => {
-            Object.keys(payload).forEach((url) => {
-                p.set(urlToPathKey(url), payload[url])
-            })
+        const fixedPayload = {}
+
+        Object.keys(payload).forEach((url) => {
+            fixedPayload[urlToPathKey(url)] = payload[url]
         })
 
         return state.mergeDeep(fixedPayload)
     },
     [receivePlpProductData]: (state, {payload}) => {
-        const fixedPayload = Immutable.Map().withMutations((p) => {
-            Object.keys(payload).forEach((url) => {
-                p.set(urlToPathKey(url), payload[url])
-            })
+        const fixedPayload = {}
+
+        Object.keys(payload).forEach((url) => {
+            fixedPayload[urlToPathKey(url)] = payload[url]
         })
 
         return state.mergeDeepWith((prev, next) => prev || next, fixedPayload)
