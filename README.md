@@ -88,7 +88,7 @@ To verify that changes do not break the checkout flow:
 ```
 npm run smoke-test
 ```
-To manually run a workflow test:
+To manually run a workflow test (replace TESTNAME.js with the workflow you want to manually run):
 
 ```
 npm run nightwatch --test tests/system/workflows/TESTNAME.js
