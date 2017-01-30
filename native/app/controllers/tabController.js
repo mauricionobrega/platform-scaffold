@@ -3,7 +3,7 @@ import Promise from 'bluebird'
 import AnchoredLayoutPlugin from 'progressive-app-sdk/plugins/anchoredLayoutPlugin'
 import NavigationPlugin from 'progressive-app-sdk/plugins/navigationPlugin'
 
-import TabHeaderController from './TabHeaderController'
+import TabHeaderController from './tabHeaderController'
 
 const TabController = function(tabItem, layout, navigationView, headerController) {
     this.tabItem = tabItem
@@ -36,9 +36,13 @@ TabController.init = async function(tabItem) {
         disableLoader: []
     }
 
-    // navigationView.on('cart-updated', async (data) => {
-    //     await counterBadgeController.updateCounterValue(data.count)
-    // })
+    headerController.on('back', () => {
+        navigationView.back()
+    })
+
+    navigationView.on('cart-updated', async (data) => {
+        await headerController.updateCounter(data.count)
+    })
 
     return new TabController(tabItem, layout, navigationView, headerController)
 }
