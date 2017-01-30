@@ -19,6 +19,7 @@
 		87C6A8931B43044D001876CE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87C6A8921B43044D001876CE /* Images.xcassets */; };
 		87C6A8A21B43044D001876CE /* scaffoldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C6A8A11B43044D001876CE /* scaffoldTests.swift */; };
 		87C6A8E91B430E15001876CE /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 87C6A8D71B430E15001876CE /* config.xml */; };
+		A5D046401E3FEB1D00994183 /* DoubleIconsPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D0463F1E3FEB1D00994183 /* DoubleIconsPlugin.swift */; };
 		CBC6D60C1D19B7E900DC3785 /* PushClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBC6D60B1D19B7E900DC3785 /* PushClient.framework */; };
 		CBC6D60D1D19B7EF00DC3785 /* PushClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CBC6D60B1D19B7E900DC3785 /* PushClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -66,6 +67,7 @@
 		87C6A8F51B430EDD001876CE /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
 		87C6A8F71B430FA2001876CE /* app.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = app.js; path = ../../app/app.js; sourceTree = "<group>"; };
 		87C6A8F91B430FB7001876CE /* app.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = app.js; path = ../../app/build/app.js; sourceTree = "<group>"; };
+		A5D0463F1E3FEB1D00994183 /* DoubleIconsPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleIconsPlugin.swift; sourceTree = "<group>"; };
 		CB4448E01D3011B900D31824 /* scaffold.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = scaffold.entitlements; sourceTree = "<group>"; };
 		CBC6D60B1D19B7E900DC3785 /* PushClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PushClient.framework; path = "$(CONFIGURATION_BUILD_DIR)/PushClient.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -105,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				3F934B601E14535500A34ACF /* README */,
+				A5D0463F1E3FEB1D00994183 /* DoubleIconsPlugin.swift */,
 			);
 			name = Plugins;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				87C6A88C1B43044D001876CE /* AppDelegate.swift in Sources */,
+				A5D046401E3FEB1D00994183 /* DoubleIconsPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

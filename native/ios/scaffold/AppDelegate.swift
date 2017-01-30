@@ -31,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                   pluginRegistrations: { pluginRegistrar in
                                                     // Register custom plugins here
                                                     // using the "pluginRegistrar"
+                                                    pluginRegistrar.registerPlugin(name: "DoubleIconsPlugin", type: DoubleIconsPlugin.self)
         })
 
         window = UIWindow(frame: UIScreen.main.bounds)

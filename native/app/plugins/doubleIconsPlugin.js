@@ -10,6 +10,6 @@ DoubleIconsPlugin.init = function(callback) {
 }
 
 DoubleIconsPlugin.prototype.setLeftIcon = Astro.nativeRpcMethod('setLeftIcon', ['address'])
-DoubleIconsPlugin.prototype.setRightIcon = Astro.nativeRpcMethod('setRightIcon', ['address']);
+DoubleIconsPlugin.prototype.setRightIcon = Astro.nativeRpcMethod('setRightIcon', ['address'])
 
 export default DoubleIconsPlugin
