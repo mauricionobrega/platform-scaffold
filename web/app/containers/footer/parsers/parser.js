@@ -7,7 +7,11 @@ export const parseNewsLetter = ($content) => {
     return {action, method}
 }
 
+const FOOTER_LINK_SELECTOR = 'footer .footer.links li a'
+
 export const parseNavigation = ($, $content) => {
-    const $links = $content.find('footer .footer.links li a')
-    return [].map.call($links, (link) => parseTextLink($(link)))
+    return [].map.call(
+        $content.find(FOOTER_LINK_SELECTOR),
+        (link) => parseTextLink($(link))
+    )
 }
