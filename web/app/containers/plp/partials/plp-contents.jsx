@@ -13,7 +13,7 @@ import ProductTile from './product-tile'
 
 const ResultList = ({products}) => (
     <List className="c--borderless">
-        {products.map((product, idx) => <ProductTile key={idx} product={product} />)}
+        {products.map((product, idx) => <ProductTile key={idx} {...product} />)}
     </List>
 )
 
