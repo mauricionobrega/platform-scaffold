@@ -24,11 +24,18 @@ class ChatWindow extends React.Component {
         super(props)
 
         this.state = {
+            firstTimestamp: '',
             inputValue: '',
             isRecording: false
         }
 
         this.renderMessages = this.renderMessages.bind(this)
+    }
+
+    componentDidMount() {
+        this.setState({
+            firstTimestamp: new Date().toLocaleTimeString()
+        })
     }
 
     componentDidUpdate(prevProps) {
@@ -104,6 +111,7 @@ class ChatWindow extends React.Component {
         } = this.props
 
         const {
+            firstTimestamp,
             inputValue
         } = this.state
 
@@ -185,7 +193,7 @@ class ChatWindow extends React.Component {
                         <div className="u-flexbox u-justify-end">
                             <div className="c-chat-window__message-container u-flex-none u-margin-end-lg u-margin-start-lg u-margin-bottom">
                                 <div className="u-color-neutral-10 u-text-small">
-                                    timestamp
+                                    Merlin {firstTimestamp}
                                 </div>
                                 <div className="c-chat-window__message c--clippy">
                                     Hey there! Feel free to ask me for anything you need.
