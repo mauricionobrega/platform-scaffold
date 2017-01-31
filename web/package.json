@@ -124,6 +124,7 @@
     "cacheDirectory": "./node_modules/.cache",
     "collectCoverageFrom": [
       "**/*.{js,jsx}",
+      "!app/static/agents/**/*.js",
       "!app/static/js/*.js",
       "!app/vendor/*.js",
       "!app/containers/reducers.js",
