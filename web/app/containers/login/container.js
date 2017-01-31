@@ -85,8 +85,7 @@ class Login extends React.Component {
                     <LoginSection signinSection={signinSection} submitSignInForm={submitSignInForm} openSignInModal={openSignInModal} closeSignInModal={closeSignInModal}/>
                 </div>
             )
-        }
-        else if (this.indexForSection(routeName) === 1){
+        } else if (this.indexForSection(routeName) === 1){
             return (
                 <div className="t-login">
                     <RegisterSection registerSection={registerSection} submitRegisterForm={submitRegisterForm} openRegisterModal={openRegisterModal} closeRegisterModal={closeRegisterModal}/>
