@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {onRouteChanged} from './containers/app/actions'
+import {triggerMobifyPageView} from 'progressive-web-sdk/dist/analytics'
 
 const getDisplayName = (WrappedComponent) => {
     return WrappedComponent.displayName || WrappedComponent.name || 'Component'
@@ -31,7 +32,8 @@ const template = (WrappedComponent) => {
         }
 
         dispatchRouteChange(targetProps) {
-            const {dispatch, location} = targetProps
+            const {dispatch, location, route} = targetProps
+            triggerMobifyPageView(route.routeName)
             dispatch(onRouteChanged(getURL(location), Template))
         }
 

@@ -43,7 +43,6 @@ const AppProvider = ({store}) => {
     const dispatchFetchPage = (nextState) => store.dispatch(appActions.fetchPage(getURL(nextState), getPageComponent(nextState), getRouteName(nextState)))
 
     const onEnter = (nextState) => {
-        triggerMobifyPageView(nextState.routes[1].routeName)
         if (shouldFetchPage(nextState)) {
             dispatchFetchPage(nextState)
         }
