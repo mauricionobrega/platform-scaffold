@@ -54,33 +54,46 @@ class Login extends React.Component {
         const openRegisterModal = () => openInfoModal(Login.REGISTER_SECTION)
         const closeRegisterModal = () => closeInfoModal(Login.REGISTER_SECTION)
 
-        return (
-            <div className="t-login">
-                {!isRunningInAstro &&
-                <div className="u-bg-color-neutral-20 u-padding-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
-                    {title ?
-                        <h1 className="u-text-uppercase u-text-normal">
-                            {title}
-                        </h1>
-                    :
-                        <div className="u-padding-md">
-                            <SkeletonBlock height="32px" width="50%" />
-                        </div>
-                    }
+        if (!isRunningInAstro) {
+            return (
+                <div className="t-login">
+                    <div className="u-bg-color-neutral-20 u-padding-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
+                        {title ?
+                            <h1 className="u-text-uppercase u-text-normal">
+                                {title}
+                            </h1>
+                        :
+                            <div className="u-padding-md">
+                                <SkeletonBlock height="32px" width="50%" />
+                            </div>
+                        }
+                    </div>
+
+                    <Tabs activeIndex={this.indexForSection(routeName)} className="t-login__navigation" onChange={(index) => navigateToSection(router, routes, this.sectionForIndex(index))}>
+                        <TabsPanel title={Login.SECTION_NAMES[Login.SIGN_IN_SECTION]}>
+                            <LoginSection signinSection={signinSection} submitSignInForm={submitSignInForm} openSignInModal={openSignInModal} closeSignInModal={closeSignInModal}/>
+                        </TabsPanel>
+
+                        <TabsPanel title={Login.SECTION_NAMES[Login.REGISTER_SECTION]}>
+                            <RegisterSection registerSection={registerSection} submitRegisterForm={submitRegisterForm} openRegisterModal={openRegisterModal} closeRegisterModal={closeRegisterModal}/>
+                        </TabsPanel>
+                    </Tabs>
                 </div>
-                }   
-
-                <Tabs activeIndex={this.indexForSection(routeName)} className="t-login__navigation" onChange={(index) => navigateToSection(router, routes, this.sectionForIndex(index))}>
-                    <TabsPanel title={Login.SECTION_NAMES[Login.SIGN_IN_SECTION]}>
-                        <LoginSection signinSection={signinSection} submitSignInForm={submitSignInForm} openSignInModal={openSignInModal} closeSignInModal={closeSignInModal}/>
-                    </TabsPanel>
-
-                    <TabsPanel title={Login.SECTION_NAMES[Login.REGISTER_SECTION]}>
-                        <RegisterSection registerSection={registerSection} submitRegisterForm={submitRegisterForm} openRegisterModal={openRegisterModal} closeRegisterModal={closeRegisterModal}/>
-                    </TabsPanel>
-                </Tabs>
-            </div>
-        )
+            )
+        } else if (this.indexForSection(routeName) === 0){
+            return (
+                <div className="t-login">
+                    <LoginSection signinSection={signinSection} submitSignInForm={submitSignInForm} openSignInModal={openSignInModal} closeSignInModal={closeSignInModal}/>
+                </div>
+            )
+        }
+        else if (this.indexForSection(routeName) === 1){
+            return (
+                <div className="t-login">
+                    <RegisterSection registerSection={registerSection} submitRegisterForm={submitRegisterForm} openRegisterModal={openRegisterModal} closeRegisterModal={closeRegisterModal}/>
+                </div>
+            )
+        }
     }
 }
 
