@@ -126,16 +126,19 @@ class ChatWindow extends React.Component {
         }
 
         const sheetHeader = (
-            <div className="u-bg-color-brand u-text-align-end">
-                <Button
-                    className="u-text-all-caps u-text-small u-color-neutral-10"
-                    type="button"
-                    onClick={() => closeSheet()}
-                >
-                    Done
-                </Button>
+            <div>
+                <div className="u-bg-color-brand">
+                    <h3 className="u-bg-color-brand u-text-align-center">Ask Merlin Anything</h3>
+                    <Button
+                        className="u-text-all-caps u-text-small u-color-neutral-10"
+                        type="button"
+                        onClick={() => closeSheet()}
+                    >
+                        Done
+                    </Button>
+                </div>
             </div>
-        )
+                )
 
         const sheetFooter = (
             <div className="sendClippyMessage">
@@ -177,8 +180,20 @@ class ChatWindow extends React.Component {
                     coverage="95%"
                     headerContent={sheetHeader}
                     footerContent={sheetFooter}
-                >
-                    <div className="c-chat-window__container u-bg-color-brand">
+
+                        <div className="c-chat-window__container u-bg-color-brand">
+                            <div className="u-flexbox u-justify-end">
+                                <div className="c-chat-window__message-container u-flex-none u-margin-end-lg u-margin-start-lg u-margin-bottom">
+                                    <div className="u-color-neutral-10 u-text-small">
+                                        timestamp
+                                    </div>
+                                    <a href="#" className="pw-link c-link">
+                                        <div className="c-chat-window__message c--clippy">
+                                            Hey there! Feel free to ask me for anything you need.
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
                         {this.renderMessages()}
                     </div>
                 </Sheet>
