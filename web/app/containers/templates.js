@@ -1,3 +1,6 @@
+// The wrapping is implemented here to avoid a circular dependency
+// involving the containers and the app actions.
+
 import template from '../template'
 import RawCart from './cart/container'
 import RawHome from './home/container'
