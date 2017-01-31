@@ -2,21 +2,32 @@ machine:
     node:
         version: 6.9.2
 dependencies:
+    cache_directories:
+        - "web/node_modules"
     pre:
         - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
         - sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
         - sudo apt-get update
         - sudo apt-get --only-upgrade install google-chrome-stable
+        - npm install:
+            pwd: web
 test:
     override:
-        - npm run lint
-        - npm test -- --runInBand
-        - sudo env "PATH=$PATH" npm run test:pwa-ci
+        - npm run lint:
+            pwd: web
+        - npm test -- --runInBand:
+            pwd: web
+        # Disabled on January 27, 2017. For some reason, Lighthouse can't connect to Chrome as of Chrome v56.
+        # - sudo env "PATH=$PATH" npm run test:pwa-ci:
+        #     pwd: web
         # Enable smoke-test when automated workflow tests have been implemented.
-        # - npm run smoke-test
+        # - npm run smoke-test:
         #    parallel: true
-    post:
-        - cp -R lighthouse/* $CIRCLE_ARTIFACTS
+        #    pwd: web
+    # Disabled on January 27, 2017. For some reason, Lighthouse can't connect to Chrome as of Chrome v56.
+    # post:
+    #    - cp -R lighthouse/* $CIRCLE_ARTIFACTS:
+    #        pwd: web
 experimental:
     notify:
         branches:
