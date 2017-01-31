@@ -1,12 +1,20 @@
 import {createAction, makeFormEncodedRequest} from '../../utils/utils'
 import {getCart} from '../cart/actions'
 import * as selectors from './selectors'
+import * as appSelectors from '../app/selectors'
 import {openModal} from '../../store/modals/actions'
 import {PDP_ITEM_ADDED_MODAL} from './constants'
 import pdpParser from './parsers/pdp'
 import {SELECTOR} from '../app/constants'
 
-export const setItemQuantity = createAction('Set item quantity')
+export const receiveNewItemQuantity = createAction('Set item quantity')
+export const setItemQuantity = (quantity) => (dispatch, getStore) => {
+    dispatch(receiveNewItemQuantity({
+        [appSelectors.getCurrentUrl(getStore())]: {
+            itemQuantity: quantity
+        }
+    }))
+}
 
 export const receiveData = createAction('Receive PDP data')
 export const process = ({payload}) => {

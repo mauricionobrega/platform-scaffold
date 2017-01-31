@@ -20,15 +20,10 @@ export const getPdp = createSelector(
     ({pdp}) => pdp
 )
 
-export const getPdpSelector = createSelector(
-    getPdp,
-    getSelectorFromState
-)
-
 export const getSelectedPdp = createSelector(
     getPdp,
-    getPdpSelector,
-    (pdp, pdpSelector) => pdp.get(pdpSelector)
+    appSelectors.getCurrentUrl,
+    (pdp, url) => pdp.get(url)
 )
 
 export const getSelectedProduct = createSelector(

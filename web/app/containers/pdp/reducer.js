@@ -31,9 +31,7 @@ const reducer = handleActions({
             return state
         }
     },
-    [pdpActions.setItemQuantity]: (state, {payload}) => {
-        return RouterUtils.setInToRoutedState(state, 'itemQuantity', payload)
-    }
+    [pdpActions.receiveNewItemQuantity]: (state, {payload}) => state.mergeDeep(payload)
 }, RouterUtils.baseInitialState.set(PLACEHOLDER, initialState))
 
 export default reducer
