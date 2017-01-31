@@ -1,5 +1,6 @@
 import {extractMagentoJson} from '../../../utils/magento-utils'
 import {parseTextLink, parseImage} from '../../../utils/parser-utils'
+import {urlToPathKey} from '../../../utils/utils'
 
 const parseCarouselItems = (magentoObject) => {
     const carouselSetup = magentoObject
@@ -15,7 +16,7 @@ export const plpParser = ($, $html) => {
         const $product = $(product)
         const link = parseTextLink($product.find('.product-item-link'))
         const image = parseImage($product.find('.product-image-photo'))
-        productMap[link.href] = {
+        productMap[urlToPathKey(link.href)] = {
             title: link.text.trim(),
             price: $product.find('.price').text(),
             link,
