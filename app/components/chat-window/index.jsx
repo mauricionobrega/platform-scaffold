@@ -34,8 +34,8 @@ class ChatWindow extends React.Component {
     componentDidUpdate(prevProps) {
         if (prevProps.messages.length !== this.props.messages.length) {
             // Scroll to the bottom
-            const sheetInner = this.container.querySelector('.c-sheet__inner')
-            sheetInner.scrollTop = this.container.querySelector('.c-sheet__content').clientHeight
+            const sheetContent = this.container.querySelector('.c-sheet__content')
+            sheetContent.scrollTop = this.container.querySelector('.c-chat-window__container').clientHeight
         }
     }
 
@@ -174,7 +174,7 @@ class ChatWindow extends React.Component {
                     headerContent={sheetHeader}
                     footerContent={sheetFooter}
                 >
-                    <div className="chatContainer u-bg-color-brand">
+                    <div className="c-chat-window__container u-bg-color-brand">
                         {this.renderMessages()}
                     </div>
                 </Sheet>
