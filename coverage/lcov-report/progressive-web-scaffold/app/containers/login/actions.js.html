@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for progressive-web-scaffold/app/containers/login/actions.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../../index.html">All files</a> / <a href="index.html">progressive-web-scaffold/app/containers/login</a> actions.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">12.33% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>9/73</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/34</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/16</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">12.5% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>9/72</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {createAction, makeFormEncodedRequest} from '../../utils/utils'
+import isEmail from 'validator/lib/isEmail'
+import {SubmissionError} from 'redux-form'
+&nbsp;
+const validateSignInForm = <span class="fstat-no" title="function not covered" >(f</span>ormValues) =&gt; {
+    const errors = <span class="cstat-no" title="statement not covered" >{</span>
+        login: {}
+    }
+<span class="cstat-no" title="statement not covered" >    if (!formValues.login) {</span>
+<span class="cstat-no" title="statement not covered" >        return {</span>
+            _error: 'Please fill in the form'
+        }
+    }
+    const email = <span class="cstat-no" title="statement not covered" >formValues.login.username</span>
+<span class="cstat-no" title="statement not covered" >    if (!email) {</span>
+<span class="cstat-no" title="statement not covered" >        errors.login.username = 'Email address is required'</span>
+    } else <span class="cstat-no" title="statement not covered" >if (!isEmail(email)) {</span>
+<span class="cstat-no" title="statement not covered" >        errors.login.username = 'Email address is invalid'</span>
+    }
+    const password = <span class="cstat-no" title="statement not covered" >formValues.login.password</span>
+<span class="cstat-no" title="statement not covered" >    if (!password) {</span>
+<span class="cstat-no" title="statement not covered" >        errors.login.password = 'Password is required'</span>
+    }
+<span class="cstat-no" title="statement not covered" >    return errors</span>
+}
+&nbsp;
+const validateRegisterForm = <span class="fstat-no" title="function not covered" >(f</span>ormValues) =&gt; {
+    const errors = <span class="cstat-no" title="statement not covered" >{}</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!Object.keys(formValues).length) {</span>
+<span class="cstat-no" title="statement not covered" >        return {</span>
+            _error: 'Please fill in the form'
+        }
+    }
+&nbsp;
+    const {
+        firstname,
+        lastname,
+        email,
+        password,
+        password_confirmation: passwordConfirmation
+    } = <span class="cstat-no" title="statement not covered" >formValues</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!firstname) {</span>
+<span class="cstat-no" title="statement not covered" >        errors.firstname = 'First name is required'</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!lastname) {</span>
+<span class="cstat-no" title="statement not covered" >        errors.lastname = 'Last name is required'</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!email) {</span>
+<span class="cstat-no" title="statement not covered" >        errors.email = 'Email address is required'</span>
+    } else <span class="cstat-no" title="statement not covered" >if (!isEmail(email)) {</span>
+<span class="cstat-no" title="statement not covered" >        errors.email = 'Email address is invalid'</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (!password) {</span>
+<span class="cstat-no" title="statement not covered" >        errors.password = 'Password is required'</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (password !== passwordConfirmation) {</span>
+<span class="cstat-no" title="statement not covered" >        errors.password_confirmation = 'Passwords are not the same'</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (password.length &lt; 6) {</span>
+<span class="cstat-no" title="statement not covered" >        errors.password = 'Please enter 6 or more characters'</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return errors</span>
+}
+&nbsp;
+const sendForm = <span class="fstat-no" title="function not covered" >(h</span>ref, formValues, formSelector, resolve, reject) =&gt; {
+<span class="cstat-no" title="statement not covered" >    return makeFormEncodedRequest(href, formValues, {method: 'POST'})</span>
+        .then(<span class="fstat-no" title="function not covered" >(r</span>esponse) =&gt; {
+<span class="cstat-no" title="statement not covered" >            return response.text()</span>
+        })
+        .then(<span class="fstat-no" title="function not covered" >(r</span>esponseText) =&gt; {
+            const $html = <span class="cstat-no" title="statement not covered" >$(responseText)</span>
+<span class="cstat-no" title="statement not covered" >            if ($html.find(formSelector).length) {</span>
+                const error = <span class="cstat-no" title="statement not covered" >{</span>
+                    _error: 'Username or password is incorrect'
+                }
+<span class="cstat-no" title="statement not covered" >                reject(new SubmissionError(error))</span>
+            } else {
+<span class="cstat-no" title="statement not covered" >                window.location.href = '/customer/account'</span>
+<span class="cstat-no" title="statement not covered" >                resolve(true)</span>
+            }
+        })
+        .catch(<span class="fstat-no" title="function not covered" >(e</span>rror) =&gt; {
+<span class="cstat-no" title="statement not covered" >            console.error('Failed to login due to network error.', error)</span>
+<span class="cstat-no" title="statement not covered" >            reject({})</span>
+        })
+}
+&nbsp;
+export const submitSignInForm = <span class="fstat-no" title="function not covered" >(f</span>ormValues, resolve, reject) =&gt; {
+<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" >(d</span>ispatch, getStore) =&gt; {</span>
+        const errors = <span class="cstat-no" title="statement not covered" >validateSignInForm(formValues)</span>
+<span class="cstat-no" title="statement not covered" >        if (errors._error || Object.keys(errors.login).length) {</span>
+<span class="cstat-no" title="statement not covered" >            return reject(new SubmissionError(errors))</span>
+        }
+        const loginData = <span class="cstat-no" title="statement not covered" >getStore().login.toJS()</span>
+        const {href, hiddenInputs} = <span class="cstat-no" title="statement not covered" >loginData.signinSection.form</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        hiddenInputs.forEach(<span class="fstat-no" title="function not covered" >(i</span>nput) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >            formValues[input.name] = input.value</span>
+        })
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return sendForm(href, formValues, '.form-login', resolve, reject)</span>
+    }
+}
+&nbsp;
+export const submitRegisterForm = <span class="fstat-no" title="function not covered" >(f</span>ormValues, resolve, reject) =&gt; {
+<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" >(d</span>ispatch, getStore) =&gt; {</span>
+        const errors = <span class="cstat-no" title="statement not covered" >validateRegisterForm(formValues)</span>
+<span class="cstat-no" title="statement not covered" >        if (errors._error || Object.keys(errors).length) {</span>
+<span class="cstat-no" title="statement not covered" >            return reject(new SubmissionError(errors))</span>
+        }
+        const loginData = <span class="cstat-no" title="statement not covered" >getStore().login.toJS()</span>
+        const {href, hiddenInputs} = <span class="cstat-no" title="statement not covered" >loginData.registerSection.form</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        hiddenInputs.forEach(<span class="fstat-no" title="function not covered" >(i</span>nput) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >            formValues[input.name] = input.value</span>
+        })
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return sendForm(href, formValues, '.form-create-account', resolve, reject)</span>
+    }
+}
+&nbsp;
+const findPathForRoute = <span class="fstat-no" title="function not covered" >(r</span>outes, routeName) =&gt; {
+    const path = <span class="cstat-no" title="statement not covered" >routes[0].childRoutes.find(<span class="fstat-no" title="function not covered" >(r</span>oute) =&gt; <span class="cstat-no" title="statement not covered" >route.routeName === routeName)</span>.path</span>
+<span class="cstat-no" title="statement not covered" >    return `/${path}`</span>
+}
+&nbsp;
+/**
+ * Uses React router to navigate between different pages. Takes care of browser history, etc.
+ */
+export const navigateToSection = <span class="fstat-no" title="function not covered" >(r</span>outer, routes, sectionName) =&gt; {
+<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        router.push(findPathForRoute(routes, sectionName))</span>
+    }
+}
+&nbsp;
+export const openInfoModal = createAction('Open Info Sheet', 'sectionName')
+export const closeInfoModal = createAction('Close Info Sheet', 'sectionName')
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jan 30 2017 16:43:01 GMT-0800 (PST)
+</div>
+</div>
+<script src="../../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../../sorter.js"></script>
+</body>
+</html>

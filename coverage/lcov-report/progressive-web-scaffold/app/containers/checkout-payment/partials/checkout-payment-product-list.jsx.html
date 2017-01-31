@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for progressive-web-scaffold/app/containers/checkout-payment/partials/checkout-payment-product-list.jsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../../../index.html">All files</a> / <a href="index.html">progressive-web-scaffold/app/containers/checkout-payment/partials</a> checkout-payment-product-list.jsx
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/4</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/4</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/2</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/4</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, {PropTypes} from 'react'<span class="cstat-no" title="statement not covered" ></span>
+import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
+&nbsp;
+import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/accordion'
+import Button from 'progressive-web-sdk/dist/components/button'
+import Field from 'progressive-web-sdk/dist/components/field'
+import FieldRow from 'progressive-web-sdk/dist/components/field-row'
+import {Icon} from 'progressive-web-sdk/dist/components/icon'
+import Image from 'progressive-web-sdk/dist/components/image'
+import {Ledger, LedgerRow} from 'progressive-web-sdk/dist/components/ledger'
+import List from 'progressive-web-sdk/dist/components/list'
+import ProductItem from '../../../components/product-item'<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+&nbsp;
+const CheckoutPaymentProductList <span class="cstat-no" title="statement not covered" >= ({cart,<span class="fstat-no" title="function not covered" > isFixedPlaceOrderShown}) =</span>&gt; (</span>
+    &lt;div className="t-checkout-payment__product-list"&gt;
+        &lt;div className="t-checkout-payment__title u-padding-top-lg u-padding-bottom-lg"&gt;
+            &lt;h2 className="u-h4"&gt;Order Summary&lt;/h2&gt;
+        &lt;/div&gt;
+&nbsp;
+        &lt;List className="u-bg-color-neutral-10 u-border-light-top u-border-light-bottom"&gt;
+            {cart.items.map((item, idx) =&gt; {
+                const productImage = (
+                    &lt;Image
+                        src={item.product_image.src}
+                        alt={item.product_image.alt}
+                        width="104px"
+                        height="104px"
+                    /&gt;
+                )
+&nbsp;
+                return (
+                    &lt;ProductItem
+                        className="u-padding-top-lg u-padding-bottom-lg u-padding-start u-padding-end"
+                        title={&lt;h2 className="u-h3"&gt;{item.product_name}&lt;/h2&gt;}
+                        key={idx}
+                        image={productImage}
+                    &gt;
+                        &lt;div className="u-flexbox u-align-bottom"&gt;
+                            &lt;div className="u-flex-none u-color-neutral-50"&gt;
+                                {item.options.map(({label, value}, idx) =&gt; (
+                                    &lt;p
+                                        className={idx &gt; 0 ? 'u-margin-top-sm' : ''}
+                                        key={`${item.item_id}-option-${idx}`}
+                                    &gt;
+                                        {label}: {value}
+                                    &lt;/p&gt;
+                                ))}
+&nbsp;
+                                &lt;p className={item.options &gt; 0 ? 'u-margin-top-sm' : ''}&gt;
+                                    Qty: {item.qty}
+                                &lt;/p&gt;
+                            &lt;/div&gt;
+&nbsp;
+                            &lt;div className="u-text-align-end u-flex"&gt;
+                                {item.onSale ?
+                                    &lt;div&gt;
+                                        &lt;div className="u-h5 u-color-accent u-text-semi-bold"&gt;
+                                            {item.product_sale_price}
+                                        &lt;/div&gt;
+&nbsp;
+                                        &lt;div className="u-text-quiet"&gt;
+                                            &lt;em&gt;Was {item.product_old_price}&lt;/em&gt;
+                                        &lt;/div&gt;
+                                    &lt;/div&gt;
+                                :
+                                    &lt;div className="u-h5 u-text-semi-bold"&gt;
+                                        {item.product_price}
+                                    &lt;/div&gt;
+                                }
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/ProductItem&gt;
+                )
+            })}
+        &lt;/List&gt;
+&nbsp;
+        &lt;div className="u-bg-color-neutral-10"&gt;
+            &lt;Ledger&gt;
+                &lt;LedgerRow
+                    label={`Subtotal (${cart.summary_count} items)`}
+                    value={cart.subtotal_excl_tax}
+                /&gt;
+&nbsp;
+                {cart.shipping_rate &amp;&amp;
+                    &lt;LedgerRow
+                        label={`Shipping (${cart.shipping_rate_label})`}
+                        value={cart.shipping_rate}
+                    /&gt;
+                }
+&nbsp;
+                {cart.promo_rate &amp;&amp;
+                    &lt;LedgerRow
+                        className="u-border-light-bottom"
+                        label={`Shipping (${cart.promo_rate_label})`}
+                        value={cart.promo_rate}
+                    /&gt;
+                }
+            &lt;/Ledger&gt;
+&nbsp;
+            {!cart.promo_rate &amp;&amp;
+                &lt;Accordion&gt;
+                    &lt;AccordionItem header="Promo code"&gt;
+                        &lt;FieldRow&gt;
+                            &lt;Field label="Enter discount code"&gt;
+                                &lt;input type="text" placeholder="Enter discount code" /&gt;
+                                &lt;Button className="c--tertiary"&gt;Apply&lt;/Button&gt;
+                            &lt;/Field&gt;
+                        &lt;/FieldRow&gt;
+                    &lt;/AccordionItem&gt;
+                &lt;/Accordion&gt;
+            }
+&nbsp;
+            &lt;Ledger&gt;
+                &lt;LedgerRow
+                    label="Total"
+                    isTotal={true}
+                    value={cart.total_incl_tax}
+                /&gt;
+            &lt;/Ledger&gt;
+&nbsp;
+            {/* This is the statically positioned "Place Your Order" container */}
+            &lt;div className="u-padding-end-md u-padding-bottom-lg u-padding-start-md"&gt;
+                &lt;Button className="c--primary u-flex-none u-width-full u-text-all-caps"&gt;
+                    &lt;Icon name="lock" /&gt;
+                    Place Your Order
+                &lt;/Button&gt;
+            &lt;/div&gt;
+&nbsp;
+            {/* This is the FIXED positioned "Place Your Order" container */}
+            &lt;div
+                className={`t-checkout-payment__fixed-place-order ${isFixedPlaceOrderShown &amp;&amp; 't--show'}`}
+                tabIndex="-1"
+                aria-hidden="true"
+            &gt;
+                &lt;div className="u-padding-md u-bg-color-neutral-10 u-text-align-center"&gt;
+                    &lt;Button className="c--primary u-flex-none u-width-full u-text-all-caps"&gt;
+                        &lt;Icon name="lock" /&gt;
+                        Place Your Order
+                    &lt;/Button&gt;
+&nbsp;
+                    &lt;p className="u-margin-top-md"&gt;
+                        Total: &lt;strong&gt;{cart.total_incl_tax}&lt;/strong&gt;
+                    &lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+&nbsp;
+            &lt;div className="u-padding-top-lg u-padding-bottom-lg u-text-align-center"&gt;
+                &lt;Image
+                    src={getAssetUrl('static/img/checkout/verisign-mcafee-secure.png')}
+                    alt="Verisign and McAfee Secure"
+                    height="38px"
+                    width="150px"
+                /&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+)
+&nbsp;
+<span class="cstat-no" title="statement not covered" >CheckoutPaymentProductList.propTypes = {</span>
+    cart: PropTypes.object,
+    isFixedPlaceOrderShown: PropTypes.bool,
+}
+&nbsp;
+export default CheckoutPaymentProductList
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jan 30 2017 16:43:01 GMT-0800 (PST)
+</div>
+</div>
+<script src="../../../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../../../sorter.js"></script>
+</body>
+</html>
