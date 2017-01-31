@@ -105,6 +105,8 @@ export const sendMessageToClippy = (message) => {
             .then((json) => {
                 watsonChatContext = json.context
 
+                json.timestamp = new Date().toLocaleTimeString()
+
                 if (json.isPDP) {
                     utils.makeRequest(json.redirectURL)
                         .then(jqueryResponse)

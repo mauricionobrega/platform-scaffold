@@ -55,7 +55,7 @@ export default createReducer({
         return state.updateIn(['clippy', 'messages'], (messages) => {
             return messages.push({
                 from: 'user',
-                text: payload
+                ...payload
             })
         })
     },
@@ -66,7 +66,8 @@ export default createReducer({
                 text: payload.response,
                 hasProduct: payload.isPDP,
                 product: {},
-                url: payload.redirectURL
+                url: payload.redirectURL,
+                timestamp: payload.timestamp
             })
         })
     },

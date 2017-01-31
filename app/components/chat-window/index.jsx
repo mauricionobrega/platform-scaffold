@@ -74,7 +74,7 @@ class ChatWindow extends React.Component {
                     <div className={`u-flexbox ${!fromUser ? 'u-justify-end' : ''}`}>
                         <div className="c-chat-window__message-container u-flex-none u-margin-end-lg u-margin-start-lg u-margin-bottom">
                             <div className="u-color-neutral-10 u-text-small">
-                                timestamp
+                                {fromUser ? 'You' : 'Merlin'} {message.timestamp}
                             </div>
 
                             <Link onClick={onClick}>
@@ -110,7 +110,11 @@ class ChatWindow extends React.Component {
         const classes = classNames(componentClass, className, 'pw--bg-color-brand')
 
         const sendMessage = () => {
-            sendMessageToClippy(this.state.inputValue)
+            sendMessageToClippy({
+                text: this.state.inputValue,
+                timestamp: new Date().toLocaleTimeString()
+            })
+
             this.setState({
                 inputValue: ''
             })
