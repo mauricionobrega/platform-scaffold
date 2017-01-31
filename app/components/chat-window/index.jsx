@@ -107,7 +107,7 @@ class ChatWindow extends React.Component {
             inputValue
         } = this.state
 
-        const classes = classNames(componentClass, className, 'pw--bg-color-brand')
+        const classes = classNames(componentClass, className)
 
         const sendMessage = () => {
             sendMessageToClippy({
@@ -169,9 +169,9 @@ class ChatWindow extends React.Component {
         )
 
         return (
-            <div ref={(el) => { this.container = el }}>
+            <div className={classes} ref={(el) => { this.container = el }}>
                 <Sheet
-                    className={classes}
+                    className="pw--bg-color-brand"
                     open={sheetOpen}
                     effect="slide-bottom"
                     coverage="95%"
