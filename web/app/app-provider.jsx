@@ -4,11 +4,7 @@ import {Provider} from 'react-redux'
 
 // Containers
 import App from './containers/app/container'
-import Cart from './containers/cart/container'
-import Home from './containers/home/container'
-import Login from './containers/login/container'
-import PLP from './containers/plp/container'
-import PDP from './containers/pdp/container'
+import {Cart, Home, Login, PLP, PDP} from './containers/templates'
 import CheckoutShipping from './containers/checkout-shipping/container'
 import CheckoutPayment from './containers/checkout-payment/container'
 import CheckoutConfirmation from './containers/checkout-confirmation/container'

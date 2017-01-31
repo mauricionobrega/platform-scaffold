@@ -1,5 +1,4 @@
 import React from 'react'
-import template from '../../template'
 
 import PDPHeading from './partials/pdp-heading'
 import PDPCarousel from './partials/pdp-carousel'
@@ -19,4 +18,4 @@ const PDP = () => {
     )
 }
 
-export default template(PDP)
+export default PDP

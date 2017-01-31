@@ -1,7 +1,6 @@
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import * as utils from '../../utils/utils'
 import * as selectors from './selectors'
-import {isPageType} from '../../utils/router-utils'
 
 import Home from '../home/container'
 import Login from '../login/container'
@@ -55,14 +54,14 @@ export const fetchPage = (url, pageComponent, routeName) => {
                 const [$, $response] = res
                 const currentURL = selectors.getCurrentUrl(getState())
                 const receivedAction = onPageReceived($, $response, url, currentURL, routeName)
-                if (isPageType(pageComponent, Home)) {
+                if (pageComponent === Home) {
                     dispatch(homeActions.process(receivedAction))
-                } else if (isPageType(pageComponent, Login)) {
+                } else if (pageComponent === Login) {
                     dispatch(loginActions.process(receivedAction))
-                } else if (isPageType(pageComponent, PDP)) {
+                } else if (pageComponent === PDP) {
                     dispatch(pdpActions.process(receivedAction))
                     dispatch(productsActions.processPdp(receivedAction))
-                } else if (isPageType(pageComponent, PLP)) {
+                } else if (pageComponent === PLP) {
                     dispatch(categoriesActions.process(receivedAction))
                     dispatch(productsActions.processPlp(receivedAction))
                 }

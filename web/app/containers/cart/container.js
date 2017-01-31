@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import classNames from 'classnames'
-import template from '../../template'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import {Grid, GridSpan} from '../../components/grid'
@@ -84,4 +83,4 @@ const mapStateToProps = createStructuredSelector({
     hasItems: miniCartSelectors.getMiniCartHasItems
 })
 
-export default template(connect(mapStateToProps)(Cart))
+export default connect(mapStateToProps)(Cart)

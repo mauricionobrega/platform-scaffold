@@ -29,10 +29,10 @@ const template = (WrappedComponent) => {
 
             triggerMobifyPageView(route.routeName)
 
-            dispatch(onRouteChanged(url, Template))
+            dispatch(onRouteChanged(url, WrappedComponent))
 
             if (!route.suppressFetch) {
-                dispatch(fetchPage(url, Template, route.routeName))
+                dispatch(fetchPage(url, WrappedComponent, route.routeName))
             }
         }
 

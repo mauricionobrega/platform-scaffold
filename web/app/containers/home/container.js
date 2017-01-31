@@ -1,5 +1,4 @@
 import React from 'react'
-import template from '../../template'
 
 import HomeCarousel from './partials/home-carousel'
 import HomeCategories from './partials/home-categories'
@@ -13,4 +12,4 @@ const Home = () => {
     )
 }
 
-export default template(Home)
+export default Home
