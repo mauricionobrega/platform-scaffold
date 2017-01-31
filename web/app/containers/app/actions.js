@@ -96,7 +96,7 @@ export const sendMessageToClippy = (message) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                message,
+                message: message.text,
                 context: watsonChatContext
             })
         }
