@@ -9,13 +9,35 @@ $clippy-message-color: #fa5ad0;
 // ---
 
 .c-chat-window {
+    .c-sheet__header {
+        text-align: center;
+        position: relative;
 
+        div.u-bg-color-brand {
+            min-height: 35px;
+        }
+        h3 {
+            line-height: 40px;
+            display: inline;
+            color: #fff;
+        }
+
+        button {
+            position: absolute;
+            right: 0;
+        }
+    }
+    .u-bg-color-brand.u-text-align-center {
+        h3 {
+            color: #fff;
+        }
+    }
 }
 
 
 // Chat Message Container
 // ---
-// 
+//
 
 .c-chat-window__message-container {
     min-width: 50%;
@@ -25,7 +47,7 @@ $clippy-message-color: #fa5ad0;
 
 // Chat Message
 // ---
-// 
+//
 
 .c-chat-window__message {
     padding: $unit*1.5 $unit*2;
@@ -44,7 +66,7 @@ $clippy-message-color: #fa5ad0;
 
 // Chat Message Product Image
 // ---
-// 
+//
 
 .c-chat-window__product-image {
     max-width: 100px;
