@@ -10,16 +10,18 @@ $clippy-message-color: #fa5ad0;
 
 .c-chat-window {
     .c-sheet__header {
-        text-align: center;
         position: relative;
+        text-align: center;
 
-        div.u-bg-color-brand {
+        .u-bg-color-brand {
             min-height: 35px;
         }
+
         h3 {
-            line-height: 40px;
             display: inline;
+
             color: #fff;
+            line-height: 40px;
         }
 
         button {
@@ -27,6 +29,7 @@ $clippy-message-color: #fa5ad0;
             right: 0;
         }
     }
+
     .u-bg-color-brand.u-text-align-center {
         h3 {
             color: #fff;

@@ -187,11 +187,9 @@ class ChatWindow extends React.Component {
                                 <div className="u-color-neutral-10 u-text-small">
                                     timestamp
                                 </div>
-                                <a href="#" className="pw-link c-link">
-                                    <div className="c-chat-window__message c--clippy">
-                                        Hey there! Feel free to ask me for anything you need.
-                                    </div>
-                                </a>
+                                <div className="c-chat-window__message c--clippy">
+                                    Hey there! Feel free to ask me for anything you need.
+                                </div>
                             </div>
                         </div>
                         {this.renderMessages()}
