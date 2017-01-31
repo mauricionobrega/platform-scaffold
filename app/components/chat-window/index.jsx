@@ -34,8 +34,8 @@ class ChatWindow extends React.Component {
     componentDidUpdate(prevProps) {
         if (prevProps.messages.length !== this.props.messages.length) {
             // Scroll to the bottom
-            const sheetInner = this.container.querySelector('.c-sheet__inner')
-            sheetInner.scrollTop = this.container.querySelector('.c-sheet__content').clientHeight
+            const sheetContent = this.container.querySelector('.c-sheet__content')
+            sheetContent.scrollTop = this.container.querySelector('.c-chat-window__container').clientHeight
         }
     }
 
@@ -74,7 +74,7 @@ class ChatWindow extends React.Component {
                     <div className={`u-flexbox ${!fromUser ? 'u-justify-end' : ''}`}>
                         <div className="c-chat-window__message-container u-flex-none u-margin-end-lg u-margin-start-lg u-margin-bottom">
                             <div className="u-color-neutral-10 u-text-small">
-                                timestamp
+                                {fromUser ? 'You' : 'Merlin'} {message.timestamp}
                             </div>
 
                             <Link onClick={onClick}>
@@ -110,7 +110,11 @@ class ChatWindow extends React.Component {
         const classes = classNames(componentClass, className, 'pw--bg-color-brand')
 
         const sendMessage = () => {
-            sendMessageToClippy(this.state.inputValue)
+            sendMessageToClippy({
+                text: this.state.inputValue,
+                timestamp: new Date().toLocaleTimeString()
+            })
+
             this.setState({
                 inputValue: ''
             })
@@ -176,9 +180,8 @@ class ChatWindow extends React.Component {
                     coverage="95%"
                     headerContent={sheetHeader}
                     footerContent={sheetFooter}
-                >
-                    <div className="chatContainer u-bg-color-brand">
-                        <div>
+
+                        <div className="c-chat-window__container u-bg-color-brand">
                             <div className="u-flexbox u-justify-end">
                                 <div className="c-chat-window__message-container u-flex-none u-margin-end-lg u-margin-start-lg u-margin-bottom">
                                     <div className="u-color-neutral-10 u-text-small">
@@ -191,7 +194,6 @@ class ChatWindow extends React.Component {
                                     </a>
                                 </div>
                             </div>
-                        </div>
                         {this.renderMessages()}
                     </div>
                 </Sheet>
