@@ -2,8 +2,18 @@ import {createSelector} from 'reselect'
 import Immutable from 'immutable'
 import {createGetSelector} from '../../utils/selector-utils'
 import * as globalSelectors from '../../store/selectors'
+import * as appSelectors from '../app/selectors'
 import {getSelectorFromState} from '../../utils/router-utils'
-import {urlToPathKey} from '../../utils/utils'
+
+const PLACEHOLDER_BREADCRUMBS = Immutable.fromJS([
+    {
+        text: 'Home',
+        href: '/'
+    },
+    {
+        text: '...'
+    }
+])
 
 export const getPdp = createSelector(
     globalSelectors.getUi,
@@ -15,11 +25,6 @@ export const getPdpSelector = createSelector(
     getSelectorFromState
 )
 
-export const getPdpSelectorPath = createSelector(
-    getPdpSelector,
-    urlToPathKey
-)
-
 export const getSelectedPdp = createSelector(
     getPdp,
     getPdpSelector,
@@ -28,7 +33,7 @@ export const getSelectedPdp = createSelector(
 
 export const getSelectedProduct = createSelector(
     globalSelectors.getProducts,
-    getPdpSelectorPath,
+    appSelectors.getCurrentPathKey,
     (products, pdpSelector) => products.get(pdpSelector, Immutable.Map())
 )
 
@@ -37,7 +42,10 @@ export const getItemAddedModalOpen = globalSelectors.isModalOpen('pdp-item-added
 export const getFormInfo = createGetSelector(getSelectedPdp, 'formInfo')
 export const getPdpContentsLoaded = createGetSelector(getSelectedPdp, 'contentsLoaded')
 
-export const getPdpBreadcrumbs = createGetSelector(getSelectedPdp, 'breadcrumbs')
+export const getPdpBreadcrumbs = createSelector(
+    getSelectedPdp,
+    (pdp) => pdp.get('breadcrumbs', PLACEHOLDER_BREADCRUMBS)
+)
 export const getProductTitle = createGetSelector(getSelectedProduct, 'title')
 export const getProductPrice = createGetSelector(getSelectedProduct, 'price')
 export const getProductDescription = createGetSelector(getSelectedProduct, 'description')
