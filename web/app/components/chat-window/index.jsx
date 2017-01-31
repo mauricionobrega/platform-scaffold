@@ -135,8 +135,10 @@ class ChatWindow extends React.Component {
 
         const sheetHeader = (
             <div>
-                <div className="u-bg-color-brand">
-                    <h3 className="u-bg-color-brand u-text-align-center">Ask Merlin Anything</h3>
+                <div className="u-bg-color-brand u-flexbox u-align-center">
+                    <h3 className="u-color-neutral-10 u-flex u-text-align-center">
+                        Ask Merlin Anything
+                    </h3>
                     <Button
                         className="u-text-all-caps u-text-small u-color-neutral-10"
                         type="button"

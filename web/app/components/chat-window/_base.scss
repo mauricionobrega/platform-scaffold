@@ -9,32 +9,7 @@ $clippy-message-color: #fa5ad0;
 // ---
 
 .c-chat-window {
-    .c-sheet__header {
-        position: relative;
-        text-align: center;
 
-        .u-bg-color-brand {
-            min-height: 35px;
-        }
-
-        h3 {
-            display: inline;
-
-            color: #fff;
-            line-height: 40px;
-        }
-
-        button {
-            position: absolute;
-            right: 0;
-        }
-    }
-
-    .u-bg-color-brand.u-text-align-center {
-        h3 {
-            color: #fff;
-        }
-    }
 }
 
 
