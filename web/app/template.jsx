@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {onRouteChanged} from './containers/app/actions'
+import {onRouteChanged, fetchPage} from './containers/app/actions'
 import {triggerMobifyPageView} from 'progressive-web-sdk/dist/analytics'
 
 const getDisplayName = (WrappedComponent) => {
@@ -8,20 +8,8 @@ const getDisplayName = (WrappedComponent) => {
 }
 
 const getPath = ({pathname, search}) => pathname + search
-
-/**
- * Given the current router state, get the corresponding URL on the
- * desktop site. Ignores #fragments in the router state.
- */
-const getURL = (routerLocation) => {
-    return [
-        window.location.protocol,
-        '//',
-        window.location.host,
-        getPath(routerLocation)
-    ].join('')
-}
-
+const getURL = (routerLocation) =>
+      window.location.origin + getPath(routerLocation)
 
 const template = (WrappedComponent) => {
     class Template extends React.Component {
@@ -35,6 +23,9 @@ const template = (WrappedComponent) => {
             const {dispatch, location, route} = targetProps
             triggerMobifyPageView(route.routeName)
             dispatch(onRouteChanged(getURL(location), Template))
+            if (!route.suppressFetch) {
+                dispatch(fetchPage(getURL(location), Template, route.routeName))
+            }
         }
 
         componentWillMount() {
