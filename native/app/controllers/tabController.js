@@ -40,7 +40,7 @@ TabController.init = async function(tabItem) {
     const counterBadgePlugin = await counterBadgeController.generatePlugin()
 
     await layout.addTopView(headerBar)
-    if (tabItem.id === 'account') {
+    if (tabItem.id === 'account') {                                                 // The account page does not require navigationView, instead using webView
         const accountController = await AccountSegmentationController.init()
         await layout.setContentView(accountController.layout)
     } else {
@@ -99,6 +99,7 @@ TabController.prototype.reload = async function() {
 }
 
 TabController.prototype.activate = function() {
+    // Don't know how to handle this yet so on account, don't do anything for now....
     if (this.tabItem.id === 'account') {
         return
     }

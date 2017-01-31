@@ -34,9 +34,17 @@ AccountSegmentationController.init = async function() {
         }
     })
 
-    await segmentedView.selectItem(accountConfig.signIn.key)
+    await segmentedView.selectItem(accountConfig.signIn.key)       // by default loadup signIn
 
     return new AccountSegmentationController(layout, webView, segmentedView)
+}
+
+AccountSegmentationController.prototype.showRegistration = async function() {
+    await this.segmentedView.selectItem(accountConfig.register.key)
+}
+
+AccountSegmentationController.prototype.showSignIn = async function() {
+    await this.segmentedView.selectItem(accountConfig.signIn.key)
 }
 
 export default AccountSegmentationController
