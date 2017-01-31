@@ -34,7 +34,7 @@ const AppProvider = ({store}) => {
         ].join('')
     }
 
-    const shouldFetchPage = (routerState) => routerState.routes[1].fetchPage !== 'false'
+    const shouldFetchPage = (routerState) => !routerState.routes[1].suppressFetch
 
     const getPageComponent = (routerState) => getComponentType(routerState.routes[1].component)
 
@@ -79,11 +79,11 @@ const AppProvider = ({store}) => {
                     <Route component={PLP} path="ingredients.html" routeName="productListPage" />
                     <Route component={PLP} path="supplies.html" routeName="productListPage" />
                     <Route component={PLP} path="new-arrivals.html" routeName="productListPage" />
-                    <Route component={PLP} path="charms.html" routeName="productListPage" />
+                    <Route component={PLP} path="charms.html" suppressFetch routeName="productListPage" />
                     <Route component={PDP} path="*.html" routeName="productDetailsPage" />
-                    <Route component={CheckoutShipping} path="checkout/shipping/" routeName="checkingShipping" fetchPage="false" Header={CheckoutHeader} Footer={CheckoutFooter} />
-                    <Route component={CheckoutPayment} path="checkout/payment/" routeName="checkingPayment" fetchPage="false" Header={CheckoutHeader} Footer={CheckoutFooter} />
-                    <Route component={CheckoutConfirmation} path="checkout/confirmation/" routeName="checkingConfirmation" fetchPage="false" Header={CheckoutHeader} Footer={CheckoutFooter} />
+                    <Route component={CheckoutShipping} path="checkout/shipping/" routeName="checkingShipping" suppressFetch Header={CheckoutHeader} Footer={CheckoutFooter} />
+                    <Route component={CheckoutPayment} path="checkout/payment/" routeName="checkingPayment" suppressFetch Header={CheckoutHeader} Footer={CheckoutFooter} />
+                    <Route component={CheckoutConfirmation} path="checkout/confirmation/" routeName="checkingConfirmation" suppressFetch Header={CheckoutHeader} Footer={CheckoutFooter} />
                 </Route>
             </Router>
         </Provider>
