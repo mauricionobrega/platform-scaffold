@@ -1,6 +1,6 @@
 import {createAction, urlToPathKey} from '../../utils/utils'
 
-import {plpParser, pdpParser} from '../../containers/catalog/products/parser'
+import {plpParser, pdpParser} from './parser'
 
 export const receivePlpProductData = createAction('Receive PLP product data')
 export const receivePdpProductData = createAction('Receive PDP product data')
