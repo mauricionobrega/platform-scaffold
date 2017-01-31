@@ -128,7 +128,8 @@ export const sendMessageToClippy = (message) => {
                         dispatch(receiveMessageFromClippy(json))
                     } else {
                         dispatch(receiveMessageFromClippy({
-                            response: 'Which product?'
+                            response: 'Which product?',
+                            timestamp: json.timestamp
                         }))
                     }
 
