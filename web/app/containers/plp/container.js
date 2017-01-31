@@ -1,4 +1,5 @@
 import React from 'react'
+import template from '../../template'
 
 import PLPHeader from './partials/plp-header'
 import PLPContents from './partials/plp-contents'
@@ -12,4 +13,4 @@ const PLP = () => {
     )
 }
 
-export default PLP
+export default template(PLP)

@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import {withRouter} from 'react-router'
+import template from '../../template'
 
 import SignInPanel from './partials/signin-panel'
 import RegisterPanel from './partials/register-panel'
@@ -89,7 +90,7 @@ Login.propTypes = {
     title: PropTypes.string
 }
 
-export default connect(
+export default template(connect(
     mapStateToProps,
     mapDispatchToProps
-)(withRouter(Login))
+)(withRouter(Login)))

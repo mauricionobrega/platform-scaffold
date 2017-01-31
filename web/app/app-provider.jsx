@@ -40,13 +40,10 @@ const AppProvider = ({store}) => {
 
     const getRouteName = (routerState) => routerState.routes[1].routeName
 
-    const dispatchRouteChanged = (nextState) => store.dispatch(appActions.onRouteChanged(getURL(nextState), getPageComponent(nextState)))
-
     const dispatchFetchPage = (nextState) => store.dispatch(appActions.fetchPage(getURL(nextState), getPageComponent(nextState), getRouteName(nextState)))
 
     const onEnter = (nextState) => {
         triggerMobifyPageView(nextState.routes[1].routeName)
-        dispatchRouteChanged(nextState)
         if (shouldFetchPage(nextState)) {
             dispatchFetchPage(nextState)
         }
@@ -62,7 +59,6 @@ const AppProvider = ({store}) => {
                     url: nextURL
                 })
             }
-            dispatchRouteChanged(nextState)
             if (shouldFetchPage(nextState)) {
                 dispatchFetchPage(nextState)
             }
