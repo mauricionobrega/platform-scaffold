@@ -2,6 +2,8 @@ import WebViewPlugin from 'progressive-app-sdk/plugins/WebViewPlugin'
 import AnchoredLayoutPlugin from 'progressive-app-sdk/plugins/anchoredLayoutPlugin'
 import SegmentedPlugin from 'progressive-app-sdk/plugins/segmentedPlugin'
 
+import accountConfig from '../config/accountConfig'
+
 const AccountSegmentationController = function(layout, webView, segmentedView) {
     this.layout = layout
     this.webView = webView
@@ -13,20 +15,26 @@ AccountSegmentationController.init = async function() {
     const layout = await AnchoredLayoutPlugin.init()
     const segmentedView = await SegmentedPlugin.init()
 
-    segmentedView.setItems([
-        {
-            key: 'registration',
-            text: 'Registration'
-        },
-        {
-            key: 'sign-in',
-            text: 'Sign-in'
-        }
-    ])
-
     await layout.setContentView(webView)
     await layout.addTopView(segmentedView)
-    await webView.navigate('https://google.ca')
+
+    await segmentedView.setItems([
+        accountConfig.signIn,
+        accountConfig.register
+    ])
+
+    segmentedView.on('itemSelect', (params) => {
+        switch (params.key) {
+            case accountConfig.signIn.key:
+                webView.navigate(accountConfig.signIn.url)
+                break
+            case accountConfig.register.key:
+                webView.navigate(accountConfig.register.url)
+                break
+        }
+    })
+
+    await segmentedView.selectItem(accountConfig.signIn.key)
 
     return new AccountSegmentationController(layout, webView, segmentedView)
 }
