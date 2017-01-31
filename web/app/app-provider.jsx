@@ -1,8 +1,6 @@
 import React, {PropTypes} from 'react'
 import {Router, Route, IndexRoute} from 'progressive-web-sdk/dist/routing'
 import {Provider} from 'react-redux'
-import * as appActions from './containers/app/actions'
-import Astro from './vendor/astro-client'
 
 // Containers
 import App from './containers/app/container'
@@ -17,59 +15,28 @@ import CheckoutConfirmation from './containers/checkout-confirmation/container'
 import CheckoutHeader from './containers/checkout-header/container'
 import CheckoutFooter from './containers/checkout-footer/container'
 
-const AppProvider = ({store}) => {
-    /**
-     * Given the current router state, get the corresponding URL on the
-     * desktop site. Ignores #fragments in the router state.
-     */
-    const getURL = (routerState) => {
-        return [
-            window.location.protocol,
-            '//',
-            window.location.host,
-            routerState.location.pathname,
-            routerState.location.search
-        ].join('')
-    }
-
-    const onChange = (prevState, nextState) => {
-        const prevURL = getURL(prevState)
-        const nextURL = getURL(nextState)
-
-        if (nextURL !== prevURL) {
-            if (nextState.location.action.toLowerCase() !== 'pop' && Astro.isRunningInApp()) {
-                Astro.trigger('pwa-navigate', {
-                    url: nextURL
-                })
-            }
-        }
-
-        store.dispatch(appActions.removeAllNotifications())
-    }
-
-    return (
-        <Provider store={store}>
-            <Router>
-                <Route path="/" component={App} onChange={onChange}>
-                    <IndexRoute component={Home} routeName="home" />
-                    <Route component={Cart} path="checkout/cart/" routeName="cart" fetchPage="false" />
-                    <Route component={Login} path="customer/account/login/" routeName="signin" />
-                    <Route component={Login} path="customer/account/create/" routeName="register" />
-                    <Route component={PLP} path="potions.html" routeName="productListPage" />
-                    <Route component={PLP} path="books.html" routeName="productListPage" />
-                    <Route component={PLP} path="ingredients.html" routeName="productListPage" />
-                    <Route component={PLP} path="supplies.html" routeName="productListPage" />
-                    <Route component={PLP} path="new-arrivals.html" routeName="productListPage" />
-                    <Route component={PLP} path="charms.html" suppressFetch routeName="productListPage" />
-                    <Route component={PDP} path="*.html" routeName="productDetailsPage" />
-                    <Route component={CheckoutShipping} path="checkout/shipping/" routeName="checkingShipping" suppressFetch Header={CheckoutHeader} Footer={CheckoutFooter} />
-                    <Route component={CheckoutPayment} path="checkout/payment/" routeName="checkingPayment" suppressFetch Header={CheckoutHeader} Footer={CheckoutFooter} />
-                    <Route component={CheckoutConfirmation} path="checkout/confirmation/" routeName="checkingConfirmation" suppressFetch Header={CheckoutHeader} Footer={CheckoutFooter} />
-                </Route>
-            </Router>
-        </Provider>
-    )
-}
+const AppProvider = ({store}) => (
+    <Provider store={store}>
+        <Router>
+            <Route path="/" component={App}>
+                <IndexRoute component={Home} routeName="home" />
+                <Route component={Cart} path="checkout/cart/" routeName="cart" fetchPage="false" />
+                <Route component={Login} path="customer/account/login/" routeName="signin" />
+                <Route component={Login} path="customer/account/create/" routeName="register" />
+                <Route component={PLP} path="potions.html" routeName="productListPage" />
+                <Route component={PLP} path="books.html" routeName="productListPage" />
+                <Route component={PLP} path="ingredients.html" routeName="productListPage" />
+                <Route component={PLP} path="supplies.html" routeName="productListPage" />
+                <Route component={PLP} path="new-arrivals.html" routeName="productListPage" />
+                <Route component={PLP} path="charms.html" suppressFetch routeName="productListPage" />
+                <Route component={PDP} path="*.html" routeName="productDetailsPage" />
+                <Route component={CheckoutShipping} path="checkout/shipping/" routeName="checkingShipping" suppressFetch Header={CheckoutHeader} Footer={CheckoutFooter} />
+                <Route component={CheckoutPayment} path="checkout/payment/" routeName="checkingPayment" suppressFetch Header={CheckoutHeader} Footer={CheckoutFooter} />
+                <Route component={CheckoutConfirmation} path="checkout/confirmation/" routeName="checkingConfirmation" suppressFetch Header={CheckoutHeader} Footer={CheckoutFooter} />
+            </Route>
+        </Router>
+    </Provider>
+)
 
 AppProvider.propTypes = {
     store: PropTypes.object

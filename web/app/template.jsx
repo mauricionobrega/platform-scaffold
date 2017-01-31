@@ -1,7 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {onRouteChanged, fetchPage} from './containers/app/actions'
+import {onRouteChanged, fetchPage, removeAllNotifications} from './containers/app/actions'
 import {triggerMobifyPageView} from 'progressive-web-sdk/dist/analytics'
+import Astro from './vendor/astro-client'
 
 const getDisplayName = (WrappedComponent) => {
     return WrappedComponent.displayName || WrappedComponent.name || 'Component'
@@ -21,10 +22,18 @@ const template = (WrappedComponent) => {
 
         dispatchRouteChange(targetProps) {
             const {dispatch, location, route} = targetProps
+            const targetURL = getURL(location)
+
+            if (Astro.isRunningInApp() && location.action.toLowerCase() !== 'pop') {
+                Astro.trigger('pwa-navigate', {url: targetURL})
+            }
+
             triggerMobifyPageView(route.routeName)
-            dispatch(onRouteChanged(getURL(location), Template))
+
+            dispatch(onRouteChanged(targetURL, Template))
+
             if (!route.suppressFetch) {
-                dispatch(fetchPage(getURL(location), Template, route.routeName))
+                dispatch(fetchPage(targetURL, Template, route.routeName))
             }
         }
 
@@ -42,6 +51,7 @@ const template = (WrappedComponent) => {
             if (getPath(this.props.location) !== getPath(nextProps.location)) {
                 console.log('changing', Template.displayName)
                 this.dispatchRouteChange(nextProps)
+                this.props.dispatch(removeAllNotifications())
             }
         }
 
