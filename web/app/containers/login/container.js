@@ -102,7 +102,7 @@ const mapStateToProps = (state, props) => {
 }
 
 const RegisterSection = (props) => {
-    const item = (
+        const item = (
     <div>
         <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
             {props.registerSection.heading ?
@@ -143,7 +143,7 @@ const RegisterSection = (props) => {
 }
 
 const LoginSection = (props) => {
-    const item = (
+        const item = (
     <div>
         <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
             <div className="u-margin-bottom">
