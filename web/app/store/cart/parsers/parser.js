@@ -31,7 +31,7 @@ export const cartReviver = (k, v) => {
 }
 
 export const parse = (responseText) => {
-    return JSON.parse(responseText, cartReviver)
+    return JSON.parse(responseText, cartReviver).cart
 }
 
 export default parse
