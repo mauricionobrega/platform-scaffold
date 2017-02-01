@@ -24,6 +24,11 @@ export const getSelectedPdp = createSelector(
     appSelectors.getCurrentUrl,
     (pdp, url) => pdp.get(url, Immutable.Map())
 )
+export const getPdpContentsLoaded = createSelector(
+    getPdp,
+    appSelectors.getCurrentUrl,
+    (pdp, url) => pdp.has(url)
+)
 
 export const getSelectedProduct = createSelector(
     globalSelectors.getProducts,
@@ -37,7 +42,6 @@ export const getItemQuantity = createSelector(
 )
 export const getItemAddedModalOpen = globalSelectors.isModalOpen('pdp-item-added')
 export const getFormInfo = createGetSelector(getSelectedPdp, 'formInfo')
-export const getPdpContentsLoaded = createGetSelector(getSelectedPdp, 'contentsLoaded')
 
 export const getPdpBreadcrumbs = createSelector(
     getSelectedPdp,
