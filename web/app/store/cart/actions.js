@@ -5,7 +5,7 @@
  *
  * All requests require a session, eg. 'Cookie: PHPSESSID=as337c3fq7751n9gn1o3enacf7'
  */
-import parse from '../../containers/cart/parser/parser'
+import parse from './parsers/parser'
 import * as utils from '../../utils/utils'
 
 const baseHeaders = {
