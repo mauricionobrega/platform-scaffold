@@ -13,12 +13,17 @@ export const selectorToJS = (selector) => createImmutableComparingSelector(
 
 export const createToJSSelector = (...args) => selectorToJS(createSelector(...args))
 
-export const createGetSelector = (selector, key) => createSelector(
+export const createGetSelector = (selector, key, defaultValue) => createSelector(
     selector,
-    (obj) => obj.get(key)
+    (obj) => obj.get(key, defaultValue)
 )
 
 export const invertSelector = (selector) => createSelector(
     selector,
     (bool) => !bool
+)
+
+export const createHasSelector = (selector, key) => createSelector(
+    selector,
+    (obj) => obj.has(key)
 )
