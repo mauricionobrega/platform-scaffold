@@ -132,12 +132,13 @@
       "**/*.{js,jsx}",
       "!app/static/js/*.js",
       "!app/vendor/*.js",
-      "!app/containers/reducers.js",
+      "!app/containers/{templates,reducers}.js",
       "!app/**/container.{js,jsx}",
       "!{dev-server,lighthouse,coverage,build,tests,webpack}/**/*.js",
       "!styleguide/**/*.{js,jsx}",
       "!app/loader-routes.js",
-      "!web/worker/main.js"
+      "!web/worker/main.js",
+      "!service-worker-loader.js"
     ],
     "coverageThreshold": {
       "global": {
