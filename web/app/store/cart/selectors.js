@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import {createSelector} from 'reselect'
 import {createGetSelector} from '../../utils/selector-utils'
-import * as globalSelectors from '../../store/selectors'
+import * as globalSelectors from '../selectors'
 
 export const getCartContentsLoaded = createSelector(
     globalSelectors.getCart,

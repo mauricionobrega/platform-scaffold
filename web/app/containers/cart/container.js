@@ -9,7 +9,7 @@ import {Grid, GridSpan} from '../../components/grid'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Image from 'progressive-web-sdk/dist/components/image'
 
-import * as miniCartSelectors from '../mini-cart/selectors'
+import {getCartContentsLoaded, getCartHasItems} from '../../store/cart/selectors'
 import CartEstimateShippingModal from './partials/cart-estimate-shipping'
 import CartWishlistModal from './partials/cart-wishlist'
 import CartItems from './partials/cart-items'
@@ -79,8 +79,8 @@ Cart.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
-    contentsLoaded: miniCartSelectors.getCartContentsLoaded,
-    hasItems: miniCartSelectors.getCartHasItems
+    contentsLoaded: getCartContentsLoaded,
+    hasItems: getCartHasItems
 })
 
 export default connect(mapStateToProps)(Cart)

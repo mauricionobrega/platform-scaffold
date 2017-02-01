@@ -1,9 +1,9 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
-import * as miniCartSelectors from '../../mini-cart/selectors'
 import classNames from 'classnames'
 
+import {getCartHasItems} from '../../../store/cart/selectors'
 import {GridSpan} from '../../../components/grid'
 import Button from 'progressive-web-sdk/dist/components/button'
 import CartProductList from './cart-product-list'
@@ -38,7 +38,7 @@ CartItems.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
-    hasItems: miniCartSelectors.getCartHasItems
+    hasItems: getCartHasItems
 })
 
 export default connect(mapStateToProps)(CartItems)

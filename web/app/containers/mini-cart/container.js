@@ -6,12 +6,12 @@ import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import Button from 'progressive-web-sdk/dist/components/button'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 import Image from 'progressive-web-sdk/dist/components/image'
-import * as selectors from './selectors'
 import {getCart} from '../../store/cart/actions'
 import {isModalOpen} from '../../store/selectors'
 import {closeModal} from '../../store/modals/actions'
 import {MINI_CART_MODAL} from './constants'
 import {stripEvent} from '../../utils/utils'
+import {getCartContentsLoaded, getCartHasItems} from '../../store/cart/selectors'
 
 import MiniCartHeader from './partials/mini-cart-header'
 import MiniCartProductList from './partials/mini-cart-product-list'
@@ -74,9 +74,9 @@ MiniCart.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
-    contentsLoaded: selectors.getCartContentsLoaded,
+    contentsLoaded: getCartContentsLoaded,
     isOpen: isModalOpen(MINI_CART_MODAL),
-    hasItems: selectors.getCartHasItems
+    hasItems: getCartHasItems
 })
 
 const mapDispatchToProps = {
