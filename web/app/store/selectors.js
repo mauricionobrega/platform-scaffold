@@ -14,3 +14,4 @@ export const isModalOpen = (modalName) => createSelector(
 
 export const getCategories = ({categories}) => categories
 export const getProducts = ({products}) => products
+export const getCart = ({cart}) => cart

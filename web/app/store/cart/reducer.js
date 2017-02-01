@@ -4,9 +4,7 @@ import {handleActions} from 'redux-actions'
 import * as cartActions from '../../containers/cart/actions'
 
 const initialState = Immutable.fromJS({
-    itemCount: 0,
-    items: [],
-    subtotal: ''
+    items: []
 })
 
 const cartReducer = handleActions({
