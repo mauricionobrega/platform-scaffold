@@ -79,13 +79,13 @@ class Login extends React.Component {
                     </Tabs>
                 </div>
             )
-        } else if (this.indexForSection(routeName) === 0){
+        } else if (routeName === Login.SIGN_IN_SECTION){
             return (
                 <div className="t-login">
                     <LoginSection signinSection={signinSection} submitSignInForm={submitSignInForm} openSignInModal={openSignInModal} closeSignInModal={closeSignInModal}/>
                 </div>
             )
-        } else if (this.indexForSection(routeName) === 1){
+        } else if (routeName === Login.REGISTER_SECTION){
             return (
                 <div className="t-login">
                     <RegisterSection registerSection={registerSection} submitRegisterForm={submitRegisterForm} openRegisterModal={openRegisterModal} closeRegisterModal={closeRegisterModal}/>
