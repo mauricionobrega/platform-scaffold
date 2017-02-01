@@ -5,7 +5,6 @@ import * as appSelectors from '../app/selectors'
 import {openModal} from '../../store/modals/actions'
 import {PDP_ITEM_ADDED_MODAL} from './constants'
 import pdpParser from './parsers/pdp'
-import {SELECTOR} from '../app/constants'
 
 export const receiveNewItemQuantity = createAction('Set item quantity')
 export const setItemQuantity = (quantity) => (dispatch, getStore) => {
@@ -18,18 +17,9 @@ export const setItemQuantity = (quantity) => (dispatch, getStore) => {
 
 export const receiveData = createAction('Receive PDP data')
 export const process = ({payload}) => {
-    const {$, $response, url, currentURL} = payload
+    const {$, $response, url} = payload
     const parsed = pdpParser($, $response)
-    // Update the store using location.href as key and the result from
-    // the parser as our value -- even if it isn't the page we're
-    // currently viewing
-    const output = {[url]: parsed}
-    // Also set the store's current selector to location.href so we
-    // can access it in our container, but only if we're on that href
-    if (url === currentURL) {
-        output[SELECTOR] = url
-    }
-    return receiveData(output)
+    return receiveData({[url]: parsed})
 }
 
 export const submitCartForm = () => (dispatch, getStore) => {

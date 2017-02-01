@@ -3,7 +3,6 @@ import Immutable from 'immutable'
 import {createGetSelector} from '../../utils/selector-utils'
 import * as globalSelectors from '../../store/selectors'
 import * as appSelectors from '../app/selectors'
-import {getSelectorFromState} from '../../utils/router-utils'
 
 const PLACEHOLDER_BREADCRUMBS = Immutable.fromJS([
     {
@@ -23,7 +22,7 @@ export const getPdp = createSelector(
 export const getSelectedPdp = createSelector(
     getPdp,
     appSelectors.getCurrentUrl,
-    (pdp, url) => pdp.get(url)
+    (pdp, url) => pdp.get(url, Immutable.Map())
 )
 
 export const getSelectedProduct = createSelector(

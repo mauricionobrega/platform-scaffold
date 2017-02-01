@@ -7,7 +7,8 @@ import PDP from './container'
 import * as pdpActions from './actions'
 
 import {onRouteChanged} from '../app/actions'
-import {SELECTOR, PLACEHOLDER} from '../app/constants'
+import {PLACEHOLDER} from '../app/constants'
+import {mergePayloadForActions} from '../../utils/reducer-utils'
 
 export const initialState = Immutable.fromJS({
     contentsLoaded: false,
@@ -16,7 +17,7 @@ export const initialState = Immutable.fromJS({
 })
 
 const reducer = handleActions({
-    [pdpActions.receiveData]: (state, {payload}) => state.mergeDeep(payload),
+    ...mergePayloadForActions(pdpActions.receiveData, pdpActions.receiveNewItemQuantity),
     [onRouteChanged]: (state, {payload}) => {
         const {pageComponent, currentURL} = payload
 
@@ -25,13 +26,11 @@ const reducer = handleActions({
                 if (!state.has(currentURL)) {
                     s.set(currentURL, initialState)
                 }
-                s.set(SELECTOR, currentURL)
             })
         } else {
             return state
         }
-    },
-    [pdpActions.receiveNewItemQuantity]: (state, {payload}) => state.mergeDeep(payload)
+    }
 }, RouterUtils.baseInitialState.set(PLACEHOLDER, initialState))
 
 export default reducer
