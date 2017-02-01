@@ -18,6 +18,7 @@ class PDP extends React.Component {
 
     render() {
         const {
+            breadcrumbs,
             itemQuantity,
             quantityAdded,
             itemAddedModalOpen,
@@ -49,7 +50,7 @@ class PDP extends React.Component {
 
         return (
             <div className="t-pdp">
-                <PDPHeading title={title} price={price} />
+                <PDPHeading breadcrumbs={breadcrumbs} title={title} price={price} />
 
                 <PDPCarousel items={carouselItems} contentsLoaded={contentsLoaded} />
 
