@@ -10,6 +10,8 @@ import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import {Tabs, TabsPanel} from 'progressive-web-sdk/dist/components/tabs'
 import {isRunningInAstro} from '../../utils/astro-integration'
 
+import {isRunningInAstro} from '../../utils/astro-integration'
+
 import * as actions from './actions'
 
 class Login extends React.Component {
