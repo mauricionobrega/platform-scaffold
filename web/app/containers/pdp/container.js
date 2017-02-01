@@ -43,7 +43,7 @@ class PDP extends React.Component {
 
         let coverage = "50%"
         if (window.innerHeight < 370) {
-            coverage = "30%"
+            coverage = "70%"
         } else if (window.innerHeight < 460) {
             coverage = "56%"
         }
