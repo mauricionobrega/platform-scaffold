@@ -74,9 +74,9 @@ MiniCart.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
-    contentsLoaded: selectors.getMiniCartContentsLoaded,
+    contentsLoaded: selectors.getCartContentsLoaded,
     isOpen: isModalOpen(MINI_CART_MODAL),
-    hasItems: selectors.getMiniCartHasItems
+    hasItems: selectors.getCartHasItems
 })
 
 const mapDispatchToProps = {

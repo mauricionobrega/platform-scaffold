@@ -79,8 +79,8 @@ Cart.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
-    contentsLoaded: miniCartSelectors.getMiniCartContentsLoaded,
-    hasItems: miniCartSelectors.getMiniCartHasItems
+    contentsLoaded: miniCartSelectors.getCartContentsLoaded,
+    hasItems: miniCartSelectors.getCartHasItems
 })
 
 export default connect(mapStateToProps)(Cart)

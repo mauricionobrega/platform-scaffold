@@ -85,7 +85,7 @@ CartSummary.propTypes = {
 const mapStateToProps = createStructuredSelector({
     subtotalExclTax: miniCartSelectors.getSubtotalExcludingTax,
     subtotalInclTax: miniCartSelectors.getSubtotalIncludingTax,
-    summaryCount: miniCartSelectors.getMiniCartSummaryCount,
+    summaryCount: miniCartSelectors.getCartSummaryCount,
 })
 
 const mapDispatchToProps = {

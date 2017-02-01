@@ -38,7 +38,7 @@ CartItems.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
-    hasItems: miniCartSelectors.getMiniCartHasItems
+    hasItems: miniCartSelectors.getCartHasItems
 })
 
 export default connect(mapStateToProps)(CartItems)

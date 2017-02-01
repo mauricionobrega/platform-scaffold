@@ -71,8 +71,8 @@ MiniCartProductList.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
-    items: selectorToJS(selectors.getMiniCartItems),
-    subtotal: selectors.getMiniCartSubtotal
+    items: selectorToJS(selectors.getCartItems),
+    subtotal: selectors.getCartSubtotal
 })
 
 export default connect(mapStateToProps)(MiniCartProductList)

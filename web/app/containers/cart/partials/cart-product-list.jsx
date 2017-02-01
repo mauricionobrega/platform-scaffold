@@ -140,8 +140,8 @@ CartProductList.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
-    items: selectorToJS(miniCartSelectors.getMiniCartItems),
-    summaryCount: miniCartSelectors.getMiniCartSummaryCount
+    items: selectorToJS(miniCartSelectors.getCartItems),
+    summaryCount: miniCartSelectors.getCartSummaryCount
 })
 
 const mapDispatchToProps = {
