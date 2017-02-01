@@ -5,14 +5,23 @@ import Application from 'progressive-app-sdk/application'
 import MobifyPreviewPlugin from 'progressive-app-sdk/plugins/mobifyPreviewPlugin'
 import PreviewController from 'progressive-app-sdk/controllers/previewController'
 
+// Local
 import baseConfig from './config/baseConfig'
 import TabBarController from './controllers/tabBarController'
 import {getInitialTabId} from './config/tabBarConfig'
+import OnboardingModalController, {OnboardingModalEvents} from './onboarding/onboardingModalController'
+import AppEvents from './global/app-events'
 
 window.run = async function() {
     const runApp = async function() {
-        const tabBarController = await TabBarController.init()
+        const onboardingModalController = await OnboardingModalController.init()
 
+        // The onboarding modal can be configured to show only once
+        // (on first launch) by setting `{forced: false}` as the
+        // parameter for onboardingModalController.show()
+        onboardingModalController.show({forced: true})
+
+        const tabBarController = await TabBarController.init()
         await Application.setMainViewPlugin(tabBarController.viewPlugin)
 
         const initialTabId = getInitialTabId()
@@ -20,8 +29,11 @@ window.run = async function() {
             tabBarController.selectTab(initialTabId)
         }
 
+        AppEvents.on(OnboardingModalEvents.onboardingHidden, () => {
+            Application.setStatusBarLightText()
+        })
+
         Application.dismissLaunchImage()
-        Application.setStatusBarLightText()
     }
 
     // Preview support

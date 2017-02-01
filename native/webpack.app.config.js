@@ -52,7 +52,8 @@ var config = {
             use: ['babel-loader'],
             include: [
                 path.resolve(rootDir, 'node_modules/mobify-progressive-app-sdk/js'),
-                path.resolve(rootDir, 'app')
+                path.resolve(rootDir, 'app'),
+                path.resolve(rootDir, 'onboarding')
             ]
         }]
     }

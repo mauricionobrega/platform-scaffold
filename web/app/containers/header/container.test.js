@@ -5,7 +5,16 @@ import {RawHeader as Header} from './container'
 
 describe('The header', () => {
     test('Should not render header at all if running in an Astro app', () => {
-        const header = shallow(<Header isRunningInAstro={true} />)
+        const headerData = {
+            toJS: () => {
+                return {
+                    isCollapsed: true,
+                    cart: []
+                }
+            }
+        }
+
+        const header = shallow(<Header isRunningInAstro={true} header={headerData} />)
         expect(header.children().length).toBe(0)
     })
 
