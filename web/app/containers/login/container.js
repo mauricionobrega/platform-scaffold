@@ -70,25 +70,25 @@ class Login extends React.Component {
 
                     <Tabs activeIndex={this.indexForSection(routeName)} className="t-login__navigation" onChange={(index) => navigateToSection(router, routes, this.sectionForIndex(index))}>
                         <TabsPanel title={Login.SECTION_NAMES[Login.SIGN_IN_SECTION]}>
-                            <LoginSection signinSection={signinSection} submitSignInForm={submitSignInForm} openSignInModal={openSignInModal} closeSignInModal={closeSignInModal}/>
+                            <LoginSection signinSection={signinSection} submitSignInForm={submitSignInForm} openSignInModal={openSignInModal} closeSignInModal={closeSignInModal} />
                         </TabsPanel>
 
                         <TabsPanel title={Login.SECTION_NAMES[Login.REGISTER_SECTION]}>
-                            <RegisterSection registerSection={registerSection} submitRegisterForm={submitRegisterForm} openRegisterModal={openRegisterModal} closeRegisterModal={closeRegisterModal}/>
+                            <RegisterSection registerSection={registerSection} submitRegisterForm={submitRegisterForm} openRegisterModal={openRegisterModal} closeRegisterModal={closeRegisterModal} />
                         </TabsPanel>
                     </Tabs>
                 </div>
             )
-        } else if (routeName === Login.SIGN_IN_SECTION){
+        } else if (routeName === Login.SIGN_IN_SECTION) {
             return (
                 <div className="t-login">
-                    <LoginSection signinSection={signinSection} submitSignInForm={submitSignInForm} openSignInModal={openSignInModal} closeSignInModal={closeSignInModal}/>
+                    <LoginSection signinSection={signinSection} submitSignInForm={submitSignInForm} openSignInModal={openSignInModal} closeSignInModal={closeSignInModal} />
                 </div>
             )
-        } else if (routeName === Login.REGISTER_SECTION){
+        } else {
             return (
                 <div className="t-login">
-                    <RegisterSection registerSection={registerSection} submitRegisterForm={submitRegisterForm} openRegisterModal={openRegisterModal} closeRegisterModal={closeRegisterModal}/>
+                    <RegisterSection registerSection={registerSection} submitRegisterForm={submitRegisterForm} openRegisterModal={openRegisterModal} closeRegisterModal={closeRegisterModal} />
                 </div>
             )
         }
@@ -101,8 +101,8 @@ const mapStateToProps = (state, props) => {
     }
 }
 
-function RegisterSection(props) {
-    const item =
+const RegisterSection = (props) => {
+    const item = (
     <div>
         <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
             {props.registerSection.heading ?
@@ -138,11 +138,12 @@ function RegisterSection(props) {
             />
         </div>
     </div>
+    )
     return item
 }
 
-function LoginSection(props) {
-    const item =
+const LoginSection = (props) => {
+    const item = (
     <div>
         <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
             <div className="u-margin-bottom">
@@ -180,6 +181,7 @@ function LoginSection(props) {
             />
         </div>
     </div>
+    )
     return item
 }
 
