@@ -21,19 +21,19 @@ export const getPdp = createSelector(
 
 export const getSelectedPdp = createSelector(
     getPdp,
-    appSelectors.getCurrentUrl,
-    (pdp, url) => pdp.get(url, Immutable.Map())
+    appSelectors.getCurrentPathKey,
+    (pdp, path) => pdp.get(path, Immutable.Map())
 )
 export const getPdpContentsLoaded = createSelector(
     getPdp,
-    appSelectors.getCurrentUrl,
-    (pdp, url) => pdp.has(url)
+    appSelectors.getCurrentPathKey,
+    (pdp, path) => pdp.has(path)
 )
 
 export const getSelectedProduct = createSelector(
     globalSelectors.getProducts,
     appSelectors.getCurrentPathKey,
-    (products, pdpSelector) => products.get(pdpSelector, Immutable.Map())
+    (products, path) => products.get(path, Immutable.Map())
 )
 
 export const getItemQuantity = createSelector(

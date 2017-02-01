@@ -27,7 +27,7 @@ test('submitCartForm makes a request and dispatches updates', () => {
 
     const getStore = () => ({
         ui: {
-            app: Immutable.fromJS({currentURL: '/'}),
+            app: Immutable.fromJS({currentURL: 'https://test.mobify.com/'}),
             pdp: Immutable.fromJS({
                 '/': {
                     contentsLoaded: true,

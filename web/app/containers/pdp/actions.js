@@ -1,4 +1,4 @@
-import {createAction, makeFormEncodedRequest} from '../../utils/utils'
+import {createAction, makeFormEncodedRequest, urlToPathKey} from '../../utils/utils'
 import {getCart} from '../cart/actions'
 import * as selectors from './selectors'
 import * as appSelectors from '../app/selectors'
@@ -19,7 +19,7 @@ export const receiveData = createAction('Receive PDP data')
 export const process = ({payload}) => {
     const {$, $response, url} = payload
     const parsed = pdpParser($, $response)
-    return receiveData({[url]: parsed})
+    return receiveData({[urlToPathKey(url)]: parsed})
 }
 
 export const submitCartForm = () => (dispatch, getStore) => {
