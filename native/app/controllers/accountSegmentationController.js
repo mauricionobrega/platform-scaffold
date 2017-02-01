@@ -3,6 +3,7 @@ import AnchoredLayoutPlugin from 'progressive-app-sdk/plugins/anchoredLayoutPlug
 import SegmentedPlugin from 'progressive-app-sdk/plugins/segmentedPlugin'
 
 import accountConfig from '../config/accountConfig'
+import AppEvents from '../global/app-events'
 
 const AccountSegmentationController = function(layout, webView, segmentedView) {
     this.layout = layout
@@ -37,6 +38,14 @@ AccountSegmentationController.init = async function() {
     })
 
     await segmentedView.selectItem(accountConfig.signIn.key)       // by default loadup signIn
+
+    AppEvents.on('registerShow', () => {
+        segmentedView.selectItem(accountConfig.register.key)
+    })
+
+    AppEvents.on('signInShow', () => {
+        segmentedView.selectItem(accountConfig.signIn.key)
+    })
 
     return new AccountSegmentationController(layout, webView, segmentedView)
 }

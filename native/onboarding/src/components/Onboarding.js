@@ -54,6 +54,7 @@ function OnboardingScreen(props) {
 
 function onRegisterTapped(event) {
     Astro.jsRpcMethod(rpcMethodNames.registerShow, [])();
+    Astro.jsRpcMethod(rpcMethodNames.onboardingHide, [])();
 }
 
 function onLaterTapped(event) {
@@ -62,6 +63,7 @@ function onLaterTapped(event) {
 
 function onSignInTapped(event) {
     Astro.jsRpcMethod(rpcMethodNames.signInShow, [])();
+    Astro.jsRpcMethod(rpcMethodNames.onboardingHide, [])();
 }
 
 export default Onboarding

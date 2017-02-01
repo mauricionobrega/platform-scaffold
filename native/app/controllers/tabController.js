@@ -10,7 +10,6 @@ import AccountSegmentationController from './accountSegmentationController'
 
 import baseConfig from '../config/baseConfig'
 import cartConfig from '../config/cartConfig'
-// import tabBarConfig from '../config/tabBarConfig'
 
 const TabController = function(tabItem, layout, headerBar, navigationView, counterBadgeController) {
     this.tabItem = tabItem
