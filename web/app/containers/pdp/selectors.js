@@ -31,7 +31,10 @@ export const getSelectedProduct = createSelector(
     (products, pdpSelector) => products.get(pdpSelector, Immutable.Map())
 )
 
-export const getItemQuantity = createGetSelector(getSelectedPdp, 'itemQuantity')
+export const getItemQuantity = createSelector(
+    getSelectedPdp,
+    (pdp) => pdp.get('itemQuantity', 1)
+)
 export const getItemAddedModalOpen = globalSelectors.isModalOpen('pdp-item-added')
 export const getFormInfo = createGetSelector(getSelectedPdp, 'formInfo')
 export const getPdpContentsLoaded = createGetSelector(getSelectedPdp, 'contentsLoaded')

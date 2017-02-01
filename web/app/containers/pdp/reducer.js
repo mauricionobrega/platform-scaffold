@@ -11,9 +11,7 @@ import {PLACEHOLDER} from '../app/constants'
 import {mergePayloadForActions} from '../../utils/reducer-utils'
 
 export const initialState = Immutable.fromJS({
-    contentsLoaded: false,
-    formInfo: {},
-    itemQuantity: 1
+    contentsLoaded: false
 })
 
 const reducer = handleActions({
@@ -21,12 +19,8 @@ const reducer = handleActions({
     [onRouteChanged]: (state, {payload}) => {
         const {pageComponent, currentURL} = payload
 
-        if (RouterUtils.isPageType(pageComponent, PDP)) {
-            return state.withMutations((s) => {
-                if (!state.has(currentURL)) {
-                    s.set(currentURL, initialState)
-                }
-            })
+        if (RouterUtils.isPageType(pageComponent, PDP) && !state.has(currentURL)) {
+            return state.set(currentURL, initialState)
         } else {
             return state
         }
