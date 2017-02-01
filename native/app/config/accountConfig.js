@@ -10,4 +10,6 @@ const signIn = {
     url: 'https://www.merlinspotions.com/customer/account/login/'
 }
 
-export default {register, signIn}
+const color = '#4E439B'
+
+export default {register, signIn, color}
