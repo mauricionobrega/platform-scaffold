@@ -1,5 +1,5 @@
 import {createAction, makeFormEncodedRequest, urlToPathKey} from '../../utils/utils'
-import {getCart} from '../cart/actions'
+import {getCart} from '../../store/cart/actions'
 import * as selectors from './selectors'
 import * as appSelectors from '../app/selectors'
 import {openModal} from '../../store/modals/actions'

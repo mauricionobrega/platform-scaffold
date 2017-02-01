@@ -7,7 +7,7 @@ import Button from 'progressive-web-sdk/dist/components/button'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 import Image from 'progressive-web-sdk/dist/components/image'
 import * as selectors from './selectors'
-import * as cartActions from '../cart/actions'
+import {getCart} from '../../store/cart/actions'
 import {isModalOpen} from '../../store/selectors'
 import {closeModal} from '../../store/modals/actions'
 import {MINI_CART_MODAL} from './constants'
@@ -49,7 +49,7 @@ MiniCartMain.propTypes = {
 
 class MiniCart extends React.Component {
     componentDidMount() {
-        this.props.fetchContents()
+        this.props.getCart()
     }
 
     render() {
@@ -68,7 +68,7 @@ class MiniCart extends React.Component {
 MiniCart.propTypes = {
     closeMiniCart: PropTypes.func,
     contentsLoaded: PropTypes.bool,
-    fetchContents: PropTypes.func,
+    getCart: PropTypes.func,
     hasItems: PropTypes.bool,
     isOpen: PropTypes.bool,
 }
@@ -80,7 +80,7 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = {
-    fetchContents: cartActions.getCart,
+    getCart,
     closeMiniCart: stripEvent(() => closeModal(MINI_CART_MODAL))
 }
 

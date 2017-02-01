@@ -6,8 +6,8 @@ import {openModal} from '../../store/modals/actions'
 
 import * as utils from '../../utils/utils'
 
-jest.mock('../cart/actions')
-import {getCart} from '../cart/actions'
+jest.mock('../../store/cart/actions')
+import {getCart} from '../../store/cart/actions'
 
 /* eslint-disable import/namespace */
 let realMakeFormEncodedRequest

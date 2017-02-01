@@ -1,7 +1,7 @@
-import {Map, fromJS} from 'immutable'
+import {Map} from 'immutable'
 
 import reducer from './reducer'
-import {receiveCartContents} from '../cart/actions'
+import {receiveCartContents} from '../../store/cart/actions'
 
 test('unknown action type leaves state unchanged', () => {
     const action = {
