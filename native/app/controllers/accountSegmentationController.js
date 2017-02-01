@@ -9,7 +9,7 @@ const Events = {
     // raised when onboarding modal is hidden
     registerSelected: 'account:register',
     // raised when onboarding modal is displayed
-    signInSelected: 'account:signIn'
+    signInSelected: 'account:sign-in'
 }
 
 const AccountSegmentationController = function(layout, webView, segmentedView) {

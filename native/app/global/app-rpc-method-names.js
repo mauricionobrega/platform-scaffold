@@ -2,8 +2,8 @@
 const rpcMethodNames = {
     onboardingShow: 'onboardingShow',
     onboardingHide: 'onboardingHide',
-    signInShow: 'signInShow',
-    registerShow: 'registerShow'
+    signInShow: 'sign-in:Show',
+    registerShow: 'register:Show'
 }
 
 export default rpcMethodNames
