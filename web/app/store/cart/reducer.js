@@ -3,10 +3,8 @@ import {handleActions} from 'redux-actions'
 import {receiveCartContents} from './actions'
 import {mergePayloadForActions} from '../../utils/reducer-utils'
 
-const initialState = Immutable.fromJS({})
-
 const cartReducer = handleActions({
     ...mergePayloadForActions(receiveCartContents)
-}, initialState)
+}, Immutable.Map())
 
 export default cartReducer

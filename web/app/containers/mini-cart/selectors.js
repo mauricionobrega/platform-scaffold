@@ -2,11 +2,6 @@ import {createSelector} from 'reselect'
 import {createGetSelector} from '../../utils/selector-utils'
 import * as globalSelectors from '../../store/selectors'
 
-export const getMiniCart = createSelector(
-    globalSelectors.getUi,
-    ({miniCart}) => miniCart
-)
-
 export const getMiniCartContentsLoaded = createSelector(
     globalSelectors.getCart,
     (cart) => cart.has('items')
