@@ -30,29 +30,3 @@ test('cartActions.receiveCartContents sets contentsLoaded flag', () => {
 
     expect(reducer(initialState, action).equals(finalState)).toBe(true)
 })
-
-test('cartActions.receiveCartContents merges in its payload', () => {
-    const action = receiveCartContents({
-        title: 'Test',
-        details: {
-            detail1: 'one',
-            detail2: 'two'
-        }
-    })
-
-    const initialState = Map({
-        bystander: 'data'
-    })
-
-    const finalState = fromJS({
-        bystander: 'data',
-        contentsLoaded: true,
-        title: 'Test',
-        details: {
-            detail1: 'one',
-            detail2: 'two'
-        }
-    })
-
-    expect(reducer(initialState, action).equals(finalState)).toBe(true)
-})
