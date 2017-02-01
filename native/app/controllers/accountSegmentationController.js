@@ -5,6 +5,13 @@ import SegmentedPlugin from 'progressive-app-sdk/plugins/segmentedPlugin'
 import accountConfig from '../config/accountConfig'
 import AppEvents from '../global/app-events'
 
+const AccountSegEvents = {
+    // raised when onboarding modal is hidden
+    registerSelected: 'account:register',
+    // raised when onboarding modal is displayed
+    signInSelected: 'account:signIn'
+}
+
 const AccountSegmentationController = function(layout, webView, segmentedView) {
     this.layout = layout
     this.webView = webView
@@ -39,11 +46,11 @@ AccountSegmentationController.init = async function() {
 
     await segmentedView.selectItem(accountConfig.signIn.key)       // by default loadup signIn
 
-    AppEvents.on('registerShow', () => {
+    AppEvents.on(AccountSegEvents.registerSelected, () => {
         segmentedView.selectItem(accountConfig.register.key)
     })
 
-    AppEvents.on('signInShow', () => {
+    AppEvents.on(AccountSegEvents.signInSelected, () => {
         segmentedView.selectItem(accountConfig.signIn.key)
     })
 
@@ -57,5 +64,7 @@ AccountSegmentationController.prototype.showRegistration = async function() {
 AccountSegmentationController.prototype.showSignIn = async function() {
     await this.segmentedView.selectItem(accountConfig.signIn.key)
 }
+
+export {AccountSegEvents}
 
 export default AccountSegmentationController

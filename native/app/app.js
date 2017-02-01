@@ -4,14 +4,16 @@
 import Application from 'progressive-app-sdk/application'
 import MobifyPreviewPlugin from 'progressive-app-sdk/plugins/mobifyPreviewPlugin'
 import PreviewController from 'progressive-app-sdk/controllers/previewController'
+import Astro from 'progressive-app-sdk/astro-full'
 
 // Local
 import baseConfig from './config/baseConfig'
 import TabBarController from './controllers/tabBarController'
 import {getInitialTabId} from './config/tabBarConfig'
 import OnboardingModalController, {OnboardingModalEvents} from './onboarding/onboardingModalController'
+import {AccountSegEvents} from './controllers/accountSegmentationController'
 import AppEvents from './global/app-events'
-import Astro from 'progressive-app-sdk/astro-full'
+import rpcMethodNames from './global/app-rpc-method-names'
 
 window.run = async function() {
     const runApp = async function() {
@@ -34,14 +36,14 @@ window.run = async function() {
             Application.setStatusBarLightText()
         })
 
-        Astro.registerRpcMethod('registerShow', [], () => {
+        Astro.registerRpcMethod(rpcMethodNames.registerShow, [], () => {
             tabBarController.selectTab('account')
-            AppEvents.trigger('registerShow')
+            AppEvents.trigger(AccountSegEvents.registerSelected)
         })
 
-        Astro.registerRpcMethod('signInShow', [], () => {
+        Astro.registerRpcMethod(rpcMethodNames.signInShow, [], () => {
             tabBarController.selectTab('account')
-            AppEvents.trigger('signInShow')
+            AppEvents.trigger(AccountSegEvents.signInSelected)
         })
 
         Application.dismissLaunchImage()
