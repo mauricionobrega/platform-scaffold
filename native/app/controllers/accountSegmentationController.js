@@ -4,19 +4,22 @@ import SegmentedPlugin from 'progressive-app-sdk/plugins/segmentedPlugin'
 
 import accountConfig from '../config/accountConfig'
 
-const AccountSegmentationController = function(layout, webView, segmentedView) {
-    this.layout = layout
+const AccountSegmentationController = function(viewPlugin, webView, segmentedView) {
+    this.viewPlugin = viewPlugin
     this.webView = webView
     this.segmentedView = segmentedView
+
+    this.isActive = false
+    this.isloaded = false
 }
 
 AccountSegmentationController.init = async function() {
     const webView = await WebViewPlugin.init()
-    const layout = await AnchoredLayoutPlugin.init()
+    const viewPlugin = await AnchoredLayoutPlugin.init()
     const segmentedView = await SegmentedPlugin.init()
 
-    await layout.setContentView(webView)
-    await layout.addTopView(segmentedView)
+    await viewPlugin.setContentView(webView)
+    await viewPlugin.addTopView(segmentedView)
 
     await segmentedView.setItems([
         accountConfig.signIn,
@@ -38,7 +41,7 @@ AccountSegmentationController.init = async function() {
 
     await segmentedView.selectItem(accountConfig.signIn.key)       // by default loadup signIn
 
-    return new AccountSegmentationController(layout, webView, segmentedView)
+    return new AccountSegmentationController(viewPlugin, webView, segmentedView)
 }
 
 AccountSegmentationController.prototype.showRegistration = async function() {
@@ -47,6 +50,23 @@ AccountSegmentationController.prototype.showRegistration = async function() {
 
 AccountSegmentationController.prototype.showSignIn = async function() {
     await this.segmentedView.selectItem(accountConfig.signIn.key)
+}
+
+AccountSegmentationController.prototype.reload = async function() {
+    this.loaded = true
+}
+
+AccountSegmentationController.prototype.activate = function() {
+    if (!this.isActive) {
+        this.isActive = true
+        if (!this.loaded) {
+            this.reload()
+        }
+    }
+}
+
+AccountSegmentationController.prototype.deactivate = function() {
+    this.isActive = false
 }
 
 export default AccountSegmentationController

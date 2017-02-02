@@ -80,25 +80,25 @@ class Login extends React.Component {
 
                     <Tabs activeIndex={this.indexForSection(routeName)} className="t-login__navigation" onChange={(index) => navigateToSection(router, routes, this.sectionForIndex(index))}>
                         <TabsPanel title={Login.SECTION_NAMES[Login.SIGN_IN_SECTION]}>
-                            <LoginSection signinSection={signinSection} submitSignInForm={submitSignInForm} openSignInModal={openSignInModal} closeSignInModal={closeSignInModal}/>
+                            <LoginSection signinSection={signinSection} submitSignInForm={submitSignInForm} openSignInModal={openSignInModal} closeSignInModal={closeSignInModal} />
                         </TabsPanel>
 
                         <TabsPanel title={Login.SECTION_NAMES[Login.REGISTER_SECTION]}>
-                            <RegisterSection registerSection={registerSection} submitRegisterForm={submitRegisterForm} openRegisterModal={openRegisterModal} closeRegisterModal={closeRegisterModal}/>
+                            <RegisterSection registerSection={registerSection} submitRegisterForm={submitRegisterForm} openRegisterModal={openRegisterModal} closeRegisterModal={closeRegisterModal} />
                         </TabsPanel>
                     </Tabs>
                 </div>
             )
-        } else if (this.indexForSection(routeName) === 0){
+        } else if (routeName === Login.SIGN_IN_SECTION) {
             return (
                 <div className="t-login">
-                    <LoginSection signinSection={signinSection} submitSignInForm={submitSignInForm} openSignInModal={openSignInModal} closeSignInModal={closeSignInModal}/>
+                    <LoginSection signinSection={signinSection} submitSignInForm={submitSignInForm} openSignInModal={openSignInModal} closeSignInModal={closeSignInModal} />
                 </div>
             )
-        } else if (this.indexForSection(routeName) === 1){
+        } else {
             return (
                 <div className="t-login">
-                    <RegisterSection registerSection={registerSection} submitRegisterForm={submitRegisterForm} openRegisterModal={openRegisterModal} closeRegisterModal={closeRegisterModal}/>
+                    <RegisterSection registerSection={registerSection} submitRegisterForm={submitRegisterForm} openRegisterModal={openRegisterModal} closeRegisterModal={closeRegisterModal} />
                 </div>
             )
         }
@@ -111,85 +111,87 @@ const mapStateToProps = (state, props) => {
     }
 }
 
-function RegisterSection(props) {
-    const item =
-    <div>
-        <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
-            {props.registerSection.heading ?
-                <h3 className="u-margin-bottom u-color-brand u-text-font-family u-text-normal">
-                    {props.registerSection.heading}
-                </h3>
-            :
-                <SkeletonBlock height="24px" width="50%" className="u-margin-bottom" />
-            }
-
-            {props.registerSection.description ?
-                <p>{props.registerSection.description}</p>
-            :
-                <SkeletonText lines={3} size="14px" width="100%" />
-            }
-
-            <div className="u-margin-top">
-                {props.registerSection.requiredText ?
-                    props.registerSection.requiredText
-                :
-                    <SkeletonText lines={1} size="14px" width="33%" />
-                }
-            </div>
-        </div>
-
-        <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
-            <RegisterForm {...props.registerSection.form}
-                disabled={!props.registerSection.form.href}
-                submitForm={props.submitRegisterForm}
-                openModal={props.openRegisterModal}
-                closeModal={props.closeRegisterModal}
-                modalOpen={props.registerSection.infoModalOpen}
-            />
-        </div>
-    </div>
-    return item
-}
-
-function LoginSection(props) {
-    const item =
-    <div>
-        <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
-            <div className="u-margin-bottom">
-                {props.signinSection.heading ?
-                    <h2 className="u-h3 u-color-brand u-text-font-family u-text-normal">
-                        {props.signinSection.heading}
-                    </h2>
+const RegisterSection = (props) => {
+    const item = (
+        <div>
+            <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
+                {props.registerSection.heading ?
+                    <h3 className="u-margin-bottom u-color-brand u-text-font-family u-text-normal">
+                        {props.registerSection.heading}
+                    </h3>
                 :
                     <SkeletonBlock height="24px" width="50%" className="u-margin-bottom" />
                 }
-            </div>
 
-            {props.signinSection.description ?
-                <p>{props.signinSection.description}</p>
-            :
-                <SkeletonText lines={2} size="14px" width="100%" />
-            }
-
-            <div className="u-margin-top">
-                {props.signinSection.requiredText ?
-                    props.signinSection.requiredText
+                {props.registerSection.description ?
+                    <p>{props.registerSection.description}</p>
                 :
-                    <SkeletonText lines={1} size="14px" width="33%" />
+                    <SkeletonText lines={3} size="14px" width="100%" />
                 }
+
+                <div className="u-margin-top">
+                    {props.registerSection.requiredText ?
+                        props.registerSection.requiredText
+                    :
+                        <SkeletonText lines={1} size="14px" width="33%" />
+                    }
+                </div>
+            </div>
+
+            <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
+                <RegisterForm {...props.registerSection.form}
+                    disabled={!props.registerSection.form.href}
+                    submitForm={props.submitRegisterForm}
+                    openModal={props.openRegisterModal}
+                    closeModal={props.closeRegisterModal}
+                    modalOpen={props.registerSection.infoModalOpen}
+                />
             </div>
         </div>
+    )
+    return item
+}
 
-        <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
-            <SignInForm {...props.signinSection.form}
-                disabled={!props.signinSection.form.href}
-                submitForm={props.submitSignInForm}
-                openModal={props.openSignInModal}
-                closeModal={props.closeSignInModal}
-                modalOpen={props.signinSection.infoModalOpen}
-            />
+const LoginSection = (props) => {
+    const item = (
+        <div>
+            <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
+                <div className="u-margin-bottom">
+                    {props.signinSection.heading ?
+                        <h2 className="u-h3 u-color-brand u-text-font-family u-text-normal">
+                            {props.signinSection.heading}
+                        </h2>
+                    :
+                        <SkeletonBlock height="24px" width="50%" className="u-margin-bottom" />
+                    }
+                </div>
+
+                {props.signinSection.description ?
+                    <p>{props.signinSection.description}</p>
+                :
+                    <SkeletonText lines={2} size="14px" width="100%" />
+                }
+
+                <div className="u-margin-top">
+                    {props.signinSection.requiredText ?
+                        props.signinSection.requiredText
+                    :
+                        <SkeletonText lines={1} size="14px" width="33%" />
+                    }
+                </div>
+            </div>
+
+            <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
+                <SignInForm {...props.signinSection.form}
+                    disabled={!props.signinSection.form.href}
+                    submitForm={props.submitSignInForm}
+                    openModal={props.openSignInModal}
+                    closeModal={props.closeSignInModal}
+                    modalOpen={props.signinSection.infoModalOpen}
+                />
+            </div>
         </div>
-    </div>
+    )
     return item
 }
 
