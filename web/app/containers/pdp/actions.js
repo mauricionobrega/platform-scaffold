@@ -9,7 +9,7 @@ import pdpParser from './parsers/pdp'
 export const receiveNewItemQuantity = createAction('Set item quantity')
 export const setItemQuantity = (quantity) => (dispatch, getStore) => {
     dispatch(receiveNewItemQuantity({
-        [appSelectors.getCurrentUrl(getStore())]: {
+        [appSelectors.getCurrentPathKey(getStore())]: {
             itemQuantity: quantity
         }
     }))
