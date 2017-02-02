@@ -11,7 +11,6 @@ import footer from './footer/reducer'
 import header from './header/reducer'
 import home from './home/reducer'
 import login from './login/reducer'
-import miniCart from './mini-cart/reducer'
 import navigation from './navigation/reducer'
 import pdp from './pdp/reducer'
 import plp from './plp/reducer'
@@ -28,7 +27,6 @@ const rootReducer = combineReducers({
     header,
     home,
     login,
-    miniCart,
     navigation,
     pdp,
     plp,

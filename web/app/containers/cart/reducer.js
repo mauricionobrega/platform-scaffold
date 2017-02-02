@@ -1,9 +1,8 @@
 import {handleActions} from 'redux-actions'
 import Immutable from 'immutable'
-import * as cartActions from './actions'
+import {receiveCartContents} from '../../store/cart/actions'
 
 const initialState = Immutable.fromJS({
-    items: [],
     // Do we want to store static data like this elsewhere?
     countries: [
         'Canada',
@@ -19,5 +18,5 @@ const initialState = Immutable.fromJS({
 })
 
 export default handleActions({
-    [cartActions.receiveCartContents]: (state) => state
+    [receiveCartContents]: (state) => state
 }, initialState)

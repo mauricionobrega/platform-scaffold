@@ -9,7 +9,7 @@ import Image from 'progressive-web-sdk/dist/components/image'
 import List from 'progressive-web-sdk/dist/components/list'
 import ProductItem from '../../../components/product-item'
 
-import * as selectors from '../selectors'
+import * as selectors from '../../../store/cart/selectors'
 
 // Parses strings in the format: $Dollars.Cents
 // Dollar amounts only, cents must be specified.
@@ -71,8 +71,8 @@ MiniCartProductList.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
-    items: selectorToJS(selectors.getMiniCartItems),
-    subtotal: selectors.getMiniCartSubtotal
+    items: selectorToJS(selectors.getCartItems),
+    subtotal: selectors.getCartSubtotal
 })
 
 export default connect(mapStateToProps)(MiniCartProductList)

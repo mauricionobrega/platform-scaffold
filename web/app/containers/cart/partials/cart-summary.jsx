@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
-import * as miniCartSelectors from '../../mini-cart/selectors'
+import * as cartSelectors from '../../../store/cart/selectors'
 import {CART_ESTIMATE_SHIPPING_MODAL} from '../constants'
 import {openModal} from '../../../store/modals/actions'
 
@@ -83,9 +83,9 @@ CartSummary.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
-    subtotalExclTax: miniCartSelectors.getSubtotalExcludingTax,
-    subtotalInclTax: miniCartSelectors.getSubtotalIncludingTax,
-    summaryCount: miniCartSelectors.getMiniCartSummaryCount,
+    subtotalExclTax: cartSelectors.getSubtotalExcludingTax,
+    subtotalInclTax: cartSelectors.getSubtotalIncludingTax,
+    summaryCount: cartSelectors.getCartSummaryCount,
 })
 
 const mapDispatchToProps = {
