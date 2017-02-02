@@ -2,13 +2,16 @@ import WebViewPlugin from 'progressive-app-sdk/plugins/WebViewPlugin'
 import AnchoredLayoutPlugin from 'progressive-app-sdk/plugins/anchoredLayoutPlugin'
 import SegmentedPlugin from 'progressive-app-sdk/plugins/segmentedPlugin'
 
+import TabHeaderController from './tabHeaderController'
 import accountConfig from '../config/accountConfig'
 
-const AccountSegmentationController = function(viewPlugin, signInView, registerView, segmentedView) {
+const AccountSegmentationController = function(viewPlugin, signInView, registerView, segmentedView, layout, headerController) {
     this.viewPlugin = viewPlugin
     this.signInView = signInView
     this.registerView = registerView
     this.segmentedView = segmentedView
+    this.layout = layout
+    this.headerController = headerController
 
     this.isActive = false
     this.isloaded = false
@@ -19,12 +22,17 @@ AccountSegmentationController.init = async function() {
     const registerView = await WebViewPlugin.init()
     const viewPlugin = await AnchoredLayoutPlugin.init()
     const segmentedView = await SegmentedPlugin.init()
+    const layout = await AnchoredLayoutPlugin.init()
+    const headerController = await TabHeaderController.init()
 
-    signInView.navigate(accountConfig.signIn.url)
-    registerView.navigate(accountConfig.register.url)
+    await signInView.navigate(accountConfig.signIn.url)
+    await registerView.navigate(accountConfig.register.url)
 
-    await viewPlugin.setContentView(signInView)
-    await viewPlugin.addTopView(segmentedView)
+    await layout.setContentView(signInView)
+    await layout.addTopView(segmentedView)
+
+    await viewPlugin.addTopView(headerController.viewPlugin)
+    await viewPlugin.setContentView(layout)
 
     await segmentedView.setItems([
         accountConfig.signIn,
@@ -36,15 +44,15 @@ AccountSegmentationController.init = async function() {
     segmentedView.on('itemSelect', (params) => {
         switch (params.key) {
             case accountConfig.signIn.key:
-                viewPlugin.setContentView(signInView)
+                layout.setContentView(signInView)
                 break
             case accountConfig.register.key:
-                viewPlugin.setContentView(registerView)
+                layout.setContentView(registerView)
                 break
         }
     })
 
-    return new AccountSegmentationController(viewPlugin, signInView, registerView, segmentedView)
+    return new AccountSegmentationController(viewPlugin, signInView, registerView, segmentedView, layout, headerController)
 }
 
 AccountSegmentationController.prototype.showRegistration = async function() {

@@ -1,23 +1,16 @@
 import Promise from 'bluebird'
 
 import AnchoredLayoutPlugin from 'progressive-app-sdk/plugins/anchoredLayoutPlugin'
-import HeaderBarPlugin from 'progressive-app-sdk/plugins/headerBarPlugin'
 import NavigationPlugin from 'progressive-app-sdk/plugins/navigationPlugin'
-import CounterBadgeController from 'progressive-app-sdk/controllers/counterBadgeController'
 
-import CartModalController from './cartModalController'
+import TabHeaderController from './tabHeaderController'
 
-import baseConfig from '../config/baseConfig'
-import cartConfig from '../config/cartConfig'
-// import tabBarConfig from '../config/tabBarConfig'
-
-const TabController = function(tabItem, layout, headerBar, navigationView, counterBadgeController) {
+const TabController = function(tabItem, layout, navigationView, headerController) {
     this.tabItem = tabItem
     this.id = tabItem.id
     this.viewPlugin = layout
-    this.headerBar = headerBar
     this.navigationView = navigationView
-    this.counterBadgeController = counterBadgeController
+    this.headerController = headerController
 
     this.isActive = false
     this.loaded = false
@@ -26,46 +19,31 @@ const TabController = function(tabItem, layout, headerBar, navigationView, count
 TabController.init = async function(tabItem) {
     const [
         layout,
-        headerBar,
         navigationView,
-        counterBadgeController
+        headerController,
     ] = await Promise.all([
         AnchoredLayoutPlugin.init(),
-        HeaderBarPlugin.init(),
         NavigationPlugin.init(),
-        CounterBadgeController.init(cartConfig.cartIcon.imageUrl, 'headerId', {})
+        TabHeaderController.init()
     ])
 
-    const counterBadgePlugin = await counterBadgeController.generatePlugin()
-
-    await layout.addTopView(headerBar)
+    await layout.addTopView(headerController.viewPlugin)
     await layout.setContentView(navigationView)
-    await navigationView.setHeaderBar(headerBar)
-
-    await headerBar.setCenterIcon(baseConfig.logoUrl, 'logo')
-    await headerBar.setRightPlugin(counterBadgePlugin, cartConfig.cartIcon.id)
-    await headerBar.setTextColor(baseConfig.colors.whiteColor)
-    await headerBar.setBackgroundColor(baseConfig.colors.primaryColor)
-    await headerBar.setOpaque()
-
-    headerBar.on('click:back', () => {
-        navigationView.back()
-    })
-
-    headerBar.on(`click:${cartConfig.cartIcon.id}`, async () => {
-        const cartModalController = await CartModalController.init()
-        cartModalController.show()
-    })
+    await navigationView.setHeaderBar(headerController.viewPlugin)
 
     navigationView.defaultWebViewPluginOptions = {
         disableLoader: []
     }
 
-    navigationView.on('cart-updated', async (data) => {
-        await counterBadgeController.updateCounterValue(data.count)
+    headerController.on('back', () => {
+        navigationView.back()
     })
 
-    return new TabController(tabItem, layout, headerBar, navigationView)
+    navigationView.on('cart-updated', async (data) => {
+        await headerController.updateCounter(data.count)
+    })
+
+    return new TabController(tabItem, layout, navigationView, headerController)
 }
 
 TabController.prototype.reload = async function() {
