@@ -37,5 +37,3 @@ register.form = makeSelectorsFrom(register.getFormInfo, [
     ['getHref', 'href'],
     ['getSubmitText', 'submitText']
 ])
-
-export const getLoginLoaded = createGetSelector(getLogin, 'loaded')
