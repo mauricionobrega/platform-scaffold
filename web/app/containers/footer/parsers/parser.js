@@ -2,9 +2,10 @@ import {parseTextLink} from '../../../utils/parser-utils'
 
 export const parseNewsLetter = ($content) => {
     const $form = $content.find('footer .form.subscribe')
-    const method = $form.attr('method').toLowerCase()
-    const action = $form.attr('action')
-    return {action, method}
+    return {
+        action: $form.attr('action'),
+        method: $form.attr('method').toLowerCase()
+    }
 }
 
 const FOOTER_LINK_SELECTOR = 'footer .footer.links li a'
