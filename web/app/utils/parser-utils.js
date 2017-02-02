@@ -1,5 +1,12 @@
 import Immutable from 'immutable'
 
+export const getTextFrom = ($element, selector) => (
+    $element
+        .find(selector)
+        .text()
+        .trim()
+)
+
 export const TextLink = Immutable.Record({
     href: '',
     text: '',
