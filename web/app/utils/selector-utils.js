@@ -6,6 +6,21 @@ export const createImmutableComparingSelector = createSelectorCreator(
     Immutable.is
 )
 
+/**
+ * Creates a selector that handles the conversion from Immutable
+ * objects to plain Javascript objects.
+ *
+ * If the result of the input selector is identical to its previous
+ * result result using Immutable.is, this will return the same JS
+ * object as the previous call.
+ *
+ * This simplifies downstream update checks substantially, since if
+ * the relevant store contents are unchanged the new object will be
+ * === to the old object. (i.e. this is where the magic happens)
+ *
+ * @param {function} selector - A selector returning an Immutable object
+ * @returns {function}
+ */
 export const selectorToJS = (selector) => createImmutableComparingSelector(
     selector,
     (raw) => { return raw ? raw.toJS() : null }
@@ -13,17 +28,58 @@ export const selectorToJS = (selector) => createImmutableComparingSelector(
 
 export const createToJSSelector = (...args) => selectorToJS(createSelector(...args))
 
-export const createGetSelector = (selector, key, defaultValue) => createSelector(
-    selector,
-    (obj) => obj.get(key, defaultValue)
-)
+/**
+ * Creates a selector that gets a value from a selected Immutable object.
+ *
+ * @param {function} selector - A selector returning an Immutable object
+ * @param {string|number|function} key - The key to be looked up on
+ *   the Immutable object. If a function is passed it is treated as a
+ *   selector returning the desired key.
+ * @param {*} [defaultValue] - An optional value to be returned if the
+ *   key does not exist in the Immutable object.
+  * @returns {function}
+ */
+export const createGetSelector = (selector, key, defaultValue) => {
+    if (typeof key === 'function') {
+        return createSelector(
+            selector,
+            key,
+            (obj, keyValue) => obj.get(keyValue, defaultValue)
+        )
+    } else {
+        return createSelector(
+            selector,
+            (obj) => obj.get(key, defaultValue)
+        )
+    }
+}
 
 export const invertSelector = (selector) => createSelector(
     selector,
     (bool) => !bool
 )
 
-export const createHasSelector = (selector, key) => createSelector(
-    selector,
-    (obj) => obj.has(key)
-)
+/**
+ * Creates a selector that checks whether a key exists in a selected
+ * Immutable object.
+ *
+ * @param {function} selector - A selector returning an Immutable object
+ * @param {string|number|function} key - The key to be checked on
+ *   the Immutable object. If a function is passed it is treated as a
+ *   selector returning the desired key.
+ * @returns {function}
+ */
+export const createHasSelector = (selector, key) => {
+    if (typeof key === 'function') {
+        return createSelector(
+            selector,
+            key,
+            (obj, keyValue) => obj.has(keyValue)
+        )
+    } else {
+        return createSelector(
+            selector,
+            (obj) => obj.has(key)
+        )
+    }
+}
