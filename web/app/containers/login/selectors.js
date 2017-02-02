@@ -23,15 +23,19 @@ const makeSelectorsFrom = (selector, keys) => fromPairs(
 
 export const signin = makeSelectorsFrom(getSigninSection, sectionKeys)
 
-export const getSigninFormFields = createGetSelector(signin.getFormInfo, 'fields')
-export const getSigninFormHref = createGetSelector(signin.getFormInfo, 'href')
-export const getSigninFormSubmitText = createGetSelector(signin.getFormInfo, 'submitText')
-export const getSigninFormForgotPassword = createGetSelector(signin.getFormInfo, 'forgotPassword')
-
+signin.form = makeSelectorsFrom(signin.getFormInfo, [
+    ['getFields', 'fields'],
+    ['getHref', 'href'],
+    ['getSubmitText', 'submitText'],
+    ['getForgotPassword', 'forgotPassword']
+])
 
 export const register = makeSelectorsFrom(getRegisterSection, sectionKeys)
 
-export const getRegisterFormSections = createGetSelector(register.getFormInfo, 'sections')
-export const getRegisterFormHref = createGetSelector(register.getFormInfo, 'href')
-export const getRegisterFormSubmitText = createGetSelector(register.getFormInfo, 'submitText')
+register.form = makeSelectorsFrom(register.getFormInfo, [
+    ['getSections', 'sections'],
+    ['getHref', 'href'],
+    ['getSubmitText', 'submitText']
+])
+
 export const getLoginLoaded = createGetSelector(getLogin, 'loaded')
