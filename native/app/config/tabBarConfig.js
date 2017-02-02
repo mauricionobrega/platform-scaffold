@@ -1,3 +1,4 @@
+import baseConfig from './baseConfig'
 
 const tabBarConfig = {
     items: [
@@ -6,29 +7,30 @@ const tabBarConfig = {
             title: 'Shop',
             imageUrl: 'file:///wand.png',
             selectedImageUrl: 'file:///wand.png',
-            rootUrl: 'https://www.merlinspotions.com',
-            isInitialTab: true
+            rootUrl: `${baseConfig.baseURL}`,
+            isInitialTab: true,
         },
         {
             id: 'stores',
             title: 'Stores',
             imageUrl: 'file:///map.png',
             selectedImageUrl: 'file:///map.png',
-            rootUrl: 'https://www.merlinspotions.com'
+            rootUrl: `${baseConfig.baseURL}`,
         },
         {
             id: 'account',
             title: 'Account',
             imageUrl: 'file:///user.png',
             selectedImageUrl: 'file:///user.png',
-            rootUrl: 'https://www.merlinspotions.com/customer/account/create/'
+            rootUrl: `${baseConfig.baseURL}/customer/account`,
+            type: 'custom'
         },
         {
             id: 'more',
             title: 'More',
             imageUrl: 'file:///more.png',
             selectedImageUrl: 'file:///more.png',
-            rootUrl: 'https://www.merlinspotions.com'
+            rootUrl: `${baseConfig.baseURL}`,
         }
     ]
 }
