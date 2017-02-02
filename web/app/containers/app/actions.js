@@ -11,7 +11,7 @@ import * as loginActions from '../login/actions'
 import * as pdpActions from '../pdp/actions'
 import * as footerActions from '../footer/actions'
 import * as navigationActions from '../navigation/actions'
-import * as productsActions from '../catalog/products/actions'
+import * as productsActions from '../../store/products/actions'
 import * as categoriesActions from '../../store/categories/actions'
 
 export const addNotification = utils.createAction('Add Notification')

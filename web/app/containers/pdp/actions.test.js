@@ -25,19 +25,22 @@ test('submitCartForm makes a request and dispatches updates', () => {
     const thunk = submitCartForm()
     expect(typeof thunk).toBe('function')
 
-    const getStore = () => ({ui: {pdp: {
-        get: () => {
-            return Immutable.fromJS({
-                contentsLoaded: true,
-                formInfo: {
-                    method: 'POST',
-                    hiddenInputs: {},
-                    submitUrl: 'submitUrl'
-                },
-                itemQuantity: 1
+    const getStore = () => ({
+        ui: {
+            app: Immutable.fromJS({currentURL: 'https://test.mobify.com/'}),
+            pdp: Immutable.fromJS({
+                '/': {
+                    contentsLoaded: true,
+                    formInfo: {
+                        method: 'POST',
+                        hiddenInputs: {},
+                        submitUrl: 'submitUrl'
+                    },
+                    itemQuantity: 1
+                }
             })
         }
-    }}})
+    })
 
     const mockDispatch = jest.fn()
     return thunk(mockDispatch, getStore)

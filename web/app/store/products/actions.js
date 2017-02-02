@@ -1,4 +1,4 @@
-import {createAction} from '../../../utils/utils'
+import {createAction, urlToPathKey} from '../../utils/utils'
 
 import {plpParser, pdpParser} from './parser'
 
@@ -8,4 +8,4 @@ export const receivePdpProductData = createAction('Receive PDP product data')
 export const processPlp = ({payload: {$, $response}}) =>
     receivePlpProductData(plpParser($, $response))
 export const processPdp = ({payload: {$, $response, url}}) =>
-    receivePdpProductData({[url]: pdpParser($, $response)})
+    receivePdpProductData({[urlToPathKey(url)]: pdpParser($, $response)})
