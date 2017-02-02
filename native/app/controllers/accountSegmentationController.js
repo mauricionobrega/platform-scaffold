@@ -25,8 +25,11 @@ AccountSegmentationController.init = async function() {
     const layout = await AnchoredLayoutPlugin.init()
     const headerController = await TabHeaderController.init()
 
-    await signInView.navigate(accountConfig.signIn.url)
-    await registerView.navigate(accountConfig.register.url)
+    // await signInView.setPageTimeOutDuration(60)
+    // await registerView.setPageTimeOutDuration(60)
+
+    signInView.navigate(accountConfig.signIn.url)
+    registerView.navigate(accountConfig.register.url)
 
     await layout.setContentView(signInView)
     await layout.addTopView(segmentedView)
@@ -42,6 +45,7 @@ AccountSegmentationController.init = async function() {
     await segmentedView.setColor(accountConfig.color)
 
     segmentedView.on('itemSelect', (params) => {
+        layout.clearContentView()
         switch (params.key) {
             case accountConfig.signIn.key:
                 layout.setContentView(signInView)
