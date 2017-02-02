@@ -114,10 +114,10 @@ const ReduxRegisterForm = reduxForm({
 })(RegisterForm)
 
 const mapStateToProps = createStructuredSelector({
-    sections: selectorToJS(selectors.getRegisterFormSections),
-    href: selectors.getRegisterFormHref,
+    sections: selectorToJS(selectors.register.form.getSections),
+    href: selectors.register.form.getHref,
     modalOpen: isModalOpen(REGISTER_SECTION),
-    submitText: selectors.getRegisterFormSubmitText
+    submitText: selectors.register.form.getSubmitText
 })
 
 const mapDispatchToProps = {

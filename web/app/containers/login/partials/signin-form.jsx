@@ -106,11 +106,11 @@ const ReduxSignInForm = reduxForm({
 })(SignInForm)
 
 const mapStateToProps = createStructuredSelector({
-    fields: selectorToJS(selectors.getSigninFormFields),
-    href: selectors.getSigninFormHref,
+    fields: selectorToJS(selectors.signin.form.getFields),
+    href: selectors.signin.form.getHref,
     modalOpen: isModalOpen(SIGN_IN_SECTION),
-    submitText: selectors.getSigninFormSubmitText,
-    forgotPassword: selectorToJS(selectors.getSigninFormForgotPassword)
+    submitText: selectors.signin.form.getSubmitText,
+    forgotPassword: selectorToJS(selectors.signin.form.getForgotPassword)
 })
 
 const mapDispatchToProps = {
