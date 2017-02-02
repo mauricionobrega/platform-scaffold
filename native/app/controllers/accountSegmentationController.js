@@ -4,9 +4,10 @@ import SegmentedPlugin from 'progressive-app-sdk/plugins/segmentedPlugin'
 
 import accountConfig from '../config/accountConfig'
 
-const AccountSegmentationController = function(viewPlugin, webView, segmentedView) {
+const AccountSegmentationController = function(viewPlugin, signInView, registerView, segmentedView) {
     this.viewPlugin = viewPlugin
-    this.webView = webView
+    this.signInView = signInView
+    this.registerView = registerView
     this.segmentedView = segmentedView
 
     this.isActive = false
@@ -14,11 +15,15 @@ const AccountSegmentationController = function(viewPlugin, webView, segmentedVie
 }
 
 AccountSegmentationController.init = async function() {
-    const webView = await WebViewPlugin.init()
+    const signInView = await WebViewPlugin.init()
+    const registerView = await WebViewPlugin.init()
     const viewPlugin = await AnchoredLayoutPlugin.init()
     const segmentedView = await SegmentedPlugin.init()
 
-    await viewPlugin.setContentView(webView)
+    signInView.navigate(accountConfig.signIn.url)
+    registerView.navigate(accountConfig.register.url)
+
+    await viewPlugin.setContentView(signInView)
     await viewPlugin.addTopView(segmentedView)
 
     await segmentedView.setItems([
@@ -31,17 +36,15 @@ AccountSegmentationController.init = async function() {
     segmentedView.on('itemSelect', (params) => {
         switch (params.key) {
             case accountConfig.signIn.key:
-                webView.navigate(accountConfig.signIn.url)
+                viewPlugin.setContentView(signInView)
                 break
             case accountConfig.register.key:
-                webView.navigate(accountConfig.register.url)
+                viewPlugin.setContentView(registerView)
                 break
         }
     })
 
-    await segmentedView.selectItem(accountConfig.signIn.key)       // by default loadup signIn
-
-    return new AccountSegmentationController(viewPlugin, webView, segmentedView)
+    return new AccountSegmentationController(viewPlugin, signInView, registerView, segmentedView)
 }
 
 AccountSegmentationController.prototype.showRegistration = async function() {
