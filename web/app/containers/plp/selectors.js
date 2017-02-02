@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import {createSelector} from 'reselect'
-import {createGetSelector} from '../../utils/selector-utils'
+import {createGetSelector, createHasSelector} from '../../utils/selector-utils'
 import {getUi, getCategories, getProducts} from '../../store/selectors'
 import * as appSelectors from '../app/selectors'
 import {PLACEHOLDER} from '../app/constants'
@@ -9,16 +9,15 @@ const PLACEHOLDER_URLS = Immutable.List(new Array(5).fill(PLACEHOLDER))
 
 export const getPlp = createSelector(getUi, ({plp}) => plp)
 
-export const getSelectedCategory = createSelector(
+export const getSelectedCategory = createGetSelector(
     getCategories,
     appSelectors.getCurrentPathKey,
-    (categories, selectorPath) => categories.get(selectorPath, Immutable.Map())
+    Immutable.Map()
 )
 
-export const getPlpContentsLoaded = createSelector(
+export const getPlpContentsLoaded = createHasSelector(
     getCategories,
-    appSelectors.getCurrentPathKey,
-    (categories, path) => categories.has(path)
+    appSelectors.getCurrentPathKey
 )
 
 export const getProductPaths = createGetSelector(getSelectedCategory, 'products', PLACEHOLDER_URLS)
