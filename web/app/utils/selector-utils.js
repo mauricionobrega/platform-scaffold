@@ -11,12 +11,14 @@ export const createImmutableComparingSelector = createSelectorCreator(
  * objects to plain Javascript objects.
  *
  * If the result of the input selector is identical to its previous
- * result result using Immutable.is, this will return the same JS
- * object as the previous call.
+ * result using Immutable.is, this will return the same JS object as
+ * the previous call.
  *
- * This simplifies downstream update checks substantially, since if
- * the relevant store contents are unchanged the new object will be
- * === to the old object. (i.e. this is where the magic happens)
+ * This simplifies downstream update checks substantially, since a
+ * shallow comparison of the resulting JS objects will only show
+ * equality if they are deeply equal. This allows optimization of
+ * updates using shallow comparisons in reselect, react-redux, and
+ * various React utilities.
  *
  * @param {function} selector - A selector returning an Immutable object
  * @returns {function}
@@ -37,7 +39,7 @@ export const createToJSSelector = (...args) => selectorToJS(createSelector(...ar
  *   selector returning the desired key.
  * @param {*} [defaultValue] - An optional value to be returned if the
  *   key does not exist in the Immutable object.
-  * @returns {function}
+ * @returns {function}
  */
 export const createGetSelector = (selector, key, defaultValue) => {
     if (typeof key === 'function') {
@@ -46,12 +48,11 @@ export const createGetSelector = (selector, key, defaultValue) => {
             key,
             (obj, keyValue) => obj.get(keyValue, defaultValue)
         )
-    } else {
-        return createSelector(
-            selector,
-            (obj) => obj.get(key, defaultValue)
-        )
     }
+    return createSelector(
+        selector,
+        (obj) => obj.get(key, defaultValue)
+    )
 }
 
 export const invertSelector = (selector) => createSelector(
@@ -76,10 +77,9 @@ export const createHasSelector = (selector, key) => {
             key,
             (obj, keyValue) => obj.has(keyValue)
         )
-    } else {
-        return createSelector(
-            selector,
-            (obj) => obj.has(key)
-        )
     }
+    return createSelector(
+        selector,
+        (obj) => obj.has(key)
+    )
 }
