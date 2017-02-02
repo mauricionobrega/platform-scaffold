@@ -1,25 +1,37 @@
 import {createSelector} from 'reselect'
 import {createGetSelector} from '../../utils/selector-utils'
 import {getUi} from '../../store/selectors'
+import fromPairs from 'lodash.frompairs'
 
 export const getLogin = createSelector(getUi, ({login}) => login)
 
 export const getLoginTitle = createGetSelector(getLogin, 'title')
+
 export const getSigninSection = createGetSelector(getLogin, 'signinSection')
-export const getSigninSectionDescription = createGetSelector(getSigninSection, 'description')
-export const getSigninSectionHeading = createGetSelector(getSigninSection, 'heading')
-export const getSigninSectionRequiredText = createGetSelector(getSigninSection, 'requiredText')
-export const getSigninFormInfo = createGetSelector(getSigninSection, 'form')
-export const getSigninFormFields = createGetSelector(getSigninFormInfo, 'fields')
-export const getSigninFormHref = createGetSelector(getSigninFormInfo, 'href')
-export const getSigninFormSubmitText = createGetSelector(getSigninFormInfo, 'submitText')
-export const getSigninFormForgotPassword = createGetSelector(getSigninFormInfo, 'forgotPassword')
 export const getRegisterSection = createGetSelector(getLogin, 'registerSection')
-export const getRegisterSectionDescription = createGetSelector(getRegisterSection, 'description')
-export const getRegisterSectionHeading = createGetSelector(getRegisterSection, 'heading')
-export const getRegisterSectionRequiredText = createGetSelector(getRegisterSection, 'requiredText')
-export const getRegisterFormInfo = createGetSelector(getRegisterSection, 'form')
-export const getRegisterFormSections = createGetSelector(getRegisterFormInfo, 'sections')
-export const getRegisterFormHref = createGetSelector(getRegisterFormInfo, 'href')
-export const getRegisterFormSubmitText = createGetSelector(getRegisterFormInfo, 'submitText')
+
+const sectionKeys = [
+    ['getDescription', 'description'],
+    ['getHeading', 'heading'],
+    ['getRequiredText', 'requiredText'],
+    ['getFormInfo', 'form']
+]
+
+const makeSelectorsFrom = (selector, keys) => fromPairs(
+    keys.map(([funcName, key]) => [funcName, createGetSelector(selector, key)])
+)
+
+export const signin = makeSelectorsFrom(getSigninSection, sectionKeys)
+
+export const getSigninFormFields = createGetSelector(signin.getFormInfo, 'fields')
+export const getSigninFormHref = createGetSelector(signin.getFormInfo, 'href')
+export const getSigninFormSubmitText = createGetSelector(signin.getFormInfo, 'submitText')
+export const getSigninFormForgotPassword = createGetSelector(signin.getFormInfo, 'forgotPassword')
+
+
+export const register = makeSelectorsFrom(getRegisterSection, sectionKeys)
+
+export const getRegisterFormSections = createGetSelector(register.getFormInfo, 'sections')
+export const getRegisterFormHref = createGetSelector(register.getFormInfo, 'href')
+export const getRegisterFormSubmitText = createGetSelector(register.getFormInfo, 'submitText')
 export const getLoginLoaded = createGetSelector(getLogin, 'loaded')

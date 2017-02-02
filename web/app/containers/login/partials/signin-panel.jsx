@@ -35,9 +35,9 @@ SignInPanel.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
-    description: selectors.getSigninSectionDescription,
-    heading: selectors.getSigninSectionHeading,
-    requiredText: selectors.getSigninSectionRequiredText
+    description: selectors.signin.getDescription,
+    heading: selectors.signin.getHeading,
+    requiredText: selectors.signin.getRequiredText
 })
 
 const mapDispatchToProps = {
