@@ -37,13 +37,7 @@ const template = (WrappedComponent) => {
         }
 
         componentWillMount() {
-            console.log('mounting', Template.displayName)
-
             this.dispatchRouteChange(this.props)
-        }
-
-        componentWillUnmount() {
-            console.log('unmounting', Template.displayName)
         }
 
         componentWillReceiveProps(nextProps) {
