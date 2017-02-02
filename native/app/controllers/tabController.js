@@ -6,11 +6,9 @@ import NavigationPlugin from 'progressive-app-sdk/plugins/navigationPlugin'
 import CounterBadgeController from 'progressive-app-sdk/controllers/counterBadgeController'
 
 import CartModalController from './cartModalController'
-import AccountSegmentationController from './accountSegmentationController'
 
 import baseConfig from '../config/baseConfig'
 import cartConfig from '../config/cartConfig'
-// import tabBarConfig from '../config/tabBarConfig'
 
 const TabController = function(tabItem, layout, headerBar, navigationView, counterBadgeController) {
     this.tabItem = tabItem
@@ -22,6 +20,7 @@ const TabController = function(tabItem, layout, headerBar, navigationView, count
 
     this.isActive = false
     this.loaded = false
+    console.log('TabController constructor finished')
 }
 
 TabController.init = async function(tabItem) {
@@ -40,13 +39,8 @@ TabController.init = async function(tabItem) {
     const counterBadgePlugin = await counterBadgeController.generatePlugin()
 
     await layout.addTopView(headerBar)
-    if (tabItem.id === 'account') {                                                 // The account page does not require navigationView, instead using webView
-        const accountController = await AccountSegmentationController.init()
-        await layout.setContentView(accountController.layout)
-    } else {
-        await layout.setContentView(navigationView)
-        await navigationView.setHeaderBar(headerBar)
-    }
+    await layout.setContentView(navigationView)
+    await navigationView.setHeaderBar(headerBar)
 
     await headerBar.setCenterIcon(baseConfig.logoUrl, 'logo')
     await headerBar.setRightPlugin(counterBadgePlugin, cartConfig.cartIcon.id)
@@ -99,11 +93,6 @@ TabController.prototype.reload = async function() {
 }
 
 TabController.prototype.activate = function() {
-    // Don't know how to handle this yet so on account, don't do anything for now....
-    if (this.tabItem.id === 'account') {
-        return
-    }
-
     if (this.isActive) {
         this.navigationView.popToRoot({animated: true})
     } else {
