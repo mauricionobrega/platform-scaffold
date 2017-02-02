@@ -23,7 +23,7 @@ AccountSegmentationController.init = async function() {
         accountConfig.register
     ])
 
-    await segmentView.setColor(accountConfig.color)
+    await segmentedView.setColor(accountConfig.color)
 
     segmentedView.on('itemSelect', (params) => {
         switch (params.key) {
