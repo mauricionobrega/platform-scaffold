@@ -1,13 +1,17 @@
+import baseConfig from './baseConfig'
+
+const baseAccountURL = `${baseConfig.baseURL}/customer/account`
+
 const register = {
     key: 'register',
     text: 'Register',
-    url: 'https://www.merlinspotions.com/customer/account/create/'
+    url: `${baseAccountURL}/create/`
 }
 
 const signIn = {
     key: 'signIn',
     text: 'Sign In',
-    url: 'https://www.merlinspotions.com/customer/account/login/'
+    url: `${baseAccountURL}/login/`
 }
 
 export default {register, signIn}
