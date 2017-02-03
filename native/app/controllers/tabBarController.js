@@ -1,7 +1,7 @@
 import AnchoredLayoutPlugin from 'progressive-app-sdk/plugins/anchoredLayoutPlugin'
 import TabBarPlugin from 'progressive-app-sdk/plugins/tabBarPlugin'
 
-import AccountSegmentationController, {Events} from './accountSegmentationController'
+import AccountSegmentationController from './accountSegmentationController'
 import TabController from './tabController'
 import {tabBarConfig} from '../config/tabBarConfig'
 
@@ -23,8 +23,6 @@ TabBarController.init = async function() {
     const layout = await AnchoredLayoutPlugin.init()
 
     const tabControllers = {}
-
-    console.log(Events)
 
     const tabControllerPromises = tabBarConfig.items.map((item) => {
         if (item.type === 'custom') {
