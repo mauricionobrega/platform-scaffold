@@ -73,7 +73,7 @@ CheckoutShipping.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        checkoutShipping: state.checkoutShipping
+        checkoutShipping: state.ui.checkoutShipping
     }
 }
 
