@@ -3,21 +3,16 @@ import React from 'react'
 import CarouselItem from 'progressive-web-sdk/dist/components/carousel/carousel-item'
 import Carousel from 'progressive-web-sdk/dist/components/carousel'
 import Button from 'progressive-web-sdk/dist/components/button'
-import Astro from '../../vendor/astro-client'
 
 const Onboarding = ({carouselData}) => {
     const carouselItems = carouselData.map((data, index) => {
-        return <OnboardingScreen data={data} key={index} index={index} isLast={index === carouselData.length - 1} />
+        return <OnboardingScreen data={data} key={index} index={index} />
     })
     return (
         <Carousel>
             {carouselItems}
         </Carousel>
     )
-}
-
-const onLaterTapped = () => {
-    Astro.jsRpcMethod('onboardingHide', [])()
 }
 
 const OnboardingScreen = (props) => {
@@ -34,16 +29,18 @@ const OnboardingScreen = (props) => {
                         <p className="item-subtitle u-text-font-family">{data.subtitle}</p>
                     </div>
                 </div>
-                {data.primaryButtonTitle &&
+                {data.primaryButton &&
                     <div className="u-flexbox u-flexbox-gutters button-wrapper">
-                        <Button text={data.primaryButtonTitle} className="c--primary u-flex" />
+                        <Button text={data.primaryButton.title} className="c--primary u-flex" onClick={data.primaryButton.action} />
                     </div>
                 }
                 <div className="u-flexbox u-flexbox-gutters button-wrapper">
-                    {props.isLast &&
-                        <Button className="c--tertiary u-flex" text={data.laterButtonTitle} onClick={onLaterTapped} />
+                    {data.laterButton &&
+                        <Button className="c--tertiary u-flex" text={data.laterButton.title} onClick={data.laterButton.action} />
                     }
-                    <Button className="c--secondary u-flex" text={data.actionButtonTitle} />
+                    {data.actionButton &&
+                        <Button className="c--secondary u-flex" text={data.actionButton.title} onClick={data.actionButton.action} />
+                    }
                 </div>
             </div>
         </CarouselItem>
