@@ -110,8 +110,8 @@ npm run test:watch
 
 ## Automated end-to-end tests
 
-To verify that changes do not break the End to End checkout workflow:
-Note: Tests will have to be built/added as the project is being built.
+To verify that changes do not break the End to End checkout workflow.
+**Note** - Tests will have to be built/added as the project is being built.
 
 ```
 npm run smoke-test
