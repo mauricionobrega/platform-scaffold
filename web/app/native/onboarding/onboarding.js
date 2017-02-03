@@ -8,6 +8,8 @@ import Onboarding from '../../containers/onboarding/container'
 // Astro
 import Astro from '../../vendor/astro-client'
 
+import Stylesheet from './index.scss' // eslint-disable-line no-unused-vars
+
 const location = {
     imageURL: 'static/img/onboarding/location.png',
     imageAlt: 'Location',
@@ -55,8 +57,6 @@ const carouselData = {
     notifications,
     login
 }
-
-import Stylesheet from './index.scss' // eslint-disable-line no-unused-vars
 
 const rootEl = document.getElementsByClassName('react-target')[0]
 
