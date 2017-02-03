@@ -82,8 +82,6 @@ AccountSegmentationController.prototype.showSignIn = async function() {
 
 AccountSegmentationController.prototype.reload = async function() {
     this.loaded = true
-    this.signInView.navigate(accountConfig.signIn.url)
-    this.registerView.navigate(accountConfig.register.url)
 }
 
 AccountSegmentationController.prototype.activate = function() {
@@ -93,7 +91,6 @@ AccountSegmentationController.prototype.activate = function() {
             this.reload()
         }
     }
-    this.reload()
 }
 
 AccountSegmentationController.prototype.deactivate = function() {

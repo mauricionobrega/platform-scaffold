@@ -5,9 +5,6 @@ import NavigationPlugin from 'progressive-app-sdk/plugins/navigationPlugin'
 
 import TabHeaderController from './tabHeaderController'
 
-import baseConfig from '../config/baseConfig'
-import cartConfig from '../config/cartConfig'
-
 const TabController = function(tabItem, layout, navigationView, headerController) {
     this.tabItem = tabItem
     this.id = tabItem.id
