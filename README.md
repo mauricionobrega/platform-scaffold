@@ -44,9 +44,9 @@ From the project folder, run the following command to push a bundle up to the Mo
 npm run push -- --m "VersionNum:GitSHA,BRANCH"
 ```
 
-The Bundle Message is required. The format of the message is as follows: 
-- Version number: Use [Semantic Versioning](http://semver.org/)
-- Git Commit SHA: 7 or 8 characters
+The Bundle Message is required. The format of the message is as follows:
+- Version Number: Use [Semantic Versioning](http://semver.org/)
+- Git Commit SHA: First 7 or 8 characters
 - BRANCH: The branch that you are bundling from
 
 
