@@ -1,3 +1,12 @@
+# Platform Scaffold
+
+Welcome to the Platform Scaffold. This repo is organized as follows:
+
+| Directory          | Description                                                         |
+| ------------------ | ------------------------------------------------------------------- |
+| [/web](/web)       | Contains the web (Mobify Progressive Web SDK) scaffold              |
+| [/native](/native) | Contains the native (Mobify Progressive App SDK, or Astro) scaffold |
+
 ## Requirements
 
 - [Git](https://git-scm.com/)
