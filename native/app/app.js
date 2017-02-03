@@ -29,8 +29,18 @@ window.run = async function() {
             tabBarController.selectTab(initialTabId)
         }
 
-        AppEvents.on(OnboardingModalEvents.onboardingHidden, () => {
+        AppEvents.on(OnboardingModalEvents.onboardingHidden, (param) => {
             Application.setStatusBarLightText()
+            switch (param.selected) {
+                case OnboardingModalEvents.registerSelected:
+                    tabBarController.showRegistration()
+                    break
+                case OnboardingModalEvents.signInSelected:
+                    tabBarController.showSignIn()
+                    break
+                default:
+                    break
+            }
         })
 
         Application.dismissLaunchImage()

@@ -12,7 +12,10 @@ const OnboardingModalEvents = {
     // raised when onboarding modal is hidden
     onboardingHidden: 'onboarding:hidden',
     // raised when onboarding modal is displayed
-    onboardingShown: 'onboarding:shown'
+    onboardingShown: 'onboarding:shown',
+
+    registerSelected: 'account:register',
+    signInSelected: 'account:sign-in',
 }
 
 const OnboardingModalController = function(modalView, onboardingController) {
@@ -46,6 +49,14 @@ OnboardingModalController.init = async function() {
         onboardingModalController.hide()
     })
 
+    Astro.registerRpcMethod(AppRpc.names.registerShow, [], () => {
+        onboardingModalController.hide({selected: OnboardingModalEvents.registerSelected})
+    })
+
+    Astro.registerRpcMethod(AppRpc.names.signInShow, [], () => {
+        onboardingModalController.hide({selected: OnboardingModalEvents.signInSelected})
+    })
+
     return onboardingModalController
 }
 
@@ -68,11 +79,11 @@ OnboardingModalController.prototype.show = async function(params) {
     }
 }
 
-OnboardingModalController.prototype.hide = function() {
+OnboardingModalController.prototype.hide = function(param) {
     this.isShowing = false
     this.modalView.hide({animated: true})
 
-    AppEvents.trigger(OnboardingModalEvents.onboardingHidden)
+    AppEvents.trigger(OnboardingModalEvents.onboardingHidden, param)
 }
 
 OnboardingModalController.prototype.isActiveItem = function() {

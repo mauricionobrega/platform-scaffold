@@ -1,12 +1,9 @@
 import AnchoredLayoutPlugin from 'progressive-app-sdk/plugins/anchoredLayoutPlugin'
 import TabBarPlugin from 'progressive-app-sdk/plugins/tabBarPlugin'
-import Astro from 'progressive-app-sdk/astro-full'
 
 import AccountSegmentationController, {Events} from './accountSegmentationController'
 import TabController from './tabController'
 import {tabBarConfig} from '../config/tabBarConfig'
-import rpcMethodNames from '../global/app-rpc-method-names'
-import AppEvents from '../global/app-events'
 
 const TabBarController = function(tabBar, layout, tabControllers) {
     this.tabBar = tabBar
@@ -27,6 +24,8 @@ TabBarController.init = async function() {
 
     const tabControllers = {}
 
+    console.log(Events)
+
     const tabControllerPromises = tabBarConfig.items.map((item) => {
         if (item.type === 'custom') {
             return AccountSegmentationController.init().then((controller) => {
@@ -43,16 +42,6 @@ TabBarController.init = async function() {
 
     await tabBar.setItems(tabBarConfig.items)
     await layout.addBottomView(tabBar)
-
-    Astro.registerRpcMethod(rpcMethodNames.registerShow, [], () => {
-        tabBar.selectItem('account')
-        AppEvents.trigger(Events.registerSelected)
-    })
-
-    Astro.registerRpcMethod(rpcMethodNames.signInShow, [], () => {
-        tabBar.selectItem('account')
-        AppEvents.trigger(Events.signInSelected)
-    })
 
     return new TabBarController(tabBar, layout, tabControllers)
 }
@@ -80,6 +69,16 @@ TabBarController.prototype.getActiveController = function() {
         return null
     }
     return this._tabControllers[this.activeTabId]
+}
+
+TabBarController.prototype.showRegistration = function() {
+    this.tabBar.selectItem('account')
+    this._tabControllers.account.showRegistration()
+}
+
+TabBarController.prototype.showSignIn = function() {
+    this.tabBar.selectItem('account')
+    this.accountTabController.showSignIn()
 }
 
 export default TabBarController

@@ -4,14 +4,6 @@ import SegmentedPlugin from 'progressive-app-sdk/plugins/segmentedPlugin'
 
 import TabHeaderController from './tabHeaderController'
 import accountConfig from '../config/accountConfig'
-import AppEvents from '../global/app-events'
-
-const Events = {
-    // raised when onboarding modal is hidden
-    registerSelected: 'account:register',
-    // raised when onboarding modal is displayed
-    signInSelected: 'account:sign-in'
-}
 
 const AccountSegmentationController = function(viewPlugin, headerController, layout, segmentedView, signInView, registerView) {
     this.viewPlugin = viewPlugin
@@ -61,14 +53,6 @@ AccountSegmentationController.init = async function() {
         }
     })
 
-    AppEvents.on(Events.registerSelected, () => {
-        segmentedView.selectItem(accountConfig.register.key)
-    })
-
-    AppEvents.on(Events.signInSelected, () => {
-        segmentedView.selectItem(accountConfig.signIn.key)
-    })
-
     return new AccountSegmentationController(viewPlugin, headerController, layout, segmentedView, signInView, registerView)
 }
 
@@ -97,5 +81,4 @@ AccountSegmentationController.prototype.deactivate = function() {
     this.isActive = false
 }
 
-export {Events}
 export default AccountSegmentationController
