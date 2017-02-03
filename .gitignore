@@ -1,15 +1,6 @@
 .DS_Store
-.nyc_output
 
-/build
-/tmp
-build.tar
-coverage
-lighthouse/audit*.html
+build/
+tmp/
 node_modules
 npm-debug.log
-
-tests/reports
-tests/screenshots
-
-webpack/tmp

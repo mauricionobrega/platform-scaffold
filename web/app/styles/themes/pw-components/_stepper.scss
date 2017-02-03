@@ -1,0 +1,57 @@
+// Stepper Theme
+// ===
+//
+
+.pw-stepper {
+    display: flex;
+    border: $border;
+
+    input {
+        width: $tap-size;
+        border: 0;
+
+        text-align: center;
+    }
+}
+
+.pw-stepper__button {
+    background-color: $brand-color;
+
+    color: $neutral-10;
+
+    &:active,
+    &:focus {
+        background-color: $dark-brand-color;
+    }
+
+    &[disabled] {
+        background-color: $neutral-30;
+
+        color: $neutral-40;
+    }
+}
+
+
+// Simple Variaton
+// ---
+
+.pw-stepper.pw--simple {
+    input {
+        padding: 0;
+    }
+
+    .pw-stepper__button {
+        color: $brand-color;
+
+        &,
+        &:active,
+        &:focus,
+        &[disabled] {
+            background: transparent;
+        }
+    }
+
+    .pw-stepper__button[disabled] {
+        opacity: 0.15;
+    }
+}
