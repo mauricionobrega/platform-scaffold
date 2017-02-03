@@ -25,9 +25,6 @@ AccountSegmentationController.init = async function() {
     const layout = await AnchoredLayoutPlugin.init()
     const headerController = await TabHeaderController.init()
 
-    // await signInView.setPageTimeOutDuration(60)
-    // await registerView.setPageTimeOutDuration(60)
-
     signInView.navigate(accountConfig.signIn.url)
     registerView.navigate(accountConfig.register.url)
 
