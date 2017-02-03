@@ -1,11 +1,3 @@
-# Platform Scaffold
-
-Welcome to the Platform Scaffold. This repo is organized as follows:
-
-| Directory          | Description                                                         |
-| ------------------ | ------------------------------------------------------------------- |
-| [/web](/web)       | Contains the web (Mobify Progressive Web SDK) scaffold              |
-| [/native](/native) | Contains the native (Mobify Progressive App SDK, or Astro) scaffold |
 
 ## Requirements
 
@@ -33,6 +25,17 @@ npm run add:page
 ```
 npm run add:component
 ```
+
+## Pushing Bundles to Cloud (Creating a Bundle)
+
+From the project folder, run the following command to push a bundle up to the Mobify Cloud:
+
+```
+npm run push -- --m "Mobile x.x.x:GitSHA,BRANCH"
+```
+
+Including the Git Commit SHA and the branch you are pushing to cloud in the bundle message is recommended.
+Including a version number (Using [Semantic Versioning](http://semver.org/)) is optional.
 
 ## Using the notification system
 
@@ -92,7 +95,7 @@ npm run test:watch
 
 ## Automated end-to-end tests
 
-To verify that changes do not break the checkout flow:
+To verify that changes do not break the End to End checkout workflow:
 
 ```
 npm run smoke-test
