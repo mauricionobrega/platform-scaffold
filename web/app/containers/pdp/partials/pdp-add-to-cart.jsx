@@ -1,4 +1,10 @@
 import React, {PropTypes} from 'react'
+import {connect} from 'react-redux'
+import {createStructuredSelector} from 'reselect'
+import {invertSelector} from '../../../utils/selector-utils'
+import * as selectors from '../selectors'
+import * as actions from '../actions'
+
 import Button from 'progressive-web-sdk/dist/components/button'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Stepper from 'progressive-web-sdk/dist/components/stepper'
@@ -53,4 +59,17 @@ PDPAddToCart.propTypes = {
     disabled: PropTypes.bool
 }
 
-export default PDPAddToCart
+const mapStateToProps = createStructuredSelector({
+    quantity: selectors.getItemQuantity,
+    disabled: invertSelector(selectors.getPdpContentsLoaded)
+})
+
+const mapDispatchToProps = {
+    setQuantity: actions.setItemQuantity,
+    onSubmit: actions.submitCartForm
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(PDPAddToCart)

@@ -1,9 +1,17 @@
+import Immutable from 'immutable'
+
+export const TextLink = Immutable.Record({
+    href: '',
+    text: '',
+    title: ''
+})
+
 export const parseTextLink = ($link) => {
-    return {
+    return TextLink({
         href: $link.attr('href'),
         text: $link.text(),
         title: $link.attr('title')
-    }
+    })
 }
 
 export const parseButton = ($button) => {
