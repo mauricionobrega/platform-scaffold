@@ -51,11 +51,11 @@ const PDPItemAddedModal = ({open, onDismiss, quantity, product: {title, price, c
 )
 
 PDPItemAddedModal.propTypes = {
+    coverage: PropTypes.string,
     open: PropTypes.bool,
     product: PropTypes.object,
     quantity: PropTypes.number,
     onDismiss: PropTypes.func,
-    coverage: PropTypes.string
 }
 
 export default PDPItemAddedModal
