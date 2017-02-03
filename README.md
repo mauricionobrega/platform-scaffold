@@ -7,12 +7,20 @@ manage node and npm versions.
 - node 6.x LTS
 - npm 3.x
 
+
 ## Setup
 
+First clone this repo to a new folder/project:
+```
+git clone git@github.com:mobify/progressive-web-scaffold.git THEPROJECTNAME
+```
+
+Navigate to that new project folder and run the following commands:
 ```
 npm install
 npm run dev
 ```
+
 
 ## Adding a page (container)
 
@@ -20,11 +28,13 @@ npm run dev
 npm run add:page
 ```
 
+
 ## Adding a component
 
 ```
 npm run add:component
 ```
+
 
 ## Pushing Bundles to Cloud (Creating a Bundle)
 
@@ -36,6 +46,7 @@ npm run push -- --m "Mobile x.x.x:GitSHA,BRANCH"
 
 Including the Git Commit SHA and the branch you are pushing to cloud in the bundle message is recommended.
 Including a version number (Using [Semantic Versioning](http://semver.org/)) is optional.
+
 
 ## Using the notification system
 
@@ -51,6 +62,7 @@ dispatch(addNotification({
 }))
 ```
 
+
 ## Docs with Styleguide
 
 To run the project documentation, including a live styleguide, use:
@@ -58,6 +70,7 @@ To run the project documentation, including a live styleguide, use:
 ```
 npm run docs:dev
 ```
+
 
 ## Prevent SSL Errors in Preview (on a Mac)
 
@@ -79,9 +92,10 @@ browsers accept it, do the following:
 This process will allow all projects hosted with `webpack-dev-server`
 version 1.15.0 and up to be trusted by your browsers.
 
-## Tests
 
-To run the full test suite, you can use:
+## Unit Tests
+
+To run the full unit test suite, you can use:
 
 ```
 npm run test:all
@@ -93,18 +107,23 @@ To run tests in watch mode and only run test related to files you modify during 
 npm run test:watch
 ```
 
+
 ## Automated end-to-end tests
 
 To verify that changes do not break the End to End checkout workflow:
+**Note**: Tests will have to be built/added as the project is being built.
 
 ```
 npm run smoke-test
 ```
-To manually run a workflow test (replace TESTNAME.js with the workflow you want to manually run):
+To manually run a workflow test:
+- Run `npm run dev` in one Terminal tab
+- In a new terminal tab run the command below (replace TESTNAME.js with the workflow you want to manually run):
 
 ```
 npm run nightwatch --test tests/system/workflows/TESTNAME.js
 ```
+
 
 ## Lighthouse tests
 
@@ -123,6 +142,7 @@ sudo npm run test:pwa-local
 You **must** keep running `npm run dev` at the same time.
 
 There is also `test:pwa-ci` task (also requires `sudo`) for CI that runs `dev` and `pwa-local` in parallel.
+
 
 ## Developing against `develop` of the Progressive Web SDK
 
