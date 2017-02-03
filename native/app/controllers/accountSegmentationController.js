@@ -5,34 +5,34 @@ import SegmentedPlugin from 'progressive-app-sdk/plugins/segmentedPlugin'
 import TabHeaderController from './tabHeaderController'
 import accountConfig from '../config/accountConfig'
 
-const AccountSegmentationController = function(viewPlugin, signInView, registerView, segmentedView, layout, headerController) {
+const AccountSegmentationController = function(viewPlugin, headerController, layout, segmentedView, signInView, registerView) {
     this.viewPlugin = viewPlugin
+    this.headerController = headerController
+    this.layout = layout
+    this.segmentedView = segmentedView
     this.signInView = signInView
     this.registerView = registerView
-    this.segmentedView = segmentedView
-    this.layout = layout
-    this.headerController = headerController
 
     this.isActive = false
     this.isloaded = false
 }
 
 AccountSegmentationController.init = async function() {
+    const viewPlugin = await AnchoredLayoutPlugin.init()                // has the header and the layout with the segmentedView
+    const headerController = await TabHeaderController.init()           // header
+    const layout = await AnchoredLayoutPlugin.init()                    // has  the segmented view and the web views
+    const segmentedView = await SegmentedPlugin.init()
     const signInView = await WebViewPlugin.init()
     const registerView = await WebViewPlugin.init()
-    const viewPlugin = await AnchoredLayoutPlugin.init()
-    const segmentedView = await SegmentedPlugin.init()
-    const layout = await AnchoredLayoutPlugin.init()
-    const headerController = await TabHeaderController.init()
+
+    await viewPlugin.addTopView(headerController.viewPlugin)
+    await viewPlugin.setContentView(layout)
 
     signInView.navigate(accountConfig.signIn.url)
     registerView.navigate(accountConfig.register.url)
 
     await layout.setContentView(signInView)
     await layout.addTopView(segmentedView)
-
-    await viewPlugin.addTopView(headerController.viewPlugin)
-    await viewPlugin.setContentView(layout)
 
     await segmentedView.setItems([
         accountConfig.signIn,
@@ -53,7 +53,7 @@ AccountSegmentationController.init = async function() {
         }
     })
 
-    return new AccountSegmentationController(viewPlugin, signInView, registerView, segmentedView, layout, headerController)
+    return new AccountSegmentationController(viewPlugin, headerController, layout, segmentedView, signInView, registerView)
 }
 
 AccountSegmentationController.prototype.showRegistration = async function() {
@@ -66,6 +66,8 @@ AccountSegmentationController.prototype.showSignIn = async function() {
 
 AccountSegmentationController.prototype.reload = async function() {
     this.loaded = true
+    this.signInView.navigate(accountConfig.signIn.url)
+    this.registerView.navigate(accountConfig.register.url)
 }
 
 AccountSegmentationController.prototype.activate = function() {
@@ -75,6 +77,7 @@ AccountSegmentationController.prototype.activate = function() {
             this.reload()
         }
     }
+    this.reload()
 }
 
 AccountSegmentationController.prototype.deactivate = function() {
