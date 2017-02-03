@@ -18,15 +18,6 @@ export const createAction = (description, ...argNames) => {
 }
 
 /**
- * Retrieve the wrapped component if there is one, otherwise just returns the passed-in component
- * @param {object} component - a React component, potentially wrapped with react-redux
- * @returns {object} - The component or the WrappedComponent if it exists
- */
-export const getComponentType = (component) => {
-    return component.WrappedComponent || component
-}
-
-/**
  * Wraps an action creator function so that the React synthetic action
  * is not passed in. This is necessary to avoid spurious warnings from
  * the React code.
