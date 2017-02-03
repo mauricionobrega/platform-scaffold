@@ -41,11 +41,13 @@ npm run add:component
 From the project folder, run the following command to push a bundle up to the Mobify Cloud:
 
 ```
-npm run push -- --m "Mobile x.x.x:GitSHA,BRANCH"
+npm run push -- --m "VersionNum:GitSHA,BRANCH"
 ```
 
-Including the Git Commit SHA and the branch you are pushing to cloud in the bundle message is recommended.
-Including a version number (Using [Semantic Versioning](http://semver.org/)) is optional.
+The Bundle Message is required. The format of the message is as follows: 
+- Version number: Use [Semantic Versioning](http://semver.org/)
+- Git Commit SHA: 7 or 8 characters
+- BRANCH: The branch that you are bundling from
 
 
 ## Using the notification system
