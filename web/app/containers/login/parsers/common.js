@@ -5,10 +5,11 @@ export const parseFields = ($, $fields) => {
     return $fields.map((_, field) => {
         const $field = $(field)
         const $tooltip = $field.find('.tooltip.wrapper')
+        const $input = $field.find('input')
         return {
             label: getTextFrom($field, 'label'),
-            name: $field.find('input').attr('name'),
-            type: $field.find('input').attr('type'),
+            name: $input.attr('name'),
+            type: $input.attr('type'),
             required: $field.hasClass('required'),
             tooltip: $tooltip.length ? {
                 title: getTextFrom($tooltip, '.toggle'),
