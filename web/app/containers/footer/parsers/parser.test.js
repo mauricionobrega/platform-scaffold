@@ -1,4 +1,4 @@
-/* eslint-env jquery */
+/* eslint-env jquery, jest */
 import {jquerifyHtmlFile} from 'progressive-web-sdk/dist/test-utils'
 import * as parser from './parser'
 import {TextLink} from '../../../utils/parser-utils'

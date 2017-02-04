@@ -1,3 +1,4 @@
+/* eslint-env jest */
 import React from 'react'
 import ConnectedCartEstimateShippingModal from './cart-estimate-shipping'
 import Field from 'progressive-web-sdk/dist/components/field'

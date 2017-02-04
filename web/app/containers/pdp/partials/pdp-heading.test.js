@@ -1,3 +1,4 @@
+/* eslint-env jest */
 import React from 'react'
 import ConnectedPDPHeading from './pdp-heading'
 import {mount, shallow} from 'enzyme'
