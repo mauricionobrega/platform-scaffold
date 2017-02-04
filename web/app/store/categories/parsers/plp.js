@@ -1,20 +1,21 @@
-import {parseTextLink} from '../../../utils/parser-utils'
+import {parseTextLink, getTextFrom} from '../../../utils/parser-utils'
+import {urlToPathKey} from '../../../utils/utils'
 
 const plpParser = ($, $html) => {
     const $numItems = $html.find('#toolbar-amount .toolbar-number').first()
 
-    const $products = $html.find('.item.product-item')
-    const products = $.makeArray($products)
+    const products = $
+          .makeArray($html.find('.item.product-item'))
           .map((product) => {
               return parseTextLink($(product).find('.product-item-link')).href
           })
-          .map((href) => new URL(href).pathname)
+          .map(urlToPathKey)
 
     return {
-        noResultsText: $html.find('.message.empty').text(),
+        noResultsText: getTextFrom($html, '.message.empty'),
         itemCount: $numItems.length > 0 ? $numItems.text() : '0',
         products,
-        title: $html.find('.page-title').text().trim(), // eslint-disable-line newline-per-chained-call
+        title: getTextFrom($html, '.page-title')
     }
 }
 
