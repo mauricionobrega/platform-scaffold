@@ -14,15 +14,14 @@ export const receiveData = createAction('Receive Login Data')
 export const process = ({payload: {$, $response, routeName}}) => {
     if (routeName === SIGN_IN_SECTION) {
         return receiveData({
-            loaded: true,
             signinSection: signinParser($, $response)
         })
     } else if (routeName === REGISTER_SECTION) {
         return receiveData({
-            loaded: true,
             registerSection: registerParser($, $response)
         })
     }
+    // This shouldn't happen, but just in case...
     return receiveData()
 }
 
