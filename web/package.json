@@ -133,7 +133,7 @@
       "!app/static/js/*.js",
       "!app/vendor/*.js",
       "!app/containers/{templates,reducers}.js",
-      "!app/**/{container,selectors}.{js,jsx}",
+      "!app/**/{container,constants,selectors}.{js,jsx}",
       "!{dev-server,proxy,lighthouse,coverage,build,tests,webpack}/**/*.js",
       "!styleguide/**/*.{js,jsx}",
       "!app/loader-routes.js",
