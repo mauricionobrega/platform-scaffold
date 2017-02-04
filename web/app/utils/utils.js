@@ -85,7 +85,9 @@ export const createActionWithMeta = (description, payloadArgumentNames, metaCrea
  * @param {function} fn - an action creator function
  * @returns {function} - the wrapped action creator
  */
-export const stripEvent = (fn) => () => fn()
+export const stripEvent = (fn) =>
+/* istanbul ignore next */
+    () => fn()
 
 
 /**
