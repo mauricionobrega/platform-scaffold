@@ -1,3 +1,4 @@
+/* eslint-env jquery */
 import {jquerifyHtmlFile} from 'progressive-web-sdk/dist/test-utils'
 import {isURL} from 'validator'
 import registrationParser from './register'

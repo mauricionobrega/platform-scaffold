@@ -1,3 +1,4 @@
+/* eslint-env jquery */
 import * as ParserUtils from './parser-utils'
 
 test('parseTextLink returns the correct href, text, and title', () => {
