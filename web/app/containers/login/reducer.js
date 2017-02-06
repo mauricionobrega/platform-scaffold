@@ -92,7 +92,7 @@ const registerSigninFields = [
 
 const initialState = Immutable.Map({
     title: 'Customer Login',
-    isRunningInAstro: isRunningInAstro,
+    isRunningInAstro,
     signinSection: Immutable.Map({
         href: '',
         heading: '',
