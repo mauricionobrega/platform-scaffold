@@ -16,6 +16,7 @@ const PDPAddToCart = ({quantity, setQuantity, onSubmit, disabled}) => {
         initialValue: quantity,
         minimumValue: 1,
         onChange: setQuantity,
+        className: 'u-flex-none'
     }
 
     if (disabled) {
@@ -32,7 +33,7 @@ const PDPAddToCart = ({quantity, setQuantity, onSubmit, disabled}) => {
                 <div className="u-flexbox u-margin-bottom-lg u-margin-top">
                     <Stepper {...stepperProps} />
 
-                    <div className="t-pdp__indicator u-border u-margin-start u-padding-md u-flexbox u-justify-center">
+                    <div className="t-pdp__indicator u-border u-margin-start u-padding-md  u-flex u-flexbox u-justify-center">
                         <Icon name="check" className="u-margin-end-sm" /> In stock
                     </div>
                 </div>
