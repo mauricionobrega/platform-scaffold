@@ -1,12 +1,16 @@
 import React from 'react'
+import {connect} from 'react-redux'
+import {createStructuredSelector} from 'reselect'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
+import {CART_WISHLIST_MODAL} from '../constants'
+import {closeModal} from '../../../store/modals/actions'
+import {isModalOpen} from '../../../store/selectors'
 
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 import Button from 'progressive-web-sdk/dist/components/button'
 import Image from 'progressive-web-sdk/dist/components/image'
 
-const CartWishlistModal = (props) => {
-    const {closeModal, isOpen} = props
+const CartWishlistModal = ({closeModal, isOpen}) => {
     return (
         <Sheet
             className="pw--no-shadow t-cart__wishlist-modal"
@@ -58,4 +62,12 @@ CartWishlistModal.propTypes = {
     isOpen: React.PropTypes.bool,
 }
 
-export default CartWishlistModal
+const mapStateToProps = createStructuredSelector({
+    isOpen: isModalOpen(CART_WISHLIST_MODAL)
+})
+
+const mapDispatchToProps = {
+    closeModal: () => closeModal(CART_WISHLIST_MODAL)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartWishlistModal)
