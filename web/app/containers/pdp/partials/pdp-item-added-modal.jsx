@@ -47,9 +47,13 @@ const PDPItemAddedModal = ({open, onDismiss, quantity, product: {title, price, c
     </Sheet>
 )
 
-function CheckoutButton() {
+const onCheckoutClicked = function() {
+    Astro.trigger('open:cart-modal')
+}
+
+const CheckoutButton = function() {
     if (isRunningInAstro) {
-        return(
+        return (
             <Button
                 onClick={onCheckoutClicked}
                 className="c--primary u-width-full u-margin-bottom-md u-text-uppercase"
@@ -58,7 +62,7 @@ function CheckoutButton() {
             </Button>
         )
     } else {
-        return(
+        return (
             <Button
                 href="#"
                 className="c--primary u-width-full u-margin-bottom-md u-text-uppercase"
@@ -67,10 +71,6 @@ function CheckoutButton() {
             </Button>
         )
     }
-}
-
-function onCheckoutClicked(event) {
-    Astro.trigger('open:cart-modal')
 }
 
 PDPItemAddedModal.propTypes = {
