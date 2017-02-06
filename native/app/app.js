@@ -4,13 +4,14 @@
 import Application from 'progressive-app-sdk/application'
 import MobifyPreviewPlugin from 'progressive-app-sdk/plugins/mobifyPreviewPlugin'
 import PreviewController from 'progressive-app-sdk/controllers/previewController'
+import Astro from 'progressive-app-sdk/astro-full'
 
 // Local
+import AppRpc from './global/app-rpc'
 import baseConfig from './config/baseConfig'
 import TabBarController from './controllers/tabBarController'
 import {getInitialTabId} from './config/tabBarConfig'
-import OnboardingModalController, {OnboardingModalEvents} from './onboarding/onboardingModalController'
-import AppEvents from './global/app-events'
+import OnboardingModalController from './onboarding/onboardingModalController'
 
 window.run = async function() {
     const runApp = async function() {
@@ -29,18 +30,14 @@ window.run = async function() {
             tabBarController.selectTab(initialTabId)
         }
 
-        AppEvents.on(OnboardingModalEvents.onboardingHidden, (param) => {
-            Application.setStatusBarLightText()
-            switch (param.selected) {
-                case OnboardingModalEvents.registerSelected:
-                    tabBarController.showRegistration()
-                    break
-                case OnboardingModalEvents.signInSelected:
-                    tabBarController.showSignIn()
-                    break
-                default:
-                    break
-            }
+        Astro.registerRpcMethod(AppRpc.names.registerShow, [], () => {
+            onboardingModalController.hide()
+            tabBarController.showRegistration()
+        })
+
+        Astro.registerRpcMethod(AppRpc.names.signInShow, [], () => {
+            onboardingModalController.hide()
+            tabBarController.showSignIn()
         })
 
         Application.dismissLaunchImage()

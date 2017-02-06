@@ -13,9 +13,6 @@ const OnboardingModalEvents = {
     onboardingHidden: 'onboarding:hidden',
     // raised when onboarding modal is displayed
     onboardingShown: 'onboarding:shown',
-
-    registerSelected: 'account:register',
-    signInSelected: 'account:sign-in',
 }
 
 const OnboardingModalController = function(modalView, onboardingController) {
@@ -47,14 +44,6 @@ OnboardingModalController.init = async function() {
 
     Astro.registerRpcMethod(AppRpc.names.onboardingHide, [], () => {
         onboardingModalController.hide()
-    })
-
-    Astro.registerRpcMethod(AppRpc.names.registerShow, [], () => {
-        onboardingModalController.hide({selected: OnboardingModalEvents.registerSelected})
-    })
-
-    Astro.registerRpcMethod(AppRpc.names.signInShow, [], () => {
-        onboardingModalController.hide({selected: OnboardingModalEvents.signInSelected})
     })
 
     return onboardingModalController
