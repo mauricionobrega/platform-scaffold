@@ -8,7 +8,6 @@ import RegisterForm from './partials/register'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import {Tabs, TabsPanel} from 'progressive-web-sdk/dist/components/tabs'
-import {isRunningInAstro} from '../../utils/astro-integration'
 
 import * as actions from './actions'
 
@@ -44,7 +43,8 @@ class Login extends React.Component {
             navigateToSection,
             route: {routeName},
             router,
-            routes
+            routes,
+            isRunningInAstro
         } = this.props
 
         const openSignInModal = () => openInfoModal(Login.SIGN_IN_SECTION)
@@ -195,6 +195,7 @@ const mapDispatchToProps = {
 
 Login.propTypes = {
     closeInfoModal: PropTypes.func,
+    isRunningInAstro: PropTypes.bool,
     navigateToSection: PropTypes.func,
     openInfoModal: PropTypes.func,
     registerSection: PropTypes.object,
@@ -206,6 +207,8 @@ Login.propTypes = {
     submitSignInForm: PropTypes.func,
     title: PropTypes.string
 }
+
+export {Login as RawLogin}
 
 export default connect(
     mapStateToProps,
