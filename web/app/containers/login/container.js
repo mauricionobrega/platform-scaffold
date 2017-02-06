@@ -8,19 +8,14 @@ import RegisterForm from './partials/register'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import {Tabs, TabsPanel} from 'progressive-web-sdk/dist/components/tabs'
-import {isRunningInAstro} from '../../utils/astro-integration'
 
 import * as actions from './actions'
 
 class Login extends React.Component {
 
     // a few constants to make refactoring easier in future
-    static get SIGN_IN_SECTION() {
-        return 'signin'
-    }
-    static get REGISTER_SECTION() {
-        return 'register'
-    }
+    static get SIGN_IN_SECTION() { return 'signin' }
+    static get REGISTER_SECTION() { return 'register' }
     static get SECTION_NAMES() {
         return {
             [Login.SIGN_IN_SECTION]: 'Sign In',
@@ -29,15 +24,11 @@ class Login extends React.Component {
     }
 
     indexForSection(sectionName) {
-        return sectionName === Login.REGISTER_SECTION
-            ? 1
-            : 0
+        return sectionName === Login.REGISTER_SECTION ? 1 : 0
     }
 
     sectionForIndex(activeIndex) {
-        return activeIndex === 1
-            ? Login.REGISTER_SECTION
-            : Login.SIGN_IN_SECTION
+        return activeIndex === 1 ? Login.REGISTER_SECTION : Login.SIGN_IN_SECTION
     }
 
     render() {
@@ -54,7 +45,8 @@ class Login extends React.Component {
                 routeName
             },
             router,
-            routes
+            routes,
+            isRunningInAstro
         } = this.props
 
         const openSignInModal = () => openInfoModal(Login.SIGN_IN_SECTION)
@@ -205,6 +197,7 @@ const mapDispatchToProps = {
 
 Login.propTypes = {
     closeInfoModal: PropTypes.func,
+    isRunningInAstro: PropTypes.bool,
     navigateToSection: PropTypes.func,
     openInfoModal: PropTypes.func,
     registerSection: PropTypes.object,
@@ -217,4 +210,9 @@ Login.propTypes = {
     title: PropTypes.string
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login))
+export {Login as RawLogin}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withRouter(Login))

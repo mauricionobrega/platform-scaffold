@@ -41,6 +41,13 @@ class PDP extends React.Component {
             closeItemAddedModal
         } = this.props
 
+        let coverage = '50%'
+        if (window.innerHeight < 370) {
+            coverage = '70%'
+        } else if (window.innerHeight < 460) {
+            coverage = '56%'
+        }
+
         return (
             <div className="t-pdp">
                 <PDPHeading breadcrumbs={breadcrumbs} title={title} price={price} />
@@ -63,6 +70,7 @@ class PDP extends React.Component {
                         onDismiss={closeItemAddedModal}
                         product={product}
                         quantity={quantityAdded}
+                        coverage={coverage}
                     />
                 }
             </div>

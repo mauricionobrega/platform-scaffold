@@ -2,6 +2,7 @@ import Immutable from 'immutable'
 import {createReducer} from 'redux-act'
 
 import {isPageType} from '../../utils/router-utils'
+import {isRunningInAstro} from '../../utils/astro-integration'
 
 import Login from './container'
 import {openInfoModal, closeInfoModal} from './actions'
@@ -91,6 +92,7 @@ const registerSigninFields = [
 
 const initialState = Immutable.Map({
     title: 'Customer Login',
+    isRunningInAstro: isRunningInAstro,
     signinSection: Immutable.Map({
         href: '',
         heading: '',
