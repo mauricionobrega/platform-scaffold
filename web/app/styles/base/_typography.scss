@@ -26,28 +26,40 @@ h6 {
     line-height: 1.25;
 }
 
-h1 {
-    @include heading-level-1;
+h1,
+%h1 {
+    font-size: 28px;
+    line-height: 32px;
 }
 
-h2 {
-    @include heading-level-2;
+h2,
+%h2 {
+    font-size: 20px;
+    line-height: 24px;
 }
 
-h3 {
-    @include heading-level-3;
+h3,
+%h3 {
+    font-size: 18px;
+    line-height: 24px;
 }
 
-h4 {
-    @include heading-level-4;
+h4,
+%h4 {
+    font-size: 18px;
+    line-height: 24px;
 }
 
-h5 {
-    @include heading-level-5;
+h5,
+%h5 {
+    font-size: 16px;
+    line-height: 20px;
 }
 
-h6 {
-    @include heading-level-6;
+h6,
+%h6 {
+    font-size: $font-size;
+    line-height: $line-height;
 }
 
 

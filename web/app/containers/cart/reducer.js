@@ -1,8 +1,15 @@
-import {handleActions} from 'redux-actions'
+import {createReducer} from 'redux-act'
 import Immutable from 'immutable'
-import {receiveCartContents} from '../../store/cart/actions'
+import * as cartActions from './actions'
 
 const initialState = Immutable.fromJS({
+    items: [],
+    estimateShippingModal: {
+        isOpen: false
+    },
+    wishlistModal: {
+        isOpen: false
+    },
     // Do we want to store static data like this elsewhere?
     countries: [
         'Canada',
@@ -17,6 +24,19 @@ const initialState = Immutable.fromJS({
     ]
 })
 
-export default handleActions({
-    [receiveCartContents]: (state) => state
+export default createReducer({
+    [cartActions.toggleEstimateShippingModal]: (state, payload) => {
+        return state.mergeDeep({
+            estimateShippingModal: {
+                isOpen: payload.isOpen
+            }
+        })
+    },
+    [cartActions.toggleWishlistModal]: (state, payload) => {
+        return state.mergeDeep({
+            wishlistModal: {
+                isOpen: payload.isOpen
+            }
+        })
+    }
 }, initialState)

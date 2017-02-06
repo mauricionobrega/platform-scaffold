@@ -1,16 +1,11 @@
 import React, {PropTypes} from 'react'
-import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
-import * as cartSelectors from '../../../store/cart/selectors'
-import {CART_ESTIMATE_SHIPPING_MODAL} from '../constants'
-import {openModal} from '../../../store/modals/actions'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import CartPromoForm from './cart-promo-form'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import {Ledger, LedgerRow} from 'progressive-web-sdk/dist/components/ledger'
 
-const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, onCalculateClick}) => {
+const CartSummary = ({cart, onCalculateClick}) => {
     const calculateButton = (
         <Button innerClassName="u-padding-end-0 u-color-brand" onClick={onCalculateClick}>
             Calculate <Icon name="chevron-right" />
@@ -34,8 +29,8 @@ const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, onCalculat
 
                 <Ledger className="u-border-light-top">
                     <LedgerRow
-                        label={`Subtotal (${summaryCount} items)`}
-                        value={subtotalExclTax}
+                        label={`Subtotal (${cart.summary_count} items)`}
+                        value={cart.subtotal_excl_tax}
                     />
 
                     <LedgerRow
@@ -58,7 +53,7 @@ const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, onCalculat
                     <LedgerRow
                         label="Total"
                         isTotal={true}
-                        value={subtotalInclTax}
+                        value={cart.subtotal_incl_tax}
                     />
                 </Ledger>
 
@@ -76,20 +71,8 @@ const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, onCalculat
 }
 
 CartSummary.propTypes = {
-    subtotalExclTax: PropTypes.string,
-    subtotalInclTax: PropTypes.string,
-    summaryCount: PropTypes.number,
+    cart: PropTypes.object,
     onCalculateClick: PropTypes.func
 }
 
-const mapStateToProps = createStructuredSelector({
-    subtotalExclTax: cartSelectors.getSubtotalExcludingTax,
-    subtotalInclTax: cartSelectors.getSubtotalIncludingTax,
-    summaryCount: cartSelectors.getCartSummaryCount,
-})
-
-const mapDispatchToProps = {
-    onCalculateClick: () => openModal(CART_ESTIMATE_SHIPPING_MODAL)
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CartSummary)
+export default CartSummary

@@ -1,24 +1,9 @@
-import Immutable from 'immutable'
-
-export const getTextFrom = ($element, selector) => (
-    $element
-        .find(selector)
-        .text()
-        .trim()
-)
-
-export const TextLink = Immutable.Record({
-    href: '',
-    text: '',
-    title: ''
-})
-
 export const parseTextLink = ($link) => {
-    return TextLink({
+    return {
         href: $link.attr('href'),
-        text: $link.text().trim(),
+        text: $link.text(),
         title: $link.attr('title')
-    })
+    }
 }
 
 export const parseButton = ($button) => {

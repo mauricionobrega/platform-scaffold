@@ -1,9 +1,7 @@
 import React from 'react'
-import ConnectedCartEstimateShippingModal from './cart-estimate-shipping'
+import CartEstimateShippingModal from './cart-estimate-shipping'
 import Field from 'progressive-web-sdk/dist/components/field'
 import {mount, shallow} from 'enzyme'
-
-const CartEstimateShippingModal = ConnectedCartEstimateShippingModal.WrappedComponent
 
 test('renders without errors', () => {
     const wrapper = mount(<CartEstimateShippingModal countries={[]} stateProvinces={[]} />)

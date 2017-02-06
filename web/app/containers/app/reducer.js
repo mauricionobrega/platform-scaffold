@@ -1,27 +1,40 @@
-import {handleActions} from 'redux-actions'
-import {fromJS, List} from 'immutable'
+import {createReducer} from 'redux-act'
+import {Map, List} from 'immutable'
 
 import * as appActions from './actions'
-import {CURRENT_URL} from './constants'
+import {FETCH_IN_PROGRESS, CURRENT_URL} from './constants'
 
-const initialState = fromJS({
+const initialState = Map({
+    [FETCH_IN_PROGRESS]: false,
     [CURRENT_URL]: false,
-    notifications: []
+        // If we use a regular array, React doesn't seem to catch all the updates
+    notifications: List()
 })
 
-export default handleActions({
-    [appActions.onRouteChanged]: (state, {payload: {currentURL}}) => {
-        return state.set(CURRENT_URL, currentURL)
+export default createReducer({
+    [appActions.onRouteChanged]: (state, {currentURL}) => {
+        return state.set(FETCH_IN_PROGRESS, true).set(CURRENT_URL, currentURL)
     },
-    [appActions.addNotification]: (state, {payload}) => {
+    [appActions.onPageReceived]: (state) => {
+        return state.set(FETCH_IN_PROGRESS, false)
+    },
+    [appActions.addNotification]: (state, payload) => {
         return state.update('notifications', (notifications) => {
             // Don't allow duplicate notifications to be added
-            return notifications.every(({id}) => id !== payload.id) ? notifications.push(payload) : notifications
+            const existingNotification = notifications.find((notification) => {
+                return notification.id === payload.id
+            })
+
+            if (existingNotification) {
+                return notifications
+            } else {
+                return notifications.push(payload)
+            }
         })
     },
-    [appActions.removeNotification]: (state, {payload}) => {
+    [appActions.removeNotification]: (state, payload) => {
         return state.update('notifications', (notifications) => {
-            return notifications.filterNot(({id}) => id === payload)
+            return notifications.filterNot((notification) => notification.id === payload)
         })
     },
     [appActions.removeAllNotifications]: (state) => {
