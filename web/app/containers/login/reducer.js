@@ -10,6 +10,9 @@ import {openInfoModal, closeInfoModal} from './actions'
 import {onPageReceived} from '../app/actions'
 import signinParser from './parsers/signin'
 import registerParser from './parsers/register'
+import {handleActions} from 'redux-actions'
+import {mergePayloadForActions} from '../../utils/reducer-utils'
+import {receiveData} from './actions'
 
 const signinFields = [
     {
@@ -90,7 +93,7 @@ const registerSigninFields = [
     },
 ]
 
-const initialState = Immutable.Map({
+const initialState = Immutable.fromJS({
     title: 'Customer Login',
     isRunningInAstro: isRunningInAstro,
     signinSection: Immutable.Map({
@@ -104,9 +107,8 @@ const initialState = Immutable.Map({
             hiddenInputs: [],
             submitText: ''
         },
-        infoModalOpen: false
-    }),
-    registerSection: Immutable.Map({
+    },
+    registerSection: {
         href: '',
         heading: '',
         description: '',
@@ -123,44 +125,9 @@ const initialState = Immutable.Map({
                 fields: registerSigninFields,
             }]
         },
-        infoModalOpen: false
-    })
+    }
 })
 
-const formatSectionName = (sectionName) => `${sectionName}Section`
-
-const merge = (object1, object2) => {
-    return {...object1, ...object2}
-}
-
-export default createReducer({
-    [onPageReceived]: (state, action) => {
-        const {$, $response, pageComponent, routeName} = action
-        if (isPageType(pageComponent, Login)) {
-            let newState
-
-            const infoModalOpen = !!state.get(formatSectionName(routeName)).get('infoModalOpen')
-
-            if (routeName === Login.SIGN_IN_SECTION) {
-                newState = {
-                    signinSection: merge(signinParser($, $response), {infoModalOpen})
-                }
-            } else if (routeName === Login.REGISTER_SECTION) {
-                newState = {
-                    registerSection: merge(registerParser($, $response), {infoModalOpen})
-                }
-            }
-
-            return state.merge(Immutable.fromJS(newState)).set('loaded', true)
-        } else {
-            return state
-        }
-    },
-    [openInfoModal]: (state, action) => {
-        return state.updateIn([formatSectionName(action.sectionName), 'infoModalOpen'], () => true)
-    },
-    [closeInfoModal]: (state, action) => {
-        return state.updateIn([formatSectionName(action.sectionName), 'infoModalOpen'], () => false)
-    }
-
+export default handleActions({
+    ...mergePayloadForActions(receiveData)
 }, initialState)

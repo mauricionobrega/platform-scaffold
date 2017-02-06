@@ -1,34 +1,51 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
+import {createStructuredSelector} from 'reselect'
 import {withRouter} from 'react-router'
 
-import SignInForm from './partials/signin'
-import RegisterForm from './partials/register'
+import SignInPanel from './partials/signin-panel'
+import RegisterPanel from './partials/register-panel'
 
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
-import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import {Tabs, TabsPanel} from 'progressive-web-sdk/dist/components/tabs'
 
 import * as actions from './actions'
+import * as selectors from './selectors'
+import {SIGN_IN_SECTION, REGISTER_SECTION, SECTION_NAMES, INDEX_FOR_SECTION, SECTION_FOR_INDEX} from './constants'
+
+const LoginTitle = ({title}) => {
+    if (title) {
+        return (
+            <h1 className="u-text-uppercase u-text-normal">
+                {title}
+            </h1>
+        )
+    } else {
+        return (
+            <div className="u-padding-md">
+                <SkeletonBlock height="32px" width="50%" />
+            </div>
+        )
+    }
+}
+
+LoginTitle.propTypes = {
+    title: PropTypes.string
+}
 
 class Login extends React.Component {
+    constructor(props) {
+        super(props)
 
-    // a few constants to make refactoring easier in future
-    static get SIGN_IN_SECTION() { return 'signin' }
-    static get REGISTER_SECTION() { return 'register' }
-    static get SECTION_NAMES() {
-        return {
-            [Login.SIGN_IN_SECTION]: 'Sign In',
-            [Login.REGISTER_SECTION]: 'Register'
-        }
+        this.navigateToSection = this.navigateToSection.bind(this)
     }
 
-    indexForSection(sectionName) {
-        return sectionName === Login.REGISTER_SECTION ? 1 : 0
-    }
-
-    sectionForIndex(activeIndex) {
-        return activeIndex === 1 ? Login.REGISTER_SECTION : Login.SIGN_IN_SECTION
+    navigateToSection(index) {
+        this.props.navigateToSection(
+            this.props.router,
+            this.props.routes,
+            SECTION_FOR_INDEX[index]
+        )
     }
 
     render() {
@@ -95,11 +112,9 @@ class Login extends React.Component {
     }
 }
 
-const mapStateToProps = (state, props) => {
-    return {
-        ...state.login.toJS()
-    }
-}
+const mapStateToProps = createStructuredSelector({
+    title: selectors.getLoginTitle
+})
 
 const RegisterSection = (props) => {
     const item = (
@@ -186,25 +201,16 @@ const LoginSection = (props) => {
 }
 
 const mapDispatchToProps = {
-    submitSignInForm: actions.submitSignInForm,
-    submitRegisterForm: actions.submitRegisterForm,
-    navigateToSection: actions.navigateToSection,
-    openInfoModal: actions.openInfoModal,
-    closeInfoModal: actions.closeInfoModal
+    navigateToSection: actions.navigateToSection
 }
 
 Login.propTypes = {
     closeInfoModal: PropTypes.func,
     isRunningInAstro: PropTypes.bool,
     navigateToSection: PropTypes.func,
-    openInfoModal: PropTypes.func,
-    registerSection: PropTypes.object,
     route: PropTypes.object,
     router: PropTypes.object,
     routes: PropTypes.array,
-    signinSection: PropTypes.object,
-    submitRegisterForm: PropTypes.func,
-    submitSignInForm: PropTypes.func,
     title: PropTypes.string
 }
 

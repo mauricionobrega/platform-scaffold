@@ -1,6 +1,8 @@
 import React from 'react'
-import CartWishlistModal from './cart-wishlist'
+import ConnectedCartWishlistModal from './cart-wishlist'
 import {mount, shallow} from 'enzyme'
+
+const CartWishlistModal = ConnectedCartWishlistModal.WrappedComponent
 
 test('renders without errors', () => {
     const wrapper = mount(<CartWishlistModal />)
