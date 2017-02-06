@@ -16,21 +16,6 @@ test('unknown action type leaves state unchanged', () => {
     expect(reducer(inputState, action)).toEqual(inputState)
 })
 
-test('checkoutShippingActions.receiveData sets contentsLoaded flag', () => {
-    const action = receiveData({})
-
-    const initialState = Map({
-        contentsLoaded: false,
-        bystander: 'data'
-    })
-
-    const finalState = Map({
-        contentsLoaded: true,
-        bystander: 'data'
-    })
-
-    expect(reducer(initialState, action).equals(finalState)).toBe(true)
-})
 
 test('checkoutShippingActions.showCompanyAndApt sets isCompanyOrAptShown flag', () => {
     const action = showCompanyAndApt({})

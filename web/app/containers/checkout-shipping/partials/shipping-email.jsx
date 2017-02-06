@@ -58,7 +58,7 @@ ShippingEmail.propTypes = {
     /**
      * Whether the form is disabled or not
      */
-    onShippingEmailRecognized: React.PropTypes.function
+    onShippingEmailRecognized: React.PropTypes.func
 }
 
 

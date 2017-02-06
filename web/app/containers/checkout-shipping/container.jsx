@@ -25,15 +25,12 @@ class CheckoutShipping extends React.Component {
 
     render() {
         const {
-            contentsLoaded,
             isCompanyOrAptShown,
             formTitle
         } = this.props.checkoutShipping.toJS()
         const {onShippingEmailRecognized} = this.props
 
-        const templateClassnames = classNames('t-checkout-shipping u-bg-color-neutral-20', {
-            't--loaded': contentsLoaded
-        })
+        const templateClassnames = classNames('t-checkout-shipping u-bg-color-neutral-20 t--loaded')
 
         return (
             <div className={templateClassnames}>
