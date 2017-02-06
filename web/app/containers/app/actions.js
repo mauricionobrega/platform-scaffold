@@ -2,10 +2,12 @@ import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import * as utils from '../../utils/utils'
 import * as selectors from './selectors'
 
+import CheckoutShipping from '../checkout-shipping/container'
 import Home from '../home/container'
 import Login from '../login/container'
 import PDP from '../pdp/container'
 import PLP from '../plp/container'
+import * as checkoutShippingActions from '../checkout-shipping/actions'
 import * as homeActions from '../home/actions'
 import * as loginActions from '../login/actions'
 import * as pdpActions from '../pdp/actions'
@@ -64,6 +66,8 @@ export const fetchPage = (url, pageComponent, routeName) => {
                 } else if (pageComponent === PLP) {
                     dispatch(categoriesActions.process(receivedAction))
                     dispatch(productsActions.processPlp(receivedAction))
+                } else if (pageComponent === CheckoutShipping) {
+                    dispatch(checkoutShippingActions.process(receivedAction))
                 }
                 dispatch(footerActions.process(receivedAction))
                 dispatch(navigationActions.process(receivedAction))

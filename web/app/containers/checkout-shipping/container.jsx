@@ -30,7 +30,8 @@ class CheckoutShipping extends React.Component {
     render() {
         const {
             contentsLoaded,
-            isCompanyOrAptShown
+            isCompanyOrAptShown,
+            formTitle
         } = this.props.checkoutShipping.toJS()
         const {onShippingEmailRecognized} = this.props
 
@@ -51,13 +52,12 @@ class CheckoutShipping extends React.Component {
                     </div>
                 </div>
 
-                {contentsLoaded &&
-                    <CheckoutShippingReduxForm
-                        isCompanyOrAptShown={isCompanyOrAptShown}
-                        handleShowCompanyAndApt={this.handleShowCompanyAndApt}
-                        onShippingEmailRecognized={onShippingEmailRecognized}
-                    />
-                }
+                <CheckoutShippingReduxForm
+                    formTitle={formTitle}
+                    isCompanyOrAptShown={isCompanyOrAptShown}
+                    handleShowCompanyAndApt={this.handleShowCompanyAndApt}
+                    onShippingEmailRecognized={onShippingEmailRecognized}
+                />
             </div>
         )
     }
