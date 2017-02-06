@@ -35,7 +35,7 @@ TabController.init = async function(tabItem) {
         disableLoader: []
     }
 
-    headerController.on('back', () => {
+    headerController.viewPlugin.on('click:back', () => {
         navigationView.back()
     })
 

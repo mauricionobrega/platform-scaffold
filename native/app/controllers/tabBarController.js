@@ -3,7 +3,7 @@ import TabBarPlugin from 'progressive-app-sdk/plugins/tabBarPlugin'
 
 import {tabBarConfig} from '../config/tabBarConfig'
 import TabController from './tabController'
-import AccountSegmentationController from './accountSegmentationController'
+import AccountTabController from './accountTabController'
 
 const TabBarController = function(tabBar, layout, tabControllers) {
     this.tabBar = tabBar
@@ -26,7 +26,7 @@ TabBarController.init = async function() {
 
     const tabControllerPromises = tabBarConfig.items.map((item) => {
         if (item.type === 'custom') {
-            return AccountSegmentationController.init().then((controller) => {
+            return AccountTabController.init().then((controller) => {
                 tabControllers[item.id] = controller
             })
         } else {

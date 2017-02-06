@@ -5,7 +5,7 @@ import SegmentedPlugin from 'progressive-app-sdk/plugins/segmentedPlugin'
 import TabHeaderController from './tabHeaderController'
 import accountConfig from '../config/accountConfig'
 
-const AccountSegmentationController = function(viewPlugin, headerController, layout, segmentedView, signInView, registerView) {
+const AccountTabController = function(viewPlugin, headerController, layout, segmentedView, signInView, registerView) {
     this.viewPlugin = viewPlugin
     this.headerController = headerController
     this.layout = layout
@@ -17,7 +17,7 @@ const AccountSegmentationController = function(viewPlugin, headerController, lay
     this.isloaded = false
 }
 
-AccountSegmentationController.init = async function() {
+AccountTabController.init = async function() {
     const viewPlugin = await AnchoredLayoutPlugin.init()                // has the header and the layout with the segmentedView
     const headerController = await TabHeaderController.init()           // header
     const layout = await AnchoredLayoutPlugin.init()                    // has  the segmented view and the web views
@@ -53,22 +53,22 @@ AccountSegmentationController.init = async function() {
         }
     })
 
-    return new AccountSegmentationController(viewPlugin, headerController, layout, segmentedView, signInView, registerView)
+    return new AccountTabController(viewPlugin, headerController, layout, segmentedView, signInView, registerView)
 }
 
-AccountSegmentationController.prototype.showRegistration = async function() {
+AccountTabController.prototype.showRegistration = async function() {
     await this.segmentedView.selectItem(accountConfig.register.key)
 }
 
-AccountSegmentationController.prototype.showSignIn = async function() {
+AccountTabController.prototype.showSignIn = async function() {
     await this.segmentedView.selectItem(accountConfig.signIn.key)
 }
 
-AccountSegmentationController.prototype.reload = async function() {
+AccountTabController.prototype.reload = async function() {
     this.loaded = true
 }
 
-AccountSegmentationController.prototype.activate = function() {
+AccountTabController.prototype.activate = function() {
     if (!this.isActive) {
         this.isActive = true
         if (!this.loaded) {
@@ -77,8 +77,8 @@ AccountSegmentationController.prototype.activate = function() {
     }
 }
 
-AccountSegmentationController.prototype.deactivate = function() {
+AccountTabController.prototype.deactivate = function() {
     this.isActive = false
 }
 
-export default AccountSegmentationController
+export default AccountTabController

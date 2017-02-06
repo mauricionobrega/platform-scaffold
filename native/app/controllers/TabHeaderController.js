@@ -1,7 +1,5 @@
 import HeaderBarPlugin from 'progressive-app-sdk/plugins/headerBarPlugin'
 import CounterBadgeController from 'progressive-app-sdk/controllers/counterBadgeController'
-import BackboneEvents from 'vendor/backbone-events'
-import Astro from 'progressive-app-sdk/astro-full'
 
 import CartModalController from './cartModalController'
 
@@ -24,23 +22,12 @@ TabHeaderController.init = async function() {
     await headerBar.setBackgroundColor(baseConfig.colors.primaryColor)
     await headerBar.setOpaque()
 
-    let tabHeaderController = new TabHeaderController(headerBar, counterBadgeController)
-    tabHeaderController = Astro.Utils.extend(tabHeaderController, BackboneEvents)
-
-    headerBar.on('click:back', () => {
-        tabHeaderController.back()
-    })
-
     headerBar.on(`click:${cartConfig.cartIcon.id}`, async () => {
         const cartModalController = await CartModalController.init()
         cartModalController.show()
     })
 
-    return tabHeaderController
-}
-
-TabHeaderController.prototype.back = function() {
-    this.trigger('back')
+    return new TabHeaderController(headerBar, counterBadgeController)
 }
 
 TabHeaderController.prototype.updateCounter = function(count) {
