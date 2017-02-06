@@ -20,7 +20,6 @@ const TabController = function(tabItem, layout, headerBar, navigationView, count
 
     this.isActive = false
     this.loaded = false
-    console.log('TabController constructor finished')
 }
 
 TabController.init = async function(tabItem) {
@@ -63,6 +62,11 @@ TabController.init = async function(tabItem) {
 
     navigationView.on('cart-updated', async (data) => {
         await counterBadgeController.updateCounterValue(data.count)
+    })
+
+    navigationView.on('open:cart-modal', async () => {
+        const cartModalController = await CartModalController.init()
+        cartModalController.show()
     })
 
     return new TabController(tabItem, layout, headerBar, navigationView)
