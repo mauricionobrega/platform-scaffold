@@ -6,7 +6,7 @@ export const showCompanyAndApt = createAction('Showing the "Company" and "Apt #"
 
 export const receiveData = createAction('Receive Checkout Shipping Data')
 export const process = ({payload: {$, $response}}) => {
-    return receiveData(checkoutShippingParser($, $response))
+    return receiveData({...checkoutShippingParser($, $response), contentsLoaded: true})
 }
 
 export const onShippingEmailRecognized = () => {

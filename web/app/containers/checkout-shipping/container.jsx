@@ -15,10 +15,6 @@ class CheckoutShipping extends React.Component {
         this.handleShowCompanyAndApt = this.handleShowCompanyAndApt.bind(this)
     }
 
-    componentDidMount() {
-        // this.props.fetchContents()
-    }
-
     shouldComponentUpdate(newProps) {
         return !Immutable.is(this.props.checkoutShipping, newProps.checkoutShipping)
     }
@@ -65,7 +61,6 @@ class CheckoutShipping extends React.Component {
 
 CheckoutShipping.propTypes = {
     checkoutShipping: PropTypes.instanceOf(Immutable.Map),
-    fetchContents: PropTypes.func,
     showCompanyAndApt: PropTypes.func,
 
     onShippingEmailRecognized: PropTypes.func,
@@ -78,7 +73,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    fetchContents: checkoutShippingActions.fetchContents,
     showCompanyAndApt: checkoutShippingActions.showCompanyAndApt,
     onShippingEmailRecognized: checkoutShippingActions.onShippingEmailRecognized,
 }

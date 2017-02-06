@@ -2,7 +2,7 @@
 import {Map} from 'immutable'
 
 import reducer from './reducer'
-import {receiveContents, showCompanyAndApt} from './actions'
+import {receiveData, showCompanyAndApt} from './actions'
 
 test('unknown action type leaves state unchanged', () => {
     const action = {
@@ -16,8 +16,8 @@ test('unknown action type leaves state unchanged', () => {
     expect(reducer(inputState, action)).toEqual(inputState)
 })
 
-test('checkoutShippingActions.receiveContents sets contentsLoaded flag', () => {
-    const action = receiveContents({})
+test('checkoutShippingActions.receiveData sets contentsLoaded flag', () => {
+    const action = receiveData({})
 
     const initialState = Map({
         contentsLoaded: false,

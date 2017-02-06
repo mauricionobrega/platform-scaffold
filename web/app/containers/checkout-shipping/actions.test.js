@@ -1,4 +1,4 @@
-import {fetchContents, receiveResponse} from './actions'
+import {process} from './actions'
 
 let realFetch
 beforeAll(() => {
@@ -16,42 +16,12 @@ import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 jest.mock('./checkout-shipping-parser')
 import checkoutShippingParser from './checkout-shipping-parser'
 
-test('fetchContents dispatches receiveResponse, which dispatches receiveContents', () => {
-    global.fetch.mockClear()
-    global.fetch.mockReturnValueOnce(Promise.resolve('page contents!'))
 
-    const url = 'http://test.mobify.com/'
-
-    /**
-     * We don't have the ability to change window.location.href, so we mock it
-     * as a workaround
-     * @url - https://github.com/tmpvar/jsdom#changing-the-url-of-an-existing-jsdom-window-instance
-     * @url - https://github.com/facebook/jest/issues/890#issuecomment-209698782
-     */
-    Object.defineProperty(window.location, 'href', {
-        writable: true,
-        value: url
-    })
-
-    const thunk = fetchContents()
-    expect(typeof thunk).toBe('function')
-
-    const mockDispatch = jest.fn()
-
-    return thunk(mockDispatch)
-        .then(() => {
-            expect(global.fetch).toBeCalled()
-            expect(global.fetch.mock.calls[0][0]).toBe(url)
-
-            expect(mockDispatch).toBeCalled()
-        })
-})
-
-test('receiveResponse parses the response and dispatches receiveContents', () => {
+test('process parses the response and dispatches receiveData', () => {
     jqueryResponse.mockClear()
     jqueryResponse.mockReturnValue(Promise.resolve(['$', '$response']))
 
-    const thunk = receiveResponse('page contents!')
+    const thunk = process('page contents!')
     expect(typeof thunk).toBe('function')
 
     const mockDispatch = jest.fn()
