@@ -10,9 +10,6 @@ import {openInfoModal, closeInfoModal} from './actions'
 import {onPageReceived} from '../app/actions'
 import signinParser from './parsers/signin'
 import registerParser from './parsers/register'
-import {handleActions} from 'redux-actions'
-import {mergePayloadForActions} from '../../utils/reducer-utils'
-import {receiveData} from './actions'
 
 const signinFields = [
     {
