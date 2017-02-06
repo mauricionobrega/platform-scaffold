@@ -5,8 +5,8 @@ import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import ProductItem from '../../../components/product-item'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
-const PDPItemAddedModal = ({open, onDismiss, quantity, product: {title, price, carouselItems}}) => (
-    <Sheet open={open} onDismiss={onDismiss} effect="slide-bottom" className="t-plp__item-added-modal" coverage="50%">
+const PDPItemAddedModal = ({open, onDismiss, quantity, product: {title, price, carouselItems}, coverage}) => (
+    <Sheet open={open} onDismiss={onDismiss} effect="slide-bottom" className="t-plp__item-added-modal" coverage={coverage}>
         <div className="u-flex-none u-border-bottom">
             <div className="u-flexbox u-align-center">
                 <h1 className="u-flex u-padding-lg u-h4 u-text-uppercase">
@@ -51,10 +51,11 @@ const PDPItemAddedModal = ({open, onDismiss, quantity, product: {title, price, c
 )
 
 PDPItemAddedModal.propTypes = {
+    coverage: PropTypes.string,
     open: PropTypes.bool,
     product: PropTypes.object,
     quantity: PropTypes.number,
-    onDismiss: PropTypes.func
+    onDismiss: PropTypes.func,
 }
 
 export default PDPItemAddedModal
