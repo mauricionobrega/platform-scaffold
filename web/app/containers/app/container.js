@@ -1,5 +1,9 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
+import {createStructuredSelector} from 'reselect'
+import {selectorToJS} from '../../utils/selector-utils'
+import {isRunningInAstro} from '../../utils/astro-integration'
+
 import {hidePreloader} from 'progressive-web-sdk/dist/preloader'
 import {IconSprite} from 'progressive-web-sdk/dist/components/icon'
 import SkipLinks from 'progressive-web-sdk/dist/components/skip-links'
@@ -7,12 +11,10 @@ import Header from '../../containers/header/container'
 import Footer from '../../containers/footer/container'
 import MiniCart from '../../containers/mini-cart/container'
 import Navigation from '../../containers/navigation/container'
-import * as navActions from '../../containers/navigation/actions'
-import * as miniCartActions from '../../containers/mini-cart/actions'
 import sprite from '../../static/svg/sprite-dist/sprite.svg'
-import * as appActions from './actions'
 
-import {isRunningInAstro} from '../../utils/astro-integration'
+import * as appActions from '../app/actions'
+import * as selectors from './selectors'
 
 import NotificationManager from '../../components/notification-manager'
 
@@ -34,17 +36,14 @@ class App extends React.Component {
 
     render() {
         const {
-            app,
             children,
             history,
-            notificationActions,
-            openNavigation,
-            requestOpenMiniCart,
+            notifications,
+            removeNotification
         } = this.props
         const currentTemplateProps = children.props
         const CurrentHeader = currentTemplateProps.route.Header || Header
         const CurrentFooter = currentTemplateProps.route.Footer || Footer
-        const {notifications} = app.toJS()
 
         const skipLinksItems = [
             // Customize your list of SkipLinks here. These are necessary to
@@ -70,15 +69,13 @@ class App extends React.Component {
                 <div id="app-wrap" className="t-app__wrapper u-flexbox u-direction-column">
                     <div id="app-header" className="u-flex-none" role="banner">
                         <CurrentHeader
-                            onMenuClick={openNavigation}
-                            onMiniCartClick={requestOpenMiniCart}
                             isRunningInAstro={isRunningInAstro}
                         />
 
                         {notifications &&
                             <NotificationManager
                                 notifications={notifications}
-                                actions={notificationActions}
+                                actions={{removeNotification}}
                             />
                         }
 
@@ -104,27 +101,17 @@ App.propTypes = {
     /**
      * The react-router history object
      */
-    app: PropTypes.object,
     history: PropTypes.object,
-    notificationActions: PropTypes.object,
-    openNavigation: PropTypes.func,
-    requestOpenMiniCart: PropTypes.func,
+    notifications: PropTypes.array,
+    removeNotification: PropTypes.func
 }
 
-const mapStateToProps = (state) => {
-    return {
-        app: state.app,
-    }
-}
+const mapStateToProps = createStructuredSelector({
+    notifications: selectorToJS(selectors.getNotifications)
+})
 
-const mapDispatchToProps = (dispatch, props) => {
-    return {
-        openNavigation: () => dispatch(navActions.openNavigation()),
-        requestOpenMiniCart: () => dispatch(miniCartActions.requestOpenMiniCart()),
-        notificationActions: {
-            removeNotification: (id) => dispatch(appActions.removeNotification(id))
-        }
-    }
+const mapDispatchToProps = {
+    removeNotification: appActions.removeNotification
 }
 
 export default connect(
