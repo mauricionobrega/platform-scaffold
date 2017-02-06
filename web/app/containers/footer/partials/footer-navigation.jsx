@@ -1,4 +1,8 @@
 import React, {PropTypes} from 'react'
+import {createStructuredSelector} from 'reselect'
+import * as selectors from '../selectors'
+import {selectorToJS} from '../../../utils/selector-utils'
+import {connect} from 'react-redux'
 
 import Divider from 'progressive-web-sdk/dist/components/divider'
 import ListTile from 'progressive-web-sdk/dist/components/list-tile'
@@ -7,11 +11,10 @@ import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 const FooterNavigation = ({navigation}) => {
     return (
         <div className="t-footer__navigation u-padding-lg u-text-align-center">
-            {navigation.map((item, key) => {
-                const title = item.get('title')
+            {navigation.map(({text, href}, index) => {
                 return (
-                    <ListTile href={item.get('href')} key={key}>
-                        {title || <SkeletonText width="135px" style={{lineHeight: '20px'}} />}
+                    <ListTile href={href} key={index}>
+                        {text || <SkeletonText width="135px" style={{lineHeight: '20px'}} />}
                     </ListTile>
                 )
             })}
@@ -27,7 +30,11 @@ const FooterNavigation = ({navigation}) => {
 }
 
 FooterNavigation.propTypes = {
-    navigation: PropTypes.object
+    navigation: PropTypes.array
 }
 
-export default FooterNavigation
+const mapStateToProps = createStructuredSelector({
+    navigation: selectorToJS(selectors.getNavigation)
+})
+
+export default connect(mapStateToProps)(FooterNavigation)

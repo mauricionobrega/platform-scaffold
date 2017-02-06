@@ -13,58 +13,49 @@ const titleClassName = classNames(
     'u-color-neutral-60'
 )
 
-const ProductTile = ({className, product}) => {
+const ProductTile = ({className, image, link, price}) => {
     const productImage = (
         <Image
-            {...product.image}
-            alt={product.image && product.image.alt}
+            {...image}
+            alt={image && image.alt}
             height="150px"
             width="120px" />
     )
 
-    const title = product.link
-        ? <h2 className={titleClassName}>{product.link.text}</h2>
+    const title = link
+        ? <h2 className={titleClassName}>{link.text}</h2>
         : <SkeletonBlock height="34px" />
-    const price = product.price
-        ? <span className="u-text-semi-bold u-color-error">{product.price}</span>
+    const priceElement = price
+        ? <span className="u-text-semi-bold u-color-error">{price}</span>
         : <SkeletonBlock height="22px" width="50px" />
 
     return (
-        <ListTile className="t-plp__product-tile u-card" {...product.link}>
+        <ListTile className="t-plp__product-tile u-card" {...link}>
             <ProductItem
-                {...product.image}
+                {...image}
                 className={classNames('u-align-center', className)}
                 title={title}
-                price={price}
+                price={priceElement}
                 image={productImage} />
         </ListTile>
     )
 }
 
-ProductTile.defaultProps = {
-    product: {}
-}
-
 ProductTile.propTypes = {
-    /**
-     * Product object representing a product on the product list page
-     */
-    product: PropTypes.shape({
-        link: PropTypes.shape({
-            href: PropTypes.string.isRequired,
-            text: PropTypes.string.isRequired,
-            title: PropTypes.string
-        }),
-        image: PropTypes.shape({
-            alt: PropTypes.string.isRequired,
-            src: PropTypes.string.isRequired,
-        }),
-        price: PropTypes.string,
-    }).isRequired,
     /**
      * Optional className for the product tile
      */
-    className: PropTypes.string
+    className: PropTypes.string,
+    image: PropTypes.shape({
+        alt: PropTypes.string.isRequired,
+        src: PropTypes.string.isRequired,
+    }),
+    link: PropTypes.shape({
+        href: PropTypes.string.isRequired,
+        text: PropTypes.string.isRequired,
+        title: PropTypes.string
+    }),
+    price: PropTypes.string,
 }
 
 export default ProductTile

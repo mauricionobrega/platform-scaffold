@@ -1,4 +1,8 @@
 import React, {PropTypes} from 'react'
+import {connect} from 'react-redux'
+import {createStructuredSelector} from 'reselect'
+import {selectorToJS} from '../../../utils/selector-utils'
+import * as selectors from '../selectors'
 
 import Carousel from 'progressive-web-sdk/dist/components/carousel'
 import CarouselItem from 'progressive-web-sdk/dist/components/carousel/carousel-item'
@@ -68,4 +72,9 @@ PDPCarousel.propTypes = {
     }))
 }
 
-export default PDPCarousel
+const mapStateToProps = createStructuredSelector({
+    contentsLoaded: selectors.getPdpContentsLoaded,
+    items: selectorToJS(selectors.getProductCarouselItems)
+})
+
+export default connect(mapStateToProps)(PDPCarousel)

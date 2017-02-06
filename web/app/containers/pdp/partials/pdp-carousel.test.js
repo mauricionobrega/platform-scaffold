@@ -1,11 +1,13 @@
 import React from 'react'
-import PDPCarousel from './pdp-carousel'
+import ConnectedPDPCarousel from './pdp-carousel'
 import {mount, shallow} from 'enzyme'
 
 import Carousel from 'progressive-web-sdk/dist/components/carousel'
 import CarouselItem from 'progressive-web-sdk/dist/components/carousel/carousel-item'
 import Image from 'progressive-web-sdk/dist/components/image'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
+
+const PDPCarousel = ConnectedPDPCarousel.WrappedComponent
 
 /* eslint-disable newline-per-chained-call */
 
