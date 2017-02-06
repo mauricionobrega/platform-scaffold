@@ -1,12 +1,9 @@
 import React, {PropTypes} from 'react'
-import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
 
 import Badge from 'progressive-web-sdk/dist/components/badge'
 import Button from 'progressive-web-sdk/dist/components/button'
 import IconLabel from 'progressive-web-sdk/dist/components/icon-label'
 import {HeaderBarActions} from 'progressive-web-sdk/dist/components/header-bar'
-import {getCartSummaryCount} from '../../../store/cart/selectors'
 
 const CartItemCounterBadge = ({itemCount}) => {
     // `undefined` is not greater than 0
@@ -42,8 +39,4 @@ CartAction.propTypes = {
     onClick: PropTypes.func
 }
 
-const mapStateToProps = createStructuredSelector({
-    itemCount: getCartSummaryCount
-})
-
-export default connect(mapStateToProps)(CartAction)
+export default CartAction

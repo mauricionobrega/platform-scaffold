@@ -1,9 +1,5 @@
-import {createAction} from '../../utils/utils'
-import {parseNavigation} from './parsers/parser'
+import * as utils from '../../utils/utils'
 
-export const receiveData = createAction('Receive navigation data')
+export const openNavigation = utils.createAction('Open navigation')
 
-export const process = ({payload}) => {
-    const {$, $response} = payload
-    return receiveData(parseNavigation($, $response))
-}
+export const closeNavigation = utils.createAction('Close navigation')

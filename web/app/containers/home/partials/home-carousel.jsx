@@ -1,14 +1,10 @@
 import React, {PropTypes} from 'react'
-import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
-import {selectorToJS} from '../../../utils/selector-utils'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
 import Carousel from 'progressive-web-sdk/dist/components/carousel'
 import CarouselItem from 'progressive-web-sdk/dist/components/carousel/carousel-item'
 import Image from 'progressive-web-sdk/dist/components/image'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
-import * as selectors from '../selectors'
 
 // The ratio of the banner image width:height is 1:.75. Since the banner will be
 // width=100%, we can use 75vw to predict the banner height.
@@ -20,11 +16,11 @@ const HomeCarousel = ({banners}) => {
         <div className="t-home__carousel">
             {banners.length > 0 ?
                 <Carousel allowLooping={true} className="pw--hide-controls">
-                    {banners.map(({src, href, alt}, index) => { // TODO: fix this when we put mobile assets on desktop
+                    {banners.map(({src, href, alt}, key) => { // TODO: fix this when we put mobile assets on desktop
                         return (
-                            <CarouselItem href={href} key={index}>
+                            <CarouselItem href={href} key={key}>
                                 <Image
-                                    src={getAssetUrl(`static/img/homepage_carousel/${index}.png`)}
+                                    src={getAssetUrl(`static/img/homepage_carousel/${key}.png`)}
                                     alt={alt}
                                     className="u-block"
                                     hidePlaceholder={true}
@@ -44,11 +40,10 @@ const HomeCarousel = ({banners}) => {
 }
 
 HomeCarousel.propTypes = {
-    banners: PropTypes.array
+    banners: PropTypes.oneOfType([
+        PropTypes.bool,
+        PropTypes.array
+    ]).isRequired,
 }
 
-const mapStateToProps = createStructuredSelector({
-    banners: selectorToJS(selectors.getHomeBanners)
-})
-
-export default connect(mapStateToProps)(HomeCarousel)
+export default HomeCarousel

@@ -1,28 +1,6 @@
-import {makeFormEncodedRequest, createAction} from '../../utils/utils'
+import {createAction, makeFormEncodedRequest} from '../../utils/utils'
 import isEmail from 'validator/lib/isEmail'
 import {SubmissionError} from 'redux-form'
-import {getLogin} from './selectors'
-import {SIGN_IN_SECTION, REGISTER_SECTION} from './constants'
-
-import signinParser from './parsers/signin'
-import registerParser from './parsers/register'
-
-export const receiveData = createAction('Receive Login Data')
-
-export const process = ({payload: {$, $response, routeName}}) => {
-    if (routeName === SIGN_IN_SECTION) {
-        return receiveData({
-            loaded: true,
-            signinSection: signinParser($, $response)
-        })
-    } else if (routeName === REGISTER_SECTION) {
-        return receiveData({
-            loaded: true,
-            registerSection: registerParser($, $response)
-        })
-    }
-    return receiveData()
-}
 
 const validateSignInForm = (formValues) => {
     const errors = {
@@ -121,7 +99,7 @@ export const submitSignInForm = (formValues, resolve, reject) => {
         if (errors._error || Object.keys(errors.login).length) {
             return reject(new SubmissionError(errors))
         }
-        const loginData = getLogin(getStore()).toJS()
+        const loginData = getStore().login.toJS()
         const {href, hiddenInputs} = loginData.signinSection.form
 
         hiddenInputs.forEach((input) => {
@@ -138,7 +116,7 @@ export const submitRegisterForm = (formValues, resolve, reject) => {
         if (errors._error || Object.keys(errors).length) {
             return reject(new SubmissionError(errors))
         }
-        const loginData = getLogin(getStore()).toJS()
+        const loginData = getStore().login.toJS()
         const {href, hiddenInputs} = loginData.registerSection.form
 
         hiddenInputs.forEach((input) => {
@@ -162,3 +140,6 @@ export const navigateToSection = (router, routes, sectionName) => {
         router.push(findPathForRoute(routes, sectionName))
     }
 }
+
+export const openInfoModal = createAction('Open Info Sheet', 'sectionName')
+export const closeInfoModal = createAction('Close Info Sheet', 'sectionName')

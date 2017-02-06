@@ -1,9 +1,7 @@
 import React from 'react'
-import ConnectedPDPDescription from './pdp-description'
+import PDPDescription from './pdp-description'
 import {mount, shallow} from 'enzyme'
 import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/accordion'
-
-const PDPDescription = ConnectedPDPDescription.WrappedComponent
 
 /* eslint-disable newline-per-chained-call */
 
