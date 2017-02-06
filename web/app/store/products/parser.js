@@ -1,5 +1,5 @@
 import {extractMagentoJson} from '../../utils/magento-utils'
-import {parseTextLink, parseImage} from '../../utils/parser-utils'
+import {getTextFrom, parseTextLink, parseImage} from '../../utils/parser-utils'
 import {urlToPathKey} from '../../utils/utils'
 
 const parseCarouselItems = (magentoObject) => {
@@ -18,7 +18,7 @@ export const plpParser = ($, $html) => {
         const image = parseImage($product.find('.product-image-photo'))
         productMap[urlToPathKey(link.href)] = {
             title: link.text.trim(),
-            price: $product.find('.price').text(),
+            price: getTextFrom($product, '.price'),
             link,
             image,
             carouselItems: [
@@ -36,9 +36,9 @@ export const pdpParser = ($, $html) => {
     const $mainContent = $html.find('.page-main')
     const magentoObject = extractMagentoJson($html)
     return {
-        title: $mainContent.find('.page-title-wrapper.product .page-title > span').text(),
-        price: $mainContent.find('.product-info-price .price-wrapper .price').text(),
+        title: getTextFrom($mainContent, '.page-title-wrapper.product .page-title > span'),
+        price: getTextFrom($mainContent, '.product-info-price .price-wrapper .price'),
         carouselItems: parseCarouselItems(magentoObject),
-        description: $mainContent.find('.product.info.detailed .product.attibute.description p').text()
+        description: getTextFrom($mainContent, '.product.info.detailed .product.attibute.description p')
     }
 }
