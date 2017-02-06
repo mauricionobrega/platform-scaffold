@@ -21,7 +21,7 @@ const tabBarConfig = {
             title: 'Account',
             imageUrl: 'file:///user.png',
             selectedImageUrl: 'file:///user.png',
-            rootUrl: 'https://www.merlinspotions.com'
+            rootUrl: 'https://www.merlinspotions.com/customer/account/create/'
         },
         {
             id: 'more',
