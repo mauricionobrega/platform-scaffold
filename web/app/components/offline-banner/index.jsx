@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react'
-import {connect} from 'react-redux'
 import classNames from 'classnames'
 
 const componentClass = 'c-offline-banner'
@@ -25,17 +24,6 @@ OfflineBanner.propTypes = {
      * Adds values to the `class` attribute of the root element
      */
     className: PropTypes.string
-
 }
 
-const mapDispatchToProps = (dispatch, props) => {
-    return {
-        openInfo: () => {},
-        closeInfo: () => {}
-    }
-}
-
-export default connect(
-    {},
-    mapDispatchToProps
-)(OfflineBanner)
+export default OfflineBanner
