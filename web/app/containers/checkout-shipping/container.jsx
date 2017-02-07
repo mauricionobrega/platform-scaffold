@@ -45,12 +45,7 @@ class CheckoutShipping extends React.Component {
                     </div>
                 </div>
 
-                <CheckoutShippingReduxForm
-                    formTitle={formTitle}
-                    isCompanyOrAptShown={isCompanyOrAptShown}
-                    handleShowCompanyAndApt={this.handleShowCompanyAndApt}
-                    onShippingEmailRecognized={onShippingEmailRecognized}
-                />
+                <CheckoutShippingReduxForm />
             </div>
         )
     }

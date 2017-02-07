@@ -1,5 +1,8 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import * as ReduxForm from 'redux-form'
+
+import {onShippingEmailRecognized} from '../actions'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
@@ -58,6 +61,14 @@ ShippingEmail.propTypes = {
     onShippingEmailRecognized: React.PropTypes.func
 }
 
+const mapStateToProps = (state) => {
+    // No content from the state is currently needed for this partial
+    return {}
+}
+
+const mapDispatchToProps = {
+    onShippingEmailRecognized
+}
 
 
-export default ShippingEmail
+export default connect(mapStateToProps, mapDispatchToProps)(ShippingEmail)

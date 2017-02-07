@@ -18,8 +18,7 @@ const CheckoutShippingForm = ({
         <form className="t-checkout-shipping__form" onSubmit={handleSubmit} noValidate>
             <Grid className="u-center-piece">
                 <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 7}}>
-                    <ShippingEmail
-                        onShippingEmailRecognized={onShippingEmailRecognized} />
+                    <ShippingEmail />
                     <ShippingAddressForm />
                 </GridSpan>
 
