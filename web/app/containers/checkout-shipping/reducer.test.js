@@ -2,7 +2,7 @@
 import {Map} from 'immutable'
 
 import reducer from './reducer'
-import {receiveData, showCompanyAndApt} from './actions'
+import {showCompanyAndApt} from './actions'
 
 test('unknown action type leaves state unchanged', () => {
     const action = {
