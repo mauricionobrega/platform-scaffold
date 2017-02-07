@@ -9,7 +9,6 @@ import ShippingMethod from './shipping-method'
 
 const CheckoutShippingForm = ({
     handleSubmit,
-    onShippingEmailRecognized,
     // disabled,
     // submitting
 }) => {
@@ -37,26 +36,13 @@ CheckoutShippingForm.propTypes = {
     disabled: React.PropTypes.bool,
 
     /**
-     * Shows the "Company" and "Apt #" fields
-     */
-    handleShowCompanyAndApt: React.PropTypes.func,
-
-    /**
      * Redux-form internal
      */
     handleSubmit: React.PropTypes.func,
-
-    /**
-     * Whether the "Company" and "Apt #" fields display
-     */
-    isCompanyOrAptShown: React.PropTypes.bool,
-
     /**
      * Redux-form internal
      */
     submitting: React.PropTypes.bool,
-
-    onShippingEmailRecognized: React.PropTypes.func,
 }
 
 const validate = (values) => {
