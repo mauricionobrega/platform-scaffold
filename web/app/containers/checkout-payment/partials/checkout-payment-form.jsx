@@ -31,7 +31,7 @@ CheckoutPaymentForm.propTypes = {
     /**
      * Redux-form internal
      */
-    handleSubmit: React.PropTypes.func
+    handleSubmit: PropTypes.func
 }
 
 export default CheckoutPaymentForm

@@ -128,14 +128,14 @@ const BillingAddressForm = ({isCompanyOrAptShown, handleShowCompanyAndApt}) => {
 
 BillingAddressForm.propTypes = {
     /**
-     * Whether the "Company" and "Apt #" fields display
-     */
-    isCompanyOrAptShown: React.PropTypes.bool,
-
-    /**
      * Shows the "Company" and "Apt #" fields
      */
-    handleShowCompanyAndApt: React.PropTypes.func,
+    handleShowCompanyAndApt: PropTypes.func,
+
+    /**
+     * Whether the "Company" and "Apt #" fields display
+     */
+    isCompanyOrAptShown: PropTypes.bool
 }
 
 const BillingAddressReduxForm = ReduxForm.reduxForm({

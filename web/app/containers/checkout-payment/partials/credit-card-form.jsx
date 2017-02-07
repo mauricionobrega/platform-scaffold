@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react'
+import React from 'react'
 import * as ReduxForm from 'redux-form'
 // import {connect} from 'react-redux'
 // import {createStructuredSelector} from 'reselect'
@@ -8,7 +8,6 @@ import * as ReduxForm from 'redux-form'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
 // SDK Components
-import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 import Image from 'progressive-web-sdk/dist/components/image'
@@ -98,9 +97,6 @@ const CreditCardForm = () => {
             }
         </div>
     )
-}
-
-CreditCardForm.propTypes = {
 }
 
 const CreditCardReduxForm = ReduxForm.reduxForm({

@@ -208,6 +208,7 @@ class ProductList extends React.Component {
 ProductList.propTypes = {
     cart: PropTypes.object,
     isFixedPlaceOrderShown: PropTypes.bool,
+    toggleFixedPlaceOrder: PropTypes.func
 }
 
 const mapStateToProps = createStructuredSelector({
