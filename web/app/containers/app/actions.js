@@ -64,13 +64,17 @@ export const fetchPage = (url, pageComponent, routeName) => {
                 const [$, $response] = res
 
                 if (isOffline) {
-                    dispatch(setPageFetchError({message: 'Failed to fetch, cached response provided'}))
+                    dispatch(setPageFetchError('Failed to fetch, cached response provided'))
                 } else {
                     dispatch(clearPageFetchError())
                 }
 
                 const currentURL = selectors.getCurrentUrl(getState())
                 const receivedAction = onPageReceived($, $response, url, currentURL, routeName)
+
+                // Let app-level reducers know about receiving the page
+                dispatch(receivedAction)
+
                 if (pageComponent === Home) {
                     dispatch(homeActions.process(receivedAction))
                 } else if (pageComponent === Login) {
@@ -87,7 +91,7 @@ export const fetchPage = (url, pageComponent, routeName) => {
             })
             .catch((error) => {
                 console.info(error.message)
-                dispatch(setPageFetchError({message: error.message}))
+                dispatch(setPageFetchError(error.message))
             })
     }
 }

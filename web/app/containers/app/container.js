@@ -39,6 +39,8 @@ class App extends React.Component {
             children,
             history,
             fetchPage,
+            fetchError,
+            hasFetchedCurrentPath,
             notifications,
             removeNotification
         } = this.props
@@ -73,7 +75,7 @@ class App extends React.Component {
                 <div id="app-wrap" className="t-app__wrapper u-flexbox u-direction-column">
                     <div id="app-header" className="u-flex-none" role="banner">
                         <CurrentHeader />
-                        {fetchError && fetchedUrls[currentURL] && <OfflineBanner />}
+                        {fetchError && hasFetchedCurrentPath && <OfflineBanner />}
 
                         {notifications &&
                             <NotificationManager
@@ -86,7 +88,7 @@ class App extends React.Component {
                         <MiniCart />
                     </div>
 
-                    {(!fetchError || fetchedUrls[currentURL]) ?
+                    {(!fetchError || hasFetchedCurrentPath) ?
                         <div>
                             <main id="app-main" className="u-flex" role="main">
                                 {this.props.children}
@@ -111,13 +113,17 @@ App.propTypes = {
     /**
      * The react-router history object
      */
+    fetchError: PropTypes.string,
+    hasFetchedCurrentPath: PropTypes.bool,
     history: PropTypes.object,
     notifications: PropTypes.array,
     removeNotification: PropTypes.func
 }
 
 const mapStateToProps = createStructuredSelector({
-    notifications: selectorToJS(selectors.getNotifications)
+    notifications: selectorToJS(selectors.getNotifications),
+    fetchError: selectors.getFetchError,
+    hasFetchedCurrentPath: selectors.hasFetchedCurrentPath
 })
 
 const mapDispatchToProps = (dispatch) => {

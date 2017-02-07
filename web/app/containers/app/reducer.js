@@ -1,17 +1,30 @@
 import {handleActions} from 'redux-actions'
 import {fromJS, List} from 'immutable'
 
+import {mergePayload} from '../../utils/reducer-utils'
+import {urlToPathKey} from '../../utils/utils'
 import * as appActions from './actions'
-import {CURRENT_URL} from './constants'
+import * as selectors from './selectors'
+import {CURRENT_URL, FETCHED_PATHS} from './constants'
 
 const initialState = fromJS({
-    [CURRENT_URL]: false,
-    notifications: []
+    [CURRENT_URL]: window.location.href,
+    notifications: [],
+    fetchError: null,
+    [FETCHED_PATHS]: {}
 })
+
+// This will need to become more complicated when
+// we handle more types of errors, but will do for now
+export const isOffline = (state) => !!selectors.getFetchError()
 
 export default handleActions({
     [appActions.onRouteChanged]: (state, {payload: {currentURL}}) => {
         return state.set(CURRENT_URL, currentURL)
+    },
+    [appActions.onPageReceived]: (state, {payload: {url}}) => {
+        const path = urlToPathKey(url)
+        return state.set(FETCHED_PATHS, state.get(FETCHED_PATHS).set(path, true))
     },
     [appActions.addNotification]: (state, {payload}) => {
         return state.update('notifications', (notifications) => {
@@ -26,5 +39,9 @@ export default handleActions({
     },
     [appActions.removeAllNotifications]: (state) => {
         return state.set('notifications', List())
+    },
+    [appActions.setPageFetchError]: mergePayload,
+    [appActions.clearPageFetchError]: (state) => {
+        return state.set('fetchError', null)
     }
 }, initialState)
