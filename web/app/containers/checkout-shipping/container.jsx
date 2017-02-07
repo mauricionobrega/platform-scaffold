@@ -15,10 +15,6 @@ class CheckoutShipping extends React.Component {
         this.handleShowCompanyAndApt = this.handleShowCompanyAndApt.bind(this)
     }
 
-    componentDidMount() {
-        // this.props.fetchContents()
-    }
-
     shouldComponentUpdate(newProps) {
         return !Immutable.is(this.props.checkoutShipping, newProps.checkoutShipping)
     }
@@ -29,14 +25,12 @@ class CheckoutShipping extends React.Component {
 
     render() {
         const {
-            contentsLoaded,
-            isCompanyOrAptShown
+            isCompanyOrAptShown,
+            formTitle
         } = this.props.checkoutShipping.toJS()
         const {onShippingEmailRecognized} = this.props
 
-        const templateClassnames = classNames('t-checkout-shipping u-bg-color-neutral-20', {
-            't--loaded': contentsLoaded
-        })
+        const templateClassnames = classNames('t-checkout-shipping u-bg-color-neutral-20 t--loaded')
 
         return (
             <div className={templateClassnames}>
@@ -51,13 +45,12 @@ class CheckoutShipping extends React.Component {
                     </div>
                 </div>
 
-                {contentsLoaded &&
-                    <CheckoutShippingReduxForm
-                        isCompanyOrAptShown={isCompanyOrAptShown}
-                        handleShowCompanyAndApt={this.handleShowCompanyAndApt}
-                        onShippingEmailRecognized={onShippingEmailRecognized}
-                    />
-                }
+                <CheckoutShippingReduxForm
+                    formTitle={formTitle}
+                    isCompanyOrAptShown={isCompanyOrAptShown}
+                    handleShowCompanyAndApt={this.handleShowCompanyAndApt}
+                    onShippingEmailRecognized={onShippingEmailRecognized}
+                />
             </div>
         )
     }
@@ -65,7 +58,6 @@ class CheckoutShipping extends React.Component {
 
 CheckoutShipping.propTypes = {
     checkoutShipping: PropTypes.instanceOf(Immutable.Map),
-    fetchContents: PropTypes.func,
     showCompanyAndApt: PropTypes.func,
 
     onShippingEmailRecognized: PropTypes.func,
@@ -73,12 +65,11 @@ CheckoutShipping.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        checkoutShipping: state.checkoutShipping
+        checkoutShipping: state.ui.checkoutShipping
     }
 }
 
 const mapDispatchToProps = {
-    fetchContents: checkoutShippingActions.fetchContents,
     showCompanyAndApt: checkoutShippingActions.showCompanyAndApt,
     onShippingEmailRecognized: checkoutShippingActions.onShippingEmailRecognized,
 }

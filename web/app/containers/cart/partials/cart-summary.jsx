@@ -65,7 +65,7 @@ const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, onCalculat
                 <div className="u-padding-end-md u-padding-bottom-lg u-padding-start-md">
                     <Button
                         className="c--primary u-flex-none u-width-full u-text-uppercase"
-                        href="/checkout/shipping/">
+                        href="/checkout/">
                         <Icon name="lock" />
                         Proceed To Checkout
                     </Button>
