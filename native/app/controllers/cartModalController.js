@@ -11,6 +11,14 @@ const CartModalController = function(modalView, navigationView) {
     this.isShowing = false
     this.viewPlugin = modalView
     this.navigationView = navigationView
+
+    this.navigationView.on('sign-in:clicked', () => {
+        this.hide()
+    })
+
+    this.navigationView.on('continue:clicked', () => {
+        this.hide()
+    })
 }
 
 CartModalController.init = async function() {

@@ -14,6 +14,7 @@ import CartProductList from './partials/cart-product-list'
 import CartSummary from './partials/cart-summary'
 import CartEstimateShippingModal from './partials/cart-estimate-shipping'
 import CartWishlistModal from './partials/cart-wishlist'
+import {isRunningInAstro} from '../../utils/astro-integration'
 
 class Cart extends React.Component {
     constructor(props) {
@@ -99,14 +100,9 @@ class Cart extends React.Component {
                             Your shopping cart is empty. Sign in to retrieve saved items or continue shopping.
                         </p>
 
-                        <Button className="c--primary u-text-uppercase u-h5 u-width-full u-margin-bottom-lg" href="/customer/account/login/">
-                            <Icon name="User" />
-                            Sign In
-                        </Button>
+                        <SignInButton />
 
-                        <Button className="c--tertiary u-text-uppercase u-h5 u-width-full" href="/">
-                            Continue Shopping
-                        </Button>
+                        <ContinueButton />
                     </div>
                 </div>
             </GridSpan>
@@ -152,6 +148,49 @@ class Cart extends React.Component {
         )
     }
 }
+
+const SignInButton = function () {
+    if (isRunningInAstro) {
+        return (
+            <Button className="c--primary u-text-uppercase u-h5 u-width-full u-margin-bottom-lg" onClick={onSignInTapped}>
+                 <Icon name="User" />
+                 Sign In
+            </Button>
+        )
+    } else {
+        return (
+            <Button className="c--primary u-text-uppercase u-h5 u-width-full u-margin-bottom-lg" href="/customer/account/login/">
+                 <Icon name="User" />
+                 Sign In
+            </Button>
+        )
+    }
+}
+
+const ContinueButton = function () {
+    if (isRunningInAstro) {
+        return (
+            <Button className="c--tertiary u-text-uppercase u-h5 u-width-full" onClick={onContinueTapped}>
+                Continue Shopping
+            </Button>
+        )
+    } else {
+        return (
+            <Button className="c--tertiary u-text-uppercase u-h5 u-width-full" href="/">
+                Continue Shopping
+            </Button>
+        )
+    }
+}
+
+const onSignInTapped = () => {
+    Astro.trigger('sign-in:clicked')
+}
+
+const onContinueTapped = () => {
+    Astro.trigger('continue:clicked')
+}
+
 
 Cart.propTypes = {
     cart: PropTypes.object,
