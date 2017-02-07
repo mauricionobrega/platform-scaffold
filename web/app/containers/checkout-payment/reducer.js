@@ -1,4 +1,4 @@
-import {handleActions} from 'redux-actions'
+import {createReducer} from 'redux-act'
 import Immutable from 'immutable'
 import * as checkoutPaymentActions from './actions'
 
@@ -12,8 +12,8 @@ const initialState = Immutable.fromJS({
     isFixedPlaceOrderShown: true,
 })
 
-export default handleActions({
-    [checkoutPaymentActions.receiveContents]: (state, {payload}) => {
+export default createReducer({
+    [checkoutPaymentActions.receiveContents]: (state, payload) => {
         return state.mergeDeep(payload, {contentsLoaded: true})
     },
     [checkoutPaymentActions.showCompanyAndApt]: (state) => {

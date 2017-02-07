@@ -46,9 +46,10 @@ CartPromoForm.propTypes = {
     submitting: React.PropTypes.bool
 }
 
-const validate = () => {
+const validate = (values) => {
     const errors = {}
 
+    console.log(values)
     // if (values.email && !values.email.match('@')) {  // Obviously not for real
     //     errors.email = 'Enter a valid email address'
     // }

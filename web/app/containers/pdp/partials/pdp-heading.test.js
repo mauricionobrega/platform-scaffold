@@ -1,8 +1,6 @@
 import React from 'react'
-import ConnectedPDPHeading from './pdp-heading'
+import PDPHeading from './pdp-heading'
 import {mount, shallow} from 'enzyme'
-
-const PDPHeading = ConnectedPDPHeading.WrappedComponent
 
 test('renders without errors', () => {
     const wrapper = mount(<PDPHeading />)

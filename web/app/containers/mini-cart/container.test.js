@@ -1,4 +1,4 @@
-import {productSubtotal} from './partials/mini-cart-product-list'
+import {productSubtotal} from './container'
 
 describe('Computing the subtotal', () => {
 

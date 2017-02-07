@@ -1,19 +1,20 @@
-import {parseTextLink} from '../../../utils/parser-utils'
-
-const parseBreadcrumbs = ($, $breadcrumbsLinks) => {
+const parseBreadcrumbs = ($breadcrumbsLinks) => {
     return $breadcrumbsLinks.get()
-        .map((breadcrumbLink) => parseTextLink($(breadcrumbLink)))
+        .map((breadcrumbLink) => {
+            return {
+                href: $(breadcrumbLink).attr('href'),
+                text: $(breadcrumbLink).text()
+                .trim()
+            }
+        })
 }
 
 const pdpParser = ($, $html) => {
-    const $breadcrumbs = (
-        $html
-            .find('.breadcrumbs')
-            .find('li')
-            .not(':last-child')
-            .find('a')
-    )
-
+    const $breadcrumbsContainer = $html.find('.breadcrumbs')
+    const $breadcrumbs = $breadcrumbsContainer
+        .find('li')
+        .not(':last-child')
+        .find('a')
     const $mainContent = $html.find('.page-main')
     const $form = $mainContent.find('#product_addtocart_form')
 
@@ -24,7 +25,8 @@ const pdpParser = ($, $html) => {
     })
 
     return {
-        breadcrumbs: parseBreadcrumbs($, $breadcrumbs),
+        breadcrumbs: parseBreadcrumbs($breadcrumbs),
+        contentsLoaded: true,
         formInfo: {
             submitUrl: $form.attr('action'),
             method: $form.attr('method'),

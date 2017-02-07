@@ -1,14 +1,8 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
 import throttle from 'lodash.throttle'
 import classnames from 'classnames'
-
 import * as headerActions from './actions'
-import * as miniCartActions from '../mini-cart/actions'
-import {openModal} from '../../store/modals/actions'
-import {NAVIGATION_MODAL} from '../navigation/constants'
-import * as selectors from './selectors'
 
 import {HeaderBar} from 'progressive-web-sdk/dist/components/header-bar'
 
@@ -39,7 +33,7 @@ class Header extends React.Component {
     }
 
     handleScroll() {
-        const {isCollapsed} = this.props
+        const {isCollapsed} = this.props.header.toJS()
         const newIsCollapsed = window.pageYOffset > this.headerHeight
 
         // Don't trigger the action unless things have changed
@@ -49,7 +43,8 @@ class Header extends React.Component {
     }
 
     render() {
-        const {onMenuClick, onMiniCartClick, isCollapsed} = this.props
+        const {onMenuClick, onMiniCartClick} = this.props
+        const {isCollapsed, itemCount} = this.props.header.toJS()
 
         if (this.props.isRunningInAstro) {
             Astro.trigger('cart-updated', {
@@ -70,7 +65,7 @@ class Header extends React.Component {
                         <div className="t-header__placeholder" />
                         <HeaderTitle isCollapsed={isCollapsed} />
                         <StoresAction innerButtonClassName={innerButtonClassName} />
-                        <CartAction innerButtonClassName={innerButtonClassName} onClick={onMiniCartClick} />
+                        <CartAction innerButtonClassName={innerButtonClassName} onClick={onMiniCartClick} itemCount={itemCount} />
                     </HeaderBar>
                 </div>
             </header>
@@ -79,24 +74,24 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
+    header: PropTypes.object,
     /**
      * Defines whether we're being hosted in an Astro app
      */
     isRunningInAstro: PropTypes.bool,
-    isCollapsed: PropTypes.bool,
     toggleHeader: PropTypes.func,
 
     onMenuClick: PropTypes.func,
-    onMiniCartClick: PropTypes.func
+    onMiniCartClick: PropTypes.func,
 }
 
-const mapStateToProps = createStructuredSelector({
-    isCollapsed: selectors.getIsCollapsed
-})
+const mapStateToProps = (state) => {
+    return {
+        header: state.header
+    }
+}
 
 const mapDispatchToProps = {
-    onMenuClick: () => openModal(NAVIGATION_MODAL),
-    onMiniCartClick: miniCartActions.requestOpenMiniCart,
     toggleHeader: headerActions.toggleHeader
 }
 
