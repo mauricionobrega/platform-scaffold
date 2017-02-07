@@ -1,4 +1,5 @@
-## Requirements
+
+### Requirements
 
 - [Git](https://git-scm.com/)
 - We recommend you use [nvm](https://github.com/creationix/nvm#installation) to
@@ -6,12 +7,20 @@ manage node and npm versions.
 - node 6.x LTS
 - npm 3.x
 
+
 ## Setup
 
+First clone this repo to a new folder/project:
+```
+git clone git@github.com:mobify/progressive-web-scaffold.git THEPROJECTNAME
+```
+
+Navigate to that new project folder and run the following commands:
 ```
 npm install
 npm run dev
 ```
+
 
 ## Adding a page (container)
 
@@ -19,11 +28,27 @@ npm run dev
 npm run add:page
 ```
 
+
 ## Adding a component
 
 ```
 npm run add:component
 ```
+
+
+## Pushing Bundles to Cloud (Creating a Bundle)
+
+From the project folder, run the following command to push a bundle up to the Mobify Cloud:
+
+```
+npm run push -- --m "VersionNum:GitSHA,BRANCH"
+```
+
+The Bundle Message is required. The format of the message is as follows:
+- Version Number: Use [Semantic Versioning](http://semver.org/)
+- Git Commit SHA: First 7 or 8 characters
+- BRANCH: The branch that you are bundling from
+
 
 ## Using the notification system
 
@@ -39,6 +64,7 @@ dispatch(addNotification({
 }))
 ```
 
+
 ## Docs with Styleguide
 
 To run the project documentation, including a live styleguide, use:
@@ -47,38 +73,36 @@ To run the project documentation, including a live styleguide, use:
 npm run docs:dev
 ```
 
-## SVG Images and Icons
+## Previewing on a device
 
-The SVG directory can be found in `app/static/svg/`. There are three purposes for this directory:
+When you preview on a real device, or on the Android emulator, you are
+connecting from a "remote" computer. Even the Android emulator is a separate
+computer with its own IP. In order for your device to trust the SSL cert
+that the webpack dev server uses, you'll need to use Chrome port forwarding.
 
-1. Store any **static SVG images**
-    * These are stored in the `app/static/svg/` directory's root. These files are ignored by the SVG optimization task (for now).
-2. Store **icon source files**
-    * These are stored in the `app/static/svg/sprite-source/` directory and are the targets for the SVG optimization and Sprite building tasks.
-3. Store the **generated icon sprite**
-    * This is stored in the `app/static/svg/sprite-dist` directory as the destination for the generated icon sprite.
+_Note_: The webpack dev server uses a self-signed certificate for `localhost`
+        which cannot be trusted when connecting to it using your local
+        computer's IP address (ie. 192.168.2.2). Because of this you *have*
+        to use Chrome port forwarding to connect to the webpack dev server
+        from an Android device.
 
-When adding, removing or modifying SVG icons, it is up to the developer to run the following command to generate the new SVG sprite sheet and commit the change.
+To set this up, do the following:
 
-```
-npm run build-sprites
-```
+1. Open chrome on the computer running the webpack dev server
+2. Navigate to `chrome://inspect`
 
-Icon sprites are a technique for creating easy to use icons. [Learn more here](https://medium.com/@webprolific/why-and-how-i-m-using-svg-over-fonts-for-icons-7241dab890f0#.1v9l7c7q2) about the technique and why we use it over icon fonts.
+   ![Chrome: Inspect Screenshot](web/dev-server/assets/chrome-inspect.png)
 
-## Tests
+3. Click the **Port Forward** button beside the *Discover USB devices* checkbox
+4. Add a new entry mapping port **8443** to **localhost:8443** and hit <Enter>
+5. Make sure the checkbox **Enable port forwarding** at the bottom of the modal is checked
 
-To run the full test suite, you can use:
+   ![Chrome: Inspect with port forward entry](web/dev-server/assets/chrome-inspect-port-forward.png)
 
-```
-npm run test:all
-```
+6. Click **Done**
 
-To run tests in watch mode and only run test related to files you modify during development, use:
+You can now preview on your Android device and use `https://localhost:8443/...`
 
-```
-npm run test:watch
-```
 
 ## Prevent SSL Errors in Preview (on a Mac)
 
@@ -90,7 +114,7 @@ for certain use cases (such as service workers).
 To add the certificate to the Mac system trust store and make the
 browsers accept it, do the following:
 
-1. In the root of the project directory, run `open node_modules/webpack-dev-server/ssl/server.crt`.
+1. In the root of the project directory, run `open web/node_modules/webpack-dev-server/ssl/server.crt`.
 2. Open `Keychain Access` -> go to `Certificates` -> select `localhost`
 3. Right click on the entry and select `Get Info`
 4. Expand the `Trust` section
@@ -100,9 +124,10 @@ browsers accept it, do the following:
 This process will allow all projects hosted with `webpack-dev-server`
 version 1.15.0 and up to be trusted by your browsers.
 
-## Tests
 
-To run the full test suite, you can use:
+## Unit Tests
+
+To run the full unit test suite, you can use:
 
 ```
 npm run test:all
@@ -114,13 +139,23 @@ To run tests in watch mode and only run test related to files you modify during 
 npm run test:watch
 ```
 
+
 ## Automated end-to-end tests
 
-To verify that changes do not break the checkout flow:
+To verify that changes do not break the End to End checkout workflow.
+**Note** - Tests will have to be built/added as the project is being built.
 
 ```
 npm run smoke-test
 ```
+To manually run a workflow test:
+- Run `npm run dev` in one Terminal tab
+- In a new terminal tab run the command below (replace TESTNAME.js with the workflow you want to manually run):
+
+```
+npm run nightwatch --test tests/system/workflows/TESTNAME.js
+```
+
 
 ## Lighthouse tests
 
@@ -140,7 +175,8 @@ You **must** keep running `npm run dev` at the same time.
 
 There is also `test:pwa-ci` task (also requires `sudo`) for CI that runs `dev` and `pwa-local` in parallel.
 
-## Developing against `develop` of the Progressive Web SDK
+
+### Developing against `develop` of the Progressive Web SDK
 
 If you are wanting to improve or add a library/component in the [Progressive Web SDK](https://github.com/mobify/progressive-web-sdk),
 you will need to clone the SDK (note: it is not open on Github).

@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "mobify-progressive-app-sdk": "^0.17.6"
+  }
+}
