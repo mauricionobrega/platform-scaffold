@@ -6,16 +6,15 @@ import ShippingAddressForm from './shipping-address'
 import ShippingEmail from './shipping-email'
 import ShippingMethod from './shipping-method'
 
-const CheckoutShippingForm = (props) => {
-    const {
-        formTitle,
-        handleShowCompanyAndApt,
-        handleSubmit,
-        isCompanyOrAptShown,
-        onShippingEmailRecognized,
-        // disabled,
-        // submitting
-    } = props
+const CheckoutShippingForm = ({
+    formTitle,
+    handleShowCompanyAndApt,
+    handleSubmit,
+    isCompanyOrAptShown,
+    onShippingEmailRecognized,
+    // disabled,
+    // submitting
+}) => {
 
     return (
         <form className="t-checkout-shipping__form" onSubmit={handleSubmit} noValidate>

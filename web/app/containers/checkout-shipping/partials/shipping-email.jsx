@@ -8,10 +8,7 @@ import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Link from 'progressive-web-sdk/dist/components/link'
 
 
-const ShippingEmail = (props) => {
-    const {
-        onShippingEmailRecognized
-    } = props
+const ShippingEmail = ({onShippingEmailRecognized}) => {
 
     const passwordHint = (
         <Link className="u-color-brand" href="/customer/account/forgotpassword/">

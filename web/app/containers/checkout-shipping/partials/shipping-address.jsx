@@ -7,12 +7,11 @@ import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
 
 
-const ShippingAddressForm = (props) => {
-    const {
-        formTitle,
-        handleShowCompanyAndApt,
-        isCompanyOrAptShown,
-    } = props
+const ShippingAddressForm = ({
+    formTitle,
+    handleShowCompanyAndApt,
+    isCompanyOrAptShown,
+}) => {
 
     const addCompanyButton = (
         <Button
