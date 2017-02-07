@@ -5,3 +5,6 @@ import {getUi} from '../../store/selectors'
 export const getCheckoutPayment = createSelector(getUi, ({checkoutPayment}) => checkoutPayment)
 
 export const getIsFixedPlaceOrderShown = createGetSelector(getCheckoutPayment, 'isFixedPlaceOrderShown')
+
+export const getHasExistingCreditCard = createGetSelector(getCheckoutPayment, 'hasExistingCreditCard')
+export const getIsNewCardInputSelected = createGetSelector(getCheckoutPayment, 'isNewCardInputSelected')

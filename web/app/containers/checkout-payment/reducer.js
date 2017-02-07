@@ -6,10 +6,13 @@ import {mergePayload} from '../../utils/reducer-utils'
 const initialState = Immutable.fromJS({
     isCompanyOrAptShown: false,
     isFixedPlaceOrderShown: true,
+    hasExistingCreditCard: true,
+    isNewCardInputSelected: false
 })
 
 const checkoutPayment = handleActions({
-    [checkoutPaymentActions.toggleFixedPlaceOrder]: mergePayload
+    [checkoutPaymentActions.toggleFixedPlaceOrder]: mergePayload,
+    [checkoutPaymentActions.toggleCardInputRadio]: mergePayload
 }, initialState)
 
 

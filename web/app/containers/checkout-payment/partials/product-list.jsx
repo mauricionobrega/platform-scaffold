@@ -65,7 +65,6 @@ class ProductList extends React.Component {
         } = this.props
 
         const cart = {
-            items: []
         }
 
         return (
@@ -236,7 +235,6 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = {
     toggleFixedPlaceOrder: checkoutPaymentActions.toggleFixedPlaceOrder
 }
-
 
 export default connect(
     mapStateToProps,
