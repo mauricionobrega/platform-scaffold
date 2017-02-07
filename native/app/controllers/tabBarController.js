@@ -2,8 +2,10 @@ import AnchoredLayoutPlugin from 'progressive-app-sdk/plugins/anchoredLayoutPlug
 import TabBarPlugin from 'progressive-app-sdk/plugins/tabBarPlugin'
 
 import {tabBarConfig} from '../config/tabBarConfig'
+import {Events} from './cartModalController'
 import TabController from './tabController'
 import AccountTabController from './accountTabController'
+import AppEvents from '../global/app-events'
 
 const TabBarController = function(tabBar, layout, tabControllers) {
     this.tabBar = tabBar
@@ -17,6 +19,10 @@ const TabBarController = function(tabBar, layout, tabControllers) {
     this.accountTabController = tabControllers.account
 
     this.tabBar.on('itemSelect', (data) => this._tabSelected(data.id))
+
+    AppEvents.on(Events.signInShow, () => {
+        this.showSignIn()
+    })
 }
 
 TabBarController.init = async function() {
