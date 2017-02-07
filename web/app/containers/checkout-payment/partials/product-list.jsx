@@ -1,8 +1,13 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
-import throttle from 'lodash.throttle'
+import {selectorToJS} from '../../../utils/selector-utils'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
+import throttle from 'lodash.throttle'
+
+// Selectors
+// import * as selectors from '../selectors'
+import * as cartSelectors from '../../../store/cart/selectors'
 
 import * as checkoutPaymentActions from '../actions'
 
@@ -51,7 +56,11 @@ class ProductList extends React.Component {
     render() {
         const {
             // cart,
-            isFixedPlaceOrderShown
+            cartItems,
+            isFixedPlaceOrderShown,
+            summaryCount,
+            subtotalExclTax,
+            subtotalInclTax
         } = this.props
 
         const cart = {
@@ -65,7 +74,7 @@ class ProductList extends React.Component {
                 </div>
 
                 <List className="u-bg-color-neutral-10 u-border-light-top u-border-light-bottom">
-                    {cart.items.map((item, idx) => {
+                    {cartItems.map((item, idx) => {
                         const productImage = (
                             <Image
                                 src={item.product_image.src}
@@ -124,8 +133,8 @@ class ProductList extends React.Component {
                 <div className="u-bg-color-neutral-10">
                     <Ledger>
                         <LedgerRow
-                            label={`Subtotal (${cart.summary_count} items)`}
-                            value={cart.subtotal_excl_tax}
+                            label={`Subtotal (${summaryCount} items)`}
+                            value={subtotalExclTax}
                         />
 
                         {cart.shipping_rate &&
@@ -161,7 +170,7 @@ class ProductList extends React.Component {
                         <LedgerRow
                             label="Total"
                             isTotal={true}
-                            value={cart.total_incl_tax}
+                            value={subtotalInclTax}
                         />
                     </Ledger>
 
@@ -186,7 +195,7 @@ class ProductList extends React.Component {
                             </Button>
 
                             <p className="u-margin-top-md">
-                                Total: <strong>{cart.total_incl_tax}</strong>
+                                Total: <strong>{subtotalInclTax}</strong>
                             </p>
                         </div>
                     </div>
@@ -207,12 +216,19 @@ class ProductList extends React.Component {
 
 ProductList.propTypes = {
     cart: PropTypes.object,
+    cartItems: PropTypes.array,
     isFixedPlaceOrderShown: PropTypes.bool,
+    subtotalExclTax: PropTypes.string,
+    subtotalInclTax: PropTypes.string,
+    summaryCount: PropTypes.number,
     toggleFixedPlaceOrder: PropTypes.func
 }
 
 const mapStateToProps = createStructuredSelector({
-    // cart: TODO
+    cartItems: selectorToJS(cartSelectors.getCartItems),
+    subtotalExclTax: cartSelectors.getSubtotalExcludingTax,
+    subtotalInclTax: cartSelectors.getSubtotalIncludingTax,
+    summaryCount: cartSelectors.getCartSummaryCount,
     // isFixedPlaceOrderShown: TODO
 })
 
