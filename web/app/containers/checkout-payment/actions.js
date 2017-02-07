@@ -4,7 +4,7 @@ import checkoutPaymentParser from './checkout-payment-parser'
 
 export const receiveContents = createAction('Received CheckoutPayment Contents')
 export const showCompanyAndApt = createAction('Showing the "Company" and "Apt #" fields')
-export const toggleFixedPlaceOrder = createAction('Toggled the fixed "Place Order" container')
+export const toggleFixedPlaceOrder = createAction('Toggled the fixed "Place Order" container', 'isFixedPlaceOrderShown')
 
 export const receiveResponse = (response) => {
     return (dispatch) => {

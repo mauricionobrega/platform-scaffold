@@ -6,9 +6,10 @@ import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import throttle from 'lodash.throttle'
 
 // Selectors
-// import * as selectors from '../selectors'
+import * as selectors from '../selectors'
 import * as cartSelectors from '../../../store/cart/selectors'
 
+// Actions
 import * as checkoutPaymentActions from '../actions'
 
 // SDK Components
@@ -229,7 +230,7 @@ const mapStateToProps = createStructuredSelector({
     subtotalExclTax: cartSelectors.getSubtotalExcludingTax,
     subtotalInclTax: cartSelectors.getSubtotalIncludingTax,
     summaryCount: cartSelectors.getCartSummaryCount,
-    // isFixedPlaceOrderShown: TODO
+    isFixedPlaceOrderShown: selectors.getIsFixedPlaceOrderShown
 })
 
 const mapDispatchToProps = {
