@@ -44,7 +44,7 @@ const ShippingAddressForm = ({
             </div>
 
             <div className="u-padding-md u-border-light-top u-border-light-bottom u-bg-color-neutral-10">
-                <FieldRow>
+                {/* <FieldRow>
                     <ReduxForm.Field
                         component={Field}
                         name="shipping-address"
@@ -53,10 +53,10 @@ const ShippingAddressForm = ({
                     >
                         <input type="radio" noValidate />
                     </ReduxForm.Field>
-                </FieldRow>
+                </FieldRow> */ }
 
                 <div className="u-padding-md u-margin-top-md u-border-light">
-                    <FieldRow>
+                    {/* <FieldRow>
                         <ReduxForm.Field
                             component={Field}
                             name="address"
@@ -64,7 +64,7 @@ const ShippingAddressForm = ({
                         >
                             <input type="radio" checked noValidate />
                         </ReduxForm.Field>
-                    </FieldRow>
+                    </FieldRow>*/}
 
                     <FieldRow>
                         <ReduxForm.Field component={Field} name="name" label="Full Name">
