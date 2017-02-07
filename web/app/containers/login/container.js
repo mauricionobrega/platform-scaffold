@@ -41,7 +41,9 @@ class Login extends React.Component {
             openInfoModal,
             closeInfoModal,
             navigateToSection,
-            route: {routeName},
+            route: {
+                routeName
+            },
             router,
             routes,
             isRunningInAstro
