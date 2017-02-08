@@ -6,11 +6,11 @@ import {ProgressSteps, ProgressStepsItem} from 'progressive-web-sdk/dist/compone
 
 
 const CheckoutShipping = () => {
-    const templateClassnames = classNames('t-checkout-shipping u-bg-color-neutral-20 t--loaded')
+    const templateClassnames = classNames('t-checkout-shipping u-bg-color-neutral-10 t--loaded')
 
     return (
         <div className={templateClassnames}>
-            <div className="u-bg-color-neutral-10 u-border-light-bottom">
+            <div className="u-bg-color-neutral-00 u-border-light-bottom">
                 <div className="t-checkout-shipping__progress">
                     <ProgressSteps>
                         <ProgressStepsItem icon="cart-full" title="Cart" href="#" />

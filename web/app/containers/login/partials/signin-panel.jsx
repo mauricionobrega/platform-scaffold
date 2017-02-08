@@ -21,7 +21,7 @@ const SignInPanel = ({description, heading, requiredText, submitForm}) => (
             </div>
         </div>
 
-        <div className="u-bg-color-neutral-20 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
+        <div className="u-bg-color-neutral-10 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
             <SignInForm submitForm={submitForm} />
         </div>
     </div>

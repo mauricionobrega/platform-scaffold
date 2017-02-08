@@ -58,7 +58,7 @@ const renderCreditCartForm = () => {
             </div>
 
             {hasExistingCreditCard ?
-                <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg u-border-light-top u-border-light-bottom u-bg-color-neutral-10">
+                <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg u-border-light-top u-border-light-bottom u-bg-color-neutral-00">
                     <FieldRow>
                         <ReduxForm.Field
                             component={Field}
@@ -89,7 +89,7 @@ const renderCreditCartForm = () => {
                     </div>
                 </div>
             :
-                <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg u-border-light-top u-border-light-bottom u-bg-color-neutral-10">
+                <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg u-border-light-top u-border-light-bottom u-bg-color-neutral-00">
                     {creditCardForm}
                 </div>
             }
@@ -126,7 +126,7 @@ const renderBillingAddress = (isCompanyOrAptShown, handleShowCompanyAndApt) => {
                 <h2 className="u-h4">Billing Address</h2>
             </div>
 
-            <div className="u-border-light-top u-border-light-bottom u-bg-color-neutral-10">
+            <div className="u-border-light-top u-border-light-bottom u-bg-color-neutral-00">
                 <FieldRow className="u-padding-md">
                     <ReduxForm.Field
                         component={Field}

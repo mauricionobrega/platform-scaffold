@@ -24,7 +24,7 @@ const HomeCarousel = ({banners}) => {
                         return (
                             <CarouselItem href={href} key={index}>
                                 <Image
-                                    src={getAssetUrl(`static/img/homepage_carousel/${index}.png`)}
+                                    src={getAssetUrl(`static/img/homepage_carousel/slide-${index + 1}.jpg`)}
                                     alt={alt}
                                     className="u-block"
                                     hidePlaceholder={true}

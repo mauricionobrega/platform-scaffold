@@ -41,7 +41,7 @@ const ShippingAddressForm = ({
                 <h2 className="u-h4">{formTitle}</h2>
             </div>
 
-            <div className="u-padding-md u-border-light-top u-border-light-bottom u-bg-color-neutral-10">
+            <div className="u-padding-md u-border-light-top u-border-light-bottom u-bg-color-neutral-00">
                 <FieldRow>
                     <ReduxForm.Field
                         component={Field}
