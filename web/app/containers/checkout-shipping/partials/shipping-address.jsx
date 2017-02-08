@@ -74,7 +74,7 @@ const ShippingAddressForm = ({
                     <FieldRow>
                         <ReduxForm.Field
                             component={Field}
-                            name="address-line1"
+                            name="street[0]"
                             label="Address"
                             caption={!isCompanyOrAptShown && addCompanyButton}
                         >
@@ -94,7 +94,7 @@ const ShippingAddressForm = ({
 
                             <ReduxForm.Field
                                 component={Field}
-                                name="address-line2"
+                                name="street[1]"
                                 label="Apt #, suite etc."
                             >
                                 <input type="text" noValidate />
@@ -103,13 +103,13 @@ const ShippingAddressForm = ({
                     }
 
                     <FieldRow>
-                        <ReduxForm.Field component={Field} name="shipping-city" label="City">
+                        <ReduxForm.Field component={Field} name="city" label="City">
                             <input type="text" noValidate />
                         </ReduxForm.Field>
                     </FieldRow>
 
                     <FieldRow>
-                        <ReduxForm.Field component={Field} name="shipping-country" label="Country">
+                        <ReduxForm.Field component={Field} name="country_id" label="Country">
                             <select>
                                 {countries.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
                             </select>
@@ -117,7 +117,7 @@ const ShippingAddressForm = ({
                     </FieldRow>
 
                     <FieldRow>
-                        <ReduxForm.Field component={Field} name="shipping-state" label="Province">
+                        <ReduxForm.Field component={Field} name="region_id" label="Province">
                             <select>
                                 {regions.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
                             </select>
@@ -125,7 +125,7 @@ const ShippingAddressForm = ({
                     </FieldRow>
 
                     <FieldRow>
-                        <ReduxForm.Field component={Field} name="shipping-postal-code" label="Postal Code">
+                        <ReduxForm.Field component={Field} name="postcode" label="Postal Code">
                             <input type="text" noValidate />
                         </ReduxForm.Field>
                     </FieldRow>
@@ -133,7 +133,7 @@ const ShippingAddressForm = ({
                     <FieldRow>
                         <ReduxForm.Field
                             component={Field}
-                            name="home-phone"
+                            name="telephone"
                             label="Phone"
                             caption="In case we need to contact you about your order"
                         >
