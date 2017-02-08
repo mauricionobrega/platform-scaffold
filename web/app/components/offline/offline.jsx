@@ -20,7 +20,7 @@ const Offline = ({
         <div className={classes}>
             <div>Fiddlesticks! We couldn't load the next page on this connection.</div>
             <div>Please try again.</div>
-            <Button onClick={reload}>Retry</Button>
+            <Button className="c--tertiary u-width-full u-text-uppercase" onClick={reload}>Retry</Button>
         </div>
     )
 }

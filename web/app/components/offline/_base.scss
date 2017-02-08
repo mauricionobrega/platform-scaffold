@@ -1,7 +1,8 @@
 // Offline
 // ===
 //
-// Component description here
+// 1. Ensure offline banner appears above page content when visible
+// 2. Ensure that the icon is vertically aligned in the center of the banner
 
 
 // Variables
@@ -16,6 +17,19 @@
     // wrapper element.
 }
 
+
+.t-offline-banner {
+    position: fixed;
+    color: $neutral-10;
+    background-color: $neutral-60;
+    
+    z-index: $z2-depth; // 1
+}
+
+.t-offline-banner__icon {
+    line-height: 0; // 2
+    float: right;
+}
 
 // Modifiers
 // ---
