@@ -42,7 +42,6 @@ const HomeCategory = ({category: {href, text}}) => {
             href={href}
             startAction={<CategoryImage alt={text} />}
             endAction={<Icon name="chevron-right" />}
-            includeEndActionInPrimary={true}
         >
             <div className="u-h2 t-home__category-text u-text-lighter">SHOP</div>
 

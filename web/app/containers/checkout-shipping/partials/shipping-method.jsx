@@ -29,7 +29,7 @@ class ShippingMethod extends React.Component {
                     <h2 className="u-h4">Shipping Method</h2>
                 </div>
 
-                <div className="u-padding-md u-border-light-top u-border-light-bottom u-bg-color-neutral-10">
+                <div className="u-padding-md u-border-light-top u-border-light-bottom u-bg-color-neutral-00">
                     {shippingMethods && shippingMethods.map(({label, cost}, idx) => {
                         return (
                             <FieldRow key={idx}>
