@@ -28,7 +28,7 @@ export const openSignIn = () => () => {
 
 export const continueShopping = () => () => {
     if (isRunningInAstro) {
-        Astro.trigger('sign-in:clicked')
+        Astro.trigger('continue:clicked')
     } else {
         // web open continue
     }
