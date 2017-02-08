@@ -1,4 +1,4 @@
-import {extractMegentoShippingStepData} from '../../../utils/magento-utils'
+import {extractMagentoShippingStepData} from '../../../utils/magento-utils'
 
 const getCheckoutConfigObject = ($html) => {
     const $configScript = $html.find('script:contains(window.checkoutConfig)')
@@ -13,7 +13,7 @@ const getCheckoutConfigObject = ($html) => {
 
 
 const checkoutShippingParser = ($, $html) => {
-    const shippingStepData = extractMegentoShippingStepData($html)
+    const shippingStepData = extractMagentoShippingStepData($html)
     const configObject = getCheckoutConfigObject($html)
 
     return {

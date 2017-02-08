@@ -18,6 +18,6 @@ export const extractMagentoJson = ($html) => {
 
 const SHIPPING_STEP_PATH = ['#checkout', 'Magento_Ui/js/core/app', 'components', 'checkout', 'children', 'steps', 'children', 'shipping-step', 'children', 'shippingAddress']
 
-export const extractMegentoShippingStepData = ($html) => {
+export const extractMagentoShippingStepData = ($html) => {
     return extractMagentoJson($html).getIn(SHIPPING_STEP_PATH)
 }
