@@ -48,7 +48,6 @@ class CheckoutConfirmation extends React.Component {
             <ListTile
                 href={href}
                 endAction={<Icon name="chevron-right" className="u-flex-none" />}
-                includeEndActionInPrimary
             >
                 <div className="u-flexbox">
                     <div className="u-flex">{children}</div>
