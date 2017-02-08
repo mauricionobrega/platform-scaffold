@@ -13,8 +13,8 @@ afterAll(() => {
 
 jest.mock('progressive-web-sdk/dist/jquery-response')
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
-jest.mock('./checkout-shipping-parser')
-import checkoutShippingParser from './parser/checkout-shipping'
+jest.mock('./parsers/checkout-shipping')
+import checkoutShippingParser from './parsers/checkout-shipping'
 
 
 test('process parses the response and dispatches receiveData', () => {
