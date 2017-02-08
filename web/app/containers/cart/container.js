@@ -63,6 +63,7 @@ class Cart extends React.Component {
                     <CartProductList
                         cart={cart}
                         onSaveLater={this.openWishlistModal}
+                        onSignInClicked={this.onSignInClicked}
                     />
                 </GridSpan>
 
@@ -73,7 +74,7 @@ class Cart extends React.Component {
                     />
 
                     <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg">
-                        <Button className="c--tertiary u-width-full u-text-uppercase">
+                        <Button className="c--tertiary u-width-full u-text-uppercase" onClick={this.onContinueClicked}>
                             Continue Shopping
                         </Button>
                     </div>

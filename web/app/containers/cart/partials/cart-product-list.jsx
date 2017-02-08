@@ -28,7 +28,7 @@ const renderProductSkeleton = () => (
     </ProductItem>
 )
 
-const CartProductList = ({cart, onSaveLater}) => {
+const CartProductList = ({cart, onSaveLater, onSignInClicked}) => {
     const isCartEmpty = cart.items.length === 0
 
     return (
@@ -39,7 +39,7 @@ const CartProductList = ({cart, onSaveLater}) => {
                         Cart {cart.summary_count > 0 && <span>({cart.summary_count} Items)</span>}
                     </h1>
 
-                    <Button className="u-flex-none u-color-brand">
+                    <Button className="u-flex-none u-color-brand" onClick={onSignInClicked}>
                         <Icon name="user" />
                         Sign in
                     </Button>
@@ -112,6 +112,7 @@ const CartProductList = ({cart, onSaveLater}) => {
 CartProductList.propTypes = {
     cart: PropTypes.object,
     onSaveLater: PropTypes.func,
+    onSignInClicked: PropTypes.func
 }
 
 export default CartProductList
