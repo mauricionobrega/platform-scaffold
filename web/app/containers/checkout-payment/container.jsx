@@ -50,7 +50,7 @@ class CheckoutPayment extends React.Component {
     }
 
     render() {
-        const cart = this.props.miniCart.get('cart').toJS()
+        const cart = this.props.cart
         const {
             contentsLoaded,
             isCompanyOrAptShown,
@@ -82,18 +82,18 @@ class CheckoutPayment extends React.Component {
 }
 
 CheckoutPayment.propTypes = {
+    cart: PropTypes.object,
     checkoutPayment: PropTypes.instanceOf(Immutable.Map),
     fetchContents: PropTypes.func,
     isFixedPlaceOrderShown: PropTypes.bool,
-    miniCart: PropTypes.object,
     showCompanyAndApt: PropTypes.func,
     toggleFixedPlaceOrder: PropTypes.func,
 }
 
 const mapStateToProps = (state) => {
     return {
-        checkoutPayment: state.checkoutPayment,
-        miniCart: state.miniCart
+        checkoutPayment: state.ui.checkoutPayment,
+        cart: state.cart.toJS()
     }
 }
 
