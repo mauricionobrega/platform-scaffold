@@ -91,9 +91,9 @@
     }
 
     &[disabled] {
-        border-color: $neutral-30;
+        border-color: $neutral-15;
 
-        color: $neutral-40;
+        color: $neutral-30;
     }
 
     .pw-button__inner {
@@ -104,9 +104,9 @@
 .pw-button.c--primary,
 .pw-button.c--secondary {
     &[disabled] {
-        background-color: $neutral-30;
+        background-color: $neutral-15;
 
-        color: $neutral-40;
+        color: $neutral-30;
     }
 }
 
