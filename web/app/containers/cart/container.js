@@ -14,7 +14,7 @@ import CartProductList from './partials/cart-product-list'
 import CartSummary from './partials/cart-summary'
 import CartEstimateShippingModal from './partials/cart-estimate-shipping'
 import CartWishlistModal from './partials/cart-wishlist'
-import {isRunningInAstro} from '../../utils/astro-integration'
+
 
 class Cart extends React.Component {
     constructor(props) {
@@ -24,6 +24,9 @@ class Cart extends React.Component {
         this.closeEstimateShippingModal = this.closeEstimateShippingModal.bind(this)
         this.openWishlistModal = this.openWishlistModal.bind(this)
         this.closeWishlistModal = this.closeWishlistModal.bind(this)
+
+        this.onSignInClicked = this.props.openSignIn
+        this.onContinueClicked = this.props.continueShopping
     }
 
     shouldComponentUpdate(newProps) {
@@ -100,9 +103,15 @@ class Cart extends React.Component {
                             Your shopping cart is empty. Sign in to retrieve saved items or continue shopping.
                         </p>
 
-                        <SignInButton />
+                        <Button className="c--primary u-text-uppercase u-h5 u-width-full u-margin-bottom-lg" onClick={this.onSignInClicked}>
+                            <Icon name="User" />
+                            Sign In
+                        </Button>
 
-                        <ContinueButton />
+                        <Button className="c--tertiary u-text-uppercase u-h5 u-width-full" onClick={this.onContinueClicked}>
+                            Continue Shopping
+                        </Button>
+
                     </div>
                 </div>
             </GridSpan>
@@ -149,52 +158,11 @@ class Cart extends React.Component {
     }
 }
 
-const SignInButton = function () {
-    if (isRunningInAstro) {
-        return (
-            <Button className="c--primary u-text-uppercase u-h5 u-width-full u-margin-bottom-lg" onClick={onSignInTapped}>
-                 <Icon name="User" />
-                 Sign In
-            </Button>
-        )
-    } else {
-        return (
-            <Button className="c--primary u-text-uppercase u-h5 u-width-full u-margin-bottom-lg" href="/customer/account/login/">
-                 <Icon name="User" />
-                 Sign In
-            </Button>
-        )
-    }
-}
-
-const ContinueButton = function () {
-    if (isRunningInAstro) {
-        return (
-            <Button className="c--tertiary u-text-uppercase u-h5 u-width-full" onClick={onContinueTapped}>
-                Continue Shopping
-            </Button>
-        )
-    } else {
-        return (
-            <Button className="c--tertiary u-text-uppercase u-h5 u-width-full" href="/">
-                Continue Shopping
-            </Button>
-        )
-    }
-}
-
-const onSignInTapped = () => {
-    Astro.trigger('sign-in:clicked')
-}
-
-const onContinueTapped = () => {
-    Astro.trigger('continue:clicked')
-}
-
-
 Cart.propTypes = {
     cart: PropTypes.object,
+    continueShopping: PropTypes.func,
     miniCart: PropTypes.object,
+    openSignIn: PropTypes.func,
     toggleEstimateShippingModal: PropTypes.func,
     toggleWishlistModal: PropTypes.func,
 }
@@ -209,6 +177,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
     toggleEstimateShippingModal: actions.toggleEstimateShippingModal,
     toggleWishlistModal: actions.toggleWishlistModal,
+    openSignIn: actions.openSignIn,
+    continueShopping: actions.continueShopping
 }
 
 export default connect(
