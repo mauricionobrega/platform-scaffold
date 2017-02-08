@@ -1,4 +1,4 @@
-import {extractMagentoJson} from '../../../utils/magento-utils'
+import {extractMegentoShippingStepData} from '../../../utils/magento-utils'
 
 const getCheckoutConfigObject = ($html) => {
     const $configScript = $html.find('script:contains(window.checkoutConfig)')
@@ -11,10 +11,9 @@ const getCheckoutConfigObject = ($html) => {
     return {}
 }
 
-const SHIPPING_STEP_PATH = ['#checkout', 'Magento_Ui/js/core/app', 'components', 'checkout', 'children', 'steps', 'children', 'shipping-step', 'children', 'shippingAddress']
 
 const checkoutShippingParser = ($, $html) => {
-    const shippingStepData = extractMagentoJson($html).getIn(SHIPPING_STEP_PATH)
+    const shippingStepData = extractMegentoShippingStepData($html)
     const configObject = getCheckoutConfigObject($html)
 
     return {

@@ -7,6 +7,7 @@ import Home from '../home/container'
 import Login from '../login/container'
 import PDP from '../pdp/container'
 import PLP from '../plp/container'
+import * as checkoutActions from '../../store/checkout/actions'
 import * as checkoutShippingActions from '../checkout-shipping/actions'
 import * as homeActions from '../home/actions'
 import * as loginActions from '../login/actions'
@@ -68,6 +69,7 @@ export const fetchPage = (url, pageComponent, routeName) => {
                     dispatch(productsActions.processPlp(receivedAction))
                 } else if (pageComponent === CheckoutShipping) {
                     dispatch(checkoutShippingActions.process(receivedAction))
+                    dispatch(checkoutActions.processShippingLocations(receivedAction))
                 }
                 dispatch(footerActions.process(receivedAction))
                 dispatch(navigationActions.process(receivedAction))

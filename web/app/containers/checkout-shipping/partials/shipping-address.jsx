@@ -1,10 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
+import {selectorToJS} from '../../../utils/selector-utils'
 import * as ReduxForm from 'redux-form'
 
 import {showCompanyAndApt} from '../actions'
 import {getShippingFormTitle, getIsCompanyOrAptShown} from '../selectors'
+import {getCountries, getRegions} from '../../../store/checkout/locations/selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
@@ -13,9 +15,11 @@ import {Icon} from 'progressive-web-sdk/dist/components/icon'
 
 
 const ShippingAddressForm = ({
+    countries,
     formTitle,
     handleShowCompanyAndApt,
     isCompanyOrAptShown,
+    regions
 }) => {
 
     const addCompanyButton = (
@@ -30,12 +34,7 @@ const ShippingAddressForm = ({
             <Icon name="chevron-down" className="u-margin-start-sm u-color-brand" />
         </Button>
     )
-    const shippingAddress = (
-        <div>
-            <p>Vancouver, BC, Canada, V4R5TS</p>
-            <p>Name: John Appleseed</p>
-        </div>
-    )
+
 
     return (
         <div>
@@ -112,14 +111,16 @@ const ShippingAddressForm = ({
                     <FieldRow>
                         <ReduxForm.Field component={Field} name="shipping-country" label="Country">
                             <select>
-                                <option>Canada</option>
+                                {countries.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
                             </select>
                         </ReduxForm.Field>
                     </FieldRow>
 
                     <FieldRow>
                         <ReduxForm.Field component={Field} name="shipping-state" label="Province">
-                            <input type="text" noValidate />
+                            <select>
+                                {regions.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
+                            </select>
                         </ReduxForm.Field>
                     </FieldRow>
 
@@ -146,6 +147,10 @@ const ShippingAddressForm = ({
 }
 
 ShippingAddressForm.propTypes = {
+    countries: React.PropTypes.arrayOf(React.PropTypes.shape({
+        label: React.PropTypes.string,
+        value: React.PropTypes.string
+    })),
     /**
      * Whether the form is disabled or not
      */
@@ -164,11 +169,19 @@ ShippingAddressForm.propTypes = {
      * Whether the "Company" and "Apt #" fields display
      */
     isCompanyOrAptShown: React.PropTypes.bool,
+    regions: React.PropTypes.arrayOf(React.PropTypes.shape({
+        country_id: React.PropTypes.string,
+        label: React.PropTypes.string,
+        title: React.PropTypes.string,
+        value: React.PropTypes.string
+    })),
 }
 
 const mapStateToProps = createStructuredSelector({
+    countries: selectorToJS(getCountries),
     formTitle: getShippingFormTitle,
-    isCompanyOrAptShown: getIsCompanyOrAptShown
+    isCompanyOrAptShown: getIsCompanyOrAptShown,
+    regions: selectorToJS(getRegions)
 })
 
 const mapDispatchToProps = {

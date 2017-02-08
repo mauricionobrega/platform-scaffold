@@ -15,3 +15,9 @@ export const extractMagentoJson = ($html) => {
         .map((item) => Immutable.fromJS(item))
         .reduce((summary, item) => summary.mergeDeep(item), Immutable.Map())
 }
+
+const SHIPPING_STEP_PATH = ['#checkout', 'Magento_Ui/js/core/app', 'components', 'checkout', 'children', 'steps', 'children', 'shipping-step', 'children', 'shippingAddress']
+
+export const extractMegentoShippingStepData = ($html) => {
+    return extractMagentoJson($html).getIn(SHIPPING_STEP_PATH)
+}
