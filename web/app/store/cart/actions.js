@@ -21,7 +21,7 @@ export const getCart = () => (dispatch) => {
     const opts = {
         headers: baseHeaders
     }
-    return utils.makeRequest('https://www.merlinspotions.com/customer/section/load/?sections=cart', opts)
+    return utils.makeRequest('/customer/section/load/?sections=cart', opts)
         .then((response) => response.text())
         .then((responseText) => dispatch(receiveCartContents(parse(responseText))))
 }
@@ -46,7 +46,7 @@ export const removeFromCart = (itemId) => {
     })
 
     const opts = {headers, body, method: 'POST'}
-    return fetch('https://www.merlinspotions.com/checkout/sidebar/removeItem/', opts)
+    return fetch('/checkout/sidebar/removeItem/', opts)
         .json()
 }
 
@@ -70,6 +70,6 @@ export const updateItemQuantity = (itemId, itemQuantity) => {
     })
 
     const opts = {headers, body, method: 'POST'}
-    return fetch('https://www.merlinspotions.com/checkout/sidebar/updateItemQty/', opts)
+    return fetch('/checkout/sidebar/updateItemQty/', opts)
         .json()
 }
