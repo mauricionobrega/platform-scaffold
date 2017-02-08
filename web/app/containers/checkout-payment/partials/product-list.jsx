@@ -33,11 +33,11 @@ class ProductList extends React.Component {
     }
 
     componentDidMount() {
-        window.addEventListener('scroll', this.handleScroll.bind(this))
+        window.addEventListener('scroll', this.handleScroll)
     }
 
     componentWillUnmount() {
-        window.removeEventListener('scroll', this.handleScroll.bind(this))
+        window.removeEventListener('scroll', this.handleScroll)
     }
 
     handleScroll() {
