@@ -38,7 +38,8 @@ class PDP extends React.Component {
         const {
             setQuantity,
             addToCart,
-            closeItemAddedModal
+            closeItemAddedModal,
+            goToCheckout
         } = this.props
 
         let coverage = '50%'
@@ -71,6 +72,7 @@ class PDP extends React.Component {
                         product={product}
                         quantity={quantityAdded}
                         coverage={coverage}
+                        onGoToCheckout={goToCheckout}
                     />
                 }
             </div>
@@ -92,6 +94,10 @@ PDP.propTypes = {
      */
     closeItemAddedModal: PropTypes.func.isRequired,
     /**
+     * Function to lead the user to checkout
+     */
+    goToCheckout: PropTypes.func.isRequired,
+    /**
      * The Immutable.js PDP state object
      */
     pdp: PropTypes.object.isRequired,
@@ -112,7 +118,8 @@ export const mapStateToProps = ({catalog, pdp}) => {
 const mapDispatchToProps = {
     setQuantity: pdpActions.setItemQuantity,
     addToCart: stripEvent(pdpActions.submitCartForm),
-    closeItemAddedModal: stripEvent(pdpActions.closeItemAddedModal)
+    closeItemAddedModal: stripEvent(pdpActions.closeItemAddedModal),
+    goToCheckout: pdpActions.goToCheckout
 }
 
 export default connect(

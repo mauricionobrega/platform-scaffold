@@ -5,10 +5,7 @@ import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import ProductItem from '../../../components/product-item'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
-import {isRunningInAstro} from '../../../utils/astro-integration'
-import Astro from '../../../vendor/astro-client'
-
-const PDPItemAddedModal = ({open, onDismiss, quantity, product: {title, price, carouselItems}, coverage}) => (
+const PDPItemAddedModal = ({open, onDismiss, quantity, product: {title, price, carouselItems}, coverage, onGoToCheckout}) => (
     <Sheet open={open} onDismiss={onDismiss} effect="slide-bottom" className="t-plp__item-added-modal" coverage={coverage}>
         <div className="u-flex-none u-border-bottom">
             <div className="u-flexbox u-align-center">
@@ -38,7 +35,7 @@ const PDPItemAddedModal = ({open, onDismiss, quantity, product: {title, price, c
             </div>
 
             <div className="u-flex-none">
-                <CheckoutButton />
+                <CheckoutButton onCheckoutClicked={onGoToCheckout}/>
                 <Button className="c--tertiary u-width-full u-text-uppercase" onClick={onDismiss}>
                     Continue Shopping
                 </Button>
@@ -47,30 +44,15 @@ const PDPItemAddedModal = ({open, onDismiss, quantity, product: {title, price, c
     </Sheet>
 )
 
-const onCheckoutClicked = function() {
-    Astro.trigger('open:cart-modal')
-}
-
-const CheckoutButton = function() {
-    if (isRunningInAstro) {
-        return (
-            <Button
-                onClick={onCheckoutClicked}
-                className="c--primary u-width-full u-margin-bottom-md u-text-uppercase"
-                innerClassName="u-text-align-center">
-                Go To Checkout
-            </Button>
-        )
-    } else {
-        return (
-            <Button
-                href="#"
-                className="c--primary u-width-full u-margin-bottom-md u-text-uppercase"
-                innerClassName="u-text-align-center">
-                Go To Checkout
-            </Button>
-        )
-    }
+const CheckoutButton = ({onCheckoutClicked}) => {
+    return (
+        <Button
+            onClick={onCheckoutClicked}
+            className="c--primary u-width-full u-margin-bottom-md u-text-uppercase"
+            innerClassName="u-text-align-center">
+            Go To Checkout
+        </Button>
+    )
 }
 
 PDPItemAddedModal.propTypes = {
@@ -79,6 +61,7 @@ PDPItemAddedModal.propTypes = {
     product: PropTypes.object,
     quantity: PropTypes.number,
     onDismiss: PropTypes.func,
+    onGoToCheckout: PropTypes.func
 }
 
 export default PDPItemAddedModal
