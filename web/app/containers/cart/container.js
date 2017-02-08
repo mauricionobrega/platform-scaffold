@@ -15,7 +15,6 @@ import CartSummary from './partials/cart-summary'
 import CartEstimateShippingModal from './partials/cart-estimate-shipping'
 import CartWishlistModal from './partials/cart-wishlist'
 
-
 class Cart extends React.Component {
     constructor(props) {
         super(props)
