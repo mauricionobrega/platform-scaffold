@@ -3,6 +3,7 @@ import TabBarPlugin from 'progressive-app-sdk/plugins/tabBarPlugin'
 
 import {tabBarConfig} from '../config/tabBarConfig'
 import TabController from './tabController'
+import AccountTabController from './accountTabController'
 
 const TabBarController = function(tabBar, layout, tabControllers) {
     this.tabBar = tabBar
@@ -13,6 +14,7 @@ const TabBarController = function(tabBar, layout, tabControllers) {
     })
 
     this._tabControllers = tabControllers
+    this.accountTabController = tabControllers.account
 
     this.tabBar.on('itemSelect', (data) => this._tabSelected(data.id))
 }
@@ -24,9 +26,20 @@ TabBarController.init = async function() {
     const tabControllers = {}
 
     const tabControllerPromises = tabBarConfig.items.map((item) => {
-        return TabController.init(item).then((controller) => {
-            tabControllers[item.id] = controller
-        })
+        if (item.type === 'custom') {
+            switch (item.id) {
+                case 'account':
+                    return AccountTabController.init().then((controller) => {
+                        tabControllers[item.id] = controller
+                    })
+                default:
+                    return null
+            }
+        } else {
+            return TabController.init(item).then((controller) => {
+                tabControllers[item.id] = controller
+            })
+        }
     })
 
     await Promise.all(tabControllerPromises)
@@ -39,12 +52,12 @@ TabBarController.init = async function() {
 
 TabBarController.prototype._tabSelected = function(tabId) {
     const newTabController = this._tabControllers[tabId]
+
     if (this.activeTabId !== tabId) {
         const oldTabController = this.getActiveController()
         if (oldTabController) {
             oldTabController.deactivate()
         }
-
         this.activeTabId = tabId
         this.viewPlugin.setContentView(newTabController.viewPlugin)
     }
@@ -60,6 +73,16 @@ TabBarController.prototype.getActiveController = function() {
         return null
     }
     return this._tabControllers[this.activeTabId]
+}
+
+TabBarController.prototype.showRegistration = function() {
+    this.tabBar.selectItem('account')
+    this.accountTabController.showRegistration()
+}
+
+TabBarController.prototype.showSignIn = function() {
+    this.tabBar.selectItem('account')
+    this.accountTabController.showSignIn()
 }
 
 export default TabBarController
