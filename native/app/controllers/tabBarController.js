@@ -14,6 +14,7 @@ const TabBarController = function(tabBar, layout, tabControllers) {
     })
 
     this._tabControllers = tabControllers
+    this.accountTabController = tabControllers.account
 
     this.tabBar.on('itemSelect', (data) => this._tabSelected(data.id))
 }
@@ -72,6 +73,16 @@ TabBarController.prototype.getActiveController = function() {
         return null
     }
     return this._tabControllers[this.activeTabId]
+}
+
+TabBarController.prototype.showRegistration = function() {
+    this.tabBar.selectItem('account')
+    this.accountTabController.showRegistration()
+}
+
+TabBarController.prototype.showSignIn = function() {
+    this.tabBar.selectItem('account')
+    this.accountTabController.showSignIn()
 }
 
 export default TabBarController
