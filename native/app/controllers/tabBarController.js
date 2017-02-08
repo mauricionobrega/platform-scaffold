@@ -23,6 +23,10 @@ const TabBarController = function(tabBar, layout, tabControllers) {
     AppEvents.on(Events.signInShow, () => {
         this.showSignIn()
     })
+
+    AppEvents.on(Events.shopShow, () => {
+        this.selectTab('shop')
+    })
 }
 
 TabBarController.init = async function() {

@@ -9,7 +9,8 @@ import CartHeaderController from './cartHeaderController'
 import CartConfig from '../config/cartConfig'
 
 const Events = {
-    signInShow: 'sign-in:Show'
+    signInShow: 'sign-in:show',
+    shopShow: 'shop:show'
 }
 
 const CartModalController = function(modalView, navigationView) {
@@ -24,6 +25,7 @@ const CartModalController = function(modalView, navigationView) {
 
     this.navigationView.on('continue:clicked', () => {
         this.hide()
+        AppEvents.trigger(Events.shopShow)
     })
 }
 
