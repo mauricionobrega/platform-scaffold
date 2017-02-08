@@ -99,7 +99,7 @@
     "add:component": "sdk-generate component",
     "add:form": "sdk-generate form",
     "add:page": "sdk-generate page",
-    "build-sprites": "npm run clean:svgs && svg-sprite --symbol --symbol-dest='.' --symbol-sprite='sprite.svg' --shape-id-generator='shoppicon-%s' --dest=./app/static/svg/sprite-dist ./app/static/svg/sprite-source/*.svg",
+    "build-sprites": "npm run clean:svgs && svg-sprite --symbol --symbol-dest='.' --symbol-sprite='sprite.svg' --shape-id-generator='pw-%s' --dest=./app/static/svg/sprite-dist ./app/static/svg/sprite-source/*.svg",
     "clean:svgs": "svgo --enable='removeUselessStrokeAndFill' -f ./app/static/svg/sprite-source",
     "clean:images": "imagemin-power -v --recursive ./app/static/img/**/* --out-dir=.",
     "dev": "sdk-get-routes && sdk-create-hash-manifest && node ./dev-server/index.js",
