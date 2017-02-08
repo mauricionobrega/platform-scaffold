@@ -1,11 +1,11 @@
 import React from 'react'
 import * as ReduxForm from 'redux-form'
 
-
 import {Grid, GridSpan} from '../../../components/grid'
 import ShippingAddressForm from './shipping-address'
 import ShippingEmail from './shipping-email'
 import ShippingMethod from './shipping-method'
+
 
 const CheckoutShippingForm = ({
     handleSubmit,

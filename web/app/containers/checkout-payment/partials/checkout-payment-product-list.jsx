@@ -17,7 +17,7 @@ const CheckoutPaymentProductList = ({cart, isFixedPlaceOrderShown}) => (
             <h2 className="u-h4">Order Summary</h2>
         </div>
 
-        <List className="u-bg-color-neutral-10 u-border-light-top u-border-light-bottom">
+        <List className="u-bg-color-neutral-00 u-border-light-top u-border-light-bottom">
             {cart.items.map((item, idx) => {
                 const productImage = (
                     <Image
@@ -74,7 +74,7 @@ const CheckoutPaymentProductList = ({cart, isFixedPlaceOrderShown}) => (
             })}
         </List>
 
-        <div className="u-bg-color-neutral-10">
+        <div className="u-bg-color-neutral-00">
             <Ledger>
                 <LedgerRow
                     label={`Subtotal (${cart.summary_count} items)`}
@@ -132,7 +132,7 @@ const CheckoutPaymentProductList = ({cart, isFixedPlaceOrderShown}) => (
                 tabIndex="-1"
                 aria-hidden="true"
             >
-                <div className="u-padding-md u-bg-color-neutral-10 u-text-align-center">
+                <div className="u-padding-md u-bg-color-neutral-00 u-text-align-center">
                     <Button className="c--primary u-flex-none u-width-full u-text-all-caps">
                         <Icon name="lock" />
                         Place Your Order
