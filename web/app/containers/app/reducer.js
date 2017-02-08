@@ -24,7 +24,7 @@ export default handleActions({
     },
     [appActions.onPageReceived]: (state, {payload: {url}}) => {
         const path = urlToPathKey(url)
-        return state.set(FETCHED_PATHS, state.get(FETCHED_PATHS).set(path, true))
+        return state.setIn([FETCHED_PATHS, path], true)
     },
     [appActions.addNotification]: (state, {payload}) => {
         return state.update('notifications', (notifications) => {
