@@ -64,7 +64,7 @@ class BillingAddressForm extends React.Component {
                     <h2 className="u-h4">Billing Address</h2>
                 </div>
 
-                <div className="u-border-light-top u-border-light-bottom u-bg-color-neutral-10">
+                <div className="u-border-light-top u-border-light-bottom u-bg-color-neutral-00">
                     <FieldRow className="u-padding-md">
                         <ReduxForm.Field
                             component={Field}
