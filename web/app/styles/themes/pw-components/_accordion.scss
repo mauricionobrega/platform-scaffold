@@ -3,13 +3,13 @@
 //
 
 .pw-accordion {
-    border-top: 1px solid $neutral-30;
-    border-bottom: 1px solid $neutral-30;
+    border-top: 1px solid $neutral-15;
+    border-bottom: 1px solid $neutral-15;
 }
 
 .pw-accordion__item {
     &:not(:last-child) {
-        border-bottom: 1px solid $neutral-30;
+        border-bottom: 1px solid $neutral-15;
     }
 }
 
