@@ -4,10 +4,6 @@
 .c-breadcrumbs__item {
     font-size: $small-font-size;
 
-    & + & {
-        margin-left: 0;
-    }
-
     &:not(:last-of-type)::after {
         content: '>';
 

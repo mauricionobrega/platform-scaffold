@@ -15,7 +15,7 @@ const PDPCarousel = ({items, contentsLoaded}) => {
         previousIcon: 'chevron-left',
         nextIcon: 'chevron-right',
         iconSize: 'medium',
-        className: 'pw--frame pw--side-controls t-pdp__carousel u-padding-md u-bg-color-neutral-20'
+        className: 'pw--frame pw--side-controls t-pdp__carousel u-padding-md u-bg-color-neutral-10'
     }
 
     // So long as we have items, display the carousel as intended!
