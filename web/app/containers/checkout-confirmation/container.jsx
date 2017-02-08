@@ -48,7 +48,6 @@ class CheckoutConfirmation extends React.Component {
             <ListTile
                 href={href}
                 endAction={<Icon name="chevron-right" className="u-flex-none" />}
-                includeEndActionInPrimary
             >
                 <div className="u-flexbox">
                     <div className="u-flex">{children}</div>
@@ -57,8 +56,8 @@ class CheckoutConfirmation extends React.Component {
         )
 
         return contentsLoaded && (
-            <div className="t-checkout-confirmation u-bg-color-neutral-20">
-                <div className="u-bg-color-neutral-10 u-border-light-bottom">
+            <div className="t-checkout-confirmation u-bg-color-neutral-10">
+                <div className="u-bg-color-neutral-00 u-border-light-bottom">
                     <Grid className="u-center-piece">
                         <GridSpan
                             className="t-checkout-confirmation__splash-image"
@@ -99,7 +98,7 @@ class CheckoutConfirmation extends React.Component {
                         </GridSpan>
 
                         <GridSpan {...gridSettings}>
-                            <div className="u-bg-color-neutral-10 u-border-light-top u-border-light-bottom u-padding-md u-padding-top-lg u-padding-bottom-lg">
+                            <div className="u-bg-color-neutral-00 u-border-light-top u-border-light-bottom u-padding-md u-padding-top-lg u-padding-bottom-lg">
                                 <div className="u-margin-bottom-lg">
                                     <Checklist>
                                         <strong>Check out faster</strong> with saved addresses
@@ -128,7 +127,7 @@ class CheckoutConfirmation extends React.Component {
                     </GridSpan>
 
                     <GridSpan {...gridSettings}>
-                        <div className="u-bg-color-neutral-10 u-border-light-top u-border-light-bottom">
+                        <div className="u-bg-color-neutral-00 u-border-light-top u-border-light-bottom">
                             <List>
                                 <QuestionLink href="#">Orders and Returns</QuestionLink>
                                 <QuestionLink href="#">Contact Us</QuestionLink>

@@ -11,7 +11,7 @@ const CartHelp = () => (
             </h2>
         </div>
 
-        <Accordion className="u-bg-color-neutral-10">
+        <Accordion className="u-bg-color-neutral-00">
             <AccordionItem header="Returns and Exchange" iconSize="medium" closeIconName="close">
                 <div>Lorem Ipsum dolor sit amet</div>
             </AccordionItem>

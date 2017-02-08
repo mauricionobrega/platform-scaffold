@@ -34,13 +34,13 @@ class CheckoutShipping extends React.Component {
         } = this.props.checkoutShipping.toJS()
         const {onShippingEmailRecognized} = this.props
 
-        const templateClassnames = classNames('t-checkout-shipping u-bg-color-neutral-20', {
+        const templateClassnames = classNames('t-checkout-shipping u-bg-color-neutral-10', {
             't--loaded': contentsLoaded
         })
 
         return (
             <div className={templateClassnames}>
-                <div className="u-bg-color-neutral-10 u-border-light-bottom">
+                <div className="u-bg-color-neutral-00 u-border-light-bottom">
                     <div className="t-checkout-shipping__progress">
                         <ProgressSteps>
                             <ProgressStepsItem icon="cart-full" title="Cart" href="#" />

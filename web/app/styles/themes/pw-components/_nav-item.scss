@@ -21,8 +21,6 @@ $nav-item__active-color: #f1f0f7;
     letter-spacing: 0;
     text-align: left;
 
-    cursor: pointer;
-
     &:active,
     &:focus {
         border: 0;
@@ -58,7 +56,7 @@ $nav-item__active-color: #f1f0f7;
 
 .c-nav-item--with-before-icon,
 .c-nav-item--sign-in.c--selected {
-    background-color: $neutral-20;
+    background-color: $neutral-10;
 }
 
 .c-nav-item__inner {
@@ -91,7 +89,7 @@ $nav-item__active-color: #f1f0f7;
 
 
 .c-nav-item.c--with-icon {
-    background-color: $neutral-20;
+    background-color: $neutral-10;
 
     .c-nav-item__inner {
         padding: 0;

@@ -55,7 +55,7 @@ EmptyCartContents.propTypes = {
 
 const Cart = ({contentsLoaded, hasItems}) => {
     const isCartEmptyAndLoaded = !hasItems && contentsLoaded
-    const templateClassnames = classNames('t-cart u-bg-color-neutral-20', {
+    const templateClassnames = classNames('t-cart u-bg-color-neutral-10', {
         't--loaded': contentsLoaded
     })
 

@@ -124,7 +124,7 @@ const CartProductList = ({items, summaryCount, onSaveLater}) => {
                 </div>
             </div>
 
-            <List className="u-bg-color-neutral-10 u-border-light-top u-border-light-bottom">
+            <List className="u-bg-color-neutral-00 u-border-light-top u-border-light-bottom">
                 {isCartEmpty && <ProductSkeleton />}
 
                 {items.map((item, idx) => (<CartProductItem {...item} key={idx} idx={idx} onSaveLater={onSaveLater} />))}
