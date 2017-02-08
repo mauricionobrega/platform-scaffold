@@ -18,7 +18,8 @@ import NotificationManager from '../../components/notification-manager'
 
 // Offline support
 import {Offline} from '../templates'
-import OfflineBanner from '../../components/offline-banner'
+import OfflineBanner from '../../components/offline/offline-banner'
+import OfflineModal from '../../components/offline/offline-modal'
 
 const hidePreloaderWhenCSSIsLoaded = () => {
     if (window.Progressive.stylesheetLoaded) {
@@ -62,6 +63,15 @@ class App extends React.Component {
             {target: '#app-footer', label: 'Skip to footer'},
         ]
 
+        const offlineStyles = {
+            padding: '10px 10px 5px 10px',
+            color: 'white',
+            backgroundColor: '#454647',
+            position: 'fixed',
+            zIndex: 10,
+            width: '100%'
+        }
+
         return (
             <div
                 id="app"
@@ -74,7 +84,8 @@ class App extends React.Component {
                 <div id="app-wrap" className="t-app__wrapper u-flexbox u-direction-column">
                     <div id="app-header" className="u-flex-none" role="banner">
                         <CurrentHeader />
-                        {fetchError && hasFetchedCurrentPath && <OfflineBanner />}
+                        <OfflineBanner style={offlineStyles} />
+                        <OfflineModal reload={reload} />
 
                         {notifications &&
                             <NotificationManager
@@ -125,11 +136,9 @@ const mapStateToProps = createStructuredSelector({
     hasFetchedCurrentPath: selectors.hasFetchedCurrentPath
 })
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        removeNotification: appActions.removeNotification,
-        fetchPage: (url, pageComponent, routeName) => dispatch(appActions.fetchPage(url, pageComponent, routeName))
-    }
+const mapDispatchToProps = {
+    removeNotification: appActions.removeNotification,
+    fetchPage: (url, pageComponent, routeName) => appActions.fetchPage(url, pageComponent, routeName)
 }
 
 export default connect(

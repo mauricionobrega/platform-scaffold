@@ -13,6 +13,9 @@ import * as footerActions from '../footer/actions'
 import * as navigationActions from '../navigation/actions'
 import * as productsActions from '../../store/products/actions'
 import * as categoriesActions from '../../store/categories/actions'
+import {closeModal} from '../../store/modals/actions'
+
+import {OFFLINE_MODAL} from '../../components/offline/constants'
 
 export const addNotification = utils.createAction('Add Notification')
 export const removeNotification = utils.createAction('Remove Notification')
@@ -67,6 +70,7 @@ export const fetchPage = (url, pageComponent, routeName) => {
                     dispatch(setPageFetchError('Failed to fetch, cached response provided'))
                 } else {
                     dispatch(clearPageFetchError())
+                    dispatch(closeModal(OFFLINE_MODAL))
                 }
 
                 const currentURL = selectors.getCurrentUrl(getState())
