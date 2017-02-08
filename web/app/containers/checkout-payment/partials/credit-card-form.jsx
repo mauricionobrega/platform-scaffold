@@ -62,8 +62,8 @@ class CreditCardForm extends React.Component {
                 </FieldRow>
 
                 <FieldRow>
-                    <ReduxForm.Field component={Field} name="ccexpiry" label="Expiry" placeholder="mm/yyyy">
-                        <input type="number" noValidate />
+                    <ReduxForm.Field component={Field} name="ccexpiry" label="Expiry">
+                        <input type="number" noValidate placeholder="mm/yyyy" />
                     </ReduxForm.Field>
 
                     <ReduxForm.Field component={Field} className="pw--overlayed-hint t-checkout-payment__credit-card-hints" name="cvv" label="CVV" hint={cvvHint}>
@@ -104,7 +104,7 @@ class CreditCardForm extends React.Component {
                             </FieldRow>
 
                             {isNewCardInputSelected &&
-                                <div className="u-margin-top-md">
+                                <div className="u-margin-top-lg u-padding-top">
                                     {creditCardForm}
                                 </div>
                             }
