@@ -4,7 +4,6 @@ import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import {PAYMENT_EXISTING_CARD, PAYMENT_NEW_CARD} from '../constants'
-// import {selectorToJS} from '../../../utils/selector-utils'
 
 // Selectors
 import * as selectors from '../selectors'
@@ -122,8 +121,19 @@ class CreditCardForm extends React.Component {
 }
 
 CreditCardForm.propTypes = {
+    /**
+     * Whether there's saved credit card data
+     */
     hasExistingCreditCard: PropTypes.bool,
+
+    /**
+     * Whether 'add new card' option is selected
+     */
     isNewCardInputSelected: PropTypes.bool,
+
+    /**
+     * Handle card option selection to determine existing or new card option
+     */
     toggleCardInputRadio: PropTypes.func,
 }
 

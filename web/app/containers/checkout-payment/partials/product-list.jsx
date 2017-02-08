@@ -216,11 +216,35 @@ class ProductList extends React.Component {
 
 ProductList.propTypes = {
     cart: PropTypes.object,
+
+    /**
+     * Cart item data
+     */
     cartItems: PropTypes.array,
+
+    /**
+     * Whether the fixed 'Place Order' container displays
+     */
     isFixedPlaceOrderShown: PropTypes.bool,
+
+    /**
+     * Subtotal excluding tax
+     */
     subtotalExclTax: PropTypes.string,
+
+    /**
+     * Subtotal including tax
+     */
     subtotalInclTax: PropTypes.string,
+
+    /**
+     * Total item count in cart
+     */
     summaryCount: PropTypes.number,
+
+    /**
+     * Handle scroll to toggle fixed 'Place Order' container
+     */
     toggleFixedPlaceOrder: PropTypes.func
 }
 

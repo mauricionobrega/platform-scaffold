@@ -1,8 +1,4 @@
 import React, {PropTypes} from 'react'
-// import {connect} from 'react-redux'
-// import {createStructuredSelector} from 'reselect'
-// import * as selectors from '../selectors'
-// import {selectorToJS} from '../../../utils/selector-utils'
 
 // SDK Component
 import {Grid, GridSpan} from '../../../components/grid'
