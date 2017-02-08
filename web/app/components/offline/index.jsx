@@ -11,7 +11,7 @@ const componentClass = 'c-offline'
  */
 
 const Offline = ({
-    retry,
+    reload,
     className
 }) => {
     const classes = classNames(componentClass, className)
@@ -20,7 +20,7 @@ const Offline = ({
         <div className={classes}>
             <div>Fiddlesticks! We couldn't load the next page on this connection.</div>
             <div>Please try again.</div>
-            <Button onClick={retry}>Retry</Button>
+            <Button onClick={reload}>Retry</Button>
         </div>
     )
 }
@@ -33,9 +33,9 @@ Offline.propTypes = {
     className: PropTypes.string,
 
     /**
-     * Callback to retry the page load
+     * Method that attempts to fetch the page again
      */
-    retry: PropTypes.func
+    reload: PropTypes.func
 }
 
 export default Offline

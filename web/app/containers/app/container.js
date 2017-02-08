@@ -98,7 +98,7 @@ class App extends React.Component {
                             </div>
                         </div>
                     :
-                        <Offline retry={reload} location={children.props.location} route={routeProps} />
+                        <Offline reload={reload} location={children.props.location} route={routeProps} />
                     }
                 </div>
             </div>
