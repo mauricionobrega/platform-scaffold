@@ -21,6 +21,7 @@ const CheckountConfirmationModal = (props) => {
     return (
         <div className="t-checkout-confirmation__temp">
             <button onClick={openCheckoutConfirmationModal}>Open Modal</button>
+
             <Sheet
                 className="t-checkout-confirmation__account-created-modal pw--no-shadow"
                 open={isOpen}
