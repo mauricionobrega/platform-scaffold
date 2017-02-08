@@ -11,6 +11,8 @@ import RawLogin from './login/container'
 import RawPDP from './pdp/container'
 import RawPLP from './plp/container'
 
+import RawOffline from '../components/offline'
+
 export const Cart = template(RawCart)
 export const CheckoutConfirmation = template(RawCheckoutConfirmation)
 export const CheckoutPayment = template(RawCheckoutPayment)
@@ -19,3 +21,4 @@ export const Home = template(RawHome)
 export const Login = template(RawLogin)
 export const PDP = template(RawPDP)
 export const PLP = template(RawPLP)
+export const Offline = template(RawOffline)

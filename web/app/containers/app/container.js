@@ -17,8 +17,7 @@ import * as selectors from './selectors'
 import NotificationManager from '../../components/notification-manager'
 
 // Offline support
-import {getComponentType} from '../../utils/utils'
-import Offline from '../../components/offline'
+import {Offline} from '../templates'
 import OfflineBanner from '../../components/offline-banner'
 
 const hidePreloaderWhenCSSIsLoaded = () => {
@@ -49,7 +48,7 @@ class App extends React.Component {
         const CurrentHeader = routeProps.Header || Header
         const CurrentFooter = routeProps.Footer || Footer
 
-        const reload = () => fetchPage(window.location.href, getComponentType(routeProps.component), routeProps.routeName)
+        const reload = () => fetchPage(window.location.href, routeProps.component.WrappedComponent, routeProps.routeName)
 
         const skipLinksItems = [
             // Customize your list of SkipLinks here. These are necessary to
@@ -99,7 +98,7 @@ class App extends React.Component {
                             </div>
                         </div>
                     :
-                        <Offline retry={reload} />
+                        <Offline retry={reload} location={children.props.location} route={routeProps} />
                     }
                 </div>
             </div>

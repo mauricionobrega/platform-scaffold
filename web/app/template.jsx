@@ -52,6 +52,7 @@ const template = (WrappedComponent) => {
             return (<WrappedComponent {...this.props} />)
         }
     }
+    Template.WrappedComponent = WrappedComponent
     Template.displayName = `Template(${getDisplayName(WrappedComponent)})`
     Template.propTypes = {
         dispatch: PropTypes.func,
