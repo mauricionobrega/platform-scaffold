@@ -30,11 +30,11 @@ class ShippingMethod extends React.Component {
                 </div>
 
                 <div className="u-padding-md u-border-light-top u-border-light-bottom u-bg-color-neutral-00">
-                    {shippingMethods && shippingMethods.map(({label, cost}, idx) => {
+                    {shippingMethods && shippingMethods.map(({label, cost, value}, idx) => {
                         return (
                             <FieldRow key={idx}>
-                                <ReduxForm.Field component={Field} name="shipping-method" label={<ShippingMethodLabel label={label} cost={cost} />}>
-                                    <input type="radio" noValidate />
+                                <ReduxForm.Field component={Field} name="shipping_method" type="radio" label={<ShippingMethodLabel label={label} cost={cost} />}>
+                                    <input type="radio" noValidate value={value} />
                                 </ReduxForm.Field>
                             </FieldRow>
                         )

@@ -75,7 +75,7 @@ const ShippingAddressForm = ({
                     <FieldRow>
                         <ReduxForm.Field
                             component={Field}
-                            name="street[0]"
+                            name="addressLine1"
                             label="Address"
                             caption={!isCompanyOrAptShown && addCompanyButton}
                         >
@@ -87,7 +87,7 @@ const ShippingAddressForm = ({
                         <FieldRow>
                             <ReduxForm.Field
                                 component={Field}
-                                name="organization"
+                                name="company"
                                 label="Company"
                             >
                                 <input type="text" noValidate />
@@ -95,7 +95,7 @@ const ShippingAddressForm = ({
 
                             <ReduxForm.Field
                                 component={Field}
-                                name="street[1]"
+                                name="addressLine2"
                                 label="Apt #, suite etc."
                             >
                                 <input type="text" noValidate />

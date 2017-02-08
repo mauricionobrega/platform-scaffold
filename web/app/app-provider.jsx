@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react'
+import {browserHistory} from 'react-router'
 import {Router, Route, IndexRoute} from 'progressive-web-sdk/dist/routing'
 import {Provider} from 'react-redux'
 
@@ -10,7 +11,7 @@ import CheckoutFooter from './containers/checkout-footer/container'
 
 const AppProvider = ({store}) => (
     <Provider store={store}>
-        <Router>
+        <Router history={browserHistory}>
             <Route path="/" component={App}>
                 <IndexRoute component={Home} routeName="home" />
                 <Route component={Cart} path="checkout/cart/" routeName="cart" fetchPage="false" />

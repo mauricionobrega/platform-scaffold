@@ -1,5 +1,8 @@
 import React from 'react'
 import * as ReduxForm from 'redux-form'
+import {connect} from 'react-redux'
+
+import {submitShipping} from '../actions'
 
 import {Grid, GridSpan} from '../../../components/grid'
 import ShippingAddressForm from './shipping-address'
@@ -9,12 +12,13 @@ import ShippingMethod from './shipping-method'
 
 const CheckoutShippingForm = ({
     handleSubmit,
+    submitShipping
     // disabled,
     // submitting
 }) => {
 
     return (
-        <form className="t-checkout-shipping__form" onSubmit={handleSubmit} noValidate>
+        <form className="t-checkout-shipping__form" onSubmit={handleSubmit(submitShipping)} noValidate>
             <Grid className="u-center-piece">
                 <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 7}}>
                     <ShippingEmail />
@@ -39,6 +43,7 @@ CheckoutShippingForm.propTypes = {
      * Redux-form internal
      */
     handleSubmit: React.PropTypes.func,
+    submitShipping: React.PropTypes.func,
     /**
      * Redux-form internal
      */
@@ -53,10 +58,21 @@ const validate = (values) => {
     return errors
 }
 
+const mapStateToProps = () => {
+    return {}
+}
+
+const mapDispatchToProps = {
+    submitShipping
+}
+
 
 const CheckoutShippingReduxForm = ReduxForm.reduxForm({
     form: 'shippingForm',
     validate,
 })(CheckoutShippingForm)
 
-export default CheckoutShippingReduxForm
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(CheckoutShippingReduxForm)
