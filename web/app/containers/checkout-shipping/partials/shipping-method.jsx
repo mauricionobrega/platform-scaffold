@@ -16,7 +16,7 @@ import ShippingMethodLabel from './shipping-method-label'
 class ShippingMethod extends React.Component {
     componentWillReceiveProps(nextProps) {
         if (!nextProps.shippingMethods.length && nextProps.entityID) {
-            this.props.fetchShippingMethods(nextProps.entityID)
+            this.props.fetchShippingMethods()
         }
     }
 

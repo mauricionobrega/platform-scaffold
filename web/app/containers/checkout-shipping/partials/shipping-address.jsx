@@ -4,7 +4,7 @@ import {createStructuredSelector} from 'reselect'
 import {selectorToJS} from '../../../utils/selector-utils'
 import * as ReduxForm from 'redux-form'
 
-import {showCompanyAndApt} from '../actions'
+import {showCompanyAndApt, fetchShippingMethods} from '../actions'
 import {getShippingFormTitle, getIsCompanyOrAptShown} from '../selectors'
 import {getCountries, getRegions} from '../../../store/checkout/locations/selectors'
 
@@ -16,6 +16,7 @@ import {Icon} from 'progressive-web-sdk/dist/components/icon'
 
 const ShippingAddressForm = ({
     countries,
+    fetchShippingMethods,
     formTitle,
     handleShowCompanyAndApt,
     isCompanyOrAptShown,
@@ -117,7 +118,7 @@ const ShippingAddressForm = ({
                     </FieldRow>
 
                     <FieldRow>
-                        <ReduxForm.Field component={Field} name="region_id" label="Province">
+                        <ReduxForm.Field component={Field} name="region_id" label="State/Province">
                             <select>
                                 {regions.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
                             </select>
@@ -126,7 +127,7 @@ const ShippingAddressForm = ({
 
                     <FieldRow>
                         <ReduxForm.Field component={Field} name="postcode" label="Postal Code">
-                            <input type="text" noValidate />
+                            <input type="text" noValidate onBlur={fetchShippingMethods} />
                         </ReduxForm.Field>
                     </FieldRow>
 
@@ -155,6 +156,7 @@ ShippingAddressForm.propTypes = {
      * Whether the form is disabled or not
      */
     disabled: React.PropTypes.bool,
+    fetchShippingMethods: React.PropTypes.func,
     /**
     * The title for the form
     */
@@ -186,6 +188,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
     handleShowCompanyAndApt: showCompanyAndApt,
+    fetchShippingMethods
 }
 
 
