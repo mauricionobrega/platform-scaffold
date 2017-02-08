@@ -35,7 +35,7 @@ Offline.propTypes = {
     /**
      * Method that attempts to fetch the page again
      */
-    reload: PropTypes.func
+    reload: PropTypes.func.isRequired
 }
 
 export default Offline
