@@ -3,15 +3,16 @@
 //
 
 .pw-stepper {
-    display: flex;
-    border: $border;
-
     input {
         width: $tap-size;
         border: 0;
 
         text-align: center;
     }
+}
+
+.pw-stepper__inner {
+    border: $border;
 }
 
 .pw-stepper__button {
