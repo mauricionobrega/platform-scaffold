@@ -4,15 +4,15 @@ import * as checkoutPaymentActions from './actions'
 import {mergePayload} from '../../utils/reducer-utils'
 
 const initialState = Immutable.fromJS({
-    isCompanyOrAptShown: false,
     isFixedPlaceOrderShown: true,
-    hasExistingCreditCard: true,
-    isNewCardInputSelected: false
+    hasExistingCreditCard: true
 })
 
 const checkoutPayment = handleActions({
     [checkoutPaymentActions.toggleFixedPlaceOrder]: mergePayload,
-    [checkoutPaymentActions.toggleCardInputRadio]: mergePayload
+    [checkoutPaymentActions.toggleCardInputRadio]: mergePayload,
+    [checkoutPaymentActions.toggleCompanyAptField]: mergePayload,
+    [checkoutPaymentActions.toggleNewAddressFields]: mergePayload
 }, initialState)
 
 

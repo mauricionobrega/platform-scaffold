@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 import * as ReduxForm from 'redux-form'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
@@ -119,6 +119,12 @@ class CreditCardForm extends React.Component {
             </div>
         )
     }
+}
+
+CreditCardForm.propTypes = {
+    hasExistingCreditCard: PropTypes.bool,
+    isNewCardInputSelected: PropTypes.bool,
+    toggleCardInputRadio: PropTypes.func,
 }
 
 const CreditCardReduxForm = ReduxForm.reduxForm({

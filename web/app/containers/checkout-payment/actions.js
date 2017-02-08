@@ -3,9 +3,10 @@ import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import checkoutPaymentParser from './checkout-payment-parser'
 
 export const receiveContents = createAction('Received CheckoutPayment Contents')
-export const showCompanyAndApt = createAction('Showing the "Company" and "Apt #" fields')
 export const toggleFixedPlaceOrder = createAction('Toggled the fixed "Place Order" container', 'isFixedPlaceOrderShown')
 export const toggleCardInputRadio = createAction('Toggled the card method radio input', 'isNewCardInputSelected')
+export const toggleCompanyAptField = createAction('Showing the "Company" and "Apt #" fields', 'isCompanyOrAptShown')
+export const toggleNewAddressFields = createAction('Toggled new address fields', 'newShippingAddressIsEnabled')
 
 export const receiveResponse = (response) => {
     return (dispatch) => {

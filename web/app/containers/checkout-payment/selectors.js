@@ -7,4 +7,9 @@ export const getCheckoutPayment = createSelector(getUi, ({checkoutPayment}) => c
 export const getIsFixedPlaceOrderShown = createGetSelector(getCheckoutPayment, 'isFixedPlaceOrderShown')
 
 export const getHasExistingCreditCard = createGetSelector(getCheckoutPayment, 'hasExistingCreditCard')
+
 export const getIsNewCardInputSelected = createGetSelector(getCheckoutPayment, 'isNewCardInputSelected')
+
+export const getIsCompanyOrAptShown = createGetSelector(getCheckoutPayment, 'isCompanyOrAptShown')
+
+export const getNewShippingAddressIsEnabled = createGetSelector(getCheckoutPayment, 'newShippingAddressIsEnabled')
