@@ -1,17 +1,14 @@
 import React from 'react'
 import * as ReduxForm from 'redux-form'
 
+
 import {Grid, GridSpan} from '../../../components/grid'
 import ShippingAddressForm from './shipping-address'
 import ShippingEmail from './shipping-email'
 import ShippingMethod from './shipping-method'
 
 const CheckoutShippingForm = ({
-    formTitle,
-    handleShowCompanyAndApt,
     handleSubmit,
-    isCompanyOrAptShown,
-    onShippingEmailRecognized,
     // disabled,
     // submitting
 }) => {
@@ -20,12 +17,8 @@ const CheckoutShippingForm = ({
         <form className="t-checkout-shipping__form" onSubmit={handleSubmit} noValidate>
             <Grid className="u-center-piece">
                 <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 7}}>
-                    <ShippingEmail
-                        onShippingEmailRecognized={onShippingEmailRecognized} />
-                    <ShippingAddressForm
-                        formTitle={formTitle}
-                        handleShowCompanyAndApt={handleShowCompanyAndApt}
-                        isCompanyOrAptShown={isCompanyOrAptShown} />
+                    <ShippingEmail />
+                    <ShippingAddressForm />
                 </GridSpan>
 
                 <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 5}}>
@@ -41,32 +34,15 @@ CheckoutShippingForm.propTypes = {
      * Whether the form is disabled or not
      */
     disabled: React.PropTypes.bool,
-    /**
-    * The title for the form
-    */
-    formTitle: React.PropTypes.string,
-
-    /**
-     * Shows the "Company" and "Apt #" fields
-     */
-    handleShowCompanyAndApt: React.PropTypes.func,
 
     /**
      * Redux-form internal
      */
     handleSubmit: React.PropTypes.func,
-
-    /**
-     * Whether the "Company" and "Apt #" fields display
-     */
-    isCompanyOrAptShown: React.PropTypes.bool,
-
     /**
      * Redux-form internal
      */
     submitting: React.PropTypes.bool,
-
-    onShippingEmailRecognized: React.PropTypes.func,
 }
 
 const validate = (values) => {
@@ -76,6 +52,7 @@ const validate = (values) => {
     }
     return errors
 }
+
 
 const CheckoutShippingReduxForm = ReduxForm.reduxForm({
     form: 'shippingForm',

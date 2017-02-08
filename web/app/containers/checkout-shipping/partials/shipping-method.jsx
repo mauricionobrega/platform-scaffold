@@ -39,6 +39,4 @@ const ShippingMethod = () => {
 ShippingMethod.propTypes = {
 }
 
-
-
 export default ShippingMethod

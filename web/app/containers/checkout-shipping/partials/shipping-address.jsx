@@ -1,5 +1,8 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import * as ReduxForm from 'redux-form'
+
+import {showCompanyAndApt} from '../actions'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
@@ -161,6 +164,21 @@ ShippingAddressForm.propTypes = {
     isCompanyOrAptShown: React.PropTypes.bool,
 }
 
+const mapStateToProps = (state) => {
+    const checkoutShippingData = state.ui.checkoutShipping
+    return {
+        formTitle: checkoutShippingData.get('formTitle'),
+        isCompanyOrAptShown: checkoutShippingData.get('isCompanyOrAptShown')
+    }
+}
+
+const mapDispatchToProps = {
+    handleShowCompanyAndApt: showCompanyAndApt,
+}
 
 
-export default ShippingAddressForm
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ShippingAddressForm)
