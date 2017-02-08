@@ -61,7 +61,7 @@ const PaymentProductItem = ({item}) => {
 }
 
 
-PaymentProductItem.PropTypes = {
+PaymentProductItem.propTypes = {
     item: PropTypes.object,
 }
 
