@@ -12,6 +12,9 @@ import * as cartSelectors from '../../../store/cart/selectors'
 // Actions
 import * as checkoutPaymentActions from '../actions'
 
+// Partials
+import PaymentProductItem from './payment-product-item'
+
 // SDK Components
 import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/accordion'
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -22,9 +25,6 @@ import Image from 'progressive-web-sdk/dist/components/image'
 import {Ledger, LedgerRow} from 'progressive-web-sdk/dist/components/ledger'
 import List from 'progressive-web-sdk/dist/components/list'
 
-// Local Component
-import ProductItem from '../../../components/product-item'
-
 class ProductList extends React.Component {
     constructor(props) {
         super(props)
@@ -33,11 +33,11 @@ class ProductList extends React.Component {
     }
 
     componentDidMount() {
-        window.addEventListener('scroll', this.handleScroll.bind(this))
+        window.addEventListener('scroll', this.handleScroll)
     }
 
     componentWillUnmount() {
-        window.removeEventListener('scroll', this.handleScroll.bind(this))
+        window.removeEventListener('scroll', this.handleScroll)
     }
 
     handleScroll() {
@@ -74,60 +74,9 @@ class ProductList extends React.Component {
                 </div>
 
                 <List className="u-bg-color-neutral-00 u-border-light-top u-border-light-bottom">
-                    {cartItems.map((item, idx) => {
-                        const productImage = (
-                            <Image
-                                src={item.product_image.src}
-                                alt={item.product_image.alt}
-                                width="104px"
-                                height="104px"
-                            />
-                        )
-
-                        return (
-                            <ProductItem
-                                className="u-padding-top-lg u-padding-bottom-lg u-padding-start u-padding-end"
-                                title={<h2 className="u-h3">{item.product_name}</h2>}
-                                key={idx}
-                                image={productImage}
-                            >
-                                <div className="u-flexbox u-align-bottom">
-                                    <div className="u-flex-none u-color-neutral-50">
-                                        {item.options.map(({label, value}, idx) => (
-                                            <p
-                                                className={idx > 0 ? 'u-margin-top-sm' : ''}
-                                                key={`${item.item_id}-option-${idx}`}
-                                            >
-                                                {label}: {value}
-                                            </p>
-                                        ))}
-
-                                        <p className={item.options > 0 ? 'u-margin-top-sm' : ''}>
-                                            Qty: {item.qty}
-                                        </p>
-                                    </div>
-
-                                    <div className="u-text-align-end u-flex">
-                                        {item.onSale ?
-                                            <div>
-                                                <div className="u-h5 u-color-accent u-text-semi-bold">
-                                                    {item.product_sale_price}
-                                                </div>
-
-                                                <div className="u-text-quiet">
-                                                    <em>Was {item.product_old_price}</em>
-                                                </div>
-                                            </div>
-                                        :
-                                            <div className="u-h5 u-text-semi-bold">
-                                                {item.product_price}
-                                            </div>
-                                        }
-                                    </div>
-                                </div>
-                            </ProductItem>
-                        )
-                    })}
+                    {cartItems.map((item, idx) =>
+                        <PaymentProductItem item={item} key={idx} />
+                    )}
                 </List>
 
                 <div className="u-bg-color-neutral-00">
