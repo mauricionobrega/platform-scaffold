@@ -148,6 +148,9 @@ const ShippingAddressForm = ({
 }
 
 ShippingAddressForm.propTypes = {
+    /**
+    * Countries available to ship to
+    */
     countries: React.PropTypes.arrayOf(React.PropTypes.shape({
         label: React.PropTypes.string,
         value: React.PropTypes.string
@@ -156,6 +159,9 @@ ShippingAddressForm.propTypes = {
      * Whether the form is disabled or not
      */
     disabled: React.PropTypes.bool,
+    /**
+    * Fetches the available shipping methods from the back end
+    */
     fetchShippingMethods: React.PropTypes.func,
     /**
     * The title for the form
@@ -171,6 +177,9 @@ ShippingAddressForm.propTypes = {
      * Whether the "Company" and "Apt #" fields display
      */
     isCompanyOrAptShown: React.PropTypes.bool,
+    /**
+    * Regions available to ship to
+    */
     regions: React.PropTypes.arrayOf(React.PropTypes.shape({
         country_id: React.PropTypes.string,
         label: React.PropTypes.string,

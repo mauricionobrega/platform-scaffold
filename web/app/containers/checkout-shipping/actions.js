@@ -92,7 +92,7 @@ export const submitShipping = () => {
             .then((response) => response.json())
             .then((responseJSON) => {
                 if (responseJSON.payment_methods) {
-                    // To Do send response data to the next container
+                    // TO DO: send response data to the next container
                     browserHistory.push({
                         pathname: '/checkout/payment/'
                     })

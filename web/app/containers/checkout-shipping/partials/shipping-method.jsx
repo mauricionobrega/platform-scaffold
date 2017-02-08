@@ -52,11 +52,21 @@ class ShippingMethod extends React.Component {
 }
 
 ShippingMethod.propTypes = {
+    /**
+    * An identifier for the current users cart
+    */
     entityID: PropTypes.string,
+    /**
+    * Fetches the available shipping methods
+    */
     fetchShippingMethods: PropTypes.func,
+    /**
+    * The available shipping methods for the order
+    */
     shippingMethods: PropTypes.arrayOf(PropTypes.shape({
         cost: PropTypes.string,
-        label: PropTypes.string
+        label: PropTypes.string,
+        value: PropTypes.string
     }))
 }
 

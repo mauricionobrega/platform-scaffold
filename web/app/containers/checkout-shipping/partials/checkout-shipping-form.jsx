@@ -43,6 +43,9 @@ CheckoutShippingForm.propTypes = {
      * Redux-form internal
      */
     handleSubmit: React.PropTypes.func,
+    /**
+    * Submits the shipping form information to the server
+    */
     submitShipping: React.PropTypes.func,
     /**
      * Redux-form internal
