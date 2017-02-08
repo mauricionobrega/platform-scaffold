@@ -14,7 +14,7 @@ const CheckoutConfirmationSplash = (props) => {
     } = props
 
     return (
-        <div className="t-checkout-confirmation__splash u-bg-color-neutral-10 u-border-light-bottom">
+        <div className="t-checkout-confirmation__splash u-bg-color-neutral-00 u-border-light-bottom">
             <Grid className="u-center-piece">
                 <GridSpan
                     className="t-checkout-confirmation__splash-image"

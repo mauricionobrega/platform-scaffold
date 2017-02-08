@@ -31,7 +31,7 @@ const CheckoutConfirmationDetails = (props) => {
             </GridSpan>
 
             <GridSpan {...GRID_SETTINGS}>
-                <div className="u-bg-color-neutral-10 u-border-light-top u-border-light-bottom u-padding-md u-padding-top-lg u-padding-bottom-lg">
+                <div className="u-bg-color-neutral-00 u-border-light-top u-border-light-bottom u-padding-md u-padding-top-lg u-padding-bottom-lg">
                     <div className="u-margin-bottom-lg">
                         <Checklist>
                             <strong>Check out faster</strong> with saved addresses
