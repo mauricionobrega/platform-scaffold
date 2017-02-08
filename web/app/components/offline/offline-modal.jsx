@@ -16,14 +16,18 @@ const OfflineModal = ({
 }) => {
     return (
         <Sheet open={isOpen} onDismiss={closeModal} maskOpacity={0.7} effect="modal-center">
-            <div>Offline mode</div>
-            <p>
-                Some content may not appear as expected. You can continue to navigate to pages
-                you have already visited, but in in order to load new content you must re-establish
-                your internet connection.
-            </p>
-            <Button onClick={reload}>Retry connection</Button>
-            <Button onClick={closeModal}>Continue offline</Button>
+            <div className="u-padding-md">
+                <div>Offline mode</div>
+                <p>
+                    Some content may not appear as expected. You can continue to navigate to pages
+                    you have already visited, but in in order to load new content you must re-establish
+                    your internet connection.
+                </p>
+                <Button className="c--secondary u-width-full u-text-uppercase u-margin-bottom-md" onClick={reload}>Retry connection</Button>
+                <Button className="c--tertiary u-width-full u-text-uppercase" onClick={closeModal}>
+                    Continue offline
+                </Button>
+            </div>
         </Sheet>
     )
 }
