@@ -66,12 +66,12 @@ window.run = async function() {
             previewController.presentPreviewAlert()
         })
 
-        const previewEnabled = await previewController.isPreviewEnabled()
-        if (previewEnabled) {
-            runAppPreview()
-        } else {
-            runApp()
-        }
+        // const previewEnabled = await previewController.isPreviewEnabled()
+        // if (previewEnabled) {
+        runAppPreview()
+        // } else {
+            // runApp()
+        // }
     }
 
     if (AstroNative.Configuration.ASTRO_PREVIEW) {
