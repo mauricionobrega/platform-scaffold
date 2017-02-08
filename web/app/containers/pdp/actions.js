@@ -10,7 +10,7 @@ export const setItemQuantity = createAction('Set item quantity')
 export const openItemAddedModal = createAction('Open Item Added Sheet')
 export const closeItemAddedModal = createAction('Close Item Added Sheet')
 
-export const goToCheckout = () => (dispatch, getStore) => {
+export const goToCheckout = () => (dispatch) => {
     dispatch(closeItemAddedModal())
     if (isRunningInAstro) {
         Astro.trigger('open:cart-modal')

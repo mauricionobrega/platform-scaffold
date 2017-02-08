@@ -35,7 +35,12 @@ const PDPItemAddedModal = ({open, onDismiss, quantity, product: {title, price, c
             </div>
 
             <div className="u-flex-none">
-                <CheckoutButton onCheckoutClicked={onGoToCheckout}/>
+                <Button
+                    onClick={onGoToCheckout}
+                    className="c--primary u-width-full u-margin-bottom-md u-text-uppercase"
+                    innerClassName="u-text-align-center">
+                    Go To Checkout
+                </Button>
                 <Button className="c--tertiary u-width-full u-text-uppercase" onClick={onDismiss}>
                     Continue Shopping
                 </Button>
@@ -43,17 +48,6 @@ const PDPItemAddedModal = ({open, onDismiss, quantity, product: {title, price, c
         </div>
     </Sheet>
 )
-
-const CheckoutButton = ({onCheckoutClicked}) => {
-    return (
-        <Button
-            onClick={onCheckoutClicked}
-            className="c--primary u-width-full u-margin-bottom-md u-text-uppercase"
-            innerClassName="u-text-align-center">
-            Go To Checkout
-        </Button>
-    )
-}
 
 PDPItemAddedModal.propTypes = {
     coverage: PropTypes.string,
