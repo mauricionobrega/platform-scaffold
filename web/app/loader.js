@@ -1,6 +1,7 @@
 import {getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
 import cacheHashManifest from '../tmp/loader-cache-hash-manifest.json'
+import {isRunningInAstro} from './utils/astro-integration'
 
 window.Progressive = {}
 
@@ -52,7 +53,8 @@ if (isReactRoute()) {
 
     // load the worker if available
     // if no worker is available, we have to assume that promises might not be either.
-    (('serviceWorker' in navigator)
+    // Astro doesn't currently support service workers
+    (('serviceWorker' in navigator && !isRunningInAstro)
      ? loadWorker()
      : {then: (fn) => setTimeout(fn)}
     ).then(() => {
