@@ -64,6 +64,7 @@ export const fetchPage = (url, pageComponent, routeName) => {
                 const [$, $response] = res
                 const currentURL = selectors.getCurrentUrl(getState())
                 const receivedAction = onPageReceived($, $response, url, currentURL, routeName)
+                dispatch(process(receivedAction))
                 if (pageComponent === Home) {
                     dispatch(homeActions.process(receivedAction))
                 } else if (pageComponent === Login) {
@@ -78,7 +79,6 @@ export const fetchPage = (url, pageComponent, routeName) => {
                     dispatch(checkoutShippingActions.process(receivedAction))
                     dispatch(checkoutActions.processShippingLocations(receivedAction))
                 }
-                dispatch(process(receivedAction))
                 dispatch(footerActions.process(receivedAction))
                 dispatch(navigationActions.process(receivedAction))
             })

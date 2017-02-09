@@ -4,6 +4,7 @@ import checkoutShippingParser from './parsers/checkout-shipping'
 import shippingMethodParser from './parsers/shipping-method'
 import {addNotification} from '../app/actions'
 import {getCustomerEntityID} from './selectors'
+import {getIsLoggedIn} from '../app/selectors'
 import {getShippingFormValues} from '../../store/form/selectors'
 
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
@@ -25,13 +26,13 @@ export const onShippingEmailRecognized = () => {
         }))
     }
 }
-// *** Temporarily hard coded - get this data from the state instead! ***
-const isLoggedIn = false
 
 export const fetchShippingMethods = () => {
     return (dispatch, getState) => {
-        const formValues = getShippingFormValues(getState())
-        const entityID = getCustomerEntityID(getState())
+        const currentState = getState()
+        const isLoggedIn = getIsLoggedIn(currentState)
+        const formValues = getShippingFormValues(currentState)
+        const entityID = getCustomerEntityID(currentState)
         // Default values to use if none have been selected
         const address = {country_id: 'US', region_id: '0', postcode: null}
         if (formValues) {
@@ -50,6 +51,7 @@ export const fetchShippingMethods = () => {
 
 export const submitShipping = () => {
     return (dispatch, getState) => {
+        const currentState = getState()
         const {
             name,
             company,
@@ -61,8 +63,9 @@ export const submitShipping = () => {
             postcode,
             telephone,
             shipping_method
-        } = getShippingFormValues(getState())
-        const entityID = getCustomerEntityID(getState())
+        } = getShippingFormValues(currentState)
+        const entityID = getCustomerEntityID(currentState)
+        const isLoggedIn = getIsLoggedIn(currentState)
         const names = name.split(' ')
         const shippingSelections = shipping_method.split('_')
         const addressData = {
