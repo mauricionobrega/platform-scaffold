@@ -115,7 +115,7 @@ class ProductList extends React.Component {
                         </Accordion>
                     }
 
-                    <Ledger>
+                    <Ledger className="u-margin-top-sm u-margin-bottom-sm">
                         <LedgerRow
                             label="Total"
                             isTotal={true}
@@ -124,7 +124,7 @@ class ProductList extends React.Component {
                     </Ledger>
 
                     {/* This is the statically positioned "Place Your Order" container */}
-                    <div className="u-padding-end-md u-padding-bottom-lg u-padding-start-md">
+                    <div className="u-padding-end-md u-padding-start-md">
                         <Button className="c--primary u-flex-none u-width-full u-text-all-caps">
                             <Icon name="lock" />
                             Place Your Order
