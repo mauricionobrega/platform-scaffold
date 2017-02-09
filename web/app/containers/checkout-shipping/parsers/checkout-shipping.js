@@ -1,15 +1,6 @@
-import {extractMagentoShippingStepData} from '../../../utils/magento-utils'
+import {extractMagentoShippingStepData, getCheckoutConfigObject} from '../../../utils/magento-utils'
 
-const getCheckoutConfigObject = ($html) => {
-    const $configScript = $html.find('script:contains(window.checkoutConfig)')
 
-    if ($configScript.length) {
-        const objectMatch = /window\.checkoutConfig\s*=\s*([^;]+);/.exec($configScript.html())
-        return objectMatch ? JSON.parse(objectMatch[1]) : {}
-    }
-
-    return {}
-}
 
 
 const checkoutShippingParser = ($, $html) => {
