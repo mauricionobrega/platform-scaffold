@@ -102,7 +102,7 @@ class BillingAddressForm extends React.Component {
                                         name="organization"
                                         label="Company"
                                     >
-                                        <input type="text" noValidate />
+                                        <input type="text" noValidate placeholder="Optional" />
                                     </ReduxForm.Field>
 
                                     <ReduxForm.Field
@@ -110,7 +110,7 @@ class BillingAddressForm extends React.Component {
                                         name="address-line2"
                                         label="Apt #, suite etc."
                                     >
-                                        <input type="text" noValidate />
+                                        <input type="text" noValidate placeholder="Optional" />
                                     </ReduxForm.Field>
                                 </FieldRow>
                             }
