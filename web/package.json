@@ -93,6 +93,7 @@
     "webpack-hot-middleware": "2.13.0"
   },
   "config": {
+    "sdk_generator_version": 2,
     "min_lighthouse_score": 40
   },
   "scripts": {
