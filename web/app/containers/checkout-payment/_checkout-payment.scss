@@ -88,8 +88,8 @@
 
 @include susy-breakpoint($desktop-breakpoint, $desktop-layout) {
     .t-checkout-payment__card {
-        border-left: 1px solid $neutral-15;
         border-right: 1px solid $neutral-15;
+        border-left: 1px solid $neutral-15;
     }
 
     .t-checkout-payment__fixed-place-order {
