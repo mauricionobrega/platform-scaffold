@@ -1,3 +1,4 @@
+/* eslint-env jest */
 /* eslint-disable import/namespace */
 import {Map} from 'immutable'
 

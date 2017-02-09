@@ -1,3 +1,4 @@
+/* eslint-env jquery, jest */
 import {jquerifyHtmlFile} from 'progressive-web-sdk/dist/test-utils'
 import plpParser from './plp'
 
