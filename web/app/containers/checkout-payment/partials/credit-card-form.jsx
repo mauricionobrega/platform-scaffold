@@ -80,7 +80,7 @@ class CreditCardForm extends React.Component {
                 </div>
 
                 {hasExistingCreditCard ?
-                    <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg u-border-light-top u-border-light-bottom u-bg-color-neutral-00">
+                    <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg u-border-light-top u-border-light-bottom u-bg-color-neutral-00 t-checkout-payment__card">
                         <FieldRow>
                             <ReduxForm.Field
                                 component={Field}
@@ -111,7 +111,7 @@ class CreditCardForm extends React.Component {
                         </div>
                     </div>
                 :
-                    <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg u-border-light-top u-border-light-bottom u-bg-color-neutral-00">
+                    <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg u-border-light-top u-border-light-bottom u-bg-color-neutral-00 t-checkout-payment__card">
                         {creditCardForm}
                     </div>
                 }

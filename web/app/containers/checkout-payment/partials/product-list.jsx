@@ -73,13 +73,13 @@ class ProductList extends React.Component {
                     <h2 className="u-h4">Order Summary</h2>
                 </div>
 
-                <List className="u-bg-color-neutral-00 u-border-light-top u-border-light-bottom">
-                    {cartItems.map((item, idx) =>
-                        <PaymentProductItem {...item} key={idx} />
-                    )}
-                </List>
+                <div className="u-bg-color-neutral-00 t-checkout-payment__card">
+                    <List className="u-border-light-top u-border-light-bottom">
+                        {cartItems.map((item, idx) =>
+                            <PaymentProductItem {...item} key={idx} />
+                        )}
+                    </List>
 
-                <div className="u-bg-color-neutral-00">
                     <Ledger>
                         <LedgerRow
                             label={`Subtotal (${summaryCount} items)`}
