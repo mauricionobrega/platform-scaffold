@@ -27,8 +27,8 @@ class CheckoutPayment extends React.Component {
 
     shouldComponentUpdate(newProps) {
         const checkoutPaymentChanged = !Immutable.is(this.props.checkoutPayment, newProps.checkoutPayment)
-        const miniCartChanged = !Immutable.is(this.props.miniCart, newProps.miniCart)
-        return checkoutPaymentChanged || miniCartChanged
+        const cartChanged = !Immutable.is(this.props.cart, newProps.cart)
+        return checkoutPaymentChanged || cartChanged
     }
 
     handleScroll() {
