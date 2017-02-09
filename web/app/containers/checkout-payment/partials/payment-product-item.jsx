@@ -6,6 +6,7 @@ import Image from 'progressive-web-sdk/dist/components/image'
 // Local Component
 import ProductItem from '../../../components/product-item'
 
+/* eslint-disable camelcase */
 const PaymentProductItem = ({
     item_id,
     product_image,
@@ -70,7 +71,6 @@ const PaymentProductItem = ({
     )
 }
 
-
 PaymentProductItem.propTypes = {
     /**
      * Item ID
@@ -99,14 +99,14 @@ PaymentProductItem.propTypes = {
     product_name: PropTypes.string,
 
     /**
-     * Standard price
-     */
-    product_price: PropTypes.string,
-
-    /**
      * Old Price
      */
     product_old_price: PropTypes.string,
+
+    /**
+     * Standard price
+     */
+    product_price: PropTypes.string,
 
     /**
      * Sale Price
@@ -123,5 +123,6 @@ PaymentProductItem.propTypes = {
      */
     onSale: PropTypes.bool,
 }
+/* eslint-enable camelcase */
 
 export default PaymentProductItem
