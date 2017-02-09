@@ -90,7 +90,7 @@ const ShippingAddressForm = ({
                                 name="company"
                                 label="Company"
                             >
-                                <input type="text" noValidate />
+                                <input type="text" noValidate placeholder="Optional" />
                             </ReduxForm.Field>
 
                             <ReduxForm.Field
@@ -98,7 +98,7 @@ const ShippingAddressForm = ({
                                 name="addressLine2"
                                 label="Apt #, suite etc."
                             >
-                                <input type="text" noValidate />
+                                <input type="text" noValidate placeholder="Optional" />
                             </ReduxForm.Field>
                         </FieldRow>
                     }
