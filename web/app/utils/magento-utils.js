@@ -21,3 +21,14 @@ const SHIPPING_STEP_PATH = ['#checkout', 'Magento_Ui/js/core/app', 'components',
 export const extractMagentoShippingStepData = ($html) => {
     return extractMagentoJson($html).getIn(SHIPPING_STEP_PATH)
 }
+
+export const getCheckoutConfigObject = ($html) => {
+    const $configScript = $html.find('script:contains(window.checkoutConfig)')
+
+    if ($configScript.length) {
+        const objectMatch = /window\.checkoutConfig\s*=\s*([^;]+);/.exec($configScript.html())
+        return objectMatch ? JSON.parse(objectMatch[1]) : {}
+    }
+
+    return {}
+}
