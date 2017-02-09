@@ -1,0 +1,25 @@
+// Card Input Theme
+// ===
+
+// Root
+// ---
+//
+// 1. `pw-card-input` is used inside `c-field__input` which has `display: flex`
+//    using `flex: 1 1 auto` so card input will stretch and fill the available space
+
+.pw-card-input {
+    flex: 1 1 auto; // 1
+}
+
+// Card Icon
+// ---
+//
+// 1. Override `.c-icon` default size
+
+.pw-card-input__card-icon {
+    min-width: $tap-size; // 1
+    min-height: $tap-size; // 1
+    padding: 0;
+
+    color: $neutral-30;
+}
