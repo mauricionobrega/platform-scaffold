@@ -99,7 +99,7 @@ const sendForm = (href, formValues, formSelector, resolve, reject) => {
         .then(jqueryResponse)
         .then((res) => {
             const [$, $response] = res // eslint-disable-line no-unused-vars
-            if (isFormResponseInvalid($response)) {
+            if (isFormResponseInvalid($response, formSelector)) {
                 const error = {
                     _error: 'Username or password is incorrect'
                 }

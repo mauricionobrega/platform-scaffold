@@ -30,4 +30,4 @@ export const parseHiddenInputs = ($, $inputs) => {
     })
 }
 
-export const isFormResponseInvalid = ($, $response, formSelector) => $response.find(formSelector).length
+export const isFormResponseInvalid = ($response, formSelector) => $response.find(formSelector).length
