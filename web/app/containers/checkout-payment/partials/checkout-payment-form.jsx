@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 
 // SDK Component
-import {Grid, GridSpan} from '../../../components/grid'
+import {Grid, GridSpan} from 'progressive-web-sdk/dist/components/grid'
 
 // Partials
 import CreditCardForm from './credit-card-form'
