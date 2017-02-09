@@ -1,3 +1,4 @@
+/* eslint-env jest */
 import React from 'react'
 import ConnectedRegisterForm from './register-form'
 import {shallow} from 'enzyme'
