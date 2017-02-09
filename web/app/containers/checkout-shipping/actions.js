@@ -24,7 +24,7 @@ export const onShippingEmailRecognized = () => {
 
 export const fetchShippingMethods = (entityID) => {
     return (dispatch) => {
-        const addressData = {address:{country_id:"US",region_id:"0",postcode:null}}
+        const addressData = {address: {country_id: 'US', region_id: '0', postcode: null}}
         const isLoggedIn = false
         const getEstimateURL = `https://www.merlinspotions.com/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/estimate-shipping-methods`
         makeJsonEncodedRequest(getEstimateURL, addressData, {method: 'POST'})
