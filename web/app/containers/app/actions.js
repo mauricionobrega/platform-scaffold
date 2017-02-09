@@ -2,6 +2,8 @@ import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import * as utils from '../../utils/utils'
 import * as selectors from './selectors'
 
+import appParser from './app-parser'
+
 import CheckoutShipping from '../checkout-shipping/container'
 import Home from '../home/container'
 import Login from '../login/container'
@@ -45,6 +47,11 @@ export const onPageReceived = utils.createAction('On page received',
     'routeName'
 )
 
+export const receiveData = utils.createAction('Receive App Data')
+export const process = ({payload: {$response}}) => {
+    return receiveData(appParser($response))
+}
+
 /**
  * Fetch the content for a 'global' page render. This should be driven
  * by react-router, ideally.
@@ -71,6 +78,7 @@ export const fetchPage = (url, pageComponent, routeName) => {
                     dispatch(checkoutShippingActions.process(receivedAction))
                     dispatch(checkoutActions.processShippingLocations(receivedAction))
                 }
+                dispatch(process(receivedAction))
                 dispatch(footerActions.process(receivedAction))
                 dispatch(navigationActions.process(receivedAction))
             })
