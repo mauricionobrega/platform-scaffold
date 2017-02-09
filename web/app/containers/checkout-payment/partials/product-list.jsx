@@ -69,18 +69,18 @@ class ProductList extends React.Component {
 
         return (
             <div className="t-checkout-payment__product-list">
-                <div className="t-checkout-payment__title u-padding-top-lg u-padding-bottom-lg">
+                <div className="t-checkout-payment__title u-padding-top-lg u-padding-bottom-md">
                     <h2 className="u-h4">Order Summary</h2>
                 </div>
 
-                <div className="u-bg-color-neutral-00 t-checkout-payment__card">
-                    <List className="u-border-light-top u-border-light-bottom">
+                <div className="u-border-light-top u-border-light-bottom u-bg-color-neutral-00 t-checkout-payment__card">
+                    <List>
                         {cartItems.map((item, idx) =>
                             <PaymentProductItem {...item} key={idx} />
                         )}
                     </List>
 
-                    <Ledger>
+                    <Ledger className="u-border-light-top">
                         <LedgerRow
                             label={`Subtotal (${summaryCount} items)`}
                             value={subtotalExclTax}

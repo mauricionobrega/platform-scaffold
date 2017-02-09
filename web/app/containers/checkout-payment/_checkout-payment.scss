@@ -83,6 +83,8 @@
 
 // Desktop Styles
 // ---
+//
+// 1. Add some white space between the product list and footer
 
 @include susy-breakpoint($desktop-breakpoint, $desktop-layout) {
     .t-checkout-payment__card {
@@ -92,5 +94,9 @@
 
     .t-checkout-payment__fixed-place-order {
         display: none;
+    }
+
+    .t-checkout-payment__product-list {
+        margin-bottom: $unit*2; // 1
     }
 }
