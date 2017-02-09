@@ -8,3 +8,4 @@ export const isModalOpen = (modalName) => createGetSelector(getModals, modalName
 export const getCategories = ({categories}) => categories
 export const getProducts = ({products}) => products
 export const getCart = ({cart}) => cart
+export const getCheckout = ({checkout}) => checkout

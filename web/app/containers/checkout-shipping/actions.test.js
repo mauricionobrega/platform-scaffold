@@ -11,8 +11,8 @@ afterAll(() => {
     global.fetch = realFetch
 })
 
-jest.mock('./checkout-shipping-parser')
-import checkoutShippingParser from './checkout-shipping-parser'
+jest.mock('./parsers/checkout-shipping')
+import checkoutShippingParser from './parsers/checkout-shipping'
 
 
 test('process parses the response and dispatches receiveData', () => {
