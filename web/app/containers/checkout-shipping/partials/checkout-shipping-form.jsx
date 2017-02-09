@@ -61,9 +61,7 @@ const validate = (values) => {
     return errors
 }
 
-const mapStateToProps = () => {
-    return {}
-}
+const mapStateToProps = () => ({})
 
 const mapDispatchToProps = {
     submitShipping

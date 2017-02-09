@@ -33,14 +33,14 @@ export const fetchShippingMethods = () => {
         const formValues = getShippingFormValues(getState())
         const entityID = getCustomerEntityID(getState())
         // Default values to use if none have been selected
-        const addressData = {country_id: 'US', region_id: '0', postcode: null}
+        const address = {country_id: 'US', region_id: '0', postcode: null}
         if (formValues) {
-            addressData.country_id = formValues.country_id
-            addressData.region_id = formValues.region_id
-            addressData.postcode = formValues.postcode
+            address.country_id = formValues.country_id
+            address.region_id = formValues.region_id
+            address.postcode = formValues.postcode
         }
         const getEstimateURL = `https://www.merlinspotions.com/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/estimate-shipping-methods`
-        makeJsonEncodedRequest(getEstimateURL, {address: addressData}, {method: 'POST'})
+        makeJsonEncodedRequest(getEstimateURL, {address}, {method: 'POST'})
             .then((response) => response.json())
             .then((responseJSON) => {
                 dispatch(receiveData({shippingMethods: shippingMethodParser(responseJSON)}))
