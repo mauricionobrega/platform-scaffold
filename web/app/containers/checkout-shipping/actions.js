@@ -6,6 +6,7 @@ import {addNotification} from '../app/actions'
 import {getCustomerEntityID} from './selectors'
 import {getIsLoggedIn} from '../app/selectors'
 import {getShippingFormValues} from '../../store/form/selectors'
+import {receiveShippingMethodInitialValues} from '../../store/checkout/actions'
 
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 
@@ -44,7 +45,12 @@ export const fetchShippingMethods = () => {
         makeJsonEncodedRequest(getEstimateURL, {address}, {method: 'POST'})
             .then((response) => response.json())
             .then((responseJSON) => {
-                dispatch(receiveData({shippingMethods: shippingMethodParser(responseJSON)}))
+                const shippingMethods = shippingMethodParser(responseJSON)
+                const initialValues = {
+                    shipping_method: shippingMethods[0].value
+                }
+                dispatch(receiveData({shippingMethods}))
+                dispatch(receiveShippingMethodInitialValues({shipping: {initialValues}})) // set initial value for method
             })
     }
 }
