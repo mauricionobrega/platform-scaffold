@@ -4,7 +4,7 @@ import Button from 'progressive-web-sdk/dist/components/button'
 import {HeaderBar, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
 
-const CheckoutHeader = function(props) {
+const CheckoutHeader = function({children}) {
     const canSignIn = true
     return (
         <header className="t-checkout-header">
@@ -29,6 +29,7 @@ const CheckoutHeader = function(props) {
                     </div>
                 }
             </HeaderBar>
+            {children}
         </header>
     )
 }

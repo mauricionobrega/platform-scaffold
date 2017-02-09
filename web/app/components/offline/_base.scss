@@ -1,20 +1,17 @@
 // Offline
 // ===
 //
-// 1. Ensure offline banner appears above page content when visible
-// 2. Ensure that the icon is vertically aligned in the center of the banner
+// 1. Fill available vertical space (since we have no footer)
+// 2. Ensure offline banner appears above page content when visible
+// 3. Align icon to right of banner
 
-
-// Variables
-// ---
-
-
-// Offline root
-// ---
-
-.c-offline {
+.t-offline {
     // Root Class. Contains all core styles, typically for the component's
     // wrapper element.
+    flex: 1; // 1
+    background-color: $background-color;
+    padding: 25% $unit*1.5 0 $unit*1.5;
+    text-align: center;
 }
 
 
@@ -23,25 +20,9 @@
     color: $neutral-10;
     background-color: $neutral-60;
     
-    z-index: $z2-depth; // 1
+    z-index: $z2-depth; // 2
 }
 
 .t-offline-banner__icon {
-    line-height: 0; // 2
-    float: right;
+    margin-left: auto; // 3
 }
-
-// Modifiers
-// ---
-//
-// .c-offline.c--modifier {
-//     ...
-// }
-
-
-// Sub components
-// ---
-//
-// .c-offline__sub-component {
-//     ...
-// }

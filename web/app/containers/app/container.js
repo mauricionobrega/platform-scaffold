@@ -63,15 +63,6 @@ class App extends React.Component {
             {target: '#app-footer', label: 'Skip to footer'},
         ]
 
-        const offlineStyles = {
-            padding: '10px 10px 5px 10px',
-            color: 'white',
-            backgroundColor: '#454647',
-            position: 'fixed',
-            zIndex: 10,
-            width: '100%'
-        }
-
         return (
             <div
                 id="app"
@@ -83,8 +74,9 @@ class App extends React.Component {
 
                 <div id="app-wrap" className="t-app__wrapper u-flexbox u-direction-column">
                     <div id="app-header" className="u-flex-none" role="banner">
-                        <CurrentHeader />
-                        <OfflineBanner style={offlineStyles} />
+                        <CurrentHeader>
+                            <OfflineBanner />
+                        </CurrentHeader>
                         <OfflineModal reload={reload} />
 
                         {notifications &&

@@ -1,37 +1,32 @@
 import React, {PropTypes} from 'react'
-import classNames from 'classnames'
 
+import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
 import Button from 'progressive-web-sdk/dist/components/button'
 
-const componentClass = 'c-offline'
+import offlineCloud from '../../static/svg/offline-cloud.svg'
 
 /**
  * UI to be shown instead of the page contents while offline and no
  * contents are available.
  */
-
 const Offline = ({
-    reload,
-    className
+    reload
 }) => {
-    const classes = classNames(componentClass, className)
-
     return (
-        <div className={classes}>
-            <div>Fiddlesticks! We couldn't load the next page on this connection.</div>
-            <div>Please try again.</div>
-            <Button className="c--tertiary u-width-full u-text-uppercase" onClick={reload}>Retry</Button>
+        <div className="t-offline">
+            <DangerousHTML html={offlineCloud}>
+                {(htmlObj) => <div className="u-margin-bottom-md" dangerouslySetInnerHTML={htmlObj} />}
+            </DangerousHTML>
+            <p>Fiddlesticks! We couldn't load the</p>
+            <p>next page on this connection.</p>
+            <p>Please try again.</p>
+            <Button className="c--tertiary u-width-full u-text-uppercase u-margin-top-lg" onClick={reload}>Retry</Button>
         </div>
     )
 }
 
 
 Offline.propTypes = {
-    /**
-     * Adds values to the `class` attribute of the root element
-     */
-    className: PropTypes.string,
-
     /**
      * Method that attempts to fetch the page again
      */
