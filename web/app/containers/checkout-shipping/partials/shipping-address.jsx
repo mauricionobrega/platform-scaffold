@@ -4,7 +4,7 @@ import {createStructuredSelector} from 'reselect'
 import {selectorToJS} from '../../../utils/selector-utils'
 import * as ReduxForm from 'redux-form'
 
-import {showCompanyAndApt} from '../actions'
+import {showCompanyAndApt, fetchShippingMethods} from '../actions'
 import {getShippingFormTitle, getIsCompanyOrAptShown} from '../selectors'
 import {getCountries, getRegions} from '../../../store/checkout/locations/selectors'
 
@@ -16,6 +16,7 @@ import {Icon} from 'progressive-web-sdk/dist/components/icon'
 
 const ShippingAddressForm = ({
     countries,
+    fetchShippingMethods,
     formTitle,
     handleShowCompanyAndApt,
     isCompanyOrAptShown,
@@ -74,7 +75,7 @@ const ShippingAddressForm = ({
                     <FieldRow>
                         <ReduxForm.Field
                             component={Field}
-                            name="address-line1"
+                            name="addressLine1"
                             label="Address"
                             caption={!isCompanyOrAptShown && addCompanyButton}
                         >
@@ -86,7 +87,7 @@ const ShippingAddressForm = ({
                         <FieldRow>
                             <ReduxForm.Field
                                 component={Field}
-                                name="organization"
+                                name="company"
                                 label="Company"
                             >
                                 <input type="text" noValidate />
@@ -94,7 +95,7 @@ const ShippingAddressForm = ({
 
                             <ReduxForm.Field
                                 component={Field}
-                                name="address-line2"
+                                name="addressLine2"
                                 label="Apt #, suite etc."
                             >
                                 <input type="text" noValidate />
@@ -103,13 +104,13 @@ const ShippingAddressForm = ({
                     }
 
                     <FieldRow>
-                        <ReduxForm.Field component={Field} name="shipping-city" label="City">
+                        <ReduxForm.Field component={Field} name="city" label="City">
                             <input type="text" noValidate />
                         </ReduxForm.Field>
                     </FieldRow>
 
                     <FieldRow>
-                        <ReduxForm.Field component={Field} name="shipping-country" label="Country">
+                        <ReduxForm.Field component={Field} name="country_id" label="Country">
                             <select>
                                 {countries.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
                             </select>
@@ -117,7 +118,7 @@ const ShippingAddressForm = ({
                     </FieldRow>
 
                     <FieldRow>
-                        <ReduxForm.Field component={Field} name="shipping-state" label="Province">
+                        <ReduxForm.Field component={Field} name="region_id" label="State/Province">
                             <select>
                                 {regions.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
                             </select>
@@ -125,15 +126,15 @@ const ShippingAddressForm = ({
                     </FieldRow>
 
                     <FieldRow>
-                        <ReduxForm.Field component={Field} name="shipping-postal-code" label="Postal Code">
-                            <input type="text" noValidate />
+                        <ReduxForm.Field component={Field} name="postcode" label="Postal Code">
+                            <input type="text" noValidate onBlur={fetchShippingMethods} />
                         </ReduxForm.Field>
                     </FieldRow>
 
                     <FieldRow>
                         <ReduxForm.Field
                             component={Field}
-                            name="home-phone"
+                            name="telephone"
                             label="Phone"
                             caption="In case we need to contact you about your order"
                         >
@@ -147,6 +148,9 @@ const ShippingAddressForm = ({
 }
 
 ShippingAddressForm.propTypes = {
+    /**
+    * Countries available to ship to
+    */
     countries: React.PropTypes.arrayOf(React.PropTypes.shape({
         label: React.PropTypes.string,
         value: React.PropTypes.string
@@ -155,6 +159,10 @@ ShippingAddressForm.propTypes = {
      * Whether the form is disabled or not
      */
     disabled: React.PropTypes.bool,
+    /**
+    * Fetches the available shipping methods from the back end
+    */
+    fetchShippingMethods: React.PropTypes.func,
     /**
     * The title for the form
     */
@@ -169,6 +177,9 @@ ShippingAddressForm.propTypes = {
      * Whether the "Company" and "Apt #" fields display
      */
     isCompanyOrAptShown: React.PropTypes.bool,
+    /**
+    * Regions available to ship to
+    */
     regions: React.PropTypes.arrayOf(React.PropTypes.shape({
         country_id: React.PropTypes.string,
         label: React.PropTypes.string,
@@ -186,6 +197,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
     handleShowCompanyAndApt: showCompanyAndApt,
+    fetchShippingMethods
 }
 
 

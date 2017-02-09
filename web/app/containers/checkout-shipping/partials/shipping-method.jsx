@@ -16,7 +16,7 @@ import ShippingMethodLabel from './shipping-method-label'
 class ShippingMethod extends React.Component {
     componentWillReceiveProps(nextProps) {
         if (!nextProps.shippingMethods.length && nextProps.entityID) {
-            this.props.fetchShippingMethods(nextProps.entityID)
+            this.props.fetchShippingMethods()
         }
     }
 
@@ -30,11 +30,11 @@ class ShippingMethod extends React.Component {
                 </div>
 
                 <div className="u-padding-md u-border-light-top u-border-light-bottom u-bg-color-neutral-00">
-                    {shippingMethods && shippingMethods.map(({label, cost}, idx) => {
+                    {shippingMethods && shippingMethods.map(({label, cost, value}, idx) => {
                         return (
                             <FieldRow key={idx}>
-                                <ReduxForm.Field component={Field} name="shipping-method" label={<ShippingMethodLabel label={label} cost={cost} />}>
-                                    <input type="radio" noValidate />
+                                <ReduxForm.Field component={Field} name="shipping_method" label={<ShippingMethodLabel label={label} cost={cost} />}>
+                                    <input type="radio" noValidate value={value} />
                                 </ReduxForm.Field>
                             </FieldRow>
                         )
@@ -52,11 +52,21 @@ class ShippingMethod extends React.Component {
 }
 
 ShippingMethod.propTypes = {
+    /**
+    * An identifier for the current users cart
+    */
     entityID: PropTypes.string,
+    /**
+    * Fetches the available shipping methods
+    */
     fetchShippingMethods: PropTypes.func,
+    /**
+    * The available shipping methods for the order
+    */
     shippingMethods: PropTypes.arrayOf(PropTypes.shape({
         cost: PropTypes.string,
-        label: PropTypes.string
+        label: PropTypes.string,
+        value: PropTypes.string
     }))
 }
 

@@ -11,7 +11,13 @@ const ShippingMethodLabel = ({label, cost}) => {
 }
 
 ShippingMethodLabel.propTypes = {
+    /**
+    * The cost of the shipping method
+    */
     cost: PropTypes.string,
+    /**
+    * The label for the shipping method
+    */
     label: PropTypes.string
 }
 
