@@ -5,8 +5,8 @@ import Carousel from 'progressive-web-sdk/dist/components/carousel'
 import Button from 'progressive-web-sdk/dist/components/button'
 
 const Onboarding = ({carouselData}) => {
-    const carouselItems = carouselData.map((data, index) => {
-        return <OnboardingScreen data={data} key={index} index={index} />
+    const carouselItems = Object.keys(carouselData).map((key, index) => {
+        return <OnboardingScreen data={carouselData[key]} key={index} index={index} />
     })
     return (
         <Carousel>
