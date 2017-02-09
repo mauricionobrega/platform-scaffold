@@ -58,8 +58,8 @@ class CheckoutPayment extends React.Component {
         } = this.props.checkoutPayment.toJS()
 
         return contentsLoaded && (
-            <div className="t-checkout-payment u-bg-color-neutral-20">
-                <div className="u-bg-color-neutral-10 u-border-light-bottom">
+            <div className="t-checkout-payment u-bg-color-neutral-10">
+                <div className="u-bg-color-neutral-00 u-border-light-bottom">
                     <div className="t-checkout-payment__progress">
                         <ProgressSteps>
                             <ProgressStepsItem icon="cart-full" title="Cart" href="/checkout/cart/" />

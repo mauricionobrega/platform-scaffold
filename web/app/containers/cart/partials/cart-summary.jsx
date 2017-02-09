@@ -27,7 +27,7 @@ const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, onCalculat
                 </div>
             </div>
 
-            <div className="u-bg-color-neutral-10 u-border-light-top u-border-light-bottom">
+            <div className="u-bg-color-neutral-00 u-border-light-top u-border-light-bottom">
                 <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg">
                     <CartPromoForm />
                 </div>

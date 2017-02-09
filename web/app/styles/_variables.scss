@@ -81,12 +81,12 @@ $line-height: 20px;
 // ---
 
 // Neutrals
-$neutral-10: #fff;
-$neutral-20: #f7f7f7;
-$neutral-30: #eee;
-$neutral-35: #d5d5d5;
-$neutral-40: #bfbfbf;
-$neutral-55: #999;
+$neutral-00: #fff;
+$neutral-10: #f7f7f7;
+$neutral-15: #eee;
+$neutral-20: #d5d5d5;
+$neutral-30: #bfbfbf;
+$neutral-40: #999;
 $neutral-50: #696969;
 $neutral-60: #333;
 $neutral-70: #000;
@@ -123,18 +123,18 @@ $active-link-color: $dark-accent-color;
 
 $focus-color: $brand-color;
 
-$border-color: $neutral-35;
+$border-color: $neutral-20;
 $border-radius: 4px;
 $border: 1px solid $border-color;
 
-$input-background-color: $neutral-10;
-$disabled-input-color: $neutral-55;
-$disabled-input-background-color: $neutral-30;
+$input-background-color: $neutral-00;
+$disabled-input-color: $neutral-40;
+$disabled-input-background-color: $neutral-15;
 $horizontal-input-padding: $unit;
 $vertical-input-padding: $unit;
 
-$background-color: $neutral-20;
-$overlay-color: rgba($neutral-10, 0.85);
+$background-color: $neutral-10;
+$overlay-color: rgba($neutral-00, 0.85);
 
 
 // [FFF] Layer (z-index)
