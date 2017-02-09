@@ -1,3 +1,4 @@
+/* eslint-env jest */
 import React from 'react'
 import ConnectedPDPCarousel from './pdp-carousel'
 import {mount, shallow} from 'enzyme'

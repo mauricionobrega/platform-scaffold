@@ -1,9 +1,11 @@
+import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import {makeFormEncodedRequest, createAction} from '../../utils/utils'
 import isEmail from 'validator/lib/isEmail'
 import {SubmissionError} from 'redux-form'
 import {getLogin} from './selectors'
 import {SIGN_IN_SECTION, REGISTER_SECTION} from './constants'
 
+import {isFormResponseInvalid} from './parsers/common'
 import signinParser from './parsers/signin'
 import registerParser from './parsers/register'
 
@@ -94,12 +96,10 @@ const validateRegisterForm = (formValues) => {
 
 const sendForm = (href, formValues, formSelector, resolve, reject) => {
     return makeFormEncodedRequest(href, formValues, {method: 'POST'})
-        .then((response) => {
-            return response.text()
-        })
-        .then((responseText) => {
-            const $html = $(responseText)
-            if ($html.find(formSelector).length) {
+        .then(jqueryResponse)
+        .then((res) => {
+            const [$, $response] = res // eslint-disable-line no-unused-vars
+            if (isFormResponseInvalid($response, formSelector)) {
                 const error = {
                     _error: 'Username or password is incorrect'
                 }
