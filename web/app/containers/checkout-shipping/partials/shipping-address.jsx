@@ -39,7 +39,7 @@ const ShippingAddressForm = ({
 
     return (
         <div>
-            <div className="t-checkout-shipping__title u-padding-top-lg u-padding-bottom-lg">
+            <div className="t-checkout-shipping__title u-padding-top-lg u-padding-bottom-md">
                 <h2 className="u-h4 u-text-uppercase">{formTitle}</h2>
             </div>
 

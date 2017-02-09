@@ -25,7 +25,7 @@ class ShippingMethod extends React.Component {
 
         return (
             <div>
-                <div className="t-checkout-shipping__title u-padding-top-lg u-padding-bottom-lg">
+                <div className="t-checkout-shipping__title u-padding-top-lg u-padding-bottom-md">
                     <h2 className="u-h4 u-text-uppercase">Shipping Method</h2>
                 </div>
 
