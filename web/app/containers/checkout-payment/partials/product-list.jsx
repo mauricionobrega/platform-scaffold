@@ -75,7 +75,7 @@ class ProductList extends React.Component {
 
                 <List className="u-bg-color-neutral-00 u-border-light-top u-border-light-bottom">
                     {cartItems.map((item, idx) =>
-                        <PaymentProductItem item={item} key={idx} />
+                        <PaymentProductItem {...item} key={idx} />
                     )}
                 </List>
 

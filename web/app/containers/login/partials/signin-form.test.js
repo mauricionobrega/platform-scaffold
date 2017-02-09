@@ -1,3 +1,4 @@
+/* eslint-env jest */
 import React from 'react'
 import ConnectedSignInForm from './signin-form'
 import {shallow} from 'enzyme'

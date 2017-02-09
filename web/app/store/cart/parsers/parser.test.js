@@ -1,3 +1,4 @@
+/* eslint-env jest */
 import parse from './parser'
 
 describe('Parsing the cart contents', () => {

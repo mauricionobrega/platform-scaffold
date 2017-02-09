@@ -1,3 +1,4 @@
+/* eslint-env jest */
 import {fetchContents, receiveResponse} from './actions'
 
 let realFetch
