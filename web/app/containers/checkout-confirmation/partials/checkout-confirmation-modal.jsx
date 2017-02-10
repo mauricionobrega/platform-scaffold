@@ -50,7 +50,7 @@ const CheckountConfirmationModal = (props) => {
                     </p>
 
                     <Button
-                        className="c--tertiary u-width-full"
+                        className="c--tertiary u-width-full u-text-uppercase"
                         onClick={closeCheckoutConfirmationModal}
                     >
                         Ok

@@ -6,7 +6,7 @@ import CheckoutConfirmationModal from './partials/checkout-confirmation-modal'
 import CheckoutConfirmationQuestions from './partials/checkout-confirmation-questions'
 
 const CheckoutConfirmation = () => (
-    <div className="t-checkout-confirmation u-bg-color-neutral-10">
+    <div className="t-checkout-confirmation">
         <CheckoutConfirmationSplash />
         <CheckoutConfirmationDetails />
         <CheckoutConfirmationQuestions />

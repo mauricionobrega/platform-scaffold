@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
+import {GRID_SETTINGS} from '../constants'
 import * as selectors from '../selectors'
 
 import {Grid, GridSpan} from 'progressive-web-sdk/dist/components/grid'
@@ -18,8 +19,7 @@ const CheckoutConfirmationSplash = (props) => {
             <Grid className="u-center-piece">
                 <GridSpan
                     className="t-checkout-confirmation__splash-image"
-                    tablet={{span: 6, pre: 1, post: 1}}
-                    desktop={{span: 2, post: 3}}
+                    {...GRID_SETTINGS}
                 >
                     <div className="u-text-align-center u-padding-lg u-text-line-height-0">
                         <Image src={getAssetUrl('static/img/checkout/confirmed.png')} alt="Sparkling checkmark, signifying completion" height="57px" width="99px" />
@@ -28,12 +28,11 @@ const CheckoutConfirmationSplash = (props) => {
 
                 <GridSpan
                     className="t-checkout-confirmation__splash-message"
-                    tablet={{span: 6, pre: 1, post: 1}}
-                    desktop={{span: 4, pre: 3}}
+                    {...GRID_SETTINGS}
                 >
                     <div className="t-checkout-confirmation__thanks u-padding-bottom-lg">
                         <h1 className="u-margin-bottom-md u-text-lighter u-text-all-caps">
-                            <strong>Thanks,</strong> order confirmed
+                            <span className="u-text-normal">Thanks,</span> order confirmed
                         </h1>
 
                         <div className="u-text-content">

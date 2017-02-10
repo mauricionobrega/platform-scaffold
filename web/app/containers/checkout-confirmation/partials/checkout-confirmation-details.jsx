@@ -10,7 +10,7 @@ import CheckoutConfirmationForm from './checkout-confirmation-form'
 
 /* eslint-disable react/prop-types */
 const Checklist = ({children}) => (
-    <div className="u-flexbox u-align-center u-padding-top u-padding-bottom">
+    <div className="u-flexbox u-align-center u-padding-bottom">
         <Icon name="check" className="u-flex-none u-margin-end-md u-color-brand" />
         <div className="u-flex">{children}</div>
     </div>
@@ -26,15 +26,15 @@ const CheckoutConfirmationDetails = (props) => {
         <Grid className="u-center-piece">
             <GridSpan {...GRID_SETTINGS}>
                 <div className="t-checkout-confirmation__heading u-padding-md u-padding-top-lg">
-                    <h2 className="u-h4 u-text-all-caps">Save Your Details</h2>
+                    <h2 className="u-h4 u-text-all-caps">Save Your Address Details</h2>
                 </div>
             </GridSpan>
 
             <GridSpan {...GRID_SETTINGS}>
-                <div className="u-bg-color-neutral-00 u-border-light-top u-border-light-bottom u-padding-md u-padding-top-lg u-padding-bottom-lg">
+                <div className="t-checkout-confirmation__card u-bg-color-neutral-00 u-border-light-top u-border-light-bottom u-padding-md u-padding-top-lg u-padding-bottom-lg">
                     <div className="u-margin-bottom-lg">
                         <Checklist>
-                            <strong>Check out faster</strong> with saved addresses
+                            <strong>Check out faster</strong> next time
                         </Checklist>
 
                         <Checklist>
