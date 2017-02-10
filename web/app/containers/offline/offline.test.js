@@ -1,34 +1,23 @@
 /* eslint-env jest */
 import {mount} from 'enzyme'
 import React from 'react'
-import {Provider} from 'react-redux'
 
-import OfflineBanner from './partials/offline-banner'
-import OfflineModal from './partials/offline-modal'
+import ConnectedOfflineBanner from './partials/offline-banner'
+import ConnectedOfflineModal from './partials/offline-modal'
 
-// Avoid errors with accessing state that does not exist (within `OfflineModal`)
-jest.mock('reselect')
+const OfflineBanner = ConnectedOfflineBanner.WrappedComponent
+const OfflineModal = ConnectedOfflineModal.WrappedComponent
 
-const store = {
-    subscribe: () => {},
-    dispatch: () => {},
-    getState: () => ({})
-}
+const mock = () => {}
 
 test('OfflineBanner renders without errors', () => {
-    const wrapper = mount(
-        <Provider store={store}>
-            <OfflineBanner />
-        </Provider>)
+    const wrapper = mount(<OfflineBanner openModal={mock} />)
 
     expect(wrapper.length).toBe(1)
 })
 
 test('OfflineModal renders without errors', () => {
-    const wrapper = mount(
-        <Provider store={store}>
-            <OfflineModal isOpen={false} reload={() => {}} />
-        </Provider>)
+    const wrapper = mount(<OfflineModal isOpen={false} reload={mock} closeModal={mock} />)
 
     expect(wrapper.length).toBe(1)
 })
