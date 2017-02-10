@@ -1,8 +1,9 @@
 import {browserHistory} from 'react-router'
 import {createAction} from '../../utils/utils'
+import CheckoutShipping from './container'
 import checkoutShippingParser from './parsers/checkout-shipping'
 import shippingMethodParser from './parsers/shipping-method'
-import {addNotification} from '../app/actions'
+import {addNotification, fetchPage, removeNotification} from '../app/actions'
 import {getCustomerEntityID} from './selectors'
 import {getIsLoggedIn} from '../app/selectors'
 import {getShippingFormValues} from '../../store/form/selectors'
@@ -17,14 +18,49 @@ export const process = ({payload: {$, $response}}) => {
     return receiveData(checkoutShippingParser($, $response))
 }
 
-
 export const onShippingEmailRecognized = () => {
     return (dispatch) => {
+        dispatch(receiveData({customerEmailRecognized: true}))
         dispatch(addNotification({
             content: `Welcome back! Sign in for a faster checkout or continue as a guest.`,
             id: 'shippingWelcomeBackMessage',
             showRemoveButton: true
         }))
+    }
+}
+
+export const checkCustomerEmail = () => {
+    return (dispatch, getState) => {
+        const formValues = getShippingFormValues(getState())
+
+        makeJsonEncodedRequest('https://www.merlinspotions.com/rest/default/V1/customers/isEmailAvailable', {customerEmail: formValues.username}, {method: 'POST'})
+            .then((response) => response.text())
+            .then((responseText) => {
+                if (/false/.test(responseText)) {
+                    dispatch(onShippingEmailRecognized())
+                }
+            })
+    }
+}
+
+export const submitSignIn = () => {
+    return (dispatch, getState) => {
+        const {
+            username,
+            password
+        } = getShippingFormValues(getState())
+
+        // This data has to be sent via AJAX, it doesn't work with makeJsonEncodedRequest
+        window.Progressive.$.ajax({
+            url: 'https://www.merlinspotions.com/customer/ajax/login',
+            data: JSON.stringify({username, password, context: 'checkout'}),
+            method: 'POST',
+            success: () => {
+                dispatch(removeNotification('shippingWelcomeBackMessage'))
+                // Refetch the page now that the user is logged in
+                dispatch(fetchPage(window.location.href, CheckoutShipping, 'checkingShipping'))
+            }
+        })
     }
 }
 
