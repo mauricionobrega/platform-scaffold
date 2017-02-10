@@ -4,7 +4,6 @@ import {fromJS, List} from 'immutable'
 import {mergePayload} from '../../utils/reducer-utils'
 import {urlToPathKey} from '../../utils/utils'
 import * as appActions from './actions'
-import * as selectors from './selectors'
 import {CURRENT_URL, FETCHED_PATHS} from './constants'
 
 const initialState = fromJS({
