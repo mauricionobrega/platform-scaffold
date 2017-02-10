@@ -77,7 +77,7 @@ export const fetchPage = (url, pageComponent, routeName) => {
                     dispatch(productsActions.processPlp(receivedAction))
                 } else if (pageComponent === CheckoutShipping) {
                     dispatch(checkoutShippingActions.process(receivedAction))
-                    dispatch(checkoutActions.processShippingLocations(receivedAction))
+                    dispatch(checkoutActions.processCheckoutData(receivedAction))
                 }
                 dispatch(footerActions.process(receivedAction))
                 dispatch(navigationActions.process(receivedAction))
