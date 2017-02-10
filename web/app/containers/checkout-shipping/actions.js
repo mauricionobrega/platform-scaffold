@@ -50,7 +50,7 @@ export const fetchShippingMethods = () => {
                     shipping_method: shippingMethods[0].value
                 }
                 dispatch(receiveData({shippingMethods}))
-                dispatch(receiveShippingMethodInitialValues({shipping: {initialValues}})) // set initial value for method
+                dispatch(receiveShippingMethodInitialValues({initialValues})) // set initial value for method
             })
     }
 }
