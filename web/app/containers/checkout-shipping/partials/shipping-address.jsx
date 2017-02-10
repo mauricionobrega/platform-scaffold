@@ -39,8 +39,8 @@ const ShippingAddressForm = ({
 
     return (
         <div>
-            <div className="t-checkout-shipping__title u-padding-top-lg u-padding-bottom-lg">
-                <h2 className="u-h4">{formTitle}</h2>
+            <div className="t-checkout-shipping__title u-padding-top-lg u-padding-bottom-md">
+                <h2 className="u-h4 u-text-uppercase">{formTitle}</h2>
             </div>
 
             <div className="u-padding-md u-border-light-top u-border-light-bottom u-bg-color-neutral-00">
@@ -90,7 +90,7 @@ const ShippingAddressForm = ({
                                 name="company"
                                 label="Company"
                             >
-                                <input type="text" noValidate />
+                                <input type="text" noValidate placeholder="Optional" />
                             </ReduxForm.Field>
 
                             <ReduxForm.Field
@@ -98,7 +98,7 @@ const ShippingAddressForm = ({
                                 name="addressLine2"
                                 label="Apt #, suite etc."
                             >
-                                <input type="text" noValidate />
+                                <input type="text" noValidate placeholder="Optional" />
                             </ReduxForm.Field>
                         </FieldRow>
                     }

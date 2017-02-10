@@ -1,6 +1,10 @@
 import React from 'react'
-import * as ReduxForm from 'redux-form'
 import {connect} from 'react-redux'
+import {createStructuredSelector} from 'reselect'
+import {selectorToJS} from '../../../utils/selector-utils'
+import * as ReduxForm from 'redux-form'
+
+import {getShippingInitialValues} from '../../../store/checkout/shipping/selectors'
 
 import {submitShipping} from '../actions'
 
@@ -61,7 +65,9 @@ const validate = (values) => {
     return errors
 }
 
-const mapStateToProps = () => ({})
+const mapStateToProps = createStructuredSelector({
+    initialValues: selectorToJS(getShippingInitialValues)
+})
 
 const mapDispatchToProps = {
     submitShipping
@@ -71,6 +77,8 @@ const mapDispatchToProps = {
 const CheckoutShippingReduxForm = ReduxForm.reduxForm({
     form: 'shippingForm',
     validate,
+    keepDirtyOnReinitialize: true,
+    enableReinitialize: true
 })(CheckoutShippingForm)
 
 export default connect(
