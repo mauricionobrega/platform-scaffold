@@ -15,8 +15,8 @@ const OfflineBanner = ({
     return (
         <header className="t-offline-banner__wrapper">
             <div className="t-offline-banner u-flexbox u-align-center u-width-full">
-                <div className="u-margin-start-md">Currently browsing in offline mode</div>
-                <IconLabelButton iconName="info" className="t-offline-banner__icon" label="" onClick={openModal} />
+                <div className="u-flex u-margin-start-md">Currently browsing in offline mode</div>
+                <IconLabelButton iconName="info" label="" onClick={openModal} />
             </div>
         </header>
     )
