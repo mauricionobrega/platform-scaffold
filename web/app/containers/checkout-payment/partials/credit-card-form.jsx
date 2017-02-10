@@ -45,15 +45,17 @@ class CreditCardForm extends React.Component {
 
     handleCVV(e) {
         const input = e.target
-        const value = input.value
-        const currentType = this.props.cvvType
 
         // Set the cvv type based on the card number
         if (input.name === 'ccnumber') {
+            const amexRegex = new RegExp('^3[47]')
+            const value = input.value
+            const currentType = this.props.cvvType
+
             // Don't trigger the actions unless things have changed
-            if (value.match(/^3[47]/) && currentType !== AMEX_CARD) {
+            if (value.match(amexRegex) && currentType !== AMEX_CARD) {
                 this.props.setCvvType(AMEX_CARD)
-            } else if (!value.match(/^3[47]/) && currentType !== DEFAULT_CARD) {
+            } else if (!value.match(amexRegex) && currentType !== DEFAULT_CARD) {
                 this.props.setCvvType(DEFAULT_CARD)
             }
         }
@@ -157,6 +159,11 @@ CreditCardForm.propTypes = {
      * Whether 'add new card' option is selected
      */
     isNewCardInputSelected: PropTypes.bool,
+
+    /**
+     * Handle cvv type
+     */
+    setCvvType: PropTypes.func,
 
     /**
      * Handle card option selection to determine existing or new card option
