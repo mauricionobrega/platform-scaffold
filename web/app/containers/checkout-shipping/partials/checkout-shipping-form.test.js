@@ -1,3 +1,4 @@
+/* eslint-env jest */
 import React from 'react'
 import CheckoutShippingReduxForm from './checkout-shipping-form'
 import {Provider} from 'react-redux'

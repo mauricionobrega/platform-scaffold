@@ -1,3 +1,4 @@
+/* eslint-env jest */
 import {createAction} from './utils'
 
 test('createAction creates a multi-argument action creator if names are passed', () => {

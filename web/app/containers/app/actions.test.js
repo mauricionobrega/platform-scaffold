@@ -1,3 +1,4 @@
+/* eslint-env jest */
 import Immutable from 'immutable'
 
 import {fetchPage, onPageReceived, setPageFetchError, clearPageFetchError} from './actions'
