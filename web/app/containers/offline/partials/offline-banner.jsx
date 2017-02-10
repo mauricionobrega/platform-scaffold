@@ -1,9 +1,9 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 
-import IconLabelButton from '../icon-label-button'
-import {OFFLINE_MODAL} from './constants'
-import {openModal} from '../../store/modals/actions'
+import IconLabelButton from '../../../components/icon-label-button'
+import {OFFLINE_MODAL} from '../constants'
+import {openModal} from '../../../store/modals/actions'
 
 /**
  * A banner displayed at the top of the page to let users know they are offline.

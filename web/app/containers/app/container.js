@@ -18,8 +18,8 @@ import NotificationManager from '../../components/notification-manager'
 
 // Offline support
 import {Offline} from '../templates'
-import OfflineBanner from '../../components/offline/offline-banner'
-import OfflineModal from '../../components/offline/offline-modal'
+import OfflineBanner from '../offline/partials/offline-banner'
+import OfflineModal from '../offline/partials/offline-modal'
 
 const hidePreloaderWhenCSSIsLoaded = () => {
     if (window.Progressive.stylesheetLoaded) {
