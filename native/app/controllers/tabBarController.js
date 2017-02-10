@@ -21,6 +21,7 @@ const TabBarController = function(tabBar, layout, tabControllers) {
 
 TabBarController.init = async function() {
     const tabBar = await TabBarPlugin.init()
+    await tabBar.setColor('#4E439B')
     const layout = await AnchoredLayoutPlugin.init()
 
     const tabControllers = {}
