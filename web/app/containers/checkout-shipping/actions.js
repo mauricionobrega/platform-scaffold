@@ -8,7 +8,7 @@ import {getIsLoggedIn} from '../app/selectors'
 import {getShippingFormValues} from '../../store/form/selectors'
 import {receiveShippingMethodInitialValues} from '../../store/checkout/actions'
 
-import {makeJsonEncodedRequest, makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 
 export const showCompanyAndApt = createAction('Showing the "Company" and "Apt #" fields')
 
