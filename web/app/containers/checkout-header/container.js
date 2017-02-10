@@ -4,8 +4,7 @@ import Button from 'progressive-web-sdk/dist/components/button'
 import {HeaderBar, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
 
-const CheckoutHeader = function(props) {
-    const canSignIn = true
+const CheckoutHeader = function({headerHasSignIn}) {
     return (
         <header className="t-checkout-header">
             <HeaderBar className="t-checkout-header__bar">
@@ -17,7 +16,7 @@ const CheckoutHeader = function(props) {
 
                 <Icon name="lock" size="medium" className="u-flex-none" />
 
-                {canSignIn &&
+                {headerHasSignIn &&
                     <div className="u-flex u-text-align-end">
                         <Button
                             href="/customer/account/login/"
@@ -31,6 +30,14 @@ const CheckoutHeader = function(props) {
             </HeaderBar>
         </header>
     )
+}
+
+CheckoutHeader.defaultProps = {
+    headerHasSignIn: true
+}
+
+CheckoutHeader.propTypes = {
+    headerHasSignIn: React.PropTypes.bool
 }
 
 export default CheckoutHeader

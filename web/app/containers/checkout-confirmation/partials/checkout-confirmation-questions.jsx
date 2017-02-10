@@ -29,7 +29,7 @@ const CheckoutConfirmationQuestions = () => (
         </GridSpan>
 
         <GridSpan {...GRID_SETTINGS}>
-            <div className="u-bg-color-neutral-00 u-border-light-top u-border-light-bottom">
+            <div className="t-checkout-confirmation__card u-bg-color-neutral-00 u-border-light-top u-border-light-bottom">
                 <List>
                     <QuestionLink href="/sales/order/history/">Orders and Returns</QuestionLink>
                     <QuestionLink href="/contact/">Contact Us</QuestionLink>

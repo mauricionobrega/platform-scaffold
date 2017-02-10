@@ -25,7 +25,15 @@ const AppProvider = ({store}) => (
                 <Route component={PDP} path="*.html" routeName="productDetailsPage" />
                 <Route component={CheckoutShipping} path="checkout/shipping/" routeName="checkingShipping" suppressFetch Header={CheckoutHeader} Footer={CheckoutFooter} />
                 <Route component={CheckoutPayment} path="checkout/payment/" routeName="checkout-payment" suppressFetch Header={CheckoutHeader} Footer={CheckoutFooter} />
-                <Route component={CheckoutConfirmation} path="checkout/confirmation/" routeName="checkingConfirmation" suppressFetch Header={CheckoutHeader} Footer={CheckoutFooter} />
+                <Route
+                    component={CheckoutConfirmation}
+                    path="checkout/confirmation/"
+                    routeName="checkout-confirmation"
+                    suppressFetch
+                    Header={CheckoutHeader}
+                    Footer={CheckoutFooter}
+                    headerHasSignIn={false}
+                />
             </Route>
         </Router>
     </Provider>
