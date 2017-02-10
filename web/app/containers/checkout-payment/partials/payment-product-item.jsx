@@ -30,11 +30,11 @@ const PaymentProductItem = ({
     return (
         <ProductItem
             className="u-padding-top-lg u-padding-bottom-lg u-padding-start u-padding-end"
-            title={<h2 className="u-h3">{product_name}</h2>}
+            title={<h2 className="u-h5">{product_name}</h2>}
             image={productImage}
         >
             <div className="u-flexbox u-align-bottom">
-                <div className="u-flex-none u-color-neutral-50">
+                <div className="u-flex-none u-color-neutral-50 u-text-small">
                     {options.map(({label, value}, idx) => (
                         <p
                             className={idx > 0 ? 'u-margin-top-sm' : ''}
@@ -45,7 +45,7 @@ const PaymentProductItem = ({
                     ))}
 
                     <p className={options > 0 ? 'u-margin-top-sm' : ''}>
-                        Qty: {qty}
+                        Quantity: {qty}
                     </p>
                 </div>
 

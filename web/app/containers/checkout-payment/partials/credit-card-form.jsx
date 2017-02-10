@@ -12,6 +12,7 @@ import * as selectors from '../selectors'
 import * as checkoutPaymentActions from '../actions'
 
 // SDK Components
+import CardInput from 'progressive-web-sdk/dist/components/card-input'
 import Field from 'progressive-web-sdk/dist/components/field'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 import Image from 'progressive-web-sdk/dist/components/image'
@@ -45,7 +46,6 @@ class CreditCardForm extends React.Component {
         } = this.props
 
         const currentCard = CREDIT_CARDS.visa
-        const ccHint = <Image src={getAssetUrl(`static/img/checkout/${currentCard[0]}`)} alt={currentCard[2]} height="29px" width="48px" />
         const cvvHint = <Image src={getAssetUrl(`static/img/checkout/${currentCard[1]}`)} alt="Demonstrating that the CCV is on the back of the Credit Card" height="29px" width="48px" />
         const creditCardForm = (
             <div>
@@ -56,14 +56,14 @@ class CreditCardForm extends React.Component {
                 </FieldRow>
 
                 <FieldRow>
-                    <ReduxForm.Field component={Field} className="pw--overlayed-hint t-checkout-payment__credit-card-hints" name="ccnumber" label="Card number" hint={ccHint}>
-                        <input type="tel" noValidate />
+                    <ReduxForm.Field component={Field} name="ccnumber2" label="Card number">
+                        <CardInput />
                     </ReduxForm.Field>
                 </FieldRow>
 
                 <FieldRow>
-                    <ReduxForm.Field component={Field} name="ccexpiry" label="Expiry" placeholder="mm/yyyy">
-                        <input type="number" noValidate />
+                    <ReduxForm.Field component={Field} name="ccexpiry" label="Expiry">
+                        <input type="number" noValidate placeholder="mm/yyyy" />
                     </ReduxForm.Field>
 
                     <ReduxForm.Field component={Field} className="pw--overlayed-hint t-checkout-payment__credit-card-hints" name="cvv" label="CVV" hint={cvvHint}>
@@ -75,12 +75,12 @@ class CreditCardForm extends React.Component {
 
         return (
             <div>
-                <div className="t-checkout-payment__title u-padding-top-lg u-padding-bottom-lg">
+                <div className="t-checkout-payment__title u-padding-top-lg u-padding-bottom-md">
                     <h2 className="u-h4">Pay With Card</h2>
                 </div>
 
                 {hasExistingCreditCard ?
-                    <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg u-border-light-top u-border-light-bottom u-bg-color-neutral-00">
+                    <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg u-border-light-top u-border-light-bottom u-bg-color-neutral-00 t-checkout-payment__card">
                         <FieldRow>
                             <ReduxForm.Field
                                 component={Field}
@@ -104,14 +104,14 @@ class CreditCardForm extends React.Component {
                             </FieldRow>
 
                             {isNewCardInputSelected &&
-                                <div className="u-margin-top-md">
+                                <div className="u-margin-top-lg u-padding-top">
                                     {creditCardForm}
                                 </div>
                             }
                         </div>
                     </div>
                 :
-                    <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg u-border-light-top u-border-light-bottom u-bg-color-neutral-00">
+                    <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg u-border-light-top u-border-light-bottom u-bg-color-neutral-00 t-checkout-payment__card">
                         {creditCardForm}
                     </div>
                 }

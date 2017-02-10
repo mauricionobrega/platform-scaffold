@@ -8,19 +8,29 @@
 }
 
 
-// Item Action
+// Item
 // ---
+//
+// 1. Override base <td> padding style
 
-.pw-ledger__item .pw-ledger__action {
-    color: $neutral-50;
-    font-size: 12px;
+.pw-ledger__item {
+    padding: 0; // 1
+
+    .pw-ledger__action {
+        color: $neutral-50;
+        font-size: $small-font-size;
+    }
 }
 
 
 // Value
 // ---
+//
+// 1. Override base <td> padding style
 
 .pw-ledger__value {
+    padding: 0; // 1
+
     font-weight: 600; // semi-bold
     font-size: 16px;
 }
@@ -51,7 +61,11 @@
         font-size: 20px;
     }
 
-    .pw-ledger__item::after {
-        content: ':\00A0';
+    .pw-ledger__item {
+        flex: 0 0 auto;
+
+        &::after {
+            content: ':\00A0';
+        }
     }
 }
