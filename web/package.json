@@ -132,7 +132,8 @@
       "!app/**/container.{js,jsx}",
       "!{dev-server,proxy,lighthouse,coverage,build,tests,webpack}/**/*.js",
       "!styleguide/**/*.{js,jsx}",
-      "!app/loader-routes.js"
+      "!app/loader-routes.js",
+      "!web/worker/main.js"
     ],
     "coverageThreshold": {
       "global": {
