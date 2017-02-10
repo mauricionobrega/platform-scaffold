@@ -14,10 +14,6 @@ const initialState = fromJS({
     [FETCHED_PATHS]: {}
 })
 
-// This will need to become more complicated when
-// we handle more types of errors, but will do for now
-export const isOffline = (state) => !!selectors.getFetchError()
-
 export default handleActions({
     [appActions.onRouteChanged]: (state, {payload: {currentURL}}) => {
         return state.set(CURRENT_URL, currentURL)
