@@ -91,7 +91,7 @@ class CreditCardForm extends React.Component {
                     </ReduxForm.Field>
 
                     <ReduxForm.Field component={Field} className="pw--overlayed-hint t-checkout-payment__credit-card-hints" name="cvv" label="CVV" hint={cvvHint}>
-                        <input type="tel" noValidate />
+                        <input type="tel" noValidate maxLength="3" />
                     </ReduxForm.Field>
                 </FieldRow>
             </div>
