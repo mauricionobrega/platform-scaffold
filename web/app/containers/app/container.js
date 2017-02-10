@@ -135,7 +135,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
     removeNotification: appActions.removeNotification,
-    fetchPage: (url, pageComponent, routeName) => appActions.fetchPage(url, pageComponent, routeName)
+    fetchPage: appActions.fetchPage
 }
 
 export default connect(
