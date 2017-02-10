@@ -37,7 +37,7 @@ module.exports = {
                 loader: 'style!css!sass',
                 include: [
                     /node_modules\/progressive-web-sdk/,
-                    /styleguide/
+                    /app/
                 ]
             },
             // Loader for plain CSS
