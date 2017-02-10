@@ -72,7 +72,7 @@
     "node-sass": "4.1.1",
     "pem": "1.8.3",
     "postcss-loader": "1.2.1",
-    "progressive-web-sdk": "0.11.3",
+    "progressive-web-sdk": "0.11.4",
     "prompt": "1.0.0",
     "raw-loader": "0.5.1",
     "react-addons-test-utils": "15.4.1",
