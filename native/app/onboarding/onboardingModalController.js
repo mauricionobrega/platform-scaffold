@@ -1,4 +1,4 @@
-
+/* eslint-disable */
 import Promise from 'bluebird'
 import Astro from 'progressive-app-sdk/astro-full'
 import ModalViewPlugin from 'progressive-app-sdk/plugins/modalViewPlugin'
@@ -7,6 +7,7 @@ import OnboardingController from './onboardingController'
 import AppRpc from '../global/app-rpc'
 import AppEvents from '../global/app-events'
 import Application from 'progressive-app-sdk/application'
+import PushController from '../controllers/pushController'
 
 const OnboardingModalEvents = {
     // raised when onboarding modal is hidden
@@ -24,10 +25,12 @@ const OnboardingModalController = function(modalView, onboardingController) {
 OnboardingModalController.init = async function() {
     const [
         modalView,
-        onboardingController
+        onboardingController,
+        pushController
     ] = await Promise.all([
         ModalViewPlugin.init(),
-        OnboardingController.init()
+        OnboardingController.init(),
+        PushController.init()
     ])
 
     modalView.setContentView(onboardingController.viewPlugin)
@@ -44,6 +47,10 @@ OnboardingModalController.init = async function() {
 
     Astro.registerRpcMethod(AppRpc.names.onboardingHide, [], () => {
         onboardingModalController.hide()
+    })
+
+    Astro.registerRpcMethod(AppRpc.names.pushEnable, [], () => {
+        pushController.subscribeTest()
     })
 
     return onboardingModalController
