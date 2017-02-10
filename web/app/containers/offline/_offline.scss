@@ -4,24 +4,23 @@
 // 1. Fill available vertical space (since we have no footer)
 // 2. Ensure offline banner appears above page content when visible
 
+// Offline container
 .t-offline {
-    // Root Class. Contains all core styles, typically for the component's
-    // wrapper element.
     flex: 1; // 1
+    padding: 25% $unit*1.5 0;
     background-color: $background-color;
-    padding: 25% $unit*1.5 0 $unit*1.5;
     text-align: center;
 }
 
+// Offline banner
 .t-offline-banner__wrapper {
     padding-top: 44px;
 }
 
 .t-offline-banner {
-    top: 52px;
     position: fixed;
-    color: $neutral-10;
-    background-color: $neutral-60;
-    
+    top: 52px;
     z-index: $z2-depth; // 2
+    background-color: $neutral-60;
+    color: $neutral-10;
 }
