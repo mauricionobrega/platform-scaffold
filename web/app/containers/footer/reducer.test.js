@@ -1,3 +1,4 @@
+/* eslint-env jest */
 import reducer, {initialState} from './reducer'
 import * as actions from './actions'
 import * as constants from './constants'

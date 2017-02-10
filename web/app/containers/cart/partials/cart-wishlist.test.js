@@ -1,3 +1,4 @@
+/* eslint-env jest */
 import React from 'react'
 import ConnectedCartWishlistModal from './cart-wishlist'
 import {mount, shallow} from 'enzyme'

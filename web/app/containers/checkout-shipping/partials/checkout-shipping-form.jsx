@@ -9,7 +9,7 @@ import {getShippingInitialValues} from '../../../store/checkout/shipping/selecto
 
 import {submitShipping} from '../actions'
 
-import {Grid, GridSpan} from '../../../components/grid'
+import {Grid, GridSpan} from 'progressive-web-sdk/dist/components/grid'
 import ShippingAddressForm from './shipping-address'
 import ShippingEmail from './shipping-email'
 import ShippingMethod from './shipping-method'

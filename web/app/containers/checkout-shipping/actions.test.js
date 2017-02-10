@@ -1,3 +1,4 @@
+/* eslint-env jest */
 import {process} from './actions'
 
 let realFetch

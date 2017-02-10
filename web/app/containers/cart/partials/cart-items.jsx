@@ -4,7 +4,7 @@ import {createStructuredSelector} from 'reselect'
 import classNames from 'classnames'
 
 import {getCartHasItems} from '../../../store/cart/selectors'
-import {GridSpan} from '../../../components/grid'
+import {GridSpan} from 'progressive-web-sdk/dist/components/grid'
 import Button from 'progressive-web-sdk/dist/components/button'
 import CartProductList from './cart-product-list'
 import CartSummary from './cart-summary'

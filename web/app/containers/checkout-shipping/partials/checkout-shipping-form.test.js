@@ -1,3 +1,4 @@
+/* eslint-env jest */
 import Immutable from 'immutable'
 import React from 'react'
 import CheckoutShippingReduxForm from './checkout-shipping-form'
