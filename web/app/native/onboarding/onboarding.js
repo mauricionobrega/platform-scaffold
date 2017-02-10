@@ -28,7 +28,9 @@ const notifications = {
     subtitle: 'Hear about the latest deals, promotions, specials, and exclusive offers through Notifications!',
     actionButton: {
         title: 'ENABLE',
-        action: () => {}
+        action: () => {
+            Astro.jsRpcMethod('push:enable', [])()
+        }
     }
 }
 
@@ -38,7 +40,9 @@ const login = {
     subtitle: 'Speed up your shopping experience, save your address information and more by registering with Merlin\'s Potions.',
     actionButton: {
         title: 'SIGN IN',
-        action: () => {}
+        action: () => {
+            Astro.jsRpcMethod('sign-in:Show', [])()
+        }
     },
     laterButton: {
         title: 'LATER',
@@ -48,7 +52,9 @@ const login = {
     },
     primaryButton: {
         title: 'REGISTER NOW',
-        action: () => {}
+        action: () => {
+            Astro.jsRpcMethod('register:Show', [])()
+        }
     }
 }
 
