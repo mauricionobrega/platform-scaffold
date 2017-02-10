@@ -76,9 +76,12 @@
 // Tablet Styles
 // ---
 
-// @include susy-breakpoint($tablet-breakpoint, $tablet-layout) {
-//     //
-// }
+@include susy-breakpoint($tablet-breakpoint, $tablet-layout) {
+    .t-checkout-payment__card {
+        border-right: 1px solid $neutral-15;
+        border-left: 1px solid $neutral-15;
+    }
+}
 
 
 // Desktop Styles
