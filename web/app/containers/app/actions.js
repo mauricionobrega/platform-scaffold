@@ -15,7 +15,7 @@ import * as productsActions from '../../store/products/actions'
 import * as categoriesActions from '../../store/categories/actions'
 import {closeModal} from '../../store/modals/actions'
 
-import {OFFLINE_MODAL} from '../../components/offline/constants'
+import {OFFLINE_MODAL} from '../offline/constants'
 
 export const addNotification = utils.createAction('Add Notification')
 export const removeNotification = utils.createAction('Remove Notification')
@@ -33,9 +33,9 @@ export const onRouteChanged = utils.createAction('On route changed', 'currentURL
  *
  * @param {object} $ - a selector library like jQuery
  * @param {object} $response - a jQuery-wrapped DOM object
- * @param {string} pageComponent - the component of the page received
  * @param {string} url - the URL of the page received
  * @param {string} currentURL - what's currently shown in the address bar
+ * @param {string} routeName - the name of the route we received the page for
  */
 export const onPageReceived = utils.createAction('On page received',
     '$',
