@@ -1,3 +1,4 @@
+/* eslint-env jest */
 import {fetchPage} from './actions'
 import Immutable from 'immutable'
 import {CURRENT_URL} from './constants'

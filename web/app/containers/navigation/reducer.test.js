@@ -1,3 +1,4 @@
+/* eslint-env jest */
 import reducer, {initialState} from './reducer'
 
 describe('The navigation reducer', () => {

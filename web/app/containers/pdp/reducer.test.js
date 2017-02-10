@@ -1,3 +1,4 @@
+/* eslint-env jest */
 import {Map} from 'immutable'
 import reducer from './reducer'
 
