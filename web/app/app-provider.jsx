@@ -24,7 +24,7 @@ const AppProvider = ({store}) => (
                 <Route component={PLP} path="charms.html" routeName="productListPage" />
                 <Route component={PDP} path="*.html" routeName="productDetailsPage" />
                 <Route component={CheckoutShipping} path="checkout/shipping/" routeName="checkingShipping" suppressFetch Header={CheckoutHeader} Footer={CheckoutFooter} />
-                <Route component={CheckoutPayment} path="checkout/payment/" routeName="checkingPayment" suppressFetch Header={CheckoutHeader} Footer={CheckoutFooter} />
+                <Route component={CheckoutPayment} path="checkout/payment/" routeName="checkout-payment" suppressFetch Header={CheckoutHeader} Footer={CheckoutFooter} />
                 <Route component={CheckoutConfirmation} path="checkout/confirmation/" routeName="checkingConfirmation" suppressFetch Header={CheckoutHeader} Footer={CheckoutFooter} />
             </Route>
         </Router>

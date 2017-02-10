@@ -8,7 +8,7 @@ import {ProgressSteps, ProgressStepsItem} from 'progressive-web-sdk/dist/compone
 
 const CheckoutPayment = () => {
     return (
-        <div className="t-checkout-payment u-bg-color-neutral-10">
+        <div className="t-checkout-payment">
             <div className="u-bg-color-neutral-00 u-border-light-bottom">
                 <div className="t-checkout-payment__progress">
                     <ProgressSteps>

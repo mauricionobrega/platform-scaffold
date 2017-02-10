@@ -69,18 +69,18 @@ class ProductList extends React.Component {
 
         return (
             <div className="t-checkout-payment__product-list">
-                <div className="t-checkout-payment__title u-padding-top-lg u-padding-bottom-lg">
+                <div className="t-checkout-payment__title u-padding-top-lg u-padding-bottom-md">
                     <h2 className="u-h4">Order Summary</h2>
                 </div>
 
-                <List className="u-bg-color-neutral-00 u-border-light-top u-border-light-bottom">
-                    {cartItems.map((item, idx) =>
-                        <PaymentProductItem {...item} key={idx} />
-                    )}
-                </List>
+                <div className="u-border-light-top u-border-light-bottom u-bg-color-neutral-00 t-checkout-payment__card">
+                    <List>
+                        {cartItems.map((item, idx) =>
+                            <PaymentProductItem {...item} key={idx} />
+                        )}
+                    </List>
 
-                <div className="u-bg-color-neutral-00">
-                    <Ledger>
+                    <Ledger className="u-border-light-top">
                         <LedgerRow
                             label={`Subtotal (${summaryCount} items)`}
                             value={subtotalExclTax}
@@ -115,7 +115,7 @@ class ProductList extends React.Component {
                         </Accordion>
                     }
 
-                    <Ledger>
+                    <Ledger className="u-margin-top-sm u-margin-bottom-sm">
                         <LedgerRow
                             label="Total"
                             isTotal={true}
@@ -124,7 +124,7 @@ class ProductList extends React.Component {
                     </Ledger>
 
                     {/* This is the statically positioned "Place Your Order" container */}
-                    <div className="u-padding-end-md u-padding-bottom-lg u-padding-start-md">
+                    <div className="u-padding-end-md u-padding-start-md">
                         <Button className="c--primary u-flex-none u-width-full u-text-all-caps">
                             <Icon name="lock" />
                             Place Your Order
