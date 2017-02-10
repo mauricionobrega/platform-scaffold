@@ -75,7 +75,10 @@ class App extends React.Component {
                 <div id="app-wrap" className="t-app__wrapper u-flexbox u-direction-column">
                     <div id="app-header" className="u-flex-none" role="banner">
                         <CurrentHeader />
-                        <OfflineBanner />
+                        {
+                            // Only display banner when we are offline and have content to show
+                            fetchError && hasFetchedCurrentPath && <OfflineBanner />
+                        }
                         <OfflineModal reload={reload} />
 
                         {notifications &&
@@ -89,18 +92,21 @@ class App extends React.Component {
                         <MiniCart />
                     </div>
 
-                    {(!fetchError || hasFetchedCurrentPath) ?
-                        <div>
-                            <main id="app-main" className="u-flex" role="main">
-                                {this.props.children}
-                            </main>
+                    {
+                        // Display main content if we have no network errors or
+                        // if we've already got the content in the store
+                        (!fetchError || hasFetchedCurrentPath) ?
+                            <div>
+                                <main id="app-main" className="u-flex" role="main">
+                                    {this.props.children}
+                                </main>
 
-                            <div id="app-footer" className="u-flex-none">
-                                <CurrentFooter />
+                                <div id="app-footer" className="u-flex-none">
+                                    <CurrentFooter />
+                                </div>
                             </div>
-                        </div>
-                    :
-                        <Offline reload={reload} location={children.props.location} route={routeProps} />
+                        :
+                            <Offline reload={reload} location={children.props.location} route={routeProps} />
                     }
                 </div>
             </div>
