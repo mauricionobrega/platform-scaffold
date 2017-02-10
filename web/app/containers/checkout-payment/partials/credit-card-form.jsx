@@ -3,7 +3,7 @@ import * as ReduxForm from 'redux-form'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
-import {PAYMENT_EXISTING_CARD, PAYMENT_NEW_CARD} from '../constants'
+import {PAYMENT_EXISTING_CARD, PAYMENT_NEW_CARD, AMEX_CARD, DEFAULT_CARD} from '../constants'
 
 // Selectors
 import * as selectors from '../selectors'
@@ -17,12 +17,15 @@ import Field from 'progressive-web-sdk/dist/components/field'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 import Image from 'progressive-web-sdk/dist/components/image'
 
-const CREDIT_CARDS = { /* eslint-disable key-spacing */
-    amex:       ['cc-american-express@3x.png', 'hint-amex@3x.png', 'Amex logo'],
-    discovery:  ['cc-discovery@3x.png', 'hint-visa-mc@3x.png', 'Discovery logo'],
-    mastercard: ['cc-mastercard@3x.png', 'hint-visa-mc@3x.png', 'Mastercard logo'],
-    unionpay:   ['cc-unionpay@3x.png', 'hint-visa-mc@3x.png', 'UnionPay logo'],
-    visa:       ['cc-visa@3x.png', 'hint-visa-mc@3x.png', 'Visa logo'],
+const CVV = { /* eslint-disable key-spacing */
+    [AMEX_CARD]: {
+        alt: 'Demonstrating that the CVV is on the front of the Credit Card',
+        src: 'hint-amex@3x.png',
+    },
+    [DEFAULT_CARD]: {
+        alt: 'Demonstrating that the CVV is on the back of the Credit Card',
+        src: 'hint-visa-mc@3x.png',
+    }
 } /* eslint-enable key-spacing */
 
 class CreditCardForm extends React.Component {
@@ -30,6 +33,7 @@ class CreditCardForm extends React.Component {
         super(props)
 
         this.handleRadioChange = this.handleRadioChange.bind(this)
+        this.handleCVV = this.handleCVV.bind(this)
     }
 
     handleRadioChange(e) {
@@ -39,16 +43,34 @@ class CreditCardForm extends React.Component {
         this.props.toggleCardInputRadio(isNewCard)
     }
 
+    handleCVV(e) {
+        const input = e.target
+        const value = input.value
+        const currentType = this.props.cvvType
+
+        // Set the cvv type based on the card number
+        if (input.name === 'ccnumber') {
+            // Don't trigger the actions unless things have changed
+            if (value.match(/^3[47]/) && currentType !== AMEX_CARD) {
+                this.props.setCvvType(AMEX_CARD)
+            } else if (!value.match(/^3[47]/) && currentType !== DEFAULT_CARD) {
+                this.props.setCvvType(DEFAULT_CARD)
+            }
+        }
+    }
+
     render() {
         const {
+            cvvType,
             hasExistingCreditCard,
             isNewCardInputSelected
         } = this.props
 
-        const currentCard = CREDIT_CARDS.visa
-        const cvvHint = <Image src={getAssetUrl(`static/img/checkout/${currentCard[1]}`)} alt="Demonstrating that the CCV is on the back of the Credit Card" height="29px" width="48px" />
+        const currentCard = CVV[cvvType]
+        const cvvHint = <Image src={getAssetUrl(`static/img/checkout/${currentCard.src}`)} alt={currentCard.alt} height="29px" width="48px" />
+
         const creditCardForm = (
-            <div>
+            <div onChange={this.handleCVV}>
                 <FieldRow>
                     <ReduxForm.Field component={Field} name="name" label="Cardholder Name">
                         <input type="text" noValidate />
@@ -56,7 +78,7 @@ class CreditCardForm extends React.Component {
                 </FieldRow>
 
                 <FieldRow>
-                    <ReduxForm.Field component={Field} name="ccnumber2" label="Card number">
+                    <ReduxForm.Field component={Field} name="ccnumber" label="Card number">
                         <CardInput />
                     </ReduxForm.Field>
                 </FieldRow>
@@ -122,6 +144,11 @@ class CreditCardForm extends React.Component {
 
 CreditCardForm.propTypes = {
     /**
+     * CVV type
+     */
+    cvvType: PropTypes.string,
+
+    /**
      * Whether there's saved credit card data
      */
     hasExistingCreditCard: PropTypes.bool,
@@ -142,12 +169,14 @@ const CreditCardReduxForm = ReduxForm.reduxForm({
 })(CreditCardForm)
 
 const mapStateToProps = createStructuredSelector({
+    cvvType: selectors.getCvvType,
     hasExistingCreditCard: selectors.getHasExistingCreditCard,
     isNewCardInputSelected: selectors.getIsNewCardInputSelected
 })
 
 const mapDispatchToProps = {
-    toggleCardInputRadio: checkoutPaymentActions.toggleCardInputRadio
+    toggleCardInputRadio: checkoutPaymentActions.toggleCardInputRadio,
+    setCvvType: checkoutPaymentActions.setCvvType,
 }
 
 export default connect(
