@@ -8,7 +8,7 @@ import {getIsLoggedIn} from '../app/selectors'
 import {getShippingFormValues} from '../../store/form/selectors'
 import {receiveShippingMethodInitialValues} from '../../store/checkout/actions'
 
-import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+import {makeJsonEncodedRequest, makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 
 export const showCompanyAndApt = createAction('Showing the "Company" and "Apt #" fields')
 
@@ -77,21 +77,22 @@ export const submitShipping = () => {
         const addressData = {
             firstname: names.slice(0, -1).join(' '),
             lastname: names.slice(-1).join(' '),
-            company,
+            company: company || '',
             telephone,
             postcode,
             city,
-            street: [addressLine1, addressLine2],
+            street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1],
             regionId: region_id,
-            countryId: country_id
+            countryId: country_id,
+            save_in_address_book: true
         }
         const addressInformation = {
             addressInformation: {
-                shippingAddress: {
+                shippingAddress: addressData,
+                billingAddress: {
                     ...addressData,
                     saveInAddressBook: false
                 },
-                billingAddress: addressData,
                 shipping_carrier_code: shippingSelections[0],
                 shipping_method_code: shippingSelections[1]
             }
