@@ -64,7 +64,6 @@ class Header extends React.Component {
                         <CartAction innerButtonClassName={innerButtonClassName} onClick={onMiniCartClick} />
                     </HeaderBar>
                 </div>
-                {this.props.children}
             </header>
         )
     }

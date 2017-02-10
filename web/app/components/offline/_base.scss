@@ -14,8 +14,12 @@
     text-align: center;
 }
 
+.t-offline-banner__wrapper {
+    padding-top: 44px;
+}
 
 .t-offline-banner {
+    top: 52px;
     position: fixed;
     color: $neutral-10;
     background-color: $neutral-60;
