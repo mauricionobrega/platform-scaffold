@@ -3,7 +3,7 @@ import * as ReduxForm from 'redux-form'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
-import {PAYMENT_EXISTING_CARD, PAYMENT_NEW_CARD, AMEX_CARD, DEFAULT_CARD} from '../constants'
+import {PAYMENT_EXISTING_CARD, PAYMENT_NEW_CARD, AMEX_CARD, DEFAULT_CARD, NUMBER_FIELD} from '../constants'
 
 // Selectors
 import * as selectors from '../selectors'
@@ -21,10 +21,12 @@ const CVV = { /* eslint-disable key-spacing */
     [AMEX_CARD]: {
         alt: 'Demonstrating that the CVV is on the front of the Credit Card',
         src: 'hint-amex@3x.png',
+        cvvLength: 4
     },
     [DEFAULT_CARD]: {
         alt: 'Demonstrating that the CVV is on the back of the Credit Card',
         src: 'hint-visa-mc@3x.png',
+        cvvLength: 3
     }
 } /* eslint-enable key-spacing */
 
@@ -47,7 +49,7 @@ class CreditCardForm extends React.Component {
         const input = e.target
 
         // Set the cvv type based on the card number
-        if (input.name === 'ccnumber') {
+        if (input.name === NUMBER_FIELD) {
             const amexRegex = new RegExp('^3[47]')
             const value = input.value
             const currentType = this.props.cvvType
@@ -80,7 +82,7 @@ class CreditCardForm extends React.Component {
                 </FieldRow>
 
                 <FieldRow>
-                    <ReduxForm.Field component={Field} name="ccnumber" label="Card number">
+                    <ReduxForm.Field component={Field} name={NUMBER_FIELD} label="Card number">
                         <CardInput />
                     </ReduxForm.Field>
                 </FieldRow>
@@ -91,7 +93,7 @@ class CreditCardForm extends React.Component {
                     </ReduxForm.Field>
 
                     <ReduxForm.Field component={Field} className="pw--overlayed-hint t-checkout-payment__credit-card-hints" name="cvv" label="CVV" hint={cvvHint}>
-                        <input type="tel" noValidate maxLength="3" />
+                        <input type="tel" noValidate maxLength={currentCard.cvvLength} />
                     </ReduxForm.Field>
                 </FieldRow>
             </div>
