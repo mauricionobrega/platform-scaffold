@@ -84,27 +84,23 @@ toolbox.router.get(/fonts.googleapis.com\/css/, toolbox.networkFirst, {cache: bu
  * @returns {Promise}
  */
 const fetchAndCache = (request, cacheName) => {
-    return new Promise((resolve, reject) => {
-        fetch(request.clone())
-            .then((response) => {
-                // This is lifted from https://github.com/GoogleChrome/sw-toolbox/blob/master/lib/strategies/networkFirst.js#L59
-                if (successResponses.test(response.status)) {
-                    caches.open(cacheName).then((cache) => {
-                        cache.put(request, response)
-                    })
-
-                    resolve(response.clone())
-                } else {
-                    toolbox.options.debug && console.error(`Response was an HTTP error: ${response.statusText}`)
-                    reject(['Bad response', request, response])
-                }
-            })
+    return fetch(request.clone())
+        .catch((error) => {
             // This should happen if there's a network failure
-            .catch((error) => {
-                toolbox.options.debug && console.error(error)
-                reject([error, request])
-            })
-    })
+            throw [error.message, request, null]
+        })
+        .then((response) => {
+            // This is lifted from https://github.com/GoogleChrome/sw-toolbox/blob/master/lib/strategies/networkFirst.js#L59
+            if (successResponses.test(response.status)) {
+                caches.open(cacheName).then((cache) => {
+                    cache.put(request, response)
+                })
+
+                return response.clone()
+            } else {
+                throw ['Bad response', request, response]
+            }
+        })
 }
 
 /**
@@ -115,18 +111,16 @@ const fetchAndCache = (request, cacheName) => {
  * the provided error message if there was a network failure and no cache hit
  * was found.
  *
- * @param {Error} error - The error object provided by fetch
+ * @param {string} error - The error message provided by fetchAndCache
  * @param {Request} request - the Request from the fetch the worker is proxying
  * @param {Response} response - the Response for the given Request
  * @param {string} cacheName - the name of the cache to look for the Request in
- * @param {Promise}
+ * @returns {Promise}
  */
 const cacheFallback = (error, request, response, cacheName) => {
-    toolbox.options.debug && console.error(`Network or response error, fallback to cache [${request.url}]`)
-
-    /* eslint-disable max-nested-callbacks */
-    return caches.open(cacheName).then((cache) => {
-        return cache.match(request).then((cachedResponse) => {
+    return caches.open(cacheName)
+        .then((cache) => cache.match(request))
+        .then((cachedResponse) => {
             if (cachedResponse) {
                 const newOptions = {
                     status: 200,
@@ -141,6 +135,7 @@ const cacheFallback = (error, request, response, cacheName) => {
                 }
 
                 return cachedResponse.blob().then((responseBodyAsBlob) => {
+                    toolbox.options.debug && console.info(`Network or response error, fallback to cache [${request.url}]`)
                     return new Response(responseBodyAsBlob, newOptions)
                 })
             }
@@ -152,10 +147,8 @@ const cacheFallback = (error, request, response, cacheName) => {
             }
 
             // This should happen if there was a network failure and no cache hit
-            throw error
+            throw new Error(error)
         })
-    })
-    /* eslint-enable max-nested-callbacks */
 }
 
 /**
