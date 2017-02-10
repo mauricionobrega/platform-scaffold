@@ -4,7 +4,7 @@ import {createStructuredSelector} from 'reselect'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import * as selectors from '../selectors'
 
-import {Grid, GridSpan} from '../../../components/grid'
+import {Grid, GridSpan} from 'progressive-web-sdk/dist/components/grid'
 import Image from 'progressive-web-sdk/dist/components/image'
 
 const CheckoutConfirmationSplash = (props) => {

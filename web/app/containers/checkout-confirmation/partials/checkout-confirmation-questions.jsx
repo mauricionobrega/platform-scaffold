@@ -2,7 +2,7 @@ import React from 'react'
 import {GRID_SETTINGS} from '../constants'
 
 import Button from 'progressive-web-sdk/dist/components/button'
-import {Grid, GridSpan} from '../../../components/grid'
+import {Grid, GridSpan} from 'progressive-web-sdk/dist/components/grid'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import List from 'progressive-web-sdk/dist/components/list'
 import ListTile from 'progressive-web-sdk/dist/components/list-tile'

@@ -4,7 +4,7 @@ import {createStructuredSelector} from 'reselect'
 import {GRID_SETTINGS} from '../constants'
 import * as selectors from '../selectors'
 
-import {Grid, GridSpan} from '../../../components/grid'
+import {Grid, GridSpan} from 'progressive-web-sdk/dist/components/grid'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import CheckoutConfirmationForm from './checkout-confirmation-form'
 
