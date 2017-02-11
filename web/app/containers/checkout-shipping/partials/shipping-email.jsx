@@ -13,7 +13,7 @@ import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Link from 'progressive-web-sdk/dist/components/link'
 
 
-const ShippingEmail = ({submitSignIn, customerEmailRecognized, checkCustomerEmail, emailError}) => {
+const ShippingEmail = ({submitSignIn, customerEmailRecognized, checkCustomerEmail}) => {
     const passwordHint = (
         <Link className="u-color-brand" href="/customer/account/forgotpassword/">
             Forgot password
@@ -40,10 +40,6 @@ const ShippingEmail = ({submitSignIn, customerEmailRecognized, checkCustomerEmai
                     </FieldRow>
                 }
 
-                {emailError &&
-                    <p className="u-color-error u-padding-md">{emailError}</p>
-                }
-
                 {customerEmailRecognized &&
                     <FieldRow>
                         <Button
@@ -60,9 +56,17 @@ const ShippingEmail = ({submitSignIn, customerEmailRecognized, checkCustomerEmai
 }
 
 ShippingEmail.propTypes = {
+    /**
+    * Checks if the users email address has an account associated with it
+    */
     checkCustomerEmail: React.PropTypes.func,
+    /**
+    * True if the users email address has an account associated with it
+    */
     customerEmailRecognized: React.PropTypes.bool,
-    emailError: React.PropTypes.string,
+    /**
+    * Submits the sign in form data
+    */
     submitSignIn: React.PropTypes.func
 }
 
