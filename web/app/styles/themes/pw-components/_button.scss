@@ -1,0 +1,111 @@
+// Button Theme
+// ===
+//
+// 1. Slightly larger than standard font size, at 15px
+
+.pw-button {
+    display: inline-table;
+    padding: 0;
+
+    background: none;
+
+    font-size: $font-size + 1; // 1
+    letter-spacing: 1px;
+
+    transition: background 0.5s ease-in;
+
+    -webkit-appearance: none;
+
+    &:active,
+    &:focus {
+        background: rgba(255, 255, 255, 0.1);
+    }
+}
+
+
+// Inner
+// ---
+//
+// 1. Ensures that the borderless and bordered buttons appear the same size
+// 2. Match the width of the parent `c-button` container
+
+.pw-button__inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; // 2
+    min-width: $tap-size;
+    min-height: $tap-size;
+    padding: $unit $unit*1.5;
+    border: 1px solid transparent; // 1
+
+    &.c--no-min-width {
+        min-width: initial;
+    }
+
+    &.c--no-min-height {
+        min-height: initial;
+    }
+}
+
+
+// Themes
+// ---
+
+.pw-button.c--primary {
+    background-color: $accent-color;
+
+    color: #fff;
+
+    &:active,
+    &:focus {
+        background-color: $dark-accent-color;
+    }
+}
+
+.pw-button.c--secondary {
+    background-color: $brand-color;
+
+    color: #fff;
+
+    &:active,
+    &:focus {
+        background-color: $dark-brand-color;
+    }
+}
+
+.pw-button.c--tertiary {
+    background-color: transparent;
+
+    color: $brand-color;
+
+    &:active,
+    &:focus {
+        border-color: $dark-brand-color;
+
+        color: $dark-brand-color;
+    }
+
+    &[disabled] {
+        border-color: $neutral-15;
+
+        color: $neutral-30;
+    }
+
+    .pw-button__inner {
+        border: 1px solid $brand-color;
+    }
+}
+
+.pw-button.c--primary,
+.pw-button.c--secondary {
+    &[disabled] {
+        background-color: $neutral-15;
+
+        color: $neutral-30;
+    }
+}
+
+.pw-button.c--icon-only {
+    line-height: 0;
+}

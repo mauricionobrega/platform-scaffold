@@ -1,0 +1,30 @@
+// Heading
+// ===
+
+.u-heading-family {
+    font-family: $header-font-family !important;
+}
+
+.u-h1 {
+    @include heading-level-1(true); // 28px/32px
+}
+
+.u-h2 {
+    @include heading-level-2(true); // 20px/24px
+}
+
+.u-h3 {
+    @include heading-level-3(true); // 18px/24px
+}
+
+.u-h4 {
+    @include heading-level-4(true); // 18px/24px
+}
+
+.u-h5 {
+    @include heading-level-5(true); // 16px/20px
+}
+
+.u-h6 {
+    @include heading-level-6(true); // 14px/20px
+}

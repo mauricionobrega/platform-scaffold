@@ -1,0 +1,52 @@
+// MiniCart
+// ===
+
+.t-mini-cart {
+    // Root Class. Contains all core styles, typically for the template's
+    // wrapper element.
+}
+
+
+// Content
+// ---
+//
+// 1. Setting this here because the utility class overrides my flex-direction
+
+.t-mini-cart__content {
+    min-height: calc(100vh - #{$unit * 6.5});
+}
+
+
+// Empty Cart
+// ---
+
+.t-mini-cart__empty-content {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+// Empty Message
+// ---
+
+.t-mini-cart__empty-message {
+    width: 80%;
+}
+
+
+// Title
+// ---
+
+.t-mini-cart__title {
+    font-size: $unit*3;
+    line-height: $unit*3.5;
+}
+
+
+// Sub-total
+// ---
+
+.t-mini-cart__subtotal {
+    border-top: 1px solid $neutral-15;
+}

@@ -1,0 +1,250 @@
+// Forms
+// ===
+
+$base__radio-checkmark: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ffffff"><path d="M18.8 6l-9.1 9.2-4.3-4.3L4 12.3 9.7 18 20.2 7.4z"/></svg>';
+$base__select-triangle: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="#4E439B"><polygon points="0 0 12 0 5.99940185 6"></polygon></svg>';
+$base__disabled-select-triangle: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="#999999"><polygon points="0 0 12 0 5.99940185 6"></polygon></svg>';
+
+
+// General Form Elements
+// ---
+
+fieldset {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+input,
+label,
+textarea,
+select {
+    font-family: $font-family;
+    font-size: $font-size;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: $unit / 2;
+
+    font-weight: bold;
+
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+    &:active {
+        color: $active-link-color;
+    }
+}
+
+select,
+textarea,
+[type="text"],
+[type="search"],
+[type="password"],
+[type="tel"],
+[type="url"],
+[type="number"],
+[type="email"] {
+    width: 100%;
+    min-height: $tap-size;
+    padding: $input-padding;
+    border: $border;
+
+    border-radius: 0;
+    background-color: $input-background-color;
+
+    line-height: $line-height;
+
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+    &::-webkit-input-placeholder {
+        color: $neutral-50;
+    }
+
+    &:active,
+    &:focus {
+        border-color: $focus-color;
+
+        box-shadow: $input-box-shadow;
+    }
+}
+
+
+// Search input
+// ---
+//
+// These properties must be set with a slightly higher specificity for search
+// inputs because Normalize's defaults are a bit too specific
+
+input[type="search"] {
+    box-sizing: border-box;
+
+    -webkit-appearance: none;
+}
+
+
+// Select
+// ---
+//
+// 1. Restore browser default styling. If you’re taking full control of select
+//    styling, remove both these lines.
+// 2. Simulate the position of the down-arrow as if it were a Icon component in
+//    a button.
+
+select {
+    height: $tap-size; // 1
+
+    border-radius: 0;
+    background-image: url($base__select-triangle); // @TODO replace with Icon component
+
+    color: $brand-color;
+
+    &,
+    &[disabled] {
+        background-repeat: no-repeat;
+        background-position: calc(100% - 14px) center; // 2
+        background-size: 12px 6px;
+    }
+
+    &[disabled] {
+        background-image: url($base__disabled-select-triangle); // @TODO: replace with Icon component
+    }
+}
+
+
+// Checkbox and Radios
+// ---
+
+[type="checkbox"],
+[type="radio"] {
+    position: relative;
+
+    display: inline-block;
+    width: $unit*3;
+    height: $unit*3;
+    margin-right: $unit;
+    border: $border;
+
+    background: #fff;
+
+    vertical-align: middle;
+
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+    &:active {
+        background: $neutral-30;
+    }
+
+    &:checked {
+        border: 0;
+
+        background: $brand-color;
+
+        &::after {
+            content: '';
+
+            position: absolute;
+
+            display: block;
+        }
+    }
+
+    &:disabled {
+        border: 0;
+
+        background: rgba($neutral-20, 0.5);
+    }
+}
+
+[type="radio"] {
+    border-radius: 50%;
+
+    &:after {
+        top: $unit;
+        right: $unit;
+        bottom: $unit;
+        left: $unit;
+
+        border-radius: 50%;
+        background: #fff;
+    }
+}
+
+[type="checkbox"] {
+    &:checked {
+        &:after {
+            content: '';
+
+            top: 0;
+
+            display: block;
+            width: $unit*3;
+            height: $unit*3;
+
+            background: url($base__radio-checkmark); // @TODO replace with Icon Component
+
+            color: #fff;
+            line-height: 0;
+
+            pointer-events: none;
+        }
+    }
+}
+
+
+// Buttons
+// ---
+
+button,
+[type="submit"] {
+    display: block;
+    padding: 0;
+    border: 0;
+
+    background: $neutral-15;
+
+    line-height: $line-height;
+
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+    &:active {
+        background: $neutral-30;
+    }
+}
+
+
+// Disabled
+// ---
+//
+// 1. web-kit default disabled style
+// 2. Disabled style for button, checkbox, radio, input and select
+// 3. Checkbox and Radio style
+
+[disabled] {
+    opacity: 1;
+    background: $disabled-input-background-color;
+
+    color: $disabled-input-color;
+
+    -webkit-text-fill-color: $disabled-input-color; // 1
+
+    // 2
+    &:active,
+    &:checked {
+        border-color: $disabled-input-color;
+
+        background: $disabled-input-background-color;
+
+        &::after {
+            color: $disabled-input-color; // 3
+        }
+    }
+
+    &[type="radio"]:after {
+        background-color: $disabled-input-color;
+    }
+}

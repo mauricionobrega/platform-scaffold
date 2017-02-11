@@ -1,0 +1,92 @@
+// Typography
+// ===
+
+// Fonts
+// ---
+
+//
+// 1. Linter workaround
+
+$base-typography__fonts: 'https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,600i,700,700i|Oswald:300,400,700'; // 1
+@import url($base-typography__fonts);
+
+// Headers
+// ---
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+
+    font-family: $header-font-family;
+    font-weight: normal;
+    line-height: 1.25;
+}
+
+h1 {
+    @include heading-level-1;
+}
+
+h2 {
+    @include heading-level-2;
+}
+
+h3 {
+    @include heading-level-3;
+}
+
+h4 {
+    @include heading-level-4;
+}
+
+h5 {
+    @include heading-level-5;
+}
+
+h6 {
+    @include heading-level-6;
+}
+
+
+// Text Elements
+// ---
+
+p {
+    margin: 0;
+}
+
+a {
+    color: $link-color;
+    text-decoration: none;
+
+    &:active,
+    &:focus {
+        color: $active-link-color;
+    }
+}
+
+
+// Miscellaneous Elements
+// ---
+
+hr {
+    margin: ($unit * 2) 0;
+    border: 1px solid $border-color;
+    border-width: 0 0 1px;
+}
+
+img {
+    max-width: 100%;
+    margin: 0;
+}
+
+blockquote {
+    margin: ($unit * 2) 0;
+    padding-left: $unit;
+    border-left: 2px solid $border-color;
+
+    color: lighten($font-color, 15);
+}
