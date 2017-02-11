@@ -55,10 +55,14 @@ export const submitSignIn = () => {
             url: 'https://www.merlinspotions.com/customer/ajax/login',
             data: JSON.stringify({username, password, context: 'checkout'}),
             method: 'POST',
-            success: () => {
+            success: (responseData) => {
                 dispatch(removeNotification('shippingWelcomeBackMessage'))
-                // Refetch the page now that the user is logged in
-                dispatch(fetchPage(window.location.href, CheckoutShipping, 'checkingShipping'))
+                if (responseData.errors) {
+                    dispatch(receiveData({emailError: responseData.message}))
+                } else {
+                    // Refetch the page now that the user is logged in
+                    dispatch(fetchPage(window.location.href, CheckoutShipping, 'checkingShipping'))
+                }
             }
         })
     }
