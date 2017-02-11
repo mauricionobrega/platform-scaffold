@@ -5,7 +5,7 @@ const appParser = ($html) => {
     if (!isLoggedIn) {
         // We may be on a checkout page so check the checkout config object
         const config = getCheckoutConfigObject($html)
-        isLoggedIn = config ? config.customerData.constructor !== Array : isLoggedIn
+        isLoggedIn = (config && config.customerData) ? config.customerData.constructor !== Array : isLoggedIn
     }
     return {
         isLoggedIn

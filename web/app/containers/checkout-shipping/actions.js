@@ -50,7 +50,7 @@ export const fetchShippingMethods = () => {
                     shipping_method: shippingMethods[0].value
                 }
                 dispatch(receiveData({shippingMethods}))
-                dispatch(receiveShippingMethodInitialValues({shipping: {initialValues}})) // set initial value for method
+                dispatch(receiveShippingMethodInitialValues({initialValues})) // set initial value for method
             })
     }
 }
@@ -77,21 +77,22 @@ export const submitShipping = () => {
         const addressData = {
             firstname: names.slice(0, -1).join(' '),
             lastname: names.slice(-1).join(' '),
-            company,
+            company: company || '',
             telephone,
             postcode,
             city,
-            street: [addressLine1, addressLine2],
+            street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1],
             regionId: region_id,
-            countryId: country_id
+            countryId: country_id,
+            save_in_address_book: true
         }
         const addressInformation = {
             addressInformation: {
-                shippingAddress: {
+                shippingAddress: addressData,
+                billingAddress: {
                     ...addressData,
                     saveInAddressBook: false
                 },
-                billingAddress: addressData,
                 shipping_carrier_code: shippingSelections[0],
                 shipping_method_code: shippingSelections[1]
             }
