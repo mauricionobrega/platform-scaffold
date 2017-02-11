@@ -3,7 +3,7 @@ import {createAction} from '../../utils/utils'
 import CheckoutShipping from './container'
 import checkoutShippingParser from './parsers/checkout-shipping'
 import shippingMethodParser from './parsers/shipping-method'
-import {addNotification, fetchPage, removeNotification} from '../app/actions'
+import {addNotification, fetchPage, removeAllNotifications} from '../app/actions'
 import {getCustomerEntityID} from './selectors'
 import {getIsLoggedIn} from '../app/selectors'
 import {getShippingFormValues} from '../../store/form/selectors'
@@ -56,9 +56,13 @@ export const submitSignIn = () => {
             data: JSON.stringify({username, password, context: 'checkout'}),
             method: 'POST',
             success: (responseData) => {
-                dispatch(removeNotification('shippingWelcomeBackMessage'))
+                dispatch(removeAllNotifications())
                 if (responseData.errors) {
-                    dispatch(receiveData({emailError: responseData.message}))
+                    dispatch(addNotification({
+                        content: responseData.message,
+                        id: 'shippingEmailError',
+                        showRemoveButton: true
+                    }))
                 } else {
                     // Refetch the page now that the user is logged in
                     dispatch(fetchPage(window.location.href, CheckoutShipping, 'checkingShipping'))
