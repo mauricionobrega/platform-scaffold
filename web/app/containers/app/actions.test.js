@@ -94,7 +94,8 @@ test('fetchPage does not throw on error', () => {
     return thunk(fakeDispatch, getState)
         .catch(() => {
             expect('The catch clause was called').toEqual('catch was not called')
-            expect(fakeDispatch.mock.calls[0][0])
-            .toEqual(setPageFetchError('Failed to fetch, cached response provided'))
+        })
+        .then(() => {
+            expect(fakeDispatch.mock.calls[0][0]).toEqual(setPageFetchError(''))
         })
 })
