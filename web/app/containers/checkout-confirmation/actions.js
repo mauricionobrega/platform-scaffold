@@ -5,7 +5,6 @@ import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 // import * as modalActions from '../../store/modals/actions'
 
 export const receiveContents = createAction('Received CheckoutConfirmation Contents')
-
 export const showModal = createAction('Showing modal')
 export const hideModal = createAction('Hiding modal')
 // export const openCheckoutConfirmationModal = () => (dispatch) => {

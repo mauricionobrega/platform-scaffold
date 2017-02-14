@@ -3,7 +3,7 @@ import {makeFormEncodedRequest, createAction} from '../../utils/utils'
 import isEmail from 'validator/lib/isEmail'
 import {SubmissionError} from 'redux-form'
 import {getLogin} from './selectors'
-import {SIGN_IN_SECTION, REGISTER_SECTION} from './constants'
+import {SIGN_IN_SECTION, REGISTER_SECTION} from '../../containers/login/constants'
 
 import {isFormResponseInvalid} from './parsers/common'
 import signinParser from './parsers/signin'
