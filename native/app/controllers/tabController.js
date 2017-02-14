@@ -39,12 +39,12 @@ TabController.init = async function(tabItem) {
         navigationView.back()
     })
 
-    navigationView.on('cart-updated', async (data) => {
-        await headerController.updateCounter(data.count)
+    navigationView.on('cart-updated', (data) => {
+        headerController.updateCounter(data.count)
     })
 
-    navigationView.on('open:cart-modal', async () => {
-        await headerController.showCartModal()
+    navigationView.on('open:cart-modal', () => {
+        headerController.showCartModal()
     })
 
     return new TabController(tabItem, layout, navigationView, headerController)
