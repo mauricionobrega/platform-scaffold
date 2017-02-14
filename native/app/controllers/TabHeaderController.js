@@ -9,6 +9,10 @@ import cartConfig from '../config/cartConfig'
 const TabHeaderController = function(headerBar, counterBadgeController) {
     this.viewPlugin = headerBar
     this.counterBadgeController = counterBadgeController
+
+    headerBar.on(`click:${cartConfig.cartIcon.id}`, async () => {
+        this.showCartModal()
+    })
 }
 
 TabHeaderController.init = async function() {
@@ -22,16 +26,16 @@ TabHeaderController.init = async function() {
     await headerBar.setBackgroundColor(baseConfig.colors.primaryColor)
     await headerBar.setOpaque()
 
-    headerBar.on(`click:${cartConfig.cartIcon.id}`, async () => {
-        const cartModalController = await CartModalController.init()
-        cartModalController.show()
-    })
-
     return new TabHeaderController(headerBar, counterBadgeController)
 }
 
 TabHeaderController.prototype.updateCounter = function(count) {
     this.counterBadgeController.updateCounterValue(count)
+}
+
+TabHeaderController.prototype.showCartModal = async () => {
+    const cartModalController = await CartModalController.init()
+    cartModalController.show()
 }
 
 export default TabHeaderController

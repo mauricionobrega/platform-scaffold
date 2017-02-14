@@ -2,9 +2,12 @@ import {createAction, makeFormEncodedRequest, urlToPathKey} from '../../utils/ut
 import {getCart} from '../../store/cart/actions'
 import * as selectors from './selectors'
 import * as appSelectors from '../app/selectors'
-import {openModal} from '../../store/modals/actions'
+import {openModal, closeModal} from '../../store/modals/actions'
 import {PDP_ITEM_ADDED_MODAL} from './constants'
 import pdpParser from './parsers/pdp'
+
+import {isRunningInAstro} from '../../utils/astro-integration'
+import Astro from '../../vendor/astro-client'
 
 export const receiveNewItemQuantity = createAction('Set item quantity')
 export const setItemQuantity = (quantity) => (dispatch, getStore) => {
@@ -20,6 +23,15 @@ export const process = ({payload}) => {
     const {$, $response, url} = payload
     const parsed = pdpParser($, $response)
     return receiveData({[urlToPathKey(url)]: parsed})
+}
+
+export const goToCheckout = () => (dispatch) => {
+    dispatch(closeModal(PDP_ITEM_ADDED_MODAL))
+    if (isRunningInAstro) {
+        Astro.trigger('open:cart-modal')
+    } else {
+        // open web checkout
+    }
 }
 
 export const submitCartForm = () => (dispatch, getStore) => {

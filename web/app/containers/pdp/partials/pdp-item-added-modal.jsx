@@ -5,6 +5,8 @@ import * as selectors from '../selectors'
 import {stripEvent} from '../../../utils/utils'
 import {isModalOpen} from '../../../store/selectors'
 import {PDP_ITEM_ADDED_MODAL} from '../constants'
+
+import * as pdpActions from '../actions'
 import {closeModal} from '../../../store/modals/actions'
 
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -12,8 +14,8 @@ import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import ProductItem from '../../../components/product-item'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
-const PDPItemAddedModal = ({open, onDismiss, quantity, title, price, productImage}) => (
-    <Sheet open={open} onDismiss={onDismiss} effect="slide-bottom" className="t-plp__item-added-modal" coverage="50%">
+const PDPItemAddedModal = ({open, onDismiss, quantity, title, price, productImage, coverage, onGoToCheckout}) => (
+    <Sheet open={open} onDismiss={onDismiss} effect="slide-bottom" className="t-plp__item-added-modal" coverage={coverage}>
 
         {/* Modal header */}
         <div className="u-flex-none u-border-bottom">
@@ -47,12 +49,11 @@ const PDPItemAddedModal = ({open, onDismiss, quantity, title, price, productImag
             {/* Buttons */}
             <div className="u-flex-none">
                 <Button
-                    href="#"
+                    onClick={onGoToCheckout}
                     className="c--primary u-width-full u-margin-bottom-md u-text-uppercase"
                     innerClassName="u-text-align-center">
                     Go To Checkout
                 </Button>
-
                 <Button className="c--tertiary u-width-full u-text-uppercase" onClick={onDismiss}>
                     Continue Shopping
                 </Button>
@@ -67,8 +68,9 @@ PDPItemAddedModal.propTypes = {
     price: PropTypes.string,
     productImage: PropTypes.string,
     quantity: PropTypes.number,
-    title: PropTypes.string,
-    onDismiss: PropTypes.func
+    onDismiss: PropTypes.func,
+    onGoToCheckout: PropTypes.func,
+    title: PropTypes.string
 }
 
 const mapStateToProps = createStructuredSelector({
@@ -80,7 +82,8 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = {
-    onDismiss: stripEvent(() => closeModal(PDP_ITEM_ADDED_MODAL))
+    onDismiss: stripEvent(() => closeModal(PDP_ITEM_ADDED_MODAL)),
+    onGoToCheckout: pdpActions.goToCheckout
 }
 
 export default connect(
