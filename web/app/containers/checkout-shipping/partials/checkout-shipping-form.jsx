@@ -4,7 +4,7 @@ import * as ReduxForm from 'redux-form'
 import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
-import {Grid, GridSpan} from '../../../components/grid'
+import {Grid, GridSpan} from 'progressive-web-sdk/dist/components/grid'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Link from 'progressive-web-sdk/dist/components/link'
 
@@ -20,7 +20,7 @@ const renderEmailAddress = (onShippingEmailRecognized) => {
         <div>
             <div className="t-checkout-shipping__email-title" />
 
-            <div className="u-padding-md u-border-light-top u-border-light-bottom u-bg-color-neutral-10">
+            <div className="u-padding-md u-border-light-top u-border-light-bottom u-bg-color-neutral-00">
                 <FieldRow>
                     <ReduxForm.Field component={Field} className="pw--overlayed-hint" name="email" label="Email my receipt to">
                         <input type="email" noValidate />
@@ -76,7 +76,7 @@ const renderShippingAddress = (isCompanyOrAptShown, handleShowCompanyAndApt) => 
                 <h2 className="u-h4">Shipping Address</h2>
             </div>
 
-            <div className="u-padding-md u-border-light-top u-border-light-bottom u-bg-color-neutral-10">
+            <div className="u-padding-md u-border-light-top u-border-light-bottom u-bg-color-neutral-00">
                 <FieldRow>
                     <ReduxForm.Field
                         component={Field}
@@ -192,7 +192,7 @@ const renderShippingMethod = () => {
                 <h2 className="u-h4">Shipping Method</h2>
             </div>
 
-            <div className="u-padding-md u-border-light-top u-border-light-bottom u-bg-color-neutral-10">
+            <div className="u-padding-md u-border-light-top u-border-light-bottom u-bg-color-neutral-00">
                 <FieldRow>
                     <ReduxForm.Field component={Field} name="shipping-method" label={methodLabel}>
                         <input type="radio" noValidate />

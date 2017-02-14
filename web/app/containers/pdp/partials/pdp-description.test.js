@@ -1,7 +1,10 @@
+/* eslint-env jest */
 import React from 'react'
-import PDPDescription from './pdp-description'
+import ConnectedPDPDescription from './pdp-description'
 import {mount, shallow} from 'enzyme'
 import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/accordion'
+
+const PDPDescription = ConnectedPDPDescription.WrappedComponent
 
 /* eslint-disable newline-per-chained-call */
 

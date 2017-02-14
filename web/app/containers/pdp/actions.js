@@ -1,17 +1,32 @@
-import {createAction, makeFormEncodedRequest} from '../../utils/utils'
-import {getCart} from '../cart/actions'
-import {getRoutedState} from '../../utils/router-utils'
+import {createAction, makeFormEncodedRequest, urlToPathKey} from '../../utils/utils'
+import {getCart} from '../../store/cart/actions'
+import * as selectors from './selectors'
+import * as appSelectors from '../app/selectors'
+import {openModal, closeModal} from '../../store/modals/actions'
+import {PDP_ITEM_ADDED_MODAL} from './constants'
+import pdpParser from './parsers/pdp'
 
 import {isRunningInAstro} from '../../utils/astro-integration'
 import Astro from '../../vendor/astro-client'
 
-export const setItemQuantity = createAction('Set item quantity')
+export const receiveNewItemQuantity = createAction('Set item quantity')
+export const setItemQuantity = (quantity) => (dispatch, getStore) => {
+    dispatch(receiveNewItemQuantity({
+        [appSelectors.getCurrentPathKey(getStore())]: {
+            itemQuantity: quantity
+        }
+    }))
+}
 
-export const openItemAddedModal = createAction('Open Item Added Sheet')
-export const closeItemAddedModal = createAction('Close Item Added Sheet')
+export const receiveData = createAction('Receive PDP data')
+export const process = ({payload}) => {
+    const {$, $response, url} = payload
+    const parsed = pdpParser($, $response)
+    return receiveData({[urlToPathKey(url)]: parsed})
+}
 
 export const goToCheckout = () => (dispatch) => {
-    dispatch(closeItemAddedModal())
+    dispatch(closeModal(PDP_ITEM_ADDED_MODAL))
     if (isRunningInAstro) {
         Astro.trigger('open:cart-modal')
     } else {
@@ -20,9 +35,8 @@ export const goToCheckout = () => (dispatch) => {
 }
 
 export const submitCartForm = () => (dispatch, getStore) => {
-    const routedState = getRoutedState(getStore().pdp)
-    const formInfo = routedState.get('formInfo')
-    const qty = routedState.get('itemQuantity')
+    const formInfo = selectors.getFormInfo(getStore())
+    const qty = selectors.getItemQuantity(getStore())
 
     return makeFormEncodedRequest(formInfo.get('submitUrl'), {
         ...formInfo.get('hiddenInputs').toJS(),
@@ -30,7 +44,7 @@ export const submitCartForm = () => (dispatch, getStore) => {
     }, {
         method: formInfo.get('method')
     }).then(() => {
-        dispatch(openItemAddedModal())
+        dispatch(openModal(PDP_ITEM_ADDED_MODAL))
         dispatch(getCart())
     })
 }

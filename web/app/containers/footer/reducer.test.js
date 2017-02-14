@@ -1,19 +1,9 @@
+/* eslint-env jest */
 import reducer, {initialState} from './reducer'
 import * as actions from './actions'
-import * as appActions from '../app/actions'
 import * as constants from './constants'
-import {jquerifyHtmlFile} from 'progressive-web-sdk/dist/test-utils'
 
 describe('The Footer reducer', () => {
-
-    test('parses the page contents onPageReceived', () => {
-        const $content = jquerifyHtmlFile('app/containers/footer/parsers/footer-example.html')
-        const newState = reducer(initialState, appActions.onPageReceived(null, $content))
-        // Parsers covered in their own tests
-        expect(newState.get('newsletter').size).toBeGreaterThan(0)
-        expect(newState.get('navigation').size).toBeGreaterThan(0)
-    })
-
     test('sets the signup status on newsletterSignupComplete', () => {
         const status = constants.SIGNUP_SUCCESSFUL
         expect(initialState.get('signupStatus')).not.toEqual(status) // Sanity check
