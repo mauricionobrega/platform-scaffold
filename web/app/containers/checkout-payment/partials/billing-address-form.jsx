@@ -2,9 +2,11 @@ import React, {PropTypes} from 'react'
 import * as ReduxForm from 'redux-form'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
+import {selectorToJS} from '../../../utils/selector-utils'
 
 // Selectors
 import * as selectors from '../selectors'
+import {getCountries, getRegions} from '../../../store/checkout/locations/selectors'
 
 // Actions
 import * as checkoutPaymentActions from '../actions'
@@ -34,8 +36,10 @@ class BillingAddressForm extends React.Component {
 
     render() {
         const {
+            countries,
             isCompanyOrAptShown,
-            newShippingAddressIsEnabled
+            newShippingAddressIsEnabled,
+            regions
         } = this.props
 
         const shippingAddress = (
@@ -122,9 +126,9 @@ class BillingAddressForm extends React.Component {
                             </FieldRow>
 
                             <FieldRow>
-                                <ReduxForm.Field component={Field} name="state" label="State/Province">
+                                <ReduxForm.Field component={Field} name="region_id" label="State/Province">
                                     <select>
-                                        <option>Select option</option>
+                                        {regions.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
                                     </select>
                                 </ReduxForm.Field>
                             </FieldRow>
@@ -137,9 +141,9 @@ class BillingAddressForm extends React.Component {
                             </FieldRow>
 
                             <FieldRow>
-                                <ReduxForm.Field component={Field} name="country" label="Country">
+                                <ReduxForm.Field component={Field} name="country_id" label="Country">
                                     <select>
-                                        <option>United States</option>
+                                        {countries.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
                                     </select>
                                 </ReduxForm.Field>
                             </FieldRow>
@@ -152,6 +156,14 @@ class BillingAddressForm extends React.Component {
 }
 
 BillingAddressForm.propTypes = {
+    /**
+    * Countries available to ship to
+    */
+    countries: PropTypes.arrayOf(PropTypes.shape({
+        label: PropTypes.string,
+        value: PropTypes.string
+    })),
+
     /**
      * Shows the "Company" and "Apt #" fields
      */
@@ -168,9 +180,19 @@ BillingAddressForm.propTypes = {
     newShippingAddressIsEnabled: PropTypes.bool,
 
     /**
+    * Regions available to ship to
+    */
+    regions: PropTypes.arrayOf(PropTypes.shape({
+        country_id: PropTypes.string,
+        label: PropTypes.string,
+        title: PropTypes.string,
+        value: PropTypes.string
+    })),
+
+    /**
      * Toggle new address fields
      */
-    toggleNewAddressFields: PropTypes.func
+    toggleNewAddressFields: PropTypes.func,
 }
 
 const BillingAddressReduxForm = ReduxForm.reduxForm({
@@ -178,8 +200,10 @@ const BillingAddressReduxForm = ReduxForm.reduxForm({
 })(BillingAddressForm)
 
 const mapStateToProps = createStructuredSelector({
+    countries: selectorToJS(getCountries),
     isCompanyOrAptShown: selectors.getIsCompanyOrAptShown,
-    newShippingAddressIsEnabled: selectors.getNewShippingAddressIsEnabled
+    newShippingAddressIsEnabled: selectors.getNewShippingAddressIsEnabled,
+    regions: selectorToJS(getRegions)
 })
 
 const mapDispatchToProps = {
