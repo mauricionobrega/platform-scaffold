@@ -11,6 +11,7 @@ export const toggleFixedPlaceOrder = createAction('Toggled the fixed "Place Orde
 export const toggleCardInputRadio = createAction('Toggled the card method radio input', 'isNewCardInputSelected')
 export const toggleCompanyAptField = createAction('Showing the "Company" and "Apt #" fields', 'isCompanyOrAptShown')
 export const toggleNewAddressFields = createAction('Toggled new address fields', 'newShippingAddressIsEnabled')
+export const setCvvType = createAction('Setting CVV type', 'cvvType')
 
 export const receiveResponse = (response) => {
     return (dispatch) => {

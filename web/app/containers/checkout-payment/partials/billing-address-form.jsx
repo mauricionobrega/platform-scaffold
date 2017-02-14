@@ -64,11 +64,11 @@ class BillingAddressForm extends React.Component {
 
         return (
             <div>
-                <div className="t-checkout-payment__title u-padding-top-lg u-padding-bottom-lg">
+                <div className="t-checkout-payment__title u-padding-top-lg u-padding-bottom-md">
                     <h2 className="u-h4">Billing Address</h2>
                 </div>
 
-                <div className="u-border-light-top u-border-light-bottom u-bg-color-neutral-00">
+                <div className="u-border-light-top u-border-light-bottom u-bg-color-neutral-00 t-checkout-payment__card">
                     <FieldRow className="u-padding-md">
                         <ReduxForm.Field
                             component={Field}
@@ -106,7 +106,7 @@ class BillingAddressForm extends React.Component {
                                         name="organization"
                                         label="Company"
                                     >
-                                        <input type="text" noValidate />
+                                        <input type="text" noValidate placeholder="Optional" />
                                     </ReduxForm.Field>
 
                                     <ReduxForm.Field
@@ -114,7 +114,7 @@ class BillingAddressForm extends React.Component {
                                         name="address-line2"
                                         label="Apt #, suite etc."
                                     >
-                                        <input type="text" noValidate />
+                                        <input type="text" noValidate placeholder="Optional" />
                                     </ReduxForm.Field>
                                 </FieldRow>
                             }
