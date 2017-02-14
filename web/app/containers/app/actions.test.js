@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import Immutable from 'immutable'
 
-import {fetchPage, onPageReceived, setPageFetchError, clearPageFetchError} from './actions'
+import {fetchPage, onPageReceived, setPageFetchError, clearPageFetchError, checkIfOffline} from './actions'
 import {closeModal} from '../../store/modals/actions'
 import {OFFLINE_MODAL} from '../offline/constants'
 import {CURRENT_URL} from './constants'
@@ -22,63 +22,101 @@ import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 
 const getState = () => ({ui: {app: Immutable.fromJS({[CURRENT_URL]: '/'})}})
 const URL = 'http://test.mobify.com/'
-const thunk = fetchPage(URL, null, 'home')
+
+const offlineTestRegExp = /https:\/\/localhost:8443\/static\/js\/offline-test\.json\?[\d]+/
 
 test('fetchPage fetches the given page', () => {
-    const fakeGet = jest.fn()
-    const response = {
-        headers: {
-            get: fakeGet
-        }
-    }
-
     global.fetch.mockClear()
-    global.fetch.mockReturnValueOnce(Promise.resolve(response))
+    global.fetch.mockReturnValueOnce(Promise.resolve('page contents!'))
 
     jqueryResponse.mockClear()
     jqueryResponse.mockReturnValue(['$', '$response'])
 
     const fakeDispatch = jest.fn()
+    const thunk = fetchPage(URL, null, 'home')
 
     return thunk(fakeDispatch, getState)
         .then(() => {
             expect(global.fetch).toBeCalled()
             expect(global.fetch.mock.calls[0][0]).toBe(URL)
 
-            expect(fakeGet).toBeCalledWith('x-mobify-progressive')
-            expect(jqueryResponse).toBeCalledWith(response)
+            expect(jqueryResponse).toBeCalledWith('page contents!')
 
             expect(fakeDispatch).toBeCalled()
-            expect(fakeDispatch.mock.calls[0][0])
-                .toEqual(clearPageFetchError())
             expect(fakeDispatch.mock.calls[1][0])
-                .toEqual(closeModal(OFFLINE_MODAL))
-            expect(fakeDispatch.mock.calls[2][0])
                 .toEqual(onPageReceived('$', '$response', URL, '/', 'home'))
         })
 })
 
-test('fetchPage dispatches fetchError if x-mobify-progressive === "offline"', () => {
-    const fakeGet = jest.fn(() => 'offline')
-    const response = {
-        headers: {
-            get: fakeGet
+test('checkIfOffline dispatches setPageFetchError if network request fails', () => {
+    global.fetch.mockClear()
+    global.fetch.mockReturnValueOnce(Promise.reject(new TypeError('failed to fetch')))
+
+    const fakeDispatch = jest.fn()
+    const thunk = checkIfOffline()
+
+    return thunk(fakeDispatch)
+        .then(() => {
+            expect(global.fetch).toBeCalled()
+            expect(global.fetch.mock.calls[0][0]).toMatch(offlineTestRegExp)
+
+            expect(fakeDispatch).toBeCalled()
+            expect(fakeDispatch.mock.calls[0][0]).toEqual(setPageFetchError('failed to fetch'))
+        })
+})
+
+test('checkIfOffline dispatches setPageFetchError if it receives modified JSON from worker', () => {
+    const mockResponse = {
+        obj: {
+            offline: true
+        },
+        json: function() { // eslint-disable-line object-shorthand
+                           // arrow function won't properly bind `this`
+            return this.obj
         }
     }
 
     global.fetch.mockClear()
-    global.fetch.mockReturnValueOnce(Promise.resolve(response))
-
-    jqueryResponse.mockClear()
-    jqueryResponse.mockReturnValue(['$', '$response'])
+    global.fetch.mockReturnValueOnce(Promise.resolve(mockResponse))
 
     const fakeDispatch = jest.fn()
+    const thunk = checkIfOffline()
 
-    return thunk(fakeDispatch, getState)
+    return thunk(fakeDispatch)
         .then(() => {
-            expect(fakeGet).toBeCalledWith('x-mobify-progressive')
-            expect(fakeDispatch.mock.calls[0][0])
-            .toEqual(setPageFetchError('Failed to fetch, cached response provided'))
+            expect(global.fetch).toBeCalled()
+            expect(global.fetch.mock.calls[0][0]).toMatch(offlineTestRegExp)
+
+            expect(fakeDispatch).toHaveBeenCalledTimes(1)
+            expect(fakeDispatch.mock.calls[0][0]).toEqual(setPageFetchError('Network failure, using worker cache'))
+        })
+})
+
+test('checkIfOffline clears offline modal and page fetch errors when it receives untouched JSON from network', () => {
+    const mockResponse = {
+        obj: {
+            offline: false
+        },
+        json: function() { // eslint-disable-line object-shorthand
+                           // arrow function won't properly bind `this`
+            return this.obj
+        }
+    }
+
+    global.fetch.mockClear()
+    global.fetch.mockReturnValueOnce(Promise.resolve(mockResponse))
+
+    const fakeDispatch = jest.fn()
+    const thunk = checkIfOffline()
+
+    return thunk(fakeDispatch)
+        .then(() => {
+            expect(global.fetch).toBeCalled()
+            expect(global.fetch.mock.calls[0][0]).toMatch(offlineTestRegExp)
+
+            expect(fakeDispatch).toHaveBeenCalledTimes(2)
+            expect(fakeDispatch.mock.calls[0][0]).toEqual(clearPageFetchError())
+            expect(fakeDispatch.mock.calls[1][0]).toEqual(closeModal(OFFLINE_MODAL))
         })
 })
 
