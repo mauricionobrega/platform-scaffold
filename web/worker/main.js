@@ -53,6 +53,29 @@ self.addEventListener('activate', (e) => {
     )
 })
 
+// App makes this asset request on each page fetch, expecting to see JSON of the
+// form `{offline: false}` if network supplies successful response.
+// In the case of failure, modify the response to be `{offline: true}` which
+// indicates to app that we are offline.
+const checkIfOffline = (request) => {
+    return fetch(request)
+        .catch(() => {
+            return new Response(
+                new Blob(
+                    [JSON.stringify({offline: true})],
+                    {type: 'application/json'}
+                ),
+                {
+                    status: 200,
+                    statusText: 'OK'
+                }
+            )
+        })
+}
+
+// For enabling offline detection within the application
+toolbox.router.get(/(cdn\.mobify\.com.*|localhost:8443)\/static\/js\/offline-test\.json/, checkIfOffline)
+
 // Path Handlers
 toolbox.router.get(/\.(?:png|gif|svg|jpe?g)$/, toolbox.fastest, {cache: imageCache})
 
