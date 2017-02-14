@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
 import classnames from 'classnames'
-import styles from './styleguide.scss'
+import styles from '../app/stylesheet.scss'
 
 import s from './Layout.css'
 
