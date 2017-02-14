@@ -5,6 +5,7 @@ import {selectorToJS} from '../../../utils/selector-utils'
 import {CART_WISHLIST_MODAL} from '../constants'
 import {openModal} from '../../../store/modals/actions'
 import {getCartItems, getCartSummaryCount} from '../../../store/cart/selectors'
+import {openSignIn} from '../../../store/cart/actions'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
@@ -40,7 +41,7 @@ const ProductSkeleton = () => (
 )
 /* eslint-disable camelcase */
 
-const CartProductItem = ({product_name, product_image, idx, qty, product_price, onSaveLater}) => (
+const CartProductItem = ({product_name, product_image, idx, qty, product_price, onSaveLater, onSignIn}) => (
     <ProductItem
         className={productItemClassNames}
         title={<h2 className="u-h3">{product_name}</h2>}
@@ -116,7 +117,7 @@ const CartProductList = ({items, summaryCount, onSaveLater}) => {
                         Cart {summaryCount > 0 && <span>({summaryCount} Items)</span>}
                     </h1>
 
-                    <Button className="u-flex-none u-color-brand" onClick={onSignInClicked}>
+                    <Button className="u-flex-none u-color-brand" onClick={openSignIn} >
                         <Icon name="user" />
                         Sign in
                     </Button>

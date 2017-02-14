@@ -16,7 +16,7 @@ const baseHeaders = {
 
 export const receiveCartContents = utils.createAction('Received Cart Contents')
 
-export const openSignIn = () => () => {
+export const openSignIn = () => {
     if (isRunningInAstro) {
         Astro.trigger('sign-in:clicked')
     } else {
@@ -24,7 +24,7 @@ export const openSignIn = () => () => {
     }
 }
 
-export const continueShopping = () => () => {
+export const continueShopping = () => {
     if (isRunningInAstro) {
         Astro.trigger('continue:clicked')
     } else {

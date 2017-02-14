@@ -10,6 +10,7 @@ import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Image from 'progressive-web-sdk/dist/components/image'
 
 import {getCartContentsLoaded, getCartHasItems} from '../../store/cart/selectors'
+import {continueShopping, openSignIn} from '../../store/cart/actions'
 import CartEstimateShippingModal from './partials/cart-estimate-shipping'
 import CartWishlistModal from './partials/cart-wishlist'
 import CartItems from './partials/cart-items'
@@ -19,6 +20,7 @@ const EmptyCartContents = ({hide}) => {
         'u-visually-hidden': hide,
         't--hide': hide
     })
+
     return (
         <GridSpan>
             <div className={emptyCartClassnames}>
@@ -34,12 +36,12 @@ const EmptyCartContents = ({hide}) => {
                     <p className="u-padding-top u-padding-start-lg u-padding-end-lg u-text-align-center u-margin-bottom-lg">
                         Your shopping cart is empty. Sign in to retrieve saved items or continue shopping.
                     </p>
-                    <Button className="c--primary u-text-uppercase u-h5 u-width-full u-margin-bottom-lg" href="/customer/account/login/">
+                    <Button className="c--primary u-text-uppercase u-h5 u-width-full u-margin-bottom-lg" onClick={openSignIn}>
                         <Icon name="User" />
                         Sign In
                     </Button>
 
-                    <Button className="c--tertiary u-text-uppercase u-h5 u-width-full" href="/">
+                    <Button className="c--tertiary u-text-uppercase u-h5 u-width-full" onClick={continueShopping}>
                         Continue Shopping
                     </Button>
                 </div>
@@ -49,7 +51,7 @@ const EmptyCartContents = ({hide}) => {
 }
 
 EmptyCartContents.propTypes = {
-    hide: PropTypes.bool
+    hide: PropTypes.bool,
 }
 
 const Cart = ({contentsLoaded, hasItems}) => {
