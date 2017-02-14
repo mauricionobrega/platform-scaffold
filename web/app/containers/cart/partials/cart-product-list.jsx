@@ -41,7 +41,7 @@ const ProductSkeleton = () => (
 )
 /* eslint-disable camelcase */
 
-const CartProductItem = ({product_name, product_image, idx, qty, product_price, onSaveLater, onSignIn}) => (
+const CartProductItem = ({product_name, product_image, idx, qty, product_price, onSaveLater}) => (
     <ProductItem
         className={productItemClassNames}
         title={<h2 className="u-h3">{product_name}</h2>}
@@ -137,7 +137,6 @@ CartProductList.propTypes = {
     items: PropTypes.array,
     summaryCount: PropTypes.number,
     onSaveLater: PropTypes.func,
-    onSignInClicked: PropTypes.func
 }
 
 const mapStateToProps = createStructuredSelector({
