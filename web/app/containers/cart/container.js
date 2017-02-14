@@ -5,7 +5,7 @@ import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import classNames from 'classnames'
 
 import Button from 'progressive-web-sdk/dist/components/button'
-import {Grid, GridSpan} from '../../components/grid'
+import {Grid, GridSpan} from 'progressive-web-sdk/dist/components/grid'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Image from 'progressive-web-sdk/dist/components/image'
 
@@ -55,7 +55,7 @@ EmptyCartContents.propTypes = {
 
 const Cart = ({contentsLoaded, hasItems}) => {
     const isCartEmptyAndLoaded = !hasItems && contentsLoaded
-    const templateClassnames = classNames('t-cart u-bg-color-neutral-20', {
+    const templateClassnames = classNames('t-cart u-bg-color-neutral-10', {
         't--loaded': contentsLoaded
     })
 

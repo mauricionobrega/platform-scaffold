@@ -60,7 +60,7 @@ class Login extends React.Component {
         if (!isRunningInAstro) {
             return (
                 <div className="t-login">
-                    <div className="u-bg-color-neutral-20 u-padding-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
+                    <div className="u-bg-color-neutral-10 u-padding-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
                         <LoginTitle title={title} />
                     </div>
 
