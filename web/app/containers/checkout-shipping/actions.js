@@ -3,7 +3,7 @@ import {createAction} from '../../utils/utils'
 import CheckoutShipping from './container'
 import checkoutShippingParser from './parsers/checkout-shipping'
 import shippingMethodParser from './parsers/shipping-method'
-import {addNotification, fetchPage, removeAllNotifications} from '../app/actions'
+import {addNotification, fetchPage, removeAllNotifications, removeNotification} from '../app/actions'
 import {getCustomerEntityID} from './selectors'
 import {getIsLoggedIn} from '../app/selectors'
 import {getShippingFormValues} from '../../store/form/selectors'
@@ -29,6 +29,13 @@ export const onShippingEmailRecognized = () => {
     }
 }
 
+export const onShippingEmailNotRecognized = () => {
+    return (dispatch) => {
+        dispatch(removeNotification('shippingWelcomeBackMessage'))
+        dispatch(receiveData({customerEmailRecognized: false}))
+    }
+}
+
 export const checkCustomerEmail = () => {
     return (dispatch, getState) => {
         const formValues = getShippingFormValues(getState())
@@ -38,6 +45,8 @@ export const checkCustomerEmail = () => {
             .then((responseText) => {
                 if (/false/.test(responseText)) {
                     dispatch(onShippingEmailRecognized())
+                } else {
+                    dispatch(onShippingEmailNotRecognized())
                 }
             })
     }
