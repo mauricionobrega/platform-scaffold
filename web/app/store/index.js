@@ -8,6 +8,9 @@ import modalReducer from './modals/reducer'
 import productReducer from './products/reducer'
 import {reducer as formReducer} from 'redux-form'
 
+import analytics from 'redux-analytics'
+import analyticsDistributor from '../utils/analytics-distributor'
+
 const noop = (f) => f
 
 const reducer = combineReducers({
@@ -21,7 +24,8 @@ const reducer = combineReducers({
 
 const configureStore = (initialState) => {
     const middlewares = [
-        thunk
+        thunk,
+        analytics(({type, payload}, state) => analyticsDistributor(type, {...state, ...payload}))
     ]
 
     const store = createStore(
