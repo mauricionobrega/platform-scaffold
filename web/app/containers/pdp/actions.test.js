@@ -1,11 +1,14 @@
+/* eslint-env jest */
 import Immutable from 'immutable'
 
-import {openItemAddedModal, submitCartForm} from './actions'
+import {submitCartForm} from './actions'
+import {PDP_ITEM_ADDED_MODAL} from './constants'
+import {openModal} from '../../store/modals/actions'
 
 import * as utils from '../../utils/utils'
 
-jest.mock('../cart/actions')
-import {getCart} from '../cart/actions'
+jest.mock('../../store/cart/actions')
+import {getCart} from '../../store/cart/actions'
 
 /* eslint-disable import/namespace */
 let realMakeFormEncodedRequest
@@ -23,19 +26,21 @@ test('submitCartForm makes a request and dispatches updates', () => {
     const thunk = submitCartForm()
     expect(typeof thunk).toBe('function')
 
-    const getStore = () => ({pdp: {
-        get: () => {
-            return Immutable.fromJS({
-                contentsLoaded: true,
-                formInfo: {
-                    method: 'POST',
-                    hiddenInputs: {},
-                    submitUrl: 'submitUrl'
-                },
-                itemQuantity: 1
+    const getStore = () => ({
+        ui: {
+            app: Immutable.fromJS({currentURL: 'https://test.mobify.com/'}),
+            pdp: Immutable.fromJS({
+                '/': {
+                    contentsLoaded: true,
+                    formInfo: {
+                        method: 'POST',
+                        hiddenInputs: {},
+                        submitUrl: 'submitUrl'
+                    },
+                    itemQuantity: 1
+                }
             })
         }
-    }
     })
 
     const mockDispatch = jest.fn()
@@ -48,7 +53,7 @@ test('submitCartForm makes a request and dispatches updates', () => {
 
             expect(mockDispatch).toBeCalled()
             expect(mockDispatch.mock.calls[0][0])
-                .toEqual(openItemAddedModal())
+                .toEqual(openModal(PDP_ITEM_ADDED_MODAL))
             expect(getCart).toBeCalled()
         })
 })

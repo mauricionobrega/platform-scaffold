@@ -1,4 +1,5 @@
-import {productSubtotal} from './container'
+/* eslint-env jest */
+import {productSubtotal} from './partials/mini-cart-product-list'
 
 describe('Computing the subtotal', () => {
 

@@ -1,12 +1,13 @@
+/* eslint-env jquery, jest */
 import * as ParserUtils from './parser-utils'
 
 test('parseTextLink returns the correct href, text, and title', () => {
     expect(ParserUtils.parseTextLink($('<a href="/test.html" title="Test">Click Here!</a>')))
-        .toEqual({
+        .toEqual(ParserUtils.TextLink({
             href: '/test.html',
             text: 'Click Here!',
             title: 'Test'
-        })
+        }))
 })
 
 test('parseButton returns the correct values', () => {
