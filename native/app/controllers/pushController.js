@@ -5,10 +5,19 @@ const PushController = function(pushPlugin) {
     this.plugin = pushPlugin
 }
 PushController.init = async function() {
-    const pushSiteId = 'merlins-potions'
-    const mobifySlugName = 'merlins-potions'
+    const pushSiteId = 'merlinspotions'
+    const mobifySlugName = 'merlins-potions-demo'
 
-    const pushPlugin = await PushPlugin.init(pushSiteId, EngagementController.init(mobifySlugName))
+    const engagementPromise = EngagementController.init(mobifySlugName)
+    const pushPlugin = await PushPlugin.init(pushSiteId, engagementPromise)
+
+    pushPlugin.on('subscribeTestTriggered', () => {
+        console.log('\n########## TEST ##########\n')
+    })
+
+    pushPlugin.on('messageReceivedWhenAppIsOpen', (params) => {
+        console.log(params.title)
+    })
 
     return new PushController(pushPlugin)
 }
@@ -19,6 +28,10 @@ PushController.prototype.subscriptionStatus = async function() {
 
 PushController.prototype.subscribeTest = async function() {
     await this.plugin.subscribeTest()
+}
+
+PushController.prototype.subscribe = async function() {
+    await this.plugin.subscribe()
 }
 
 export default PushController

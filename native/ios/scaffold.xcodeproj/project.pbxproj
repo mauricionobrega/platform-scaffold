@@ -241,6 +241,11 @@
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = KS9S3B73SG;
 						LastSwiftMigration = 0800;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					87C6A89A1B43044D001876CE = {
 						CreatedOnToolsVersion = 6.3.1;
