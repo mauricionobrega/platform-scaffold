@@ -1,3 +1,12 @@
+## 0.11.0 (February 10, 2017)
+- Upgrade to the latest SDK
+- Get new generators to match the architecture 2.0
+
+## 0.10.1 (February 7, 2017)
+- Optimize the homepage carousel images
+- Disable a few CircleCI features that broke in January
+- Add `cache_directories` for the node_modules directory to circle.yml
+
 ## 0.10.0 (January 8, 2017)
 - Implement the Progressive Checkout UI components
 - Fix inconsistencies between the generator and best practices

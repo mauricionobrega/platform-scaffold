@@ -1,12 +1,18 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
+import {createStructuredSelector} from 'reselect'
+import {selectorToJS} from '../../utils/selector-utils'
+
 import Nav from 'progressive-web-sdk/dist/components/nav'
 import NavMenu from 'progressive-web-sdk/dist/components/nav-menu'
 import NavItem from 'progressive-web-sdk/dist/components/nav-item'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
-import * as navActions from './actions'
 import IconLabelButton from '../../components/icon-label-button'
 import * as merlinsNavItem from '../../components/nav-item'
+import * as selectors from './selectors'
+import {NAVIGATION_MODAL} from './constants'
+import {isModalOpen} from '../../store/selectors'
+import {closeModal} from '../../store/modals/actions'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 import {withRouter} from 'react-router'
 
@@ -25,10 +31,7 @@ const itemFactory = (type, props) => {
 
 
 const Navigation = (props) => {
-    const {navigation, closeNavigation, router} = props
-    const path = navigation.get('path')
-    const isOpen = navigation.get('isOpen')
-    const root = navigation.get('root') && navigation.get('root').toJS()
+    const {path, isOpen, root, closeNavigation, router} = props
 
     const onPathChange = (path) => {
         const url = new URL(path)
@@ -41,7 +44,7 @@ const Navigation = (props) => {
 
     return (
         <Sheet className="t-navigation" open={isOpen} onDismiss={closeNavigation} maskOpacity={0.7}>
-            <Nav root={root} path={path} onPathChange={onPathChange}>
+            <Nav root={root.title ? root : null} path={path} onPathChange={onPathChange}>
                 <HeaderBar>
                     <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
                         <h2 className="t-navigation__title u-heading-family u-text-uppercase">
@@ -65,31 +68,26 @@ Navigation.propTypes = {
     /**
      * A function used to set the navigation-sheet's state to closed
      */
-    closeNavigation: React.PropTypes.func,
+    closeNavigation: PropTypes.func,
 
-    /**
-     * The immutableJS data for the nav.
-     */
-    navigation: React.PropTypes.object,
-
+    isOpen: PropTypes.bool,
+    path: PropTypes.string,
+    root: PropTypes.object,
     /**
      * The react-router router object.
      */
-    router: React.PropTypes.object,
+    router: PropTypes.object,
 }
 
 
-const mapStateToProps = (state) => {
-    return {
-        navigation: state.navigation,
-    }
+const mapStateToProps = createStructuredSelector({
+    path: selectors.getPath,
+    isOpen: isModalOpen(NAVIGATION_MODAL),
+    root: selectorToJS(selectors.getNavigationRoot)
+})
+
+const mapDispatchToProps = {
+    closeNavigation: () => closeModal(NAVIGATION_MODAL)
 }
 
-
-export default connect(
-    mapStateToProps,
-    {
-        openNavigation: navActions.openNavigation,
-        closeNavigation: navActions.closeNavigation,
-    }
-)(withRouter(Navigation))
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Navigation))

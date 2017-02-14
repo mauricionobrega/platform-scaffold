@@ -1,7 +1,10 @@
+/* eslint-env jest */
 import React from 'react'
-import CartSummary from './cart-summary'
+import ConnectedCartSummary from './cart-summary'
 import {Provider} from 'react-redux'
 import {mount, shallow} from 'enzyme'
+
+const CartSummary = ConnectedCartSummary.WrappedComponent
 
 test('renders without errors', () => {
     const store = {

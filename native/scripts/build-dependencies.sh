@@ -8,9 +8,9 @@ pushd node_modules/mobify-progressive-app-sdk
     npm run build:astro_client
 popd
 
-pushd onboarding
+pushd ../web
     npm i
-    npm run build
+    npm run prod:build
 popd
 
 
