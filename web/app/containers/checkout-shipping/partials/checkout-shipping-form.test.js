@@ -12,7 +12,7 @@ test('renders without errors', () => {
         dispatch: () => {},
         getState: () => ({
             checkout: Immutable.Map(),
-            ui: {checkoutShipping: Immutable.Map()}
+            ui: {checkoutShipping: Immutable.Map(), app: Immutable.Map()}
         })
     }
     const wrapper = mount(

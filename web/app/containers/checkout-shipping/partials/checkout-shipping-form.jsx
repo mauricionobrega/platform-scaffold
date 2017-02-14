@@ -4,6 +4,7 @@ import {createStructuredSelector} from 'reselect'
 import {selectorToJS} from '../../../utils/selector-utils'
 import * as ReduxForm from 'redux-form'
 
+import {getIsLoggedIn} from '../../app/selectors'
 import {getShippingInitialValues} from '../../../store/checkout/shipping/selectors'
 
 import {submitShipping} from '../actions'
@@ -16,6 +17,7 @@ import ShippingMethod from './shipping-method'
 
 const CheckoutShippingForm = ({
     handleSubmit,
+    isLoggedIn,
     submitShipping
     // disabled,
     // submitting
@@ -25,7 +27,7 @@ const CheckoutShippingForm = ({
         <form className="t-checkout-shipping__form" onSubmit={handleSubmit(submitShipping)} noValidate>
             <Grid className="u-center-piece">
                 <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 7}}>
-                    <ShippingEmail />
+                    {!isLoggedIn && <ShippingEmail />}
                     <ShippingAddressForm />
                 </GridSpan>
 
@@ -48,6 +50,10 @@ CheckoutShippingForm.propTypes = {
      */
     handleSubmit: React.PropTypes.func,
     /**
+    * Is the user logged in or not
+    */
+    isLoggedIn: React.PropTypes.bool,
+    /**
     * Submits the shipping form information to the server
     */
     submitShipping: React.PropTypes.func,
@@ -66,7 +72,8 @@ const validate = (values) => {
 }
 
 const mapStateToProps = createStructuredSelector({
-    initialValues: selectorToJS(getShippingInitialValues)
+    initialValues: selectorToJS(getShippingInitialValues),
+    isLoggedIn: getIsLoggedIn
 })
 
 const mapDispatchToProps = {
