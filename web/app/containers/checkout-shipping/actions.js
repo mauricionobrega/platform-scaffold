@@ -51,6 +51,9 @@ export const submitSignIn = () => {
         } = getShippingFormValues(getState())
 
         // This data has to be sent via AJAX, it doesn't work with makeJsonEncodedRequest
+        // If we send this using makeRequest, fetch or makeJsonEncodedRequest we get back a 400 (bad request) error
+        // After comparing our request (using makeRequest, fetch or makeJsonEncodedRequest) to the desktop request (using AJAX)
+        // The only difference we could find is that the desktop request is sent via AJAX and therefor includes the header X-Requested-With: XMLHttpRequest
         window.Progressive.$.ajax({
             url: 'https://www.merlinspotions.com/customer/ajax/login',
             data: JSON.stringify({username, password, context: 'checkout'}),
