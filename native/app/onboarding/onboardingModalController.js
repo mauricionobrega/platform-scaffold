@@ -1,4 +1,3 @@
-/* eslint-disable */
 import Promise from 'bluebird'
 import Astro from 'progressive-app-sdk/astro-full'
 import ModalViewPlugin from 'progressive-app-sdk/plugins/modalViewPlugin'
@@ -50,7 +49,8 @@ OnboardingModalController.init = async function() {
     })
 
     Astro.registerRpcMethod(AppRpc.names.pushEnable, [], () => {
-        pushController.subscribeTest()
+        console.log('enable push')
+        console.log(pushController.subscribeTest())
     })
 
     return onboardingModalController
