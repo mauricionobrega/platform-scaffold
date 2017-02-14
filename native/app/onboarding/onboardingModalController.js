@@ -49,7 +49,7 @@ OnboardingModalController.init = async function() {
     })
 
     Astro.registerRpcMethod(AppRpc.names.pushEnable, [], () => {
-        console.log(pushController.subscriptionStatus())
+        console.log('subscribing!')
         pushController.subscribeTest()
     })
 
