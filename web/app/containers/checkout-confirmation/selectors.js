@@ -8,3 +8,4 @@ export const getEmailAddress = createGetSelector(getCheckoutConfirmation, 'email
 export const getIsLoggedIn = createGetSelector(getCheckoutConfirmation, 'isLoggedIn')
 export const getIsModalShown = createGetSelector(getCheckoutConfirmation, 'isModalShown')
 export const getOrderNumber = createGetSelector(getCheckoutConfirmation, 'orderNumber')
+export const getOrderUrl = createGetSelector(getCheckoutConfirmation, 'orderUrl')
