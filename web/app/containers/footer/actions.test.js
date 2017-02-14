@@ -1,3 +1,4 @@
+/* eslint-env jest */
 import {signUpToNewsletter, newsletterSignupComplete} from './actions'
 import {SIGNUP_SUCCESSFUL, SIGNUP_FAILED} from './constants'
 

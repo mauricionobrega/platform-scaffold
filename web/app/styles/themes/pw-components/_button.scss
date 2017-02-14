@@ -20,10 +20,6 @@
     &:focus {
         background: rgba(255, 255, 255, 0.1);
     }
-
-    &.c--is-anchor {
-        display: inline-flex;
-    }
 }
 
 
@@ -91,9 +87,9 @@
     }
 
     &[disabled] {
-        border-color: $neutral-30;
+        border-color: $neutral-15;
 
-        color: $neutral-40;
+        color: $neutral-30;
     }
 
     .pw-button__inner {
@@ -104,9 +100,9 @@
 .pw-button.c--primary,
 .pw-button.c--secondary {
     &[disabled] {
-        background-color: $neutral-30;
+        background-color: $neutral-15;
 
-        color: $neutral-40;
+        color: $neutral-30;
     }
 }
 

@@ -1,7 +1,14 @@
-import React, {PropTypes} from 'react'
+import React from 'react'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
-const FooterSocialIcons = ({social}) => {
+const social = [
+    ['http://www.facebook.com/#TODO', 'static/svg/facebook.svg', 'Facebook'],
+    ['http://www.twitter.com/#TODO', 'static/svg/twitter.svg', 'Twitter'],
+    ['http://plus.google.com/#TODO', 'static/svg/googleplus.svg', 'Google+'],
+    ['http://www.youtube.com/#TODO', 'static/svg/youtube.svg', 'Youtube'],
+]
+
+const FooterSocialIcons = () => {
     return (
         <div className="t-footer__social u-padding-md">
             <div className="u-flexbox u-justify-center u-padding-md">
@@ -13,10 +20,6 @@ const FooterSocialIcons = ({social}) => {
             </div>
         </div>
     )
-}
-
-FooterSocialIcons.propTypes = {
-    social: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
 }
 
 export default FooterSocialIcons
