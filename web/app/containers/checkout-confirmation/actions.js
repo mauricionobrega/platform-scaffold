@@ -4,6 +4,7 @@ import {createAction, makeRequest, makeFormEncodedRequest} from '../../utils/uti
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import {addNotification, removeAllNotifications} from '../app/actions'
 import {openModal} from '../../store/modals/actions'
+import customerAddressParser from './parsers/customer-address'
 
 export const receiveContents = createAction('Received CheckoutConfirmation Contents')
 export const showSuccessModal = createAction('Showing Success modal')
@@ -27,42 +28,84 @@ export const fetchContents = () => {
     }
 }
 
+export const updateShippingAndBilling = (parsedFormData) => {
+    return (dispatch, getState) => {
+        console.log('Updating Shipping/Billing!!!!')
+        console.log('getState', getState())
+
+        const formCredentials = {
+            // Details
+            company: 'I AM COMPANY',
+            telephone: '111-222-3333',
+            fax: '999-888-7777',
+
+            // Shipping/Billing
+            'street[]': 'street address',
+            city: 'Vancouver',
+            region_id: '',
+            region: 'BC',
+            postcode: 'V5V 5V5',
+            country_id: 'CA',
+
+            // other form settings
+            default_billing: 1,
+            default_shipping: 1,
+            success_url: '',
+            error_url: '',
+
+            // Parsed Form Data
+            ...parsedFormData
+        }
+
+        console.log('formCredentials', formCredentials)
+
+        const postUpdateCustomerAddressURL = 'https://www.merlinspotions.com/customer/address/formPost/'
+        // const requestOptions = {
+        //     method: 'POST',
+        //     headers: new Headers({'content-type': 'multipart/form-data'})
+        // }
+        const requestOptions = {
+            method: 'POST',
+            headers: {'content-type': 'multipart/form-data'}
+        }
+
+        makeFormEncodedRequest(postUpdateCustomerAddressURL, formCredentials, requestOptions)
+            .then((response) => {
+                console.log('response for updating customer address', new FormData(response))
+            })
+    }
+}
+
+export const initiateShippingAndBillingUpdate = () => {
+    return (dispatch) => {
+        // Grab required form data in prep for updating shipping/billing information
+        const editCustomerAddressURL = 'https://www.merlinspotions.com/customer/address/edit/'
+        makeRequest(editCustomerAddressURL)
+            .then(jqueryResponse)
+            .then((res) => {
+                const [$, $response] = res // eslint-disable-line no-unused-vars
+                const parsedFormData = customerAddressParser($, $response)
+                dispatch(updateShippingAndBilling(parsedFormData))
+            })
+    }
+}
+
 export const submitRegisterForm = () => {
     return (dispatch, getState) => {
         dispatch(removeAllNotifications())
 
         // ....TOP....
         console.log('getState', getState())
-        const uuid = 9
+
+        // UUID (temporary for debugging)
+        const uuid = Date.now()
+
         const userCredentials = {
             firstname: `test-firstname-${uuid}`,
             lastname: `test-lastname-${uuid}`,
             email: `mobifyqa+test-email-${uuid}@gmail.com`,
-            is_subscribed: 0,
             password: '1234qwer',
             password_confirmation: '1234qwer',
-
-            // Details
-            // ---
-            company: 'Mobify',
-            telephone: '123-123-1234',
-            fax: '987-987-9876',
-
-            // Shipping Address
-            // ---
-            'street[]': '',
-            city: 'Vancouver',
-            region: 'Canada',
-            postcode: 'V5V 5V5',
-            country_id: 'CA',
-
-            // Billing Address
-            // ---
-            // 'street[]': '',
-            // city: 'Vancouver',
-            // region: 'Canada',
-            // postcode: 'V5V 5V5',
-            // country_id: 'CA',
         }
 
         const postCreateAccountURL = 'https://www.merlinspotions.com/customer/account/createpost/'
@@ -75,6 +118,7 @@ export const submitRegisterForm = () => {
 
                 if (response.redirected && isNotRedirectedToCreate) {
                     dispatch(openModal(CHECKOUT_CONFIRMATION_MODAL))
+                    dispatch(initiateShippingAndBillingUpdate())
                     dispatch(hideRegistrationForm())
                 } else {
                     dispatch(addNotification({
