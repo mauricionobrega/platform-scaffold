@@ -4,7 +4,7 @@ export const normalizePhone = (value, previousValue) => {
         return value
     }
 
-    const onlyNums = value.replace(/\D/g, '')
+    const onlyNums = value.replace(/^1|\D/g, '')
 
     const areaCode = onlyNums.slice(0, 3)
     const exchange = onlyNums.slice(3, 6)
