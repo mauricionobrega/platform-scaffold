@@ -16,11 +16,12 @@ import AppProvider from './app-provider'
 // added to the markup in `loader.js`
 import Stylesheet from './stylesheet.scss' // eslint-disable-line no-unused-vars
 
-import {initMobifyAnalytics} from 'progressive-web-sdk/dist/analytics'
+import {analyticsInitializer} from './utils/analytics-manager'
+import * as ClientGA from './utils/analytics/client-ga'
 
 polyfill()
 
-initMobifyAnalytics(AJS_SLUG) // eslint-disable-line no-undef
+analyticsInitializer(ClientGA)
 initCacheManifest(cacheHashManifest)
 
 const store = configureStore()

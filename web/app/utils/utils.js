@@ -1,5 +1,6 @@
 import {createAction as createReduxAction} from 'redux-actions'
 import fromPairs from 'lodash.frompairs'
+import isFunction from 'lodash.isfunction'
 import {makeRequest, makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 
 // Re-export the SDK utilities for now
@@ -9,11 +10,24 @@ export {makeRequest, makeFormEncodedRequest}
 // usage: createAction('Update Campaign', 'id', 'update')
 // instead of: createAction('Update Campaign', (id, update) => ({id, update}))
 export const createAction = (description, ...argNames) => {
+    let payloadCreator
+    let metaCreator
+  
+    if (argNames.length > 4 && isFunction(argNames[argNames.length - 2])) {
+        payloadCreator = argNames[argNames.length - 2]
+        metaCreator = argNames[argNames.length - 1]
+    }
+
     return createReduxAction(
         description,
-        argNames.length ?
-            (...args) => fromPairs(argNames.map((arg, idx) => [arg, args[idx]]))
-            : null
+        argNames.length ? (
+                payloadCreator ? 
+                    payloadCreator
+                    :
+                    (...args) => fromPairs(argNames.map((arg, idx) => [arg, args[idx]]))
+            )
+            : null,
+        metaCreator ? metaCreator : null
     )
 }
 

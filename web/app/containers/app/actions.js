@@ -23,7 +23,17 @@ export const removeAllNotifications = utils.createAction('Remove All Notificatio
  * @param {string} pageComponent - the component of the entered route
  * @param {string} currentURL - what's currently shown in the address bar
  */
-export const onRouteChanged = utils.createAction('On route changed', 'currentURL', 'pageComponent')
+export const onRouteChanged = utils.createAction('On route changed', 'currentURL', 'pageComponent', 'routeName',
+    (currentURL, pageComponent, routeName) => ({currentURL, pageComponent}),
+    (currentURL, pageComponent, routeName) => ({
+        analytics: {
+            type: 'Pageview',
+            payload:{
+                name: routeName
+            }
+        }
+    })
+)
 
 /**
  * Action dispatched when content for a global page render is ready.

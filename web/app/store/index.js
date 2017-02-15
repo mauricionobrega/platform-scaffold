@@ -9,7 +9,10 @@ import productReducer from './products/reducer'
 import {reducer as formReducer} from 'redux-form'
 
 import analytics from 'redux-analytics'
-import analyticsDistributor from '../utils/analytics-distributor'
+import {analyticsDistributor} from '../utils/analytics-manager'
+
+// import createLogger from 'redux-logger'
+// const logger = createLogger()
 
 const noop = (f) => f
 
