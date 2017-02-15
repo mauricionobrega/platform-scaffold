@@ -4,7 +4,7 @@ import {isURL} from 'validator'
 import registrationParser from './register'
 
 describe('the Registration parser', () => {
-    const $content = jquerifyHtmlFile('app/store/login/parsers/register-example.html')
+    const $content = jquerifyHtmlFile('app/containers/login/parsers/register-example.html')
     const parsedContent = registrationParser($, $content)
 
     const headings = ['Personal Information', 'Sign-in Information']

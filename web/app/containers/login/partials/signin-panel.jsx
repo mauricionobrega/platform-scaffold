@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react'
 import {createStructuredSelector} from 'reselect'
 import {connect} from 'react-redux'
-import * as selectors from '../../../store/login/selectors'
-import * as actions from '../../../store/login/actions'
+import * as selectors from '../selectors'
+import * as actions from '../actions'
 
 import SignInForm from './signin-form'
 import {PanelHeading, PanelDescription, PanelRequiredText} from './common'

@@ -9,8 +9,8 @@ import RegisterPanel from './partials/register-panel'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import {Tabs, TabsPanel} from 'progressive-web-sdk/dist/components/tabs'
 
-import * as actions from '../../store/login/actions'
-import * as selectors from '../../store/login/selectors'
+import * as actions from './actions'
+import * as selectors from './selectors'
 import {SIGN_IN_SECTION, REGISTER_SECTION, SECTION_NAMES, INDEX_FOR_SECTION, SECTION_FOR_INDEX} from './constants'
 
 const LoginTitle = ({title}) => {

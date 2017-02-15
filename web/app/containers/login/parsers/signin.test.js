@@ -4,7 +4,7 @@ import {isURL} from 'validator'
 import loginParser from './signin'
 
 describe('the Login parser', () => {
-    const $content = jquerifyHtmlFile('app/store/login/parsers/signin-example.html')
+    const $content = jquerifyHtmlFile('app/containers/login/parsers/signin-example.html')
     const parsedContent = loginParser($, $content)
 
     test('extracts the title from the page', () => {

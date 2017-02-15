@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import {handleActions} from 'redux-actions'
 import {mergePayloadForActions} from '../../utils/reducer-utils'
-import {receiveData} from '../../store/login/actions'
+import {receiveData} from './actions'
 
 const signinFields = [
     {
