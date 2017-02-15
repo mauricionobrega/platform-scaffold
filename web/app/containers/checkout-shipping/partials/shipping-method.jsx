@@ -5,7 +5,8 @@ import {selectorToJS} from '../../../utils/selector-utils'
 import * as ReduxForm from 'redux-form'
 
 import {fetchShippingMethods} from '../actions'
-import {getShippingMethods, getCustomerEntityID} from '../selectors'
+import {getShippingMethods} from '../selectors'
+import {getCustomerEntityID} from '../../../store/checkout/selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
