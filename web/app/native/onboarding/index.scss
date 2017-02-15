@@ -10,11 +10,10 @@ body,
 
 * {
     user-select: none;
-    -webkit-touch-callout: none;
+    -webkit-touch-callout: none; // sass-lint:disable-line no-misspelled-properties
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-
 }
 
 body {
