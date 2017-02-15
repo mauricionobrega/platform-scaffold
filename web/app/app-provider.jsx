@@ -72,7 +72,6 @@ const AppProvider = ({store}) => {
         if (urlHasChanged) {
             if (isCoordinatingWithNativeApp) {
                 pwaNavigate(nextURL).then(() => {
-                    console.log('Finishing up here')
                     callback()
                     triggerChange()
                     store.dispatch(appActions.removeAllNotifications())
