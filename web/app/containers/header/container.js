@@ -80,14 +80,13 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
+    isCollapsed: PropTypes.bool,
     /**
      * Defines whether we're being hosted in an Astro app
      */
     isRunningInAstro: PropTypes.bool,
-    isCollapsed: PropTypes.bool,
     itemCount: PropTypes.number,
     toggleHeader: PropTypes.func,
-
     onMenuClick: PropTypes.func,
     onMiniCartClick: PropTypes.func
 }
