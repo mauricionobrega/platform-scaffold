@@ -14,8 +14,8 @@ afterAll(() => {
 
 jest.mock('progressive-web-sdk/dist/jquery-response')
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
-jest.mock('./checkout-confirmation-parser')
-import checkoutConfirmationParser from './checkout-confirmation-parser'
+jest.mock('./parsers/checkout-confirmation')
+import checkoutConfirmationParser from './parsers/checkout-confirmation'
 
 test('fetchContents dispatches receiveResponse, which dispatches receiveContents', () => {
     global.fetch.mockClear()

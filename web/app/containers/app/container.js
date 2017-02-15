@@ -66,7 +66,7 @@ class App extends React.Component {
 
                 <div id="app-wrap" className="t-app__wrapper u-flexbox u-direction-column">
                     <div id="app-header" className="u-flex-none" role="banner">
-                        <CurrentHeader />
+                        <CurrentHeader headerHasSignIn={currentTemplateProps.route.headerHasSignIn} />
 
                         {notifications &&
                             <NotificationManager

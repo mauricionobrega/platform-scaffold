@@ -7,7 +7,7 @@ import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 
 const CheckoutConfirmationForm = (props) => {
     const {
-        handleSubmit,
+        handleSubmit, // @TODO: How are actions handled???
         // disabled,
         // submitting
     } = props

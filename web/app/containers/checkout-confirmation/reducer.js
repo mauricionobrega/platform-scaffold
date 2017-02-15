@@ -5,10 +5,11 @@ import * as checkoutConfirmationActions from './actions'
 const initialState = Immutable.fromJS({
     body: '',
     contentsLoaded: true,
-    emailAddress: 'mlenton@mobify.com',
+    emailAddress: '',
     isLoggedIn: true,
     isModalShown: false,
-    orderNumber: '000000005',
+    orderNumber: '',
+    orderUrl: ''
 })
 
 export default handleActions({
