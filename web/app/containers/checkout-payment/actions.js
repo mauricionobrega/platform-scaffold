@@ -68,18 +68,17 @@ export const submitPayment = () => {
             email: 'mobifyqa@gmail.com',
             paymentMethod: {
                 additional_data: null,
-                method: "checkmo",
+                method: 'checkmo',
                 po_number: null
             }
         }
         const persistPaymentURL = `https://www.merlinspotions.com/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/payment-information`
         makeJsonEncodedRequest(persistPaymentURL, paymentInformation, {method: 'POST'})
             .then((response) => response.json())
-            .then((responseJSON) => {
-                // TO DO: send response data to the next container
+            .then(
                 browserHistory.push({
                     pathname: '/checkout/confirmation/'
                 })
-            })
+            )
     }
 }
