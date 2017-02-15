@@ -7,6 +7,7 @@ const initialState = Immutable.fromJS({
     contentsLoaded: true,
     emailAddress: '',
     isLoggedIn: true,
+    isRegistrationFormHidden: false,
     isModalShown: false,
     orderNumber: '',
     orderUrl: ''
@@ -21,5 +22,8 @@ export default handleActions({
     },
     [checkoutConfirmationActions.hideModal]: (state) => {
         return state.mergeDeep({isModalShown: false})
+    },
+    [checkoutConfirmationActions.hideRegistrationForm]: (state) => {
+        return state.mergeDeep({isRegistrationFormHidden: true})
     },
 }, initialState)

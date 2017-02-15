@@ -19,10 +19,11 @@ const Checklist = ({children}) => (
 
 const CheckoutConfirmationDetails = (props) => {
     const {
-        isLoggedIn
+        isLoggedIn,
+        isRegistrationFormHidden,
     } = props
 
-    return isLoggedIn && (
+    return (isLoggedIn && !isRegistrationFormHidden) && (
         <Grid className="u-center-piece">
             <GridSpan {...GRID_SETTINGS}>
                 <div className="t-checkout-confirmation__heading u-padding-md u-padding-top-lg">
@@ -54,11 +55,13 @@ const CheckoutConfirmationDetails = (props) => {
 }
 
 CheckoutConfirmationDetails.propTypes = {
-    isLoggedIn: PropTypes.bool
+    isLoggedIn: PropTypes.bool,
+    isRegistrationFormHidden: PropTypes.bool
 }
 
 const mapStateToProps = createStructuredSelector({
-    isLoggedIn: selectors.getIsLoggedIn
+    isLoggedIn: selectors.getIsLoggedIn,
+    isRegistrationFormHidden: selectors.getIsRegistrationFormHidden
 })
 
 export default connect(mapStateToProps)(CheckoutConfirmationDetails)

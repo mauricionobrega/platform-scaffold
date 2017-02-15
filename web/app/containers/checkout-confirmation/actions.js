@@ -9,6 +9,7 @@ export const receiveContents = createAction('Received CheckoutConfirmation Conte
 export const showSuccessModal = createAction('Showing Success modal')
 export const showFailNotification = createAction('Showing fail notification')
 export const hideModal = createAction('Hiding modal')
+export const hideRegistrationForm = createAction('Hiding Registration Form (Save Your Address Details)')
 
 export const receiveResponse = (response) => {
     return (dispatch) => {
@@ -74,7 +75,7 @@ export const submitRegisterForm = () => {
 
                 if (response.redirected && isNotRedirectedToCreate) {
                     dispatch(openModal(CHECKOUT_CONFIRMATION_MODAL))
-                    // dispatch(hideRegistrationForm()) // @TODO
+                    dispatch(hideRegistrationForm())
                 } else {
                     dispatch(addNotification({
                         content: `Sorry, registration failed. The email you provided might already be in use.`,
