@@ -7,6 +7,9 @@
  */
 import parse from './parsers/parser'
 import * as utils from '../../utils/utils'
+import {addNotification, removeAllNotifications} from '../../containers/app/actions'
+
+import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 
 const baseHeaders = {
     Accept: 'application/json',
@@ -21,6 +24,7 @@ export const getCart = () => (dispatch) => {
     const opts = {
         headers: baseHeaders
     }
+    dispatch(removeAllNotifications())
     return utils.makeRequest('/customer/section/load/?sections=cart', opts)
         .then((response) => response.text())
         .then((responseText) => dispatch(receiveCartContents(parse(responseText))))
@@ -57,19 +61,28 @@ export const removeFromCart = (itemId) => {
  *
  * - Response is 200 with JSON: `{"success":true}` on success
  * - Response is 200 with JSON: `{"success":false,"error_message":"We can't find the quote item."}` if item not in cart
- * - Important: The cart contents rendered in the main HTML is *not* updated until `getCart()` has been called which
- *   busts a cache. You are expected to call `removeFromCart()` then `getCart()` every time.
  */
 export const updateItemQuantity = (itemId, itemQuantity) => {
-    const body = new FormData()
-    body.append('item_id', itemId)
-    body.append('item_qty', itemQuantity)
+    return (dispatch) => {
+        const body = `item_id=${itemId}&item_qty=${itemQuantity}`
+        const headers = {
+            ...baseHeaders,
+            'Content-Type': 'application/x-www-form-urlencoded',
+        }
 
-    const headers = Object.assign({}, baseHeaders, {
-        'Content-Type': 'application/x-www-form-urlencoded',
-    })
-
-    const opts = {headers, body, method: 'POST'}
-    return fetch('/checkout/sidebar/updateItemQty/', opts)
-        .json()
+        const opts = {headers, body, method: 'POST'}
+        return makeRequest('/checkout/sidebar/updateItemQty/', opts)
+            .then((response) => response.json())
+            .then((responseJSON) => {
+                // if (responseJSON.success) {
+                //     dispatch(getCart())
+                // } else {
+                    dispatch(addNotification({
+                        content: `Unable to update Quantity`,
+                        id: 'cartQtyError',
+                        showRemoveButton: true
+                    }))
+                // }
+            })
+    }
 }
