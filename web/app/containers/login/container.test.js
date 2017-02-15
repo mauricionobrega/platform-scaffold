@@ -5,7 +5,7 @@ import React from 'react'
 import {RawLogin as Login} from './container'
 
 describe('The Login', () => {
-    test('Should not render tabs at all if running in an Astro app', () => {
+    test('Should render tab if not running in Astro', () => {
         const route = {
             route: 'register'
         }

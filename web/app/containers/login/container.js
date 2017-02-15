@@ -8,7 +8,6 @@ import RegisterPanel from './partials/register-panel'
 
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import {Tabs, TabsPanel} from 'progressive-web-sdk/dist/components/tabs'
-import {isRunningInAstro} from '../../utils/astro-integration'
 
 import * as actions from './actions'
 import * as selectors from './selectors'
@@ -52,6 +51,7 @@ class Login extends React.Component {
     render() {
         const {
             title,
+            isRunningInAstro,
             route: {
                 routeName
             },
@@ -91,7 +91,8 @@ class Login extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-    title: selectors.getLoginTitle
+    title: selectors.getLoginTitle,
+    isRunningInAstro: selectors.getIsRunningInAstro
 })
 
 const mapDispatchToProps = {
@@ -99,6 +100,7 @@ const mapDispatchToProps = {
 }
 
 Login.propTypes = {
+    isRunningInAstro: PropTypes.bool,
     navigateToSection: PropTypes.func,
     route: PropTypes.object,
     router: PropTypes.object,
