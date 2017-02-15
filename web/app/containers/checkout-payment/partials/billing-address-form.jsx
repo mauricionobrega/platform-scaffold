@@ -72,7 +72,7 @@ class BillingAddressForm extends React.Component {
                     <FieldRow className="u-padding-md">
                         <ReduxForm.Field
                             component={Field}
-                            name="same-address"
+                            name="same_address"
                             label={<strong className="u-text-semi-bold">Same as shipping address</strong>}
                             caption={shippingAddress}
                         >

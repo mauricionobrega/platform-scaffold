@@ -1,10 +1,13 @@
 import {browserHistory} from 'react-router'
 import {createAction, makeRequest} from '../../utils/utils'
+import {selectorToJS} from '../../utils/selector-utils'
+
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import checkoutPaymentParser from './checkout-payment-parser'
 
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 
+import {getShippingAddress, getShippingFirstName} from '../../store/checkout/shipping/selectors'
 import {getPaymentBillingFormValues} from '../../store/form/selectors'
 import {getCustomerEntityID} from './selectors'
 import {getIsLoggedIn} from '../app/selectors'
@@ -35,7 +38,10 @@ export const fetchContents = () => {
 export const submitPayment = () => {
     return (dispatch, getState) => {
         const currentState = getState()
+        const entityID = getCustomerEntityID(currentState)
+        const isLoggedIn = getIsLoggedIn(currentState)
         const {
+            same_address,
             name,
             company,
             addressLine1,
@@ -45,20 +51,27 @@ export const submitPayment = () => {
             region_id,
             postcode,
         } = getPaymentBillingFormValues(currentState)
-        const entityID = getCustomerEntityID(currentState)
-        const isLoggedIn = getIsLoggedIn(currentState)
-        const names = name.split(' ')
-        const addressData = {
-            firstname: names.slice(0, -1).join(' '),
-            lastname: names.slice(-1).join(' '),
-            company: company || '',
-            postcode,
-            city,
-            street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1],
-            regionId: region_id,
-            countryId: country_id,
-            saveInAddressBook: false
+
+        let addressData = {}
+
+        if (same_address) {
+            addressData = getShippingAddress(currentState).toJS()
+        } else {
+            const names = name.split(' ')
+
+            addressData = {
+                firstname: names.slice(0, -1).join(' '),
+                lastname: names.slice(-1).join(' '),
+                company: company || '',
+                postcode,
+                city,
+                street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1],
+                regionId: region_id,
+                countryId: country_id,
+                saveInAddressBook: false
+            }
         }
+
         const paymentInformation = {
             billingAddress: {
                 ...addressData

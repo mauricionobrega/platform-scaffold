@@ -59,7 +59,7 @@ const mapDispatchToProps = {
 }
 
 const CheckoutPaymentReduxForm = ReduxForm.reduxForm({
-    form: 'paymentForm',
+    form: 'paymentForm'
 })(CheckoutPaymentForm)
 
 export default connect(
