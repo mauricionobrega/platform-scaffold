@@ -20,7 +20,7 @@ const PDP = () => {
             <PDPCarousel />
             <PDPDescription />
             <PDPAddToCart />
-            <PDPItemAddedModal coverage={coverage}/>
+            <PDPItemAddedModal coverage={coverage} />
         </div>
     )
 }
