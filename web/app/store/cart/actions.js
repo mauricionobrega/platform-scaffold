@@ -74,15 +74,15 @@ export const updateItemQuantity = (itemId, itemQuantity) => {
         return makeRequest('/checkout/sidebar/updateItemQty/', opts)
             .then((response) => response.json())
             .then((responseJSON) => {
-                // if (responseJSON.success) {
-                //     dispatch(getCart())
-                // } else {
+                if (responseJSON.success) {
+                    dispatch(getCart())
+                } else {
                     dispatch(addNotification({
                         content: `Unable to update Quantity`,
                         id: 'cartQtyError',
                         showRemoveButton: true
                     }))
-                // }
+                }
             })
     }
 }
