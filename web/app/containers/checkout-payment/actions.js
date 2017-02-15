@@ -1,6 +1,5 @@
 import {browserHistory} from 'react-router'
 import {createAction, makeRequest} from '../../utils/utils'
-import {selectorToJS} from '../../utils/selector-utils'
 
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import checkoutPaymentParser from './checkout-payment-parser'
@@ -77,7 +76,7 @@ export const submitPayment = () => {
                 ...addressData
             },
             cartId: entityID,
-            // TODO: Use selector to get email data
+            // TODO: Obtain email from shipping step
             email: 'mobifyqa@gmail.com',
             paymentMethod: {
                 additional_data: null,
@@ -89,9 +88,14 @@ export const submitPayment = () => {
         makeJsonEncodedRequest(persistPaymentURL, paymentInformation, {method: 'POST'})
             .then((response) => response.json())
             .then((responseJSON) => {
-                browserHistory.push({
-                    pathname: '/checkout/confirmation/'
-                })
+                // Looks like when it is successful, the responseJSON is a number
+                if (/^\d+$/.test(responseJSON)) {
+                    browserHistory.push({
+                        pathname: '/checkout/confirmation/'
+                    })
+                } else {
+                    console.error(responseJSON.message)
+                }
             })
     }
 }
