@@ -7,6 +7,7 @@ import {selectorToJS} from '../../../utils/selector-utils'
 // Selectors
 import * as selectors from '../selectors'
 import {getCountries, getRegions} from '../../../store/checkout/locations/selectors'
+import {getShippingFullName, getStreetLineOne, getCity, getPostcode} from '../../../store/checkout/shipping/selectors'
 
 // Actions
 import * as checkoutPaymentActions from '../actions'
@@ -36,16 +37,20 @@ class BillingAddressForm extends React.Component {
 
     render() {
         const {
+            city,
             countries,
             isCompanyOrAptShown,
+            name,
             newShippingAddressIsEnabled,
-            regions
+            postcode,
+            regions,
+            street
         } = this.props
 
         const shippingAddress = (
             <div>
-                <p>720 W Georgia, Vancouver, V4R5TS</p>
-                <p>Name: John Appleseed</p>
+                <p>{street}, {city}, {postcode}</p>
+                <p>Name: {name}</p>
             </div>
         )
 
@@ -76,7 +81,7 @@ class BillingAddressForm extends React.Component {
                             label={<strong className="u-text-semi-bold">Same as shipping address</strong>}
                             caption={shippingAddress}
                         >
-                            <input type="checkbox" defaultChecked onChange={this.handleSavedAddress} noValidate />
+                            <input type="checkbox" defaultChecked={!newShippingAddressIsEnabled} onChange={this.handleSavedAddress} noValidate />
                         </ReduxForm.Field>
                     </FieldRow>
 
@@ -157,6 +162,11 @@ class BillingAddressForm extends React.Component {
 
 BillingAddressForm.propTypes = {
     /**
+    * City of saved shipping address
+    */
+    city: PropTypes.string,
+
+    /**
     * Countries available to ship to
     */
     countries: PropTypes.arrayOf(PropTypes.shape({
@@ -175,9 +185,19 @@ BillingAddressForm.propTypes = {
     isCompanyOrAptShown: PropTypes.bool,
 
     /**
+    * Name of saved shipping address
+    */
+    name: PropTypes.string,
+
+    /**
      * Whether the new address fields display
      */
     newShippingAddressIsEnabled: PropTypes.bool,
+
+    /**
+    * Postcode of saved shipping address
+    */
+    postcode: PropTypes.string,
 
     /**
     * Regions available to ship to
@@ -190,16 +210,25 @@ BillingAddressForm.propTypes = {
     })),
 
     /**
+    * Street of saved shipping address
+    */
+    street: PropTypes.string,
+
+    /**
      * Toggle new address fields
      */
     toggleNewAddressFields: PropTypes.func,
 }
 
 const mapStateToProps = createStructuredSelector({
+    city: getCity,
     countries: selectorToJS(getCountries),
     isCompanyOrAptShown: selectors.getIsCompanyOrAptShown,
+    name: getShippingFullName,
     newShippingAddressIsEnabled: selectors.getNewShippingAddressIsEnabled,
-    regions: selectorToJS(getRegions)
+    postcode: getPostcode,
+    regions: selectorToJS(getRegions),
+    street: getStreetLineOne,
 })
 
 const mapDispatchToProps = {
