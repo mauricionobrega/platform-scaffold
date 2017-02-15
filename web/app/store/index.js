@@ -28,7 +28,7 @@ const reducer = combineReducers({
 const configureStore = (initialState) => {
     const middlewares = [
         thunk,
-        analytics(({type, payload}, state) => analyticsDistributor(type, {...state, ...payload}))
+        analytics(({type, payload}, state) => analyticsDistributor(type, payload, state))
     ]
 
     const store = createStore(

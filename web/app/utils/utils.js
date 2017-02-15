@@ -1,6 +1,5 @@
 import {createAction as createReduxAction} from 'redux-actions'
 import fromPairs from 'lodash.frompairs'
-import isFunction from 'lodash.isfunction'
 import {makeRequest, makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 
 // Re-export the SDK utilities for now
@@ -10,22 +9,58 @@ export {makeRequest, makeFormEncodedRequest}
 // usage: createAction('Update Campaign', 'id', 'update')
 // instead of: createAction('Update Campaign', (id, update) => ({id, update}))
 export const createAction = (description, ...argNames) => {
-    let payloadCreator
-    let metaCreator
-  
-    if (argNames.length > 4 && isFunction(argNames[argNames.length - 2])) {
-        payloadCreator = argNames[argNames.length - 2]
-        metaCreator = argNames[argNames.length - 1]
-    }
-
     return createReduxAction(
         description,
-        argNames.length ? (
-                payloadCreator ? 
-                    payloadCreator
-                    :
-                    (...args) => fromPairs(argNames.map((arg, idx) => [arg, args[idx]]))
-            )
+        argNames.length ?
+            (...args) => fromPairs(argNames.map((arg, idx) => [arg, args[idx]]))
+            : null
+    )
+}
+
+export const analyticMetaPayloadCreator = (type, payload) => ({
+    analytics: {
+        type,
+        payload
+    }
+})
+
+/**
+ * createActionWithMeta - creates action with meta
+ *
+ * Usage:
+ *
+ * = Creating the action =
+ * export const actionVariable = createActionWithMeta('Action name',
+ *      ['parameter1', 'parameter2'],                           // The parameter name to map to payload
+ *      (parameter1, parameter2, parameter3) => (parameter3)    // The meta payload creator - this tells the action which parameter to use for meta payload
+ * )
+ *
+ * = Dispatching the action =
+ * dispatch(actionVariable('abc', 'def', {
+ *      analytics: {                            // Define meta payload here: It must be in FSA standard
+ *          type: 'Pageview',
+ *          payload: {
+ *              name: 'PLP'
+ *          }
+ *      }
+ * }))
+ *
+ * = Using convient meta payload creator for analytic =
+ * dispatch(actionVariable('abc', 'def', analyticMetaPayloadCreator('Pageview', {
+ *      name: 'PLP'
+ * })
+ *
+ * Note: The intention of this function is to replace createAction utilty function defined above
+ *
+ * @description {string} - a unique name for the action
+ * @argNamesPayloadAry {array} - an array of strings that identifies each parameter
+ * @metaCreator {function} (optional) - a function that maps the recieved parameters to meta payload
+ */
+export const createActionWithMeta = (description, argNamesPayloadAry, metaCreator) => {
+    return createReduxAction(
+        description,
+        argNamesPayloadAry.length ?
+            (...args) => fromPairs(argNamesPayloadAry.slice(0, argNamesPayloadAry.length).map((arg, idx) => [arg, args[idx]]))
             : null,
         metaCreator ? metaCreator : null
     )
