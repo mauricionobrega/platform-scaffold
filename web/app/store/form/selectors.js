@@ -5,6 +5,6 @@ export const getShippingForm = createSelector(getForm, (form) => form.shippingFo
 
 export const getShippingFormValues = createSelector(getShippingForm, (shippingForm) => shippingForm.values)
 
-export const getPaymentBillingForm = createSelector(getForm, (form) => form.paymentBillingAddressForm)
+export const getPaymentBillingForm = createSelector(getForm, (form) => form.paymentForm)
 
-export const getPaymentBillingFormValues = createSelector(getPaymentBillingForm, (paymentBillingAddressForm) => paymentBillingAddressForm.values)
+export const getPaymentBillingFormValues = createSelector(getPaymentBillingForm, (paymentForm) => paymentForm.values)

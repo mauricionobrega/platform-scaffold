@@ -83,7 +83,7 @@ class BillingAddressForm extends React.Component {
                     {newShippingAddressIsEnabled &&
                         <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg u-border-light-top">
                             <FieldRow>
-                                <ReduxForm.Field component={Field} name="fullName" label="Full name">
+                                <ReduxForm.Field component={Field} name="name" label="Full name">
                                     <input type="text" noValidate />
                                 </ReduxForm.Field>
                             </FieldRow>
@@ -91,7 +91,7 @@ class BillingAddressForm extends React.Component {
                             <FieldRow>
                                 <ReduxForm.Field
                                     component={Field}
-                                    name="address"
+                                    name="addressLine1"
                                     label="Address"
                                     caption={!isCompanyOrAptShown && addDetails}
                                 >
@@ -103,7 +103,7 @@ class BillingAddressForm extends React.Component {
                                 <FieldRow>
                                     <ReduxForm.Field
                                         component={Field}
-                                        name="organization"
+                                        name="company"
                                         label="Company"
                                     >
                                         <input type="text" noValidate placeholder="Optional" />
@@ -111,7 +111,7 @@ class BillingAddressForm extends React.Component {
 
                                     <ReduxForm.Field
                                         component={Field}
-                                        name="address-line2"
+                                        name="addressLine2"
                                         label="Apt #, suite etc."
                                     >
                                         <input type="text" noValidate placeholder="Optional" />
@@ -134,7 +134,7 @@ class BillingAddressForm extends React.Component {
                             </FieldRow>
 
                             <FieldRow>
-                                <ReduxForm.Field component={Field} name="zip" label="Zip/Postal code">
+                                <ReduxForm.Field component={Field} name="postcode" label="Zip/Postal code">
                                     {/* @TODO: Set Type to text or tel based on country! */}
                                     <input type="text" noValidate />
                                 </ReduxForm.Field>
@@ -195,10 +195,6 @@ BillingAddressForm.propTypes = {
     toggleNewAddressFields: PropTypes.func,
 }
 
-const BillingAddressReduxForm = ReduxForm.reduxForm({
-    form: 'paymentBillingAddressForm'
-})(BillingAddressForm)
-
 const mapStateToProps = createStructuredSelector({
     countries: selectorToJS(getCountries),
     isCompanyOrAptShown: selectors.getIsCompanyOrAptShown,
@@ -214,4 +210,4 @@ const mapDispatchToProps = {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(BillingAddressReduxForm)
+)(BillingAddressForm)

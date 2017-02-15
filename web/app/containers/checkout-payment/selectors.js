@@ -15,3 +15,5 @@ export const getIsCompanyOrAptShown = createGetSelector(getCheckoutPayment, 'isC
 export const getNewShippingAddressIsEnabled = createGetSelector(getCheckoutPayment, 'newShippingAddressIsEnabled')
 
 export const getCvvType = createGetSelector(getCheckoutPayment, 'cvvType')
+
+export const getCustomerEntityID = createGetSelector(getCheckoutPayment, 'customerEntityID')

@@ -1,6 +1,9 @@
+import {browserHistory} from 'react-router'
 import {createAction, makeRequest} from '../../utils/utils'
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import checkoutPaymentParser from './checkout-payment-parser'
+
+import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 
 import {getPaymentBillingFormValues} from '../../store/form/selectors'
 import {getCustomerEntityID} from './selectors'
@@ -41,47 +44,42 @@ export const submitPayment = () => {
             city,
             region_id,
             postcode,
-            // telephone,
-            // shipping_method
         } = getPaymentBillingFormValues(currentState)
         const entityID = getCustomerEntityID(currentState)
         const isLoggedIn = getIsLoggedIn(currentState)
         const names = name.split(' ')
-        // const shippingSelections = shipping_method.split('_')
         const addressData = {
             firstname: names.slice(0, -1).join(' '),
             lastname: names.slice(-1).join(' '),
             company: company || '',
-            // telephone,
             postcode,
             city,
             street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1],
             regionId: region_id,
             countryId: country_id,
-            save_in_address_book: true
+            saveInAddressBook: false
         }
         const paymentInformation = {
             billingAddress: {
                 ...addressData
             },
             cartId: entityID,
-            email: ,
+            // TODO: Use selector to get email data
+            email: 'mobifyqa@gmail.com',
             paymentMethod: {
                 additional_data: null,
                 method: "checkmo",
                 po_number: null
             }
         }
-        const persistShippingURL = `https://www.merlinspotions.com/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/shipping-information`
-        makeJsonEncodedRequest(persistShippingURL, paymentInformation, {method: 'POST'})
+        const persistPaymentURL = `https://www.merlinspotions.com/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/payment-information`
+        makeJsonEncodedRequest(persistPaymentURL, paymentInformation, {method: 'POST'})
             .then((response) => response.json())
             .then((responseJSON) => {
-                if (responseJSON.payment_methods) {
-                    // TO DO: send response data to the next container
-                    browserHistory.push({
-                        pathname: '/checkout/confirmation/'
-                    })
-                }
+                // TO DO: send response data to the next container
+                browserHistory.push({
+                    pathname: '/checkout/confirmation/'
+                })
             })
     }
 }
