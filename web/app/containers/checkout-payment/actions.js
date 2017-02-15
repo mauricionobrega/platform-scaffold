@@ -7,9 +7,9 @@ import checkoutPaymentParser from './checkout-payment-parser'
 
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 
-import {getShippingAddress, getShippingFirstName} from '../../store/checkout/shipping/selectors'
 import {getPaymentBillingFormValues} from '../../store/form/selectors'
-import {getCustomerEntityID} from './selectors'
+import {getCustomerEntityID} from '../../store/checkout/selectors'
+import {getShippingAddress} from '../../store/checkout/shipping/selectors'
 import {getIsLoggedIn} from '../app/selectors'
 
 export const receiveContents = createAction('Received CheckoutPayment Contents')
@@ -88,10 +88,10 @@ export const submitPayment = () => {
         const persistPaymentURL = `https://www.merlinspotions.com/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/payment-information`
         makeJsonEncodedRequest(persistPaymentURL, paymentInformation, {method: 'POST'})
             .then((response) => response.json())
-            .then(
+            .then((responseJSON) => {
                 browserHistory.push({
                     pathname: '/checkout/confirmation/'
                 })
-            )
+            })
     }
 }
