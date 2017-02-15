@@ -2,10 +2,15 @@ import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import * as utils from '../../utils/utils'
 import * as selectors from './selectors'
 
+import appParser from './app-parser'
+
+import CheckoutShipping from '../checkout-shipping/container'
 import Home from '../home/container'
 import Login from '../login/container'
 import PDP from '../pdp/container'
 import PLP from '../plp/container'
+import * as checkoutActions from '../../store/checkout/actions'
+import * as checkoutShippingActions from '../checkout-shipping/actions'
 import * as homeActions from '../home/actions'
 import * as loginActions from '../login/actions'
 import * as pdpActions from '../pdp/actions'
@@ -45,6 +50,11 @@ export const onPageReceived = utils.createAction('On page received',
     'routeName'
 )
 
+export const receiveData = utils.createAction('Receive App Data')
+export const process = ({payload: {$response}}) => {
+    return receiveData(appParser($response))
+}
+
 /**
  * Fetch the content for a 'global' page render. This should be driven
  * by react-router, ideally.
@@ -57,6 +67,7 @@ export const fetchPage = (url, pageComponent, routeName) => {
                 const [$, $response] = res
                 const currentURL = selectors.getCurrentUrl(getState())
                 const receivedAction = onPageReceived($, $response, url, currentURL, routeName)
+                dispatch(process(receivedAction))
                 if (pageComponent === Home) {
                     dispatch(homeActions.process(receivedAction))
                 } else if (pageComponent === Login) {
@@ -67,6 +78,10 @@ export const fetchPage = (url, pageComponent, routeName) => {
                 } else if (pageComponent === PLP) {
                     dispatch(categoriesActions.process(receivedAction))
                     dispatch(productsActions.processPlp(receivedAction))
+                } else if (pageComponent === CheckoutShipping) {
+                    dispatch(checkoutShippingActions.process(receivedAction))
+                    dispatch(checkoutActions.processCheckoutData(receivedAction))
+                    dispatch(checkoutShippingActions.fetchShippingMethods())
                 }
                 dispatch(footerActions.process(receivedAction))
                 dispatch(navigationActions.process(receivedAction))
