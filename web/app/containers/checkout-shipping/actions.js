@@ -4,10 +4,10 @@ import CheckoutShipping from './container'
 import checkoutShippingParser from './parsers/checkout-shipping'
 import shippingMethodParser from './parsers/shipping-method'
 import {addNotification, fetchPage, removeAllNotifications, removeNotification} from '../app/actions'
-import {getCustomerEntityID} from './selectors'
+import {getCustomerEntityID} from '../../store/checkout/selectors'
 import {getIsLoggedIn} from '../app/selectors'
 import {getShippingFormValues} from '../../store/form/selectors'
-import {receiveShippingMethodInitialValues} from '../../store/checkout/actions'
+import {receiveShippingMethodInitialValues, receiveCheckoutData} from '../../store/checkout/actions'
 
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 
@@ -130,7 +130,7 @@ export const submitShipping = () => {
         const isLoggedIn = getIsLoggedIn(currentState)
         const names = name.split(' ')
         const shippingSelections = shipping_method.split('_')
-        const addressData = {
+        const address = {
             firstname: names.slice(0, -1).join(' '),
             lastname: names.slice(-1).join(' '),
             company: company || '',
@@ -144,9 +144,9 @@ export const submitShipping = () => {
         }
         const addressInformation = {
             addressInformation: {
-                shippingAddress: addressData,
+                shippingAddress: address,
                 billingAddress: {
-                    ...addressData,
+                    ...address,
                     saveInAddressBook: false
                 },
                 shipping_carrier_code: shippingSelections[0],
@@ -154,6 +154,7 @@ export const submitShipping = () => {
             }
         }
         const persistShippingURL = `https://www.merlinspotions.com/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/shipping-information`
+        dispatch(receiveCheckoutData({shipping: {address}}))
         makeJsonEncodedRequest(persistShippingURL, addressInformation, {method: 'POST'})
             .then((response) => response.json())
             .then((responseJSON) => {
