@@ -9,9 +9,6 @@ export const receiveContents = createAction('Received CheckoutConfirmation Conte
 export const showSuccessModal = createAction('Showing Success modal')
 export const showFailNotification = createAction('Showing fail notification')
 export const hideModal = createAction('Hiding modal')
-// export const openCheckoutConfirmationModal = () => (dispatch) => {
-//     dispatch(modalActions.openModal(CHECKOUT_CONFIRMATION_MODAL))
-// }
 
 export const receiveResponse = (response) => {
     return (dispatch) => {
