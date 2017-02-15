@@ -16,7 +16,7 @@ export default handleActions({
     [checkoutConfirmationActions.receiveContents]: (state, {payload}) => {
         return state.mergeDeep(payload, {contentsLoaded: true})
     },
-    [checkoutConfirmationActions.showModal]: (state) => {
+    [checkoutConfirmationActions.showSuccessModal]: (state) => {
         return state.mergeDeep({isModalShown: true})
     },
     [checkoutConfirmationActions.hideModal]: (state) => {
