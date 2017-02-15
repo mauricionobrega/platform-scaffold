@@ -1,7 +1,8 @@
+/* eslint-env jest */
 import {shallow} from 'enzyme'
 import React from 'react'
 
-import {RawFooter as Footer} from './container'
+import Footer from './container'
 
 describe('The footer', () => {
     test('Should not render footer at all if running in an Astro app', () => {
