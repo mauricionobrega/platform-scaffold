@@ -134,7 +134,7 @@ export const submitShipping = () => {
             firstname: names.slice(0, -1).join(' '),
             lastname: names.slice(-1).join(' '),
             company: company || '',
-            telephone: telephone.replace(/[()-\s]/g, ''),
+            telephone,
             postcode,
             city,
             street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1],
