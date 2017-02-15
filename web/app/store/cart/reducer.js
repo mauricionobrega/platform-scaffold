@@ -1,10 +1,11 @@
 import Immutable from 'immutable'
 import {handleActions} from 'redux-actions'
 import {receiveCartContents} from './actions'
-import {mergePayloadForActions} from '../../utils/reducer-utils'
+import {listMerger} from '../../utils/reducer-utils'
+
 
 const cartReducer = handleActions({
-    ...mergePayloadForActions(receiveCartContents)
+    [receiveCartContents]: (state, {payload}) => state.mergeWith(listMerger, payload)
 }, Immutable.Map())
 
 export default cartReducer

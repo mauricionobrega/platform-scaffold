@@ -10,8 +10,10 @@ import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Image from 'progressive-web-sdk/dist/components/image'
 
 import {getCartContentsLoaded, getCartHasItems} from '../../store/cart/selectors'
+import {getRemoveItemID} from './selectors'
 import CartEstimateShippingModal from './partials/cart-estimate-shipping'
 import CartWishlistModal from './partials/cart-wishlist'
+import CartRemoveItemModal from './partials/cart-remove-item'
 import CartItems from './partials/cart-items'
 
 const EmptyCartContents = ({hide}) => {
@@ -53,7 +55,7 @@ EmptyCartContents.propTypes = {
     hide: PropTypes.bool
 }
 
-const Cart = ({contentsLoaded, hasItems}) => {
+const Cart = ({contentsLoaded, hasItems, removeItemID}) => {
     const isCartEmptyAndLoaded = !hasItems && contentsLoaded
     const templateClassnames = classNames('t-cart u-bg-color-neutral-10', {
         't--loaded': contentsLoaded
@@ -69,6 +71,7 @@ const Cart = ({contentsLoaded, hasItems}) => {
 
             <CartEstimateShippingModal />
             <CartWishlistModal />
+            <CartRemoveItemModal itemID={removeItemID} />
         </div>
     )
 }
@@ -76,11 +79,13 @@ const Cart = ({contentsLoaded, hasItems}) => {
 Cart.propTypes = {
     contentsLoaded: PropTypes.bool,
     hasItems: PropTypes.bool,
+    removeItemID: PropTypes.string
 }
 
 const mapStateToProps = createStructuredSelector({
     contentsLoaded: getCartContentsLoaded,
-    hasItems: getCartHasItems
+    hasItems: getCartHasItems,
+    removeItemID: getRemoveItemID
 })
 
 export default connect(mapStateToProps)(Cart)

@@ -49,6 +49,7 @@ export const createGetSelector = (selector, key, defaultValue) => {
             (obj, keyValue) => obj.get(keyValue, defaultValue)
         )
     }
+    console.log(key)
     return createSelector(
         selector,
         (obj) => obj.get(key, defaultValue)

@@ -7,6 +7,8 @@
  */
 import parse from './parsers/parser'
 import * as utils from '../../utils/utils'
+import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+import {addNotification, removeAllNotifications} from '../../containers/app/actions'
 
 const baseHeaders = {
     Accept: 'application/json',
@@ -21,6 +23,7 @@ export const getCart = () => (dispatch) => {
     const opts = {
         headers: baseHeaders
     }
+    dispatch(removeAllNotifications())
     return utils.makeRequest('/customer/section/load/?sections=cart', opts)
         .then((response) => response.text())
         .then((responseText) => dispatch(receiveCartContents(parse(responseText))))
@@ -38,16 +41,29 @@ export const getCart = () => (dispatch) => {
  *   busts a cache. You are expected to call `removeFromCart()` then `getCart()` every time.
  */
 export const removeFromCart = (itemId) => {
-    const body = new FormData()
-    body.append('item_id', itemId)
+    return (dispatch) => {
+        const body = `item_id=${itemId}`
+        const headers = {
+            ...baseHeaders,
+            'Content-Type': 'application/x-www-form-urlencoded',
+        }
 
-    const headers = Object.assign({}, baseHeaders, {
-        'Content-Type': 'application/x-www-form-urlencoded',
-    })
+        const opts = {headers, body, method: 'POST'}
+        return makeRequest('/checkout/sidebar/removeItem/', opts)
+            .then((response) => response.json())
+            .then((responseJSON) => {
+                if (responseJSON.success) {
+                    dispatch(getCart())
+                } else {
+                    dispatch(addNotification({
+                        content: `Unable to remove item`,
+                        id: 'cartRemoveError',
+                        showRemoveButton: true
+                    }))
+                }
+            })
+    }
 
-    const opts = {headers, body, method: 'POST'}
-    return fetch('/checkout/sidebar/removeItem/', opts)
-        .json()
 }
 
 /**

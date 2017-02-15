@@ -4,6 +4,7 @@ import {createStructuredSelector} from 'reselect'
 import {selectorToJS} from '../../../utils/selector-utils'
 import {CART_WISHLIST_MODAL} from '../constants'
 import {openModal} from '../../../store/modals/actions'
+import {openRemoveItemModal} from '../actions'
 import {getCartItems, getCartSummaryCount} from '../../../store/cart/selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -41,7 +42,7 @@ const ProductSkeleton = () => (
 
 /* eslint-disable camelcase */
 
-const CartProductItem = ({product_name, product_image, idx, qty, product_price, onSaveLater}) => (
+const CartProductItem = ({product_name, product_image, item_id, idx, qty, product_price, onSaveLater, openRemoveItemModal}) => (
     <ProductItem
         className={productItemClassNames}
         title={<h2 className="u-h3">{product_name}</h2>}
@@ -90,6 +91,7 @@ const CartProductItem = ({product_name, product_image, idx, qty, product_price, 
             <Button
                 className="u-text-small u-color-brand qa-cart__remove-item"
                 innerClassName="u-padding-end-0 u-padding-bottom-0"
+                onClick={() => { openRemoveItemModal(item_id) }}
                 >
                 Remove
             </Button>
@@ -99,6 +101,8 @@ const CartProductItem = ({product_name, product_image, idx, qty, product_price, 
 
 CartProductItem.propTypes = {
     idx: PropTypes.number,
+    item_id: PropTypes.string,
+    openRemoveItemModal: PropTypes.func,
     product_image: PropTypes.object,
     product_name: PropTypes.string,
     product_price: PropTypes.string,
@@ -106,7 +110,7 @@ CartProductItem.propTypes = {
     onSaveLater: PropTypes.func
 }
 
-const CartProductList = ({items, summaryCount, onSaveLater}) => {
+const CartProductList = ({items, summaryCount, onSaveLater, openRemoveItemModal}) => {
     const isCartEmpty = items.length === 0
 
     return (
@@ -127,7 +131,7 @@ const CartProductList = ({items, summaryCount, onSaveLater}) => {
             <List className="u-bg-color-neutral-00 u-border-light-top u-border-light-bottom">
                 {isCartEmpty && <ProductSkeleton />}
 
-                {items.map((item, idx) => (<CartProductItem {...item} key={idx} idx={idx} onSaveLater={onSaveLater} />))}
+                {items.map((item, idx) => (<CartProductItem {...item} key={item.item_id} idx={idx} openRemoveItemModal={openRemoveItemModal} onSaveLater={onSaveLater} />))}
             </List>
         </div>
     )
@@ -135,6 +139,8 @@ const CartProductList = ({items, summaryCount, onSaveLater}) => {
 
 CartProductList.propTypes = {
     items: PropTypes.array,
+    openRemoveItemModal: PropTypes.func,
+    removeFromCart: PropTypes.func,
     summaryCount: PropTypes.number,
     onSaveLater: PropTypes.func,
 }
@@ -145,7 +151,8 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = {
-    onSaveLater: () => openModal(CART_WISHLIST_MODAL)
+    onSaveLater: () => openModal(CART_WISHLIST_MODAL),
+    openRemoveItemModal: (itemId) => openRemoveItemModal(itemId)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartProductList)
