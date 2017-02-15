@@ -87,16 +87,16 @@ TabBarController.prototype.showSignIn = function() {
     this.accountTabController.showSignIn()
 }
 
-TabBarController.prototype.backActiveItem = function() {
-    if (this.canGoBack()) {
+TabBarController.prototype.backActiveItem = async function() {
+    if (await this.canGoBack()) {
         const activeTab = this.getActiveController()
         activeTab.back()
     }
 }
 
-TabBarController.prototype.canGoBack = function() {
+TabBarController.prototype.canGoBack = async function() {
     const activeTab = this.getActiveController()
-    return activeTab.canGoBack()
+    return await activeTab.canGoBack()
 }
 
 export default TabBarController

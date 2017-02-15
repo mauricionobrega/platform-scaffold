@@ -88,7 +88,7 @@ TabController.prototype.deactivate = function() {
 }
 
 TabController.prototype.canGoBack = async function() {
-    return this.navigationView.canGoBack()
+    return await this.navigationView.canGoBack()
 }
 
 TabController.prototype.back = async function() {
