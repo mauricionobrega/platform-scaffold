@@ -39,23 +39,23 @@ export const submitPayment = () => {
         const currentState = getState()
         const entityID = getCustomerEntityID(currentState)
         const isLoggedIn = getIsLoggedIn(currentState)
-        const {
-            same_address,
-            name,
-            company,
-            addressLine1,
-            addressLine2,
-            country_id,
-            city,
-            region_id,
-            postcode,
-        } = getPaymentBillingFormValues(currentState)
+        const sameAddress = getPaymentBillingFormValues(currentState).billing_same_as_shipping
 
         let addressData = {}
 
-        if (same_address) {
+        if (sameAddress) {
             addressData = getShippingAddress(currentState).toJS()
         } else {
+            const {
+                name,
+                company,
+                addressLine1,
+                addressLine2,
+                country_id,
+                city,
+                region_id,
+                postcode,
+            } = getPaymentBillingFormValues(currentState)
             const names = name.split(' ')
 
             addressData = {
