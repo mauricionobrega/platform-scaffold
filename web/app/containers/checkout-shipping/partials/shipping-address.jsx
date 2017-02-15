@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import {selectorToJS} from '../../../utils/selector-utils'
 import * as ReduxForm from 'redux-form'
+import {normalizePhone} from '../../../utils/normalize-utils'
 
 import {showCompanyAndApt, fetchShippingMethods} from '../actions'
 import {getShippingFormTitle, getIsCompanyOrAptShown} from '../selectors'
@@ -137,6 +138,7 @@ const ShippingAddressForm = ({
                             name="telephone"
                             label="Phone"
                             caption="In case we need to contact you about your order"
+                            normalize={normalizePhone}
                         >
                             <input type="tel" noValidate />
                         </ReduxForm.Field>
