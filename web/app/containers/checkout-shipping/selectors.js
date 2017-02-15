@@ -11,8 +11,6 @@ export const getIsCompanyOrAptShown = createGetSelector(getCheckoutShipping, 'is
 
 export const getShippingMethods = createGetSelector(getCheckoutShipping, 'shippingMethods', Immutable.List())
 
-export const getCustomerEntityID = createGetSelector(getCheckoutShipping, 'customerEntityID')
-
 export const getCustomerEmailRecognized = createGetSelector(getCheckoutShipping, 'customerEmailRecognized')
 
 export const getEmailError = createGetSelector(getCheckoutShipping, 'emailError')
