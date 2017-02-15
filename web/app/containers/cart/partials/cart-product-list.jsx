@@ -106,6 +106,7 @@ CartProductItem.propTypes = {
     product_name: PropTypes.string,
     product_price: PropTypes.string,
     qty: PropTypes.number,
+    onQtyChange: PropTypes.func,
     onSaveLater: PropTypes.func
 }
 
