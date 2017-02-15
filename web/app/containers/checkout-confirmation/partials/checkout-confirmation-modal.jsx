@@ -1,6 +1,6 @@
 import React from 'react'
 import {CHECKOUT_CONFIRMATION_MODAL} from '../constants'
-import {closeModal, openModal} from '../../../store/modals/actions'
+import {closeModal} from '../../../store/modals/actions'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
