@@ -7,9 +7,11 @@ import {isRunningInAstro} from '../../utils/astro-integration'
 
 const CheckoutHeader = function(props) {
     const canSignIn = true
+    if (isRunningInAstro) {
+        return null
+    }
     return (
         <div>
-            {!isRunningInAstro &&
             <header className="t-checkout-header">
                 <HeaderBar className="t-checkout-header__bar">
                     <HeaderBarTitle className="u-flex-none u-padding-start u-text-align-start">
@@ -33,7 +35,6 @@ const CheckoutHeader = function(props) {
                             }
                 </HeaderBar>
             </header>
-                }
         </div>
     )
 }
