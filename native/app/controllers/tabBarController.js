@@ -2,6 +2,7 @@ import AnchoredLayoutPlugin from 'progressive-app-sdk/plugins/anchoredLayoutPlug
 import TabBarPlugin from 'progressive-app-sdk/plugins/tabBarPlugin'
 
 import {tabBarConfig} from '../config/tabBarConfig'
+import baseConfig from '../config/baseConfig'
 import TabController from './tabController'
 import AccountTabController from './accountTabController'
 
@@ -21,7 +22,7 @@ const TabBarController = function(tabBar, layout, tabControllers) {
 
 TabBarController.init = async function() {
     const tabBar = await TabBarPlugin.init()
-    await tabBar.setColor('#4E439B')
+    await tabBar.setColor(baseConfig.colors.primaryColor)
     const layout = await AnchoredLayoutPlugin.init()
 
     const tabControllers = {}
