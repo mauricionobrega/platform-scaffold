@@ -41,7 +41,7 @@ window.run = async function() {
         })
 
         // Android hardware back
-        const setupHardwareBackButton = async (alternativeBackFunction) => {
+        const setupHardwareBackButton = (alternativeBackFunction) => {
             Application.on('backButtonPressed', () => {
                 alternativeBackFunction()
             })
@@ -66,12 +66,12 @@ window.run = async function() {
             previewController.presentPreviewAlert()
         })
 
-        // const previewEnabled = await previewController.isPreviewEnabled()
-        // if (previewEnabled) {
-        runAppPreview()
-        // } else {
-            // runApp()
-        // }
+        const previewEnabled = await previewController.isPreviewEnabled()
+        if (previewEnabled) {
+            runAppPreview()
+        } else {
+            runApp()
+        }
     }
 
     if (AstroNative.Configuration.ASTRO_PREVIEW) {
