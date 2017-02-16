@@ -101,7 +101,7 @@ const CartProductItem = ({product_name, product_image, item_id, idx, qty, produc
 
 CartProductItem.propTypes = {
     idx: PropTypes.number,
-    item_id: PropTypes.number,
+    item_id: PropTypes.string,
     product_image: PropTypes.object,
     product_name: PropTypes.string,
     product_price: PropTypes.string,
@@ -151,7 +151,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
     onSaveLater: () => openModal(CART_WISHLIST_MODAL),
-    onUpdateItemQuantity: (itemID, itemQuantity) => updateItemQuantity(itemID, itemQuantity)
+    onUpdateItemQuantity: updateItemQuantity
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartProductList)
