@@ -4,8 +4,8 @@ import {createStructuredSelector} from 'reselect'
 import {selectorToJS} from '../../../utils/selector-utils'
 import {CART_WISHLIST_MODAL} from '../constants'
 import {openModal} from '../../../store/modals/actions'
-import {openRemoveItemModal} from '../actions'
 import {updateItemQuantity} from '../../../store/cart/actions'
+import {openRemoveItemModal, saveToWishlist} from '../actions'
 import {getCartItems, getCartSummaryCount} from '../../../store/cart/selectors'
 import {noop} from 'progressive-web-sdk/dist/utils/utils'
 
@@ -191,8 +191,8 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = {
-    onSaveLater: () => openModal(CART_WISHLIST_MODAL),
     onUpdateItemQuantity: updateItemQuantity,
+    onSaveLater: saveToWishlist,
     openRemoveItemModal
 }
 
