@@ -1,13 +1,13 @@
 /* eslint-env jquery, jest */
 import {jquerifyHtmlFile} from 'progressive-web-sdk/dist/test-utils'
 import {isURL} from 'validator'
-import pdpParser from './pdp'
+import productDetailsParser from './productDetails'
 
 /* eslint-disable max-nested-callbacks */
 
-describe('the PDP parser', () => {
-    const $content = jquerifyHtmlFile('app/containers/pdp/parsers/pdp-example.html')
-    const parsedContent = pdpParser($, $content)
+describe('the ProductDetails parser', () => {
+    const $content = jquerifyHtmlFile('app/containers/product-details/parsers/productDetails-example.html')
+    const parsedContent = productDetailsParser($, $content)
 
     test('extracts form info from the add-to-cart form', () => {
         expect(isURL(parsedContent.formInfo.submitUrl)).toBe(true)

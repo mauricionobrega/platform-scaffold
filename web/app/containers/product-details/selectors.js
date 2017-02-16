@@ -14,15 +14,15 @@ const PLACEHOLDER_BREADCRUMBS = Immutable.fromJS([
     }
 ])
 
-export const getPdp = createSelector(getUi, ({pdp}) => pdp)
+export const getProductDetails = createSelector(getUi, ({productDetails}) => productDetails)
 
-export const getSelectedPdp = createGetSelector(
-    getPdp,
+export const getSelectedProductDetails = createGetSelector(
+    getProductDetails,
     appSelectors.getCurrentPathKey,
     Immutable.Map()
 )
-export const getPdpContentsLoaded = createHasSelector(
-    getPdp,
+export const getProductDetailsContentsLoaded = createHasSelector(
+    getProductDetails,
     appSelectors.getCurrentPathKey
 )
 
@@ -32,12 +32,12 @@ export const getSelectedProduct = createGetSelector(
     Immutable.Map()
 )
 
-export const getItemQuantity = createGetSelector(getSelectedPdp, 'itemQuantity', 1)
-export const getItemAddedModalOpen = isModalOpen('pdp-item-added')
-export const getFormInfo = createGetSelector(getSelectedPdp, 'formInfo')
+export const getItemQuantity = createGetSelector(getSelectedProductDetails, 'itemQuantity', 1)
+export const getItemAddedModalOpen = isModalOpen('product-details-item-added')
+export const getFormInfo = createGetSelector(getSelectedProductDetails, 'formInfo')
 
-export const getPdpBreadcrumbs = createGetSelector(
-    getSelectedPdp,
+export const getProductDetailsBreadcrumbs = createGetSelector(
+    getSelectedProductDetails,
     'breadcrumbs',
     PLACEHOLDER_BREADCRUMBS
 )

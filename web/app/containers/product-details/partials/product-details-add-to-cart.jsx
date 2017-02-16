@@ -9,7 +9,7 @@ import Button from 'progressive-web-sdk/dist/components/button'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Stepper from 'progressive-web-sdk/dist/components/stepper'
 
-const PDPAddToCart = ({quantity, setQuantity, onSubmit, disabled}) => {
+const ProductDetailsAddToCart = ({quantity, setQuantity, onSubmit, disabled}) => {
     const stepperProps = {
         decrementIcon: 'minus',
         incrementIcon: 'plus',
@@ -33,7 +33,7 @@ const PDPAddToCart = ({quantity, setQuantity, onSubmit, disabled}) => {
                 <div className="u-flexbox u-margin-bottom-lg u-margin-top">
                     <Stepper {...stepperProps} />
 
-                    <div className="t-pdp__indicator u-border u-margin-start u-padding-md  u-flex u-flexbox u-justify-center">
+                    <div className="t-product-details__indicator u-border u-margin-start u-padding-md  u-flex u-flexbox u-justify-center">
                         <Icon name="check" className="u-margin-end-sm" /> In stock
                     </div>
                 </div>
@@ -44,7 +44,7 @@ const PDPAddToCart = ({quantity, setQuantity, onSubmit, disabled}) => {
                 icon="plus"
                 title="Add to cart"
                 showIconText={true}
-                className="c--primary u-width-full u-text-uppercase u-margin-bottom-lg t-pdp__add-to-cart"
+                className="c--primary u-width-full u-text-uppercase u-margin-bottom-lg t-product-details__add-to-cart"
                 onClick={onSubmit}
                 disabled={disabled}
             />
@@ -53,7 +53,7 @@ const PDPAddToCart = ({quantity, setQuantity, onSubmit, disabled}) => {
 }
 
 
-PDPAddToCart.propTypes = {
+ProductDetailsAddToCart.propTypes = {
     quantity: PropTypes.number.isRequired,
     setQuantity: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
@@ -62,7 +62,7 @@ PDPAddToCart.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
     quantity: selectors.getItemQuantity,
-    disabled: invertSelector(selectors.getPdpContentsLoaded)
+    disabled: invertSelector(selectors.getProductDetailsContentsLoaded)
 })
 
 const mapDispatchToProps = {
@@ -73,4 +73,4 @@ const mapDispatchToProps = {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(PDPAddToCart)
+)(ProductDetailsAddToCart)

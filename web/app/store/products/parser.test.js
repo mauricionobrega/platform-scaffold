@@ -1,13 +1,13 @@
 /* eslint-env jquery, jest */
 import {jquerifyHtmlFile} from 'progressive-web-sdk/dist/test-utils'
 import {isURL} from 'validator'
-import {pdpParser, plpParser} from './parser'
+import {productDetailsParser, productListParser} from './parser'
 
 /* eslint-disable max-nested-callbacks */
 
-describe('the PDP product parser', () => {
-    const $content = jquerifyHtmlFile('app/containers/pdp/parsers/pdp-example.html')
-    const parsedContent = pdpParser($, $content)
+describe('the ProductDetails product parser', () => {
+    const $content = jquerifyHtmlFile('app/containers/product-details/parsers/productDetails-example.html')
+    const parsedContent = productDetailsParser($, $content)
 
     it('extracts the title from the page', () => {
         expect(parsedContent.title).toBe('Eye Of Newt')
@@ -35,18 +35,18 @@ describe('the PDP product parser', () => {
     })
 })
 
-describe('the PLP product parser', () => {
-    const $content = jquerifyHtmlFile('app/store/categories/parsers/plp.test.html')
-    const parsedContent = plpParser($, $content)
+describe('the ProductList product parser', () => {
+    const $content = jquerifyHtmlFile('app/store/categories/parsers/productList.test.html')
+    const parsedContent = productListParser($, $content)
 
-    it('should extract the plp content from the rendered HTML', () => {
+    it('should extract the product list content from the rendered HTML', () => {
         const urls = Object.keys(parsedContent)
         expect(urls.length).toBe(7)
         const expected = {
             productKeys: ['title', 'price', 'link', 'image', 'carouselItems'],
             imageKeys: ['title', 'alt', 'src']
         }
-        // Test that the shallow properties of the plp object are correct
+        // Test that the shallow properties of the product list object are correct
         urls.forEach((url) => {
             expect(Object.keys(parsedContent[url])).toEqual(expected.productKeys)
             expect(Object.keys(parsedContent[url].image)).toEqual(expected.imageKeys)

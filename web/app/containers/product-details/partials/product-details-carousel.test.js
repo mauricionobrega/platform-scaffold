@@ -1,6 +1,6 @@
 /* eslint-env jest */
 import React from 'react'
-import ConnectedPDPCarousel from './pdp-carousel'
+import ConnectedProductDetailsCarousel from './productDetails-carousel'
 import {mount, shallow} from 'enzyme'
 
 import Carousel from 'progressive-web-sdk/dist/components/carousel'
@@ -8,23 +8,23 @@ import CarouselItem from 'progressive-web-sdk/dist/components/carousel/carousel-
 import Image from 'progressive-web-sdk/dist/components/image'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
-const PDPCarousel = ConnectedPDPCarousel.WrappedComponent
+const ProductDetailsCarousel = ConnectedProductDetailsCarousel.WrappedComponent
 
 /* eslint-disable newline-per-chained-call */
 
 test('renders without errors', () => {
-    const wrapper = mount(<PDPCarousel />)
+    const wrapper = mount(<ProductDetailsCarousel />)
 
     expect(wrapper.length).toBe(1)
 })
 
-const ROOT_CLASS = 't-pdp__carousel'
+const ROOT_CLASS = 't-product-details__carousel'
 
 test('renders the component class correctly', () => {
     const carouselItems = [
         {position: '0', img: 'test.png'}
     ]
-    const wrapper = shallow(<PDPCarousel items={carouselItems} />)
+    const wrapper = shallow(<ProductDetailsCarousel items={carouselItems} />)
 
     expect(wrapper.hasClass(ROOT_CLASS)).toBe(true)
 })
@@ -33,7 +33,7 @@ test('renders a Carousel', () => {
     const carouselItems = [
         {position: '0', img: 'test.png'}
     ]
-    const wrapper = shallow(<PDPCarousel items={carouselItems} />)
+    const wrapper = shallow(<ProductDetailsCarousel items={carouselItems} />)
 
     expect(wrapper.type()).toBe(Carousel)
 })
@@ -45,7 +45,7 @@ test('renders a CarouselItem for each item passed', () => {
     ];
 
     [1, 2].forEach((n) => {
-        const wrapper = shallow(<PDPCarousel items={items.slice(0, n)} />)
+        const wrapper = shallow(<ProductDetailsCarousel items={items.slice(0, n)} />)
         const carouselItems = wrapper.find(CarouselItem)
 
         expect(carouselItems.length).toBe(n)
@@ -63,7 +63,7 @@ test('renders two SkeletonBlock when the carousel items array is empty', () => {
     // One skeleton block is a placeholder for the carousel image, the other is
     // for the carousel pips
 
-    const wrapper = shallow(<PDPCarousel items={[]} />)
+    const wrapper = shallow(<ProductDetailsCarousel items={[]} />)
     const skeletonBlocks = wrapper.find(SkeletonBlock)
     const placeholderCount = 2 // image placeholder, and pip placeholder
 

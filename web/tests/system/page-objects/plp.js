@@ -1,23 +1,23 @@
 const selectors = {
     plpTemplateIdentifier: '.t-plp__container',
-    pdpItem(index) {
+    productDetailsItem(index) {
         return `.pw-list .t-plp__product-tile:nth-child(${index}) .pw--is-loaded`
     }
 }
 
-const PLP = function(browser) {
+const ProductList = function(browser) {
     this.browser = browser
     this.selectors = selectors
 }
 
-PLP.prototype.navigateToPDP = function(productIndex) {
-    // Navigate from PLP to PDP
+ProductList.prototype.navigateToProductDetails = function(productIndex) {
+    // Navigate from ProductList to ProductDetails
     this.browser
-        .log('Navigating to PDP')
-        .waitForElementVisible(selectors.pdpItem(productIndex))
-        .click(selectors.pdpItem(productIndex))
+        .log('Navigating to ProductDetails')
+        .waitForElementVisible(selectors.productDetailsItem(productIndex))
+        .click(selectors.productDetailsItem(productIndex))
         .waitUntilMobified()
     return this
 }
 
-export default PLP
+export default ProductList

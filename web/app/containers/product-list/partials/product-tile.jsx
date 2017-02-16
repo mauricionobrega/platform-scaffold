@@ -7,7 +7,7 @@ import ProductItem from '../../../components/product-item'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
 const titleClassName = classNames(
-    't-plp__product-name',
+    't-product-list__product-name',
     'u-h1',
     'u-heading-family',
     'u-color-neutral-60'
@@ -30,7 +30,7 @@ const ProductTile = ({className, image, link, price}) => {
         : <SkeletonBlock height="22px" width="50px" />
 
     return (
-        <ListTile className="t-plp__product-tile u-card" {...link}>
+        <ListTile className="t-product-list__product-tile u-card" {...link}>
             <ProductItem
                 {...image}
                 className={classNames('u-align-center', className)}

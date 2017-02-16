@@ -8,7 +8,7 @@ const initialState = Immutable.fromJS({
     anything: 'else'
 })
 
-describe('The PLP reducer', () => {
+describe('The Product List reducer', () => {
     test('does nothing for unknown action types', () => {
         const action = {type: 'qwertyuiop'}
         expect(reducer(initialState, action)).toBe(initialState)

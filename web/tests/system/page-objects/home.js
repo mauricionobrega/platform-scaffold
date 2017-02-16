@@ -14,13 +14,13 @@ const Home = function(browser) {
     this.selectors = selectors
 }
 
-Home.prototype.navigateToPLP = function(PLP_INDEX) {
-    // Navigate from Home to PLP
+Home.prototype.navigateToProductList = function(PRODUCT_LIST_INDEX) {
+    // Navigate from Home to ProductList
     this.browser
-        .log('Navigating to PLP')
+        .log('Navigating to ProductList')
         .waitForAjaxCompleted()
-        .waitForElementVisible(selectors.plpItem(PLP_INDEX))
-        .click(selectors.plpItem(PLP_INDEX))
+        .waitForElementVisible(selectors.plpItem(PRODUCT_LIST_INDEX))
+        .click(selectors.plpItem(PRODUCT_LIST_INDEX))
         .waitUntilMobified()
     return this
 }

@@ -5,7 +5,7 @@ const parseBreadcrumbs = ($, $breadcrumbsLinks) => {
         .map((breadcrumbLink) => parseTextLink($(breadcrumbLink)))
 }
 
-const pdpParser = ($, $html) => {
+const productDetailsParser = ($, $html) => {
     const $breadcrumbs = (
         $html
             .find('.breadcrumbs')
@@ -33,4 +33,4 @@ const pdpParser = ($, $html) => {
     }
 }
 
-export default pdpParser
+export default productDetailsParser

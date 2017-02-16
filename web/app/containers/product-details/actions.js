@@ -3,8 +3,8 @@ import {getCart} from '../../store/cart/actions'
 import * as selectors from './selectors'
 import * as appSelectors from '../app/selectors'
 import {openModal} from '../../store/modals/actions'
-import {PDP_ITEM_ADDED_MODAL} from './constants'
-import pdpParser from './parsers/pdp'
+import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from './constants'
+import productDetailsParser from './parsers/product-details'
 
 export const receiveNewItemQuantity = createAction('Set item quantity')
 export const setItemQuantity = (quantity) => (dispatch, getStore) => {
@@ -15,10 +15,10 @@ export const setItemQuantity = (quantity) => (dispatch, getStore) => {
     }))
 }
 
-export const receiveData = createAction('Receive PDP data')
+export const receiveData = createAction('Receive Product Details data')
 export const process = ({payload}) => {
     const {$, $response, url} = payload
-    const parsed = pdpParser($, $response)
+    const parsed = productDetailsParser($, $response)
     return receiveData({[urlToPathKey(url)]: parsed})
 }
 
@@ -32,7 +32,7 @@ export const submitCartForm = () => (dispatch, getStore) => {
     }, {
         method: formInfo.get('method')
     }).then(() => {
-        dispatch(openModal(PDP_ITEM_ADDED_MODAL))
+        dispatch(openModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL))
         dispatch(getCart())
     })
 }

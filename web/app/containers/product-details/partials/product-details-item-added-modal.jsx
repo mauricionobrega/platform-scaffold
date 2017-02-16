@@ -4,7 +4,7 @@ import {createStructuredSelector} from 'reselect'
 import * as selectors from '../selectors'
 import {stripEvent} from '../../../utils/utils'
 import {isModalOpen} from '../../../store/selectors'
-import {PDP_ITEM_ADDED_MODAL} from '../constants'
+import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from '../constants'
 import {closeModal} from '../../../store/modals/actions'
 
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -12,8 +12,8 @@ import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import ProductItem from '../../../components/product-item'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
-const PDPItemAddedModal = ({open, onDismiss, quantity, title, price, productImage}) => (
-    <Sheet open={open} onDismiss={onDismiss} effect="slide-bottom" className="t-plp__item-added-modal" coverage="50%">
+const ProductDetailsItemAddedModal = ({open, onDismiss, quantity, title, price, productImage}) => (
+    <Sheet open={open} onDismiss={onDismiss} effect="slide-bottom" className="product-list__item-added-modal" coverage="50%">
 
         {/* Modal header */}
         <div className="u-flex-none u-border-bottom">
@@ -22,9 +22,9 @@ const PDPItemAddedModal = ({open, onDismiss, quantity, title, price, productImag
                     Product Added to Cart
                 </h1>
 
-                <div className="t-pdp__item-added-modal-close u-flexbox u-flex-none u-align-center u-justify-center">
+                <div className="t-product-details__item-added-modal-close u-flexbox u-flex-none u-align-center u-justify-center">
                     <Button className="u-text-uppercase" onClick={onDismiss}>
-                        <Icon name="close" title="Close" className="t-pdp__item-added-modal-icon" />
+                        <Icon name="close" title="Close" className="t-product-details__item-added-modal-icon" />
                     </Button>
                 </div>
             </div>
@@ -61,7 +61,7 @@ const PDPItemAddedModal = ({open, onDismiss, quantity, title, price, productImag
     </Sheet>
 )
 
-PDPItemAddedModal.propTypes = {
+ProductDetailsItemAddedModal.propTypes = {
     open: PropTypes.bool,
     price: PropTypes.string,
     productImage: PropTypes.string,
@@ -72,17 +72,17 @@ PDPItemAddedModal.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
     productImage: selectors.getFirstProductImage,
-    open: isModalOpen(PDP_ITEM_ADDED_MODAL),
+    open: isModalOpen(PRODUCT_DETAILS_ITEM_ADDED_MODAL),
     quantity: selectors.getItemQuantity,
     title: selectors.getProductTitle,
     price: selectors.getProductPrice
 })
 
 const mapDispatchToProps = {
-    onDismiss: stripEvent(() => closeModal(PDP_ITEM_ADDED_MODAL))
+    onDismiss: stripEvent(() => closeModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL))
 }
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(PDPItemAddedModal)
+)(ProductDetailsItemAddedModal)

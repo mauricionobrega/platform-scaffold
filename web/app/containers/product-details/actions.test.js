@@ -2,7 +2,7 @@
 import Immutable from 'immutable'
 
 import {submitCartForm} from './actions'
-import {PDP_ITEM_ADDED_MODAL} from './constants'
+import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from './constants'
 import {openModal} from '../../store/modals/actions'
 
 import * as utils from '../../utils/utils'
@@ -29,7 +29,7 @@ test('submitCartForm makes a request and dispatches updates', () => {
     const getStore = () => ({
         ui: {
             app: Immutable.fromJS({currentURL: 'https://test.mobify.com/'}),
-            pdp: Immutable.fromJS({
+            productDetails: Immutable.fromJS({
                 '/': {
                     contentsLoaded: true,
                     formInfo: {
@@ -53,7 +53,7 @@ test('submitCartForm makes a request and dispatches updates', () => {
 
             expect(mockDispatch).toBeCalled()
             expect(mockDispatch.mock.calls[0][0])
-                .toEqual(openModal(PDP_ITEM_ADDED_MODAL))
+                .toEqual(openModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL))
             expect(getCart).toBeCalled()
         })
 })

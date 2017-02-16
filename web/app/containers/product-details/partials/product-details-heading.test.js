@@ -1,26 +1,26 @@
 /* eslint-env jest */
 import React from 'react'
-import ConnectedPDPHeading from './pdp-heading'
+import ConnectedProductDetailsHeading from './product-details-heading'
 import {mount, shallow} from 'enzyme'
 
-const PDPHeading = ConnectedPDPHeading.WrappedComponent
+const ProductDetailsHeading = ConnectedProductDetailsHeading.WrappedComponent
 
 test('renders without errors', () => {
-    const wrapper = mount(<PDPHeading />)
+    const wrapper = mount(<ProductDetailsHeading />)
 
     expect(wrapper.length).toBe(1)
 })
 
-const ROOT_CLASS = 't-pdp-heading'
+const ROOT_CLASS = 't-product-details-heading'
 
 test('renders the component class correctly', () => {
-    const wrapper = shallow(<PDPHeading />)
+    const wrapper = shallow(<ProductDetailsHeading />)
 
     expect(wrapper.hasClass(ROOT_CLASS)).toBe(true)
 })
 
 test('renders the title and price', () => {
-    const wrapper = shallow(<PDPHeading title="Potion of Healing" price="10gp" />)
+    const wrapper = shallow(<ProductDetailsHeading title="Potion of Healing" price="10gp" />)
 
     const titleElement = wrapper.find(`.${ROOT_CLASS}__title`)
     expect(titleElement.length).toBe(1)

@@ -1,7 +1,7 @@
-// PLP.scss
+// _product-list.scss
 // ===
 
-.t-plp {
+.t-product-list {
     //
 }
 
@@ -11,7 +11,7 @@
 //
 // 1. Ensure the box-shadow at bottom of container is visible
 
-.t-plp__container {
+.t-product-list__container {
     background-color: $background-color;
     box-shadow: $inset-box-shadow;
 }
@@ -24,7 +24,7 @@
 //
 // 1. Ensure the container only takes up this amount of vertical space
 
-.t-plp__breadcrumb {
+.t-product-list__breadcrumb {
     font-size: $unit * 1.5; // 1
     line-height: $unit * 1.5; // 1
 }
@@ -36,7 +36,7 @@
 // 1. 172px is the minimum predicated height of the tile based on how large the
 //    images are suppose to be at mobile viewport size. Avoids flash of moving content
 
-.t-plp__product-tile {
+.t-product-list__product-tile {
     min-height: $unit * 21.5; // 1
 }
 
@@ -44,7 +44,7 @@
 // Product Name
 // ---
 
-.t-plp__product-name {
+.t-product-list__product-name {
     word-break: break-word;
 }
 
@@ -52,10 +52,10 @@
 // No Results
 // ---
 
-.t-plp__no-results-text {
+.t-product-list__no-results-text {
     padding: ($unit * 3) ($unit * 6) ($unit * 2);
 }
 
-.t-plp__num-results {
+.t-product-list__num-results {
     font-size: $font-size + 1;
 }

@@ -1,7 +1,7 @@
-// Pdp
+// Product Details
 // ===
 
-.t-pdp {
+.t-product-details {
     // Root Class. Contains all core styles, typically for the template's
     // wrapper element.
 }
@@ -10,7 +10,7 @@
 // Price
 // ---
 
-.t-pdp__price {
+.t-product-details__price {
     font-size: 24px;
     line-height: 32px;
 }
@@ -19,7 +19,7 @@
 // Add to Cart Button
 // ---
 
-.t-pdp__add-to-cart .c-icon {
+.t-product-details__add-to-cart .c-icon {
     width: $unit*1.5 !important;
     height: $unit*1.5 !important;
     margin-right: $unit;
@@ -32,19 +32,19 @@
 // 1. Provide the space within which the Close button with be vertically and
 //    horisontally centered in order to match the mockup
 
-.t-plp__item-added-modal {
+.t-product-details__item-added-modal {
     .c-sheet__content {
         display: flex;
         flex-direction: column;
     }
 }
 
-.t-pdp__item-added-modal-close {
+.t-product-details__item-added-modal-close {
     width: $unit*7; // 1
     height: $unit*7; // 1
 }
 
-.t-pdp__item-added-modal-icon {
+.t-product-details__item-added-modal-icon {
     color: $neutral-30;
 
     fill: $neutral-30;

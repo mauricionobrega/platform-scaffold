@@ -7,13 +7,13 @@ import appParser from './app-parser'
 import CheckoutShipping from '../checkout-shipping/container'
 import Home from '../home/container'
 import Login from '../login/container'
-import PDP from '../pdp/container'
-import PLP from '../plp/container'
+import ProductDetails from '../product-details/container'
+import ProductList from '../product-list/container'
 import * as checkoutActions from '../../store/checkout/actions'
 import * as checkoutShippingActions from '../checkout-shipping/actions'
 import * as homeActions from '../home/actions'
 import * as loginActions from '../login/actions'
-import * as pdpActions from '../pdp/actions'
+import * as productDetailsActions from '../product-details/actions'
 import * as footerActions from '../footer/actions'
 import * as navigationActions from '../navigation/actions'
 import * as productsActions from '../../store/products/actions'
@@ -69,10 +69,10 @@ export const fetchPage = (url, pageComponent, routeName) => {
                     dispatch(homeActions.process(receivedAction))
                 } else if (pageComponent === Login) {
                     dispatch(loginActions.process(receivedAction))
-                } else if (pageComponent === PDP) {
-                    dispatch(pdpActions.process(receivedAction))
+                } else if (pageComponent === ProductDetails) {
+                    dispatch(productDetailsActions.process(receivedAction))
                     dispatch(productsActions.processPdp(receivedAction))
-                } else if (pageComponent === PLP) {
+                } else if (pageComponent === ProductList) {
                     dispatch(categoriesActions.process(receivedAction))
                     dispatch(productsActions.processPlp(receivedAction))
                 } else if (pageComponent === CheckoutShipping) {

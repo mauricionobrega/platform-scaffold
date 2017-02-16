@@ -1,12 +1,12 @@
 /* eslint-env jquery, jest */
 import {jquerifyHtmlFile} from 'progressive-web-sdk/dist/test-utils'
-import plpParser from './plp'
+import productListParser from './productList'
 
-describe('the plp parser', () => {
-    const $content = jquerifyHtmlFile('app/store/categories/parsers/plp.test.html')
-    const parsedContent = plpParser($, $content)
+describe('the product list parser', () => {
+    const $content = jquerifyHtmlFile('app/store/categories/parsers/productList.test.html')
+    const parsedContent = productListParser($, $content)
 
-    it('should extract the plp content from the rendered HTML', () => {
+    it('should extract the product list content from the rendered HTML', () => {
         const expected = {
             hasProducts: true,
             contentsLoaded: true,
@@ -24,7 +24,7 @@ describe('the plp parser', () => {
             ]
         }
 
-        // Test that the shallow properties of the plp object are correct
+        // Test that the shallow properties of the product list object are correct
         for (const key in parsedContent) {
             if (key !== 'products') {
                 expect(parsedContent[key]).toEqual(expected[key])

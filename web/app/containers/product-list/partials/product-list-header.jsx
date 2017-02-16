@@ -8,10 +8,10 @@ import Link from 'progressive-web-sdk/dist/components/link'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import Image from 'progressive-web-sdk/dist/components/image'
 
-const PLPHeader = ({title, contentsLoaded}) => (
+const ProductListHeader = ({title, contentsLoaded}) => (
     <div className="u-flexbox u-align-bottom">
         <div className="u-flex u-padding-top-lg u-padding-bottom-lg u-padding-start-md">
-            <div className="t-plp__breadcrumb">
+            <div className="t-product-list__breadcrumb">
                 <Link href="/" className="u-text-small">Home</Link>
             </div>
 
@@ -38,14 +38,14 @@ const PLPHeader = ({title, contentsLoaded}) => (
 
 )
 
-PLPHeader.propTypes = {
+ProductListHeader.propTypes = {
     contentsLoaded: PropTypes.bool,
     title: PropTypes.string
 }
 
 const mapStateToProps = createStructuredSelector({
-    contentsLoaded: selectors.getPlpContentsLoaded,
-    title: selectors.getPlpTitle
+    contentsLoaded: selectors.getProductListContentsLoaded,
+    title: selectors.getProductListTitle
 })
 
-export default connect(mapStateToProps)(PLPHeader)
+export default connect(mapStateToProps)(ProductListHeader)

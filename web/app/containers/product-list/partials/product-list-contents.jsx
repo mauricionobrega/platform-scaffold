@@ -31,7 +31,7 @@ const NoResultsList = ({bodyText}) => (
                 height="110px"
                 src={getAssetUrl('static/img/global/no-results.png')} />
 
-            <div className="t-plp__no-results-text u-text-align-center">
+            <div className="t-product-list__no-results-text u-text-align-center">
                 {bodyText}
             </div>
         </div>
@@ -42,9 +42,9 @@ NoResultsList.propTypes = {
     bodyText: PropTypes.string
 }
 
-const PLPContents = ({contentsLoaded, numItems, products, hasProducts, noResultsText}) => (
-    <div className="t-plp__container u-padding-end u-padding-bottom-lg u-padding-start">
-        <div className="t-plp__num-results u-padding-md">
+const ProductListContents = ({contentsLoaded, numItems, products, hasProducts, noResultsText}) => (
+    <div className="t-product-list__container u-padding-end u-padding-bottom-lg u-padding-start">
+        <div className="t-product-list__num-results u-padding-md">
             {contentsLoaded ?
                 <span className="u-text-semi-bold">{numItems} Results</span>
                     :
@@ -56,7 +56,7 @@ const PLPContents = ({contentsLoaded, numItems, products, hasProducts, noResults
     </div>
 )
 
-PLPContents.propTypes = {
+ProductListContents.propTypes = {
     products: PropTypes.array.isRequired,
     contentsLoaded: PropTypes.bool,
     hasProducts: PropTypes.bool,
@@ -66,11 +66,11 @@ PLPContents.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
     hasProducts: selectors.getHasProducts,
-    contentsLoaded: selectors.getPlpContentsLoaded,
+    contentsLoaded: selectors.getProductListContentsLoaded,
     noResultsText: selectors.getNoResultsText,
     numItems: selectors.getNumItems,
-    products: selectorToJS(selectors.getPlpProducts)
+    products: selectorToJS(selectors.getProductListProducts)
 })
 
 
-export default connect(mapStateToProps)(PLPContents)
+export default connect(mapStateToProps)(ProductListContents)

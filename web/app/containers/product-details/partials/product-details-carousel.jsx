@@ -10,12 +10,12 @@ import Ratio from 'progressive-web-sdk/dist/components/ratio'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import Image from 'progressive-web-sdk/dist/components/image'
 
-const PDPCarousel = ({items, contentsLoaded}) => {
+const ProductDetailsCarousel = ({items, contentsLoaded}) => {
     const carouselProps = {
         previousIcon: 'chevron-left',
         nextIcon: 'chevron-right',
         iconSize: 'medium',
-        className: 'pw--frame pw--side-controls t-pdp__carousel u-padding-md u-bg-color-neutral-10'
+        className: 'pw--frame pw--side-controls t-product-details__carousel u-padding-md u-bg-color-neutral-10'
     }
 
     // So long as we have items, display the carousel as intended!
@@ -60,11 +60,11 @@ const PDPCarousel = ({items, contentsLoaded}) => {
     )
 }
 
-PDPCarousel.defaultProps = {
+ProductDetailsCarousel.defaultProps = {
     items: []
 }
 
-PDPCarousel.propTypes = {
+ProductDetailsCarousel.propTypes = {
     contentsLoaded: PropTypes.bool,
     items: PropTypes.arrayOf(PropTypes.shape({
         position: PropTypes.string.isRequired,
@@ -73,8 +73,8 @@ PDPCarousel.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
-    contentsLoaded: selectors.getPdpContentsLoaded,
+    contentsLoaded: selectors.getProductDetailsContentsLoaded,
     items: selectorToJS(selectors.getProductCarouselItems)
 })
 
-export default connect(mapStateToProps)(PDPCarousel)
+export default connect(mapStateToProps)(ProductDetailsCarousel)

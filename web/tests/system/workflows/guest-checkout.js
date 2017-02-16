@@ -1,17 +1,17 @@
 import process from 'process'
 import Home from '../page-objects/home'
-import PLP from '../page-objects/plp'
-import PDP from '../page-objects/pdp'
+import ProductList from '../page-objects/plp'
+import ProductDetails from '../page-objects/productDetails'
 // import Cart from '../page-objects/cart'
 // import Checkout from '../page-objects/checkout'
 
 let home
 let plp
-let pdp
+let productDetails
 // let cart
 // let checkout
 
-const PLP_INDEX = process.env.PLP_INDEX || 2
+const PRODUCT_LIST_INDEX = process.env.PRODUCT_LIST_INDEX || 2
 const PRODUCT_INDEX = process.env.PRODUCT_INDEX || 1
 
 export default {
@@ -19,8 +19,8 @@ export default {
 
     before: (browser) => {
         home = new Home(browser)
-        plp = new PLP(browser)
-        pdp = new PDP(browser)
+        plp = new ProductList(browser)
+        productDetails = new ProductDetails(browser)
         // cart = new Cart(browser)
         // checkout = new Checkout(browser)
     },
@@ -36,31 +36,31 @@ export default {
             .assert.visible(home.selectors.wrapper)
     },
 
-    'Checkout - Guest - Step 2 - Navigate from Home to PLP': (browser) => {
-        home.navigateToPLP(PLP_INDEX)
+    'Checkout - Guest - Step 2 - Navigate from Home to ProductList': (browser) => {
+        home.navigateToProductList(PRODUCT_LIST_INDEX)
         browser
             .waitForElementVisible(plp.selectors.plpTemplateIdentifier)
             .assert.visible(plp.selectors.plpTemplateIdentifier)
     },
 
-    'Checkout - Guest - Step 3 - Navigate from PLP to PDP': (browser) => {
-        plp.navigateToPDP(PRODUCT_INDEX)
+    'Checkout - Guest - Step 3 - Navigate from ProductList to ProductDetails': (browser) => {
+        plp.navigateToProductDetails(PRODUCT_INDEX)
         browser
-            .waitForElementVisible(pdp.selectors.pdpTemplateIdentifier)
-            .assert.visible(pdp.selectors.pdpTemplateIdentifier)
+            .waitForElementVisible(productDetails.selectors.productDetailsTemplateIdentifier)
+            .assert.visible(productDetails.selectors.productDetailsTemplateIdentifier)
     },
 
     'Checkout - Guest - Step 4 - Add item to Shopping Cart': (browser) => {
-        pdp.addItemToCart()
+        productDetails.addItemToCart()
         browser
-            .waitForElementVisible(pdp.selectors.itemAdded)
-            .assert.visible(pdp.selectors.itemAdded)
+            .waitForElementVisible(productDetails.selectors.itemAdded)
+            .assert.visible(productDetails.selectors.itemAdded)
     },
 
 /* TODO: Uncomment the following once the Progressive Web build for Merlin's Potions has been completed.
 
-    'Checkout - Guest - Step 5 - Navigate from PDP to Shopping Cart': (browser) => {
-        pdp.navigateToCart()
+    'Checkout - Guest - Step 5 - Navigate from ProductDetails to Shopping Cart': (browser) => {
+        productDetails.navigateToCart()
         browser
             .waitForElementVisible(cart.selectors.cartTemplateIdentifier)
             .assert.visible(cart.selectors.cartTemplateIdentifier)
