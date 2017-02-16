@@ -74,18 +74,21 @@ class Login extends React.Component {
                     </Tabs>
                 </div>
             )
-        } else if (routeName === Login.SIGN_IN_SECTION) {
+        } else if (routeName === SIGN_IN_SECTION) {
             return (
                 <div className="t-login">
                     <SignInPanel />
                 </div>
             )
-        } else {
+        } else if (routeName === REGISTER_SECTION) {
             return (
                 <div className="t-login">
                     <RegisterPanel />
                 </div>
             )
+        } else {
+            console.log('route unsupported: ', routeName)
+            return null
         }
     }
 }
