@@ -53,24 +53,30 @@ self.addEventListener('activate', (e) => {
     )
 })
 
+const noCacheJSONResponse = (json) => {
+    return new Response(
+        new Blob(
+            [JSON.stringify(json)],
+            {type: 'application/json'}
+        ),
+        {
+            status: 200,
+            statusText: 'OK',
+            headers: new Headers({
+                'Cache-Control': 'no-cache, no-store, must-revalidate'
+            })
+        }
+    )
+}
+
 // App makes this asset request on each page fetch, expecting to see JSON of the
 // form `{offline: false}` if network supplies successful response.
 // In the case of failure, modify the response to be `{offline: true}` which
 // indicates to app that we are offline.
 const checkIfOffline = (request) => {
-    return fetch(request)
-        .catch(() => {
-            return new Response(
-                new Blob(
-                    [JSON.stringify({offline: true})],
-                    {type: 'application/json'}
-                ),
-                {
-                    status: 200,
-                    statusText: 'OK'
-                }
-            )
-        })
+    return fetch(new Request(request, {cache: 'no-store'}))
+        .then(() => noCacheJSONResponse({offline: false}))
+        .catch(() => noCacheJSONResponse({offline: true}))
 }
 
 // For enabling offline detection within the application

@@ -59,7 +59,9 @@ export const checkIfOffline = () => {
     return (dispatch) => {
         // we need to cachebreak every request to ensure we don't get something
         // stale from the disk cache on the device
-        return utils.makeRequest(`${getBuildOrigin()}static/js/offline-test.json?${Date.now()}`)
+        return fetch(`//cdn.mobify.com/sites/progressive-web-scaffold/bundles/51/static/js/offline-test.json?${Date.now()}`, {
+            cache: 'no-store'
+        })
             .then((response) => response.json())
             .then((json) => {
                 if (json.offline) {
@@ -86,8 +88,6 @@ export const fetchPage = (url, pageComponent, routeName) => {
         return utils.makeRequest(url)
             .then(jqueryResponse)
             .then((res) => {
-                dispatch(checkIfOffline())
-
                 const [$, $response] = res
 
                 const currentURL = selectors.getCurrentUrl(getState())
@@ -109,6 +109,10 @@ export const fetchPage = (url, pageComponent, routeName) => {
                 }
                 dispatch(footerActions.process(receivedAction))
                 dispatch(navigationActions.process(receivedAction))
+
+                // Finally, let's check if we received a cached response from the
+                // worker, but are in fact 'offline'
+                dispatch(checkIfOffline())
             })
             .catch((error) => {
                 console.info(error.message)
