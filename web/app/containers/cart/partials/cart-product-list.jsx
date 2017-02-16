@@ -44,63 +44,96 @@ const ProductSkeleton = () => (
 
 /* eslint-disable camelcase */
 
-const CartProductItem = ({product_name, product_image, configure_url, item_id, qty, product_price, onSaveLater, onQtyChange, openRemoveItemModal}) => (
-    <ProductItem
-        className={productItemClassNames}
-        title={<h2 className="u-h3">{product_name}</h2>}
-        image={<ProductImage {...product_image} />}
-        >
-        <p className="u-color-neutral-50">Color: Maroon</p>
-        <p className="u-margin-bottom-sm u-color-neutral-50">Size: XL</p>
+class CartProductItem extends React.Component {
+    constructor(props) {
+        super(props)
 
-        <FieldRow className="u-align-bottom">
-            <Field label="Quantity" idFor={`quantity-${item_id}`}>
-                <Stepper
-                    className="pw--simple t-cart__product-stepper"
-                    idForLabel={`quantity-${item_id}`}
-                    incrementIcon="plus"
-                    decrementIcon="minus"
-                    initialValue={qty}
-                    minimumValue={1}
-                    onChange={(newVal) => { onQtyChange(item_id, newVal) }}
-                    />
-            </Field>
+        this.changeQuantity = this.changeQuantity.bind(this)
+        this.removeItem = this.removeItem.bind(this)
+        this.saveForLater = this.saveForLater.bind(this)
+    }
 
-            <Field>
-                <div className="u-text-align-end u-flex">
-                    <div className="u-h5 u-color-accent u-text-semi-bold">{product_price}</div>
-                    <div className="u-text-quiet"><em>Was $29.99</em></div>
+    changeQuantity(newQty) {
+        this.props.onQtyChange(this.props.item_id, newQty)
+    }
+
+    removeItem() {
+        this.props.openRemoveItemModal(this.props.item_id)
+    }
+
+    saveForLater() {
+        this.props.onSaveLater(this.props.item_id)
+    }
+
+    render() {
+        const {
+            configure_url,
+            product_name,
+            product_image,
+            item_id,
+            qty,
+            product_price
+        } = this.props
+
+        return (
+            <ProductItem
+                className={productItemClassNames}
+                title={<h2 className="u-h3">{product_name}</h2>}
+                image={<ProductImage {...product_image} />}
+                >
+                <p className="u-color-neutral-50">Color: Maroon</p>
+                <p className="u-margin-bottom-sm u-color-neutral-50">Size: XL</p>
+
+                <FieldRow className="u-align-bottom">
+                    <Field label="Quantity" idFor={`quantity-${item_id}`}>
+                        <Stepper
+                            className="pw--simple t-cart__product-stepper"
+                            idForLabel={`quantity-${item_id}`}
+                            incrementIcon="plus"
+                            decrementIcon="minus"
+                            initialValue={qty}
+                            minimumValue={1}
+                            onChange={this.changeQuantity}
+                            />
+                    </Field>
+
+                    <Field>
+                        <div className="u-text-align-end u-flex">
+                            <div className="u-h5 u-color-accent u-text-semi-bold">{product_price}</div>
+                            <div className="u-text-quiet"><em>Was $29.99</em></div>
+                        </div>
+                    </Field>
+                </FieldRow>
+
+                <div className="u-flexbox">
+                    <Button
+                        className="u-text-small u-color-brand u-flex-none"
+                        innerClassName="c--no-min-width u-padding-start-0 u-padding-bottom-0"
+                        href={configure_url}
+                        >
+                        Edit
+                    </Button>
+
+                    <Button
+                        className="u-text-small u-color-brand u-padding-start-0 u-padding-end-0"
+                        innerClassName="u-padding-bottom-0"
+                        onClick={this.saveForLater}
+                        >
+                        Save for Later
+                    </Button>
+
+                    <Button
+                        className="u-text-small u-color-brand qa-cart__remove-item"
+                        innerClassName="u-padding-end-0 u-padding-bottom-0"
+                        onClick={this.removeItem}
+                        >
+                        Remove
+                    </Button>
                 </div>
-            </Field>
-        </FieldRow>
-
-        <div className="u-flexbox">
-            <Button
-                className="u-text-small u-color-brand u-flex-none"
-                innerClassName="c--no-min-width u-padding-start-0 u-padding-bottom-0"
-                href={configure_url}
-                >
-                Edit
-            </Button>
-
-            <Button
-                className="u-text-small u-color-brand u-padding-start-0 u-padding-end-0"
-                innerClassName="u-padding-bottom-0"
-                onClick={onSaveLater}
-                >
-                Save for Later
-            </Button>
-
-            <Button
-                className="u-text-small u-color-brand qa-cart__remove-item"
-                innerClassName="u-padding-end-0 u-padding-bottom-0"
-                onClick={() => { openRemoveItemModal(item_id) }}
-                >
-                Remove
-            </Button>
-        </div>
-    </ProductItem>
-)
+            </ProductItem>
+        )
+    }
+}
 
 CartProductItem.defaultProps = {
     onQtyChange: noop
