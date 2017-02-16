@@ -42,21 +42,20 @@ const ProductSkeleton = () => (
 
 /* eslint-disable camelcase */
 
-const CartProductItem = ({product_name, product_image, item_id, idx, qty, product_price, onSaveLater, openRemoveItemModal}) => (
+const CartProductItem = ({product_name, product_image, item_id, qty, product_price, onSaveLater, openRemoveItemModal}) => (
     <ProductItem
         className={productItemClassNames}
         title={<h2 className="u-h3">{product_name}</h2>}
-        key={idx}
         image={<ProductImage {...product_image} />}
         >
         <p className="u-color-neutral-50">Color: Maroon</p>
         <p className="u-margin-bottom-sm u-color-neutral-50">Size: XL</p>
 
         <FieldRow className="u-align-bottom">
-            <Field label="Quantity" idFor={`quantity-${idx}`}>
+            <Field label="Quantity" idFor={`quantity-${item_id}`}>
                 <Stepper
                     className="pw--simple t-cart__product-stepper"
-                    idForLabel={`quantity-${idx}`}
+                    idForLabel={`quantity-${item_id}`}
                     incrementIcon="plus"
                     decrementIcon="minus"
                     initialValue={qty}
@@ -100,7 +99,6 @@ const CartProductItem = ({product_name, product_image, item_id, idx, qty, produc
 )
 
 CartProductItem.propTypes = {
-    idx: PropTypes.number,
     item_id: PropTypes.string,
     openRemoveItemModal: PropTypes.func,
     product_image: PropTypes.object,
@@ -131,7 +129,7 @@ const CartProductList = ({items, summaryCount, onSaveLater, openRemoveItemModal}
             <List className="u-bg-color-neutral-00 u-border-light-top u-border-light-bottom">
                 {isCartEmpty && <ProductSkeleton />}
 
-                {items.map((item, idx) => (<CartProductItem {...item} key={item.item_id} idx={idx} openRemoveItemModal={openRemoveItemModal} onSaveLater={onSaveLater} />))}
+                {items.map((item) => (<CartProductItem {...item} key={item.item_id} openRemoveItemModal={openRemoveItemModal} onSaveLater={onSaveLater} />))}
             </List>
         </div>
     )
