@@ -68,9 +68,9 @@ PDPItemAddedModal.propTypes = {
     price: PropTypes.string,
     productImage: PropTypes.string,
     quantity: PropTypes.number,
+    title: PropTypes.string,
     onDismiss: PropTypes.func,
     onGoToCheckout: PropTypes.func,
-    title: PropTypes.string
 }
 
 const mapStateToProps = createStructuredSelector({
