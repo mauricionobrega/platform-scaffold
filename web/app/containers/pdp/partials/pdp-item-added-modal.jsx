@@ -14,9 +14,16 @@ import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import ProductItem from '../../../components/product-item'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
-const PDPItemAddedModal = ({open, onDismiss, quantity, title, price, productImage, coverage, onGoToCheckout}) => (
-    <Sheet open={open} onDismiss={onDismiss} effect="slide-bottom" className="t-plp__item-added-modal" coverage={coverage}>
+// calculates modal height based on user screen size 50% by default
+let coverage = '50'
+if (window.innerHeight < 370) {
+    coverage = '70'
+} else if (window.innerHeight < 460) {
+    coverage = '56'
+}
 
+const PDPItemAddedModal = ({open, onDismiss, quantity, title, price, productImage, onGoToCheckout}) => (
+    <Sheet open={open} onDismiss={onDismiss} effect="slide-bottom" className="t-plp__item-added-modal" coverage={coverage}>
         {/* Modal header */}
         <div className="u-flex-none u-border-bottom">
             <div className="u-flexbox u-align-center">
@@ -63,7 +70,6 @@ const PDPItemAddedModal = ({open, onDismiss, quantity, title, price, productImag
 )
 
 PDPItemAddedModal.propTypes = {
-    coverage: PropTypes.string,
     open: PropTypes.bool,
     price: PropTypes.string,
     productImage: PropTypes.string,
