@@ -9,6 +9,8 @@ const colors = {
     whiteColor: '#ffffff'
 }
 
+const previewEnabled = true
+
 const baseConfig = {
     baseURL: 'https://www.merlinspotions.com',
     previewBundle: AstroNative.Configuration.DEBUG
@@ -16,6 +18,7 @@ const baseConfig = {
         : '//cdn.mobify.com/sites/progressive-web-scaffold/astro/loader.js',
     colors,
     logoUrl: 'file:///logo.png',
+    previewEnabled
 }
 
 export default baseConfig
