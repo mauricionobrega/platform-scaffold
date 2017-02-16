@@ -16,12 +16,15 @@ import AppProvider from './app-provider'
 // added to the markup in `loader.js`
 import Stylesheet from './stylesheet.scss' // eslint-disable-line no-unused-vars
 
-import {analyticsInitializer} from './utils/analytics-manager'
+import {analyticsInitializer} from 'progressive-web-sdk/dist/analytics/analytic-manager'
 import * as ClientGA from './utils/analytics/client-ga'
 
 polyfill()
 
-analyticsInitializer(ClientGA)
+analyticsInitializer({
+	projectSlug: AJS_SLUG,		// eslint-disable-line no-undef
+	isDebug: false
+}, ClientGA)
 initCacheManifest(cacheHashManifest)
 
 const store = configureStore()
