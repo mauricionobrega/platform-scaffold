@@ -78,10 +78,6 @@ export const updateShippingAndBilling = (parsedFormData) => {
             method: 'POST',
             processData: false,
             contentType: false,
-            headers: {
-                Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-                'Upgrade-Insecure-Requests': 1
-            },
             error: (response) => {
                 console.error('Updating the user Shipping/Billing address failed. Response log:')
                 console.error(response)
