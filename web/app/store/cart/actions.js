@@ -11,6 +11,9 @@ import {addNotification, removeNotification} from '../../containers/app/actions'
 
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 
+const LOAD_CART_SECTION_URL = '/customer/section/load/?sections=cart'
+const REMOVE_CART_ITEM_URL = '/checkout/sidebar/removeItem/'
+const UPDATE_ITEM_URL = '/checkout/sidebar/updateItemQty/'
 const baseHeaders = {
     Accept: 'application/json',
 }
@@ -25,7 +28,7 @@ export const getCart = () => (dispatch) => {
         headers: baseHeaders
     }
     dispatch(removeNotification('cartQtyError'))
-    return utils.makeRequest('/customer/section/load/?sections=cart', opts)
+    return utils.makeRequest(LOAD_CART_SECTION_URL, opts)
         .then((response) => response.text())
         .then((responseText) => dispatch(receiveCartContents(parse(responseText))))
 }
@@ -50,7 +53,7 @@ export const removeFromCart = (itemId) => {
     })
 
     const opts = {headers, body, method: 'POST'}
-    return fetch('/checkout/sidebar/removeItem/', opts)
+    return fetch(REMOVE_CART_ITEM_URL, opts)
         .json()
 }
 
@@ -71,7 +74,7 @@ export const updateItemQuantity = (itemId, itemQuantity) => {
         }
 
         const opts = {headers, body, method: 'POST'}
-        return makeRequest('/checkout/sidebar/updateItemQty/', opts)
+        return makeRequest(UPDATE_ITEM_URL, opts)
             .then((response) => response.json())
             .then((responseJSON) => {
                 if (responseJSON.success) {
