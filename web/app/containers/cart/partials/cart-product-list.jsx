@@ -117,7 +117,7 @@ const CartProductList = ({items, summaryCount, onSaveLater}) => {
                         Cart {summaryCount > 0 && <span>({summaryCount} Items)</span>}
                     </h1>
 
-                    <Button className="u-flex-none u-color-brand">
+                    <Button className="u-flex-none u-color-brand" href="/customer/account/login/">
                         <Icon name="user" />
                         Sign in
                     </Button>
