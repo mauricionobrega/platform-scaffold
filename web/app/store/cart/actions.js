@@ -7,7 +7,7 @@
  */
 import parse from './parsers/parser'
 import * as utils from '../../utils/utils'
-import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+import {makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {addNotification, removeAllNotifications} from '../../containers/app/actions'
 
 const baseHeaders = {
@@ -42,14 +42,7 @@ export const getCart = () => (dispatch) => {
  */
 export const removeFromCart = (itemId) => {
     return (dispatch) => {
-        const body = `item_id=${itemId}`
-        const headers = {
-            ...baseHeaders,
-            'Content-Type': 'application/x-www-form-urlencoded',
-        }
-
-        const opts = {headers, body, method: 'POST'}
-        return makeRequest('/checkout/sidebar/removeItem/', opts)
+        return makeFormEncodedRequest('/checkout/sidebar/removeItem/', {item_id: itemId}, {method: 'POST'})
             .then((response) => response.json())
             .then((responseJSON) => {
                 if (responseJSON.success) {

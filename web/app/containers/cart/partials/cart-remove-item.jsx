@@ -74,13 +74,13 @@ CartRemoveItemModal.propTypes = {
      */
     isOpen: React.PropTypes.bool,
     /**
-    * The id of the item being deleted
-    */
-    removeItemID: React.PropTypes.string,
-    /**
     * Removes the item from the cart
     */
-    removeFromCart: React.PropTypes.func
+    removeFromCart: React.PropTypes.func,
+    /**
+    * The id of the item being deleted
+    */
+    removeItemID: React.PropTypes.string
 }
 
 const mapStateToProps = createStructuredSelector({

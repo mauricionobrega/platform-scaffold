@@ -10,7 +10,6 @@ import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Image from 'progressive-web-sdk/dist/components/image'
 
 import {getCartContentsLoaded, getCartHasItems} from '../../store/cart/selectors'
-import {getRemoveItemID} from './selectors'
 import CartEstimateShippingModal from './partials/cart-estimate-shipping'
 import CartWishlistModal from './partials/cart-wishlist'
 import CartRemoveItemModal from './partials/cart-remove-item'
