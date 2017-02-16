@@ -11,6 +11,8 @@ import {getCustomerEntityID} from '../../store/checkout/selectors'
 import {getShippingAddress} from '../../store/checkout/shipping/selectors'
 import {getIsLoggedIn} from '../app/selectors'
 
+import {receiveCheckoutData} from '../../store/checkout/actions'
+
 export const receiveContents = createAction('Received CheckoutPayment Contents')
 export const toggleFixedPlaceOrder = createAction('Toggled the fixed "Place Order" container', 'isFixedPlaceOrderShown')
 export const toggleCardInputRadio = createAction('Toggled the card method radio input', 'isNewCardInputSelected')
@@ -41,10 +43,10 @@ export const submitPayment = () => {
         const isLoggedIn = getIsLoggedIn(currentState)
         const sameAddress = getPaymentBillingFormValues(currentState).billing_same_as_shipping
 
-        let addressData = {}
+        let address = {}
 
         if (sameAddress) {
-            addressData = getShippingAddress(currentState).toJS()
+            address = getShippingAddress(currentState).toJS()
         } else {
             const {
                 name,
@@ -58,7 +60,7 @@ export const submitPayment = () => {
             } = getPaymentBillingFormValues(currentState)
             const names = name.split(' ')
 
-            addressData = {
+            address = {
                 firstname: names.slice(0, -1).join(' '),
                 lastname: names.slice(-1).join(' '),
                 company: company || '',
@@ -73,7 +75,7 @@ export const submitPayment = () => {
 
         const paymentInformation = {
             billingAddress: {
-                ...addressData
+                ...address
             },
             cartId: entityID,
             // TODO: Obtain email from shipping step
@@ -85,6 +87,8 @@ export const submitPayment = () => {
             }
         }
         const persistPaymentURL = `https://www.merlinspotions.com/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/payment-information`
+        // Save payment address for confirmation
+        dispatch(receiveCheckoutData({payment: {address}}))
         makeJsonEncodedRequest(persistPaymentURL, paymentInformation, {method: 'POST'})
             .then((response) => response.json())
             .then((responseJSON) => {
