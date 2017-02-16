@@ -7,7 +7,7 @@
  */
 import parse from './parsers/parser'
 import * as utils from '../../utils/utils'
-import {addNotification, removeAllNotifications} from '../../containers/app/actions'
+import {addNotification, removeNotification} from '../../containers/app/actions'
 
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 
@@ -24,7 +24,7 @@ export const getCart = () => (dispatch) => {
     const opts = {
         headers: baseHeaders
     }
-    dispatch(removeAllNotifications())
+    dispatch(removeNotification('cartQtyError'))
     return utils.makeRequest('/customer/section/load/?sections=cart', opts)
         .then((response) => response.text())
         .then((responseText) => dispatch(receiveCartContents(parse(responseText))))
