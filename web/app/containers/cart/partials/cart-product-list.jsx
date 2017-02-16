@@ -6,6 +6,7 @@ import {CART_WISHLIST_MODAL} from '../constants'
 import {openModal} from '../../../store/modals/actions'
 import {updateItemQuantity} from '../../../store/cart/actions'
 import {getCartItems, getCartSummaryCount} from '../../../store/cart/selectors'
+import {noop} from 'progressive-web-sdk/dist/utils/utils'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
@@ -100,7 +101,7 @@ const CartProductItem = ({product_name, product_image, item_id, idx, qty, produc
 )
 
 CartProductItem.defaultProps = {
-    onQtyChange: () => {}
+    onQtyChange: noop
 }
 
 CartProductItem.propTypes = {
