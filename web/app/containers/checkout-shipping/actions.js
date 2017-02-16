@@ -2,12 +2,10 @@ import {browserHistory} from 'react-router'
 import {createAction} from '../../utils/utils'
 import CheckoutShipping from './container'
 import checkoutShippingParser from './parsers/checkout-shipping'
-import shippingMethodParser from './parsers/shipping-method'
 import {addNotification, fetchPage, removeAllNotifications, removeNotification} from '../app/actions'
 import {getCustomerEntityID} from '../../store/checkout/selectors'
 import {getIsLoggedIn} from '../app/selectors'
 import {getShippingFormValues} from '../../store/form/selectors'
-import {receiveShippingMethodInitialValues, receiveCheckoutData} from '../../store/checkout/actions'
 
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 
@@ -81,33 +79,6 @@ export const submitSignIn = () => {
                 }
             }
         })
-    }
-}
-
-export const fetchShippingMethods = () => {
-    return (dispatch, getState) => {
-        const currentState = getState()
-        const isLoggedIn = getIsLoggedIn(currentState)
-        const formValues = getShippingFormValues(currentState)
-        const entityID = getCustomerEntityID(currentState)
-        // Default values to use if none have been selected
-        const address = {country_id: 'US', region_id: '0', postcode: null}
-        if (formValues) {
-            address.country_id = formValues.country_id
-            address.region_id = formValues.region_id
-            address.postcode = formValues.postcode
-        }
-        const getEstimateURL = `https://www.merlinspotions.com/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/estimate-shipping-methods`
-        makeJsonEncodedRequest(getEstimateURL, {address}, {method: 'POST'})
-            .then((response) => response.json())
-            .then((responseJSON) => {
-                const shippingMethods = shippingMethodParser(responseJSON)
-                const initialValues = {
-                    shipping_method: shippingMethods[0].value
-                }
-                dispatch(receiveData({shippingMethods}))
-                dispatch(receiveShippingMethodInitialValues({initialValues})) // set initial value for method
-            })
     }
 }
 

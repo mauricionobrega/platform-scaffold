@@ -4,8 +4,8 @@ import {createStructuredSelector} from 'reselect'
 import {selectorToJS} from '../../../utils/selector-utils'
 import * as ReduxForm from 'redux-form'
 
-import {fetchShippingMethods} from '../actions'
-import {getShippingMethods} from '../selectors'
+import {fetchShippingMethods} from '../../../store/checkout/shipping/actions'
+import {getShippingMethods} from '../../../store/checkout/shipping/selectors'
 import {getCustomerEntityID} from '../../../store/checkout/selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'

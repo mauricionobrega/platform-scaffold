@@ -3,4 +3,4 @@ import {getForm} from '../selectors'
 
 export const getShippingForm = createSelector(getForm, (form) => form.shippingForm)
 
-export const getShippingFormValues = createSelector(getShippingForm, (shippingForm) => shippingForm.values)
+export const getShippingFormValues = createSelector(getShippingForm, (shippingForm) => { return shippingForm ? shippingForm.values : undefined })

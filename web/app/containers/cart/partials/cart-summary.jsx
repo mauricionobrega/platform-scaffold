@@ -4,13 +4,15 @@ import {createStructuredSelector} from 'reselect'
 import * as cartSelectors from '../../../store/cart/selectors'
 import {CART_ESTIMATE_SHIPPING_MODAL} from '../constants'
 import {openModal} from '../../../store/modals/actions'
+import {fetchShippingMethods} from '../../../store/checkout/shipping/actions'
+import {getDefaultShippingRate} from '../../../store/checkout/shipping/selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import CartPromoForm from './cart-promo-form'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import {Ledger, LedgerRow} from 'progressive-web-sdk/dist/components/ledger'
 
-const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, onCalculateClick}) => {
+const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, shippingRate, onCalculateClick}) => {
     const calculateButton = (
         <Button innerClassName="u-padding-end-0 u-color-brand" onClick={onCalculateClick}>
             Calculate <Icon name="chevron-right" />
@@ -40,13 +42,13 @@ const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, onCalculat
 
                     <LedgerRow
                         label="Shipping (Flat - Fixed Rate)"
-                        value="$10.00"
+                        value={shippingRate}
                     />
 
-                    <LedgerRow
+                    {/* <LedgerRow
                         label="Discount: FREESHIP"
                         valueAction={<span className="u-color-accent">-$10.00</span>}
-                    />
+                    />*/}
 
                     <LedgerRow
                         className="u-flex-none"
@@ -75,7 +77,9 @@ const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, onCalculat
     )
 }
 
+
 CartSummary.propTypes = {
+    shippingRate: PropTypes.string,
     subtotalExclTax: PropTypes.string,
     subtotalInclTax: PropTypes.string,
     summaryCount: PropTypes.number,
@@ -83,13 +87,15 @@ CartSummary.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
+    shippingRate: getDefaultShippingRate,
     subtotalExclTax: cartSelectors.getSubtotalExcludingTax,
     subtotalInclTax: cartSelectors.getSubtotalIncludingTax,
     summaryCount: cartSelectors.getCartSummaryCount,
 })
 
 const mapDispatchToProps = {
-    onCalculateClick: () => openModal(CART_ESTIMATE_SHIPPING_MODAL)
+    onCalculateClick: () => openModal(CART_ESTIMATE_SHIPPING_MODAL),
+    fetchShippingMethods
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartSummary)
