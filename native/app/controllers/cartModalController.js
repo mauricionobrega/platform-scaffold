@@ -4,13 +4,29 @@ import AnchoredLayoutPlugin from 'progressive-app-sdk/plugins/anchoredLayoutPlug
 import ModalViewPlugin from 'progressive-app-sdk/plugins/modalViewPlugin'
 import NavigationPlugin from 'progressive-app-sdk/plugins/navigationPlugin'
 
+import AppEvents from '../global/app-events'
 import CartHeaderController from './cartHeaderController'
 import CartConfig from '../config/cartConfig'
+
+const Events = {
+    signInShow: 'sign-in:show',
+    shopShow: 'shop:show'
+}
 
 const CartModalController = function(modalView, navigationView) {
     this.isShowing = false
     this.viewPlugin = modalView
     this.navigationView = navigationView
+
+    this.navigationView.on('sign-in:clicked', () => {
+        this.hide()
+        AppEvents.trigger(Events.signInShow)
+    })
+
+    this.navigationView.on('continue:clicked', () => {
+        this.hide()
+        AppEvents.trigger(Events.shopShow)
+    })
 }
 
 CartModalController.init = async function() {
@@ -71,5 +87,7 @@ CartModalController.prototype.hide = async function() {
 CartModalController.prototype.isActiveItem = function() {
     return this.isShowing
 }
+
+export {Events}
 
 export default CartModalController
