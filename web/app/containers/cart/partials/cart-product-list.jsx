@@ -138,7 +138,6 @@ const CartProductList = ({items, summaryCount, onSaveLater, openRemoveItemModal}
 CartProductList.propTypes = {
     items: PropTypes.array,
     openRemoveItemModal: PropTypes.func,
-    removeFromCart: PropTypes.func,
     summaryCount: PropTypes.number,
     onSaveLater: PropTypes.func,
 }
@@ -150,7 +149,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
     onSaveLater: () => openModal(CART_WISHLIST_MODAL),
-    openRemoveItemModal: (itemId) => openRemoveItemModal(itemId)
+    openRemoveItemModal
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartProductList)
