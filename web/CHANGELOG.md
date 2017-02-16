@@ -1,3 +1,6 @@
+## To be released
+- Add option to analyze bundle after build. Set `MOBIFY_ANALYZE` environment variable to `true` before running any build. Eg. `MOBIFY_ANALYZE=true npm run prod:build`
+
 ## 0.11.0 (February 10, 2017)
 - Upgrade to the latest SDK
 - Get new generators to match the architecture 2.0
