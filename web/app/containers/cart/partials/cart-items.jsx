@@ -4,6 +4,7 @@ import {createStructuredSelector} from 'reselect'
 import classNames from 'classnames'
 
 import {getCartHasItems} from '../../../store/cart/selectors'
+import {continueShopping} from '../../../store/cart/actions'
 import {GridSpan} from 'progressive-web-sdk/dist/components/grid'
 import Button from 'progressive-web-sdk/dist/components/button'
 import CartProductList from './cart-product-list'
@@ -24,7 +25,7 @@ const CartItems = ({hasItems}) => {
                 <CartSummary />
 
                 <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg">
-                    <Button className="c--tertiary u-width-full u-text-uppercase">
+                    <Button className="c--tertiary u-width-full u-text-uppercase" onClick={continueShopping}>
                         Continue Shopping
                     </Button>
                 </div>

@@ -7,12 +7,30 @@
  */
 import parse from './parsers/parser'
 import * as utils from '../../utils/utils'
+import {isRunningInAstro} from '../../utils/astro-integration'
+import Astro from '../../vendor/astro-client'
 
 const baseHeaders = {
     Accept: 'application/json',
 }
 
 export const receiveCartContents = utils.createAction('Received Cart Contents')
+
+export const openSignIn = () => {
+    if (isRunningInAstro) {
+        Astro.trigger('sign-in:clicked')
+    } else {
+        // web open signIn
+    }
+}
+
+export const continueShopping = () => {
+    if (isRunningInAstro) {
+        Astro.trigger('continue:clicked')
+    } else {
+        // web open continue
+    }
+}
 
 /**
  * Get the contents of the users cart
