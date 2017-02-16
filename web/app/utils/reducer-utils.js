@@ -13,7 +13,7 @@ const isList = Immutable.List.isList
 // for a = {test: [1, 2, 3]}, b = {test: [1, 2]}
 // a.mergeDeep(b) => {test: [1, 2, 3]}
 // Based on: https://github.com/facebook/immutable-js/issues/762
-export const listMerger = (a, b) => {
+export const mergeSkipLists = (a, b) => {
     if (a && a.mergeWith && !isList(a) && !isList(b)) {
         return a.mergeWith(listMerger, b)
     }
