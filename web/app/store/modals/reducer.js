@@ -8,11 +8,9 @@ const initialState = Map()
 
 const modalReducer = handleActions({
     [modalActions.openModal]: (state, {payload: modalName}) =>
-        state.setIn([modalName, 'isOpen'], true),
+        state.set(modalName, true),
     [modalActions.closeModal]: (state, {payload: modalName}) =>
-        state.setIn([modalName, 'isOpen'], false),
-    [modalActions.receiveModalContents]: (state, {payload: {modalName, ...contents}}) =>
-        state.set(modalName, Map(contents)),
+        state.set(modalName, false),
     [modalActions.closeAllModals]: () => initialState,
     [appActions.onRouteChanged]: () => initialState
 

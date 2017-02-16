@@ -6,12 +6,13 @@ import {CART_REMOVE_ITEM_MODAL} from '../constants'
 import {removeFromCart} from '../../../store/cart/actions'
 import {closeModal} from '../../../store/modals/actions'
 import {isModalOpen} from '../../../store/selectors'
+import {getRemoveItemID} from '../selectors'
 
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 import Button from 'progressive-web-sdk/dist/components/button'
 import Image from 'progressive-web-sdk/dist/components/image'
 
-const CartRemoveItemModal = ({closeModal, isOpen, itemID, removeFromCart}) => {
+const CartRemoveItemModal = ({closeModal, isOpen, removeItemID, removeFromCart}) => {
     return (
         <Sheet
             className="pw--no-shadow t-cart__remove-item-confirmation-modal"
@@ -52,7 +53,7 @@ const CartRemoveItemModal = ({closeModal, isOpen, itemID, removeFromCart}) => {
                         className="c--secondary u-text-uppercase u-flex u-margin-start"
                         onClick={() => {
                             closeModal()
-                            removeFromCart(itemID)
+                            removeFromCart(removeItemID)
                         }}
                     >
                         Ok
@@ -75,7 +76,7 @@ CartRemoveItemModal.propTypes = {
     /**
     * The id of the item being deleted
     */
-    itemID: React.PropTypes.string,
+    removeItemID: React.PropTypes.string,
     /**
     * Removes the item from the cart
     */
@@ -83,11 +84,12 @@ CartRemoveItemModal.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
-    isOpen: isModalOpen(CART_REMOVE_ITEM_MODAL)
+    isOpen: isModalOpen(CART_REMOVE_ITEM_MODAL),
+    removeItemID: getRemoveItemID
 })
 
 const mapDispatchToProps = {
     closeModal: () => closeModal(CART_REMOVE_ITEM_MODAL),
-    removeFromCart: (itemId) => removeFromCart(itemId)
+    removeFromCart
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CartRemoveItemModal)

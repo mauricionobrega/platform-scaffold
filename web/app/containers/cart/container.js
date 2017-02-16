@@ -55,7 +55,7 @@ EmptyCartContents.propTypes = {
     hide: PropTypes.bool
 }
 
-const Cart = ({contentsLoaded, hasItems, removeItemID}) => {
+const Cart = ({contentsLoaded, hasItems}) => {
     const isCartEmptyAndLoaded = !hasItems && contentsLoaded
     const templateClassnames = classNames('t-cart u-bg-color-neutral-10', {
         't--loaded': contentsLoaded
@@ -71,7 +71,7 @@ const Cart = ({contentsLoaded, hasItems, removeItemID}) => {
 
             <CartEstimateShippingModal />
             <CartWishlistModal />
-            <CartRemoveItemModal itemID={removeItemID} />
+            <CartRemoveItemModal />
         </div>
     )
 }
@@ -84,8 +84,7 @@ Cart.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
     contentsLoaded: getCartContentsLoaded,
-    hasItems: getCartHasItems,
-    removeItemID: getRemoveItemID
+    hasItems: getCartHasItems
 })
 
 export default connect(mapStateToProps)(Cart)
