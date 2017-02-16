@@ -10,6 +10,7 @@ describe('The Login', () => {
             route: 'register'
         }
         const login = shallow(<Login isRunningInAstro={false} route={route} />)
+        console.log(login.children())
         expect(login.children().length).toBe(2)
     })
 
@@ -18,6 +19,7 @@ describe('The Login', () => {
             route: 'signin'
         }
         const login = shallow(<Login isRunningInAstro={true} route={route} />)
-        expect(login.children().length).toBe(1)
+        console.log(login.children())
+        expect(login.children().length).toBe(0)
     })
 })
