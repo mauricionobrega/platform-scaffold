@@ -32,7 +32,8 @@ export const getSelectedProduct = createGetSelector(
     Immutable.Map()
 )
 
-export const getItemQuantity = createGetSelector(getSelectedPdp, 'itemQuantity', 1)
+export const getItemQuantity = createGetSelector(getSelectedPdp, 'itemQuantity')
+export const getCTAText = createGetSelector(getSelectedPdp, 'ctaText')
 export const getItemAddedModalOpen = isModalOpen('pdp-item-added')
 export const getFormInfo = createGetSelector(getSelectedPdp, 'formInfo')
 
