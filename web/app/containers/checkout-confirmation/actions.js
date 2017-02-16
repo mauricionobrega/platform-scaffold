@@ -72,24 +72,6 @@ export const updateShippingAndBilling = (parsedFormData) => {
             }
         }
 
-        // Set the url to the "edit account address" page to match the Request
-        // Header's `referer` parameter to what's used on desktop
-        history.pushState(null, null, 'https://www.merlinspotions.com/customer/address/edit/id/8/')
-
-        // const requestOptions = {
-        //     method: 'POST',
-        //     headers: new Headers({
-        //         Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-        //         'Upgrade-Insecure-Requests': 1
-        //     }),
-        //     body: formData
-        // }
-        // makeRequest(postUpdateCustomerAddressURL, requestOptions)
-        //     .then((response) => {
-        //         console.log('response for updating customer address', response)
-        //         history.pushState(null, null, 'https://www.merlinspotions.com/checkout/confirmation/')
-        //     })
-
         window.Progressive.$.ajax({
             url: postUpdateCustomerAddressURL,
             data: formData,
