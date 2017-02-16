@@ -14,7 +14,7 @@ import Image from 'progressive-web-sdk/dist/components/image'
 const CartRemoveItemModal = ({closeModal, isOpen, itemID, removeFromCart}) => {
     return (
         <Sheet
-            className="pw--no-shadow t-cart__wishlist-modal"
+            className="pw--no-shadow t-cart__remove-item-confirmation-modal"
             open={isOpen}
             onDismiss={closeModal}
             maskOpacity={0.7}
@@ -25,10 +25,10 @@ const CartRemoveItemModal = ({closeModal, isOpen, itemID, removeFromCart}) => {
             <div className="u-flexbox u-direction-column u-align-center u-padding-md u-padding-top-lg u-padding-bottom-lg u-text-align-center">
                 <div className="u-padding-md">
                     <Image
-                        src={getAssetUrl('static/img/cart/wishlist@2x.png')}
+                        src={getAssetUrl('static/img/cart/remove-item@2x.png')}
                         alt=""
-                        height="73px"
-                        width="104px"
+                        height="75px"
+                        width="95px"
                     />
                 </div>
 
@@ -42,13 +42,14 @@ const CartRemoveItemModal = ({closeModal, isOpen, itemID, removeFromCart}) => {
 
                 <div className="u-flex u-flexbox">
                     <Button
-                        className="c--tertiary u-text-uppercase"
+                        className="c--tertiary u-text-uppercase u-flex"
                         onClick={closeModal}
                     >
                         Cancel
                     </Button>
+
                     <Button
-                        className="c--secondary u-text-uppercase"
+                        className="c--secondary u-text-uppercase u-flex u-margin-start"
                         onClick={() => {
                             closeModal()
                             removeFromCart(itemID)
