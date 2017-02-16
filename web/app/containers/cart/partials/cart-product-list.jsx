@@ -99,6 +99,10 @@ const CartProductItem = ({product_name, product_image, item_id, idx, qty, produc
     </ProductItem>
 )
 
+CartProductItem.defaultProps = {
+    onQtyChange: () => {}
+}
+
 CartProductItem.propTypes = {
     idx: PropTypes.number,
     item_id: PropTypes.string,
