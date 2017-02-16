@@ -3,8 +3,12 @@ import TabBarPlugin from 'progressive-app-sdk/plugins/tabBarPlugin'
 
 import {tabBarConfig} from '../config/tabBarConfig'
 import baseConfig from '../config/baseConfig'
+
+import {Events} from './cartModalController'
+
 import TabController from './tabController'
 import AccountTabController from './accountTabController'
+import AppEvents from '../global/app-events'
 
 const TabBarController = function(tabBar, layout, tabControllers) {
     this.tabBar = tabBar
@@ -18,6 +22,10 @@ const TabBarController = function(tabBar, layout, tabControllers) {
     this.accountTabController = tabControllers.account
 
     this.tabBar.on('itemSelect', (data) => this._tabSelected(data.id))
+
+    AppEvents.on(Events.signInShow, () => this.showSignIn())
+
+    AppEvents.on(Events.shopShow, () => this.selectTab('shop'))
 }
 
 TabBarController.init = async function() {

@@ -11,12 +11,12 @@ const CartHelp = () => (
             </h2>
         </div>
 
-        <Accordion className="u-bg-color-neutral-10">
-            <AccordionItem header="Returns and Exchange" iconSize="medium" closeIconName="close">
+        <Accordion className="u-bg-color-neutral-00">
+            <AccordionItem header="Returns and Exchange" closeIconName="close">
                 <div>Lorem Ipsum dolor sit amet</div>
             </AccordionItem>
 
-            <AccordionItem header="Contact Us" iconSize="medium" closeIconName="close">
+            <AccordionItem header="Contact Us" closeIconName="close">
                 <div>Lorem Ipsum dolor sit amet</div>
             </AccordionItem>
         </Accordion>
