@@ -15,7 +15,7 @@ const isList = Immutable.List.isList
 // Based on: https://github.com/facebook/immutable-js/issues/762
 export const mergeSkipLists = (a, b) => {
     if (a && a.mergeWith && !isList(a) && !isList(b)) {
-        return a.mergeWith(listMerger, b)
+        return a.mergeWith(mergeSkipLists, b)
     }
     return b
 }
