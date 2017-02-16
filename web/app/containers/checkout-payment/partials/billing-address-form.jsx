@@ -74,18 +74,20 @@ class BillingAddressForm extends React.Component {
                 </div>
 
                 <div className="u-border-light-top u-border-light-bottom u-bg-color-neutral-00 t-checkout-payment__card">
-                    <FieldRow className="u-padding-md">
-                        <ReduxForm.Field
-                            component={Field}
-                            name="billing_same_as_shipping"
-                            label={<strong className="u-text-semi-bold">Same as shipping address</strong>}
-                            caption={shippingAddress}
-                        >
-                            <input type="checkbox" defaultChecked={!newShippingAddressIsEnabled} onChange={this.handleSavedAddress} noValidate />
-                        </ReduxForm.Field>
-                    </FieldRow>
+                    {city &&
+                        <FieldRow className="u-padding-md">
+                            <ReduxForm.Field
+                                component={Field}
+                                name="billing_same_as_shipping"
+                                label={<strong className="u-text-semi-bold">Same as shipping address</strong>}
+                                caption={shippingAddress}
+                            >
+                                <input type="checkbox" defaultChecked={!newShippingAddressIsEnabled} onChange={this.handleSavedAddress} noValidate />
+                            </ReduxForm.Field>
+                        </FieldRow>
+                    }
 
-                    {newShippingAddressIsEnabled &&
+                    {(newShippingAddressIsEnabled || !city) &&
                         <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg u-border-light-top">
                             <FieldRow>
                                 <ReduxForm.Field component={Field} name="name" label="Full name">
