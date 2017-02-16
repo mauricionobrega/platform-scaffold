@@ -34,6 +34,17 @@ export const updateShippingAndBilling = (parsedFormData) => {
         console.log('getState', getState())
 
         const formCredentials = {
+            // Parsed Form Data
+            ...parsedFormData,
+
+            // ...
+            success_url: '',
+            error_url: '',
+
+            //
+            firstname: 'Billy',
+            lastname: 'Bob',
+
             // Details
             company: 'I AM COMPANY',
             telephone: '111-222-3333',
@@ -50,29 +61,50 @@ export const updateShippingAndBilling = (parsedFormData) => {
             // other form settings
             default_billing: 1,
             default_shipping: 1,
-            success_url: '',
-            error_url: '',
-
-            // Parsed Form Data
-            ...parsedFormData
         }
-
-        console.log('formCredentials', formCredentials)
 
         const postUpdateCustomerAddressURL = 'https://www.merlinspotions.com/customer/address/formPost/'
-        // const requestOptions = {
-        //     method: 'POST',
-        //     headers: new Headers({'content-type': 'multipart/form-data'})
-        // }
-        const requestOptions = {
-            method: 'POST',
-            headers: {'content-type': 'multipart/form-data'}
+        const formData = new FormData()
+        for (const key in formCredentials) {
+            if (Object.prototype.hasOwnProperty.call(formCredentials, key)) {
+                console.log(key, formCredentials[key])
+                formData.append(key, formCredentials[key])
+            }
         }
 
-        makeFormEncodedRequest(postUpdateCustomerAddressURL, formCredentials, requestOptions)
-            .then((response) => {
-                console.log('response for updating customer address', new FormData(response))
-            })
+        // Set the url to the "edit account address" page to match the Request
+        // Header's `referer` parameter to what's used on desktop
+        history.pushState(null, null, 'https://www.merlinspotions.com/customer/address/edit/id/8/')
+
+        // const requestOptions = {
+        //     method: 'POST',
+        //     headers: new Headers({
+        //         Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        //         'Upgrade-Insecure-Requests': 1
+        //     }),
+        //     body: formData
+        // }
+        // makeRequest(postUpdateCustomerAddressURL, requestOptions)
+        //     .then((response) => {
+        //         console.log('response for updating customer address', response)
+        //         history.pushState(null, null, 'https://www.merlinspotions.com/checkout/confirmation/')
+        //     })
+
+        window.Progressive.$.ajax({
+            url: postUpdateCustomerAddressURL,
+            data: formData,
+            method: 'POST',
+            processData: false,
+            contentType: false,
+            headers: {
+                Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+                'Upgrade-Insecure-Requests': 1
+            },
+            success: (response) => {
+                console.log('response for updating customer address', response)
+                history.pushState(null, null, 'https://www.merlinspotions.com/checkout/confirmation/')
+            }
+        })
     }
 }
 
