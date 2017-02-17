@@ -23,7 +23,7 @@ const CheckoutConfirmationDetails = (props) => {
         isRegistrationFormHidden,
     } = props
 
-    return (isLoggedIn && !isRegistrationFormHidden) && (
+    return (!isLoggedIn && !isRegistrationFormHidden) && (
         <Grid className="u-center-piece">
             <GridSpan {...GRID_SETTINGS}>
                 <div className="t-checkout-confirmation__heading u-padding-md u-padding-top-lg">
