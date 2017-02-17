@@ -1,5 +1,7 @@
 ## To be released
 - Add option to analyze bundle after build. Set `MOBIFY_ANALYZE` environment variable to `true` before running any build. Eg. `MOBIFY_ANALYZE=true npm run prod:build`
+- Rename plp and pdp containers to product-list and ProductDetails
+- Rename product-list component in checkout to order-summary
 
 ## 0.11.0 (February 10, 2017)
 - Upgrade to the latest SDK
@@ -19,7 +21,7 @@
 
 ## 0.9.0 (November 14, 2016)
 - Use SDK version 0.10.3
-- Build the homepage, ProductLists, ProductDetailss and login for Merlin's Potions
+- Build the homepage, PLPs, PDPs and login for Merlin's Potions
 
 ## 0.8.0 (November 2, 2016)
 - Use SDK version 0.9.0
