@@ -1,4 +1,6 @@
 /* eslint-env jest */
+/* eslint-disable import/namespace */
+
 import {shallow} from 'enzyme'
 import React from 'react'
 
