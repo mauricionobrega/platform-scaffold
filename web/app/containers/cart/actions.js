@@ -8,6 +8,10 @@ import {
     CART_REMOVE_ITEM_MODAL,
     CART_WISHLIST_MODAL
 } from './constants'
+import {removeFromCart} from '../../store/cart/actions'
+import {makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+import {getUenc} from '../pdp/selectors'
+import {getFormKey} from '../app/selectors'
 
 export const receiveData = createAction('Receive Cart Data')
 export const setRemoveItemId = createAction('Set item id for removal', 'removeItemId')
@@ -19,9 +23,26 @@ export const submitEstimateShipping = () => {
     }
 }
 
-export const saveToWishlist = (itemId) => (dispatch) => {
+const ADD_TO_WISHLIST_URL = '/wishlist/index/add'
+
+export const addToWishlist = (productId) => (dispatch, getState) => {
+    const payload = {
+        product: productId,
+        uenc: getUenc(getState()),
+        formKey: getFormKey(getState())
+    }
+
+    console.log(payload)
+
+    return makeFormEncodedRequest(ADD_TO_WISHLIST_URL, payload, {method: 'POST'})
+}
+
+export const saveToWishlist = (productId, itemId) => (dispatch) => {
     dispatch(openModal(CART_WISHLIST_MODAL))
     dispatch(receiveData({wishlistItemId: itemId}))
+    dispatch(addToWishlist(productId))
+        .then(() => dispatch(removeFromCart(itemId)))
+
 }
 
 export const openRemoveItemModal = (itemId) => {

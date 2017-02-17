@@ -2,8 +2,6 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import {selectorToJS} from '../../../utils/selector-utils'
-import {CART_WISHLIST_MODAL} from '../constants'
-import {openModal} from '../../../store/modals/actions'
 import {updateItemQuantity} from '../../../store/cart/actions'
 import {openRemoveItemModal, saveToWishlist} from '../actions'
 import {getCartItems, getCartSummaryCount} from '../../../store/cart/selectors'
@@ -62,7 +60,7 @@ class CartProductItem extends React.Component {
     }
 
     saveForLater() {
-        this.props.onSaveLater(this.props.item_id)
+        this.props.onSaveLater(this.props.productId, this.props.item_id)
     }
 
     render() {
