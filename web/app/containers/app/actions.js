@@ -1,5 +1,4 @@
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
-import {getBuildOrigin} from 'progressive-web-sdk/dist/asset-utils'
 
 import * as utils from '../../utils/utils'
 import * as selectors from './selectors'
@@ -16,6 +15,7 @@ import * as navigationActions from '../navigation/actions'
 import * as productsActions from '../../store/products/actions'
 import * as categoriesActions from '../../store/categories/actions'
 
+import {OFFLINE_ASSET_URL} from './constants'
 import {closeModal} from '../../store/modals/actions'
 import {OFFLINE_MODAL} from '../offline/constants'
 
@@ -58,8 +58,9 @@ export const clearPageFetchError = utils.createAction('Clear page fetch error')
 export const checkIfOffline = () => {
     return (dispatch) => {
         // we need to cachebreak every request to ensure we don't get something
-        // stale from the disk cache on the device
-        return fetch(`//cdn.mobify.com/sites/progressive-web-scaffold/bundles/51/static/js/offline-test.json?${Date.now()}`, {
+        // stale from the disk cache on the device - the CDN will ignore query
+        // parameters for this asset, however
+        return fetch(`${OFFLINE_ASSET_URL}?${Date.now()}`, {
             cache: 'no-store'
         })
             .then((response) => response.json())
