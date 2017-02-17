@@ -1,8 +1,7 @@
 import {handleActions} from 'redux-actions'
 import Immutable from 'immutable'
 import {mergePayloadForActions} from '../../utils/reducer-utils'
-import {receiveCartContents} from '../../store/cart/actions'
-import {receiveData} from './actions'
+import {receiveData, setRemoveItemId} from './actions'
 
 const initialState = Immutable.fromJS({
     // Do we want to store static data like this elsewhere?
@@ -20,5 +19,5 @@ const initialState = Immutable.fromJS({
 })
 
 export default handleActions({
-    ...mergePayloadForActions(receiveData)
+    ...mergePayloadForActions(receiveData, setRemoveItemId)
 }, initialState)
