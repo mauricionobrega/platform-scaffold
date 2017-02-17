@@ -2,10 +2,10 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import {selectorToJS} from '../../../utils/selector-utils'
-import * as selectors from '../selectors'
 import {CART_ESTIMATE_SHIPPING_MODAL} from '../constants'
 import {closeModal} from '../../../store/modals/actions'
 import {isModalOpen} from '../../../store/selectors'
+import {getCountries, getRegions} from '../../../store/checkout/locations/selectors'
 
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -34,12 +34,7 @@ const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateProvince
                 <FieldRow>
                     <Field label="Country">
                         <select>
-                            <option>Select</option>
-                            {countries.map((country, idx) => {
-                                return (
-                                    <option key={idx}>{country}</option>
-                                )
-                            })}
+                            {countries.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
                         </select>
                     </Field>
                 </FieldRow>
@@ -47,12 +42,7 @@ const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateProvince
                 <FieldRow>
                     <Field label="State/Province">
                         <select>
-                            <option>Select</option>
-                            {stateProvinces.map((stateProvince, idx) => {
-                                return (
-                                    <option key={idx}>{stateProvince}</option>
-                                )
-                            })}
+                            {stateProvinces.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
                         </select>
                     </Field>
                 </FieldRow>
@@ -90,9 +80,9 @@ CartEstimateShippingModal.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
-    countries: selectorToJS(selectors.getCountries),
+    countries: selectorToJS(getCountries),
     isOpen: isModalOpen(CART_ESTIMATE_SHIPPING_MODAL),
-    stateProvinces: selectorToJS(selectors.getStateProvinces)
+    stateProvinces: selectorToJS(getRegions)
 })
 
 const mapDispatchToProps = {

@@ -32,3 +32,10 @@ export const getCheckoutConfigObject = ($html) => {
 
     return {}
 }
+
+
+export const getCheckoutEntityID = ($html) => {
+    const configObject = getCheckoutConfigObject($html)
+
+    return configObject ? configObject.quoteData.entity_id : ''
+}

@@ -1,5 +1,5 @@
 import {createAction} from '../../utils/utils'
-import {extractMagentoShippingStepData, getCheckoutConfigObject} from '../../utils/magento-utils'
+import {extractMagentoShippingStepData, getCheckoutEntityID, extractMagentoJson} from '../../utils/magento-utils'
 
 import parseLocations from './locations/parser'
 import {parseShippingInitialValues} from './shipping/parser'
@@ -10,24 +10,31 @@ export const receiveShippingMethodInitialValues = createAction('Receive Shipping
 
 export const processCheckoutData = ({payload: {$response}}) => {
     return (dispatch) => {
-        const configObject = getCheckoutConfigObject($response)
-        const shippingStepData = extractMagentoShippingStepData($response)
-        let checkoutData = {
-            // entity_id is used for calls to the ID
-            customerEntityID: configObject ? configObject.quoteData.entity_id : ''
-        }
-        if (shippingStepData) {
-            const magentoFieldData = shippingStepData.getIn(['children', 'shipping-address-fieldset', 'children'])
-            const initialValues = parseShippingInitialValues(magentoFieldData)
-            const locationsData = parseLocations(magentoFieldData)
+        const customerEntityID = getCheckoutEntityID($response)
+        const magentoFieldData = extractMagentoShippingStepData($response).getIn(['children', 'shipping-address-fieldset', 'children'])
+        const initialValues = parseShippingInitialValues(magentoFieldData)
+        const locationsData = parseLocations(magentoFieldData)
 
-            checkoutData = {
-                ...checkoutData,
-                ...locationsData,
-                shipping: {initialValues}
-            }
-        }
+        dispatch(receiveCheckoutData({
+            // entity_id is used for API calls
+            customerEntityID,
+            ...locationsData,
+            shipping: {initialValues}
+        }))
+    }
+}
+const ESTIMATE_FIELD_PATH = ['#block-summary', 'Magento_Ui/js/core/app', 'components', 'block-summary', 'children', 'block-shipping', 'children', 'address-fieldsets', 'children']
 
-        dispatch(receiveCheckoutData(checkoutData))
+export const processCartCheckoutData = ({payload: {$response}}) => {
+    return (dispatch) => {
+        const customerEntityID = getCheckoutEntityID($response)
+        const magentoFieldData = extractMagentoJson($response).getIn(ESTIMATE_FIELD_PATH)
+        const locationsData = parseLocations(magentoFieldData)
+
+        dispatch(receiveCheckoutData({
+            customerEntityID,
+            ...locationsData
+        }))
+
     }
 }

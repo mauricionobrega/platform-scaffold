@@ -82,7 +82,7 @@ export const fetchPage = (url, pageComponent, routeName) => {
                     dispatch(checkoutActions.processCheckoutData(receivedAction))
                     dispatch(checkoutShippingActions.fetchShippingMethods())
                 } else if (pageComponent === Cart) {
-                    dispatch(checkoutActions.processCheckoutData(receivedAction))
+                    dispatch(checkoutActions.processCartCheckoutData(receivedAction))
                     dispatch(checkoutShippingActions.fetchShippingMethods())
                 }
                 dispatch(footerActions.process(receivedAction))
