@@ -44,7 +44,7 @@ const ProductSkeleton = () => (
 
 /* eslint-disable camelcase */
 
-const CartProductItem = ({product_name, product_image, item_id, qty, product_price, onSaveLater, onQtyChange}) => (
+const CartProductItem = ({product_name, product_image, item_id, qty, product_price, onSaveLater, onQtyChange, openRemoveItemModal}) => (
     <ProductItem
         className={productItemClassNames}
         title={<h2 className="u-h3">{product_name}</h2>}
@@ -107,6 +107,7 @@ CartProductItem.defaultProps = {
 
 CartProductItem.propTypes = {
     item_id: PropTypes.string,
+    openRemoveItemModal: PropTypes.func,
     product_image: PropTypes.object,
     product_name: PropTypes.string,
     product_price: PropTypes.string,
@@ -115,7 +116,7 @@ CartProductItem.propTypes = {
     onSaveLater: PropTypes.func
 }
 
-const CartProductList = ({items, summaryCount, onSaveLater, onUpdateItemQuantity}) => {
+const CartProductList = ({items, summaryCount, onSaveLater, onUpdateItemQuantity, openRemoveItemModal}) => {
     const isCartEmpty = items.length === 0
 
     return (
@@ -135,7 +136,7 @@ const CartProductList = ({items, summaryCount, onSaveLater, onUpdateItemQuantity
 
             <List className="u-bg-color-neutral-00 u-border-light-top u-border-light-bottom">
                 {isCartEmpty && <ProductSkeleton />}
-                {items.map((item, idx) => (<CartProductItem {...item} key={item.item_id} onQtyChange={onUpdateItemQuantity} onSaveLater={onSaveLater} />))}
+                {items.map((item) => (<CartProductItem {...item} key={item.item_id} onQtyChange={onUpdateItemQuantity} onSaveLater={onSaveLater} openRemoveItemModal={openRemoveItemModal} />))}
             </List>
         </div>
     )
@@ -156,7 +157,8 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
     onSaveLater: () => openModal(CART_WISHLIST_MODAL),
-    onUpdateItemQuantity: updateItemQuantity
+    onUpdateItemQuantity: updateItemQuantity,
+    openRemoveItemModal
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartProductList)
