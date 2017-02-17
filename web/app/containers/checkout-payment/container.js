@@ -13,7 +13,7 @@ const CheckoutPayment = () => {
                 <div className="t-checkout-payment__progress">
                     <ProgressSteps>
                         <ProgressStepsItem icon="cart-full" title="Cart" href="/checkout/cart/" />
-                        <ProgressStepsItem icon="shipping" title="Shipping" href="/checkout/shipping/" />
+                        <ProgressStepsItem icon="shipping" title="Shipping" href="/checkout/" />
                         <ProgressStepsItem icon="payment-full" title="Payment" current />
                         <ProgressStepsItem icon="done" title="Done" />
                     </ProgressSteps>
