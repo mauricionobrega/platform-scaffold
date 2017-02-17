@@ -1,6 +1,6 @@
 import React from 'react'
 import {CHECKOUT_CONFIRMATION_MODAL} from '../constants'
-import {closeModal, openModal} from '../../../store/modals/actions'
+import {closeModal} from '../../../store/modals/actions'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
@@ -14,14 +14,11 @@ import Sheet from 'progressive-web-sdk/dist/components/sheet'
 const CheckountConfirmationModal = (props) => {
     const {
         closeCheckoutConfirmationModal,
-        openCheckoutConfirmationModal,
         isOpen,
     } = props
 
     return (
         <div className="t-checkout-confirmation__temp">
-            <button onClick={openCheckoutConfirmationModal}>Open Modal</button>
-
             <Sheet
                 className="t-checkout-confirmation__account-created-modal pw--no-shadow"
                 open={isOpen}
@@ -72,11 +69,6 @@ CheckountConfirmationModal.propTypes = {
      * Whether the modal is open or not
      */
     isOpen: React.PropTypes.bool,
-
-    /**
-     * A function used to open the modal. TEMPORARY
-     */
-    openCheckoutConfirmationModal: React.PropTypes.func,
 }
 
 const mapStateToProps = createStructuredSelector({
@@ -85,7 +77,6 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
     closeCheckoutConfirmationModal: stripEvent(() => closeModal(CHECKOUT_CONFIRMATION_MODAL)),
-    openCheckoutConfirmationModal: stripEvent(() => openModal(CHECKOUT_CONFIRMATION_MODAL))
 }
 
 export default connect(

@@ -4,3 +4,4 @@ export const GRID_SETTINGS = {
 }
 
 export const CHECKOUT_CONFIRMATION_MODAL = 'checkout-confirmation-modal'
+export const CHECKOUT_CONFIRMATION_REGISTRATION_FAILED = 'checkount confirmation registration failed'

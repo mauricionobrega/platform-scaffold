@@ -6,6 +6,7 @@ export const getCheckoutConfirmation = createSelector(getUi, ({checkoutConfirmat
 
 export const getEmailAddress = createGetSelector(getCheckoutConfirmation, 'emailAddress')
 export const getIsLoggedIn = createGetSelector(getCheckoutConfirmation, 'isLoggedIn')
+export const getIsRegistrationFormHidden = createGetSelector(getCheckoutConfirmation, 'isRegistrationFormHidden')
 export const getIsModalShown = createGetSelector(getCheckoutConfirmation, 'isModalShown')
 export const getOrderNumber = createGetSelector(getCheckoutConfirmation, 'orderNumber')
 export const getOrderUrl = createGetSelector(getCheckoutConfirmation, 'orderUrl')
