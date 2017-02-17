@@ -44,7 +44,7 @@ const ProductSkeleton = () => (
 
 /* eslint-disable camelcase */
 
-const CartProductItem = ({product_name, product_image, item_id, qty, product_price, onSaveLater, onQtyChange, openRemoveItemModal}) => (
+const CartProductItem = ({product_name, product_image, configure_url, item_id, qty, product_price, onSaveLater, onQtyChange, openRemoveItemModal}) => (
     <ProductItem
         className={productItemClassNames}
         title={<h2 className="u-h3">{product_name}</h2>}
@@ -78,6 +78,7 @@ const CartProductItem = ({product_name, product_image, item_id, qty, product_pri
             <Button
                 className="u-text-small u-color-brand u-flex-none"
                 innerClassName="c--no-min-width u-padding-start-0 u-padding-bottom-0"
+                href={configure_url}
                 >
                 Edit
             </Button>
@@ -106,6 +107,7 @@ CartProductItem.defaultProps = {
 }
 
 CartProductItem.propTypes = {
+    configure_url: PropTypes.string,
     item_id: PropTypes.string,
     openRemoveItemModal: PropTypes.func,
     product_image: PropTypes.object,
