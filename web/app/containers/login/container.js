@@ -11,7 +11,13 @@ import {Tabs, TabsPanel} from 'progressive-web-sdk/dist/components/tabs'
 
 import * as actions from './actions'
 import * as selectors from './selectors'
-import {SIGN_IN_SECTION, REGISTER_SECTION, SECTION_NAMES, INDEX_FOR_SECTION, SECTION_FOR_INDEX} from './constants'
+import {
+    SIGN_IN_SECTION,
+    REGISTER_SECTION,
+    SECTION_NAMES,
+    INDEX_FOR_SECTION,
+    SECTION_FOR_INDEX
+} from './constants'
 
 import * as AstroIntegration from '../../utils/astro-integration'
 
