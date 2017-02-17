@@ -13,7 +13,7 @@ import * as actions from './actions'
 import * as selectors from './selectors'
 import {SIGN_IN_SECTION, REGISTER_SECTION, SECTION_NAMES, INDEX_FOR_SECTION, SECTION_FOR_INDEX} from './constants'
 
-import {isRunningInAstro} from '../../utils/astro-integration'
+import * as AstroIntegration from '../../utils/astro-integration'
 
 const LoginTitle = ({title}) => {
     if (title) {
@@ -58,7 +58,7 @@ class Login extends React.Component {
             },
         } = this.props
 
-        if (!isRunningInAstro) {
+        if (!AstroIntegration.isRunningInAstro) {
             return (
                 <div className="t-login">
                     <div className="u-bg-color-neutral-10 u-padding-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
