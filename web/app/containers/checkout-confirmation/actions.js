@@ -6,6 +6,8 @@ import {addNotification, removeAllNotifications} from '../app/actions'
 import {openModal} from '../../store/modals/actions'
 import customerAddressParser from './parsers/customer-address'
 import * as shippingSelectors from '../../store/checkout/shipping/selectors'
+import * as formSelectors from '../../store/form/selectors'
+import {selectorToJS} from '../../utils/selector-utils'
 
 // @TODO: blocked until the desktop's Address Book actualy works correctly
 // import * as paymentSelectors from '../../store/checkout/payment/selectors'
@@ -101,7 +103,7 @@ export const fetchContents = () => {
 
 export const updateingShippingAndBilling = (parsedFormData) => {
     return (dispatch, getState) => {
-        const shippingData = shippingSelectors.getShipping(getState())
+        const shippingData = selectorToJS(shippingSelectors.getShippingAddress)(getState())
         const formData = buildFormData({
             ...parsedFormData,
             success_url: '',
@@ -155,16 +157,12 @@ export const submitRegisterForm = () => {
     return (dispatch, getState) => {
         dispatch(removeAllNotifications())
 
-        // UUID (temporary for debugging)
-        const uuid = Date.now()
-
         // @TODO: REPLACE THESE WITH ACTUAL DATA
         const userCredentials = {
-            firstname: `firstname`,
-            lastname: `lastname`,
-            email: `mobifyqa+${uuid}@gmail.com`,
-            password: '1234qwer',
-            password_confirmation: '1234qwer',
+            firstname: shippingSelectors.getShippingFirstName(getState()),
+            lastname: shippingSelectors.getShippingLastName(getState()),
+            email: shippingSelectors.getEmail(getState()),
+            ...formSelectors.getConfirmationFormValues(getState())
         }
 
         const postCreateAccountURL = 'https://www.merlinspotions.com/customer/account/createpost/'

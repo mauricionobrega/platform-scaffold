@@ -19,13 +19,13 @@ const CheckoutConfirmationForm = (props) => {
     return (
         <form className="t-checkout-confirmation__form" onSubmit={handleSubmit(submitRegistrationForm)} noValidate>
             <FieldRow>
-                <ReduxForm.Field component={Field} name="password1" label="Choose Password" caption="More than 5 characters with at least one number">
+                <ReduxForm.Field component={Field} name="password" label="Choose Password" caption="More than 5 characters with at least one number">
                     <input type="password" noValidate />
                 </ReduxForm.Field>
             </FieldRow>
 
             <FieldRow>
-                <ReduxForm.Field component={Field} name="password2" label="Re-enter Password">
+                <ReduxForm.Field component={Field} name="password_confirmation" label="Re-enter Password">
                     <input type="password" noValidate />
                 </ReduxForm.Field>
             </FieldRow>
@@ -75,27 +75,27 @@ const validate = (values) => {
     }
 
     const {
-        password1,
-        password2
+        password,
+        password_confirmation
     } = values
 
-    if (!password1) {
-        errors.password1 = 'Password is required'
+    if (!password) {
+        errors.password = 'Password is required'
     }
 
-    if (password1 !== password2) {
-        errors.password2 = 'Passwords are not the same'
+    if (password !== password_confirmation) { // eslint-disable-line camelcase
+        errors.password_confirmation = 'Passwords are not the same'
     }
 
-    if (password1.length < 6) {
-        errors.password1 = 'Please enter 6 or more characters'
+    if (password.length < 6) {
+        errors.password = 'Please enter 6 or more characters'
     }
 
     return errors
 }
 
 const CheckoutPaymentReduxForm = ReduxForm.reduxForm({
-    form: 'paymentForm',
+    form: 'confirmationForm',
     validate,
 })(CheckoutConfirmationForm)
 
