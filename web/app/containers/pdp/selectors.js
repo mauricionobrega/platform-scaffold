@@ -52,3 +52,10 @@ export const getFirstProductCarouselItem = createGetSelector(
     Immutable.Map()
 )
 export const getFirstProductImage = createGetSelector(getFirstProductCarouselItem, 'img')
+
+export const getFirstPdp = createSelector(
+    getPdp,
+    (pdp) => (pdp.first() || Immutable.Map())
+)
+
+export const getUenc = createGetSelector(getFirstPdp, 'uenc')
