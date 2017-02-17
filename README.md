@@ -1,4 +1,4 @@
-# Mobify Progressive Mobile Scaffold(s)
+# Mobify Progressive Mobile Scaffold
 
 ## Requirements
 
