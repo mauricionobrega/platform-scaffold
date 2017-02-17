@@ -4,6 +4,7 @@ import {createStructuredSelector} from 'reselect'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import {GRID_SETTINGS} from '../constants'
 import * as selectors from '../selectors'
+import {getEmail} from '../../../store/checkout/shipping/selectors'
 
 import {Grid, GridSpan} from 'progressive-web-sdk/dist/components/grid'
 import Image from 'progressive-web-sdk/dist/components/image'
@@ -60,7 +61,7 @@ CheckoutConfirmationSplash.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
-    emailAddress: selectors.getEmailAddress,
+    emailAddress: getEmail,
     orderNumber: selectors.getOrderNumber,
     orderUrl: selectors.getOrderUrl
 })

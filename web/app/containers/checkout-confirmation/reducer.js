@@ -5,7 +5,6 @@ import * as checkoutConfirmationActions from './actions'
 const initialState = Immutable.fromJS({
     body: '',
     contentsLoaded: true,
-    emailAddress: '',
     isLoggedIn: true,
     isRegistrationFormHidden: false,
     isModalShown: false,
