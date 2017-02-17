@@ -6,8 +6,11 @@ const path = require('path')
 const baseCommon = require('./base.common')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
-module.exports = {
+const analyzeBundle = process.env.MOBIFY_ANALYZE === 'true'
+
+const config = {
     devtool: 'cheap-source-map',
     entry: [
         'whatwg-fetch',
@@ -60,3 +63,15 @@ module.exports = {
         ],
     }
 }
+
+if (analyzeBundle) {
+    console.info('Analyzing build...')
+    config.plugins = config.plugins.concat([
+        new BundleAnalyzerPlugin({
+            analyzerMode: 'static',
+            openAnalyzer: true
+        })
+    ])
+}
+
+module.exports = config

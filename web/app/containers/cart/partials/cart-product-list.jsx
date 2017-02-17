@@ -4,7 +4,10 @@ import {createStructuredSelector} from 'reselect'
 import {selectorToJS} from '../../../utils/selector-utils'
 import {CART_WISHLIST_MODAL} from '../constants'
 import {openModal} from '../../../store/modals/actions'
+import {openRemoveItemModal} from '../actions'
+import {updateItemQuantity} from '../../../store/cart/actions'
 import {getCartItems, getCartSummaryCount} from '../../../store/cart/selectors'
+import {noop} from 'progressive-web-sdk/dist/utils/utils'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
@@ -41,25 +44,25 @@ const ProductSkeleton = () => (
 
 /* eslint-disable camelcase */
 
-const CartProductItem = ({product_name, product_image, configure_url, idx, qty, product_price, onSaveLater}) => (
+const CartProductItem = ({product_name, product_image, configure_url, item_id, qty, product_price, onSaveLater, onQtyChange, openRemoveItemModal}) => (
     <ProductItem
         className={productItemClassNames}
         title={<h2 className="u-h3">{product_name}</h2>}
-        key={idx}
         image={<ProductImage {...product_image} />}
         >
         <p className="u-color-neutral-50">Color: Maroon</p>
         <p className="u-margin-bottom-sm u-color-neutral-50">Size: XL</p>
 
         <FieldRow className="u-align-bottom">
-            <Field label="Quantity" idFor={`quantity-${idx}`}>
+            <Field label="Quantity" idFor={`quantity-${item_id}`}>
                 <Stepper
                     className="pw--simple t-cart__product-stepper"
-                    idForLabel={`quantity-${idx}`}
+                    idForLabel={`quantity-${item_id}`}
                     incrementIcon="plus"
                     decrementIcon="minus"
                     initialValue={qty}
                     minimumValue={1}
+                    onChange={(newVal) => { onQtyChange(item_id, newVal) }}
                     />
             </Field>
 
@@ -91,6 +94,7 @@ const CartProductItem = ({product_name, product_image, configure_url, idx, qty, 
             <Button
                 className="u-text-small u-color-brand qa-cart__remove-item"
                 innerClassName="u-padding-end-0 u-padding-bottom-0"
+                onClick={() => { openRemoveItemModal(item_id) }}
                 >
                 Remove
             </Button>
@@ -98,17 +102,23 @@ const CartProductItem = ({product_name, product_image, configure_url, idx, qty, 
     </ProductItem>
 )
 
+CartProductItem.defaultProps = {
+    onQtyChange: noop
+}
+
 CartProductItem.propTypes = {
     configure_url: PropTypes.string,
-    idx: PropTypes.number,
+    item_id: PropTypes.string,
+    openRemoveItemModal: PropTypes.func,
     product_image: PropTypes.object,
     product_name: PropTypes.string,
     product_price: PropTypes.string,
     qty: PropTypes.number,
+    onQtyChange: PropTypes.func,
     onSaveLater: PropTypes.func
 }
 
-const CartProductList = ({items, summaryCount, onSaveLater}) => {
+const CartProductList = ({items, summaryCount, onSaveLater, onUpdateItemQuantity, openRemoveItemModal}) => {
     const isCartEmpty = items.length === 0
 
     return (
@@ -119,7 +129,7 @@ const CartProductList = ({items, summaryCount, onSaveLater}) => {
                         Cart {summaryCount > 0 && <span>({summaryCount} Items)</span>}
                     </h1>
 
-                    <Button className="u-flex-none u-color-brand">
+                    <Button className="u-flex-none u-color-brand" href="/customer/account/login/">
                         <Icon name="user" />
                         Sign in
                     </Button>
@@ -128,8 +138,7 @@ const CartProductList = ({items, summaryCount, onSaveLater}) => {
 
             <List className="u-bg-color-neutral-00 u-border-light-top u-border-light-bottom">
                 {isCartEmpty && <ProductSkeleton />}
-
-                {items.map((item, idx) => (<CartProductItem {...item} key={idx} idx={idx} onSaveLater={onSaveLater} />))}
+                {items.map((item) => (<CartProductItem {...item} key={item.item_id} onQtyChange={onUpdateItemQuantity} onSaveLater={onSaveLater} openRemoveItemModal={openRemoveItemModal} />))}
             </List>
         </div>
     )
@@ -137,8 +146,10 @@ const CartProductList = ({items, summaryCount, onSaveLater}) => {
 
 CartProductList.propTypes = {
     items: PropTypes.array,
+    openRemoveItemModal: PropTypes.func,
     summaryCount: PropTypes.number,
     onSaveLater: PropTypes.func,
+    onUpdateItemQuantity: PropTypes.func
 }
 
 const mapStateToProps = createStructuredSelector({
@@ -147,7 +158,9 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = {
-    onSaveLater: () => openModal(CART_WISHLIST_MODAL)
+    onSaveLater: () => openModal(CART_WISHLIST_MODAL),
+    onUpdateItemQuantity: updateItemQuantity,
+    openRemoveItemModal
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartProductList)
