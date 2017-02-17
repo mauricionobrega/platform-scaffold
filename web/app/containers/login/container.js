@@ -116,8 +116,6 @@ Login.propTypes = {
     title: PropTypes.string
 }
 
-export {Login as RawLogin}
-
 export default connect(
     mapStateToProps,
     mapDispatchToProps
