@@ -1,17 +1,15 @@
 /* global AstroNative */
 
-import Astro from 'progressive-app-sdk/astro-full'
-
-// TODO: Update <local_ip> if running on Android
-const localPreviewUrl = Astro.isRunningInIOSApp()
-    ? '//localhost:8443/loader.js'
-    : '<local_ip>:8443/loader.js'
+// Remember to set up Chrome port forwarding for this to work in Android
+const localPreviewUrl = 'https://localhost:8443/loader.js'
 
 const colors = {
     primaryColor: '#4E439B',
     secondaryColor: '#007ba7',
     whiteColor: '#ffffff'
 }
+
+const previewEnabled = true
 
 const baseConfig = {
     baseURL: 'https://www.merlinspotions.com',
@@ -20,6 +18,7 @@ const baseConfig = {
         : '//cdn.mobify.com/sites/progressive-web-scaffold/astro/loader.js',
     colors,
     logoUrl: 'file:///logo.png',
+    previewEnabled
 }
 
 export default baseConfig

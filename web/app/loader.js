@@ -1,6 +1,7 @@
-import {getBuildOrigin, getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
+import {getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
 import cacheHashManifest from '../tmp/loader-cache-hash-manifest.json'
+import {isRunningInAstro} from './utils/astro-integration'
 
 window.Progressive = {}
 
@@ -13,10 +14,11 @@ const isReactRoute = () => {
 initCacheManifest(cacheHashManifest)
 
 // This isn't accurate but does describe the case where the PR currently works
-const IS_PREVIEW = getBuildOrigin().indexOf('localhost') !== -1
+const IS_PREVIEW = /mobify-path=true/.test(document.cookie)
 
 const CAPTURING_CDN = '//cdn.mobify.com/capturejs/capture-latest.min.js'
-const SW_LOADER_PATH = `/service-worker-loader.js?preview=${IS_PREVIEW}&b=${cacheHashManifest.buildDate}`
+const BASE_URL = IS_PREVIEW ? 'https://localhost:8443' : ''
+const SW_LOADER_PATH = `${BASE_URL}/service-worker-loader.js?preview=${IS_PREVIEW}&b=${cacheHashManifest.buildDate}`
 
 import preloadHTML from 'raw-loader!./preloader/preload.html'
 import preloadCSS from 'css-loader?minimize!./preloader/preload.css'
@@ -51,7 +53,8 @@ if (isReactRoute()) {
 
     // load the worker if available
     // if no worker is available, we have to assume that promises might not be either.
-    (('serviceWorker' in navigator)
+    // Astro doesn't currently support service workers
+    (('serviceWorker' in navigator && !isRunningInAstro)
      ? loadWorker()
      : {then: (fn) => setTimeout(fn)}
     ).then(() => {
