@@ -5,7 +5,10 @@ import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import {addNotification, removeAllNotifications} from '../app/actions'
 import {openModal} from '../../store/modals/actions'
 import customerAddressParser from './parsers/customer-address'
-import * as selectors from '../../store/checkout/shipping/selectors'
+import * as shippingSelectors from '../../store/checkout/shipping/selectors'
+
+// @TODO: blocked until the desktop's Address Book actualy works correctly
+// import * as paymentSelectors from '../../store/checkout/payment/selectors'
 
 export const receiveContents = createAction('Received CheckoutConfirmation Contents')
 export const showSuccessModal = createAction('Showing Success modal')
@@ -52,111 +55,61 @@ export const fetchContents = () => {
     }
 }
 
-export const updateShippingAddress = (parsedFormData) => {
+// @TODO: These are blocked from working until the day that the Address Book on
+//        desktop starts working.
+//
+// export const updateBillingAddress = (parsedFormData) => {
+//     return (dispatch, getState) => {
+//         const formData = buildFormData({
+//             ...parsedFormData,
+//             success_url: '',
+//             error_url: '',
+//             ...paymentSelectors.getPayment(getState()),
+//             default_billing: 1,
+//             default_shipping: 1,
+//         })
+//
+//         const postUpdateCustomerAddressURL = 'https://www.merlinspotions.com/customer/address/formPost/id/46/'
+//         window.Progressive.$.ajax({
+//             url: postUpdateCustomerAddressURL,
+//             data: formData,
+//             method: 'POST',
+//             processData: false,
+//             contentType: false,
+//             error: (response) => {
+//                 console.error('Updating the user Shipping/Billing address failed. Response log:')
+//                 console.error(response)
+//             }
+//         })
+//     }
+// }
+//
+// export const initiateBillingUpdate = () => {
+//     return (dispatch) => {
+//         // Grab required form data in prep for updating shipping/billing information
+//         const editCustomerAddressURL = 'https://www.merlinspotions.com/customer/address/edit/id/46/'
+//         makeRequest(editCustomerAddressURL)
+//             .then(jqueryResponse)
+//             .then((res) => {
+//                 const [$, $response] = res // eslint-disable-line no-unused-vars
+//                 const parsedFormData = customerAddressParser($, $response)
+//                 console.log('dispatch: updateBillingAddress')
+//                 dispatch(updateBillingAddress(parsedFormData))
+//             })
+//     }
+// }
+
+export const updateingShippingAndBilling = (parsedFormData) => {
     return (dispatch, getState) => {
-
-        // Temporary
-        const ShippingCredentials = {
-            // Parsed Form Data
-            ...parsedFormData,
-
-            // ...
-            success_url: '',
-            error_url: '',
-
-            // ...
-            firstname: 'John',
-            lastname: 'Doe',
-
-            // Details
-            company: 'COMPANY ME BE',
-            telephone: '333-222-1111',
-            fax: '777-888-9999',
-
-            // Shipping/Billing
-            'street[]': 'Shipping Address',
-            city: 'BURNABY',
-            region_id: '',
-            region: 'BC',
-            postcode: 'V5V 5V5',
-            country_id: 'CA',
-
-            // other form settings
-            default_shipping: 1,
-        }
-
-        const postUpdateCustomerAddressURL = 'https://www.merlinspotions.com/customer/address/formPost/id/27/'
-        const formData = new FormData()
-        for (const key in ShippingCredentials) {
-            if (Object.prototype.hasOwnProperty.call(ShippingCredentials, key)) {
-                formData.append(key, ShippingCredentials[key])
-            }
-        }
-
-        window.Progressive.$.ajax({
-            url: postUpdateCustomerAddressURL,
-            data: formData,
-            method: 'POST',
-            processData: false,
-            contentType: false,
-            error: (response) => {
-                console.error('Updating the user Shipping/Billing address failed. Response log:')
-                console.error(response)
-            }
-        })
-    }
-}
-
-export const initiateShippingUpdate = () => {
-    return (dispatch) => {
-        // Grab required form data in prep for updating shipping/billing information
-        const editCustomerAddressURL = 'https://www.merlinspotions.com/customer/address/edit/id/27/'
-        makeRequest(editCustomerAddressURL)
-            .then(jqueryResponse)
-            .then((res) => {
-                const [$, $response] = res // eslint-disable-line no-unused-vars
-                const parsedFormData = customerAddressParser($, $response)
-                dispatch(updateShippingAddress(parsedFormData))
-            })
-    }
-}
-
-export const updateBillingAndShippingAddress = (parsedFormData) => {
-    return (dispatch, getState) => {
-        // const formData = new FormData()
-        // const formCredentials = {
-        //     ...parsedFormData,
-        //     success_url: '',
-        //     error_url: '',
-        //     ...selectors.getShipping(getState()),
-        //     default_billing: 1,
-        //     default_shipping: 1,
-        // }
-
+        const shippingData = shippingSelectors.getShipping(getState())
         const formData = buildFormData({
             ...parsedFormData,
             success_url: '',
             error_url: '',
-            ...selectors.getShipping(getState()),
+            ...shippingData,
             default_billing: 1,
             default_shipping: 1,
         })
-
-        // for (const key in formCredentials) {
-        //     if (Object.prototype.hasOwnProperty.call(formCredentials, key)) {
-        //         const item = formCredentials[key]
-        //         if (item instanceof Array) {
-        //             // This item is probably the list of addresses, add them
-        //             // all with the same key!
-        //             for (let i = 0; i < item.length; i++) {
-        //                 console.log('appending street[]...', item[i])
-        //                 formData.append('street[]', item[i])
-        //             }
-        //         } else {
-        //             formData.append(key, item)
-        //         }
-        //     }
-        // }
 
         const postUpdateCustomerAddressURL = 'https://www.merlinspotions.com/customer/address/formPost/'
         window.Progressive.$.ajax({
@@ -165,13 +118,17 @@ export const updateBillingAndShippingAddress = (parsedFormData) => {
             method: 'POST',
             processData: false,
             contentType: false,
-            success: () => {
-                // @TODO: REPLACE WITH REAL CHECK
-                const shippingIsDifferentThanBilling = true
-                if (shippingIsDifferentThanBilling) {
-                    // dispatch(initiateShippingUpdate())
-                }
-            },
+            // success: () => {
+                // @TODO: Once the Address Book on desktop works correctly, we
+                //        must implement the ability to update just the Billing
+                //        address separately from the Shipping address.
+                //
+                // const paymentData = paymentSelectors.getPayment(getState())
+                // const shippingIsDifferentThanBilling = JSON.stringify(shippingData) !== JSON.stringify(paymentData)
+                // if (shippingIsDifferentThanBilling) {
+                //     dispatch(initiateBillingUpdate())
+                // }
+            // },
             error: (response) => {
                 console.error('Updating the user Shipping and Billing address failed. Response log:')
                 console.error(response)
@@ -189,7 +146,7 @@ export const initiateBillingAndShippingUpdate = () => {
             .then((res) => {
                 const [$, $response] = res // eslint-disable-line no-unused-vars
                 const parsedFormData = customerAddressParser($, $response)
-                dispatch(updateBillingAndShippingAddress(parsedFormData))
+                dispatch(updateingShippingAndBilling(parsedFormData))
             })
     }
 }
@@ -203,9 +160,9 @@ export const submitRegisterForm = () => {
 
         // @TODO: REPLACE THESE WITH ACTUAL DATA
         const userCredentials = {
-            firstname: `test-firstname-${uuid}`,
-            lastname: `test-lastname-${uuid}`,
-            email: `mobifyqa+test-email-${uuid}@gmail.com`,
+            firstname: `firstname`,
+            lastname: `lastname`,
+            email: `mobifyqa+${uuid}@gmail.com`,
             password: '1234qwer',
             password_confirmation: '1234qwer',
         }
