@@ -16,7 +16,7 @@ import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 import IconLabelButton from '../../../components/icon-label-button'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 
-const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateProvinces, submitEstimateShipping, handleSubmit}) => {
+export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateProvinces, submitEstimateShipping, handleSubmit}) => {
     return (
         <Sheet className="t-cart__estimate-shipping-modal" open={isOpen} onDismiss={closeModal} maskOpacity={0.7} effect="slide-right">
             <HeaderBar>
