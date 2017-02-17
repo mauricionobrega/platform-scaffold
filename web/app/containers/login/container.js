@@ -13,6 +13,8 @@ import * as actions from './actions'
 import * as selectors from './selectors'
 import {SIGN_IN_SECTION, REGISTER_SECTION, SECTION_NAMES, INDEX_FOR_SECTION, SECTION_FOR_INDEX} from './constants'
 
+import {isRunningInAstro} from '../../utils/astro-integration'
+
 const LoginTitle = ({title}) => {
     if (title) {
         return (
@@ -51,7 +53,6 @@ class Login extends React.Component {
     render() {
         const {
             title,
-            isRunningInAstro,
             route: {
                 routeName
             },
@@ -94,8 +95,7 @@ class Login extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-    title: selectors.getLoginTitle,
-    isRunningInAstro: selectors.getIsRunningInAstro
+    title: selectors.getLoginTitle
 })
 
 const mapDispatchToProps = {
@@ -103,7 +103,6 @@ const mapDispatchToProps = {
 }
 
 Login.propTypes = {
-    isRunningInAstro: PropTypes.bool,
     navigateToSection: PropTypes.func,
     route: PropTypes.object,
     router: PropTypes.object,
