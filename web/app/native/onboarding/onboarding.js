@@ -66,4 +66,8 @@ const carouselData = {
 
 const rootEl = document.getElementsByClassName('react-target')[0]
 
-render(<Onboarding carouselData={carouselData} />, rootEl)
+// There's a bug in the Android webview that doesn't immediately register
+// the event handlers for the carousel, so we delay rendering to next runloop
+setTimeout(() => {
+    render(<Onboarding carouselData={carouselData} />, rootEl)
+}, 0)

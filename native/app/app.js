@@ -40,6 +40,15 @@ window.run = async function() {
             tabBarController.showSignIn()
         })
 
+        // Android hardware back
+        const setupHardwareBackButton = (alternativeBackFunction) => {
+            Application.on('backButtonPressed', () => {
+                alternativeBackFunction()
+            })
+        }
+
+        setupHardwareBackButton(tabBarController.backActiveItem.bind(tabBarController))
+
         Application.dismissLaunchImage()
     }
 
@@ -57,7 +66,7 @@ window.run = async function() {
             previewController.presentPreviewAlert()
         })
 
-        const previewEnabled = await previewController.isPreviewEnabled()
+        const previewEnabled = baseConfig.previewEnabled
         if (previewEnabled) {
             runAppPreview()
         } else {

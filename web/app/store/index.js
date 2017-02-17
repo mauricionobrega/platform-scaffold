@@ -6,6 +6,7 @@ import cartReducer from './cart/reducer'
 import categoryReducer from './categories/reducer'
 import modalReducer from './modals/reducer'
 import productReducer from './products/reducer'
+import checkoutReducer from './checkout/reducer'
 import {reducer as formReducer} from 'redux-form'
 
 const noop = (f) => f
@@ -16,6 +17,7 @@ const reducer = combineReducers({
     ui: rootReducer,
     modals: modalReducer,
     products: productReducer,
+    checkout: checkoutReducer,
     form: formReducer
 })
 

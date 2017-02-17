@@ -1,18 +1,11 @@
 import {handleActions} from 'redux-actions'
 import Immutable from 'immutable'
-import * as checkoutShippingActions from './actions'
-
-const initialState = Immutable.fromJS({
-    body: '',
-    contentsLoaded: true,
-    isCompanyOrAptShown: false,
-})
+import {mergePayloadForActions} from '../../utils/reducer-utils'
+import {receiveData, showCompanyAndApt} from './actions'
 
 export default handleActions({
-    [checkoutShippingActions.receiveContents]: (state, {payload}) => {
-        return state.mergeDeep(payload, {contentsLoaded: true})
-    },
-    [checkoutShippingActions.showCompanyAndApt]: (state) => {
+    ...mergePayloadForActions(receiveData),
+    [showCompanyAndApt]: (state) => {
         return state.merge({isCompanyOrAptShown: true})
     }
-}, initialState)
+}, Immutable.Map())
