@@ -157,7 +157,6 @@ export const submitRegisterForm = () => {
     return (dispatch, getState) => {
         dispatch(removeAllNotifications())
 
-        // @TODO: REPLACE THESE WITH ACTUAL DATA
         const userCredentials = {
             firstname: shippingSelectors.getShippingFirstName(getState()),
             lastname: shippingSelectors.getShippingLastName(getState()),
@@ -166,20 +165,19 @@ export const submitRegisterForm = () => {
         }
 
         const postCreateAccountURL = 'https://www.merlinspotions.com/customer/account/createpost/'
-
-        // ....BOTTOM....
         makeFormEncodedRequest(postCreateAccountURL, userCredentials, {method: 'POST'})
             .then((response) => {
-                const urlHas = (chunk) => response.url.search(chunk) >= 0
-                const isNotRedirectedToCreate = urlHas('/account/') && !urlHas('/create/')
+                const responseUrlHas = (chunk) => response.url.search(chunk) >= 0
+                const redirectUrlIsNotToCreate = responseUrlHas('/account/') && !responseUrlHas('/create/')
+                const registrationIsSuccess = response.redirected && redirectUrlIsNotToCreate
 
-                if (response.redirected && isNotRedirectedToCreate) {
+                if (registrationIsSuccess) {
                     dispatch(openModal(CHECKOUT_CONFIRMATION_MODAL))
                     dispatch(initiateBillingAndShippingUpdate())
                     dispatch(hideRegistrationForm())
                 } else {
                     dispatch(addNotification({
-                        content: `Sorry, registration failed. The email you provided might already be in use.`,
+                        content: `Could not complete registration. The email you provided may already be in use.`,
                         id: CHECKOUT_CONFIRMATION_REGISTRATION_FAILED,
                         showRemoveButton: true
                     }))
