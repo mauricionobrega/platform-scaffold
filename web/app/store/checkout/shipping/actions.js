@@ -9,7 +9,6 @@ import {receiveShippingMethodInitialValues, receiveCheckoutData} from '../action
 
 export const fetchShippingMethodsEstimate = (formKey) => {
     return (dispatch, getState) => {
-        debugger
         const currentState = getState()
         const isLoggedIn = getIsLoggedIn(currentState)
         const formValues = getFormValues(formKey)(currentState)

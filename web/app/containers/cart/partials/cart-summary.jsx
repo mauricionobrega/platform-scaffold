@@ -4,7 +4,6 @@ import {createStructuredSelector} from 'reselect'
 import * as cartSelectors from '../../../store/cart/selectors'
 import {CART_ESTIMATE_SHIPPING_MODAL} from '../constants'
 import {openModal} from '../../../store/modals/actions'
-import {fetchShippingMethods} from '../../../store/checkout/shipping/actions'
 import {getDefaultShippingRate} from '../../../store/checkout/shipping/selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -94,8 +93,7 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = {
-    onCalculateClick: () => openModal(CART_ESTIMATE_SHIPPING_MODAL),
-    fetchShippingMethods
+    onCalculateClick: () => openModal(CART_ESTIMATE_SHIPPING_MODAL)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartSummary)
