@@ -8,6 +8,7 @@ import {getIsLoggedIn} from '../../app/selectors'
 import {getShippingInitialValues} from '../../../store/checkout/shipping/selectors'
 
 import {submitShipping} from '../actions'
+import {SHIPPING_FORM_NAME} from '../constants'
 
 import {Grid, GridSpan} from 'progressive-web-sdk/dist/components/grid'
 import ShippingAddressForm from './shipping-address'
@@ -82,7 +83,7 @@ const mapDispatchToProps = {
 
 
 const CheckoutShippingReduxForm = ReduxForm.reduxForm({
-    form: 'shippingForm',
+    form: SHIPPING_FORM_NAME,
     validate,
     keepDirtyOnReinitialize: true,
     enableReinitialize: true

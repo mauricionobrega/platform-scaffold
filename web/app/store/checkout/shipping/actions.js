@@ -2,15 +2,17 @@
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {getCustomerEntityID} from '../selectors'
 import {getIsLoggedIn} from '../../../containers/app/selectors'
-import {getShippingFormValues} from '../../form/selectors'
+import {getFormValues} from '../../form/selectors'
 import {parseShippingMethods} from './parser'
 import {receiveShippingMethodInitialValues, receiveCheckoutData} from '../actions'
 
-export const fetchShippingMethods = () => {
+
+export const fetchShippingMethodsEstimate = (formKey) => {
     return (dispatch, getState) => {
+        debugger
         const currentState = getState()
         const isLoggedIn = getIsLoggedIn(currentState)
-        const formValues = getShippingFormValues(currentState)
+        const formValues = getFormValues(formKey)(currentState)
         const entityID = getCustomerEntityID(currentState)
         // Default values to use if none have been selected
         const address = {country_id: 'US', region_id: '0', postcode: null}

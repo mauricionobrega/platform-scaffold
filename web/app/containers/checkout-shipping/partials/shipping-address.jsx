@@ -5,7 +5,9 @@ import {selectorToJS} from '../../../utils/selector-utils'
 import * as ReduxForm from 'redux-form'
 import {normalizePhone} from '../../../utils/normalize-utils'
 
-import {showCompanyAndApt, fetchShippingMethods} from '../actions'
+import {showCompanyAndApt} from '../actions'
+import {SHIPPING_FORM_NAME} from '../constants'
+import {fetchShippingMethodsEstimate} from '../../../store/checkout/shipping/actions'
 import {getShippingFormTitle, getIsCompanyOrAptShown} from '../selectors'
 import {getCountries, getRegions} from '../../../store/checkout/locations/selectors'
 
@@ -199,7 +201,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
     handleShowCompanyAndApt: showCompanyAndApt,
-    fetchShippingMethods
+    fetchShippingMethods: () => fetchShippingMethodsEstimate(SHIPPING_FORM_NAME)
 }
 
 
