@@ -12,6 +12,7 @@ const isList = Immutable.List.isList
 // Otherwise we would end up with something like this:
 // for a = {test: [1, 2, 3]}, b = {test: [1, 2]}
 // a.mergeDeep(b) => {test: [1, 2, 3]}
+// When we want it to return {test: [1, 2]} (ie. delete the third item)
 // Based on: https://github.com/facebook/immutable-js/issues/762
 export const mergeSkipLists = (a, b) => {
     if (a && a.mergeWith && !isList(a) && !isList(b)) {
