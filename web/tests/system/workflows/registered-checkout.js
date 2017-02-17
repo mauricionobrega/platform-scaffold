@@ -6,7 +6,7 @@ import ProductDetails from '../page-objects/product-details'
 // import Checkout from '../page-objects/checkout'
 
 let home
-let plp
+let productList
 let productDetails
 // let cart
 // let checkout
@@ -20,7 +20,7 @@ export default {
 
     before: (browser) => {
         home = new Home(browser)
-        plp = new ProductList(browser)
+        productList = new ProductList(browser)
         productDetails = new ProductDetails(browser)
         // cart = new Cart(browser)
         // checkout = new Checkout(browser)
@@ -40,12 +40,12 @@ export default {
     'Checkout - Registered - Step 2 - Navigate from Home to ProductList': (browser) => {
         home.navigateToProductList(PRODUCT_LIST_INDEX)
         browser
-            .waitForElementVisible(plp.selectors.plpTemplateIdentifier)
-            .assert.visible(plp.selectors.plpTemplateIdentifier)
+            .waitForElementVisible(productList.selectors.productListTemplateIdentifier)
+            .assert.visible(productList.selectors.productListTemplateIdentifier)
     },
 
     'Checkout - Registered - Step 3 - Navigate from ProductList to ProductDetails': (browser) => {
-        plp.navigateToProductDetails(PRODUCT_INDEX)
+        productList.navigateToProductDetails(PRODUCT_INDEX)
         browser
             .waitForElementVisible(productDetails.selectors.productDetailsTemplateIdentifier)
             .assert.visible(productDetails.selectors.productDetailsTemplateIdentifier)

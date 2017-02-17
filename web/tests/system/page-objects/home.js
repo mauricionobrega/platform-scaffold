@@ -4,7 +4,7 @@ const selectors = {
     skipToMain: '.pw-skip-links__anchor:first-of-type',
     skipToNav: '.pw-skip-links__anchor:nth-child(2n)',
     skipToFooter: '.pw-skip-links__anchor:last-of-type',
-    plpItem(index) {
+    productListItem(index) {
         return `.t-home__category .t-home__category-section:nth-child(${index}) .pw--is-loaded`
     }
 }
@@ -19,8 +19,8 @@ Home.prototype.navigateToProductList = function(PRODUCT_LIST_INDEX) {
     this.browser
         .log('Navigating to ProductList')
         .waitForAjaxCompleted()
-        .waitForElementVisible(selectors.plpItem(PRODUCT_LIST_INDEX))
-        .click(selectors.plpItem(PRODUCT_LIST_INDEX))
+        .waitForElementVisible(selectors.productListItem(PRODUCT_LIST_INDEX))
+        .click(selectors.productListItem(PRODUCT_LIST_INDEX))
         .waitUntilMobified()
     return this
 }
