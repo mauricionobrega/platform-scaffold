@@ -98,6 +98,7 @@ export const submitShipping = () => {
             country_id,
             city,
             region_id,
+            region,
             postcode,
             telephone,
             shipping_method
@@ -115,6 +116,7 @@ export const submitShipping = () => {
             city,
             street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1],
             regionId: region_id,
+            region,
             countryId: country_id,
             save_in_address_book: true
         }
