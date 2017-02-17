@@ -2,7 +2,6 @@ import Immutable from 'immutable'
 import {handleActions} from 'redux-actions'
 import {mergePayloadForActions} from '../../utils/reducer-utils'
 import {receiveData} from './actions'
-import {isRunningInAstro} from '../../utils/astro-integration'
 
 const signinFields = [
     {
@@ -85,7 +84,6 @@ const registerSigninFields = [
 
 const initialState = Immutable.fromJS({
     title: 'Customer Login',
-    isRunningInAstro,
     signinSection: {
         href: '',
         heading: '',
