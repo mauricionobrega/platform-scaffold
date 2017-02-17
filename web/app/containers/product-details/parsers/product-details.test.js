@@ -1,12 +1,12 @@
 /* eslint-env jquery, jest */
 import {jquerifyHtmlFile} from 'progressive-web-sdk/dist/test-utils'
 import {isURL} from 'validator'
-import productDetailsParser from './productDetails'
+import productDetailsParser from './product-details'
 
 /* eslint-disable max-nested-callbacks */
 
 describe('the ProductDetails parser', () => {
-    const $content = jquerifyHtmlFile('app/containers/product-details/parsers/productDetails-example.html')
+    const $content = jquerifyHtmlFile('app/containers/product-details/parsers/product-details-example.html')
     const parsedContent = productDetailsParser($, $content)
 
     test('extracts form info from the add-to-cart form', () => {

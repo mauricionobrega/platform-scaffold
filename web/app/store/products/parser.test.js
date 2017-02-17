@@ -6,7 +6,7 @@ import {productDetailsParser, productListParser} from './parser'
 /* eslint-disable max-nested-callbacks */
 
 describe('the ProductDetails product parser', () => {
-    const $content = jquerifyHtmlFile('app/containers/product-details/parsers/productDetails-example.html')
+    const $content = jquerifyHtmlFile('app/containers/product-details/parsers/product-details-example.html')
     const parsedContent = productDetailsParser($, $content)
 
     it('extracts the title from the page', () => {
@@ -36,7 +36,7 @@ describe('the ProductDetails product parser', () => {
 })
 
 describe('the ProductList product parser', () => {
-    const $content = jquerifyHtmlFile('app/store/categories/parsers/productList.test.html')
+    const $content = jquerifyHtmlFile('app/store/categories/parsers/product-list.test.html')
     const parsedContent = productListParser($, $content)
 
     it('should extract the product list content from the rendered HTML', () => {

@@ -1,6 +1,6 @@
 /* eslint-env jest */
 import React from 'react'
-import ConnectedProductDetailsDescription from './productDetails-description'
+import ConnectedProductDetailsDescription from './product-details-description'
 import {mount, shallow} from 'enzyme'
 import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/accordion'
 

@@ -25,7 +25,7 @@ import Image from 'progressive-web-sdk/dist/components/image'
 import {Ledger, LedgerRow} from 'progressive-web-sdk/dist/components/ledger'
 import List from 'progressive-web-sdk/dist/components/list'
 
-class ProductList extends React.Component {
+class OrderSummary extends React.Component {
     constructor(props) {
         super(props)
 
@@ -68,7 +68,7 @@ class ProductList extends React.Component {
         }
 
         return (
-            <div className="t-checkout-payment__product-list">
+            <div className="t-checkout-payment__order-summary">
                 <div className="t-checkout-payment__title u-padding-top-lg u-padding-bottom-md">
                     <h2 className="u-h4">Order Summary</h2>
                 </div>
@@ -163,7 +163,7 @@ class ProductList extends React.Component {
     }
 }
 
-ProductList.propTypes = {
+OrderSummary.propTypes = {
     cart: PropTypes.object,
 
     /**
@@ -212,4 +212,4 @@ const mapDispatchToProps = {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(ProductList)
+)(OrderSummary)

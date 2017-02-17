@@ -1,6 +1,6 @@
 /* eslint-env jest */
 import React from 'react'
-import ConnectedProductDetailsCarousel from './productDetails-carousel'
+import ConnectedProductDetailsCarousel from './product-details-carousel'
 import {mount, shallow} from 'enzyme'
 
 import Carousel from 'progressive-web-sdk/dist/components/carousel'

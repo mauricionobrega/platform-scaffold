@@ -1,9 +1,9 @@
 /* eslint-env jquery, jest */
 import {jquerifyHtmlFile} from 'progressive-web-sdk/dist/test-utils'
-import productListParser from './productList'
+import productListParser from './product-list'
 
 describe('the product list parser', () => {
-    const $content = jquerifyHtmlFile('app/store/categories/parsers/productList.test.html')
+    const $content = jquerifyHtmlFile('app/store/categories/parsers/product-list.test.html')
     const parsedContent = productListParser($, $content)
 
     it('should extract the product list content from the rendered HTML', () => {

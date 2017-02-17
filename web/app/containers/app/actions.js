@@ -71,7 +71,7 @@ export const fetchPage = (url, pageComponent, routeName) => {
                     dispatch(loginActions.process(receivedAction))
                 } else if (pageComponent === ProductDetails) {
                     dispatch(productDetailsActions.process(receivedAction))
-                    dispatch(productsActions.processPdp(receivedAction))
+                    dispatch(productsActions.processProductDetails(receivedAction))
                 } else if (pageComponent === ProductList) {
                     dispatch(categoriesActions.process(receivedAction))
                     dispatch(productsActions.processPlp(receivedAction))
