@@ -33,7 +33,7 @@ export const getSelectedProduct = createGetSelector(
 )
 
 export const getItemQuantity = createGetSelector(getSelectedPdp, 'itemQuantity')
-export const getCTAText = createGetSelector(getSelectedPdp, 'ctaText')
+export const getCTAText = createGetSelector(getSelectedPdp, 'ctaText', 'Add To Cart')
 export const getItemAddedModalOpen = isModalOpen('pdp-item-added')
 export const getFormInfo = createGetSelector(getSelectedPdp, 'formInfo')
 
