@@ -1,9 +1,11 @@
 const checkoutConfirmationParser = ($, $html) => {
-    const body = $html.find('body').html()
+    const $checkoutSuccess = $html.find('.checkout-success')
+    const $orderInSpan = $checkoutSuccess('p span')
+    const $orderInAnchor = $checkoutSuccess('p a')
 
     return {
-        testText: 'checkoutConfirmation Page',
-        body
+        orderNumber: $orderInSpan.length ? $orderInSpan.text() : $orderInAnchor.text(),
+        orderUrl: $orderInAnchor.length ? $orderInAnchor.attr('href') : ''
     }
 }
 
