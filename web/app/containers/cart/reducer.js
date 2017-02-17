@@ -20,6 +20,5 @@ const initialState = Immutable.fromJS({
 })
 
 export default handleActions({
-    ...mergePayloadForActions(receiveData),
-    [receiveCartContents]: (state) => state
+    ...mergePayloadForActions(receiveData)
 }, initialState)
