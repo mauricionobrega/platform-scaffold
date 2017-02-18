@@ -4,6 +4,7 @@ import {onRouteChanged, fetchPage, removeAllNotifications} from './containers/ap
 import Astro from './vendor/astro-client'
 
 import {analyticMetaPayloadCreator} from './utils/utils'
+import * as analyticConstants from 'progressive-web-sdk/dist/analytics/analytic-constants'
 
 const getDisplayName = (WrappedComponent) => {
     return WrappedComponent.displayName || WrappedComponent.name || 'Component'
@@ -28,7 +29,7 @@ const template = (WrappedComponent) => {
                 Astro.trigger('pwa-navigate', {url})
             }
 
-            dispatch(onRouteChanged(url, WrappedComponent, analyticMetaPayloadCreator('Pageview', {name: route.routeName})))
+            dispatch(onRouteChanged(url, WrappedComponent, analyticMetaPayloadCreator(analyticConstants.pageview, {name: route.routeName})))
 
             if (!route.suppressFetch) {
                 dispatch(fetchPage(url, WrappedComponent, route.routeName))
