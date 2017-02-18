@@ -19,7 +19,10 @@ const store = {
                 countries,
                 regions
             }
-        })
+        }),
+        form: {
+            estimateShipping: {}
+        }
     })
 }
 const testProps = {
