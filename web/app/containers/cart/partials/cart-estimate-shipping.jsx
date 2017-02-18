@@ -6,7 +6,7 @@ import {selectorToJS} from '../../../utils/selector-utils'
 import {CART_ESTIMATE_SHIPPING_MODAL, ESTIMATE_FORM_NAME} from '../constants'
 import {closeModal} from '../../../store/modals/actions'
 import {isModalOpen} from '../../../store/selectors'
-import {getCountries, getRegions} from '../../../store/checkout/locations/selectors'
+import {getCountries, getAvailableRegions} from '../../../store/checkout/locations/selectors'
 import {submitEstimateShipping} from '../actions'
 
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
@@ -43,11 +43,18 @@ export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateP
                     </FieldRow>
 
                     <FieldRow>
-                        <ReduxForm.Field component={Field} name="region_id" label="State/Province">
-                            <select>
-                                {stateProvinces.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
-                            </select>
-                        </ReduxForm.Field>
+                        {stateProvinces.length == 0 ?
+                            <ReduxForm.Field component={Field} name="region" label="State/Province">
+                                <input type="text" noValidate />
+                            </ReduxForm.Field>
+                        :
+                            <ReduxForm.Field component={Field} name="region_id" label="State/Province">
+                                <select>
+                                    {stateProvinces.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
+                                </select>
+                            </ReduxForm.Field>
+                        }
+
                     </FieldRow>
 
                     <FieldRow>
@@ -94,7 +101,7 @@ CartEstimateShippingModal.propTypes = {
 const mapStateToProps = createStructuredSelector({
     countries: selectorToJS(getCountries),
     isOpen: isModalOpen(CART_ESTIMATE_SHIPPING_MODAL),
-    stateProvinces: selectorToJS(getRegions)
+    stateProvinces: selectorToJS(getAvailableRegions(ESTIMATE_FORM_NAME))
 })
 
 const mapDispatchToProps = {

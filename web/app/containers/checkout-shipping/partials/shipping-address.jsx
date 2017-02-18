@@ -202,7 +202,7 @@ const mapStateToProps = createStructuredSelector({
     countries: selectorToJS(getCountries),
     formTitle: getShippingFormTitle,
     isCompanyOrAptShown: getIsCompanyOrAptShown,
-    regions: selectorToJS(getAvailableRegions)
+    regions: selectorToJS(getAvailableRegions(SHIPPING_FORM_NAME))
 })
 
 const mapDispatchToProps = {

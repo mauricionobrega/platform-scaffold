@@ -19,6 +19,11 @@ export const fetchShippingMethodsEstimate = (formKey) => {
             address.country_id = formValues.country_id
             address.region_id = formValues.region_id
             address.postcode = formValues.postcode
+            if (formValues.region) {
+                address.region = formValues.region
+                // Remove the region_id in case we have an old value
+                delete address.region_id
+            }
         }
         const getEstimateURL = `https://www.merlinspotions.com/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/estimate-shipping-methods`
         makeJsonEncodedRequest(getEstimateURL, {address}, {method: 'POST'})
