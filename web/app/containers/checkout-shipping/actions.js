@@ -7,7 +7,6 @@ import {getCustomerEntityID} from '../../store/checkout/selectors'
 import {getIsLoggedIn} from '../app/selectors'
 import {getShippingFormValues} from '../../store/form/selectors'
 import {receiveCheckoutData} from '../../store/checkout/actions'
-import {fetchShippingMethodsEstimate} from '../../store/checkout/shipping/actions'
 
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 
@@ -18,8 +17,6 @@ export const process = ({payload: {$, $response}}) => {
     return receiveData(checkoutShippingParser($, $response))
 }
 
-
-export const fetchShippingMethods = () => fetchShippingMethodsEstimate('shippingForm')
 
 export const onShippingEmailRecognized = () => {
     return (dispatch) => {
