@@ -43,7 +43,7 @@ export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateP
                     </FieldRow>
 
                     <FieldRow>
-                        {stateProvinces.length == 0 ?
+                        {stateProvinces.length === 0 ?
                             <ReduxForm.Field component={Field} name="region" label="State/Province">
                                 <input type="text" noValidate />
                             </ReduxForm.Field>
