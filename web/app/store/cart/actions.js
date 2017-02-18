@@ -28,7 +28,7 @@ export const getCart = () => (dispatch) => {
         headers: baseHeaders
     }
     dispatch(removeNotification('cartUpdateError'))
-    return utils.makeRequest(LOAD_CART_SECTION_URL, opts)
+    return makeRequest(LOAD_CART_SECTION_URL, opts)
         .then((response) => response.text())
         .then((responseText) => dispatch(receiveCartContents(parse(responseText))))
 }
