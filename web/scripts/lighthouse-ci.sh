@@ -5,7 +5,7 @@ concurrently --kill-others --success first --raw \
 	'npm run dev' \
 	'npm run proxy' \
 	'chrome-debug --allow-insecure-localhost' \
-	"sleep 35 && lighthouse \
+	"while ! echo exit | nc localhost 8443; do sleep 20; done && lighthouse \
 		--skip-autolaunch \
 		--output=html \
 		--output-path=${OUTPUT_PATH} \
