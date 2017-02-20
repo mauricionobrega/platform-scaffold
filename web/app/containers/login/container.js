@@ -11,7 +11,15 @@ import {Tabs, TabsPanel} from 'progressive-web-sdk/dist/components/tabs'
 
 import * as actions from './actions'
 import * as selectors from './selectors'
-import {SIGN_IN_SECTION, REGISTER_SECTION, SECTION_NAMES, INDEX_FOR_SECTION, SECTION_FOR_INDEX} from './constants'
+import {
+    SIGN_IN_SECTION,
+    REGISTER_SECTION,
+    SECTION_NAMES,
+    INDEX_FOR_SECTION,
+    SECTION_FOR_INDEX
+} from './constants'
+
+import * as AstroIntegration from '../../utils/astro-integration'
 
 const LoginTitle = ({title}) => {
     if (title) {
@@ -54,10 +62,9 @@ class Login extends React.Component {
             route: {
                 routeName
             },
-            isRunningInAstro
         } = this.props
 
-        if (!isRunningInAstro) {
+        if (!AstroIntegration.isRunningInAstro) {
             return (
                 <div className="t-login">
                     <div className="u-bg-color-neutral-10 u-padding-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
@@ -74,18 +81,21 @@ class Login extends React.Component {
                     </Tabs>
                 </div>
             )
-        } else if (routeName === Login.SIGN_IN_SECTION) {
+        } else if (routeName === SIGN_IN_SECTION) {
             return (
                 <div className="t-login">
                     <SignInPanel />
                 </div>
             )
-        } else {
+        } else if (routeName === REGISTER_SECTION) {
             return (
                 <div className="t-login">
                     <RegisterPanel />
                 </div>
             )
+        } else {
+            console.log('route unsupported: ', routeName)
+            return null
         }
     }
 }
@@ -99,15 +109,12 @@ const mapDispatchToProps = {
 }
 
 Login.propTypes = {
-    isRunningInAstro: PropTypes.bool,
     navigateToSection: PropTypes.func,
     route: PropTypes.object,
     router: PropTypes.object,
     routes: PropTypes.array,
     title: PropTypes.string
 }
-
-export {Login as RawLogin}
 
 export default connect(
     mapStateToProps,
