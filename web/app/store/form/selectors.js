@@ -8,3 +8,5 @@ export const getShippingFormValues = createSelector(getShippingForm, (shippingFo
 export const getFormByKey = (formKey) => createSelector(getForm, (form) => { return form[formKey] ? form[formKey] : {} })
 
 export const getFormValues = (formKey) => createSelector(getFormByKey(formKey), ({values}) => values)
+
+export const getFormRegisteredFields = (formKey) => createSelector(getFormByKey(formKey), ({registeredFields}) => registeredFields)

@@ -2,9 +2,10 @@
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {getCustomerEntityID} from '../selectors'
 import {getIsLoggedIn} from '../../../containers/app/selectors'
-import {getFormValues} from '../../form/selectors'
+import {getFormValues, getFormRegisteredFields} from '../../form/selectors'
 import {parseShippingMethods} from './parser'
 import {receiveShippingMethodInitialValues, receiveCheckoutData} from '../actions'
+
 
 
 export const fetchShippingMethodsEstimate = (formKey) => {
@@ -13,14 +14,20 @@ export const fetchShippingMethodsEstimate = (formKey) => {
         const isLoggedIn = getIsLoggedIn(currentState)
         const formValues = getFormValues(formKey)(currentState)
         const entityID = getCustomerEntityID(currentState)
+        const registeredFieldNames = getFormRegisteredFields(formKey)(currentState).map(({name}) => name)
         // Default values to use if none have been selected
         const address = {country_id: 'US', region_id: '0', postcode: null}
+
         if (formValues) {
-            address.country_id = formValues.country_id
-            address.region_id = formValues.region_id || ''
-            address.postcode = formValues.postcode
+            // Only return the field value if the field is registered
+            const getRegisteredFieldValue = (fieldName) => {
+                return registeredFieldNames.includes(fieldName) ? formValues[fieldName] : undefined
+            }
+            address.country_id = getRegisteredFieldValue('country_id')
+            address.region_id = getRegisteredFieldValue('region_id')
+            address.postcode = getRegisteredFieldValue('postcode')
             if (formValues.region) {
-                address.region = formValues.region
+                address.region = getRegisteredFieldValue('region')
                 // Remove the region_id in case we have an old value
                 delete address.region_id
             }
