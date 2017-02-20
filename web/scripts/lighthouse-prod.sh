@@ -1,5 +1,5 @@
 OUTPUT_PATH=./lighthouse/audit-prod.html
-URL=https://localhost
+URL=https://www.merlinspotions.com
 
 lighthouse \
 	--output=html \
