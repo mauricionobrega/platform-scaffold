@@ -5,10 +5,10 @@ concurrently --kill-others --success first --raw \
 	'npm run dev' \
 	'npm run proxy' \
 	'chrome-debug --allow-insecure-localhost' \
-	'sleep 35 && lighthouse \
+	"sleep 35 && lighthouse \
 		--skip-autolaunch \
 		--output=html \
-		--output-path=./lighthouse/audit-local.html \
-		https://localhost'
+		--output-path=${OUTPUT_PATH} \
+		${URL}"
 
 node ./lighthouse/check-score.js

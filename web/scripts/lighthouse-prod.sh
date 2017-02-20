@@ -1,8 +1,9 @@
 OUTPUT_PATH=./lighthouse/audit-prod.html
+URL=https://localhost
 
 lighthouse \
 	--output=html \
 	--output-path=$OUTPUT_PATH \
-	https://www.merlinspotions.com
+	$URL
 
 open $OUTPUT_PATH
