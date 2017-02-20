@@ -21,7 +21,11 @@ const template = (WrappedComponent) => {
         }
 
         dispatchRouteChange({dispatch, location, route}) {
-            const url = getURL(location)
+            let url = getURL(location)
+
+            if (route.fetchUrl) {
+                url = route.fetchUrl
+            }
 
             if (Astro.isRunningInApp() && location.action.toLowerCase() !== 'pop') {
                 Astro.trigger('pwa-navigate', {url})
