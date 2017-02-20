@@ -2,6 +2,8 @@ import * as analyticConstants from 'progressive-web-sdk/dist/analytics/analytic-
 
 let options
 
+export const toString = () => { return 'Client-GA' }
+
 export const init = (initalizingOptions) => {
     options = initalizingOptions
     // initialize analytic setup
