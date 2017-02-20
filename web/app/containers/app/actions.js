@@ -9,6 +9,7 @@ import {SHIPPING_FORM_NAME} from '../checkout-shipping/constants'
 
 import Cart from '../cart/container'
 import CheckoutShipping from '../checkout-shipping/container'
+import CheckoutPayment from '../checkout-payment/container'
 import Home from '../home/container'
 import Login from '../login/container'
 import PDP from '../pdp/container'
@@ -87,6 +88,8 @@ export const fetchPage = (url, pageComponent, routeName) => {
                 } else if (pageComponent === Cart) {
                     dispatch(checkoutActions.processCartCheckoutData(receivedAction))
                     dispatch(checkoutShippingActions.fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME))
+                } else if (pageComponent === CheckoutPayment) {
+                    dispatch(checkoutActions.processCheckoutData(receivedAction))
                 }
                 dispatch(footerActions.process(receivedAction))
                 dispatch(navigationActions.process(receivedAction))
