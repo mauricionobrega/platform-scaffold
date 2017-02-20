@@ -391,6 +391,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Preview";
 				BUNDLE_DISPLAY_NAME = "Merlin's";
 				CODE_SIGN_ENTITLEMENTS = scaffold/scaffold.entitlements;
+				DEVELOPMENT_TEAM = KS9S3B73SG;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(CONFIGURATION_BUILD_DIR)",
@@ -521,6 +522,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Preview";
 				BUNDLE_DISPLAY_NAME = "Merlin's";
 				CODE_SIGN_ENTITLEMENTS = scaffold/scaffold.entitlements;
+				DEVELOPMENT_TEAM = KS9S3B73SG;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(CONFIGURATION_BUILD_DIR)",
@@ -543,6 +545,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				BUNDLE_DISPLAY_NAME = "Merlin's";
 				CODE_SIGN_ENTITLEMENTS = scaffold/scaffold.entitlements;
+				DEVELOPMENT_TEAM = KS9S3B73SG;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(CONFIGURATION_BUILD_DIR)",

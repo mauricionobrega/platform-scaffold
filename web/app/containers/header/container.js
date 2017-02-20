@@ -87,7 +87,6 @@ Header.propTypes = {
     isRunningInAstro: PropTypes.bool,
     itemCount: PropTypes.number,
     toggleHeader: PropTypes.func,
-
     onMenuClick: PropTypes.func,
     onMiniCartClick: PropTypes.func
 }
