@@ -22,8 +22,8 @@ import * as ClientGA from './utils/analytics/client-ga'
 polyfill()
 
 analyticsInitializer({
-	projectSlug: AJS_SLUG,		// eslint-disable-line no-undef
-	isDebug: false
+    projectSlug: AJS_SLUG,      // eslint-disable-line no-undef
+    isDebug: false
 }, ClientGA)
 initCacheManifest(cacheHashManifest)
 

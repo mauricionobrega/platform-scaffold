@@ -1,19 +1,19 @@
 import * as analyticConstants from 'progressive-web-sdk/dist/analytics/analytic-constants'
 
-let options
+// let options
 
 export const toString = () => { return 'Client-GA' }
 
-export const init = (initalizingOptions) => {
-    options = initalizingOptions
+export const init = (/* initalizingOptions */) => {
+    // options = initalizingOptions
     // initialize analytic setup
 }
 
 const handlers = {
-    [analyticConstants.pageview]: (payload) => {
+    [analyticConstants.pageview]: (/* payload */) => {
         // Send Pageview
     },
-    [analyticConstants.transaction]: (payload) => {
+    [analyticConstants.transaction]: (/* payload */) => {
         // Send Transaction
     }
 }
