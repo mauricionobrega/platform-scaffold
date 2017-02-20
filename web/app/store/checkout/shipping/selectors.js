@@ -7,7 +7,7 @@ export const getShipping = createGetSelector(getCheckout, 'shipping', Immutable.
 
 export const getShippingInitialValues = createGetSelector(getShipping, 'initialValues')
 
-export const getShippingAddress = createGetSelector(getShipping, 'address')
+export const getShippingAddress = createGetSelector(getShipping, 'address', Immutable.Map())
 
 export const getShippingFirstName = createGetSelector(getShippingAddress, 'firstname', '')
 
@@ -32,3 +32,5 @@ export const getRegionId = createGetSelector(getShippingAddress, 'regionId')
 export const getCountryId = createGetSelector(getShippingAddress, 'countryId')
 
 export const getEmail = createGetSelector(getShippingAddress, 'email')
+
+export const getCity = createGetSelector(getShippingAddress, 'city')
