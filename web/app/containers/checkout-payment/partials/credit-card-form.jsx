@@ -173,10 +173,6 @@ CreditCardForm.propTypes = {
     toggleCardInputRadio: PropTypes.func,
 }
 
-const CreditCardReduxForm = ReduxForm.reduxForm({
-    form: 'paymentCreditCardForm'
-})(CreditCardForm)
-
 const mapStateToProps = createStructuredSelector({
     cvvType: selectors.getCvvType,
     hasExistingCreditCard: selectors.getHasExistingCreditCard,
@@ -191,4 +187,4 @@ const mapDispatchToProps = {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(CreditCardReduxForm)
+)(CreditCardForm)
