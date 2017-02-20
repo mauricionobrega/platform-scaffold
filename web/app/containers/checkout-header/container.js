@@ -1,12 +1,15 @@
 import React from 'react'
+import {connect} from 'react-redux'
+import {createStructuredSelector} from 'reselect'
+
+import {getIsLoggedIn} from '../app/selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import {HeaderBar, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import {isRunningInAstro} from '../../utils/astro-integration'
 
-const CheckoutHeader = function(props) {
-    const canSignIn = true
+const CheckoutHeader = function({isLoggedIn}) {
     if (isRunningInAstro) {
         return null
     }
@@ -22,21 +25,32 @@ const CheckoutHeader = function(props) {
 
                     <Icon name="lock" size="medium" className="u-flex-none" />
 
-                    {canSignIn &&
-                    <div className="u-flex u-text-align-end">
-                        <Button
-                            href="/customer/account/login/"
-                            innerClassName="u-color-neutral-10"
-                                    >
-                            <Icon name="user" className="u-margin-end-sm" />
-                            <span>Sign in</span>
-                        </Button>
-                    </div>
-                            }
+                    {!isLoggedIn &&
+                        <div className="u-flex u-text-align-end">
+                            <Button
+                                href="/customer/account/login/"
+                                innerClassName="u-color-neutral-10"
+                                >
+                                <Icon name="user" className="u-margin-end-sm" />
+                                <span>Sign in</span>
+                            </Button>
+                        </div>
+                    }
                 </HeaderBar>
             </header>
         </div>
     )
 }
 
-export default CheckoutHeader
+CheckoutHeader.propTypes = {
+    /**
+    * Is the user logged in or not
+    */
+    isLoggedIn: React.PropTypes.bool
+}
+
+const mapStateToProps = createStructuredSelector({
+    isLoggedIn: getIsLoggedIn
+})
+
+export default connect(mapStateToProps)(CheckoutHeader)

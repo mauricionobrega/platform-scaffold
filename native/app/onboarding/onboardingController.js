@@ -31,8 +31,8 @@ OnboardingController.prototype.back = function() {
     this.viewPlugin.back()
 }
 
-OnboardingController.prototype.canGoBack = function() {
-    return this.viewPlugin.canGoBack()
+OnboardingController.prototype.canGoBack = async function() {
+    return await this.viewPlugin.canGoBack()
 }
 
 export default OnboardingController

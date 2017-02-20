@@ -2,7 +2,10 @@ import AnchoredLayoutPlugin from 'progressive-app-sdk/plugins/anchoredLayoutPlug
 import TabBarPlugin from 'progressive-app-sdk/plugins/tabBarPlugin'
 
 import {tabBarConfig} from '../config/tabBarConfig'
+import baseConfig from '../config/baseConfig'
+
 import {Events} from './cartModalController'
+
 import TabController from './tabController'
 import AccountTabController from './accountTabController'
 import AppEvents from '../global/app-events'
@@ -27,6 +30,7 @@ const TabBarController = function(tabBar, layout, tabControllers) {
 
 TabBarController.init = async function() {
     const tabBar = await TabBarPlugin.init()
+    await tabBar.setColor(baseConfig.colors.primaryColor)
     const layout = await AnchoredLayoutPlugin.init()
 
     const tabControllers = {}
@@ -89,6 +93,18 @@ TabBarController.prototype.showRegistration = function() {
 TabBarController.prototype.showSignIn = function() {
     this.tabBar.selectItem('account')
     this.accountTabController.showSignIn()
+}
+
+TabBarController.prototype.backActiveItem = async function() {
+    if (await this.canGoBack()) {
+        const activeTab = this.getActiveController()
+        activeTab.back()
+    }
+}
+
+TabBarController.prototype.canGoBack = async function() {
+    const activeTab = this.getActiveController()
+    return await activeTab.canGoBack()
 }
 
 export default TabBarController

@@ -6,22 +6,22 @@ const tabBarConfig = {
             id: 'shop',
             title: 'Shop',
             imageUrl: 'file:///wand.png',
-            selectedImageUrl: 'file:///wand.png',
+            selectedImageUrl: 'file:///wand_selected.png',
             rootUrl: `${baseConfig.baseURL}`,
-            isInitialTab: true,
+            isInitialTab: true
         },
         {
             id: 'stores',
             title: 'Stores',
             imageUrl: 'file:///map.png',
-            selectedImageUrl: 'file:///map.png',
-            rootUrl: `${baseConfig.baseURL}`,
+            selectedImageUrl: 'file:///map_selected.png',
+            rootUrl: `${baseConfig.baseURL}`
         },
         {
             id: 'account',
             title: 'Account',
             imageUrl: 'file:///user.png',
-            selectedImageUrl: 'file:///user.png',
+            selectedImageUrl: 'file:///user_selected.png',
             rootUrl: `${baseConfig.baseURL}/customer/account`,
             type: 'custom'
         },
@@ -29,8 +29,8 @@ const tabBarConfig = {
             id: 'more',
             title: 'More',
             imageUrl: 'file:///more.png',
-            selectedImageUrl: 'file:///more.png',
-            rootUrl: `${baseConfig.baseURL}`,
+            selectedImageUrl: 'file:///more_selected.png',
+            rootUrl: `${baseConfig.baseURL}`
         }
     ]
 }

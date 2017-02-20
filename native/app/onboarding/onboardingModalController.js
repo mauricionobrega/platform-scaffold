@@ -79,8 +79,8 @@ OnboardingModalController.prototype.isActiveItem = function() {
     return this.isShowing
 }
 
-OnboardingModalController.prototype.canGoBack = function() {
-    return this.onboardingController.canGoBack()
+OnboardingModalController.prototype.canGoBack = async function() {
+    return await this.onboardingController.canGoBack()
 }
 
 export {OnboardingModalEvents}
