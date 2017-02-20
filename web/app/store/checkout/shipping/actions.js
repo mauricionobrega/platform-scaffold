@@ -17,7 +17,7 @@ export const fetchShippingMethodsEstimate = (formKey) => {
         const address = {country_id: 'US', region_id: '0', postcode: null}
         if (formValues) {
             address.country_id = formValues.country_id
-            address.region_id = formValues.region_id
+            address.region_id = formValues.region_id || ''
             address.postcode = formValues.postcode
             if (formValues.region) {
                 address.region = formValues.region
@@ -25,7 +25,7 @@ export const fetchShippingMethodsEstimate = (formKey) => {
                 delete address.region_id
             }
         }
-        const getEstimateURL = `https://www.merlinspotions.com/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/estimate-shipping-methods`
+        const getEstimateURL = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/estimate-shipping-methods`
         makeJsonEncodedRequest(getEstimateURL, {address}, {method: 'POST'})
             .then((response) => response.json())
             .then((responseJSON) => {
