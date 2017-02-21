@@ -17,7 +17,7 @@ test:
             pwd: web
         - npm test -- --runInBand:
             pwd: web
-        - sudo env "PATH=$PATH" npm run test:pwa-ci:
+        - sudo -E npm run test:pwa-ci:
             pwd: web
         ## Enable smoke-test when automated workflow tests have been implemented.
         # - npm run smoke-test:

@@ -4,11 +4,11 @@ URL=https://localhost
 concurrently --kill-others --success first --raw \
 	'npm run dev' \
 	'npm run proxy' \
-	'google-chrome --remote-debugging-port=9222  --allow-insecure-localhost' \
-	"while ! echo exit | nc localhost 8443; do sleep 20; done && lighthouse \
+	'chrome-debug --allow-insecure-localhost' \
+	"'while ! echo exit | nc localhost 8443; do sleep 20; done && lighthouse \
 		--skip-autolaunch \
 		--output=html \
 		--output-path=${OUTPUT_PATH} \
-		${URL}"
+		${URL}'"
 
 node ./lighthouse/check-score.js
