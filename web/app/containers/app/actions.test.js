@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 import {fetchPage, onPageReceived, setPageFetchError, clearPageFetchError, checkIfOffline} from './actions'
 import {closeModal} from '../../store/modals/actions'
 import {OFFLINE_MODAL} from '../offline/constants'
-import {CURRENT_URL} from './constants'
+import {CURRENT_URL, OFFLINE_ASSET_URL} from './constants'
 
 let realFetch
 beforeAll(() => {
@@ -56,7 +56,7 @@ test('checkIfOffline dispatches setPageFetchError if network request fails', () 
     return thunk(fakeDispatch)
         .then(() => {
             expect(global.fetch).toBeCalled()
-            expect(global.fetch.mock.calls[0][0]).toMatch(offlineTestRegExp)
+            expect(global.fetch.mock.calls[0][0]).toMatch(OFFLINE_ASSET_URL)
 
             expect(fakeDispatch).toBeCalled()
             expect(fakeDispatch.mock.calls[0][0]).toEqual(setPageFetchError('failed to fetch'))
@@ -83,7 +83,7 @@ test('checkIfOffline dispatches setPageFetchError if it receives modified JSON f
     return thunk(fakeDispatch)
         .then(() => {
             expect(global.fetch).toBeCalled()
-            expect(global.fetch.mock.calls[0][0]).toMatch(offlineTestRegExp)
+            expect(global.fetch.mock.calls[0][0]).toMatch(OFFLINE_ASSET_URL)
 
             expect(fakeDispatch).toHaveBeenCalledTimes(1)
             expect(fakeDispatch.mock.calls[0][0]).toEqual(setPageFetchError('Network failure, using worker cache'))
@@ -110,7 +110,7 @@ test('checkIfOffline clears offline modal and page fetch errors when it receives
     return thunk(fakeDispatch)
         .then(() => {
             expect(global.fetch).toBeCalled()
-            expect(global.fetch.mock.calls[0][0]).toMatch(offlineTestRegExp)
+            expect(global.fetch.mock.calls[0][0]).toMatch(OFFLINE_ASSET_URL)
 
             expect(fakeDispatch).toHaveBeenCalledTimes(2)
             expect(fakeDispatch.mock.calls[0][0]).toEqual(clearPageFetchError())
