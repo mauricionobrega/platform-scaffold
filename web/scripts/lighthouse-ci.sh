@@ -4,7 +4,7 @@ URL=https://localhost
 concurrently --kill-others --success first --raw \
 	'npm run dev' \
 	'npm run proxy' \
-	'chrome-debug --allow-insecure-localhost' \
+	'google-chrome --remote-debugging-port=9222  --allow-insecure-localhost' \
 	"while ! echo exit | nc localhost 8443; do sleep 20; done && lighthouse \
 		--skip-autolaunch \
 		--output=html \
