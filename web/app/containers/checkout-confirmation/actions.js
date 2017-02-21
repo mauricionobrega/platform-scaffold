@@ -101,7 +101,7 @@ export const fetchContents = () => {
 //     }
 // }
 
-export const updateingShippingAndBilling = (parsedFormData) => {
+export const updatingShippingAndBilling = (parsedFormData) => {
     return (dispatch, getState) => {
         const shippingData = selectorToJS(shippingSelectors.getShippingAddress)(getState())
         const formData = buildFormData({
