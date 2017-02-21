@@ -1,10 +1,9 @@
 /* eslint-env jest */
-import Immutable from 'immutable'
 
-import {fetchPage, onPageReceived, setPageFetchError, clearPageFetchError, checkIfOffline} from './actions'
+import {fetchPage, setPageFetchError, clearPageFetchError, checkIfOffline} from './actions'
 import {closeModal} from '../../store/modals/actions'
 import {OFFLINE_MODAL} from '../offline/constants'
-import {CURRENT_URL, OFFLINE_ASSET_URL} from './constants'
+import {OFFLINE_ASSET_URL} from './constants'
 
 let realFetch
 beforeAll(() => {
@@ -17,11 +16,11 @@ afterAll(() => {
     global.fetch = realFetch
 })
 
-jest.mock('progressive-web-sdk/dist/jquery-response')
-import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
+// jest.mock('progressive-web-sdk/dist/jquery-response')
+// import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 
-const getState = () => ({ui: {app: Immutable.fromJS({[CURRENT_URL]: '/'})}})
-const URL = 'http://test.mobify.com/'
+// const getState = () => ({ui: {app: Immutable.fromJS({[CURRENT_URL]: '/'})}})
+// const URL = 'http://test.mobify.com/'
 
 // test('fetchPage fetches the given page', () => {
 //     global.fetch.mockClear()
@@ -127,7 +126,7 @@ test('fetchPage does not throw on error', () => {
 
     const fakeDispatch = jest.fn()
 
-    return thunk(fakeDispatch, getState)
+    return thunk(fakeDispatch)
         .catch(() => {
             expect('The catch clause was called').toEqual('catch was not called')
         })
