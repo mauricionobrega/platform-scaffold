@@ -33,7 +33,7 @@ const template = (WrappedComponent) => {
                 Astro.trigger('pwa-navigate', {url})
             }
 
-            dispatch(onRouteChanged(url, WrappedComponent, analyticMetaPayloadCreator(analyticConstants.pageview, {name: route.routeName})))
+            dispatch(onRouteChanged(url, analyticMetaPayloadCreator(analyticConstants.pageview, {name: route.routeName})))
 
             if (!route.suppressFetch) {
                 dispatch(fetchPage(url, WrappedComponent, route.routeName))

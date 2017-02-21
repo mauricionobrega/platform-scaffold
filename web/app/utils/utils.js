@@ -31,9 +31,24 @@ export const analyticMetaPayloadCreator = (type, payload) => ({
  *
  * Usage:
  *
- * = Creating the action = You don't need to specify the meta payload creator
+ * = Creating the action =
  * export const actionVariable = createActionWithMeta('Action name',
  *      ['parameter1', 'parameter2']                                // The parameter name to map to payload
+ *      (parameter1, parameter2, parameter3) => (parameter3)        // The meta payload creator - this tells the action which parameter to use for meta payload
+ * )
+ *
+ *
+ * You can also create meta payload from payload as well
+ * export const actionVariable = createActionWithMeta('Action name',
+ *      ['parameter1', 'parameter2']
+ *      (parameter1, parameter2) => ({
+ *          analytics: {
+ *              type: parameter1,
+ *              payload: {
+ *                  name: parameter2
+ *              }
+ *          }
+ *      })
  * )
  *
  * = Dispatching the action =
@@ -56,15 +71,14 @@ export const analyticMetaPayloadCreator = (type, payload) => ({
  * @description {string} - a unique name for the action
  * @argNamesPayloadAry {array} - an array of strings that identifies each parameter
  */
-export const createActionWithMeta = (description, argNamesPayloadAry) => {
+export const createActionWithMeta = (description, argNamesPayloadAry, metaCreator) => {
     return createReduxAction(
         description,
         argNamesPayloadAry.length ?
             (...args) => fromPairs(argNamesPayloadAry.map((arg, idx) => [arg, args[idx]]))
             : null,
-        (...args) => {
-            return argNamesPayloadAry.length < args.length ? args[argNamesPayloadAry.length] : null
-        }
+        metaCreator ? metaCreator : null
+
     )
 }
 
