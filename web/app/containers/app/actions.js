@@ -34,10 +34,7 @@ export const removeAllNotifications = utils.createAction('Remove All Notificatio
  * @param {string} pageComponent - the component of the entered route
  * @param {string} currentURL - what's currently shown in the address bar
  */
-export const onRouteChanged = utils.createActionWithMeta('On route changed',
-    ['currentURL', 'pageComponent'],
-    (currentURL, pageComponent, meta) => (meta)
-)
+export const onRouteChanged = utils.createActionWithMeta('On route changed', ['currentURL', 'pageComponent'])
 
 /**
  * Action dispatched when content for a global page render is ready.
