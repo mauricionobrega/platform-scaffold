@@ -19,9 +19,8 @@ import ShippingMethod from './shipping-method'
 const CheckoutShippingForm = ({
     handleSubmit,
     isLoggedIn,
-    submitShipping
-    // disabled,
-    // submitting
+    submitShipping,
+    submitting
 }) => {
 
     return (
@@ -33,7 +32,7 @@ const CheckoutShippingForm = ({
                 </GridSpan>
 
                 <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 5}}>
-                    <ShippingMethod />
+                    <ShippingMethod submitting={submitting} />
                 </GridSpan>
             </Grid>
         </form>
@@ -45,7 +44,6 @@ CheckoutShippingForm.propTypes = {
      * Whether the form is disabled or not
      */
     disabled: React.PropTypes.bool,
-
     /**
      * Redux-form internal
      */
@@ -66,9 +64,26 @@ CheckoutShippingForm.propTypes = {
 
 const validate = (values) => {
     const errors = {}
-    if (values.email && !values.email.match('@')) {  // Obviously not for real
+    const requiredFieldNames = [
+        'username',
+        'name',
+        'addressLine1',
+        'city',
+        'country_id',
+        'region_id',
+        'postcode',
+        'telephone'
+    ]
+    if (values.username && !values.username.match('@')) {  // Obviously not for real
         errors.email = 'Enter a valid email address'
     }
+
+    requiredFieldNames.forEach((fieldName) => {
+        if (!values[fieldName]) {
+            errors[fieldName] = 'Required'
+        }
+    })
+
     return errors
 }
 

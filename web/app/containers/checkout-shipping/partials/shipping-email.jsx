@@ -35,7 +35,7 @@ const ShippingEmail = ({submitSignIn, customerEmailRecognized, checkCustomerEmai
                 {customerEmailRecognized &&
                     <FieldRow>
                         <ReduxForm.Field component={Field} name="password" label="Password" hint={passwordHint}>
-                            <input type="password" noValidate />
+                            <input type="password" name="password" noValidate />
                         </ReduxForm.Field>
                     </FieldRow>
                 }

@@ -13,7 +13,7 @@ import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 import ShippingMethodLabel from './shipping-method-label'
 
 
-const ShippingMethod = ({shippingMethods}) => {
+const ShippingMethod = ({shippingMethods, submitting}) => {
     return (
         <div>
             <div className="t-checkout-shipping__title u-padding-top-lg u-padding-bottom-md">
@@ -38,7 +38,7 @@ const ShippingMethod = ({shippingMethods}) => {
                 })}
 
                 <FieldRow className="u-margin-top-lg">
-                    <Button type="submit" className="c--primary u-width-full u-text-uppercase">
+                    <Button type="submit" className="c--primary u-width-full u-text-uppercase" disabled={submitting}>
                         Continue to Payment
                     </Button>
                 </FieldRow>
@@ -59,7 +59,11 @@ ShippingMethod.propTypes = {
         cost: PropTypes.string,
         label: PropTypes.string,
         value: PropTypes.string
-    }))
+    })),
+    /**
+    * (Internal) Added by redux form
+    */
+    submitting: PropTypes.bool
 }
 
 const mapStateToProps = createStructuredSelector({
