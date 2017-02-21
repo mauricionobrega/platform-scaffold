@@ -78,8 +78,6 @@ const checkIfOffline = (request) =>
     .catch(() => noCacheJSONResponse({offline: true}))
 
 // For enabling offline detection within the application
-// @TODO {MQ} - Modify this regular expression to match the final asset URL once
-// created and uploaded to S3/CDN
 toolbox.router.get(/online\.mobify\.net\/offline\.json/, checkIfOffline)
 
 // Path Handlers

@@ -91,11 +91,8 @@ test('checkIfOffline dispatches setPageFetchError if it receives modified JSON f
 
 test('checkIfOffline clears offline modal and page fetch errors when it receives untouched JSON from network', () => {
     const mockResponse = {
-        obj: {
-            offline: false
-        },
-        json: function() { // eslint-disable-line object-shorthand
-                           // arrow function won't properly bind `this`
+        obj: {},
+        json() {
             return this.obj
         }
     }
