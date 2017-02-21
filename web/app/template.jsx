@@ -4,13 +4,12 @@ import {onRouteChanged, fetchPage, removeAllNotifications} from './containers/ap
 import {triggerMobifyPageView} from 'progressive-web-sdk/dist/analytics'
 import Astro from './vendor/astro-client'
 
+import {getURL, getPath} from './utils/utils'
+import {trigger as astroTrigger} from './utils/astro-integration'
+
 const getDisplayName = (WrappedComponent) => {
     return WrappedComponent.displayName || WrappedComponent.name || 'Component'
 }
-
-const getPath = ({pathname, search}) => pathname + search
-const getURL = (routerLocation) =>
-      window.location.origin + getPath(routerLocation)
 
 const template = (WrappedComponent) => {
     class Template extends React.Component {
@@ -44,12 +43,26 @@ const template = (WrappedComponent) => {
             this.dispatchRouteChange(this.props)
         }
 
+        componentDidMount() {
+            astroTrigger('pwa-navigated', {
+                url: getURL(this.props.location),
+                source: 'componentDidMount'
+            })
+        }
+
         componentWillReceiveProps(nextProps) {
             if (getPath(this.props.location) !== getPath(nextProps.location)) {
                 console.log('changing', Template.displayName)
                 this.dispatchRouteChange(nextProps)
                 this.props.dispatch(removeAllNotifications())
             }
+        }
+
+        componentDidUpdate() {
+            astroTrigger('pwa-navigated', {
+                url: getURL(this.props.location),
+                source: 'componentDidUpdate'
+            })
         }
 
         render() {
