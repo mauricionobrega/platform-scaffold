@@ -3,10 +3,21 @@ import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import * as utils from '../../utils/utils'
 import * as selectors from './selectors'
 
+import appParser from './app-parser'
+
+import {ESTIMATE_FORM_NAME} from '../cart/constants'
+import {SHIPPING_FORM_NAME} from '../checkout-shipping/constants'
+
+import Cart from '../cart/container'
+import CheckoutShipping from '../checkout-shipping/container'
+import CheckoutPayment from '../checkout-payment/container'
 import Home from '../home/container'
 import Login from '../login/container'
 import PDP from '../pdp/container'
 import PLP from '../plp/container'
+import * as checkoutActions from '../../store/checkout/actions'
+import * as checkoutShippingUIActions from '../checkout-shipping/actions'
+import * as checkoutShippingActions from '../../store/checkout/shipping/actions'
 import * as homeActions from '../home/actions'
 import * as loginActions from '../login/actions'
 import * as pdpActions from '../pdp/actions'
@@ -46,6 +57,11 @@ export const onPageReceived = utils.createAction('On page received',
     'currentURL',
     'routeName'
 )
+
+export const receiveData = utils.createAction('Receive App Data')
+export const process = ({payload: {$response}}) => {
+    return receiveData(appParser($response))
+}
 
 export const setPageFetchError = utils.createAction('Set page fetch error', 'fetchError')
 export const clearPageFetchError = utils.createAction('Clear page fetch error')
@@ -96,6 +112,7 @@ export const fetchPage = (url, pageComponent, routeName) => {
 
                 // Let app-level reducers know about receiving the page
                 dispatch(receivedAction)
+                dispatch(process(receivedAction))
 
                 if (pageComponent === Home) {
                     dispatch(homeActions.process(receivedAction))
@@ -107,6 +124,15 @@ export const fetchPage = (url, pageComponent, routeName) => {
                 } else if (pageComponent === PLP) {
                     dispatch(categoriesActions.process(receivedAction))
                     dispatch(productsActions.processPlp(receivedAction))
+                } else if (pageComponent === CheckoutShipping) {
+                    dispatch(checkoutShippingUIActions.process(receivedAction))
+                    dispatch(checkoutActions.processCheckoutData(receivedAction))
+                    dispatch(checkoutShippingActions.fetchShippingMethodsEstimate(SHIPPING_FORM_NAME))
+                } else if (pageComponent === Cart) {
+                    dispatch(checkoutActions.processCartCheckoutData(receivedAction))
+                    dispatch(checkoutShippingActions.fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME))
+                } else if (pageComponent === CheckoutPayment) {
+                    dispatch(checkoutActions.processCheckoutData(receivedAction))
                 }
                 dispatch(footerActions.process(receivedAction))
                 dispatch(navigationActions.process(receivedAction))

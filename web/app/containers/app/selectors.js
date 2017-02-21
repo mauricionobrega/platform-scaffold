@@ -15,3 +15,5 @@ export const getNotifications = createGetSelector(getApp, 'notifications')
 export const getFetchError = createGetSelector(getApp, 'fetchError')
 export const getFetchedPaths = createGetSelector(getApp, FETCHED_PATHS)
 export const hasFetchedCurrentPath = createHasSelector(getFetchedPaths, getCurrentPathKey)
+
+export const getIsLoggedIn = createGetSelector(getApp, 'isLoggedIn')

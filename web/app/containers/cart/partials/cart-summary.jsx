@@ -4,13 +4,14 @@ import {createStructuredSelector} from 'reselect'
 import * as cartSelectors from '../../../store/cart/selectors'
 import {CART_ESTIMATE_SHIPPING_MODAL} from '../constants'
 import {openModal} from '../../../store/modals/actions'
+import {getDefaultShippingRate} from '../../../store/checkout/shipping/selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import CartPromoForm from './cart-promo-form'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import {Ledger, LedgerRow} from 'progressive-web-sdk/dist/components/ledger'
 
-const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, onCalculateClick}) => {
+const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, shippingRate, onCalculateClick}) => {
     const calculateButton = (
         <Button innerClassName="u-padding-end-0 u-color-brand" onClick={onCalculateClick}>
             Calculate <Icon name="chevron-right" />
@@ -40,13 +41,13 @@ const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, onCalculat
 
                     <LedgerRow
                         label="Shipping (Flat - Fixed Rate)"
-                        value="$10.00"
+                        value={shippingRate}
                     />
 
-                    <LedgerRow
+                    {/* <LedgerRow
                         label="Discount: FREESHIP"
                         valueAction={<span className="u-color-accent">-$10.00</span>}
-                    />
+                    />*/}
 
                     <LedgerRow
                         className="u-flex-none"
@@ -65,7 +66,7 @@ const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, onCalculat
                 <div className="u-padding-end-md u-padding-bottom-lg u-padding-start-md">
                     <Button
                         className="c--primary u-flex-none u-width-full u-text-uppercase"
-                        href="/checkout/shipping/">
+                        href="/checkout/">
                         <Icon name="lock" />
                         Proceed To Checkout
                     </Button>
@@ -75,7 +76,9 @@ const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, onCalculat
     )
 }
 
+
 CartSummary.propTypes = {
+    shippingRate: PropTypes.string,
     subtotalExclTax: PropTypes.string,
     subtotalInclTax: PropTypes.string,
     summaryCount: PropTypes.number,
@@ -83,6 +86,7 @@ CartSummary.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
+    shippingRate: getDefaultShippingRate,
     subtotalExclTax: cartSelectors.getSubtotalExcludingTax,
     subtotalInclTax: cartSelectors.getSubtotalIncludingTax,
     summaryCount: cartSelectors.getCartSummaryCount,

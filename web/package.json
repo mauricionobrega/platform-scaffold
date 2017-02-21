@@ -9,7 +9,7 @@
   "siteUrl": "",
   "license": "See license in LICENSE",
   "private": true,
-  "version": "0.10.0",
+  "version": "0.11.0",
   "dependencies": {
     "babel-runtime": "6.11.6",
     "es6-promise": "4.0.5",
@@ -89,6 +89,7 @@
     "text-loader": "0.0.1",
     "validator": "6.2.0",
     "webpack": "2.2.0",
+    "webpack-bundle-analyzer": "2.3.0",
     "webpack-dev-server": "1.16.2",
     "webpack-hot-middleware": "2.13.0"
   },

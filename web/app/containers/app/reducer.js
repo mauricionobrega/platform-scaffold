@@ -1,5 +1,6 @@
 import {handleActions} from 'redux-actions'
 import {fromJS, List} from 'immutable'
+import {mergePayloadForActions} from '../../utils/reducer-utils'
 
 import {mergePayload} from '../../utils/reducer-utils'
 import {urlToPathKey} from '../../utils/utils'
@@ -14,6 +15,7 @@ const initialState = fromJS({
 })
 
 export default handleActions({
+    ...mergePayloadForActions(appActions.receiveData),
     [appActions.onRouteChanged]: (state, {payload: {currentURL}}) => {
         return state.set(CURRENT_URL, currentURL)
     },
