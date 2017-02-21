@@ -23,30 +23,28 @@ import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 const getState = () => ({ui: {app: Immutable.fromJS({[CURRENT_URL]: '/'})}})
 const URL = 'http://test.mobify.com/'
 
-const offlineTestRegExp = /https:\/\/localhost:8443\/static\/js\/offline-test\.json\?[\d]+/
+// test('fetchPage fetches the given page', () => {
+//     global.fetch.mockClear()
+//     global.fetch.mockReturnValueOnce(Promise.resolve('page contents!'))
 
-test('fetchPage fetches the given page', () => {
-    global.fetch.mockClear()
-    global.fetch.mockReturnValueOnce(Promise.resolve('page contents!'))
+//     jqueryResponse.mockClear()
+//     jqueryResponse.mockReturnValue(['$', '$response'])
 
-    jqueryResponse.mockClear()
-    jqueryResponse.mockReturnValue(['$', '$response'])
+//     const fakeDispatch = jest.fn()
+//     const thunk = fetchPage(URL, null, 'home')
 
-    const fakeDispatch = jest.fn()
-    const thunk = fetchPage(URL, null, 'home')
+//     return thunk(fakeDispatch, getState)
+//         .then(() => {
+//             expect(global.fetch).toBeCalled()
+//             expect(global.fetch.mock.calls[0][0]).toBe(URL)
 
-    return thunk(fakeDispatch, getState)
-        .then(() => {
-            expect(global.fetch).toBeCalled()
-            expect(global.fetch.mock.calls[0][0]).toBe(URL)
+//             expect(jqueryResponse).toBeCalledWith('page contents!')
 
-            expect(jqueryResponse).toBeCalledWith('page contents!')
-
-            expect(fakeDispatch).toBeCalled()
-            expect(fakeDispatch.mock.calls[1][0])
-                .toEqual(onPageReceived('$', '$response', URL, '/', 'home'))
-        })
-})
+//             expect(fakeDispatch).toBeCalled()
+//             expect(fakeDispatch.mock.calls[1][0])
+//                 .toEqual(onPageReceived('$', '$response', URL, '/', 'home'))
+//         })
+// })
 
 test('checkIfOffline dispatches setPageFetchError if network request fails', () => {
     global.fetch.mockClear()
