@@ -12,11 +12,13 @@ import {selectorToJS} from '../../utils/selector-utils'
 // @TODO: blocked until the desktop's Address Book actualy works correctly
 // import * as paymentSelectors from '../../store/checkout/payment/selectors'
 
-export const receiveContents = createAction('Received CheckoutConfirmation Contents')
+export const receiveData = createAction('Received Checkout Confirmation Data')
 export const showSuccessModal = createAction('Showing Success modal')
 export const showFailNotification = createAction('Showing fail notification')
 export const hideModal = createAction('Hiding modal')
 export const hideRegistrationForm = createAction('Hiding Registration Form (Save Your Address Details)')
+
+export const process = ({payload: {$, $response}}) => receiveData(checkoutConfirmationParser($, $response))
 
 const buildFormData = (formCredentials) => {
     const formData = new FormData()
@@ -39,22 +41,6 @@ const buildFormData = (formCredentials) => {
     }
 
     return formData
-}
-
-export const receiveResponse = (response) => {
-    return (dispatch) => {
-        return jqueryResponse(response)
-            .then(([$, $responseText]) => {
-                dispatch(receiveContents(checkoutConfirmationParser($, $responseText)))
-            })
-    }
-}
-
-export const fetchContents = () => {
-    return (dispatch) => {
-        return makeRequest(window.location.href)
-            .then((response) => dispatch(receiveResponse(response)))
-    }
 }
 
 // @TODO: These are blocked from working until the day that the Address Book on

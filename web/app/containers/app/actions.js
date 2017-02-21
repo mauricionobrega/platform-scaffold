@@ -6,12 +6,14 @@ import appParser from './app-parser'
 
 import CheckoutShipping from '../checkout-shipping/container'
 import CheckoutPayment from '../checkout-payment/container'
+import CheckoutConfirmation from '../checkout-confirmation/container'
 import Home from '../home/container'
 import Login from '../login/container'
 import PDP from '../pdp/container'
 import PLP from '../plp/container'
 import * as checkoutActions from '../../store/checkout/actions'
 import * as checkoutShippingActions from '../checkout-shipping/actions'
+import * as checkoutConfirmationActions from '../checkout-confirmation/actions'
 import * as homeActions from '../home/actions'
 import * as loginActions from '../login/actions'
 import * as pdpActions from '../pdp/actions'
@@ -82,6 +84,8 @@ export const fetchPage = (url, pageComponent, routeName) => {
                     dispatch(checkoutShippingActions.fetchShippingMethods())
                 } else if (pageComponent === CheckoutPayment) {
                     dispatch(checkoutActions.processCheckoutData(receivedAction))
+                } else if (pageComponent === CheckoutConfirmation) {
+                    dispatch(checkoutConfirmationActions.process(receivedAction))
                 }
                 dispatch(footerActions.process(receivedAction))
                 dispatch(navigationActions.process(receivedAction))

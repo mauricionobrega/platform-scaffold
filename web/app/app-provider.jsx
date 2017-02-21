@@ -30,10 +30,9 @@ const AppProvider = ({store}) => (
                 <Route component={CheckoutConfirmation} path="checkout/confirmation/" routeName="checkingConfirmation" suppressFetch Header={CheckoutHeader} Footer={CheckoutFooter} />
                 <Route
                     component={CheckoutConfirmation}
-                    path="checkout/confirmation/"
+                    path="checkout/onepage/success/"
                     fetchUrl="/checkout/onepage/success/"
                     routeName="checkout-confirmation"
-                    suppressFetch
                     Header={CheckoutHeader}
                     Footer={CheckoutFooter}
                 />
