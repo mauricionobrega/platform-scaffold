@@ -1,4 +1,5 @@
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
+
 import * as utils from '../../utils/utils'
 import * as selectors from './selectors'
 
@@ -13,8 +14,9 @@ import * as footerActions from '../footer/actions'
 import * as navigationActions from '../navigation/actions'
 import * as productsActions from '../../store/products/actions'
 import * as categoriesActions from '../../store/categories/actions'
-import {closeModal} from '../../store/modals/actions'
 
+import {OFFLINE_ASSET_URL} from './constants'
+import {closeModal} from '../../store/modals/actions'
 import {OFFLINE_MODAL} from '../offline/constants'
 
 export const addNotification = utils.createAction('Add Notification')
@@ -49,29 +51,45 @@ export const setPageFetchError = utils.createAction('Set page fetch error', 'fet
 export const clearPageFetchError = utils.createAction('Clear page fetch error')
 
 /**
+ * Make a separate request that is intercepted by the worker. The worker will
+ * return a JSON object where `{offline: true}` if the request failed, which we
+ * can use to detect if we're offline.
+ */
+export const checkIfOffline = () => {
+    return (dispatch) => {
+        // we need to cachebreak every request to ensure we don't get something
+        // stale from the disk cache on the device - the CDN will ignore query
+        // parameters for this asset, however
+        return fetch(`${OFFLINE_ASSET_URL}?${Date.now()}`, {
+            cache: 'no-store'
+        })
+            .then((response) => response.json())
+            .then((json) => {
+                if (json.offline) {
+                    dispatch(setPageFetchError('Network failure, using worker cache'))
+                } else {
+                    dispatch(clearPageFetchError())
+                    dispatch(closeModal(OFFLINE_MODAL))
+                }
+            })
+            .catch((error) => {
+                // In cases where we don't have the worker installed, this means
+                // we indeed have a network failure, so switch on offline
+                dispatch(setPageFetchError(error.message))
+            })
+    }
+}
+
+/**
  * Fetch the content for a 'global' page render. This should be driven
  * by react-router, ideally.
  */
 export const fetchPage = (url, pageComponent, routeName) => {
     return (dispatch, getState) => {
-        let isOffline = false
-
         return utils.makeRequest(url)
-            .then((response) => {
-                isOffline = response.headers.get('x-mobify-progressive') === 'offline'
-
-                return response
-            })
             .then(jqueryResponse)
             .then((res) => {
                 const [$, $response] = res
-
-                if (isOffline) {
-                    dispatch(setPageFetchError('Failed to fetch, cached response provided'))
-                } else {
-                    dispatch(clearPageFetchError())
-                    dispatch(closeModal(OFFLINE_MODAL))
-                }
 
                 const currentURL = selectors.getCurrentUrl(getState())
                 const receivedAction = onPageReceived($, $response, url, currentURL, routeName)
@@ -92,6 +110,10 @@ export const fetchPage = (url, pageComponent, routeName) => {
                 }
                 dispatch(footerActions.process(receivedAction))
                 dispatch(navigationActions.process(receivedAction))
+
+                // Finally, let's check if we received a cached response from the
+                // worker, but are in fact 'offline'
+                dispatch(checkIfOffline())
             })
             .catch((error) => {
                 console.info(error.message)
