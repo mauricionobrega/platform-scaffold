@@ -7,6 +7,7 @@ import {openModal} from '../../store/modals/actions'
 import customerAddressParser from './parsers/customer-address'
 import * as shippingSelectors from '../../store/checkout/shipping/selectors'
 import * as formSelectors from '../../store/form/selectors'
+import {getEmailAddress} from '../../store/checkout/selectors'
 import {selectorToJS} from '../../utils/selector-utils'
 
 // @TODO: blocked until the desktop's Address Book actualy works correctly
@@ -134,7 +135,7 @@ export const initiateBillingAndShippingUpdate = () => {
             .then((res) => {
                 const [$, $response] = res // eslint-disable-line no-unused-vars
                 const parsedFormData = customerAddressParser($, $response)
-                dispatch(updateingShippingAndBilling(parsedFormData))
+                dispatch(updatingShippingAndBilling(parsedFormData))
             })
     }
 }
@@ -146,7 +147,7 @@ export const submitRegisterForm = () => {
         const userCredentials = {
             firstname: shippingSelectors.getShippingFirstName(getState()),
             lastname: shippingSelectors.getShippingLastName(getState()),
-            email: shippingSelectors.getEmail(getState()),
+            email: getEmailAddress(getState()),
             ...formSelectors.getConfirmationFormValues(getState())
         }
 

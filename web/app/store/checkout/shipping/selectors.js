@@ -37,6 +37,4 @@ export const getRegionId = createGetSelector(getShippingAddress, 'regionId')
 
 export const getCountryId = createGetSelector(getShippingAddress, 'countryId')
 
-export const getEmail = createGetSelector(getShippingAddress, 'email')
-
 export const getCity = createGetSelector(getShippingAddress, 'city')

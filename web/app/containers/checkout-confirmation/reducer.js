@@ -1,21 +1,10 @@
 import {handleActions} from 'redux-actions'
 import Immutable from 'immutable'
 import * as checkoutConfirmationActions from './actions'
-
-const initialState = Immutable.fromJS({
-    body: '',
-    contentsLoaded: false,
-    isLoggedIn: false,
-    isRegistrationFormHidden: false,
-    isModalShown: false,
-    orderNumber: '',
-    orderUrl: ''
-})
+import {mergePayloadForActions} from '../../utils/reducer-utils'
 
 export default handleActions({
-    [checkoutConfirmationActions.receiveContents]: (state, {payload}) => {
-        return state.mergeDeep(payload, {contentsLoaded: true})
-    },
+    ...mergePayloadForActions(checkoutConfirmationActions.receiveData),
     [checkoutConfirmationActions.showSuccessModal]: (state) => {
         return state.mergeDeep({isModalShown: true})
     },
@@ -25,4 +14,4 @@ export default handleActions({
     [checkoutConfirmationActions.hideRegistrationForm]: (state) => {
         return state.mergeDeep({isRegistrationFormHidden: true})
     },
-}, initialState)
+}, Immutable.Map())
