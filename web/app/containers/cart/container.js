@@ -10,7 +10,7 @@ import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Image from 'progressive-web-sdk/dist/components/image'
 
 import {getCartContentsLoaded, getCartHasItems} from '../../store/cart/selectors'
-import CartEstimateShippingModal from './partials/cart-estimate-shipping'
+import EstimateShippingReduxForm from './partials/cart-estimate-shipping'
 import CartWishlistModal from './partials/cart-wishlist'
 import CartRemoveItemModal from './partials/cart-remove-item'
 import CartItems from './partials/cart-items'
@@ -68,7 +68,7 @@ const Cart = ({contentsLoaded, hasItems}) => {
                 <EmptyCartContents hide={!isCartEmptyAndLoaded} />
             </Grid>
 
-            <CartEstimateShippingModal />
+            <EstimateShippingReduxForm />
             <CartWishlistModal />
             <CartRemoveItemModal />
         </div>
