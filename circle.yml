@@ -5,7 +5,7 @@ dependencies:
     cache_directories:
         - "web/node_modules"
     pre:
-        - ./scripts/install-google-chrome-stable.sh
+        - ./web/scripts/install-google-chrome-stable.sh
         - npm install:
             pwd: web
 test:
