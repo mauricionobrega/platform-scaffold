@@ -73,15 +73,14 @@ const noCacheJSONResponse = (json) => {
 // if network supplies successful response.
 // In the case of failure, we modify response to be `{offline: true}` which
 // indicates to app that we are offline.
-const checkIfOffline = (request) => {
-    return fetch(new Request(request, {cache: 'no-store'}))
-        .catch(() => noCacheJSONResponse({offline: true}))
-}
+const checkIfOffline = (request) =>
+    fetch(new Request(request, {cache: 'no-store'}))
+    .catch(() => noCacheJSONResponse({offline: true}))
 
 // For enabling offline detection within the application
 // @TODO {MQ} - Modify this regular expression to match the final asset URL once
 // created and uploaded to S3/CDN
-toolbox.router.get(/cdn\.mobify\.com.*\/offline\.json/, checkIfOffline)
+toolbox.router.get(/online\.mobify\.net\/offline\.json/, checkIfOffline)
 
 // Path Handlers
 toolbox.router.get(/\.(?:png|gif|svg|jpe?g)$/, toolbox.fastest, {cache: imageCache})
