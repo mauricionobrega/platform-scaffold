@@ -94,6 +94,12 @@ export const fetchPage = (url, pageComponent, routeName) => {
                 dispatch(footerActions.process(receivedAction))
                 dispatch(navigationActions.process(receivedAction))
             })
-            .catch((error) => { console.info(error.message) })
+            .catch((error) => {
+                console.info(error.message)
+                if (error.name !== 'FetchError') {
+                    throw error
+                }
+            })
+
     }
 }
