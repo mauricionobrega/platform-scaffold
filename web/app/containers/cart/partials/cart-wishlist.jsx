@@ -123,7 +123,7 @@ CartWishlistModal.propTypes = {
 const mapStateToProps = createStructuredSelector({
     isOpen: isModalOpen(CART_WISHLIST_MODAL),
     isLoggedIn: getIsLoggedIn,
-    isComplete: () => false
+    isComplete: getIsWishlistAddComplete
 })
 
 const mapDispatchToProps = {
