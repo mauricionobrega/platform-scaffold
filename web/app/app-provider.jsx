@@ -32,7 +32,6 @@ if (isRunningInAstro) {
 const AppProvider = ({store}) => (
     <Provider store={store}>
         <Router history={browserHistory}>
-        <Router>
             <Route path="/" component={App} onChange={OnChange}>
                 <IndexRoute component={Home} routeName="home" />
                 <Route component={Cart} path="checkout/cart/" routeName="cart" />
