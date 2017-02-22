@@ -35,10 +35,6 @@ export const addToWishlist = (productId, productURL) => (dispatch, getState) => 
         formKey: getFormKey(getState())
     }
 
-    debugger
-
-    console.log(payload)
-
     return makeFormEncodedRequest(ADD_TO_WISHLIST_URL, payload, {method: 'POST'})
 }
 

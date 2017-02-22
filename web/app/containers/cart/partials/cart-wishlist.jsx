@@ -110,7 +110,7 @@ const CartWishlistModal = ({closeModal, isOpen, isComplete, isLoggedIn}) => {
         >
             <div className="u-flexbox u-direction-column u-align-center u-padding-md u-padding-top-lg u-padding-bottom-lg u-text-align-center">
                 {isLoggedIn ?
-                    <CartWishlistLoggedIn isComplete={isComplete} isLoggedIn={isLoggedIn} />
+                    <CartWishlistLoggedIn isComplete={isComplete} closeModal={closeModal} />
                     : <CartWishlistGuest closeModal={closeModal} />
                 }
             </div>
