@@ -18,7 +18,7 @@ test:
         # - sudo -E npm run test:pwa-ci:
         #     pwd: web
 
-        - sudo env "PATH=$PATH" npm run proxy:
+        - sudo env "PATH=$PATH" npm run proxy &:
             pwd: web
         - npm run test:pwa-ci:
             pwd: web
