@@ -5,7 +5,7 @@ const parseBreadcrumbs = ($, $breadcrumbsLinks) => {
         .map((breadcrumbLink) => parseTextLink($(breadcrumbLink)))
 }
 
-const UENC_REGEX = /\/uenc\/([^\/]+)\//
+const UENC_REGEX = /\/uenc\/([^/]+)\//
 
 const pdpParser = ($, $html) => {
     const $breadcrumbs = (

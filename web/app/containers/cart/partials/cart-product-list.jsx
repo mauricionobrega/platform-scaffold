@@ -141,6 +141,7 @@ CartProductItem.propTypes = {
     configure_url: PropTypes.string,
     item_id: PropTypes.string,
     openRemoveItemModal: PropTypes.func,
+    productId: PropTypes.string,
     product_image: PropTypes.object,
     product_name: PropTypes.string,
     product_price: PropTypes.string,

@@ -6,6 +6,7 @@ import {CART_WISHLIST_MODAL} from '../constants'
 import {closeModal} from '../../../store/modals/actions'
 import {isModalOpen} from '../../../store/selectors'
 import {getIsLoggedIn} from '../../app/selectors'
+import {getIsWishlistAddComplete} from '../selectors'
 
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -83,6 +84,18 @@ CartWishlistGuest.propTypes = {
     closeModal: PropTypes.func
 }
 
+const CartWishlistLoggedIn = ({isComplete, closeModal}) => {
+    if (isComplete) {
+        return (<CartWishlistComplete closeModal={closeModal} />)
+    }
+    return (<InlineLoader />)
+}
+
+CartWishlistLoggedIn.propTypes = {
+    closeModal: PropTypes.func,
+    isComplete: PropTypes.bool
+}
+
 
 const CartWishlistModal = ({closeModal, isOpen, isComplete, isLoggedIn}) => {
     return (
@@ -97,7 +110,7 @@ const CartWishlistModal = ({closeModal, isOpen, isComplete, isLoggedIn}) => {
         >
             <div className="u-flexbox u-direction-column u-align-center u-padding-md u-padding-top-lg u-padding-bottom-lg u-text-align-center">
                 {isLoggedIn ?
-                    (isComplete ? <CartWishlistComplete closeModal={closeModal} /> : <InlineLoader />)
+                    <CartWishlistLoggedIn isComplete={isComplete} isLoggedIn={isLoggedIn} />
                     : <CartWishlistGuest closeModal={closeModal} />
                 }
             </div>
