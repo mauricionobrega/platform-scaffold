@@ -8,16 +8,17 @@ import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 
-const CheckoutConfirmationForm = (props) => {
-    const {
-        handleSubmit,
-        submitRegistrationForm,
-        // disabled,
-        submitting
-    } = props
+const CheckoutConfirmationForm = ({
+    error,
+    handleSubmit,
+    submitRegistrationForm,
+    submitting,
+    submitFailed
+}) => {
 
     return (
         <form className="t-checkout-confirmation__form" onSubmit={handleSubmit(submitRegistrationForm)} noValidate>
+
             <FieldRow>
                 <ReduxForm.Field component={Field} name="password" label="Choose Password" caption="More than 5 characters with at least one number">
                     <input type="password" noValidate />
@@ -29,6 +30,8 @@ const CheckoutConfirmationForm = (props) => {
                     <input type="password" noValidate />
                 </ReduxForm.Field>
             </FieldRow>
+
+            {submitFailed && error && <p>{error}</p>}
 
             <FieldRow>
                 <Button
@@ -48,11 +51,19 @@ CheckoutConfirmationForm.propTypes = {
      * Whether the form is disabled or not
      */
     disabled: React.PropTypes.bool,
+    /**
+    * Redux-form internal
+    */
+    error: React.PropTypes.string,
 
     /**
      * Redux-form internal
      */
     handleSubmit: React.PropTypes.func,
+    /**
+    * Redux-form internal, indicates if handleSubmit failed
+    */
+    submitFailed: React.PropTypes.bool,
 
     /**
      * Redux-form internal
@@ -81,14 +92,18 @@ const validate = (values) => {
 
     if (!password) {
         errors.password = 'Password is required'
+    } else {
+        if (password.length < 6) {
+            errors.password = 'Please enter 6 or more characters'
+        }
+
+        if (!/\d/.test(password)) {
+            errors.password = 'Password must contain a number'
+        }
     }
 
-    if (password !== password_confirmation) { // eslint-disable-line camelcase
+    if (password_confirmation && password !== password_confirmation) { // eslint-disable-line camelcase
         errors.password_confirmation = 'Passwords are not the same'
-    }
-
-    if (password.length < 6) {
-        errors.password = 'Please enter 6 or more characters'
     }
 
     return errors
