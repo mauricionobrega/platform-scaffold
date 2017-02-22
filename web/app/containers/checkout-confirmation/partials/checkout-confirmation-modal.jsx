@@ -11,7 +11,7 @@ import Button from 'progressive-web-sdk/dist/components/button'
 import Image from 'progressive-web-sdk/dist/components/image'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
-const CheckountConfirmationModal = (props) => {
+const CheckoutConfirmationModal = (props) => {
     const {
         closeCheckoutConfirmationModal,
         isOpen,
@@ -58,7 +58,7 @@ const CheckountConfirmationModal = (props) => {
     )
 }
 
-CheckountConfirmationModal.propTypes = {
+CheckoutConfirmationModal.propTypes = {
     /**
      * A function used to set the Confirmation page's "Save Your Details" modal
      * state to closed
@@ -82,4 +82,4 @@ const mapDispatchToProps = {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(CheckountConfirmationModal)
+)(CheckoutConfirmationModal)
