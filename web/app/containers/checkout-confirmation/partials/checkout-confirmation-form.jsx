@@ -1,7 +1,6 @@
 import React from 'react'
 import * as ReduxForm from 'redux-form'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
 import * as actions from '../actions'
 
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -114,9 +113,7 @@ const CheckoutPaymentReduxForm = ReduxForm.reduxForm({
     validate,
 })(CheckoutConfirmationForm)
 
-const mapStateToProps = createStructuredSelector({
-    // isLoggedIn: selectors.getIsLoggedIn
-})
+const mapStateToProps = () => ({})
 
 const mapDispatchToProps = {
     submitRegistrationForm: actions.submitRegisterForm
