@@ -30,7 +30,11 @@ const CheckoutConfirmationForm = ({
                 </ReduxForm.Field>
             </FieldRow>
 
-            {submitFailed && error && <p>{error}</p>}
+            {submitFailed && error &&
+                <FieldRow>
+                    <p className="pw-field__error c-field__error">{error}</p>
+                </FieldRow>
+            }
 
             <FieldRow>
                 <Button
