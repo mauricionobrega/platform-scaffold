@@ -18,9 +18,10 @@ test:
         # - sudo -E npm run test:pwa-ci:
         #     pwd: web
 
-        - sudo -E npm run proxy:
+        - sudo env "PATH=$PATH" npm run proxy:
             pwd: web
-        - npm run test:pwa-ci
+        - npm run test:pwa-ci:
+            pwd: web
 
 
         ## Enable smoke-test when automated workflow tests have been implemented.
