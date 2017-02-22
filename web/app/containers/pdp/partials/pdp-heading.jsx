@@ -7,12 +7,15 @@ import {selectorToJS} from '../../../utils/selector-utils'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import Breadcrumbs from 'progressive-web-sdk/dist/components/breadcrumbs'
 
+import {isRunningInAstro} from '../../../utils/astro-integration'
+
 const PDPHeading = ({breadcrumbs, title, price}) => (
     <div className="t-pdp-heading u-padding-md u-box-shadow u-position-relative u-z-index-1">
-        <div className="t-pdp__breadcrumbs u-margin-bottom-md">
-            <Breadcrumbs items={breadcrumbs} />
-        </div>
-
+        {!isRunningInAstro &&
+            <div className="t-pdp__breadcrumbs u-margin-bottom-md">
+                <Breadcrumbs items={breadcrumbs} />
+            </div>
+        }
         {title ?
             <h1 className="t-pdp-heading__title u-text-uppercase u-margin-bottom">{title}</h1>
         :
