@@ -4,8 +4,7 @@ import {createStructuredSelector} from 'reselect'
 import {selectorToJS} from '../../../utils/selector-utils'
 import * as ReduxForm from 'redux-form'
 
-import {fetchShippingMethods} from '../actions'
-import {getShippingMethods} from '../selectors'
+import {getShippingMethods} from '../../../store/checkout/shipping/selectors'
 import {getCustomerEntityID} from '../../../store/checkout/selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -54,10 +53,6 @@ ShippingMethod.propTypes = {
     */
     entityID: PropTypes.string,
     /**
-    * Fetches the available shipping methods
-    */
-    fetchShippingMethods: PropTypes.func,
-    /**
     * The available shipping methods for the order
     */
     shippingMethods: PropTypes.arrayOf(PropTypes.shape({
@@ -72,11 +67,7 @@ const mapStateToProps = createStructuredSelector({
     shippingMethods: selectorToJS(getShippingMethods)
 })
 
-const mapDispatchToProps = {
-    fetchShippingMethods
-}
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
 )(ShippingMethod)
