@@ -19,6 +19,7 @@ import * as checkoutActions from '../../store/checkout/actions'
 import * as checkoutConfirmationActions from '../checkout-confirmation/actions'
 import * as checkoutShippingUIActions from '../checkout-shipping/actions'
 import * as checkoutShippingActions from '../../store/checkout/shipping/actions'
+import * as cartActions from '../../store/cart/actions'
 import * as homeActions from '../home/actions'
 import * as loginActions from '../login/actions'
 import * as pdpActions from '../pdp/actions'
@@ -94,6 +95,8 @@ export const fetchPage = (url, pageComponent, routeName) => {
                     dispatch(checkoutActions.processCheckoutData(receivedAction))
                 } else if (pageComponent === CheckoutConfirmation) {
                     dispatch(checkoutConfirmationActions.process(receivedAction))
+                    // Resets the cart count to 0
+                    dispatch(cartActions.getCart())
                 }
                 dispatch(footerActions.process(receivedAction))
                 dispatch(navigationActions.process(receivedAction))
