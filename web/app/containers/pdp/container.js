@@ -1,5 +1,7 @@
 import React from 'react'
 
+import * as commands from '../../integration-manager/commands'
+
 import PDPHeading from './partials/pdp-heading'
 import PDPCarousel from './partials/pdp-carousel'
 import PDPDescription from './partials/pdp-description'
@@ -16,6 +18,10 @@ const PDP = ({route: {routeName}}) => {
             <PDPItemAddedModal />
         </div>
     )
+}
+
+PDP.fetcher = (url, dispatch) => {
+    dispatch(commands.fetchPdpData(url))
 }
 
 PDP.propTypes = {

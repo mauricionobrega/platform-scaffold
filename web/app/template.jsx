@@ -35,6 +35,10 @@ const template = (WrappedComponent) => {
 
             dispatch(onRouteChanged(url, WrappedComponent))
 
+            if (WrappedComponent.fetcher) {
+                WrappedComponent.fetcher(url, dispatch)
+            }
+
             if (!route.suppressFetch) {
                 dispatch(fetchPage(url, WrappedComponent, route.routeName))
             }
