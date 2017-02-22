@@ -14,8 +14,15 @@ test:
             pwd: web
         - npm test -- --runInBand:
             pwd: web
-        - sudo -E npm run test:pwa-ci:
+        # # 'sudo' is required in order to bind to port 80. 
+        # - sudo -E npm run test:pwa-ci:
+        #     pwd: web
+
+        - sudo -E npm run proxy:
             pwd: web
+        - npm run test:pwa-ci
+
+
         ## Enable smoke-test when automated workflow tests have been implemented.
         # - npm run smoke-test:
         #    parallel: true
