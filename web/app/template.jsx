@@ -2,10 +2,9 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {onRouteChanged, fetchPage, removeAllNotifications} from './containers/app/actions'
 import {triggerMobifyPageView} from 'progressive-web-sdk/dist/analytics'
-import {isRunningInAstro, pwaNavigate} from './utils/astro-integration'
+import {trigger as astroTrigger} from './utils/astro-integration'
 
 import {getURL, getPath} from './utils/utils'
-import {trigger as astroTrigger} from './utils/astro-integration'
 
 const getDisplayName = (WrappedComponent) => {
     return WrappedComponent.displayName || WrappedComponent.name || 'Component'
@@ -24,10 +23,6 @@ const template = (WrappedComponent) => {
 
             if (route.fetchUrl) {
                 url = route.fetchUrl
-            }
-
-            if (isRunningInAstro && location.action.toLowerCase() !== 'pop') {
-                pwaNavigate(url)
             }
 
             triggerMobifyPageView(route.routeName)
