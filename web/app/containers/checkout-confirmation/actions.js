@@ -58,7 +58,7 @@ const buildFormData = (formCredentials) => {
 //             default_shipping: 1,
 //         })
 //
-//         const postUpdateCustomerAddressURL = 'https://www.merlinspotions.com/customer/address/formPost/id/46/'
+//         const postUpdateCustomerAddressURL = '/customer/address/formPost/id/46/'
 //         window.Progressive.$.ajax({
 //             url: postUpdateCustomerAddressURL,
 //             data: formData,
@@ -76,7 +76,7 @@ const buildFormData = (formCredentials) => {
 // export const initiateBillingUpdate = () => {
 //     return (dispatch) => {
 //         // Grab required form data in prep for updating shipping/billing information
-//         const editCustomerAddressURL = 'https://www.merlinspotions.com/customer/address/edit/id/46/'
+//         const editCustomerAddressURL = '/customer/address/edit/id/46/'
 //         makeRequest(editCustomerAddressURL)
 //             .then(jqueryResponse)
 //             .then((res) => {
@@ -100,7 +100,7 @@ export const updatingShippingAndBilling = (parsedFormData) => {
             default_shipping: 1,
         })
 
-        const postUpdateCustomerAddressURL = 'https://www.merlinspotions.com/customer/address/formPost/'
+        const postUpdateCustomerAddressURL = '/customer/address/formPost/'
         window.Progressive.$.ajax({
             url: postUpdateCustomerAddressURL,
             data: formData,
@@ -129,7 +129,7 @@ export const updatingShippingAndBilling = (parsedFormData) => {
 export const initiateBillingAndShippingUpdate = () => {
     return (dispatch) => {
         // Grab required form data in prep for updating shipping/billing information
-        const editCustomerAddressURL = 'https://www.merlinspotions.com/customer/address/edit/'
+        const editCustomerAddressURL = '/customer/address/edit/'
         makeRequest(editCustomerAddressURL)
             .then(jqueryResponse)
             .then((res) => {
@@ -151,7 +151,7 @@ export const submitRegisterForm = () => {
             ...formSelectors.getConfirmationFormValues(getState())
         }
 
-        const postCreateAccountURL = 'https://www.merlinspotions.com/customer/account/createpost/'
+        const postCreateAccountURL = '/customer/account/createpost/'
         makeFormEncodedRequest(postCreateAccountURL, userCredentials, {method: 'POST'})
             .then((response) => {
                 const responseUrlHas = (chunk) => response.url.search(chunk) >= 0
