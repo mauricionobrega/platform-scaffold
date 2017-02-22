@@ -14,17 +14,13 @@ test:
             pwd: web
         - npm test -- --runInBand:
             pwd: web
-        # # 'sudo' is required in order to bind to port 80. 
-        # - sudo -E npm run test:pwa-ci:
-        #     pwd: web
-
+        # 'sudo' is required in order to bind to port 80. 
         - sudo env "PATH=$PATH" npm run proxy:
             pwd: web
             background: true
+        # Calculate the Lighthouse score 
         - npm run test:pwa-ci:
             pwd: web
-
-
         ## Enable smoke-test when automated workflow tests have been implemented.
         # - npm run smoke-test:
         #    parallel: true
