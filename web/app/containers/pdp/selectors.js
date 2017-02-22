@@ -21,6 +21,8 @@ export const getSelectedPdp = createGetSelector(
     appSelectors.getCurrentPathKey,
     Immutable.Map()
 )
+export const getPDPByPathKey = (pathKey) => createGetSelector(getPdp, pathKey, Immutable.Map())
+
 export const getPdpContentsLoaded = createHasSelector(
     getPdp,
     appSelectors.getCurrentPathKey
@@ -58,4 +60,4 @@ export const getFirstPdp = createSelector(
     (pdp) => (pdp.first() || Immutable.Map())
 )
 
-export const getUenc = createGetSelector(getFirstPdp, 'uenc')
+export const getUenc = (pathKey) => createGetSelector(getPDPByPathKey(pathKey), 'uenc')

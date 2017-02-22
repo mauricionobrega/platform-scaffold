@@ -1,5 +1,5 @@
 
-import {createAction} from '../../utils/utils'
+import {createAction, urlToPathKey} from '../../utils/utils'
 import {closeModal, openModal} from '../../store/modals/actions'
 import {fetchShippingMethodsEstimate} from '../../store/checkout/shipping/actions'
 import {
@@ -26,22 +26,26 @@ export const submitEstimateShipping = () => {
 }
 
 
-export const addToWishlist = (productId) => (dispatch, getState) => {
+export const addToWishlist = (productId, productURL) => (dispatch, getState) => {
     const payload = {
         product: productId,
-        uenc: getUenc(getState()),
+        // This won't always be defined, but we can add to wishlist will still work
+        // if it's missing
+        uenc: getUenc(urlToPathKey(productURL))(getState()),
         formKey: getFormKey(getState())
     }
+
+    debugger
 
     console.log(payload)
 
     return makeFormEncodedRequest(ADD_TO_WISHLIST_URL, payload, {method: 'POST'})
 }
 
-export const saveToWishlist = (productId, itemId) => (dispatch, getState) => {
+export const saveToWishlist = (productId, itemId, productURL) => (dispatch, getState) => {
     dispatch(openModal(CART_WISHLIST_MODAL))
     if (getIsLoggedIn(getState())) {
-        dispatch(addToWishlist(productId))
+        dispatch(addToWishlist(productId, productURL))
             .then(() => dispatch(removeFromCart(itemId)))
             .then(() => {
                 dispatch(setIsWishlistComplete(true))
