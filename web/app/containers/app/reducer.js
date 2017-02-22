@@ -1,9 +1,8 @@
 import {handleActions} from 'redux-actions'
 import {fromJS, List} from 'immutable'
-import {mergePayloadForActions} from '../../utils/reducer-utils'
-
-import {mergePayload} from '../../utils/reducer-utils'
+import {mergePayloadForActions, mergePayload} from '../../utils/reducer-utils'
 import {urlToPathKey} from '../../utils/utils'
+
 import * as appActions from './actions'
 import {CURRENT_URL, FETCHED_PATHS} from './constants'
 
