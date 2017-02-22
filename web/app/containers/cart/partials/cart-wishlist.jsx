@@ -65,7 +65,7 @@ const CartWishlistGuest = ({closeModal}) => (
 
         <Button
             className="c--tertiary u-width-full u-text-uppercase"
-            href="/customer/account/login"
+            href="/customer/account/login/"
         >
             Sign in or sign up
         </Button>
