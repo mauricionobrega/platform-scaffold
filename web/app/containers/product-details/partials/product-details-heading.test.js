@@ -39,7 +39,7 @@ test('doesnt render the breadcrumbs if running in Astro', () => {
     AstroIntegration.isRunningInAstro = true
 
     const wrapper = shallow(<ProductDetailsHeading />)
-    const breadcrumbs = wrapper.find(`.t-pdp__breadcrumbs`)
+    const breadcrumbs = wrapper.find(`.t-product-details__breadcrumbs`)
     expect(breadcrumbs.length).toBe(0)
 })
 
@@ -47,6 +47,6 @@ test('renders the breadcrumbs if not running in Astro', () => {
     AstroIntegration.isRunningInAstro = false
 
     const wrapper = shallow(<ProductDetailsHeading />)
-    const breadcrumbs = wrapper.find(`.t-pdp__breadcrumbs`)
+    const breadcrumbs = wrapper.find(`.t-product-details__breadcrumbs`)
     expect(breadcrumbs.length).toBe(1)
 })

@@ -13,14 +13,6 @@ import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import ProductItem from '../../../components/product-item'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
-// calculates modal height based on user screen size 50% by default
-let coverage = '50'
-if (window.innerHeight < 370) {
-    coverage = '70'
-} else if (window.innerHeight < 460) {
-    coverage = '56'
-}
-
 const ProductDetailsItemAddedModal = ({open, onDismiss, quantity, title, price, productImage, onGoToCheckout}) => (
     <Sheet open={open} onDismiss={onDismiss} effect="slide-bottom" className="product-list__item-added-modal" coverage="50%">
         {/* Modal header */}
