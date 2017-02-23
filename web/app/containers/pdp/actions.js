@@ -28,9 +28,9 @@ export const process = ({payload}) => {
 export const goToCheckout = () => (dispatch) => {
     dispatch(closeModal(PDP_ITEM_ADDED_MODAL))
     if (isRunningInAstro) {
+        // If we're running in Astro, we want to dismiss open the cart modal,
+        // otherwise, navigating is taken care of by the button press
         Astro.trigger('open:cart-modal')
-    } else {
-        // open web checkout
     }
 }
 

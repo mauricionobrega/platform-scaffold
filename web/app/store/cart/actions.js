@@ -24,16 +24,12 @@ export const receiveCartContents = utils.createAction('Received Cart Contents')
 export const openSignIn = () => {
     if (isRunningInAstro) {
         Astro.trigger('sign-in:clicked')
-    } else {
-        // web open signIn
     }
 }
 
 export const continueShopping = () => {
     if (isRunningInAstro) {
         Astro.trigger('continue:clicked')
-    } else {
-        // web open continue
     }
 }
 
