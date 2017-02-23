@@ -8,7 +8,7 @@ const PushController = function(pushPlugin) {
 }
 PushController.init = async function() {
     const pushSiteId = 'merlinspotions'
-    const mobifySlugName = 'progressive-web-scaffold'
+    const mobifySlugName = 'merlins-potions-demo'
 
     const engagementPromise = EngagementController.init(mobifySlugName)
     const pushPlugin = await PushPlugin.init(pushSiteId, engagementPromise)
@@ -36,8 +36,11 @@ PushController.prototype.subscribeTest = async function() {
     }
 }
 
-PushController.prototype.subscribe = function() {
-    this.plugin.subscribe()
+PushController.prototype.subscribe = async function() {
+    const subscriptionStatus = await this.plugin.getSubscriptionStatus()
+    if (subscriptionStatus.canSubscribe) {
+        this.plugin.subscribe()
+    }
 }
 
 export default PushController
