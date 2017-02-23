@@ -47,7 +47,7 @@ const ProductDetailsItemAddedModal = ({open, onDismiss, quantity, title, price, 
             {/* Buttons */}
             <div className="u-flex-none">
                 <Button
-                    href="#"
+                    href="/checkout/"
                     className="c--primary u-width-full u-margin-bottom-md u-text-uppercase"
                     innerClassName="u-text-align-center">
                     Go To Checkout

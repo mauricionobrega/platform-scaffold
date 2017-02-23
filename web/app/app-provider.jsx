@@ -14,7 +14,7 @@ const AppProvider = ({store}) => (
         <Router history={browserHistory}>
             <Route path="/" component={App}>
                 <IndexRoute component={Home} routeName="home" />
-                <Route component={Cart} path="checkout/cart/" routeName="cart" fetchPage="false" />
+                <Route component={Cart} path="checkout/cart/" routeName="cart" />
                 <Route component={Login} path="customer/account/login/" routeName="signin" />
                 <Route component={Login} path="customer/account/create/" routeName="register" />
                 <Route component={ProductList} path="potions.html" routeName="productListPage" />
@@ -23,9 +23,10 @@ const AppProvider = ({store}) => (
                 <Route component={ProductList} path="supplies.html" routeName="productListPage" />
                 <Route component={ProductList} path="new-arrivals.html" routeName="productListPage" />
                 <Route component={ProductList} path="charms.html" routeName="productListPage" />
+                <Route component={ProductDetails} path="checkout/cart/configure/id/*/product_id/*/" routeName="cartEditPage" />
                 <Route component={ProductDetails} path="*.html" routeName="productDetailsPage" />
                 <Route component={CheckoutShipping} path="checkout/" routeName="checkingShipping" Header={CheckoutHeader} Footer={CheckoutFooter} />
-                <Route component={CheckoutPayment} path="checkout/payment/" routeName="checkout-payment" suppressFetch Header={CheckoutHeader} Footer={CheckoutFooter} />
+                <Route component={CheckoutPayment} path="checkout/payment/" fetchUrl="/checkout/#payment" routeName="checkout-payment" Header={CheckoutHeader} Footer={CheckoutFooter} />
                 <Route component={CheckoutConfirmation} path="checkout/confirmation/" routeName="checkingConfirmation" suppressFetch Header={CheckoutHeader} Footer={CheckoutFooter} />
             </Route>
         </Router>

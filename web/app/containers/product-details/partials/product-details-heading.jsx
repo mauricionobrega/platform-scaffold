@@ -7,10 +7,17 @@ import {selectorToJS} from '../../../utils/selector-utils'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import Breadcrumbs from 'progressive-web-sdk/dist/components/breadcrumbs'
 
-const ProductDetailsHeading = ({breadcrumbs, title, price}) => (
-    <div className="t-product-details-heading u-padding-md u-box-shadow u-position-relative u-z-index-1">
-        <div className="t-product-details__breadcrumbs u-margin-bottom-md">
-            <Breadcrumbs items={breadcrumbs} />
+const checkoutBreadcrumb = [
+    {
+        text: 'Cart',
+        href: '/checkout/cart'
+    }
+]
+
+const ProductDetailsHeading = ({breadcrumbs, title, price, isInCheckout}) => (
+    <div className="product-details-heading u-padding-md u-box-shadow u-position-relative u-z-index-1">
+        <div className="product-details__breadcrumbs u-margin-bottom-md">
+            <Breadcrumbs items={isInCheckout ? checkoutBreadcrumb : breadcrumbs} />
         </div>
 
         {title ?
@@ -29,6 +36,7 @@ const ProductDetailsHeading = ({breadcrumbs, title, price}) => (
 
 ProductDetailsHeading.propTypes = {
     breadcrumbs: PropTypes.array,
+    isInCheckout: PropTypes.bool,
     price: PropTypes.string,
     title: PropTypes.string
 }

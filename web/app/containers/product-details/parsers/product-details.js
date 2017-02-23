@@ -29,7 +29,9 @@ const productDetailsParser = ($, $html) => {
             submitUrl: $form.attr('action'),
             method: $form.attr('method'),
             hiddenInputs
-        }
+        },
+        itemQuantity: parseInt($form.find('#qty').val()),
+        ctaText: $form.find('.tocart').text()
     }
 }
 

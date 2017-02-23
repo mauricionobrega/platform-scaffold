@@ -9,7 +9,7 @@ import Button from 'progressive-web-sdk/dist/components/button'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Stepper from 'progressive-web-sdk/dist/components/stepper'
 
-const ProductDetailsAddToCart = ({quantity, setQuantity, onSubmit, disabled}) => {
+const ProductDetailsAddToCart = ({quantity, ctaText, setQuantity, onSubmit, disabled}) => {
     const stepperProps = {
         decrementIcon: 'minus',
         incrementIcon: 'plus',
@@ -31,7 +31,9 @@ const ProductDetailsAddToCart = ({quantity, setQuantity, onSubmit, disabled}) =>
                 <label htmlFor="quantity">Quantity</label>
 
                 <div className="u-flexbox u-margin-bottom-lg u-margin-top">
-                    <Stepper {...stepperProps} />
+                    {quantity &&
+                        <Stepper {...stepperProps} />
+                    }
 
                     <div className="t-product-details__indicator u-border u-margin-start u-padding-md  u-flex u-flexbox u-justify-center">
                         <Icon name="check" className="u-margin-end-sm" /> In stock
@@ -42,7 +44,7 @@ const ProductDetailsAddToCart = ({quantity, setQuantity, onSubmit, disabled}) =>
             <Button
                 type="button"
                 icon="plus"
-                title="Add to cart"
+                title={ctaText}
                 showIconText={true}
                 className="c--primary u-width-full u-text-uppercase u-margin-bottom-lg t-product-details__add-to-cart"
                 onClick={onSubmit}
@@ -57,10 +59,12 @@ ProductDetailsAddToCart.propTypes = {
     quantity: PropTypes.number.isRequired,
     setQuantity: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
+    ctaText: PropTypes.string,
     disabled: PropTypes.bool
 }
 
 const mapStateToProps = createStructuredSelector({
+    ctaText: selectors.getCTAText,
     quantity: selectors.getItemQuantity,
     disabled: invertSelector(selectors.getProductDetailsContentsLoaded)
 })

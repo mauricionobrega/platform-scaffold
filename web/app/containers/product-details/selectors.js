@@ -32,7 +32,8 @@ export const getSelectedProduct = createGetSelector(
     Immutable.Map()
 )
 
-export const getItemQuantity = createGetSelector(getSelectedProductDetails, 'itemQuantity', 1)
+export const getItemQuantity = createGetSelector(getSelectedProductDetails, 'itemQuantity')
+export const getCTAText = createGetSelector(getSelectedProductDetails, 'ctaText', 'Add To Cart')
 export const getItemAddedModalOpen = isModalOpen('product-details-item-added')
 export const getFormInfo = createGetSelector(getSelectedProductDetails, 'formInfo')
 
