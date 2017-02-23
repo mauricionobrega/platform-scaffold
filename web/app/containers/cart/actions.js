@@ -11,7 +11,7 @@ import {
 } from './constants'
 import {removeFromCart} from '../../store/cart/actions'
 import {makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
-import {getUenc} from '../pdp/selectors'
+import {getUenc} from '../product-details/selectors'
 import {addNotification} from '../app/actions'
 import {getFormKey, getIsLoggedIn} from '../app/selectors'
 
