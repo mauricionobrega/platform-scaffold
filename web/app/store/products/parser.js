@@ -9,7 +9,7 @@ const parseCarouselItems = (magentoObject) => {
     return carouselSetup.toJS()
 }
 
-export const plpParser = ($, $html) => {
+export const productListParser = ($, $html) => {
     const $products = $html.find('.item.product-item')
     const productMap = {}
     $products.each((_, product) => {
@@ -32,7 +32,7 @@ export const plpParser = ($, $html) => {
     return productMap
 }
 
-export const pdpParser = ($, $html) => {
+export const productDetailsParser = ($, $html) => {
     const $mainContent = $html.find('.page-main')
     const magentoObject = extractMagentoJson($html)
     return {
