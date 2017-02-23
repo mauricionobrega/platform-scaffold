@@ -10,3 +10,10 @@ export const isRunningInAstro = Astro.isRunningInApp()
 export const pwaNavigate = Astro.isRunningInApp()
     ? Astro.jsRpcMethod('pwa-navigate', ['url'])
     : () => {}
+
+/**
+ * Triggers an event into the native Astro app.
+ * This is exactly the same method as documented here:
+ * http://astro.mobify.com/latest/advanced/webview-appjs-communication/
+ */
+export const trigger = Astro.trigger
