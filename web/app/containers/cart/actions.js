@@ -36,12 +36,18 @@ const addToWishlist = (productId, productURL) => (dispatch, getState) => {
         formKey: getFormKey(getState())
     }
 
-    return makeFormEncodedRequest(ADD_TO_WISHLIST_URL, payload, {method: 'POST'})
+    return makeFormEncodedRequest(ADD_TO_WISHLIST_URL, {}, {method: 'POST'})
 }
 
 export const saveToWishlist = (productId, itemId, productURL) => (dispatch, getState) => {
     dispatch(openModal(CART_WISHLIST_MODAL))
     if (getIsLoggedIn(getState())) {
+        const wishListErrorNotification = {
+            content: 'Unable to add item to wishlist.',
+            id: 'cartWishlistError',
+            showRemoveButton: true
+        }
+
 
         dispatch(addToWishlist(productId, productURL))
             .then(jqueryResponse)
@@ -53,12 +59,15 @@ export const saveToWishlist = (productId, itemId, productURL) => (dispatch, getS
                     dispatch(setIsWishlistComplete(true))
                     return
                 }
-                dispatch(closeModal(CART_WISHLIST_MODAL))
-                dispatch(addNotification({
-                    content: 'Unable to add item to wishlist.',
-                    id: 'cartWishlistError',
-                    showRemoveButton: true
-                }))
+                throw new Error('Add Request Failed')
+            })
+            .catch((error) => {
+                if (/Failed to fetch|Add Request Failed/i.test(error.message)) {
+                    dispatch(closeModal(CART_WISHLIST_MODAL))
+                    dispatch(addNotification(wishListErrorNotification))
+                } else {
+                    throw error
+                }
             })
     }
 }
