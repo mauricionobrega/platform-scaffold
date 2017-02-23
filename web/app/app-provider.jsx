@@ -9,12 +9,32 @@ import {Cart, CheckoutConfirmation, CheckoutPayment, CheckoutShipping, Home, Log
 import CheckoutHeader from './containers/checkout-header/container'
 import CheckoutFooter from './containers/checkout-footer/container'
 
+import {getURL} from './utils/utils'
+import {isRunningInAstro, pwaNavigate} from './utils/astro-integration'
+
+// We define an initial OnChange as a no-op for non-Astro use
+let OnChange = () => {}
+
+if (isRunningInAstro) {
+    // Redefine OnChange to enable Astro integration
+    OnChange = (prevState, nextState, replace, callback) => {
+        if (nextState.location.action === 'POP') {
+            callback()
+            return
+        }
+
+        pwaNavigate({url: getURL(nextState)}).then(() => {
+            callback()
+        })
+    }
+}
+
 const AppProvider = ({store}) => (
     <Provider store={store}>
         <Router history={browserHistory}>
-            <Route path="/" component={App}>
+            <Route path="/" component={App} onChange={OnChange}>
                 <IndexRoute component={Home} routeName="home" />
-                <Route component={Cart} path="checkout/cart/" routeName="cart" fetchPage="false" />
+                <Route component={Cart} path="checkout/cart/" routeName="cart" />
                 <Route component={Login} path="customer/account/login/" routeName="signin" />
                 <Route component={Login} path="customer/account/create/" routeName="register" />
                 <Route component={PLP} path="potions.html" routeName="productListPage" />
@@ -23,9 +43,10 @@ const AppProvider = ({store}) => (
                 <Route component={PLP} path="supplies.html" routeName="productListPage" />
                 <Route component={PLP} path="new-arrivals.html" routeName="productListPage" />
                 <Route component={PLP} path="charms.html" routeName="productListPage" />
+                <Route component={PDP} path="checkout/cart/configure/id/*/product_id/*/" routeName="cartEditPage" />
                 <Route component={PDP} path="*.html" routeName="productDetailsPage" />
                 <Route component={CheckoutShipping} path="checkout/" routeName="checkingShipping" Header={CheckoutHeader} Footer={CheckoutFooter} />
-                <Route component={CheckoutPayment} path="checkout/payment/" routeName="checkout-payment" suppressFetch Header={CheckoutHeader} Footer={CheckoutFooter} />
+                <Route component={CheckoutPayment} path="checkout/payment/" fetchUrl="/checkout/#payment" routeName="checkout-payment" Header={CheckoutHeader} Footer={CheckoutFooter} />
                 <Route component={CheckoutConfirmation} path="checkout/confirmation/" routeName="checkingConfirmation" suppressFetch Header={CheckoutHeader} Footer={CheckoutFooter} />
             </Route>
         </Router>

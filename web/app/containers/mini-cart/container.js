@@ -31,19 +31,30 @@ const MiniCartEmpty = () => (
     </div>
 )
 
-const MiniCartMain = ({hasItems}) => (
-    <div className="t-mini-cart__content u-flexbox u-column u-padding-md">
-        {hasItems ? <MiniCartProductList /> : <MiniCartEmpty />}
+const MiniCartMain = ({hasItems, closeMiniCart}) => {
+    const buttonClasses = 'c--primary u-width-full u-text-uppercase'
 
-        <div className="u-padding-top-lg u-flex-none">
-            <Button href="#" className="c--primary u-width-full u-text-uppercase">
-                {hasItems ? 'Go To Checkout' : 'Continue Shopping'}
-            </Button>
+    return (
+        <div className="t-mini-cart__content u-flexbox u-column u-padding-md">
+            {hasItems ? <MiniCartProductList /> : <MiniCartEmpty />}
+
+            <div className="u-padding-top-lg u-flex-none">
+                {hasItems ?
+                    <Button href="/checkout/" className={buttonClasses}>
+                        Go To Checkout
+                    </Button>
+                :
+                    <Button onClick={closeMiniCart} className={buttonClasses}>
+                        Continue Shopping
+                    </Button>
+                }
+            </div>
         </div>
-    </div>
-)
+    )
+}
 
 MiniCartMain.propTypes = {
+    closeMiniCart: PropTypes.func,
     hasItems: PropTypes.bool
 }
 
@@ -59,7 +70,7 @@ class MiniCart extends React.Component {
             <Sheet className="t-mini-cart" open={isOpen} onDismiss={closeMiniCart} maskOpacity={0.7} effect="slide-right">
                 <MiniCartHeader closeMiniCart={closeMiniCart} />
 
-                {contentsLoaded && <MiniCartMain hasItems={hasItems} />}
+                {contentsLoaded && <MiniCartMain hasItems={hasItems} closeMiniCart={closeMiniCart} />}
             </Sheet>
         )
     }

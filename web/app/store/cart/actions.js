@@ -9,9 +9,8 @@ import parse from './parsers/parser'
 import * as utils from '../../utils/utils'
 import {isRunningInAstro} from '../../utils/astro-integration'
 import Astro from '../../vendor/astro-client'
+import {makeFormEncodedRequest, makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {addNotification, removeNotification} from '../../containers/app/actions'
-
-import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 
 const LOAD_CART_SECTION_URL = '/customer/section/load/?sections=cart'
 const REMOVE_CART_ITEM_URL = '/checkout/sidebar/removeItem/'
@@ -45,7 +44,7 @@ export const getCart = () => (dispatch) => {
     const opts = {
         headers: baseHeaders
     }
-    dispatch(removeNotification('cartQtyError'))
+    dispatch(removeNotification('cartUpdateError'))
     return utils.makeRequest(LOAD_CART_SECTION_URL, opts)
         .then((response) => response.text())
         .then((responseText) => dispatch(receiveCartContents(parse(responseText))))
@@ -63,16 +62,21 @@ export const getCart = () => (dispatch) => {
  *   busts a cache. You are expected to call `removeFromCart()` then `getCart()` every time.
  */
 export const removeFromCart = (itemId) => {
-    const body = new FormData()
-    body.append('item_id', itemId)
-
-    const headers = Object.assign({}, baseHeaders, {
-        'Content-Type': 'application/x-www-form-urlencoded',
-    })
-
-    const opts = {headers, body, method: 'POST'}
-    return fetch(REMOVE_CART_ITEM_URL, opts)
-        .json()
+    return (dispatch) => {
+        return makeFormEncodedRequest(REMOVE_CART_ITEM_URL, {item_id: itemId}, {method: 'POST'})
+            .then((response) => response.json())
+            .then((responseJSON) => {
+                if (responseJSON.success) {
+                    dispatch(getCart())
+                } else {
+                    dispatch(addNotification({
+                        content: `Unable to remove item`,
+                        id: 'cartUpdateError',
+                        showRemoveButton: true
+                    }))
+                }
+            })
+    }
 }
 
 /**
@@ -100,7 +104,7 @@ export const updateItemQuantity = (itemId, itemQuantity) => {
                 } else {
                     dispatch(addNotification({
                         content: `Unable to update Quantity`,
-                        id: 'cartQtyError',
+                        id: 'cartUpdateError',
                         showRemoveButton: true
                     }))
                 }
