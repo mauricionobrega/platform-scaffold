@@ -1,5 +1,3 @@
-// THIS IS A GENERATED FILE, DO NOT EDIT
-
 import {combineReducers} from 'redux'
 
 import app from './app/reducer'
