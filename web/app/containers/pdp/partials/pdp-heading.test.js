@@ -1,7 +1,11 @@
 /* eslint-env jest */
+/* eslint-disable import/namespace */
+
 import React from 'react'
 import ConnectedPDPHeading from './pdp-heading'
 import {mount, shallow} from 'enzyme'
+
+import * as AstroIntegration from '../../../utils/astro-integration'
 
 const PDPHeading = ConnectedPDPHeading.WrappedComponent
 
@@ -29,4 +33,20 @@ test('renders the title and price', () => {
     const priceElement = wrapper.find(`.${ROOT_CLASS}__price`)
     expect(priceElement.length).toBe(1)
     expect(priceElement.text()).toBe('10gp')
+})
+
+test('doesnt render the breadcrumbs if running in Astro', () => {
+    AstroIntegration.isRunningInAstro = true
+
+    const wrapper = shallow(<PDPHeading />)
+    const breadcrumbs = wrapper.find(`.t-pdp__breadcrumbs`)
+    expect(breadcrumbs.length).toBe(0)
+})
+
+test('renders the breadcrumbs if not running in Astro', () => {
+    AstroIntegration.isRunningInAstro = false
+
+    const wrapper = shallow(<PDPHeading />)
+    const breadcrumbs = wrapper.find(`.t-pdp__breadcrumbs`)
+    expect(breadcrumbs.length).toBe(1)
 })

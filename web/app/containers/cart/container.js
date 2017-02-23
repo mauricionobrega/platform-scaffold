@@ -12,8 +12,10 @@ import Image from 'progressive-web-sdk/dist/components/image'
 import Astro from '../../vendor/astro-client'
 import {getCartContentsLoaded, getCartHasItems} from '../../store/cart/selectors'
 import {continueShopping, openSignIn} from '../../store/cart/actions'
-import CartEstimateShippingModal from './partials/cart-estimate-shipping'
+import EstimateShippingReduxForm from './partials/cart-estimate-shipping'
+
 import CartWishlistModal from './partials/cart-wishlist'
+import CartRemoveItemModal from './partials/cart-remove-item'
 import CartItems from './partials/cart-items'
 
 const EmptyCartContents = ({hide}) => {
@@ -70,8 +72,9 @@ const Cart = ({contentsLoaded, hasItems}) => {
                 <EmptyCartContents hide={!isCartEmptyAndLoaded} />
             </Grid>
 
-            <CartEstimateShippingModal />
+            <EstimateShippingReduxForm />
             <CartWishlistModal />
+            <CartRemoveItemModal />
         </div>
     )
 }
@@ -79,6 +82,7 @@ const Cart = ({contentsLoaded, hasItems}) => {
 Cart.propTypes = {
     contentsLoaded: PropTypes.bool,
     hasItems: PropTypes.bool,
+    removeItemID: PropTypes.string
 }
 
 const mapStateToProps = createStructuredSelector({

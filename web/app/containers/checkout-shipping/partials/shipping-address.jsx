@@ -5,9 +5,11 @@ import {selectorToJS} from '../../../utils/selector-utils'
 import * as ReduxForm from 'redux-form'
 import {normalizePhone} from '../../../utils/normalize-utils'
 
-import {showCompanyAndApt, fetchShippingMethods} from '../actions'
+import {showCompanyAndApt} from '../actions'
+import {SHIPPING_FORM_NAME} from '../constants'
+import {fetchShippingMethodsEstimate} from '../../../store/checkout/shipping/actions'
 import {getShippingFormTitle, getIsCompanyOrAptShown} from '../selectors'
-import {getCountries, getRegions} from '../../../store/checkout/locations/selectors'
+import {getCountries, getAvailableRegions} from '../../../store/checkout/locations/selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
@@ -119,11 +121,17 @@ const ShippingAddressForm = ({
                     </FieldRow>
 
                     <FieldRow>
-                        <ReduxForm.Field component={Field} name="region_id" label="State/Province">
-                            <select>
-                                {regions.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
-                            </select>
-                        </ReduxForm.Field>
+                        {regions.length === 0 ?
+                            <ReduxForm.Field component={Field} name="region" label="State/Province">
+                                <input type="text" noValidate />
+                            </ReduxForm.Field>
+                        :
+                            <ReduxForm.Field component={Field} name="region_id" label="State/Province">
+                                <select>
+                                    {regions.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
+                                </select>
+                            </ReduxForm.Field>
+                        }
                     </FieldRow>
 
                     <FieldRow>
@@ -194,12 +202,12 @@ const mapStateToProps = createStructuredSelector({
     countries: selectorToJS(getCountries),
     formTitle: getShippingFormTitle,
     isCompanyOrAptShown: getIsCompanyOrAptShown,
-    regions: selectorToJS(getRegions)
+    regions: selectorToJS(getAvailableRegions(SHIPPING_FORM_NAME))
 })
 
 const mapDispatchToProps = {
     handleShowCompanyAndApt: showCompanyAndApt,
-    fetchShippingMethods
+    fetchShippingMethods: () => fetchShippingMethodsEstimate(SHIPPING_FORM_NAME)
 }
 
 
