@@ -17,7 +17,7 @@ import AppProvider from './app-provider'
 import Stylesheet from './stylesheet.scss' // eslint-disable-line no-unused-vars
 
 import {analyticManager} from 'progressive-web-sdk/dist/analytics/analytic-manager'
-import {clientAnalytics} from './utils/analytics/client-ga'
+import {clientAnalytics} from './utils/analytics/client-analytics'
 
 polyfill()
 
