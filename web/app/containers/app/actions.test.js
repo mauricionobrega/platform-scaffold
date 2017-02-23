@@ -67,8 +67,7 @@ test('checkIfOffline dispatches setPageFetchError if it receives modified JSON f
         obj: {
             offline: true
         },
-        json: function() { // eslint-disable-line object-shorthand
-                           // arrow function won't properly bind `this`
+        json() {
             return this.obj
         }
     }
