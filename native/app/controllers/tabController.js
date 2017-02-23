@@ -64,7 +64,7 @@ TabController.prototype.reload = async function() {
         if (topPlugin && typeof topPlugin.navigate === 'function') {
             topPlugin.navigate(this.tabItem.rootUrl)
         } else {
-            this.navigationView.navigate(this.tabItem.rootUrl)
+            this.navigationView.navigateToUrl(this.tabItem.rootUrl)
         }
     } else if (typeof topPlugin.reload === 'function') {
         topPlugin.reload()
