@@ -5,7 +5,7 @@ const parseBreadcrumbs = ($, $breadcrumbsLinks) => {
         .map((breadcrumbLink) => parseTextLink($(breadcrumbLink)))
 }
 
-const UENC_REGEX = /\/uenc\/([^/]+)\//
+const UENC_REGEX = /\/uenc\/([^/]+),\//
 
 const pdpParser = ($, $html) => {
     const $breadcrumbs = (
@@ -26,7 +26,9 @@ const pdpParser = ($, $html) => {
     })
 
     const submitUrl = $form.attr('action')
-    const uenc = UENC_REGEX.exec(submitUrl)[1]
+    const uencMatch = UENC_REGEX.exec(submitUrl)
+    const uenc = uencMatch ? uencMatch[1] : ''
+    debugger
 
     return {
         breadcrumbs: parseBreadcrumbs($, $breadcrumbs),
