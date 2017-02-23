@@ -55,9 +55,5 @@ export const getFirstProductCarouselItem = createGetSelector(
 )
 export const getFirstProductImage = createGetSelector(getFirstProductCarouselItem, 'img')
 
-export const getFirstPdp = createSelector(
-    getPdp,
-    (pdp) => (pdp.first() || Immutable.Map())
-)
 
 export const getUenc = (pathKey) => createGetSelector(getPDPByPathKey(pathKey), 'uenc')
