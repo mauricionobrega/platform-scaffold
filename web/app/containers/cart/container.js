@@ -9,6 +9,7 @@ import {Grid, GridSpan} from 'progressive-web-sdk/dist/components/grid'
 import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import Image from 'progressive-web-sdk/dist/components/image'
 
+import Astro from '../../vendor/astro-client'
 import {getCartContentsLoaded, getCartHasItems} from '../../store/cart/selectors'
 import {continueShopping, openSignIn} from '../../store/cart/actions'
 import EstimateShippingReduxForm from './partials/cart-estimate-shipping'
@@ -57,6 +58,7 @@ EmptyCartContents.propTypes = {
 }
 
 const Cart = ({contentsLoaded, hasItems}) => {
+    Astro.trigger('checkout:disable-alert')
     const isCartEmptyAndLoaded = !hasItems && contentsLoaded
     const templateClassnames = classNames('t-cart u-bg-color-neutral-10', {
         't--loaded': contentsLoaded
