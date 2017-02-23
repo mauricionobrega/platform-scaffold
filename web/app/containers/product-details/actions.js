@@ -25,10 +25,10 @@ export const process = ({payload}) => {
 }
 
 export const submitCartForm = () => (dispatch, getStore) => {
-    const formInfo = selectors.getFormInfo(getStore())
+    const key = appSelectors.getCurrentPathKey(getStore())
     const qty = selectors.getItemQuantity(getStore())
 
-    return dispatch(commands.addToCart(qty, formInfo))
+    return dispatch(commands.addToCart(key, qty))
         .then(() => {
             dispatch(openModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL))
             dispatch(getCart())
