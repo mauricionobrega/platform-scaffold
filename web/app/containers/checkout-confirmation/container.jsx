@@ -10,6 +10,7 @@ import Image from 'progressive-web-sdk/dist/components/image'
 import List from 'progressive-web-sdk/dist/components/list'
 import ListTile from 'progressive-web-sdk/dist/components/list-tile'
 
+import Astro from '../../vendor/astro-client'
 import * as checkoutConfirmationActions from './actions'
 import CheckoutConfirmationForm from './partials/checkout-confirmation-form'
 import CheckountConfirmationModal from './partials/checkout-confirmation-modal'
@@ -24,6 +25,7 @@ class CheckoutConfirmation extends React.Component {
     }
 
     render() {
+        Astro.trigger('checkout:disable-alert')
         const {
             contentsLoaded,
             emailAddress,
