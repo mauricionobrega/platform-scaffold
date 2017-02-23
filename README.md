@@ -8,7 +8,9 @@ manage node and npm versions.
 - node 6.x LTS
 - npm 3.x
 
-## Projects
+## Directory
 
-This repository contains scaffold projects for Mobify's Progressive [Web](/web) 
-and [App](/native) SDKs. 
+This repository contains scaffold projects for Mobify's platform.
+
+### [Web](/web)
+### [App](/native)
