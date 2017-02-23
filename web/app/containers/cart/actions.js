@@ -12,7 +12,7 @@ import {
 import {removeFromCart} from '../../store/cart/actions'
 import {makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {getUenc} from '../pdp/selectors'
-import {addNotification, removeNotification} from '../app/actions'
+import {addNotification} from '../app/actions'
 import {getFormKey, getIsLoggedIn} from '../app/selectors'
 
 export const receiveData = createAction('Receive Cart Data')
