@@ -1,7 +1,7 @@
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 
 import {makeRequest, urlToPathKey} from '../utils/utils'
-import {pdpParser} from '../store/products/parser'
+import {productDetailsParser} from '../store/products/parser'
 import {receivePdpProductData} from './responses'
 
 export const fetchPdpData = (url) => (dispatch) => {
@@ -9,7 +9,7 @@ export const fetchPdpData = (url) => (dispatch) => {
         .then(jqueryResponse)
         .then((res) => {
             const [$, $response] = res
-            dispatch(receivePdpProductData({[urlToPathKey(url)]: pdpParser($, $response)}))
+            dispatch(receivePdpProductData({[urlToPathKey(url)]: productDetailsParser($, $response)}))
         })
         .catch((error) => { console.info(error.message) })
 }
