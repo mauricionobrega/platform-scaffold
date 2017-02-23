@@ -41,7 +41,7 @@ const addToWishlist = (productId, productURL) => (dispatch, getState) => {
 
 export const saveToWishlist = (productId, itemId, productURL) => (dispatch, getState) => {
     dispatch(openModal(CART_WISHLIST_MODAL))
-    if (getIsLoggedIn(getState())) {
+    if (!getIsLoggedIn(getState())) {
         return
     }
     const wishListErrorNotification = {
