@@ -4,6 +4,7 @@ import {createStructuredSelector} from 'reselect'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import {CART_WISHLIST_MODAL} from '../constants'
 import {closeModal} from '../../../store/modals/actions'
+import {setIsWishlistComplete} from '../actions'
 import {isModalOpen} from '../../../store/selectors'
 import {getIsLoggedIn} from '../../app/selectors'
 import {getIsWishlistAddComplete} from '../selectors'
@@ -102,7 +103,10 @@ const CartWishlistModal = ({closeModal, isOpen, isComplete, isLoggedIn}) => {
         <Sheet
             className="pw--no-shadow t-cart__wishlist-modal"
             open={isOpen}
-            onDismiss={closeModal}
+            onDismiss={() => {
+                closeModal()
+                setIsWishlistComplete(false)
+            }}
             maskOpacity={0.7}
             effect="modal-center"
             shrinkToContent={true}
@@ -140,7 +144,8 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = {
-    closeModal: () => closeModal(CART_WISHLIST_MODAL)
+    closeModal: () => closeModal(CART_WISHLIST_MODAL),
+    setIsWishlistComplete
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartWishlistModal)
