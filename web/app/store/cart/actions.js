@@ -9,6 +9,7 @@ import parse from './parsers/parser'
 import * as utils from '../../utils/utils'
 import {makeFormEncodedRequest, makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {addNotification, removeNotification} from '../../containers/app/actions'
+import {getFormKey} from '../../containers/app/selectors'
 
 const LOAD_CART_SECTION_URL = '/customer/section/load/?sections=cart'
 const REMOVE_CART_ITEM_URL = '/checkout/sidebar/removeItem/'
@@ -44,8 +45,8 @@ export const getCart = () => (dispatch) => {
  *   busts a cache. You are expected to call `removeFromCart()` then `getCart()` every time.
  */
 export const removeFromCart = (itemId) => {
-    return (dispatch) => {
-        return makeFormEncodedRequest(REMOVE_CART_ITEM_URL, {item_id: itemId}, {method: 'POST'})
+    return (dispatch, getState) => {
+        return makeFormEncodedRequest(REMOVE_CART_ITEM_URL, {item_id: itemId, formKey: getFormKey(getState())}, {method: 'POST'})
             .then((response) => response.json())
             .then((responseJSON) => {
                 if (responseJSON.success) {
