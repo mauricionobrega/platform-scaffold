@@ -13,7 +13,6 @@ import {Icon} from 'progressive-web-sdk/dist/components/icon'
 import ProductItem from '../../../components/product-item'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
-<<<<<<< HEAD:web/app/containers/pdp/partials/pdp-item-added-modal.jsx
 // calculates modal height based on user screen size 50% by default
 let coverage = '50'
 if (window.innerHeight < 370) {
@@ -88,7 +87,7 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = {
-    onGoToCheckout: productDetailsActions.goToCheckout
+    onGoToCheckout: productDetailsActions.goToCheckout,
     onDismiss: stripEvent(() => closeModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL))
 }
 
