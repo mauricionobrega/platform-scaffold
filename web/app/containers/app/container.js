@@ -4,17 +4,19 @@ import {createStructuredSelector} from 'reselect'
 import {selectorToJS} from '../../utils/selector-utils'
 
 import {hidePreloader} from 'progressive-web-sdk/dist/preloader'
-import {IconSprite} from 'progressive-web-sdk/dist/components/icon'
+import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
 import SkipLinks from 'progressive-web-sdk/dist/components/skip-links'
 import Header from '../../containers/header/container'
 import Footer from '../../containers/footer/container'
 import MiniCart from '../../containers/mini-cart/container'
 import Navigation from '../../containers/navigation/container'
-import sprite from '../../static/svg/sprite-dist/sprite.svg'
 import * as appActions from '../app/actions'
 import * as selectors from './selectors'
 
 import NotificationManager from '../../components/notification-manager'
+
+// @TODO: Replace this with an action that fetches the SVG file via Ajax
+import sprite from '../../static/svg/sprite-dist/sprite.svg'
 
 const hidePreloaderWhenCSSIsLoaded = () => {
     if (window.Progressive.stylesheetLoaded) {
@@ -61,7 +63,9 @@ class App extends React.Component {
                 className={`t-app t-app--${currentTemplateProps.route.routeName}`}
                 style={{display: 'none'}}
             >
-                <IconSprite sprite={sprite} />
+                <DangerousHTML html={sprite}>
+                    {(htmlObj) => <div hidden dangerouslySetInnerHTML={htmlObj} />}
+                </DangerousHTML>
                 <SkipLinks items={skipLinksItems} />
 
                 <div id="app-wrap" className="t-app__wrapper u-flexbox u-direction-column">
