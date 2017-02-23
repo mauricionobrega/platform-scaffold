@@ -2,10 +2,10 @@ import * as analyticConstants from 'progressive-web-sdk/dist/analytics/analytic-
 import Distributor from 'progressive-web-sdk/dist/analytics/distributors/distributor'
 
 const handlers = {
-    [analyticConstants.pageview]: (payload) => {
+    [analyticConstants.pageview]: () => {
         // Send Pageview
     },
-    [analyticConstants.transaction]: (payload) => {
+    [analyticConstants.transaction]: () => {
         // Send Transaction
     }
 }
