@@ -61,8 +61,9 @@ OnboardingModalController.prototype.show = async function(params) {
         await this.modalView.show({animated: true})
         await Application.setStatusBarDarkText()
 
-        AppEvents.on(OnboardingModalEvents.onboardingHidden, () => {
+        AppEvents.on(OnboardingModalEvents.onboardingHidden, async () => {
             SettingsStore.set(isFirstRunKey, 'false')
+            await Application.setStatusBarLightText()
         })
         AppEvents.trigger(OnboardingModalEvents.onboardingShown)
     }
