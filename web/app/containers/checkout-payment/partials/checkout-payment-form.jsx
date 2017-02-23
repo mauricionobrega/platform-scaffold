@@ -16,7 +16,7 @@ import {Grid, GridSpan} from 'progressive-web-sdk/dist/components/grid'
 // Partials
 import CreditCardForm from './credit-card-form'
 import BillingAddressForm from './billing-address-form'
-import ProductList from './product-list'
+import OrderSummary from './order-summary'
 
 const CheckoutPaymentForm = ({handleSubmit, submitPayment}) => {
     return (
@@ -28,7 +28,7 @@ const CheckoutPaymentForm = ({handleSubmit, submitPayment}) => {
                 </GridSpan>
 
                 <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 5}}>
-                    <ProductList />
+                    <OrderSummary />
                 </GridSpan>
             </Grid>
         </form>
