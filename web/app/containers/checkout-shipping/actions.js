@@ -94,6 +94,7 @@ export const submitShipping = () => {
             addressLine2,
             country_id,
             city,
+            username,
             region_id,
             region,
             postcode,
@@ -129,7 +130,7 @@ export const submitShipping = () => {
             }
         }
         const persistShippingURL = `https://www.merlinspotions.com/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/shipping-information`
-        dispatch(receiveCheckoutData({shipping: {address}}))
+        dispatch(receiveCheckoutData({shipping: {address}, emailAddress: username}))
         makeJsonEncodedRequest(persistShippingURL, addressInformation, {method: 'POST'})
             .then((response) => response.json())
             .then((responseJSON) => {
