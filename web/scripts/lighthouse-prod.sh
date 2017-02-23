@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 OUTPUT_PATH=./lighthouse/audit-prod.html
 URL=https://www.merlinspotions.com
 

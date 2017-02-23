@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Run the Lighthouse test against the dev build with continuous integration.
 
 OUTPUT_PATH=./lighthouse/audit-local.html

@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 OUTPUT_PATH=./lighthouse/audit-local.html
 URL=https://localhost
 
