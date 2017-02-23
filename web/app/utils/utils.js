@@ -69,13 +69,13 @@ export const analyticMetaPayloadCreator = (type, payload) => ({
  * Note: The intention of this function is to replace createAction utilty function defined above
  *
  * @description {string} - a unique name for the action
- * @argNamesPayloadAry {array} - an array of strings that identifies each parameter
+ * @payloadArgumentNames {array} - an array of strings that identifies each parameter
  */
-export const createActionWithMeta = (description, argNamesPayloadAry, metaCreator) => {
+export const createActionWithMeta = (description, payloadArgumentNames, metaCreator) => {
     return createReduxAction(
         description,
-        argNamesPayloadAry.length ?
-            (...args) => fromPairs(argNamesPayloadAry.map((arg, idx) => [arg, args[idx]]))
+        payloadArgumentNames.length ?
+            (...args) => fromPairs(payloadArgumentNames.map((arg, idx) => [arg, args[idx]]))
             : null,
         metaCreator ? metaCreator : null
 
