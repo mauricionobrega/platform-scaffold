@@ -1,6 +1,6 @@
 import {createAction} from '../../utils/utils'
 
-import {productListParser, productDetailsParser} from './parser'
+import {productListParser} from './parser'
 
 export const receiveProductListProductData = createAction('Receive ProductList product data')
 // export const receiveProductDetailsProductData = createAction('Receive ProductDetails product data')
