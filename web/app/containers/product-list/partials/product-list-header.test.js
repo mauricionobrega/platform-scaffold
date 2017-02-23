@@ -15,7 +15,7 @@ test('renders without errors', () => {
     expect(wrapper.length).toBe(1)
 })
 
-const ROOT_CLASS = 't-plp'
+const ROOT_CLASS = 't-product-list'
 
 test('doesnt render the breadcrumbs if running in Astro', () => {
     AstroIntegration.isRunningInAstro = true
