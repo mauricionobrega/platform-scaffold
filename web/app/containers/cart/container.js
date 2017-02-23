@@ -39,7 +39,7 @@ const EmptyCartContents = ({hide}) => {
                     <p className="u-padding-top u-padding-start-lg u-padding-end-lg u-text-align-center u-margin-bottom-lg">
                         Your shopping cart is empty. Sign in to retrieve saved items or continue shopping.
                     </p>
-                    <Button className="c--primary u-text-uppercase u-h5 u-width-full u-margin-bottom-lg" onClick={openSignIn} href="/customer/account/login/">
+                    <Button className="c--primary u-text-uppercase u-h5 u-width-full u-margin-bottom-lg" onClick={openSignIn}>
                         <Icon name="User" />
                         Sign In
                     </Button>

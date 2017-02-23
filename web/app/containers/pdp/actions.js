@@ -1,3 +1,5 @@
+import {browserHistory} from 'react-router'
+
 import {createAction, makeFormEncodedRequest, urlToPathKey} from '../../utils/utils'
 import {getCart} from '../../store/cart/actions'
 import * as selectors from './selectors'
@@ -31,6 +33,8 @@ export const goToCheckout = () => (dispatch) => {
         // If we're running in Astro, we want to dismiss open the cart modal,
         // otherwise, navigating is taken care of by the button press
         Astro.trigger('open:cart-modal')
+    } else {
+        browserHistory.push('/checkout/')
     }
 }
 
