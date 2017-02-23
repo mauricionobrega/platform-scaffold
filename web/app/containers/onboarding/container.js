@@ -6,7 +6,7 @@ import Button from 'progressive-web-sdk/dist/components/button'
 
 const Onboarding = ({carouselData}) => {
     const carouselItems = Object.keys(carouselData).map((key, index) => {
-        return <OnboardingScreen data={carouselData[key]} key={index} index={index} />
+        return <OnboardingScreen {...carouselData[key]} key={index} />
     })
     return (
         <Carousel>
@@ -15,31 +15,30 @@ const Onboarding = ({carouselData}) => {
     )
 }
 
-const OnboardingScreen = (props) => {
-    const data = props.data
+const OnboardingScreen = ({imageURL, imageAlt, title, subtitle, primaryButton, laterButton, actionButton, key}) => {
     const item = (
-        <CarouselItem caption="Get started" key={props.index} className="carousel-item" allowLooping="false">
+        <CarouselItem caption="Get started" key={key} className="carousel-item" allowLooping="false">
             <div className="carousel-item-wrapper u-direction-column">
                 <div className="u-flex u-flexbox u-align-center u-justify-center">
                     <div>
-                        <img src={data.imageURL} className="carousel-item-image" alt={data.imageAlt} />
-                        {data.title &&
-                            <h2 className="item-title u-color-neutral-60 u-text-font-family u-text-semi-bold">{data.title}</h2>
+                        <img src={imageURL} className="carousel-item-image" alt={imageAlt} />
+                        {title &&
+                            <h2 className="item-title u-color-neutral-60 u-text-font-family u-text-semi-bold">{title}</h2>
                         }
-                        <p className="item-subtitle u-text-font-family">{data.subtitle}</p>
+                        <p className="item-subtitle u-text-font-family">{subtitle}</p>
                     </div>
                 </div>
-                {data.primaryButton &&
+                {primaryButton &&
                     <div className="u-flexbox u-flexbox-gutters button-wrapper">
-                        <Button text={data.primaryButton.title} className="c--primary u-flex" onClick={data.primaryButton.action} />
+                        <Button text={primaryButton.title} className="c--primary u-flex" onClick={primaryButton.action} />
                     </div>
                 }
                 <div className="u-flexbox u-flexbox-gutters button-wrapper">
-                    {data.laterButton &&
-                        <Button className="c--tertiary u-flex" text={data.laterButton.title} onClick={data.laterButton.action} />
+                    {laterButton &&
+                        <Button className="c--tertiary u-flex" text={laterButton.title} onClick={laterButton.action} />
                     }
-                    {data.actionButton &&
-                        <Button className="c--secondary u-flex" text={data.actionButton.title} onClick={data.actionButton.action} />
+                    {actionButton &&
+                        <Button className="c--secondary u-flex" text={actionButton.title} onClick={actionButton.action} />
                     }
                 </div>
             </div>

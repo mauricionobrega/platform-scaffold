@@ -8,8 +8,8 @@ import RawCheckoutPayment from './checkout-payment/container'
 import RawCheckoutShipping from './checkout-shipping/container'
 import RawHome from './home/container'
 import RawLogin from './login/container'
-import RawPDP from './pdp/container'
-import RawPLP from './plp/container'
+import RawProductDetails from './product-details/container'
+import RawProductList from './product-list/container'
 
 export const Cart = template(RawCart)
 export const CheckoutConfirmation = template(RawCheckoutConfirmation)
@@ -17,5 +17,5 @@ export const CheckoutPayment = template(RawCheckoutPayment)
 export const CheckoutShipping = template(RawCheckoutShipping)
 export const Home = template(RawHome)
 export const Login = template(RawLogin)
-export const PDP = template(RawPDP)
-export const PLP = template(RawPLP)
+export const ProductDetails = template(RawProductDetails)
+export const ProductList = template(RawProductList)
