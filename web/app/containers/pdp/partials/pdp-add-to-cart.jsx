@@ -56,11 +56,11 @@ const PDPAddToCart = ({quantity, ctaText, setQuantity, onSubmit, disabled}) => {
 
 
 PDPAddToCart.propTypes = {
-    quantity: PropTypes.number.isRequired,
     setQuantity: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
     ctaText: PropTypes.string,
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    quantity: PropTypes.number
 }
 
 const mapStateToProps = createStructuredSelector({
