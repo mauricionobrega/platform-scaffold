@@ -1,4 +1,4 @@
-import WebViewPlugin from 'progressive-app-sdk/plugins/WebViewPlugin'
+import WebViewPlugin from 'progressive-app-sdk/plugins/webViewPlugin'
 import AnchoredLayoutPlugin from 'progressive-app-sdk/plugins/anchoredLayoutPlugin'
 import SegmentedPlugin from 'progressive-app-sdk/plugins/segmentedPlugin'
 
