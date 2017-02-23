@@ -28,7 +28,6 @@ const pdpParser = ($, $html) => {
     const submitUrl = $form.attr('action')
     const uencMatch = UENC_REGEX.exec(submitUrl)
     const uenc = uencMatch ? uencMatch[1] : ''
-    debugger
 
     return {
         breadcrumbs: parseBreadcrumbs($, $breadcrumbs),
