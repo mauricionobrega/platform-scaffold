@@ -15,8 +15,8 @@ const checkoutBreadcrumb = [
 ]
 
 const ProductDetailsHeading = ({breadcrumbs, title, price, isInCheckout}) => (
-    <div className="product-details-heading u-padding-md u-box-shadow u-position-relative u-z-index-1">
-        <div className="product-details__breadcrumbs u-margin-bottom-md">
+    <div className="t-product-details-heading u-padding-md u-box-shadow u-position-relative u-z-index-1">
+        <div className="t-product-details__breadcrumbs u-margin-bottom-md">
             <Breadcrumbs items={isInCheckout ? checkoutBreadcrumb : breadcrumbs} />
         </div>
 
