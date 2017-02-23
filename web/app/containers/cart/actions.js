@@ -36,40 +36,41 @@ const addToWishlist = (productId, productURL) => (dispatch, getState) => {
         formKey: getFormKey(getState())
     }
 
-    return makeFormEncodedRequest(ADD_TO_WISHLIST_URL, {}, {method: 'POST'})
+    return makeFormEncodedRequest(ADD_TO_WISHLIST_URL, payload, {method: 'POST'})
 }
 
 export const saveToWishlist = (productId, itemId, productURL) => (dispatch, getState) => {
     dispatch(openModal(CART_WISHLIST_MODAL))
     if (getIsLoggedIn(getState())) {
-        const wishListErrorNotification = {
-            content: 'Unable to add item to wishlist.',
-            id: 'cartWishlistError',
-            showRemoveButton: true
-        }
-
-
-        dispatch(addToWishlist(productId, productURL))
-            .then(jqueryResponse)
-            .then((response) => {
-                const [$, $response] = response // eslint-disable-line no-unused-vars
-                // The response is the HTML of the wishlist page, so check for the item we added
-                if ($response.find(`.product-item-link[href="${productURL}"]`).length) {
-                    dispatch(removeFromCart(itemId))
-                    dispatch(setIsWishlistComplete(true))
-                    return
-                }
-                throw new Error('Add Request Failed')
-            })
-            .catch((error) => {
-                if (/Failed to fetch|Add Request Failed/i.test(error.message)) {
-                    dispatch(closeModal(CART_WISHLIST_MODAL))
-                    dispatch(addNotification(wishListErrorNotification))
-                } else {
-                    throw error
-                }
-            })
+        return
     }
+    const wishListErrorNotification = {
+        content: 'Unable to add item to wishlist.',
+        id: 'cartWishlistError',
+        showRemoveButton: true
+    }
+
+
+    dispatch(addToWishlist(productId, productURL))
+        .then(jqueryResponse)
+        .then((response) => {
+            const [$, $response] = response // eslint-disable-line no-unused-vars
+            // The response is the HTML of the wishlist page, so check for the item we added
+            if ($response.find(`.product-item-link[href="${productURL}"]`).length) {
+                dispatch(removeFromCart(itemId))
+                dispatch(setIsWishlistComplete(true))
+                return
+            }
+            throw new Error('Add Request Failed')
+        })
+        .catch((error) => {
+            if (/Failed to fetch|Add Request Failed/i.test(error.message)) {
+                dispatch(closeModal(CART_WISHLIST_MODAL))
+                dispatch(addNotification(wishListErrorNotification))
+            } else {
+                throw error
+            }
+        })
 }
 
 export const openRemoveItemModal = (itemId) => {
