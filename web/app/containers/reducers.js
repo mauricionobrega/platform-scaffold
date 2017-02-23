@@ -14,10 +14,10 @@ import login from './login/reducer'
 import navigation from './navigation/reducer'
 import pdp from './pdp/reducer'
 import plp from './plp/reducer'
-// import {reducer as formReducer} from 'redux-form'
+import startersKit from './starters-kit/reducer'
 
 
-const rootReducer = combineReducers({
+const uiReducer = combineReducers({
     app,
     cart,
     checkoutConfirmation,
@@ -30,8 +30,8 @@ const rootReducer = combineReducers({
     navigation,
     pdp,
     plp,
-    // form: formReducer,
+    startersKit,
 
 })
 
-export default rootReducer
+export default uiReducer
