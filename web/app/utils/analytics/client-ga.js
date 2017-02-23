@@ -1,25 +1,15 @@
 import * as analyticConstants from 'progressive-web-sdk/dist/analytics/analytic-constants'
-
-// let options
-
-export const toString = () => { return 'Client-GA' }
-
-export const init = (/* initalizingOptions */) => {
-    // options = initalizingOptions
-    // initialize analytic setup
-}
+import Distributor from 'progressive-web-sdk/dist/analytics/distributors/distributor'
 
 const handlers = {
-    [analyticConstants.pageview]: (/* payload */) => {
+    [analyticConstants.pageview]: (payload) => {
         // Send Pageview
     },
-    [analyticConstants.transaction]: (/* payload */) => {
+    [analyticConstants.transaction]: (payload) => {
         // Send Transaction
     }
 }
 
-export const analyticReceiver = (type, metaPayload, state) => {
-    if (handlers.hasOwnProperty(type)) {
-        handlers[type](metaPayload)
-    }
-}
+class ClientAnalytics extends Distributor {}
+
+export const clientAnalytics = new ClientAnalytics(handlers)
