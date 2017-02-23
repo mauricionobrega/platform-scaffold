@@ -53,6 +53,33 @@ self.addEventListener('activate', (e) => {
     )
 })
 
+const noCacheJSONResponse = (json) => {
+    return new Response(
+        new Blob(
+            [JSON.stringify(json)],
+            {type: 'application/json'}
+        ),
+        {
+            status: 200,
+            statusText: 'OK',
+            headers: new Headers({
+                'Cache-Control': 'no-cache, no-store, must-revalidate'
+            })
+        }
+    )
+}
+
+// App makes this asset request on each page fetch, expecting to see empty JSON
+// if network supplies successful response.
+// In the case of failure, we modify response to be `{offline: true}` which
+// indicates to app that we are offline.
+const checkIfOffline = (request) =>
+    fetch(new Request(request, {cache: 'no-store'}))
+    .catch(() => noCacheJSONResponse({offline: true}))
+
+// For enabling offline detection within the application
+toolbox.router.get(/online\.mobify\.net\/offline\.json/, checkIfOffline)
+
 // Path Handlers
 toolbox.router.get(/\.(?:png|gif|svg|jpe?g)$/, toolbox.fastest, {cache: imageCache})
 

@@ -16,6 +16,11 @@ import * as selectors from './selectors'
 
 import NotificationManager from '../../components/notification-manager'
 
+// Offline support
+import {Offline} from '../templates'
+import OfflineBanner from '../offline/partials/offline-banner'
+import OfflineModal from '../offline/partials/offline-modal'
+
 const hidePreloaderWhenCSSIsLoaded = () => {
     if (window.Progressive.stylesheetLoaded) {
         hidePreloader()
@@ -24,24 +29,27 @@ const hidePreloaderWhenCSSIsLoaded = () => {
     }
 }
 
-
 class App extends React.Component {
     componentDidMount() {
         hidePreloaderWhenCSSIsLoaded()
-
-        // Dispatch an action to retrieve global content here
     }
 
     render() {
         const {
             children,
             history,
+            fetchPage,
+            fetchError,
+            hasFetchedCurrentPath,
             notifications,
             removeNotification
         } = this.props
-        const currentTemplateProps = children.props
-        const CurrentHeader = currentTemplateProps.route.Header || Header
-        const CurrentFooter = currentTemplateProps.route.Footer || Footer
+
+        const routeProps = children.props.route
+        const CurrentHeader = routeProps.Header || Header
+        const CurrentFooter = routeProps.Footer || Footer
+
+        const reload = () => fetchPage(window.location.href, routeProps.component.WrappedComponent, routeProps.routeName)
 
         const skipLinksItems = [
             // Customize your list of SkipLinks here. These are necessary to
@@ -58,7 +66,7 @@ class App extends React.Component {
         return (
             <div
                 id="app"
-                className={`t-app t-app--${currentTemplateProps.route.routeName}`}
+                className={`t-app t-app--${routeProps.routeName}`}
                 style={{display: 'none'}}
             >
                 <IconSprite sprite={sprite} />
@@ -67,6 +75,11 @@ class App extends React.Component {
                 <div id="app-wrap" className="t-app__wrapper u-flexbox u-direction-column">
                     <div id="app-header" className="u-flex-none" role="banner">
                         <CurrentHeader />
+                        {
+                            // Only display banner when we are offline and have content to show
+                            fetchError && hasFetchedCurrentPath && <OfflineBanner />
+                        }
+                        <OfflineModal reload={reload} />
 
                         {notifications &&
                             <NotificationManager
@@ -79,13 +92,22 @@ class App extends React.Component {
                         <MiniCart />
                     </div>
 
-                    <main id="app-main" className="u-flex" role="main">
-                        {this.props.children}
-                    </main>
+                    {
+                        // Display main content if we have no network errors or
+                        // if we've already got the content in the store
+                        (!fetchError || hasFetchedCurrentPath) ?
+                            <div>
+                                <main id="app-main" className="u-flex" role="main">
+                                    {this.props.children}
+                                </main>
 
-                    <div id="app-footer" className="u-flex-none">
-                        <CurrentFooter />
-                    </div>
+                                <div id="app-footer" className="u-flex-none">
+                                    <CurrentFooter />
+                                </div>
+                            </div>
+                        :
+                            <Offline reload={reload} location={children.props.location} route={routeProps} />
+                    }
                 </div>
             </div>
         )
@@ -94,20 +116,26 @@ class App extends React.Component {
 
 App.propTypes = {
     children: PropTypes.element.isRequired,
+    fetchPage: PropTypes.func.isRequired,
     /**
      * The react-router history object
      */
+    fetchError: PropTypes.string,
+    hasFetchedCurrentPath: PropTypes.bool,
     history: PropTypes.object,
     notifications: PropTypes.array,
     removeNotification: PropTypes.func
 }
 
 const mapStateToProps = createStructuredSelector({
-    notifications: selectorToJS(selectors.getNotifications)
+    notifications: selectorToJS(selectors.getNotifications),
+    fetchError: selectors.getFetchError,
+    hasFetchedCurrentPath: selectors.hasFetchedCurrentPath
 })
 
 const mapDispatchToProps = {
-    removeNotification: appActions.removeNotification
+    removeNotification: appActions.removeNotification,
+    fetchPage: appActions.fetchPage
 }
 
 export default connect(
