@@ -26,7 +26,7 @@ const AppProvider = ({store}) => (
                 <Route component={CheckoutShipping} path="checkout/shipping/" routeName="checkingShipping" suppressFetch Header={CheckoutHeader} Footer={CheckoutFooter} />
                 <Route component={CheckoutPayment} path="checkout/payment/" routeName="checkout-payment" suppressFetch Header={CheckoutHeader} Footer={CheckoutFooter} />
                 <Route component={CheckoutConfirmation} path="checkout/confirmation/" routeName="checkingConfirmation" suppressFetch Header={CheckoutHeader} Footer={CheckoutFooter} />
-                <Route component={StartersKit} path="starters-kit/" routeName="startersKit" />
+                <Route component={StartersKit} path="starters-kit" routeName="startersKit" />
             </Route>
         </Router>
     </Provider>

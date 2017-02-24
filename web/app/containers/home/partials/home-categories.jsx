@@ -66,9 +66,14 @@ HomeCategory.propTypes = {
 }
 
 const HomeCategories = ({categories}) => {
+    const startersKitCategory = {
+        href: 'https://www.merlinspotions.com/starters-kit/',
+        text: 'Starters Kit'
+    }
     return (
         <div className="t-home__category u-padding-start u-padding-end u-padding-bottom-md">
             <div className="u-card">
+                <HomeCategory category={startersKitCategory} />
                 {categories.map((category, index) => <HomeCategory category={category} key={index} />)}
             </div>
         </div>
