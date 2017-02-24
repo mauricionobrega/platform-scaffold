@@ -29,8 +29,6 @@ export const plpParser = ($, $html) => {
             ]
         }
     })
-    console.log('test')
-    debugger
     return productMap
 }
 

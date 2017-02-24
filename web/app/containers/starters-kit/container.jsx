@@ -4,12 +4,12 @@ import {createStructuredSelector} from 'reselect'
 import {selectorToJS} from '../../utils/selector-utils'
 
 import {getDescription, getHasProducts, getStartersKitProducts, getTitle, getText} from './selectors'
-// import * as startersKitActions from './actions'
 
 import List from 'progressive-web-sdk/dist/components/list'
-import ListTile from 'progressive-web-sdk/dist/components/list-tile'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
+
+import ProductTile from '../plp/partials/product-tile'
 
 
 const containerClass = 't-starters-kit'
@@ -17,13 +17,7 @@ const titleClass = `${containerClass}__title`
 
 const ResultList = ({products}) => (
     <List className="c--borderless">
-        {products.map((product, idx) => {
-            if (!product) {
-                return null
-            }
-
-            return <ListTile key={idx}><div>{product.title}:{product.price}</div></ListTile>
-        })}
+        {products.map((product, idx) => <ProductTile key={idx} {...product} />)}
     </List>
 )
 

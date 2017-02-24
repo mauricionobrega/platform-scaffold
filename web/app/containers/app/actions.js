@@ -69,7 +69,7 @@ export const fetchPage = (url, pageComponent, routeName) => {
                 } else if (pageComponent === StartersKit) {
                     dispatch(categoriesActions.process(receivedAction))
                     dispatch(productsActions.processPlp(receivedAction))
-                    // dispatch(startersKitActions.process(receivedAction))
+                    dispatch(startersKitActions.process(receivedAction))
                 }
                 dispatch(footerActions.process(receivedAction))
                 dispatch(navigationActions.process(receivedAction))
