@@ -96,7 +96,7 @@ When you develop it might be helpful to run the same test against your local fil
 sudo npm run test:pwa-local
 ```
 
-You **must** keep running `npm run dev` at the same time.
+You **must** keep running `npm run dev` at the same time. `sudo` is required in order to bind to port 80. 
 
 There is also `test:pwa-ci` task (also requires `sudo`) for CI that runs `dev` and `pwa-local` in parallel.
 
