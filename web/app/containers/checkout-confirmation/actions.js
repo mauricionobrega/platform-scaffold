@@ -4,10 +4,10 @@ import {createAction, makeRequest, makeFormEncodedRequest} from '../../utils/uti
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import {addNotification, removeAllNotifications} from '../app/actions'
 import {openModal} from '../../store/modals/actions'
-import customerAddressParser from './parsers/customer-address'
 import * as shippingSelectors from '../../store/checkout/shipping/selectors'
 import * as formSelectors from '../../store/form/selectors'
 import {getEmailAddress} from '../../store/checkout/selectors'
+import {getFormKey} from '../app/selectors'
 import {selectorToJS} from '../../utils/selector-utils'
 
 // @TODO: blocked until the desktop's Address Book actualy works correctly
@@ -47,10 +47,10 @@ const buildFormData = (formCredentials) => {
 // @TODO: These are blocked from working until the day that the Address Book on
 //        desktop starts working.
 //
-// export const updateBillingAddress = (parsedFormData) => {
+// export const updateBillingAddress = () => {
 //     return (dispatch, getState) => {
 //         const formData = buildFormData({
-//             ...parsedFormData,
+//             form_key: getFormKey(getState()),
 //             success_url: '',
 //             error_url: '',
 //             ...paymentSelectors.getPayment(getState()),
@@ -77,26 +77,13 @@ const buildFormData = (formCredentials) => {
 //     }
 // }
 //
-// export const initiateBillingUpdate = () => {
-//     return (dispatch) => {
-//         // Grab required form data in prep for updating shipping/billing information
-//         const editCustomerAddressURL = '/customer/address/edit/id/46/'
-//         makeRequest(editCustomerAddressURL)
-//             .then(jqueryResponse)
-//             .then((res) => {
-//                 const [$, $response] = res // eslint-disable-line no-unused-vars
-//                 const parsedFormData = customerAddressParser($, $response)
-//                 console.log('dispatch: updateBillingAddress')
-//                 dispatch(updateBillingAddress(parsedFormData))
-//             })
-//     }
-// }
 
-export const updatingShippingAndBilling = (parsedFormData) => {
+
+export const updatingShippingAndBilling = () => {
     return (dispatch, getState) => {
         const shippingData = selectorToJS(shippingSelectors.getShippingAddress)(getState())
         const formData = buildFormData({
-            ...parsedFormData,
+            form_key: getFormKey(getState()),
             success_url: '',
             error_url: '',
             ...shippingData,
@@ -123,7 +110,7 @@ export const updatingShippingAndBilling = (parsedFormData) => {
                 // const paymentData = paymentSelectors.getPayment(getState())
                 // const shippingIsDifferentThanBilling = JSON.stringify(shippingData) !== JSON.stringify(paymentData)
                 // if (shippingIsDifferentThanBilling) {
-                //     dispatch(initiateBillingUpdate())
+                //     dispatch(updateBillingAddress())
                 // }
             // },
             error: (response) => {
@@ -134,19 +121,6 @@ export const updatingShippingAndBilling = (parsedFormData) => {
     }
 }
 
-export const initiateBillingAndShippingUpdate = () => {
-    return (dispatch) => {
-        // Grab required form data in prep for updating shipping/billing information
-        const editCustomerAddressURL = '/customer/address/edit/'
-        makeRequest(editCustomerAddressURL)
-            .then(jqueryResponse)
-            .then((res) => {
-                const [$, $response] = res
-                const parsedFormData = customerAddressParser($, $response)
-                dispatch(updatingShippingAndBilling(parsedFormData))
-            })
-    }
-}
 
 export const submitRegisterForm = () => {
     return (dispatch, getState) => {
@@ -168,7 +142,7 @@ export const submitRegisterForm = () => {
 
                 if (registrationIsSuccess) {
                     dispatch(openModal(CHECKOUT_CONFIRMATION_MODAL))
-                    dispatch(initiateBillingAndShippingUpdate())
+                    dispatch(updatingShippingAndBilling())
                     dispatch(hideRegistrationForm())
                 } else {
                     dispatch(addNotification({
