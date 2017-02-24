@@ -6,6 +6,7 @@ import Home from '../home/container'
 import Login from '../login/container'
 import PDP from '../pdp/container'
 import PLP from '../plp/container'
+import StartersKit from '../starters-kit/container'
 import * as homeActions from '../home/actions'
 import * as loginActions from '../login/actions'
 import * as pdpActions from '../pdp/actions'
@@ -13,6 +14,7 @@ import * as footerActions from '../footer/actions'
 import * as navigationActions from '../navigation/actions'
 import * as productsActions from '../../store/products/actions'
 import * as categoriesActions from '../../store/categories/actions'
+import * as startersKitActions from '../starters-kit/actions'
 
 export const addNotification = utils.createAction('Add Notification')
 export const removeNotification = utils.createAction('Remove Notification')
@@ -64,6 +66,10 @@ export const fetchPage = (url, pageComponent, routeName) => {
                 } else if (pageComponent === PLP) {
                     dispatch(categoriesActions.process(receivedAction))
                     dispatch(productsActions.processPlp(receivedAction))
+                } else if (pageComponent === StartersKit) {
+                    dispatch(categoriesActions.process(receivedAction))
+                    dispatch(productsActions.processPlp(receivedAction))
+                    // dispatch(startersKitActions.process(receivedAction))
                 }
                 dispatch(footerActions.process(receivedAction))
                 dispatch(navigationActions.process(receivedAction))

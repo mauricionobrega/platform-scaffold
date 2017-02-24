@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import {selectorToJS} from '../../utils/selector-utils'
 
-import {getDescription, getTitle, getText} from './selectors'
+import {getDescription, getHasProducts, getStartersKitProducts, getTitle, getText} from './selectors'
 // import * as startersKitActions from './actions'
 
 import List from 'progressive-web-sdk/dist/components/list'
@@ -17,7 +17,13 @@ const titleClass = `${containerClass}__title`
 
 const ResultList = ({products}) => (
     <List className="c--borderless">
-        {products.map((productName, idx) => <ListTile key={idx}><div>{productName}</div></ListTile>)}
+        {products.map((product, idx) => {
+            if (!product) {
+                return null
+            }
+
+            return <ListTile key={idx}><div>{product.title}:{product.price}</div></ListTile>
+        })}
     </List>
 )
 
@@ -54,14 +60,16 @@ const StartersKit = ({description, hasProducts, products, title, text}) => (
 StartersKit.propTypes = {
     description: PropTypes.string,
     hasProducts: PropTypes.bool,
-    products: PropTypes.arrayOf(PropTypes.string),
+    products: PropTypes.array,
     text: PropTypes.arrayOf(PropTypes.string),
     title: PropTypes.string
 }
 
 // Only wrap compound data (arrays and objects) in selectorToJS
 const mapStateToProps = createStructuredSelector({
-    // description: getDescription,
+    description: getDescription,
+    hasProducts: getHasProducts,
+    products: selectorToJS(getStartersKitProducts),
     text: selectorToJS(getText),
     title: getTitle
 })
