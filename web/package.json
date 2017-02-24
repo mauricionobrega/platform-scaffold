@@ -72,7 +72,7 @@
     "node-sass": "4.1.1",
     "pem": "1.8.3",
     "postcss-loader": "1.2.1",
-    "progressive-web-sdk": "0.11.4",
+    "progressive-web-sdk": "0.12.0",
     "prompt": "1.0.0",
     "raw-loader": "0.5.1",
     "react-addons-test-utils": "15.4.1",
@@ -134,14 +134,15 @@
       "!app/**/container.{js,jsx}",
       "!{dev-server,proxy,lighthouse,coverage,build,tests,webpack}/**/*.js",
       "!styleguide/**/*.{js,jsx}",
-      "!app/loader-routes.js"
+      "!app/loader-routes.js",
+      "!web/worker/main.js"
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 20,
-        "functions": 38,
-        "lines": 54,
-        "statements": 48
+        "branches": 11,
+        "functions": 31,
+        "lines": 50,
+        "statements": 47
       }
     },
     "moduleFileExtensions": [

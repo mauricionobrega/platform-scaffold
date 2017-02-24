@@ -121,6 +121,13 @@
 @import 'pw-components/image';
 
 
+// Inline-Loader
+// ---
+
+@import 'node_modules/progressive-web-sdk/dist/components/inline-loader/base';
+@import 'pw-components/inline-loader';
+
+
 // Ledger
 // ---
 
