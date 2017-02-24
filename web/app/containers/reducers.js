@@ -12,8 +12,8 @@ import header from './header/reducer'
 import home from './home/reducer'
 import login from './login/reducer'
 import navigation from './navigation/reducer'
-import pdp from './pdp/reducer'
-import plp from './plp/reducer'
+import productDetails from './product-details/reducer'
+import productList from './product-list/reducer'
 // import {reducer as formReducer} from 'redux-form'
 
 
@@ -28,8 +28,8 @@ const rootReducer = combineReducers({
     home,
     login,
     navigation,
-    pdp,
-    plp,
+    productDetails,
+    productList,
     // form: formReducer,
 
 })
