@@ -12,6 +12,14 @@ export const quoteItemReviver = (k, v) => {
     return v
 }
 
+const PRODUCT_ID_REGEX = /\/product_id\/(\d+)/
+const productIdFromUrl = (url) => {
+    if (!url) {
+        return undefined
+    }
+    return PRODUCT_ID_REGEX.exec(url)[1] || undefined
+}
+
 export const cartReviver = (k, v) => {
     switch (k) {
         case 'subtotal':
@@ -23,6 +31,7 @@ export const cartReviver = (k, v) => {
                 for (const k of Object.keys(item)) {
                     item[k] = quoteItemReviver(k, item[k])
                 }
+                item.productId = productIdFromUrl(item.configure_url)
                 return item
             })
         default:
