@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 import classNames from 'classnames'
 import Button from 'progressive-web-sdk/dist/components/button'
-import {Icon} from 'progressive-web-sdk/dist/components/icon'
+import Icon from 'progressive-web-sdk/dist/components/icon'
 
 
 class Notification extends React.Component {

@@ -1,4 +1,7 @@
 const parseLocations = (shippingStepData) => {
+    if (!shippingStepData) {
+        return {}
+    }
 
     return {
         locations: {

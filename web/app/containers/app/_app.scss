@@ -26,6 +26,7 @@
 // Modifiers
 // ---
 
-.t-app.t-app--checkout-payment {
+.t-app.t-app--checkout-payment,
+.t-app.t-app--checkout-confirmation {
     background-color: $neutral-10;
 }
