@@ -2,9 +2,12 @@ import React, {PropTypes} from 'react'
 import * as ReduxForm from 'redux-form'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
+import {selectorToJS} from '../../../utils/selector-utils'
 
 // Selectors
 import * as selectors from '../selectors'
+import {getCountries, getRegions} from '../../../store/checkout/locations/selectors'
+import {getShippingFullName, getStreetLineOne, getCity, getPostcode} from '../../../store/checkout/shipping/selectors'
 
 // Actions
 import * as checkoutPaymentActions from '../actions'
@@ -13,7 +16,7 @@ import * as checkoutPaymentActions from '../actions'
 import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
-import {Icon} from 'progressive-web-sdk/dist/components/icon'
+import Icon from 'progressive-web-sdk/dist/components/icon'
 
 class BillingAddressForm extends React.Component {
     constructor(props) {
@@ -34,14 +37,20 @@ class BillingAddressForm extends React.Component {
 
     render() {
         const {
+            city,
+            countries,
             isCompanyOrAptShown,
-            newShippingAddressIsEnabled
+            name,
+            newShippingAddressIsEnabled,
+            postcode,
+            regions,
+            street
         } = this.props
 
         const shippingAddress = (
             <div>
-                <p>720 W Georgia, Vancouver, V4R5TS</p>
-                <p>Name: John Appleseed</p>
+                <p>{street}, {city}, {postcode}</p>
+                <p>Name: {name}</p>
             </div>
         )
 
@@ -65,21 +74,23 @@ class BillingAddressForm extends React.Component {
                 </div>
 
                 <div className="u-border-light-top u-border-light-bottom u-bg-color-neutral-00 t-checkout-payment__card">
-                    <FieldRow className="u-padding-md">
-                        <ReduxForm.Field
-                            component={Field}
-                            name="same-address"
-                            label={<strong className="u-text-semi-bold">Same as shipping address</strong>}
-                            caption={shippingAddress}
-                        >
-                            <input type="checkbox" defaultChecked onChange={this.handleSavedAddress} noValidate />
-                        </ReduxForm.Field>
-                    </FieldRow>
+                    {city &&
+                        <FieldRow className="u-padding-md">
+                            <ReduxForm.Field
+                                component={Field}
+                                name="billing_same_as_shipping"
+                                label={<strong className="u-text-semi-bold">Same as shipping address</strong>}
+                                caption={shippingAddress}
+                            >
+                                <input type="checkbox" defaultChecked={!newShippingAddressIsEnabled} onChange={this.handleSavedAddress} noValidate />
+                            </ReduxForm.Field>
+                        </FieldRow>
+                    }
 
-                    {newShippingAddressIsEnabled &&
+                    {(newShippingAddressIsEnabled || !city) &&
                         <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg u-border-light-top">
                             <FieldRow>
-                                <ReduxForm.Field component={Field} name="fullName" label="Full name">
+                                <ReduxForm.Field component={Field} name="name" label="Full name">
                                     <input type="text" noValidate />
                                 </ReduxForm.Field>
                             </FieldRow>
@@ -87,7 +98,7 @@ class BillingAddressForm extends React.Component {
                             <FieldRow>
                                 <ReduxForm.Field
                                     component={Field}
-                                    name="address"
+                                    name="addressLine1"
                                     label="Address"
                                     caption={!isCompanyOrAptShown && addDetails}
                                 >
@@ -99,7 +110,7 @@ class BillingAddressForm extends React.Component {
                                 <FieldRow>
                                     <ReduxForm.Field
                                         component={Field}
-                                        name="organization"
+                                        name="company"
                                         label="Company"
                                     >
                                         <input type="text" noValidate placeholder="Optional" />
@@ -107,7 +118,7 @@ class BillingAddressForm extends React.Component {
 
                                     <ReduxForm.Field
                                         component={Field}
-                                        name="address-line2"
+                                        name="addressLine2"
                                         label="Apt #, suite etc."
                                     >
                                         <input type="text" noValidate placeholder="Optional" />
@@ -122,24 +133,24 @@ class BillingAddressForm extends React.Component {
                             </FieldRow>
 
                             <FieldRow>
-                                <ReduxForm.Field component={Field} name="state" label="State/Province">
+                                <ReduxForm.Field component={Field} name="region_id" label="State/Province">
                                     <select>
-                                        <option>Select option</option>
+                                        {regions.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
                                     </select>
                                 </ReduxForm.Field>
                             </FieldRow>
 
                             <FieldRow>
-                                <ReduxForm.Field component={Field} name="zip" label="Zip/Postal code">
+                                <ReduxForm.Field component={Field} name="postcode" label="Zip/Postal code">
                                     {/* @TODO: Set Type to text or tel based on country! */}
                                     <input type="text" noValidate />
                                 </ReduxForm.Field>
                             </FieldRow>
 
                             <FieldRow>
-                                <ReduxForm.Field component={Field} name="country" label="Country">
+                                <ReduxForm.Field component={Field} name="country_id" label="Country">
                                     <select>
-                                        <option>United States</option>
+                                        {countries.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
                                     </select>
                                 </ReduxForm.Field>
                             </FieldRow>
@@ -153,6 +164,19 @@ class BillingAddressForm extends React.Component {
 
 BillingAddressForm.propTypes = {
     /**
+    * City of saved shipping address
+    */
+    city: PropTypes.string,
+
+    /**
+    * Countries available to ship to
+    */
+    countries: PropTypes.arrayOf(PropTypes.shape({
+        label: PropTypes.string,
+        value: PropTypes.string
+    })),
+
+    /**
      * Shows the "Company" and "Apt #" fields
      */
     handleShowCompanyAndApt: PropTypes.func,
@@ -163,23 +187,50 @@ BillingAddressForm.propTypes = {
     isCompanyOrAptShown: PropTypes.bool,
 
     /**
+    * Name of saved shipping address
+    */
+    name: PropTypes.string,
+
+    /**
      * Whether the new address fields display
      */
     newShippingAddressIsEnabled: PropTypes.bool,
 
     /**
+    * Postcode of saved shipping address
+    */
+    postcode: PropTypes.string,
+
+    /**
+    * Regions available to ship to
+    */
+    regions: PropTypes.arrayOf(PropTypes.shape({
+        country_id: PropTypes.string,
+        label: PropTypes.string,
+        title: PropTypes.string,
+        value: PropTypes.string
+    })),
+
+    /**
+    * Street of saved shipping address
+    */
+    street: PropTypes.string,
+
+    /**
      * Toggle new address fields
      */
-    toggleNewAddressFields: PropTypes.func
+    toggleNewAddressFields: PropTypes.func,
 }
 
-const BillingAddressReduxForm = ReduxForm.reduxForm({
-    form: 'paymentBillingAddressForm'
-})(BillingAddressForm)
-
 const mapStateToProps = createStructuredSelector({
+    city: getCity,
+    countries: selectorToJS(getCountries),
     isCompanyOrAptShown: selectors.getIsCompanyOrAptShown,
-    newShippingAddressIsEnabled: selectors.getNewShippingAddressIsEnabled
+    name: getShippingFullName,
+    newShippingAddressIsEnabled: selectors.getNewShippingAddressIsEnabled,
+    postcode: getPostcode,
+    regions: selectorToJS(getRegions),
+    street: getStreetLineOne,
 })
 
 const mapDispatchToProps = {
@@ -190,4 +241,4 @@ const mapDispatchToProps = {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(BillingAddressReduxForm)
+)(BillingAddressForm)

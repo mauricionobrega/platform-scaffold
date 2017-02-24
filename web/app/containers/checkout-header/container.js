@@ -1,11 +1,14 @@
 import React from 'react'
+import {connect} from 'react-redux'
+import {createStructuredSelector} from 'reselect'
+
+import {getIsLoggedIn} from '../app/selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import {HeaderBar, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
-import {Icon} from 'progressive-web-sdk/dist/components/icon'
+import Icon from 'progressive-web-sdk/dist/components/icon'
 
-const CheckoutHeader = function(props) {
-    const canSignIn = true
+const CheckoutHeader = function({isLoggedIn}) {
     return (
         <header className="t-checkout-header">
             <HeaderBar className="t-checkout-header__bar">
@@ -17,7 +20,7 @@ const CheckoutHeader = function(props) {
 
                 <Icon name="lock" size="medium" className="u-flex-none" />
 
-                {canSignIn &&
+                {!isLoggedIn &&
                     <div className="u-flex u-text-align-end">
                         <Button
                             href="/customer/account/login/"
@@ -33,4 +36,15 @@ const CheckoutHeader = function(props) {
     )
 }
 
-export default CheckoutHeader
+CheckoutHeader.propTypes = {
+    /**
+    * Is the user logged in or not
+    */
+    isLoggedIn: React.PropTypes.bool
+}
+
+const mapStateToProps = createStructuredSelector({
+    isLoggedIn: getIsLoggedIn
+})
+
+export default connect(mapStateToProps)(CheckoutHeader)

@@ -32,7 +32,7 @@ const template = (WrappedComponent) => {
             dispatch(onRouteChanged(url, WrappedComponent))
 
             if (!route.suppressFetch) {
-                dispatch(fetchPage(url, WrappedComponent, route.routeName))
+                dispatch(fetchPage(url, WrappedComponent, route.routeName, route.fetchUrl))
             }
         }
 
@@ -52,6 +52,7 @@ const template = (WrappedComponent) => {
             return (<WrappedComponent {...this.props} />)
         }
     }
+    Template.WrappedComponent = WrappedComponent
     Template.displayName = `Template(${getDisplayName(WrappedComponent)})`
     Template.propTypes = {
         dispatch: PropTypes.func,

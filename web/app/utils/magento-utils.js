@@ -15,3 +15,27 @@ export const extractMagentoJson = ($html) => {
         .map((item) => Immutable.fromJS(item))
         .reduce((summary, item) => summary.mergeDeep(item), Immutable.Map())
 }
+
+const SHIPPING_STEP_PATH = ['#checkout', 'Magento_Ui/js/core/app', 'components', 'checkout', 'children', 'steps', 'children', 'shipping-step', 'children', 'shippingAddress']
+
+export const extractMagentoShippingStepData = ($html) => {
+    return extractMagentoJson($html).getIn(SHIPPING_STEP_PATH)
+}
+
+export const getCheckoutConfigObject = ($html) => {
+    const $configScript = $html.find('script:contains(window.checkoutConfig)')
+
+    if ($configScript.length) {
+        const objectMatch = /window\.checkoutConfig\s*=\s*([^;]+);/.exec($configScript.html())
+        return objectMatch ? JSON.parse(objectMatch[1]) : {}
+    }
+
+    return {}
+}
+
+
+export const getCheckoutEntityID = ($html) => {
+    const configObject = getCheckoutConfigObject($html)
+
+    return configObject && configObject.quoteData ? configObject.quoteData.entity_id : ''
+}

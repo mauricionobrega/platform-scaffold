@@ -70,7 +70,7 @@
 
     &:active,
     &:focus {
-        background-color: $dark-brand-color;
+        background-color: $tertiary-brand-color;
     }
 }
 
@@ -81,9 +81,9 @@
 
     &:active,
     &:focus {
-        border-color: $dark-brand-color;
+        border-color: $tertiary-brand-color;
 
-        color: $dark-brand-color;
+        color: $tertiary-brand-color;
     }
 
     &[disabled] {
