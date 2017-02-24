@@ -8,7 +8,7 @@ import {getDefaultShippingRate} from '../../../store/checkout/shipping/selectors
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import CartPromoForm from './cart-promo-form'
-import {Icon} from 'progressive-web-sdk/dist/components/icon'
+import Icon from 'progressive-web-sdk/dist/components/icon'
 import {Ledger, LedgerRow} from 'progressive-web-sdk/dist/components/ledger'
 
 const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, shippingRate, onCalculateClick}) => {

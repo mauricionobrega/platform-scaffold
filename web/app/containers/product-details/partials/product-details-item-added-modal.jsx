@@ -8,7 +8,7 @@ import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from '../constants'
 import {closeModal} from '../../../store/modals/actions'
 
 import Button from 'progressive-web-sdk/dist/components/button'
-import {Icon} from 'progressive-web-sdk/dist/components/icon'
+import Icon from 'progressive-web-sdk/dist/components/icon'
 import ProductItem from '../../../components/product-item'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
