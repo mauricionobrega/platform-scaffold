@@ -85,8 +85,10 @@ test('checkIfOffline clears offline modal and page fetch errors when it receives
 })
 
 test('fetchPage does not throw on error', () => {
+    const fetchError = new Error()
+    fetchError.name = 'FetchError'
     global.fetch.mockClear()
-    global.fetch.mockReturnValueOnce(Promise.reject(new Error()))
+    global.fetch.mockReturnValueOnce(Promise.reject(fetchError))
 
     const thunk = fetchPage('url', 'pageType', '/')
     expect(typeof thunk).toBe('function')

@@ -141,9 +141,15 @@ export const fetchPage = (url, pageComponent, routeName) => {
                 // worker, but are in fact 'offline'
                 dispatch(checkIfOffline())
             })
+
             .catch((error) => {
                 console.info(error.message)
-                dispatch(setPageFetchError(error.message))
+                if (error.name !== 'FetchError') {
+                    throw error
+                } else {
+                    dispatch(setPageFetchError(error.message))
+                }
             })
+
     }
 }
