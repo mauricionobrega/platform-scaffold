@@ -46,7 +46,7 @@ export const getCart = () => (dispatch) => {
  */
 export const removeFromCart = (itemId) => {
     return (dispatch, getState) => {
-        return makeFormEncodedRequest(REMOVE_CART_ITEM_URL, {item_id: itemId, formKey: getFormKey(getState())}, {method: 'POST'})
+        return makeFormEncodedRequest(REMOVE_CART_ITEM_URL, {item_id: itemId, form_key: getFormKey(getState())}, {method: 'POST'})
             .then((response) => response.json())
             .then((responseJSON) => {
                 if (responseJSON.success) {
