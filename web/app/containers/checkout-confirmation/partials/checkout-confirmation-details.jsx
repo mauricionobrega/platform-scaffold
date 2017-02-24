@@ -6,7 +6,7 @@ import {getIsLoggedIn} from '../../app/selectors'
 import * as selectors from '../selectors'
 
 import {Grid, GridSpan} from 'progressive-web-sdk/dist/components/grid'
-import {Icon} from 'progressive-web-sdk/dist/components/icon'
+import Icon from 'progressive-web-sdk/dist/components/icon'
 import CheckoutConfirmationForm from './checkout-confirmation-form'
 
 /* eslint-disable react/prop-types */
