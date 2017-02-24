@@ -26,16 +26,14 @@ const AppProvider = ({store}) => (
                 <Route component={PDP} path="checkout/cart/configure/id/*/product_id/*/" routeName="cartEditPage" />
                 <Route component={PDP} path="*.html" routeName="productDetailsPage" />
                 <Route component={CheckoutShipping} path="checkout/" routeName="checkingShipping" Header={CheckoutHeader} Footer={CheckoutFooter} />
+                {/*
+                    The URL for the payment page on desktop is /checkout/#payment,
+                    but routing wasn't working properly when using this as the
+                    route path so we specify a fetchUrl to make sure when we
+                    fetch it's using the URL for the desktop page
+                */}
                 <Route component={CheckoutPayment} path="checkout/payment/" fetchUrl="/checkout/#payment" routeName="checkout-payment" Header={CheckoutHeader} Footer={CheckoutFooter} />
-                <Route component={CheckoutConfirmation} path="checkout/confirmation/" routeName="checkingConfirmation" suppressFetch Header={CheckoutHeader} Footer={CheckoutFooter} />
-                <Route
-                    component={CheckoutConfirmation}
-                    path="checkout/onepage/success/"
-                    fetchUrl="/checkout/onepage/success/"
-                    routeName="checkout-confirmation"
-                    Header={CheckoutHeader}
-                    Footer={CheckoutFooter}
-                />
+                <Route component={CheckoutConfirmation} path="checkout/onepage/success/" routeName="checkout-confirmation" Header={CheckoutHeader} Footer={CheckoutFooter} />
             </Route>
         </Router>
     </Provider>
