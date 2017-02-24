@@ -8,5 +8,6 @@ export const getStartersKit = createSelector(
     ({startersKit}) => startersKit
 )
 
-export const getTitle = createGetSelector(getStartersKit, 'title', 'My default title')
+export const getDescription = createGetSelector(getStartersKit, 'description')
+export const getTitle = createGetSelector(getStartersKit, 'title')
 export const getText = createGetSelector(getStartersKit, 'text', Immutable.List())
