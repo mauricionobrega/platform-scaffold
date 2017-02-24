@@ -13,6 +13,7 @@ export const getStartersKit = createSelector(
 )
 
 export const getDescription = createGetSelector(getStartersKit, 'description')
+export const getDisplayingAll = createGetSelector(getStartersKit, 'showAll', true)
 export const getTitle = createGetSelector(getSelectedCategory, 'title')
 
 // Products

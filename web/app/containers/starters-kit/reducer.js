@@ -8,6 +8,6 @@ const initialState = Immutable.Map()
 export default handleActions({
     ...mergePayloadForActions(
         startersKitActions.receiveData,
-        startersKitActions.changeTitle
+        startersKitActions.receiveShowAll
     )
 }, initialState)

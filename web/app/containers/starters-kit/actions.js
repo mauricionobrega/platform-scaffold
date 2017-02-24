@@ -8,5 +8,10 @@ export const process = ({payload}) => {
     return receiveData(parsed)
 }
 
-// This action will change the `title` key in the local private state
-export const changeTitle = createAction('Change StartersKit title', 'title')
+export const receiveShowAll = createAction('Toggle show all starter products', 'showAll')
+export const showAll = () => (dispatch) => {
+    dispatch(receiveShowAll(true))
+}
+export const showSome = () => (dispatch) => {
+    dispatch(receiveShowAll(false))
+}
