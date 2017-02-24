@@ -11,7 +11,7 @@ import {makeFormEncodedRequest, makeRequest} from 'progressive-web-sdk/dist/util
 import {addNotification, removeNotification} from '../../containers/app/actions'
 import {getFormKey} from '../../containers/app/selectors'
 
-const LOAD_CART_SECTION_URL = '/customer/section/load/?sections=cart'
+const LOAD_CART_SECTION_URL = '/customer/section/load/?sections=cart%2Cmessages&update_section_id=true&_=<timestamp>'
 const REMOVE_CART_ITEM_URL = '/checkout/sidebar/removeItem/'
 const UPDATE_ITEM_URL = '/checkout/sidebar/updateItemQty/'
 const baseHeaders = {
@@ -28,7 +28,7 @@ export const getCart = () => (dispatch) => {
         headers: baseHeaders
     }
     dispatch(removeNotification('cartUpdateError'))
-    return utils.makeRequest(LOAD_CART_SECTION_URL, opts)
+    return utils.makeRequest(`${LOAD_CART_SECTION_URL}${new Date().getTime()}`, opts)
         .then((response) => response.text())
         .then((responseText) => dispatch(receiveCartContents(parse(responseText))))
 }
