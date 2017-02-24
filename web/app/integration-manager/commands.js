@@ -1,4 +1,4 @@
-import * as connector from './connector'
+import * as connector from './merlins-connector/connector'
 
 export const fetchPdpData = (...args) => {
     return connector.fetchPdpData(...args)

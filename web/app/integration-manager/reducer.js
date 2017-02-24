@@ -1,4 +1,4 @@
-import connectorReducer from './connector-reducer'
+import connectorReducer from './merlins-connector/reducer'
 
 const reducer = (state, action) => connectorReducer(state, action)
 

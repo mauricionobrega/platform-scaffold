@@ -1,5 +1,5 @@
 import {handleActions} from 'redux-actions'
-import {receiveFormInfo} from './actions'
+import {receiveFormInfo} from '../actions'
 
 import Immutable from 'immutable'
 
