@@ -5,7 +5,6 @@ import {getUi} from '../../store/selectors'
 export const getCheckoutConfirmation = createSelector(getUi, ({checkoutConfirmation}) => checkoutConfirmation)
 
 export const getEmailAddress = createGetSelector(getCheckoutConfirmation, 'emailAddress')
-export const getIsLoggedIn = createGetSelector(getCheckoutConfirmation, 'isLoggedIn')
 export const getIsRegistrationFormHidden = createGetSelector(getCheckoutConfirmation, 'isRegistrationFormHidden')
 export const getIsModalShown = createGetSelector(getCheckoutConfirmation, 'isModalShown')
 export const getOrderNumber = createGetSelector(getCheckoutConfirmation, 'orderNumber')

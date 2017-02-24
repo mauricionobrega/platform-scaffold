@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import {GRID_SETTINGS} from '../constants'
+import {getIsLoggedIn} from '../app/selectors'
 import * as selectors from '../selectors'
 
 import {Grid, GridSpan} from 'progressive-web-sdk/dist/components/grid'
@@ -60,7 +61,7 @@ CheckoutConfirmationDetails.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
-    isLoggedIn: selectors.getIsLoggedIn,
+    isLoggedIn: getIsLoggedIn,
     isRegistrationFormHidden: selectors.getIsRegistrationFormHidden
 })
 
