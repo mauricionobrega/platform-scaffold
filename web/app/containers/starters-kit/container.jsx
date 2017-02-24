@@ -3,9 +3,10 @@ import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import {selectorToJS} from '../../utils/selector-utils'
 
-import {getDescription, getHasProducts, getStartersKitProducts, getTitle, getText} from './selectors'
+import {getDescription, getHasProducts, getStartersKitProducts, getTitle} from './selectors'
 
 import List from 'progressive-web-sdk/dist/components/list'
+import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/accordion'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
@@ -34,7 +35,11 @@ const StartersKit = ({description, hasProducts, products, title, text}) => (
         }
 
         {description ?
-            <p>{description}</p>
+            <Accordion>
+                <AccordionItem header="Description">
+                    {description}
+                </AccordionItem>
+            </Accordion>
                 :
             <SkeletonBlock height="100px" />
         }
@@ -47,7 +52,6 @@ const StartersKit = ({description, hasProducts, products, title, text}) => (
                 <SkeletonBlock height="50px" />
             }
         </div>
-        {text.map((paragraph, idx) => <p key={idx}>{paragraph}</p>)}
     </div>
 )
 
@@ -64,7 +68,6 @@ const mapStateToProps = createStructuredSelector({
     description: getDescription,
     hasProducts: getHasProducts,
     products: selectorToJS(getStartersKitProducts),
-    text: selectorToJS(getText),
     title: getTitle
 })
 

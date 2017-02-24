@@ -13,7 +13,6 @@ export const getStartersKit = createSelector(
 )
 
 export const getDescription = createGetSelector(getStartersKit, 'description')
-export const getText = createGetSelector(getStartersKit, 'text', Immutable.List())
 export const getTitle = createGetSelector(getSelectedCategory, 'title')
 
 // Products
