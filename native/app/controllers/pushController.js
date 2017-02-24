@@ -8,7 +8,7 @@ const PushController = function(pushPlugin) {
 }
 PushController.init = async function() {
     const pushSiteId = 'merlinspotions'
-    const mobifySlugName = 'merlins-potions-demo'
+    const mobifySlugName = 'progressive-web-scaffold'
 
     const engagementPromise = EngagementController.init(mobifySlugName)
     const pushPlugin = await PushPlugin.init(pushSiteId, engagementPromise)
