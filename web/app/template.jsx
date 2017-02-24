@@ -32,7 +32,7 @@ const template = (WrappedComponent) => {
             dispatch(onRouteChanged(url, WrappedComponent))
 
             if (!route.suppressFetch) {
-                dispatch(fetchPage(route.fetchUrl || url, WrappedComponent, route.routeName))
+                dispatch(fetchPage(url, WrappedComponent, route.routeName, route.fetchUrl))
             }
         }
 

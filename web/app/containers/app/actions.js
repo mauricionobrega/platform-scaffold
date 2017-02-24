@@ -103,9 +103,9 @@ export const checkIfOffline = () => {
  * Fetch the content for a 'global' page render. This should be driven
  * by react-router, ideally.
  */
-export const fetchPage = (url, pageComponent, routeName) => {
+export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
     return (dispatch, getState) => {
-        return utils.makeRequest(url)
+        return utils.makeRequest(fetchUrl || url)
             .then(jqueryResponse)
             .then((res) => {
                 const [$, $response] = res
