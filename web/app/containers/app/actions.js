@@ -11,13 +11,16 @@ import {SHIPPING_FORM_NAME} from '../checkout-shipping/constants'
 import Cart from '../cart/container'
 import CheckoutShipping from '../checkout-shipping/container'
 import CheckoutPayment from '../checkout-payment/container'
+import CheckoutConfirmation from '../checkout-confirmation/container'
 import Home from '../home/container'
 import Login from '../login/container'
 import ProductDetails from '../product-details/container'
 import ProductList from '../product-list/container'
 import * as checkoutActions from '../../store/checkout/actions'
+import * as checkoutConfirmationActions from '../checkout-confirmation/actions'
 import * as checkoutShippingUIActions from '../checkout-shipping/actions'
 import * as checkoutShippingActions from '../../store/checkout/shipping/actions'
+import * as cartActions from '../../store/cart/actions'
 import * as homeActions from '../home/actions'
 import * as loginActions from '../login/actions'
 import * as productDetailsActions from '../product-details/actions'
@@ -100,9 +103,9 @@ export const checkIfOffline = () => {
  * Fetch the content for a 'global' page render. This should be driven
  * by react-router, ideally.
  */
-export const fetchPage = (url, pageComponent, routeName) => {
+export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
     return (dispatch, getState) => {
-        return utils.makeRequest(url)
+        return utils.makeRequest(fetchUrl || url)
             .then(jqueryResponse)
             .then((res) => {
                 const [$, $response] = res
@@ -133,6 +136,10 @@ export const fetchPage = (url, pageComponent, routeName) => {
                     dispatch(checkoutShippingActions.fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME))
                 } else if (pageComponent === CheckoutPayment) {
                     dispatch(checkoutActions.processCheckoutData(receivedAction))
+                } else if (pageComponent === CheckoutConfirmation) {
+                    dispatch(checkoutConfirmationActions.process(receivedAction))
+                    // Resets the cart count to 0
+                    dispatch(cartActions.getCart())
                 }
                 dispatch(footerActions.process(receivedAction))
                 dispatch(navigationActions.process(receivedAction))
