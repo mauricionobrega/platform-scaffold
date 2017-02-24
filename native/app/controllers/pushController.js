@@ -18,14 +18,6 @@ PushController.init = async function() {
         await pushPlugin.setNotifcationIconPath(notifcationIconPath)
     }
 
-    pushPlugin.on('subscribeTestTriggered', () => {
-        console.log('\n########## TEST ##########\n')
-    })
-
-    pushPlugin.on('messageReceivedWhenAppIsOpen', (params) => {
-        console.log(params.title)
-    })
-
     return new PushController(pushPlugin)
 }
 
