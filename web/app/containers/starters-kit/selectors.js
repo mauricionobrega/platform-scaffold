@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 import {createSelector} from 'reselect'
 import {createGetSelector} from '../../utils/selector-utils'
 import {getProducts, getUi} from '../../store/selectors'
-import {getSelectedCategory} from '../plp/selectors'
+import {getSelectedCategory} from '../product-list/selectors'
 import {PLACEHOLDER} from '../app/constants'
 
 const PLACEHOLDER_URLS = Immutable.List(new Array(5).fill(PLACEHOLDER))

@@ -1,20 +1,12 @@
 /* eslint-env jest */
 import React from 'react'
 import CheckoutShippingReduxForm from './checkout-shipping-form'
-import {Provider} from 'react-redux'
 import {mount} from 'enzyme'
 
-test('renders without errors', () => {
-    const store = {
-        subscribe: () => {},
-        dispatch: () => {},
-        getState: () => ({})
-    }
+const component = CheckoutShippingReduxForm.WrappedComponent
 
-    const wrapper = mount(
-        <Provider store={store}>
-            <CheckoutShippingReduxForm />
-        </Provider>)
+test('renders without errors', () => {
+    const wrapper = mount(<component />)
 
     expect(wrapper.length).toBe(1)
 })

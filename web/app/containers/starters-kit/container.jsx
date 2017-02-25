@@ -12,7 +12,7 @@ import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/acco
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
-import ProductTile from '../plp/partials/product-tile'
+import ProductTile from '../product-list/partials/product-tile'
 
 
 const containerClass = 't-starters-kit'
