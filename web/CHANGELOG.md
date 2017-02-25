@@ -1,4 +1,6 @@
 ## To be released
+- Rename app-provider.jsx to router.jsx [#354](https://github.com/mobify/progressive-web-scaffold/pull/354)
+- Rename raw to unwrapped in templates.jsx [#354](https://github.com/mobify/progressive-web-scaffold/pull/354)
 
 ## 0.12.0 (February 24, 2017)
 - Update to latest SDK
