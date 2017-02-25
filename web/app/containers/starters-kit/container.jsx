@@ -79,7 +79,6 @@ StartersKit.propTypes = {
     products: PropTypes.array,
     showAll: PropTypes.func,
     showSome: PropTypes.func,
-    text: PropTypes.arrayOf(PropTypes.string),
     title: PropTypes.string
 }
 
