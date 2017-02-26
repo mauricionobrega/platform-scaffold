@@ -9,8 +9,8 @@ import {render} from 'react-dom'
 // Redux
 import configureStore from './store'
 
-// App provider
-import AppProvider from './app-provider'
+// Router
+import Router from './router'
 
 // Stylesheet: importing it here compiles the SCSS into CSS. The CSS is actually
 // added to the markup in `loader.js`
@@ -27,4 +27,4 @@ const store = configureStore()
 
 const rootEl = document.getElementsByClassName('react-target')[0]
 
-render(<AppProvider store={store} />, rootEl)
+render(<Router store={store} />, rootEl)
