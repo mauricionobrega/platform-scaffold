@@ -17,8 +17,7 @@ initCacheManifest(cacheHashManifest)
 const IS_PREVIEW = /mobify-path=true/.test(document.cookie)
 
 const CAPTURING_CDN = '//cdn.mobify.com/capturejs/capture-latest.min.js'
-const BASE_URL = IS_PREVIEW ? 'https://localhost:8443' : ''
-const SW_LOADER_PATH = `${BASE_URL}/service-worker-loader.js?preview=${IS_PREVIEW}&b=${cacheHashManifest.buildDate}`
+const SW_LOADER_PATH = `/service-worker-loader.js?preview=${IS_PREVIEW}&b=${cacheHashManifest.buildDate}`
 
 import preloadHTML from 'raw-loader!./preloader/preload.html'
 import preloadCSS from 'css-loader?minimize!./preloader/preload.css'
