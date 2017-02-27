@@ -1,22 +1,20 @@
-package com.mobify.astro.scaffold.plugins;
-
-import com.mobify.astro.AstroActivity;
-import com.mobify.astro.AstroPlugin;
-import com.mobify.astro.PluginResolver;
+package com.mobify.astro.merlins.plugins;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.mobify.astro.AstroActivity;
+import com.mobify.astro.AstroPlugin;
+import com.mobify.astro.PluginResolver;
 import com.mobify.astro.messaging.EventRegistrar;
 import com.mobify.astro.messaging.MessageSender;
 import com.mobify.astro.messaging.annotations.RpcMethod;
 import com.mobify.astro.plugins.headerbarplugin.HeaderContentItem;
-import com.mobify.astro.scaffold.R;
+import com.mobify.astro.merlins.R;
 import com.mobify.astro.utilities.HeaderUtilities;
 
 public class DoubleIconsPlugin extends AstroPlugin {
