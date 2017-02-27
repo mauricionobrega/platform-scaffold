@@ -19,8 +19,7 @@ import ShippingMethod from './shipping-method'
 const CheckoutShippingForm = ({
     handleSubmit,
     isLoggedIn,
-    submitShipping,
-    submitting
+    submitShipping
 }) => {
 
     return (
@@ -32,7 +31,7 @@ const CheckoutShippingForm = ({
                 </GridSpan>
 
                 <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 5}}>
-                    <ShippingMethod submitting={submitting} />
+                    <ShippingMethod />
                 </GridSpan>
             </Grid>
         </form>
@@ -55,11 +54,7 @@ CheckoutShippingForm.propTypes = {
     /**
     * Submits the shipping form information to the server
     */
-    submitShipping: React.PropTypes.func,
-    /**
-     * Redux-form internal
-     */
-    submitting: React.PropTypes.bool,
+    submitShipping: React.PropTypes.func
 }
 
 const validate = (values) => {

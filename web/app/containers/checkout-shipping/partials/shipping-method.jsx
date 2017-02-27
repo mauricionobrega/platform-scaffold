@@ -13,7 +13,7 @@ import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 import ShippingMethodLabel from './shipping-method-label'
 
 
-const ShippingMethod = ({shippingMethods, submitting}) => {
+const ShippingMethod = ({shippingMethods}) => {
     return (
         <div>
             <div className="t-checkout-shipping__title u-padding-top-lg u-padding-bottom-md">
@@ -38,7 +38,7 @@ const ShippingMethod = ({shippingMethods, submitting}) => {
                 })}
 
                 <FieldRow className="u-margin-top-lg">
-                    <Button type="submit" className="c--primary u-width-full u-text-uppercase" disabled={submitting}>
+                    <Button type="submit" className="c--primary u-width-full u-text-uppercase">
                         Continue to Payment
                     </Button>
                 </FieldRow>
