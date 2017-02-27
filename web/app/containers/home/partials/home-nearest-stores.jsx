@@ -42,18 +42,13 @@ class HomeNearestStores extends React.Component {
     render() {
         const {
             title,
-            viewAllStoresText,
-            className
+            viewAllStoresText
         } = this.props
-
-        const classes = classNames(componentClass, className, {
-            // 'c--modifier': bool ? true : false
-        })
 
         const closestLocations = merlinsPotionsNearbyConfig.configs
 
         return (
-            <div className={classes}>
+            <div className={componentClass}>
                 <div className="u-card u-padding-md u-padding-top-lg u-padding-bottom-lg">
                     <h2 className="u-padding-bottom-md u-border-light-bottom u-text-uppercase">{title}</h2>
 
