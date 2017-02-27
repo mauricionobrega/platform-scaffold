@@ -28,6 +28,9 @@ export const parseShippingInitialValues = (shippingFieldData) => {
 }
 
 export const parseShippingMethods = (shippingMethods) => {
+    if (!shippingMethods || !shippingMethods.map) {
+        return []
+    }
     return shippingMethods.map((method) => {
         return {
             label: `${method.method_title} - ${method.carrier_title}`,

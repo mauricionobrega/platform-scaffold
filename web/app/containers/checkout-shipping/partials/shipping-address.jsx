@@ -14,7 +14,7 @@ import {getCountries, getAvailableRegions} from '../../../store/checkout/locatio
 import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
-import {Icon} from 'progressive-web-sdk/dist/components/icon'
+import Icon from 'progressive-web-sdk/dist/components/icon'
 
 
 const ShippingAddressForm = ({

@@ -23,11 +23,7 @@ const template = (WrappedComponent) => {
         }
 
         dispatchRouteChange({dispatch, location, route}) {
-            let url = getURL(location)
-
-            if (route.fetchUrl) {
-                url = route.fetchUrl
-            }
+            const url = getURL(location)
 
             if (Astro.isRunningInApp() && location.action.toLowerCase() !== 'pop') {
                 Astro.trigger('pwa-navigate', {url})
@@ -36,7 +32,7 @@ const template = (WrappedComponent) => {
             dispatch(onRouteChanged(url, analyticMetaPayloadCreator(analyticConstants.pageview, {name: route.routeName})))
 
             if (!route.suppressFetch) {
-                dispatch(fetchPage(url, WrappedComponent, route.routeName))
+                dispatch(fetchPage(url, WrappedComponent, route.routeName, route.fetchUrl))
             }
         }
 
@@ -56,6 +52,7 @@ const template = (WrappedComponent) => {
             return (<WrappedComponent {...this.props} />)
         }
     }
+    Template.WrappedComponent = WrappedComponent
     Template.displayName = `Template(${getDisplayName(WrappedComponent)})`
     Template.propTypes = {
         dispatch: PropTypes.func,

@@ -107,6 +107,10 @@ export const stripEvent = (fn) => () => fn()
  */
 
 export const urlToPathKey = (url) => {
+    if (/^\//.test(url)) {
+        // The URL is already relative, so just return it
+        return url
+    }
     const urlObject = new URL(url)
 
     return `${urlObject.pathname}${urlObject.search}`
