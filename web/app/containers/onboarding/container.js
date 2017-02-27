@@ -47,12 +47,9 @@ OnboardingScreen.propTypes = {
 }
 
 const Onboarding = ({carouselData}) => {
-    const carouselItems = Object.keys(carouselData).map((key) => {
-        return <OnboardingScreen {...carouselData[key]} key={key} allowLooping={false} />
-    })
     return (
-        <Carousel>
-            {carouselItems}
+        <Carousel allowLooping={false}>
+            {Object.keys(carouselData).map((key) => <OnboardingScreen {...carouselData[key]} key={key} />)}
         </Carousel>
     )
 }
