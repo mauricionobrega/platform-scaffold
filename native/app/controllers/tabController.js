@@ -4,7 +4,12 @@ import AnchoredLayoutPlugin from 'progressive-app-sdk/plugins/anchoredLayoutPlug
 import NavigationPlugin from 'progressive-app-sdk/plugins/navigationPlugin'
 import Application from 'progressive-app-sdk/application'
 
+import AppEvents from '../global/app-events'
 import TabHeaderController from './tabHeaderController'
+
+const Events = {
+    updateCart: 'cart:updated'
+}
 
 const TabController = function(tabItem, layout, navigationView, headerController) {
     this.tabItem = tabItem
@@ -41,7 +46,7 @@ TabController.init = async function(tabItem) {
     })
 
     navigationView.on('cart-updated', (data) => {
-        headerController.updateCounter(data.count)
+        AppEvents.trigger(Events.updateCart, data)
     })
 
     navigationView.on('open:cart-modal', () => {
@@ -105,5 +110,7 @@ TabController.prototype.back = async function() {
     }
 
 }
+
+export {Events}
 
 export default TabController

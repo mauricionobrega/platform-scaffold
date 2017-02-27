@@ -3,8 +3,10 @@ import CounterBadgeController from 'progressive-app-sdk/controllers/counterBadge
 
 import CartModalController from './cartModalController'
 
+import AppEvents from '../global/app-events'
 import baseConfig from '../config/baseConfig'
 import cartConfig from '../config/cartConfig'
+import {Events} from './TabController'
 
 const TabHeaderController = function(headerBar, counterBadgeController) {
     this.viewPlugin = headerBar
@@ -12,6 +14,10 @@ const TabHeaderController = function(headerBar, counterBadgeController) {
 
     headerBar.on(`click:${cartConfig.cartIcon.id}`, async () => {
         this.showCartModal()
+    })
+
+    AppEvents.on(Events.updateCart, (data) => {
+        this.updateCounter(data.count)
     })
 }
 
