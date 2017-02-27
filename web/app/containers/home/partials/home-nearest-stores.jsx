@@ -1,6 +1,5 @@
 /* eslint-disable react/self-closing-comp */
 import React, {PropTypes} from 'react'
-import classNames from 'classnames'
 import Button from 'progressive-web-sdk/dist/components/button'
 
 // Merlins Potions Nearby Widget Config
