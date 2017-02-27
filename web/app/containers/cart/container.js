@@ -33,7 +33,6 @@ export const continueShopping = () => {
     }
 }
 
-
 const EmptyCartContents = ({hide}) => {
     const emptyCartClassnames = classNames('t-cart__empty u-flexbox u-flex u-direction-column u-align-center u-justify-center', {
         'u-visually-hidden': hide,
@@ -73,26 +72,35 @@ EmptyCartContents.propTypes = {
     hide: PropTypes.bool,
 }
 
-const Cart = ({contentsLoaded, hasItems}) => {
-    Astro.trigger('checkout:disable-alert')
-    const isCartEmptyAndLoaded = !hasItems && contentsLoaded
-    const templateClassnames = classNames('t-cart u-bg-color-neutral-10', {
-        't--loaded': contentsLoaded
-    })
+class Cart extends React.Component {
+    componentDidMount() {
+        Astro.trigger('checkout:disable-alert')
+    }
 
-    return (
-        <div className={templateClassnames}>
-            <Grid className="u-center-piece">
-                {!isCartEmptyAndLoaded && <CartItems />}
+    render() {
+        const {
+            contentsLoaded,
+            hasItems
+        } = this.props
+        const isCartEmptyAndLoaded = !hasItems && contentsLoaded
+        const templateClassnames = classNames('t-cart u-bg-color-neutral-10', {
+            't--loaded': contentsLoaded
+        })
 
-                <EmptyCartContents hide={!isCartEmptyAndLoaded} />
-            </Grid>
+        return (
+            <div className={templateClassnames}>
+                <Grid className="u-center-piece">
+                    {!isCartEmptyAndLoaded && <CartItems />}
 
-            <EstimateShippingReduxForm />
-            <CartWishlistModal />
-            <CartRemoveItemModal />
-        </div>
-    )
+                    <EmptyCartContents hide={!isCartEmptyAndLoaded} />
+                </Grid>
+
+                <EstimateShippingReduxForm />
+                <CartWishlistModal />
+                <CartRemoveItemModal />
+            </div>
+        )
+    }
 }
 
 Cart.propTypes = {

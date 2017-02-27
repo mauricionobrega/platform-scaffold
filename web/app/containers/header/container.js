@@ -50,9 +50,9 @@ class Header extends React.Component {
     }
 
     render() {
-        const {onMenuClick, onMiniCartClick, isCollapsed, itemCount} = this.props
+        const {onMenuClick, onMiniCartClick, isCollapsed, itemCount, isRunningInAstro} = this.props
 
-        if (this.props.isRunningInAstro) {
+        if (isRunningInAstro) {
             Astro.trigger('cart-updated', {
                 count: itemCount
             })
@@ -101,8 +101,6 @@ const mapDispatchToProps = {
     onMiniCartClick: miniCartActions.requestOpenMiniCart,
     toggleHeader: headerActions.toggleHeader
 }
-
-export {Header as RawHeader}
 
 export default connect(
     mapStateToProps,

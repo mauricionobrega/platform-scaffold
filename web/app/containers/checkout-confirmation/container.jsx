@@ -18,6 +18,7 @@ import CheckountConfirmationModal from './partials/checkout-confirmation-modal'
 class CheckoutConfirmation extends React.Component {
     componentDidMount() {
         // this.props.fetchContents()
+        Astro.trigger('checkout:disable-alert')
     }
 
     shouldComponentUpdate(newProps) {
@@ -25,7 +26,6 @@ class CheckoutConfirmation extends React.Component {
     }
 
     render() {
-        Astro.trigger('checkout:disable-alert')
         const {
             contentsLoaded,
             emailAddress,
