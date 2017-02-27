@@ -128,6 +128,10 @@
     @include row-reverse(true);
 }
 
+.u-row {
+    flex-direction: row !important; // @TODO: Add to spline
+}
+
 .u-column {
     flex-direction: column !important; // @TODO: Add to spline
 }
