@@ -6,7 +6,7 @@ import Button from 'progressive-web-sdk/dist/components/button'
 
 const OnboardingScreen = ({imageURL, imageAlt, title, subtitle, primaryButton, laterButton, actionButton, key}) => {
     return (
-        <CarouselItem caption="Get started" key={key} className="carousel-item" allowLooping="false">
+        <CarouselItem caption="Get started" key={key} className="carousel-item">
             <div className="carousel-item-wrapper u-direction-column">
                 <div className="u-flex u-flexbox u-align-center u-justify-center">
                     <div>
@@ -48,7 +48,7 @@ OnboardingScreen.propTypes = {
 
 const Onboarding = ({carouselData}) => {
     const carouselItems = Object.keys(carouselData).map((key) => {
-        return <OnboardingScreen {...carouselData[key]} key={key} />
+        return <OnboardingScreen {...carouselData[key]} key={key} allowLooping={false} />
     })
     return (
         <Carousel>
