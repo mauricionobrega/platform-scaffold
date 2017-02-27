@@ -1,5 +1,16 @@
-## To be released
+## 0.13.0 (February 24, 2017)
+- Updated to v0.13.0 of the SDK [#361](https://github.com/mobify/progressive-web-scaffold/pull/361)
+- Rename app-provider.jsx to router.jsx [#354](https://github.com/mobify/progressive-web-scaffold/pull/354)
+- Rename raw to unwrapped in templates.jsx [#354](https://github.com/mobify/progressive-web-scaffold/pull/354)
+
+## 0.12.0 (February 24, 2017)
+- Update to latest SDK
+- Refactor application to use architecture 2.0
+- Parse content for Checkout pages
+- Implement functionality for Checkout pages
 - Add option to analyze bundle after build. Set `MOBIFY_ANALYZE` environment variable to `true` before running any build. Eg. `MOBIFY_ANALYZE=true npm run prod:build`
+- Rename plp and pdp containers to product-list and product-details
+- Rename product-list component in checkout to order-summary
 
 ## 0.11.0 (February 10, 2017)
 - Upgrade to the latest SDK

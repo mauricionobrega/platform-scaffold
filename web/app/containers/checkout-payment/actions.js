@@ -7,7 +7,7 @@ import checkoutPaymentParser from './checkout-payment-parser'
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 
 import {getPaymentBillingFormValues} from '../../store/form/selectors'
-import {getCustomerEntityID} from '../../store/checkout/selectors'
+import {getCustomerEntityID, getEmailAddress} from '../../store/checkout/selectors'
 import {getShippingAddress} from '../../store/checkout/shipping/selectors'
 import {getIsLoggedIn} from '../app/selectors'
 
@@ -44,6 +44,7 @@ export const submitPayment = () => {
         const sameAddress = getPaymentBillingFormValues(currentState).billing_same_as_shipping
 
         let address = {}
+        const email = getEmailAddress(currentState)
 
         if (sameAddress) {
             address = getShippingAddress(currentState).toJS()
@@ -78,8 +79,7 @@ export const submitPayment = () => {
                 ...address
             },
             cartId: entityID,
-            // TODO: Obtain email from shipping step
-            email: 'mobifyqa@gmail.com',
+            email,
             paymentMethod: {
                 additional_data: null,
                 method: 'checkmo',
@@ -95,7 +95,7 @@ export const submitPayment = () => {
                 // Looks like when it is successful, the responseJSON is a number
                 if (/^\d+$/.test(responseJSON)) {
                     browserHistory.push({
-                        pathname: '/checkout/confirmation/'
+                        pathname: '/checkout/onepage/success/'
                     })
                 } else {
                     console.error(responseJSON.message)
