@@ -1,9 +1,9 @@
-package com.mobify.astro.scaffold;
+package com.mobify.astro.merlins;
 
 import android.os.Bundle;
 
 import com.mobify.astro.AstroActivity;
-import com.mobify.astro.plugins.*;
+import com.mobify.astro.plugins.AstroWorker;
 
 public class MainActivity extends AstroActivity {
     protected AstroWorker worker;

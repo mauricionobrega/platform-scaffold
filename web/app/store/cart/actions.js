@@ -6,10 +6,8 @@
  * All requests require a session, eg. 'Cookie: PHPSESSID=as337c3fq7751n9gn1o3enacf7'
  */
 import parse from './parsers/parser'
-import {browserHistory} from 'react-router'
 import * as utils from '../../utils/utils'
-import {isRunningInAstro} from '../../utils/astro-integration'
-import Astro from '../../vendor/astro-client'
+
 import {makeFormEncodedRequest, makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {addNotification, removeNotification} from '../../containers/app/actions'
 
@@ -21,20 +19,6 @@ const baseHeaders = {
 }
 
 export const receiveCartContents = utils.createAction('Received Cart Contents')
-
-export const openSignIn = () => {
-    if (isRunningInAstro) {
-        Astro.trigger('sign-in:clicked')
-    } else {
-        browserHistory.push('/customer/account/login/')
-    }
-}
-
-export const continueShopping = () => {
-    if (isRunningInAstro) {
-        Astro.trigger('continue:clicked')
-    }
-}
 
 /**
  * Get the contents of the users cart
