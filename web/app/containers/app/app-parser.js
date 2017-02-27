@@ -7,9 +7,17 @@ const appParser = ($html) => {
         const config = getCheckoutConfigObject($html)
         isLoggedIn = (config && config.customerData) ? config.customerData.constructor !== Array : isLoggedIn
     }
-    return {
-        isLoggedIn
+
+    const result = {isLoggedIn}
+
+    const formKeyInput = $html.find('input[name="form_key"]')
+    // It looks like the form key is always the same for a given
+    // session. So we just grab the first one.
+    if (formKeyInput.length) {
+        result.formKey = formKeyInput.val()
     }
+
+    return result
 }
 
 export default appParser

@@ -95,7 +95,7 @@ export const submitPayment = () => {
                 // Looks like when it is successful, the responseJSON is a number
                 if (/^\d+$/.test(responseJSON)) {
                     browserHistory.push({
-                        pathname: '/checkout/confirmation/'
+                        pathname: '/checkout/onepage/success/'
                     })
                 } else {
                     console.error(responseJSON.message)

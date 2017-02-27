@@ -21,6 +21,10 @@ export const getSelectedProductDetails = createGetSelector(
     appSelectors.getCurrentPathKey,
     Immutable.Map()
 )
+
+export const getProductDetailsByPathKey = (pathKey) => createGetSelector(getProductDetails, pathKey, Immutable.Map())
+
+
 export const getProductDetailsContentsLoaded = createHasSelector(
     getProductDetails,
     appSelectors.getCurrentPathKey
@@ -52,3 +56,5 @@ export const getFirstProductCarouselItem = createGetSelector(
     Immutable.Map()
 )
 export const getFirstProductImage = createGetSelector(getFirstProductCarouselItem, 'img')
+
+export const getUenc = (pathKey) => createGetSelector(getProductDetailsByPathKey(pathKey), 'uenc')

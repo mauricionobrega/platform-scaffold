@@ -12,5 +12,7 @@ export const getFormValues = (formKey) => createSelector(getFormByKey(formKey), 
 export const getFormRegisteredFields = (formKey) => createSelector(getFormByKey(formKey), ({registeredFields}) => { return registeredFields ? registeredFields : [] })
 
 export const getPaymentBillingForm = createSelector(getForm, (form) => form.paymentForm)
-
 export const getPaymentBillingFormValues = createSelector(getPaymentBillingForm, (paymentForm) => paymentForm.values)
+
+export const getConfirmationForm = createSelector(getForm, (form) => form.confirmationForm)
+export const getConfirmationFormValues = createSelector(getConfirmationForm, (confirmationForm) => confirmationForm.values)
