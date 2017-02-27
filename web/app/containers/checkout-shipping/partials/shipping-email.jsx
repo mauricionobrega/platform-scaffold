@@ -27,8 +27,16 @@ const ShippingEmail = ({submitSignIn, customerEmailRecognized, checkCustomerEmai
             <div className="u-padding-md u-border-light-top u-border-light-bottom u-bg-color-neutral-00">
 
                 <FieldRow>
-                    <ReduxForm.Field component={Field} className="pw--overlayed-hint" name="username" label="Email order confirmation to">
-                        <input type="email" noValidate onBlur={checkCustomerEmail} />
+                    <ReduxForm.Field
+                        component={Field}
+                        className="pw--overlayed-hint"
+                        name="username"
+                        label="Email order confirmation to"
+                        customEventHandlers={{
+                            onBlur: checkCustomerEmail
+                        }}
+                    >
+                        <input type="email" noValidate />
                     </ReduxForm.Field>
                 </FieldRow>
 

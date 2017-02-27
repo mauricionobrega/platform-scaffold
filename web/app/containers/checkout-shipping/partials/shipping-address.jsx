@@ -135,8 +135,15 @@ const ShippingAddressForm = ({
                     </FieldRow>
 
                     <FieldRow>
-                        <ReduxForm.Field component={Field} name="postcode" label="Postal Code">
-                            <input type="text" noValidate onBlur={fetchShippingMethods} />
+                        <ReduxForm.Field
+                            component={Field}
+                            name="postcode"
+                            label="Postal Code"
+                            customEventHandlers={{
+                                onBlur: fetchShippingMethods
+                            }}
+                        >
+                            <input type="text" noValidate />
                         </ReduxForm.Field>
                     </FieldRow>
 
