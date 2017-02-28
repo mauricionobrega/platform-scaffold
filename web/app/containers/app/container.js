@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import {selectorToJS} from '../../utils/selector-utils'
+import {isRunningInAstro} from '../../utils/astro-integration'
 
 import {hidePreloader} from 'progressive-web-sdk/dist/preloader'
 import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
@@ -78,8 +79,7 @@ class App extends React.Component {
 
                 <div id="app-wrap" className="t-app__wrapper u-flexbox u-direction-column">
                     <div id="app-header" className="u-flex-none" role="banner">
-
-                        <CurrentHeader headerHasSignIn={routeProps.headerHasSignIn} />
+                        <CurrentHeader headerHasSignIn={routeProps.headerHasSignIn} isRunningInAstro={isRunningInAstro} />
                         {
                             // Only display banner when we are offline and have content to show
                             fetchError && hasFetchedCurrentPath && <OfflineBanner />
@@ -107,7 +107,7 @@ class App extends React.Component {
                                 </main>
 
                                 <div id="app-footer" className="u-flex-none">
-                                    <CurrentFooter />
+                                    <CurrentFooter isRunningInAstro={isRunningInAstro} />
                                 </div>
                             </div>
                         :

@@ -1,5 +1,5 @@
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
-
+import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import * as utils from '../../utils/utils'
 import * as selectors from './selectors'
 
@@ -105,7 +105,7 @@ export const checkIfOffline = () => {
  */
 export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
     return (dispatch, getState) => {
-        return utils.makeRequest(fetchUrl || url)
+        return makeRequest(fetchUrl || url)
             .then(jqueryResponse)
             .then((res) => {
                 const [$, $response] = res
@@ -148,7 +148,6 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                 // worker, but are in fact 'offline'
                 dispatch(checkIfOffline())
             })
-
             .catch((error) => {
                 console.info(error.message)
                 if (error.name !== 'FetchError') {
@@ -157,6 +156,5 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                     dispatch(setPageFetchError(error.message))
                 }
             })
-
     }
 }
