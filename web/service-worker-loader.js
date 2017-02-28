@@ -1,5 +1,5 @@
 // MOBIFY PROGRESSIVE SERVICE WORKER LOADER
-// DO NOT MODIFY
+// DO NOT MODIFY WITHOUT APPROVAL FROM MOBIFY
 const isPreview = /preview=true/.test(self.location.search)
 
 if (isPreview) {
