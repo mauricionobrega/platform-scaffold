@@ -6,6 +6,7 @@ const ip = require('ip')
 const loaderConfig = require('./base.loader')
 const mainConfig = require('./base.main')
 const workerConfig = require('./base.worker')
+const onboardingConfig = require('./base.onboarding')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 mainConfig.module.rules = mainConfig.module.rules.concat({
@@ -29,4 +30,4 @@ workerConfig.plugins = workerConfig.plugins.concat([
     })
 ])
 
-module.exports = [mainConfig, loaderConfig, workerConfig]
+module.exports = [mainConfig, loaderConfig, workerConfig, onboardingConfig]
