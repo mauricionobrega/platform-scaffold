@@ -7,3 +7,5 @@ export const fetchPdpData = (...args) => {
 export const addToCart = (...args) => {
     return connector.addToCart(...args)
 }
+
+export const fetchCheckoutShippingData = (...args) => connector.fetchCheckoutShippingData(...args)

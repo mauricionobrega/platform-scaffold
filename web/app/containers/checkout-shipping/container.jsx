@@ -1,6 +1,8 @@
 import React from 'react'
 import classNames from 'classnames'
 
+import * as commands from '../../integration-manager/commands'
+
 import CheckoutShippingReduxForm from './partials/checkout-shipping-form'
 import {ProgressSteps, ProgressStepsItem} from 'progressive-web-sdk/dist/components/progress-steps'
 
@@ -24,6 +26,10 @@ const CheckoutShipping = () => {
             <CheckoutShippingReduxForm />
         </div>
     )
+}
+
+CheckoutShipping.fetcher = (url, dispatch) => {
+    dispatch(commands.fetchCheckoutShippingData(url))
 }
 
 export default CheckoutShipping

@@ -1,7 +1,6 @@
 import {browserHistory} from 'react-router'
 import {createAction} from '../../utils/utils'
 import CheckoutShipping from './container'
-import checkoutShippingParser from './parsers/checkout-shipping'
 import {addNotification, fetchPage, removeAllNotifications, removeNotification} from '../app/actions'
 import {getCustomerEntityID} from '../../store/checkout/selectors'
 import {getIsLoggedIn} from '../app/selectors'
@@ -11,11 +10,7 @@ import {receiveCheckoutData} from '../../store/checkout/actions'
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 
 export const showCompanyAndApt = createAction('Showing the "Company" and "Apt #" fields')
-
 export const receiveData = createAction('Receive Checkout Shipping Data')
-export const process = ({payload: {$, $response}}) => {
-    return receiveData(checkoutShippingParser($, $response))
-}
 
 
 export const onShippingEmailRecognized = () => {
