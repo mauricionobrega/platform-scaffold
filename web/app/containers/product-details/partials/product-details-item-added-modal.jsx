@@ -4,6 +4,7 @@ import {createStructuredSelector} from 'reselect'
 import * as selectors from '../selectors'
 import {stripEvent} from '../../../utils/utils'
 import {isModalOpen} from '../../../store/selectors'
+import * as productDetailsActions from '../actions'
 import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from '../constants'
 import {closeModal} from '../../../store/modals/actions'
 
@@ -12,9 +13,8 @@ import Icon from 'progressive-web-sdk/dist/components/icon'
 import ProductItem from '../../../components/product-item'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
-const ProductDetailsItemAddedModal = ({open, onDismiss, quantity, title, price, productImage}) => (
+const ProductDetailsItemAddedModal = ({open, onDismiss, quantity, title, price, productImage, onGoToCheckout}) => (
     <Sheet open={open} onDismiss={onDismiss} effect="slide-bottom" className="product-list__item-added-modal" coverage="50%">
-
         {/* Modal header */}
         <div className="u-flex-none u-border-bottom">
             <div className="u-flexbox u-align-center">
@@ -47,12 +47,11 @@ const ProductDetailsItemAddedModal = ({open, onDismiss, quantity, title, price, 
             {/* Buttons */}
             <div className="u-flex-none">
                 <Button
-                    href="/checkout/"
+                    onClick={onGoToCheckout}
                     className="c--primary u-width-full u-margin-bottom-md u-text-uppercase"
                     innerClassName="u-text-align-center">
                     Go To Checkout
                 </Button>
-
                 <Button className="c--tertiary u-width-full u-text-uppercase" onClick={onDismiss}>
                     Continue Shopping
                 </Button>
@@ -67,7 +66,8 @@ ProductDetailsItemAddedModal.propTypes = {
     productImage: PropTypes.string,
     quantity: PropTypes.number,
     title: PropTypes.string,
-    onDismiss: PropTypes.func
+    onDismiss: PropTypes.func,
+    onGoToCheckout: PropTypes.func,
 }
 
 const mapStateToProps = createStructuredSelector({
@@ -79,6 +79,7 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = {
+    onGoToCheckout: productDetailsActions.goToCheckout,
     onDismiss: stripEvent(() => closeModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL))
 }
 

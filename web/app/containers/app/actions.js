@@ -148,7 +148,6 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                 // worker, but are in fact 'offline'
                 dispatch(checkIfOffline())
             })
-
             .catch((error) => {
                 console.info(error.message)
                 if (error.name !== 'FetchError') {
@@ -157,6 +156,5 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                     dispatch(setPageFetchError(error.message))
                 }
             })
-
     }
 }
