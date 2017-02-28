@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import * as ReduxForm from 'redux-form'
 
-import {checkCustomerEmail, submitSignIn} from '../actions'
+import {checkCustomerEmail, submitSignIn} from '../../../integration-manager/commands'
 import {getCustomerEmailRecognized, getEmailError} from '../selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'

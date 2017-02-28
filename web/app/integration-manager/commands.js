@@ -11,3 +11,7 @@ export const addToCart = (...args) => {
 export const fetchCheckoutShippingData = (...args) => connector.fetchCheckoutShippingData(...args)
 
 export const submitShipping = (...args) => connector.submitShipping(...args)
+
+export const checkCustomerEmail = (...args) => connector.checkCustomerEmail(...args)
+
+export const submitSignIn = (...args) => connector.submitSignIn(...args)
