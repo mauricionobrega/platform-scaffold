@@ -1,11 +1,7 @@
-import {browserHistory} from 'react-router'
 import {createAction} from '../../utils/utils'
 import CheckoutShipping from './container'
 import {addNotification, fetchPage, removeAllNotifications, removeNotification} from '../app/actions'
-import {getCustomerEntityID} from '../../store/checkout/selectors'
-import {getIsLoggedIn} from '../app/selectors'
 import {getShippingFormValues} from '../../store/form/selectors'
-import {receiveCheckoutData} from '../../store/checkout/actions'
 
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 
@@ -76,65 +72,5 @@ export const submitSignIn = () => {
                 }
             }
         })
-    }
-}
-
-export const submitShipping = () => {
-    return (dispatch, getState) => {
-        const currentState = getState()
-        const {
-            name,
-            company,
-            addressLine1,
-            addressLine2,
-            country_id,
-            city,
-            username,
-            region_id,
-            region,
-            postcode,
-            telephone,
-            shipping_method
-        } = getShippingFormValues(currentState)
-        const entityID = getCustomerEntityID(currentState)
-        const isLoggedIn = getIsLoggedIn(currentState)
-        const names = name.split(' ')
-        const shippingSelections = shipping_method.split('_')
-        const address = {
-            firstname: names.slice(0, -1).join(' '),
-            lastname: names.slice(-1).join(' '),
-            company: company || '',
-            telephone,
-            postcode,
-            city,
-            street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1],
-            regionId: region_id,
-            region,
-            countryId: country_id,
-            save_in_address_book: true
-        }
-        const addressInformation = {
-            addressInformation: {
-                shippingAddress: address,
-                billingAddress: {
-                    ...address,
-                    saveInAddressBook: false
-                },
-                shipping_carrier_code: shippingSelections[0],
-                shipping_method_code: shippingSelections[1]
-            }
-        }
-        const persistShippingURL = `https://www.merlinspotions.com/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/shipping-information`
-        dispatch(receiveCheckoutData({shipping: {address}, emailAddress: username}))
-        makeJsonEncodedRequest(persistShippingURL, addressInformation, {method: 'POST'})
-            .then((response) => response.json())
-            .then((responseJSON) => {
-                if (responseJSON.payment_methods) {
-                    // TO DO: send response data to the next container
-                    browserHistory.push({
-                        pathname: '/checkout/payment/'
-                    })
-                }
-            })
     }
 }

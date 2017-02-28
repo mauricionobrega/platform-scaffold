@@ -7,7 +7,7 @@ import * as ReduxForm from 'redux-form'
 import {getIsLoggedIn} from '../../app/selectors'
 import {getShippingInitialValues} from '../../../store/checkout/shipping/selectors'
 
-import {submitShipping} from '../actions'
+import {submitShipping} from '../../../integration-manager/commands'
 import {SHIPPING_FORM_NAME} from '../constants'
 
 import {Grid, GridSpan} from 'progressive-web-sdk/dist/components/grid'
