@@ -17,7 +17,7 @@ export const createAction = (description, ...argNames) => {
     )
 }
 
-export const analyticMetaPayloadCreator = (type, payload) => ({
+export const createAnalyticsMeta = (type, payload) => ({
     analytics: {
         type,
         payload
@@ -62,7 +62,7 @@ export const analyticMetaPayloadCreator = (type, payload) => ({
  * }))
  *
  * = Using convient meta payload creator for analytic =
- * dispatch(actionVariable('abc', 'def', analyticMetaPayloadCreator('Pageview', {
+ * dispatch(actionVariable('abc', 'def', createAnalyticsMeta('Pageview', {
  *      name: 'PLP'
  * })
  *

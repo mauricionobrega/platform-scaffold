@@ -2,6 +2,7 @@ import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 
 import * as utils from '../../utils/utils'
 import * as selectors from './selectors'
+import * as analyticConstants from 'progressive-web-sdk/dist/analytics/analytic-constants'
 
 import appParser from './app-parser'
 
@@ -39,10 +40,13 @@ export const removeAllNotifications = utils.createAction('Remove All Notificatio
 
 /**
  * Action dispatched when the route changes
- * @param {string} pageComponent - the component of the entered route
  * @param {string} currentURL - what's currently shown in the address bar
+ * @param {string} routeName - Template name for analytic
  */
-export const onRouteChanged = utils.createActionWithMeta('On route changed', ['currentURL'], (...args) => (args[1]))
+export const onRouteChanged = utils.createActionWithMeta(
+    'On route changed',
+    ['currentURL'],
+    (currentURL, routeName) => utils.createAnalyticsMeta(analyticConstants.pageview, {name: routeName}))
 
 /**
  * Action dispatched when content for a global page render is ready.

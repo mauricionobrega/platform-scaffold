@@ -3,9 +3,6 @@ import {connect} from 'react-redux'
 import {onRouteChanged, fetchPage, removeAllNotifications} from './containers/app/actions'
 import Astro from './vendor/astro-client'
 
-import {analyticMetaPayloadCreator} from './utils/utils'
-import * as analyticConstants from 'progressive-web-sdk/dist/analytics/analytic-constants'
-
 const getDisplayName = (WrappedComponent) => {
     return WrappedComponent.displayName || WrappedComponent.name || 'Component'
 }
@@ -29,7 +26,7 @@ const template = (WrappedComponent) => {
                 Astro.trigger('pwa-navigate', {url})
             }
 
-            dispatch(onRouteChanged(url, analyticMetaPayloadCreator(analyticConstants.pageview, {name: route.routeName})))
+            dispatch(onRouteChanged(url, route.routeName))
 
             if (!route.suppressFetch) {
                 dispatch(fetchPage(url, WrappedComponent, route.routeName, route.fetchUrl))
