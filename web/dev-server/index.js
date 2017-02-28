@@ -14,6 +14,11 @@ const port = argv.port || process.env.PORT || 8443
 const compiler = webpack(config)
 
 const server = new WebpackDevServer(compiler, {
+    headers: {
+        // The Mobify CDN has this response header, and we need it for certain
+        // CORS fetches
+        'Access-Control-Allow-Origin': '*'
+    },
     https: true,
     stats: {
         // Configures logging: https://webpack.github.io/docs/node.js-api.html#stats

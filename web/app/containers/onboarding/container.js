@@ -4,20 +4,9 @@ import CarouselItem from 'progressive-web-sdk/dist/components/carousel/carousel-
 import Carousel from 'progressive-web-sdk/dist/components/carousel'
 import Button from 'progressive-web-sdk/dist/components/button'
 
-const Onboarding = ({carouselData}) => {
-    const carouselItems = Object.keys(carouselData).map((key, index) => {
-        return <OnboardingScreen {...carouselData[key]} key={index} />
-    })
-    return (
-        <Carousel>
-            {carouselItems}
-        </Carousel>
-    )
-}
-
 const OnboardingScreen = ({imageURL, imageAlt, title, subtitle, primaryButton, laterButton, actionButton, key}) => {
-    const item = (
-        <CarouselItem caption="Get started" key={key} className="carousel-item" allowLooping="false">
+    return (
+        <CarouselItem caption="Get started" key={key} className="carousel-item">
             <div className="carousel-item-wrapper u-direction-column">
                 <div className="u-flex u-flexbox u-align-center u-justify-center">
                     <div>
@@ -44,7 +33,25 @@ const OnboardingScreen = ({imageURL, imageAlt, title, subtitle, primaryButton, l
             </div>
         </CarouselItem>
     )
-    return item
+}
+
+OnboardingScreen.propTypes = {
+    actionButton: React.PropTypes.object,
+    imageAlt: React.PropTypes.string,
+    imageURL: React.PropTypes.string,
+    key: React.PropTypes.string,
+    laterButton: React.PropTypes.object,
+    primaryButton: React.PropTypes.object,
+    subtitle: React.PropTypes.string,
+    title: React.PropTypes.string
+}
+
+const Onboarding = ({carouselData}) => {
+    return (
+        <Carousel allowLooping={false}>
+            {Object.keys(carouselData).map((key) => <OnboardingScreen {...carouselData[key]} key={key} />)}
+        </Carousel>
+    )
 }
 
 Onboarding.propTypes = {

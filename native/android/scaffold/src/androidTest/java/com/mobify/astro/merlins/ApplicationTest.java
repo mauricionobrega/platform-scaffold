@@ -1,4 +1,4 @@
-package com.mobify.astro.scaffold;
+package com.mobify.astro.merlins;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

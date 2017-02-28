@@ -6,14 +6,13 @@
  * All requests require a session, eg. 'Cookie: PHPSESSID=as337c3fq7751n9gn1o3enacf7'
  */
 import parse from './parsers/parser'
-import {browserHistory} from 'react-router'
 import * as utils from '../../utils/utils'
-import {isRunningInAstro} from '../../utils/astro-integration'
-import Astro from '../../vendor/astro-client'
+
 import {makeFormEncodedRequest, makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {addNotification, removeNotification} from '../../containers/app/actions'
+import {getFormKey} from '../../containers/app/selectors'
 
-const LOAD_CART_SECTION_URL = '/customer/section/load/?sections=cart'
+const LOAD_CART_SECTION_URL = '/customer/section/load/?sections=cart%2Cmessages&update_section_id=true&_=<timestamp>'
 const REMOVE_CART_ITEM_URL = '/checkout/sidebar/removeItem/'
 const UPDATE_ITEM_URL = '/checkout/sidebar/updateItemQty/'
 const baseHeaders = {
@@ -21,20 +20,6 @@ const baseHeaders = {
 }
 
 export const receiveCartContents = utils.createAction('Received Cart Contents')
-
-export const openSignIn = () => {
-    if (isRunningInAstro) {
-        Astro.trigger('sign-in:clicked')
-    } else {
-        browserHistory.push('/customer/account/login/')
-    }
-}
-
-export const continueShopping = () => {
-    if (isRunningInAstro) {
-        Astro.trigger('continue:clicked')
-    }
-}
 
 /**
  * Get the contents of the users cart
@@ -44,7 +29,7 @@ export const getCart = () => (dispatch) => {
         headers: baseHeaders
     }
     dispatch(removeNotification('cartUpdateError'))
-    return utils.makeRequest(LOAD_CART_SECTION_URL, opts)
+    return utils.makeRequest(`${LOAD_CART_SECTION_URL}${new Date().getTime()}`, opts)
         .then((response) => response.text())
         .then((responseText) => dispatch(receiveCartContents(parse(responseText))))
 }
@@ -61,8 +46,8 @@ export const getCart = () => (dispatch) => {
  *   busts a cache. You are expected to call `removeFromCart()` then `getCart()` every time.
  */
 export const removeFromCart = (itemId) => {
-    return (dispatch) => {
-        return makeFormEncodedRequest(REMOVE_CART_ITEM_URL, {item_id: itemId}, {method: 'POST'})
+    return (dispatch, getState) => {
+        return makeFormEncodedRequest(REMOVE_CART_ITEM_URL, {item_id: itemId, form_key: getFormKey(getState())}, {method: 'POST'})
             .then((response) => response.json())
             .then((responseJSON) => {
                 if (responseJSON.success) {

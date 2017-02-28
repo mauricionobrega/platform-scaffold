@@ -6,17 +6,32 @@ import classNames from 'classnames'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import {Grid, GridSpan} from 'progressive-web-sdk/dist/components/grid'
-import {Icon} from 'progressive-web-sdk/dist/components/icon'
+import Icon from 'progressive-web-sdk/dist/components/icon'
 import Image from 'progressive-web-sdk/dist/components/image'
 
 import Astro from '../../vendor/astro-client'
+import {isRunningInAstro} from '../../utils/astro-integration'
 import {getCartContentsLoaded, getCartHasItems} from '../../store/cart/selectors'
-import {continueShopping, openSignIn} from '../../store/cart/actions'
 import EstimateShippingReduxForm from './partials/cart-estimate-shipping'
 
 import CartWishlistModal from './partials/cart-wishlist'
 import CartRemoveItemModal from './partials/cart-remove-item'
 import CartItems from './partials/cart-items'
+import {browserHistory} from 'progressive-web-sdk/dist/routing'
+
+export const openSignIn = () => {
+    if (isRunningInAstro) {
+        Astro.trigger('sign-in:clicked')
+    } else {
+        browserHistory.push('/customer/account/login/')
+    }
+}
+
+export const continueShopping = () => {
+    if (isRunningInAstro) {
+        Astro.trigger('continue:clicked')
+    }
+}
 
 const EmptyCartContents = ({hide}) => {
     const emptyCartClassnames = classNames('t-cart__empty u-flexbox u-flex u-direction-column u-align-center u-justify-center', {
@@ -57,26 +72,35 @@ EmptyCartContents.propTypes = {
     hide: PropTypes.bool,
 }
 
-const Cart = ({contentsLoaded, hasItems}) => {
-    Astro.trigger('checkout:disable-alert')
-    const isCartEmptyAndLoaded = !hasItems && contentsLoaded
-    const templateClassnames = classNames('t-cart u-bg-color-neutral-10', {
-        't--loaded': contentsLoaded
-    })
+class Cart extends React.Component {
+    componentDidMount() {
+        Astro.trigger('checkout:disable-alert')
+    }
 
-    return (
-        <div className={templateClassnames}>
-            <Grid className="u-center-piece">
-                {!isCartEmptyAndLoaded && <CartItems />}
+    render() {
+        const {
+            contentsLoaded,
+            hasItems
+        } = this.props
+        const isCartEmptyAndLoaded = !hasItems && contentsLoaded
+        const templateClassnames = classNames('t-cart u-bg-color-neutral-10', {
+            't--loaded': contentsLoaded
+        })
 
-                <EmptyCartContents hide={!isCartEmptyAndLoaded} />
-            </Grid>
+        return (
+            <div className={templateClassnames}>
+                <Grid className="u-center-piece">
+                    {!isCartEmptyAndLoaded && <CartItems onContinueShopping={continueShopping} onOpenSignIn={openSignIn} />}
 
-            <EstimateShippingReduxForm />
-            <CartWishlistModal />
-            <CartRemoveItemModal />
-        </div>
-    )
+                    <EmptyCartContents hide={!isCartEmptyAndLoaded} />
+                </Grid>
+
+                <EstimateShippingReduxForm />
+                <CartWishlistModal />
+                <CartRemoveItemModal />
+            </div>
+        )
+    }
 }
 
 Cart.propTypes = {
