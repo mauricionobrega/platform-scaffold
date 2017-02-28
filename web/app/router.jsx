@@ -9,10 +9,31 @@ import {Cart, CheckoutConfirmation, CheckoutPayment, CheckoutShipping, Home, Log
 import CheckoutHeader from './containers/checkout-header/container'
 import CheckoutFooter from './containers/checkout-footer/container'
 
+import {getURL} from './utils/utils'
+import {isRunningInAstro, pwaNavigate} from './utils/astro-integration'
+
+// We define an initial OnChange as a no-op for non-Astro use
+let OnChange = () => {}
+
+if (isRunningInAstro) {
+    // Redefine OnChange to enable Astro integration
+    OnChange = (prevState, nextState, replace, callback) => {
+        if (nextState.location.action === 'POP') {
+            callback()
+            return
+        }
+
+        pwaNavigate({url: getURL(nextState)}).then(() => {
+            callback()
+        })
+    }
+}
+
 const Router = ({store}) => (
     <Provider store={store}>
         <SDKRouter history={browserHistory}>
-            <Route path="/" component={App}>
+            <Route path="/" component={App} onChange={OnChange}>
+
                 <IndexRoute component={Home} routeName="home" />
                 <Route component={Cart} path="checkout/cart/" routeName="cart" />
                 <Route component={Login} path="customer/account/login/" routeName="signin" />
