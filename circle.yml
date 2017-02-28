@@ -11,6 +11,7 @@ dependencies:
         - sudo apt-get update
         - sudo apt-get --only-upgrade install google-chrome-stable
     override:
+        - ./web/scripts/install-google-chrome-stable.sh
         - npm install:
             pwd: web
         # Disabling native `npm install` for now as we aren't set up to `npm install` a git dep yet
@@ -22,17 +23,20 @@ test:
             pwd: web
         - npm test -- --runInBand:
             pwd: web
-        # Disabled on January 27, 2017. For some reason, Lighthouse can't connect to Chrome as of Chrome v56.
-        # - sudo env "PATH=$PATH" npm run test:pwa-ci:
-        #     pwd: web
-        # Enable smoke-test when automated workflow tests have been implemented.
+        # 'sudo' is required in order to bind to port 80. 
+        - sudo env "PATH=$PATH" npm run proxy:
+            pwd: web
+            background: true
+        # Calculate the Lighthouse score 
+        - npm run test:pwa-ci:
+            pwd: web
+        ## Enable smoke-test when automated workflow tests have been implemented.
         # - npm run smoke-test:
         #    parallel: true
         #    pwd: web
-    # Disabled on January 27, 2017. For some reason, Lighthouse can't connect to Chrome as of Chrome v56.
-    # post:
-    #    - cp -R lighthouse/* $CIRCLE_ARTIFACTS:
-    #        pwd: web
+    post:
+       - cp -R lighthouse/* $CIRCLE_ARTIFACTS:
+           pwd: web
 experimental:
     notify:
         branches:

@@ -6,7 +6,7 @@ import * as selectors from '../selectors'
 import * as actions from '../actions'
 
 import Button from 'progressive-web-sdk/dist/components/button'
-import {Icon} from 'progressive-web-sdk/dist/components/icon'
+import Icon from 'progressive-web-sdk/dist/components/icon'
 import Stepper from 'progressive-web-sdk/dist/components/stepper'
 
 const ProductDetailsAddToCart = ({quantity, ctaText, setQuantity, onSubmit, disabled}) => {

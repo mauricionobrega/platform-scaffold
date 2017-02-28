@@ -6,13 +6,13 @@ import {getIsLoggedIn} from '../app/selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import {HeaderBar, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
-import {Icon} from 'progressive-web-sdk/dist/components/icon'
-import {isRunningInAstro} from '../../utils/astro-integration'
+import Icon from 'progressive-web-sdk/dist/components/icon'
 
-const CheckoutHeader = function({isLoggedIn}) {
+const CheckoutHeader = function({isLoggedIn, isRunningInAstro}) {
     if (isRunningInAstro) {
         return null
     }
+
     return (
         <header className="t-checkout-header">
             <HeaderBar className="t-checkout-header__bar">
@@ -44,7 +44,11 @@ CheckoutHeader.propTypes = {
     /**
     * Is the user logged in or not
     */
-    isLoggedIn: React.PropTypes.bool
+    isLoggedIn: React.PropTypes.bool,
+    /**
+     * Whether the app is running inside an Astro container
+     */
+    isRunningInAstro: React.PropTypes.bool
 }
 
 const mapStateToProps = createStructuredSelector({
