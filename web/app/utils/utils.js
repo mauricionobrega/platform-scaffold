@@ -40,9 +40,28 @@ export const stripEvent = (fn) => () => fn()
  * Converts a full URL to the preferred format for keying the redux store,
  * i.e. the path and query string
  */
-
 export const urlToPathKey = (url) => {
+    if (/^\//.test(url)) {
+        // The URL is already relative, so just return it
+        return url
+    }
     const urlObject = new URL(url)
 
     return `${urlObject.pathname}${urlObject.search}`
 }
+
+/**
+ * Returns a path given a `location` object.
+ * @param {object} location - a location object from React Router
+ * @returns {string} - the `path` and `search` concatenated together
+ */
+export const getPath = ({pathname, search}) => pathname + search
+
+/**
+ * Returns a full URL given a `location` object.
+ * @param {object} location - a location object from React Router
+ * @returns {string} - the full URL for the given location
+ */
+export const getURL = (location) =>
+      window.location.origin + getPath(location)
+

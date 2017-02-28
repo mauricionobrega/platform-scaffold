@@ -1,7 +1,9 @@
 /* eslint-env jest */
-import {fetchPage} from './actions'
-import Immutable from 'immutable'
-import {CURRENT_URL} from './constants'
+
+import {fetchPage, setPageFetchError, clearPageFetchError, checkIfOffline} from './actions'
+import {closeModal} from '../../store/modals/actions'
+import {OFFLINE_MODAL} from '../offline/constants'
+import {OFFLINE_ASSET_URL} from './constants'
 
 let realFetch
 beforeAll(() => {
@@ -14,48 +16,90 @@ afterAll(() => {
     global.fetch = realFetch
 })
 
-// jest.mock('progressive-web-sdk/dist/jquery-response')
-// import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
+test('checkIfOffline dispatches setPageFetchError if network request fails', () => {
+    global.fetch.mockClear()
+    global.fetch.mockReturnValueOnce(Promise.reject(new TypeError('failed to fetch')))
 
-// test('fetchPage fetches the given page', () => {
-//     global.fetch.mockClear()
-//     global.fetch.mockReturnValueOnce(Promise.resolve('page contents!'))
+    const fakeDispatch = jest.fn()
+    const thunk = checkIfOffline()
 
-//     jqueryResponse.mockClear()
-//     jqueryResponse.mockReturnValue(['$', '$response'])
+    return thunk(fakeDispatch)
+        .then(() => {
+            expect(global.fetch).toBeCalled()
+            expect(global.fetch.mock.calls[0][0]).toMatch(OFFLINE_ASSET_URL)
 
-//     const pageType = 'Home'
-//     const url = 'http://test.mobify.com/'
+            expect(fakeDispatch).toBeCalled()
+            expect(fakeDispatch.mock.calls[0][0]).toEqual(setPageFetchError('failed to fetch'))
+        })
+})
 
-//     const thunk = fetchPage(url, pageType, '/')
-//     expect(typeof thunk).toBe('function')
+test('checkIfOffline dispatches setPageFetchError if it receives modified JSON from worker', () => {
+    const mockResponse = {
+        obj: {
+            offline: true
+        },
+        json() {
+            return this.obj
+        }
+    }
 
-//     const fakeDispatch = jest.fn()
-//     const getState = () => ({ui: {app: Immutable.fromJS({[CURRENT_URL]: 'test'})}})
+    global.fetch.mockClear()
+    global.fetch.mockReturnValueOnce(Promise.resolve(mockResponse))
 
-//     return thunk(fakeDispatch, getState)
-//         .then(() => {
-//             expect(global.fetch).toBeCalled()
-//             expect(global.fetch.mock.calls[0][0]).toBe(url)
+    const fakeDispatch = jest.fn()
+    const thunk = checkIfOffline()
 
-//             expect(jqueryResponse).toBeCalledWith('page contents!')
+    return thunk(fakeDispatch)
+        .then(() => {
+            expect(global.fetch).toBeCalled()
+            expect(global.fetch.mock.calls[0][0]).toMatch(OFFLINE_ASSET_URL)
 
-//             expect(fakeDispatch).toBeCalled()
-//             expect(fakeDispatch.mock.calls[0][0])
-//                 .toEqual(onPageReceived('$', '$response', pageType, url, 'test', '/'))
-//         })
-// })
+            expect(fakeDispatch).toHaveBeenCalledTimes(1)
+            expect(fakeDispatch.mock.calls[0][0]).toEqual(setPageFetchError('Network failure, using worker cache'))
+        })
+})
+
+test('checkIfOffline clears offline modal and page fetch errors when it receives untouched JSON from network', () => {
+    const mockResponse = {
+        obj: {},
+        json() {
+            return this.obj
+        }
+    }
+
+    global.fetch.mockClear()
+    global.fetch.mockReturnValueOnce(Promise.resolve(mockResponse))
+
+    const fakeDispatch = jest.fn()
+    const thunk = checkIfOffline()
+
+    return thunk(fakeDispatch)
+        .then(() => {
+            expect(global.fetch).toBeCalled()
+            expect(global.fetch.mock.calls[0][0]).toMatch(OFFLINE_ASSET_URL)
+
+            expect(fakeDispatch).toHaveBeenCalledTimes(2)
+            expect(fakeDispatch.mock.calls[0][0]).toEqual(clearPageFetchError())
+            expect(fakeDispatch.mock.calls[1][0]).toEqual(closeModal(OFFLINE_MODAL))
+        })
+})
 
 test('fetchPage does not throw on error', () => {
+    const fetchError = new Error()
+    fetchError.name = 'FetchError'
     global.fetch.mockClear()
-    global.fetch.mockReturnValueOnce(Promise.reject(new Error()))
+    global.fetch.mockReturnValueOnce(Promise.reject(fetchError))
 
     const thunk = fetchPage('url', 'pageType', '/')
     expect(typeof thunk).toBe('function')
 
     const fakeDispatch = jest.fn()
-    const getState = () => ({ui: {app: Immutable.fromJS({[CURRENT_URL]: 'test'})}})
 
-    return thunk(fakeDispatch, getState)
-        .catch(() => expect('The catch clause was called').toEqual('catch was not called'))
+    return thunk(fakeDispatch)
+        .catch(() => {
+            expect('The catch clause was called').toEqual('catch was not called')
+        })
+        .then(() => {
+            expect(fakeDispatch.mock.calls[0][0]).toEqual(setPageFetchError(''))
+        })
 })

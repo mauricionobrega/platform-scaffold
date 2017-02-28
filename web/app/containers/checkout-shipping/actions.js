@@ -2,12 +2,11 @@ import {browserHistory} from 'react-router'
 import {createAction} from '../../utils/utils'
 import CheckoutShipping from './container'
 import checkoutShippingParser from './parsers/checkout-shipping'
-import shippingMethodParser from './parsers/shipping-method'
 import {addNotification, fetchPage, removeAllNotifications, removeNotification} from '../app/actions'
-import {getCustomerEntityID} from './selectors'
+import {getCustomerEntityID} from '../../store/checkout/selectors'
 import {getIsLoggedIn} from '../app/selectors'
 import {getShippingFormValues} from '../../store/form/selectors'
-import {receiveShippingMethodInitialValues} from '../../store/checkout/actions'
+import {receiveCheckoutData} from '../../store/checkout/actions'
 
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 
@@ -17,6 +16,7 @@ export const receiveData = createAction('Receive Checkout Shipping Data')
 export const process = ({payload: {$, $response}}) => {
     return receiveData(checkoutShippingParser($, $response))
 }
+
 
 export const onShippingEmailRecognized = () => {
     return (dispatch) => {
@@ -84,33 +84,6 @@ export const submitSignIn = () => {
     }
 }
 
-export const fetchShippingMethods = () => {
-    return (dispatch, getState) => {
-        const currentState = getState()
-        const isLoggedIn = getIsLoggedIn(currentState)
-        const formValues = getShippingFormValues(currentState)
-        const entityID = getCustomerEntityID(currentState)
-        // Default values to use if none have been selected
-        const address = {country_id: 'US', region_id: '0', postcode: null}
-        if (formValues) {
-            address.country_id = formValues.country_id
-            address.region_id = formValues.region_id
-            address.postcode = formValues.postcode
-        }
-        const getEstimateURL = `https://www.merlinspotions.com/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/estimate-shipping-methods`
-        makeJsonEncodedRequest(getEstimateURL, {address}, {method: 'POST'})
-            .then((response) => response.json())
-            .then((responseJSON) => {
-                const shippingMethods = shippingMethodParser(responseJSON)
-                const initialValues = {
-                    shipping_method: shippingMethods[0].value
-                }
-                dispatch(receiveData({shippingMethods}))
-                dispatch(receiveShippingMethodInitialValues({initialValues})) // set initial value for method
-            })
-    }
-}
-
 export const submitShipping = () => {
     return (dispatch, getState) => {
         const currentState = getState()
@@ -121,7 +94,9 @@ export const submitShipping = () => {
             addressLine2,
             country_id,
             city,
+            username,
             region_id,
+            region,
             postcode,
             telephone,
             shipping_method
@@ -130,7 +105,7 @@ export const submitShipping = () => {
         const isLoggedIn = getIsLoggedIn(currentState)
         const names = name.split(' ')
         const shippingSelections = shipping_method.split('_')
-        const addressData = {
+        const address = {
             firstname: names.slice(0, -1).join(' '),
             lastname: names.slice(-1).join(' '),
             company: company || '',
@@ -139,14 +114,15 @@ export const submitShipping = () => {
             city,
             street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1],
             regionId: region_id,
+            region,
             countryId: country_id,
             save_in_address_book: true
         }
         const addressInformation = {
             addressInformation: {
-                shippingAddress: addressData,
+                shippingAddress: address,
                 billingAddress: {
-                    ...addressData,
+                    ...address,
                     saveInAddressBook: false
                 },
                 shipping_carrier_code: shippingSelections[0],
@@ -154,6 +130,7 @@ export const submitShipping = () => {
             }
         }
         const persistShippingURL = `https://www.merlinspotions.com/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/shipping-information`
+        dispatch(receiveCheckoutData({shipping: {address}, emailAddress: username}))
         makeJsonEncodedRequest(persistShippingURL, addressInformation, {method: 'POST'})
             .then((response) => response.json())
             .then((responseJSON) => {
