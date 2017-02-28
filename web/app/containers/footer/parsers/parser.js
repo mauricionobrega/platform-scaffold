@@ -1,18 +1,20 @@
+import {parseTextLink} from '../../../utils/parser-utils'
 
 export const parseNewsLetter = ($content) => {
     const $form = $content.find('footer .form.subscribe')
-    const method = $form.attr('method').toLowerCase()
+    const method = $form.attr('method')
     const action = $form.attr('action')
-    return {action, method}
+    return {
+        action,
+        method: method ? method.toLowerCase() : ''
+    }
 }
 
-export const parseNavigation = ($content) => {
-    const $links = $content.find('footer .footer.links li a')
-    return Array.prototype.map.call($links, (link) => {
-        const $link = $(link)
-        return {
-            title: $link.text(),
-            href: $link.attr('href')
-        }
-    })
+const FOOTER_LINK_SELECTOR = 'footer .footer.links li a'
+
+export const parseNavigation = ($, $content) => {
+    return [].map.call(
+        $content.find(FOOTER_LINK_SELECTOR),
+        (link) => parseTextLink($(link))
+    )
 }

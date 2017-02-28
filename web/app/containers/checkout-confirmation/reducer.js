@@ -1,24 +1,11 @@
-import {createReducer} from 'redux-act'
+import {handleActions} from 'redux-actions'
 import Immutable from 'immutable'
 import * as checkoutConfirmationActions from './actions'
+import {mergePayloadForActions} from '../../utils/reducer-utils'
 
-const initialState = Immutable.fromJS({
-    body: '',
-    contentsLoaded: true,
-    emailAddress: 'mlenton@mobify.com',
-    isLoggedIn: true,
-    isModalShown: false,
-    orderNumber: '000000005',
-})
-
-export default createReducer({
-    [checkoutConfirmationActions.receiveContents]: (state, payload) => {
-        return state.mergeDeep(payload, {contentsLoaded: true})
+export default handleActions({
+    ...mergePayloadForActions(checkoutConfirmationActions.receiveData),
+    [checkoutConfirmationActions.hideRegistrationForm]: (state) => {
+        return state.mergeDeep({isRegistrationFormHidden: true})
     },
-    [checkoutConfirmationActions.showModal]: (state) => {
-        return state.mergeDeep({isModalShown: true})
-    },
-    [checkoutConfirmationActions.hideModal]: (state) => {
-        return state.mergeDeep({isModalShown: false})
-    },
-}, initialState)
+}, Immutable.Map())

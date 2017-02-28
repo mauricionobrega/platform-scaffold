@@ -1,6 +1,6 @@
 import React from 'react'
 import NavItem from 'progressive-web-sdk/dist/components/nav-item'
-import {Icon} from 'progressive-web-sdk/dist/components/icon'
+import Icon from 'progressive-web-sdk/dist/components/icon'
 
 /**
  * Icon used on project-specific nav items

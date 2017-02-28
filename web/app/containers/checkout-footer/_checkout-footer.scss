@@ -14,17 +14,16 @@
 // ---
 
 .t-checkout-footer__inner {
-    opacity: 0.5;
-    color: $neutral-10;
+    color: $neutral-00;
 }
 
 // Copyright
 // ---
 
 .t-checkout-footer__copyright {
-    margin: 0;
+    opacity: 0.5;
 
-    font-size: 12px;
+    font-size: $small-font-size;
     line-height: $font-size;
 }
 
@@ -34,7 +33,8 @@
 }
 
 .t-checkout-footer__logo-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    [id*='logo-sparkle-1'],
+    [id*='logo-sparkle-2'] {
+        opacity: 0.5;
+    }
 }

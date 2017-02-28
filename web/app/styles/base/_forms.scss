@@ -135,7 +135,7 @@ select {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
     &:active {
-        background: $neutral-40;
+        background: $neutral-30;
     }
 
     &:checked {
@@ -155,7 +155,7 @@ select {
     &:disabled {
         border: 0;
 
-        background: rgba($neutral-35, 0.5);
+        background: rgba($neutral-20, 0.5);
     }
 }
 
@@ -204,7 +204,7 @@ button,
     padding: 0;
     border: 0;
 
-    background: $neutral-30;
+    background: $neutral-15;
 
     line-height: $line-height;
 
@@ -212,7 +212,7 @@ button,
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
     &:active {
-        background: $neutral-40;
+        background: $neutral-30;
     }
 }
 
