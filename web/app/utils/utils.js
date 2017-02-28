@@ -1,9 +1,5 @@
 import {createAction as createReduxAction} from 'redux-actions'
 import fromPairs from 'lodash.frompairs'
-import {makeRequest, makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
-
-// Re-export the SDK utilities for now
-export {makeRequest, makeFormEncodedRequest}
 
 // simplify redux-actions createAction method.
 // usage: createAction('Update Campaign', 'id', 'update')
