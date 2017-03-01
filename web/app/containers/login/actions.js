@@ -138,8 +138,7 @@ export const submitRegisterForm = (formValues, resolve, reject) => {
     return (dispatch, getStore) => {
         const errors = validateRegisterForm(formValues)
         if (errors._error || Object.keys(errors).length) {
-            // return reject(new SubmissionError(errors))
-            throw new SubmissionError(errors)
+            return reject(new SubmissionError(errors))
         }
         const loginData = getLogin(getStore()).toJS()
         const {href, hiddenInputs} = loginData.registerSection.form
