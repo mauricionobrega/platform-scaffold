@@ -3,7 +3,7 @@
 rimraf build/
 sdk-get-routes
 sdk-create-hash-manifest
-webpack --config webpack/production.js -p --display-error-details
+webpack --config webpack/production.js -p --display-error-details --bail
 
 # Copy native onboarding
 rimraf ../native/app/build/app-www/onboarding/*
