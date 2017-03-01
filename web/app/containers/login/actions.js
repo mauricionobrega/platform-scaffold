@@ -1,5 +1,6 @@
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
-import {makeFormEncodedRequest, createAction} from '../../utils/utils'
+import {createAction} from '../../utils/utils'
+import {makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import isEmail from 'validator/lib/isEmail'
 import {SubmissionError} from 'redux-form'
 import {getLogin} from './selectors'
@@ -14,15 +15,14 @@ export const receiveData = createAction('Receive Login Data')
 export const process = ({payload: {$, $response, routeName}}) => {
     if (routeName === SIGN_IN_SECTION) {
         return receiveData({
-            loaded: true,
             signinSection: signinParser($, $response)
         })
     } else if (routeName === REGISTER_SECTION) {
         return receiveData({
-            loaded: true,
             registerSection: registerParser($, $response)
         })
     }
+    // This shouldn't happen, but just in case...
     return receiveData()
 }
 
