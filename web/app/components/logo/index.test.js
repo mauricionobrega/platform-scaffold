@@ -1,8 +1,9 @@
+/* eslint-env jest */
 import {mount} from 'enzyme'
 import React from 'react'
 
 import Logo from './index'
-import {Icon} from 'progressive-web-sdk/dist/components/icon'
+import Icon from 'progressive-web-sdk/dist/components/icon'
 
 /* eslint-disable newline-per-chained-call */
 

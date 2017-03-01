@@ -1,77 +1,82 @@
-/**
- * Demonstrates fetching/modifying the cart contents on the Merlin's site. This isn't
- * tested - just the result of inspecting the requests/responses to the site and then
- * translating them to JS.
- *
- * All requests require a session, eg. 'Cookie: PHPSESSID=as337c3fq7751n9gn1o3enacf7'
- */
-import parse from './parser/parser'
-import * as utils from '../../utils/utils'
+import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
+import {createAction, urlToPathKey} from '../../utils/utils'
+import {closeModal, openModal} from '../../store/modals/actions'
+import {fetchShippingMethodsEstimate} from '../../store/checkout/shipping/actions'
+import {
+    CART_ESTIMATE_SHIPPING_MODAL,
+    ESTIMATE_FORM_NAME,
+    CART_REMOVE_ITEM_MODAL,
+    CART_WISHLIST_MODAL,
+    ADD_TO_WISHLIST_URL
+} from './constants'
+import {removeFromCart} from '../../store/cart/actions'
+import {makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+import {getUenc} from '../product-details/selectors'
+import {addNotification} from '../app/actions'
+import {getFormKey, getIsLoggedIn} from '../app/selectors'
 
-const baseHeaders = {
-    Accept: 'application/json',
-}
+export const receiveData = createAction('Receive Cart Data')
+export const setRemoveItemId = createAction('Set item id for removal', 'removeItemId')
+export const setIsWishlistComplete = createAction('Set wishlist add complete', 'isWishlistAddComplete')
 
-export const receiveCartContents = utils.createAction('Received Cart Contents')
-export const toggleEstimateShippingModal = utils.createAction('Toggled Estimate Shipping modal', 'isOpen')
-export const toggleWishlistModal = utils.createAction('Toggled Wishlist modal', 'isOpen')
-
-/**
- * Get the contents of the users cart
- */
-export const getCart = () => (dispatch) => {
-    const opts = {
-        headers: baseHeaders
+export const submitEstimateShipping = () => {
+    return (dispatch) => {
+        dispatch(fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME))
+        dispatch(closeModal(CART_ESTIMATE_SHIPPING_MODAL))
     }
-    return utils.makeRequest('https://www.merlinspotions.com/customer/section/load/?sections=cart', opts)
-        .then((response) => response.text())
-        .then((responseText) => dispatch(receiveCartContents(parse(responseText))))
 }
 
-/**
- * Remove an item from the users cart
- *
- * Notes:
- *
- * - The `item_id` present in the data returned from getCart.
- * - Response is 200 with JSON: `{"success":true}` on success
- * - Response is 200 with JSON: `{"success":false,"error_message":"We can't find the quote item."}` if item not in cart
- * - Important: The cart contents rendered in the main HTML is *not* updated until `getCart()` has been called which
- *   busts a cache. You are expected to call `removeFromCart()` then `getCart()` every time.
- */
-export const removeFromCart = (itemId) => {
-    const body = new FormData()
-    body.append('item_id', itemId)
 
-    const headers = Object.assign({}, baseHeaders, {
-        'Content-Type': 'application/x-www-form-urlencoded',
-    })
+const addToWishlist = (productId, productURL) => (dispatch, getState) => {
+    const payload = {
+        product: productId,
+        // This won't always be defined, but add to wishlist will still work
+        // if it's missing
+        uenc: getUenc(urlToPathKey(productURL))(getState()),
+        formKey: getFormKey(getState())
+    }
 
-    const opts = {headers, body, method: 'POST'}
-    return fetch('https://www.merlinspotions.com/checkout/sidebar/removeItem/', opts)
-        .json()
+    return makeFormEncodedRequest(ADD_TO_WISHLIST_URL, payload, {method: 'POST'})
 }
 
-/**
- * Update the quantity of an item in the users cart
- *
- * Notes:
- *
- * - Response is 200 with JSON: `{"success":true}` on success
- * - Response is 200 with JSON: `{"success":false,"error_message":"We can't find the quote item."}` if item not in cart
- * - Important: The cart contents rendered in the main HTML is *not* updated until `getCart()` has been called which
- *   busts a cache. You are expected to call `removeFromCart()` then `getCart()` every time.
- */
-export const updateItemQuantity = (itemId, itemQuantity) => {
-    const body = new FormData()
-    body.append('item_id', itemId)
-    body.append('item_qty', itemQuantity)
+export const saveToWishlist = (productId, itemId, productURL) => (dispatch, getState) => {
+    dispatch(setIsWishlistComplete(false))
+    dispatch(openModal(CART_WISHLIST_MODAL))
+    if (!getIsLoggedIn(getState())) {
+        return
+    }
+    const wishListErrorNotification = {
+        content: 'Unable to add item to wishlist.',
+        id: 'cartWishlistError',
+        showRemoveButton: true
+    }
 
-    const headers = Object.assign({}, baseHeaders, {
-        'Content-Type': 'application/x-www-form-urlencoded',
-    })
 
-    const opts = {headers, body, method: 'POST'}
-    return fetch('https://www.merlinspotions.com/checkout/sidebar/updateItemQty/', opts)
-        .json()
+    dispatch(addToWishlist(productId, productURL))
+        .then(jqueryResponse)
+        .then((response) => {
+            const [$, $response] = response // eslint-disable-line no-unused-vars
+            // The response is the HTML of the wishlist page, so check for the item we added
+            if ($response.find(`.product-item-link[href="${productURL}"]`).length) {
+                dispatch(removeFromCart(itemId))
+                dispatch(setIsWishlistComplete(true))
+                return
+            }
+            throw new Error('Add Request Failed')
+        })
+        .catch((error) => {
+            if (/Failed to fetch|Add Request Failed/i.test(error.message)) {
+                dispatch(closeModal(CART_WISHLIST_MODAL))
+                dispatch(addNotification(wishListErrorNotification))
+            } else {
+                throw error
+            }
+        })
+}
+
+export const openRemoveItemModal = (itemId) => {
+    return (dispatch) => {
+        dispatch(openModal(CART_REMOVE_ITEM_MODAL))
+        dispatch(setRemoveItemId(itemId))
+    }
 }

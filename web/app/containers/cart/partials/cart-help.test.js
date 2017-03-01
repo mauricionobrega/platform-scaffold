@@ -1,3 +1,4 @@
+/* eslint-env jest */
 import React from 'react'
 import CartHelp from './cart-help'
 import {mount, shallow} from 'enzyme'
