@@ -53,7 +53,7 @@ class Header extends React.Component {
         const {onMenuClick, onMiniCartClick, isCollapsed, itemCount, isRunningInAstro} = this.props
 
         if (isRunningInAstro) {
-           trigger('cart-updated', {
+            trigger('cart-updated', {
                 count: itemCount
             })
             return null
