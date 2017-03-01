@@ -6,7 +6,7 @@ import CartModalController from './cartModalController'
 import AppEvents from '../global/app-events'
 import baseConfig from '../config/baseConfig'
 import cartConfig from '../config/cartConfig'
-import {Events} from './TabController'
+import {Events} from './tabController'
 
 const TabHeaderController = function(headerBar, counterBadgeController) {
     this.viewPlugin = headerBar
