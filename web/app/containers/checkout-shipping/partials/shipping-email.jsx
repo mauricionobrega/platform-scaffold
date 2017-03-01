@@ -43,7 +43,7 @@ const ShippingEmail = ({submitSignIn, customerEmailRecognized, checkCustomerEmai
                 {customerEmailRecognized &&
                     <FieldRow>
                         <Button
-                            className="c--secondary u-width-full u-text-uppercase"
+                            className="c--secondary u-width-full u-text-uppercase qa-checkout__sign-in"
                             onClick={submitSignIn}>
                             <Icon name="user" className="u-margin-end" />
                             Sign In

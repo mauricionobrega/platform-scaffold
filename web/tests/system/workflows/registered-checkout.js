@@ -58,38 +58,38 @@ export default {
             .assert.visible(productDetails.selectors.itemAdded)
     },
 
-    'Checkout - Registered - Step 5 - Navigate from ProductDetails to Shopping Cart': (browser) => {
-        productDetails.navigateToCart()
-        browser
-            .waitForElementVisible(cart.selectors.cartTemplateIdentifier)
-            .assert.visible(cart.selectors.cartTemplateIdentifier)
-    },
-
-    'Checkout - Registered - Step 6 - Navigate from Shopping Cart to Checkout Sign In or Continue as Guest page': (browser) => {
-        cart.navigateToCheckout()
+    'Checkout - Registered - Step 5 - Navigate from ProductDetails to Checkout': (browser) => {
+        productDetails.navigateToCheckout()
         browser
             .waitForElementVisible(checkout.selectors.checkoutTemplateIdentifier)
             .assert.visible(checkout.selectors.checkoutTemplateIdentifier)
     },
 
-    'Checkout - Registered - Step 7 - Continue to Registered Checkout': (browser) => {
+    'Checkout - Registered - Step 6 - Continue to Registered Checkout': (browser) => {
         checkout.continueAsRegistered()
         browser
             .waitForElementVisible(checkout.selectors.checkoutTemplateIdentifier)
             .assert.visible(checkout.selectors.checkoutTemplateIdentifier)
     },
 
-    // 'Checkout - Registered - Step 8 - Fill out Registered Checkout Payment Details form': (browser) => {
-    //     checkout.fillPaymentDetails()
-    //     browser
-    //         .waitForElementVisible(checkout.selectors.lastPaymentDetail)
-    //         .assert.valueContains(checkout.selectors.lastPaymentDetail, checkout.userData.lastPaymentDetail)
-    // },
+    'Checkout - Registered - Step 7 - Fill out Shipping Info form': (browser) => {
+        checkout.fillShippingInfo()
+        browser.waitForElementVisible(checkout.selectors.lastShippingInfo)
+    },
 
-    // 'Checkout - Registered - Step 9 - Verify Submit Order button is visible': (browser) => {
-    //     browser
-    //         .waitForElementVisible(checkout.selectors.submitOrder)
-    //         .assert.visible(checkout.selectors.submitOrder)
-    // }
+    'Checkout - Registered - Step 8 - Fill out Registered Checkout Payment Details form': (browser) => {
+        checkout.continueToPayment()
+        // Pre-filled card on Merlins Potions
+        // checkout.fillPaymentDetails()
+        // browser
+        //     .waitForElementVisible(checkout.selectors.lastPaymentDetail)
+        //     .assert.valueContains(checkout.selectors.lastPaymentDetail, checkout.userData.lastPaymentDetail)
+    },
+
+    'Checkout - Registered - Step 9 - Verify Submit Order button is visible': (browser) => {
+        browser
+            .waitForElementVisible(checkout.selectors.submitOrder)
+            .assert.visible(checkout.selectors.submitOrder)
+    }
 
 }

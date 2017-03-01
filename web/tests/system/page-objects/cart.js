@@ -2,6 +2,7 @@ const selectors = {
     cartTemplateIdentifier: '.t-cart',
     cartCheckout: '.qa-cart__checkout',
     removeItem: '.qa-cart__remove-item',
+    confirmRemove: '.t-cart__remove-item-confirmation-modal .c--secondary',
     emptyCart: '.t-cart__empty'
 }
 
@@ -31,6 +32,8 @@ Cart.prototype.removeItems = function() {
                 self.browser
                     .log('Removing item from cart')
                     .click(selectors.removeItem)
+                    .waitForElementVisible(selectors.confirmRemove)
+                    .click(selectors.confirmRemove)
                     .waitUntilMobified()
                 self.cleanUp()
             }

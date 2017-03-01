@@ -65,12 +65,12 @@ export default {
             .assert.visible(checkout.selectors.checkoutTemplateIdentifier)
     },
 
-    'Checkout - Guest - Step 7 - Fill out Guest Checkout Shipping Info form': (browser) => {
+    'Checkout - Guest - Step 6 - Fill out Guest Checkout Shipping Info form': (browser) => {
         checkout.fillShippingInfo()
         browser.waitForElementVisible(checkout.selectors.lastShippingInfo)
     },
 
-    'Checkout - Guest - Step 8 - Fill out Guest Checkout Payment Details form': (browser) => {
+    'Checkout - Guest - Step 7 - Fill out Guest Checkout Payment Details form': (browser) => {
         checkout.continueToPayment()
         // Pre-filled card on Merlins Potions
         // checkout.fillPaymentDetails()
@@ -79,7 +79,7 @@ export default {
         //     .assert.valueContains(checkout.selectors.lastPaymentDetail, checkout.userData.lastPaymentDetail)
     },
 
-    'Checkout - Guest - Step 10 - Verify Submit Order button is visible': (browser) => {
+    'Checkout - Guest - Step 8 - Verify Submit Order button is visible': (browser) => {
         browser
             .waitForElementVisible(checkout.selectors.submitOrder)
             .assert.visible(checkout.selectors.submitOrder)

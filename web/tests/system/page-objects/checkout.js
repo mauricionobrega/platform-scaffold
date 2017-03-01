@@ -1,7 +1,7 @@
 const selectors = {
     checkoutTemplateIdentifier: '.t-checkout-shipping.t--loaded',
 
-    registeredEmail: 'input[name="email"]',
+    registeredEmail: 'input[name="username"]',
     registeredPassword: 'input[name="password"]',
     signIn: '.qa-checkout__sign-in',
 
@@ -10,7 +10,7 @@ const selectors = {
     address: 'input[name="addressLine1"]',
     city: 'input[name*="city"]',
     country: 'select[name*="country"]',
-    state: 'input[name*="region"]',
+    state: 'select[name*="region"]',
     postCode: 'input[name*="code"]',
     phone: 'input[name*="phone"]',
     lastShippingInfo: 'input[name*="phone"]', // Used to verify that shipping info has been completed
@@ -65,6 +65,10 @@ Checkout.prototype.continueAsRegistered = function() {
         .log('Navigating to Registered Checkout')
         .waitForElementVisible(selectors.registeredEmail)
         .setValue(selectors.registeredEmail, userData.registeredEmail)
+        // The password field is not displayed to the user until focus is 
+        // removed from the email field.
+        .click(selectors.checkoutTemplateIdentifier)
+        .waitForElementVisible(selectors.registeredPassword)
         .setValue(selectors.registeredPassword, userData.registeredPassword)
         .waitForElementVisible(selectors.signIn)
         .click(selectors.signIn)
@@ -84,6 +88,14 @@ Checkout.prototype.fillShippingInfo = function() {
     // Fill out Shipping info form fields
     this.browser
         .log('Fill out Shipping Info form fields')
+        .clearValue(selectors.name)
+        .clearValue(selectors.address)
+        .clearValue(selectors.city)
+        .clearValue(selectors.country)
+        .clearValue(selectors.state)
+        .clearValue(selectors.postCode)
+        .clearValue(selectors.phone)
+
         .setValue(selectors.name, userData.name)
         .setValue(selectors.address, userData.address)
         .setValue(selectors.city, userData.city)

@@ -31,9 +31,9 @@ test:
         - npm run test:pwa-ci:
             pwd: web
         ## Enable smoke-test when automated workflow tests have been implemented.
-        # - npm run smoke-test:
-        #    parallel: true
-        #    pwd: web
+        - npm run smoke-test:
+           parallel: true
+           pwd: web
     post:
        - cp -R lighthouse/* $CIRCLE_ARTIFACTS:
            pwd: web
