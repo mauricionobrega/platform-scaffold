@@ -1,3 +1,5 @@
+/* global AstroNative */
+
 import Promise from 'bluebird'
 import Astro from 'progressive-app-sdk/astro-full'
 import ModalViewPlugin from 'progressive-app-sdk/plugins/modalViewPlugin'
@@ -49,7 +51,11 @@ OnboardingModalController.init = async function() {
     })
 
     Astro.registerRpcMethod(AppRpc.names.pushEnable, [], () => {
-        pushController.subscribeTest()
+        if (AstroNative.Configuration.DEBUG) {
+            pushController.subscribeTest()
+        } else {
+            pushController.subscribe()
+        }
     })
 
     return onboardingModalController
