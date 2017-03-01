@@ -6,6 +6,7 @@ import EngagementController from 'progressive-app-sdk/controllers/engagementCont
 const PushController = function(pushPlugin) {
     this.plugin = pushPlugin
 }
+
 PushController.init = async function() {
     const pushSiteId = 'merlinspotions'
     const mobifySlugName = 'progressive-web-scaffold'
@@ -14,8 +15,8 @@ PushController.init = async function() {
     const pushPlugin = await PushPlugin.init(pushSiteId, engagementPromise)
 
     if (Astro.isRunningInAndroidApp()) {
-        const notifcationIconPath = 'file:///web_push_notification_icon'
-        await pushPlugin.setNotifcationIconPath(notifcationIconPath)
+        const notificationIconPath = 'file:///push_notification_icon.png'
+        await pushPlugin.setNotificationIconPath(notificationIconPath)
     }
 
     return new PushController(pushPlugin)
