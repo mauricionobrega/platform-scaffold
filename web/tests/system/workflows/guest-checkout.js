@@ -58,15 +58,8 @@ export default {
     },
 
 
-    'Checkout - Guest - Step 5 - Navigate from ProductDetails to Shopping Cart': (browser) => {
-        productDetails.navigateToCart()
-        browser
-            .waitForElementVisible(cart.selectors.cartTemplateIdentifier)
-            .assert.visible(cart.selectors.cartTemplateIdentifier)
-    },
-
-    'Checkout - Guest - Step 6 - Navigate from Shopping Cart to Checkout Sign In or Continue as Guest page': (browser) => {
-        cart.navigateToCheckout()
+    'Checkout - Guest - Step 5 - Navigate from ProductDetails to Checkout': (browser) => {
+        productDetails.navigateToCheckout()
         browser
             .waitForElementVisible(checkout.selectors.checkoutTemplateIdentifier)
             .assert.visible(checkout.selectors.checkoutTemplateIdentifier)
@@ -74,22 +67,21 @@ export default {
 
     'Checkout - Guest - Step 7 - Fill out Guest Checkout Shipping Info form': (browser) => {
         checkout.fillShippingInfo()
-        browser
-            .waitForElementVisible(checkout.selectors.lastShippingInfo)
-            .assert.valueContains(checkout.selectors.lastShippingInfo, checkout.userData.lastShippingInfo)
+        browser.waitForElementVisible(checkout.selectors.lastShippingInfo)
     },
 
-    // 'Checkout - Guest - Step 8 - Fill out Guest Checkout Payment Details form': (browser) => {
-    //     checkout.continueToPayment()
-    //     checkout.fillPaymentDetails()
-    //     browser
-    //         .waitForElementVisible(checkout.selectors.lastPaymentDetail)
-    //         .assert.valueContains(checkout.selectors.lastPaymentDetail, checkout.userData.lastPaymentDetail)
-    // },
+    'Checkout - Guest - Step 8 - Fill out Guest Checkout Payment Details form': (browser) => {
+        checkout.continueToPayment()
+        // Pre-filled card on Merlins Potions
+        // checkout.fillPaymentDetails()
+        // browser
+        //     .waitForElementVisible(checkout.selectors.lastPaymentDetail)
+        //     .assert.valueContains(checkout.selectors.lastPaymentDetail, checkout.userData.lastPaymentDetail)
+    },
 
-    // 'Checkout - Guest - Step 10 - Verify Submit Order button is visible': (browser) => {
-    //     browser
-    //         .waitForElementVisible(checkout.selectors.submitOrder)
-    //         .assert.visible(checkout.selectors.submitOrder)
-    // }
+    'Checkout - Guest - Step 10 - Verify Submit Order button is visible': (browser) => {
+        browser
+            .waitForElementVisible(checkout.selectors.submitOrder)
+            .assert.visible(checkout.selectors.submitOrder)
+    }
 }

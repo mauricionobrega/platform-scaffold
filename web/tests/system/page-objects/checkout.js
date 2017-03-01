@@ -7,14 +7,13 @@ const selectors = {
 
     // Shipping info
     name: 'input[name="name"]',
-    address: 'input[name="address-line1"]',
+    address: 'input[name="addressLine1"]',
     city: 'input[name*="city"]',
     country: 'select[name*="country"]',
-    state: 'input[name*="state"]',
+    state: 'input[name*="region"]',
     postCode: 'input[name*="code"]',
     phone: 'input[name*="phone"]',
     lastShippingInfo: 'input[name*="phone"]', // Used to verify that shipping info has been completed
-    shippingMethod: 'input[name="shipping-method"]',
     continueToPayment: '.qa-checkout__continue-to-payment',
 
     paymentTemplate: '.t-app--checkingPayment',
@@ -23,7 +22,7 @@ const selectors = {
     expiry: 'input[name="ccexpiry"]',
     cvv: 'input[name="cvv"]',
 
-    submitOrder: '.submitOrder'
+    submitOrder: 'button.c--primary[type="submit"]'
 }
 
 const userData = {
@@ -92,9 +91,6 @@ Checkout.prototype.fillShippingInfo = function() {
         .setValue(selectors.state, userData.state)
         .setValue(selectors.postCode, userData.postCode)
         .setValue(selectors.phone, userData.phone)
-
-        .waitForElementVisible(selectors.shippingMethod)
-        .click(selectors.shippingMethod)
     return this
 }
 

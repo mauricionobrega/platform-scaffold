@@ -1,8 +1,8 @@
 const selectors = {
     productDetailsTemplateIdentifier: '.t-product-details',
     addItem: '.t-product-details__add-to-cart:not([disabled])',
-    itemAdded: '.t-pproduct-list__item-added-modal .u-h4',
-    goToCart: '.t-product-list__item-added-modal a[href*="cart"]'
+    itemAdded: '.product-list__item-added-modal',
+    goToCheckout: '.product-list__item-added-modal .c--primary'
 }
 
 const ProductDetails = function(browser) {
@@ -20,16 +20,14 @@ ProductDetails.prototype.addItemToCart = function() {
     return this
 }
 
-ProductDetails.prototype.navigateToCart = function() {
-    // Navigate from ProductDetails to Cart
+ProductDetails.prototype.navigateToCheckout = function() {
+    // Navigate from ProductDetails to Checkout
     this.browser
         .log('Navigating to cart')
-        // .waitForElementVisible(selectors.goToCart)
-        // .click(selectors.goToCart)
-        // .waitUntilMobified()
+        .waitForElementVisible(selectors.goToCheckout)
+        .click(selectors.goToCheckout)
+        .waitUntilMobified()
 
-        // Workaround until Go To Checkout link works
-        .url('https://www.merlinspotions.com/checkout/cart/')
     return this
 }
 
