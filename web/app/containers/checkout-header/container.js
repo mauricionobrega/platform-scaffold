@@ -27,6 +27,7 @@ const CheckoutHeader = function({isLoggedIn, isRunningInAstro}) {
                 {!isLoggedIn &&
                     <div className="u-flex u-text-align-end">
                         <Button
+                            className= "u-text-letter-spacing-normal"
                             href="/customer/account/login/"
                             innerClassName="u-color-neutral-10"
                             >

@@ -13,7 +13,7 @@ import {Ledger, LedgerRow} from 'progressive-web-sdk/dist/components/ledger'
 
 const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, shippingRate, onCalculateClick}) => {
     const calculateButton = (
-        <Button innerClassName="u-padding-end-0 u-color-brand" onClick={onCalculateClick}>
+        <Button innerClassName="u-padding-end-0 u-color-brand u-text-letter-spacing-normal" onClick={onCalculateClick}>
             Calculate <Icon name="chevron-right" />
         </Button>
     )
