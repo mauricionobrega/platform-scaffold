@@ -18,7 +18,7 @@ import HeaderTitle from './partials/header-title'
 import StoresAction from './partials/stores-action'
 import CartAction from './partials/cart-action'
 
-import Astro from '../../vendor/astro-client'
+import {trigger} from '../../vendor/astro-client'
 
 const SCROLL_CHECK_INTERVAL = 200
 
@@ -53,7 +53,7 @@ class Header extends React.Component {
         const {onMenuClick, onMiniCartClick, isCollapsed, itemCount, isRunningInAstro} = this.props
 
         if (isRunningInAstro) {
-            Astro.trigger('cart-updated', {
+           trigger('cart-updated', {
                 count: itemCount
             })
             return null

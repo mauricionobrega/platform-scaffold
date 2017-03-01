@@ -8,6 +8,7 @@ import AlertViewPlugin from 'progressive-app-sdk/plugins/alertViewPlugin'
 import AppEvents from '../global/app-events'
 import CartHeaderController from './cartHeaderController'
 import CartConfig from '../config/cartConfig'
+import {Events as TabEvents} from './tabController'
 
 const Events = {
     signInShow: 'sign-in:show',
@@ -36,6 +37,10 @@ const CartModalController = function(modalView, navigationView) {
 
     this.navigationView.on('checkout:enable-alert', () => {
         this.alertEnabled = true
+    })
+
+    this.navigationView.on('cart-updated', (data) => {
+        AppEvents.trigger(TabEvents.updateCart, data)
     })
 }
 
