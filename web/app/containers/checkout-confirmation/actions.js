@@ -1,6 +1,7 @@
+import {makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import checkoutConfirmationParser from './parsers/checkout-confirmation'
 import {CHECKOUT_CONFIRMATION_MODAL, CHECKOUT_CONFIRMATION_REGISTRATION_FAILED} from './constants'
-import {createAction, makeFormEncodedRequest} from '../../utils/utils'
+import {createAction} from '../../utils/utils'
 import {addNotification, removeAllNotifications} from '../app/actions'
 import {openModal} from '../../store/modals/actions'
 import * as shippingSelectors from '../../store/checkout/shipping/selectors'
