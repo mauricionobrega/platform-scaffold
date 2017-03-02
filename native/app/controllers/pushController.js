@@ -1,10 +1,26 @@
 import Astro from 'progressive-app-sdk/astro-full'
 
 import PushPlugin from 'progressive-app-sdk/plugins/pushPlugin'
+import AlertViewPlugin from 'progressive-app-sdk/plugins/alertViewPlugin'
 import EngagementController from 'progressive-app-sdk/controllers/engagementController'
 
 const PushController = function(pushPlugin) {
     this.plugin = pushPlugin
+
+    this.plugin.on('messageReceivedWhenAppIsOpen', (params) => {
+        const config = {
+            title: params.title,
+            text: params.message,
+            okButton: 'OK',
+            cancelButton: 'Cancel'
+        }
+
+        AlertViewPlugin.alert(config).then((okButtonPressed) => {
+            if (okButtonPressed) {
+                this.plugin.messageClickedWhenAppIsOpen(params)
+            }
+        })
+    })
 }
 
 PushController.init = async function() {
