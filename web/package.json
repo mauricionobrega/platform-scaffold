@@ -9,7 +9,7 @@
   "siteUrl": "",
   "license": "See license in LICENSE",
   "private": true,
-  "version": "0.13.0",
+  "version": "0.13.1",
   "dependencies": {
     "babel-runtime": "6.11.6",
     "es6-promise": "4.0.5",
