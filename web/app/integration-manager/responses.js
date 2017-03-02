@@ -4,6 +4,8 @@ import {addNotification, removeNotification} from '../containers/app/actions'
 
 export const receivePdpProductData = createAction('Receive PDP product data')
 
+export const receivePdpUIData = createAction('Receive PDP UI data')
+
 export const receiveCheckoutShippingData = createAction('Receive Checkout Shipping data')
 
 export const receiveCheckoutData = createAction('Receive Checkout Data')
