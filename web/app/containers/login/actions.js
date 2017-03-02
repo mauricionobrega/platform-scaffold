@@ -117,7 +117,6 @@ const sendForm = (href, formValues, formSelector, resolve, reject) => {
 
 export const submitSignInForm = (formValues, resolve, reject) => {
     return (dispatch, getStore) => {
-        // debugger
         const errors = validateSignInForm(formValues)
         if (errors._error || Object.keys(errors.login).length) {
             return reject(new SubmissionError(errors))
