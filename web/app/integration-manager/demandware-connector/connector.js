@@ -48,3 +48,23 @@ export const fetchPdpData = () => (dispatch) => {
         })
 
 }
+
+export const addToCart = () => {
+    console.log('Add item to cart')
+}
+
+export const fetchCheckoutShippingData = () => {
+    console.log('Fetch checkout shipping data')
+}
+
+export const submitShipping = () => {
+    console.log('submit shipping form')
+}
+
+export const checkCustomerEmail = () => {
+    console.log('Check customer email')
+}
+
+export const submitSignIn = () => {
+    console.log('Submit sign in form')
+}
