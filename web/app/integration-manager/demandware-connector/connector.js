@@ -9,19 +9,22 @@ const DW_CLIENT_ID = '5640cc6b-f5e9-466e-9134-9853e9f9db93'
 
 const API_END_POINT_URL = `/s/${SITE_ID}/dw/${API_TYPE}/${API_VERSION}`
 
-const REQUEST_OPTIONS = {
-    headers: new Headers({
-        'Content-Type': 'application/json',
-        'x-dw-client-id': DW_CLIENT_ID
-    }),
-    body: '{ type : "session" }'
+const REQUEST_HEADERS = {
+    'Content-Type': 'application/json',
+    'x-dw-client-id': DW_CLIENT_ID
 }
 
 const initDemandWareSession = () => {
-    const options = {...REQUEST_OPTIONS, method: 'POST'}
+    const options = {
+        method: 'POST',
+        body: '{ type : "session" }',
+        headers: new Headers(REQUEST_HEADERS)
+    }
     return makeRequest(`${API_END_POINT_URL}/customers/auth`, options)
         .then((response) => {
-            REQUEST_OPTIONS.headers.set('Authorization', response.headers.get('Authorization'))
+            // To Do: Add this to the store???
+            REQUEST_HEADERS.Authorization = response.headers.get('Authorization')
+            options.headers.set('Authorization', response.headers.get('Authorization'))
         })
         .then(() => {
             makeRequest(`${API_END_POINT_URL}/sessions`, options)
@@ -35,9 +38,8 @@ export const fetchPdpData = () => (dispatch) => {
     return initDemandWareSession()
         .then(() => {
             const options = {
-                ...REQUEST_OPTIONS,
                 method: 'GET',
-                body: undefined
+                headers: new Headers(REQUEST_HEADERS)
             }
             makeRequest(productURL, options)
                 .then((response) => response.json())
