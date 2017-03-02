@@ -26,12 +26,10 @@ class RegisterForm extends React.Component {
         }
     }
 
-    onSubmit() {
-        this.props.handleSubmit((values) =>
-            new Promise((resolve, reject) => {
-                this.props.submitForm(values, resolve, reject)
-            })
-        )
+    onSubmit(values) {
+        return new Promise((resolve, reject) => {
+            this.props.submitForm(values, resolve, reject)
+        })
     }
 
     render() {
@@ -39,6 +37,7 @@ class RegisterForm extends React.Component {
             // redux-form
             error,
             submitting,
+            handleSubmit,
             // props from parent
             sections,
             submitText,
@@ -55,7 +54,7 @@ class RegisterForm extends React.Component {
         }
 
         return (
-            <form noValidate={true} onSubmit={this.onSubmit}>
+            <form noValidate={true} onSubmit={handleSubmit(this.onSubmit)}>
                 {error &&
                     <div className="u-margin-bottom-md u-color-error">
                         {error}
