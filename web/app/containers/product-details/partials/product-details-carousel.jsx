@@ -22,10 +22,10 @@ const ProductDetailsCarousel = ({items, contentsLoaded}) => {
     if (items.length) {
         return (
             <Carousel {...carouselProps}>
-                {items.map(({img}, idx) => {
+                {items.map(({img, alt}, idx) => {
                     const imgProps = {
                         className: contentsLoaded ? 'u-block' : 'u-block c--is-transitioning', // Carousel hasn't received the final images yet
-                        alt: '', // no alt text available :(
+                        alt: alt || '', // no alt text available :(
                         src: img,
                         hidePlaceholder: true,
                         ratio: {aspect: '1:1'},
