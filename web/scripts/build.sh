@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 rimraf build/
 sdk-get-routes
