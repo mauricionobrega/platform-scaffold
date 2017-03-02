@@ -5,8 +5,6 @@ import Button from 'progressive-web-sdk/dist/components/button'
 // Merlins Potions Nearby Widget Config
 import merlinsPotionsNearbyConfig from '../../../config/merlins-potions-nearby-config.json'
 
-const componentClass = 'c-nearest-stores'
-
 /**
  * Merlins Donde Nearby Widget
  */
@@ -47,7 +45,7 @@ class HomeNearestStores extends React.Component {
         const closestLocations = merlinsPotionsNearbyConfig.configs
 
         return (
-            <div className={componentClass}>
+            <div className="t-home__nearest-stores">
                 <div className="u-card u-padding-md u-padding-top-lg u-padding-bottom-lg">
                     <h2 className="u-padding-bottom-md u-border-light-bottom u-text-uppercase">{title}</h2>
 
