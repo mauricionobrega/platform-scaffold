@@ -103,15 +103,15 @@ const sendForm = (href, formValues, formSelector, resolve, reject) => {
                 const error = {
                     _error: 'Username or password is incorrect'
                 }
-                reject(new SubmissionError(error))
-            } else {
-                window.location.href = '/customer/account'
-                resolve(true)
+                return reject(new SubmissionError(error))
             }
+            window.location.href = '/customer/account'
+            return resolve(true)
         })
         .catch((error) => {
-            console.error('Failed to login due to network error.', error)
-            reject({})
+            if (error.name !== SubmissionError) {
+                reject(new SubmissionError({_error: 'Failed to login due to network error.'}))
+            }
         })
 }
 
