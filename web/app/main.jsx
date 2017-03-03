@@ -18,7 +18,7 @@ import Stylesheet from './stylesheet.scss' // eslint-disable-line no-unused-vars
 
 import {initMobifyAnalytics} from 'progressive-web-sdk/dist/analytics'
 
-import connector from './integration-manager/merlins-connector'
+import connector from './integration-manager/demandware-connector'
 import {registerConnector} from './integration-manager'
 
 polyfill()
