@@ -4,7 +4,7 @@
 OUTPUT_PATH=./lighthouse/audit-local.html
 URL=https://localhost
 
-concurrently --kill-others --success first --raw \
+concurrently --kill-others --success --raw \
 	'chrome-debug --allow-insecure-localhost --user-agent="Chrome MobifyPreview"' \
 	"sleep 5 && lighthouse --skip-autolaunch --output=html \
 		--output-path=./lighthouse/audit-local.html \
