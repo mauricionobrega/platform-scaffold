@@ -1,5 +1,6 @@
 import AnchoredLayoutPlugin from 'progressive-app-sdk/plugins/anchoredLayoutPlugin'
 import TabBarPlugin from 'progressive-app-sdk/plugins/tabBarPlugin'
+import Application from 'progressive-app-sdk/application'
 
 import {tabBarConfig} from '../config/tabBarConfig'
 import baseConfig from '../config/baseConfig'
@@ -99,6 +100,8 @@ TabBarController.prototype.backActiveItem = async function() {
     if (await this.canGoBack()) {
         const activeTab = this.getActiveController()
         activeTab.back()
+    } else {
+        Application.closeApp()
     }
 }
 
