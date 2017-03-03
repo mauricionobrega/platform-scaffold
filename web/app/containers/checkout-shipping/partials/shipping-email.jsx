@@ -28,7 +28,7 @@ const ShippingEmail = ({submitSignIn, customerEmailRecognized, checkCustomerEmai
 
                 <FieldRow>
                     <ReduxForm.Field component={Field} className="pw--overlayed-hint" name="username" label="Email order confirmation to">
-                        <input type="email" noValidate onBlur={checkCustomerEmail} />
+                        <input type="email" noValidate onBlur={checkCustomerEmail} placeholder="Email Address" />
                     </ReduxForm.Field>
                 </FieldRow>
 
