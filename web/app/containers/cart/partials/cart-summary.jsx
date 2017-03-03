@@ -10,6 +10,7 @@ import Button from 'progressive-web-sdk/dist/components/button'
 import CartPromoForm from './cart-promo-form'
 import Icon from 'progressive-web-sdk/dist/components/icon'
 import {Ledger, LedgerRow} from 'progressive-web-sdk/dist/components/ledger'
+import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/accordion'
 
 const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, shippingRate, onCalculateClick}) => {
     const calculateButton = (
@@ -28,12 +29,14 @@ const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, shippingRa
                 </div>
             </div>
 
-            <div className="u-bg-color-neutral-00 u-border-light-top u-border-light-bottom">
-                <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg">
-                    <CartPromoForm />
-                </div>
+            <div className="u-bg-color-neutral-00 u-border-light-bottom">
+                <Accordion>
+                    <AccordionItem header="Promo code">
+                        <CartPromoForm />
+                    </AccordionItem>
+                </Accordion>
 
-                <Ledger className="u-border-light-top">
+                <Ledger>
                     <LedgerRow
                         label={`Subtotal (${summaryCount} items)`}
                         value={subtotalExclTax}
