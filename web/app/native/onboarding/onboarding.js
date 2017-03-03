@@ -28,7 +28,9 @@ const notifications = {
     subtitle: 'Hear about the latest deals, promotions, specials, and exclusive offers through Notifications!',
     actionButton: {
         title: 'ENABLE',
-        action: () => {}
+        action: () => {
+            Astro.jsRpcMethod('push:enable', [])()
+        }
     }
 }
 
