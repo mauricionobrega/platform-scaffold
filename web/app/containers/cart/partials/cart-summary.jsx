@@ -21,6 +21,11 @@ const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, shippingRa
 
     return (
         <div className="t-cart__summary">
+            <Accordion className="u-margin-top u-bg-color-neutral-00">
+                <AccordionItem header="Promo code">
+                    <CartPromoForm />
+                </AccordionItem>
+            </Accordion>
             <div className="t-cart__summary-title">
                 <div className="u-flexbox u-align-center">
                     <h2 className="u-flex">
@@ -29,14 +34,8 @@ const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, shippingRa
                 </div>
             </div>
 
-            <div className="u-bg-color-neutral-00 u-border-light-bottom">
-                <Accordion>
-                    <AccordionItem header="Promo code">
-                        <CartPromoForm />
-                    </AccordionItem>
-                </Accordion>
-
-                <Ledger>
+            <div className="u-bg-color-neutral-00 u-border-light-top u-border-light-bottom">
+                <Ledger className="u-border-light-top">
                     <LedgerRow
                         label={`Subtotal (${summaryCount} items)`}
                         value={subtotalExclTax}
