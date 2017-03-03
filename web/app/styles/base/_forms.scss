@@ -97,7 +97,6 @@ select {
     height: $tap-size; // 1
 
     border-radius: 0;
-    background-image: url($base__select-triangle); // @TODO replace with Icon component
 
     color: $brand-color;
 
@@ -106,10 +105,6 @@ select {
         background-repeat: no-repeat;
         background-position: calc(100% - 14px) center; // 2
         background-size: 12px 6px;
-    }
-
-    &[disabled] {
-        background-image: url($base__disabled-select-triangle); // @TODO: replace with Icon component
     }
 }
 
