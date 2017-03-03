@@ -3,7 +3,7 @@ package com.mobify.astro.merlins;
 import android.os.Bundle;
 
 import com.mobify.astro.AstroActivity;
-import com.mobify.astro.plugins.AstroWorker;
+import com.mobify.astro.AstroWorker;
 
 public class MainActivity extends AstroActivity {
     protected AstroWorker worker;
