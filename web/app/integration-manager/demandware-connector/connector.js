@@ -52,8 +52,13 @@ const getBasketID = () => {
         })
 }
 
+const getCurrentProductID = () => {
+    const productIDMatch = /(\d+).html/.exec(window.location.href)
+    return productIDMatch ? productIDMatch[1] : ''
+}
+
 export const fetchPdpData = () => (dispatch) => {
-    const productURL = `${API_END_POINT_URL}/products/701643427208?expand=prices,images`
+    const productURL = `${API_END_POINT_URL}/products/${getCurrentProductID()}?expand=prices,images`
     const productPathKey = urlToPathKey(window.location.href)
     return initDemandWareSession()
         .then(() => {
@@ -89,10 +94,11 @@ export const fetchPdpData = () => (dispatch) => {
 export const addToCart = () => (dispatch) => {
     return initDemandWareSession()
         .then(() => {
+
             const options = {
                 method: 'POST',
                 headers: new Headers(REQUEST_HEADERS),
-                body: '[{product_id: "701643427208", quantity: 1.00}]'
+                body: `[{product_id: "${getCurrentProductID()}" , quantity: 1.00}]`
             }
 
             return getBasketID()
