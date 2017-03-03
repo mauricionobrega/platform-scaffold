@@ -158,8 +158,8 @@ const CartProductList = ({items, summaryCount, onSaveLater, onUpdateItemQuantity
         <div className="t-cart__product-list">
             <div className="t-cart__product-list-title u-padding-top-md u-padding-bottom-md">
                 <div className="u-flexbox u-align-center">
-                    <h1 className="u-flex">
-                        Cart {summaryCount > 0 && <span>({summaryCount} Items)</span>}
+                    <h1 className="u-flex u-text-uppercase">
+                        Cart {summaryCount > 0 && <span className="u-text-lighter">({summaryCount} Items)</span>}
                     </h1>
                     <Button className="u-flex-none u-color-brand" onClick={onOpenSignIn}>
                         <Icon name="user" />
