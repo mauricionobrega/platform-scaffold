@@ -25,7 +25,7 @@ const ProductItem = ({
                     </p>
                 }
 
-                <div className="u-margin-bottom-sm u-text-uppercase">
+                <div className="u-margin-bottom-sm u-text-capitilize">
                     {title}
                 </div>
 
