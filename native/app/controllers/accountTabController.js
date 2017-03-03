@@ -25,6 +25,7 @@ const AccountTabController = function(viewPlugin, headerController, layout, segm
             this.layout.hideTopViews()
             this.isLoggedIn = true
         }
+        this.layout.setContentView(signInView)
     })
 
     Astro.registerRpcMethod(AppRpc.names.guest, [], () => {
