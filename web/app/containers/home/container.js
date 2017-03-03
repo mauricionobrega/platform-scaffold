@@ -1,5 +1,6 @@
 import React from 'react'
 
+// Partials
 import HomeCarousel from './partials/home-carousel'
 import HomeCategories from './partials/home-categories'
 

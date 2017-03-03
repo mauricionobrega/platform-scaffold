@@ -7,6 +7,7 @@
  */
 import parse from './parsers/parser'
 import * as utils from '../../utils/utils'
+
 import {makeFormEncodedRequest, makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {addNotification, removeNotification} from '../../containers/app/actions'
 import {getFormKey} from '../../containers/app/selectors'
@@ -28,7 +29,7 @@ export const getCart = () => (dispatch) => {
         headers: baseHeaders
     }
     dispatch(removeNotification('cartUpdateError'))
-    return utils.makeRequest(`${LOAD_CART_SECTION_URL}${new Date().getTime()}`, opts)
+    return makeRequest(`${LOAD_CART_SECTION_URL}${new Date().getTime()}`, opts)
         .then((response) => response.text())
         .then((responseText) => dispatch(receiveCartContents(parse(responseText))))
 }

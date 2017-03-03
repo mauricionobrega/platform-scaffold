@@ -8,13 +8,16 @@ import Link from 'progressive-web-sdk/dist/components/link'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import Image from 'progressive-web-sdk/dist/components/image'
 
+import {isRunningInAstro} from '../../../utils/astro-integration'
+
 const ProductListHeader = ({title, contentsLoaded}) => (
     <div className="u-flexbox u-align-bottom">
         <div className="u-flex u-padding-top-lg u-padding-bottom-lg u-padding-start-md">
-            <div className="t-product-list__breadcrumb">
-                <Link href="/" className="u-text-small">Home</Link>
-            </div>
-
+            {!isRunningInAstro &&
+                <div className="t-product-list__breadcrumb">
+                    <Link href="/" className="u-text-small">Home</Link>
+                </div>
+            }
             <div className="u-margin-top-md">
                 {contentsLoaded ?
                     <h1 className="u-text-lighter u-text-uppercase">{title}</h1>

@@ -1,3 +1,6 @@
+## 0.14.0 (March 3, 2017)
+- Add support for Progressive Mobile Apps
+
 ## 0.13.1 (March 1, 2017)
 - Fix for cart fetch when Magento backend has full page cache enabled
 
