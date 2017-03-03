@@ -18,10 +18,15 @@ import Stylesheet from './stylesheet.scss' // eslint-disable-line no-unused-vars
 
 import {initMobifyAnalytics} from 'progressive-web-sdk/dist/analytics'
 
+import connector from './integration-manager/merlins-connector'
+import {registerConnector} from './integration-manager'
+
 polyfill()
 
 initMobifyAnalytics(AJS_SLUG) // eslint-disable-line no-undef
 initCacheManifest(cacheHashManifest)
+
+registerConnector(connector)
 
 const store = configureStore()
 

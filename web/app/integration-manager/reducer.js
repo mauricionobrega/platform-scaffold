@@ -1,5 +1,7 @@
-import connectorReducer from './merlins-connector/reducer'
+let connectorReducer
 
-const reducer = (state, action) => connectorReducer(state, action)
+export const register = (reducer) => {
+    connectorReducer = reducer
+}
 
-export default reducer
+export const reducer = (state, action) => connectorReducer(state, action)

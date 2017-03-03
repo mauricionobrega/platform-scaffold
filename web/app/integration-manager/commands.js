@@ -1,4 +1,8 @@
-import * as connector from './demandware-connector/connector'
+let connector = {}
+
+export const register = (commands) => {
+    connector = commands
+}
 
 export const fetchPdpData = (...args) => {
     return connector.fetchPdpData(...args)
