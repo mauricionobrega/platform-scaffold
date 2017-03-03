@@ -1,4 +1,5 @@
 import {getCheckoutConfigObject} from '../../utils/magento-utils'
+import * as AstroIntegration from '../../utils/astro-integration'
 
 const appParser = ($html) => {
     let isLoggedIn = !!$html.find('.customer-welcome').length
@@ -16,6 +17,11 @@ const appParser = ($html) => {
     if (formKeyInput.length) {
         result.formKey = formKeyInput.val()
     }
+
+    AstroIntegration.trigger('user-state:account', {
+        isLoggedIn: isLoggedIn
+    })
+    console.log(result.isLoggedIn)
 
     return result
 }
