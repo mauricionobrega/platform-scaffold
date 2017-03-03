@@ -10,6 +10,9 @@ import {isFormResponseInvalid} from './parsers/common'
 import signinParser from './parsers/signin'
 import registerParser from './parsers/register'
 
+import Astro from '../../vendor/astro-client'
+import {isRunningInAstro} from '../../utils/astro-integration'
+
 export const receiveData = createAction('Receive Login Data')
 
 export const process = ({payload: {$, $response, routeName}}) => {
@@ -104,6 +107,9 @@ const sendForm = (href, formValues, formSelector, resolve, reject) => {
                     _error: 'Username or password is incorrect'
                 }
                 return reject(new SubmissionError(error))
+            }
+            if (isRunningInAstro) {
+                Astro.jsRpcMethod('user:loggedIn', [])()
             }
             window.location.href = '/customer/account'
             return resolve(true)

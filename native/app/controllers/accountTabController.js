@@ -18,21 +18,23 @@ const AccountTabController = function(viewPlugin, headerController, layout, segm
 
     this.isActive = false
     this.isloaded = false
-    this.isLoggedIn = false
+    this.isLoggedIn = true
 
     Astro.registerRpcMethod(AppRpc.names.loggedIn, [], () => {
-        if (!this.isLoggedIn) {
-            this.layout.hideTopViews()
-            this.isLoggedIn = true
+        if (!this.loggedIn) {
+            this.reload()
         }
+        this.layout.hideTopViews()
+        this.isLoggedIn = true
         this.layout.setContentView(signInView)
     })
 
     Astro.registerRpcMethod(AppRpc.names.guest, [], () => {
-        if (this.isLoggedIn) {
-            this.layout.showTopViews()
-            this.isLoggedIn = false
+        if (this.loggedIn) {
+            this.reload()
         }
+        this.layout.showTopViews()
+        this.isLoggedIn = false
     })
 }
 
@@ -83,6 +85,8 @@ AccountTabController.prototype.showSignIn = async function() {
 }
 
 AccountTabController.prototype.reload = async function() {
+    await this.signInView.navigate(accountConfig.signIn.url)
+    await this.registerView.navigate(accountConfig.register.url)
     this.loaded = true
 }
 
