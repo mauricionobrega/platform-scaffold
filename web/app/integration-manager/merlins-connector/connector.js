@@ -10,6 +10,7 @@ import * as responses from './../responses'
 import {getCustomerEntityID} from '../../store/checkout/selectors'
 import {getIsLoggedIn} from '../../containers/app/selectors'
 import {getShippingFormValues} from '../../store/form/selectors'
+import {getCart} from '../../store/cart/actions'
 import {browserHistory} from 'react-router'
 import {receiveFormInfo} from './../actions'
 import {removeAllNotifications} from '../../containers/app/actions'
@@ -27,14 +28,19 @@ export const fetchPdpData = (url) => (dispatch) => {
 
 export const addToCart = (key, qty) => (dispatch, getStore) => {
     const formInfo = getStore().integrationManager.get(key)
-
-    return makeFormEncodedRequest(formInfo.get('submitUrl'), {
+    const formValues = {
         ...formInfo.get('hiddenInputs').toJS(),
         qty
-    }, {
-        method: formInfo.get('method')
-    })
+    }
+
+    return makeFormEncodedRequest(formInfo.get('submitUrl'), formValues, {method: formInfo.get('method')})
+        .then(() => {
+            dispatch(responses.onAddToCartSucceess())
+            dispatch(getCart())
+        })
 }
+
+
 
 export const fetchCheckoutShippingData = (url) => (dispatch) => {
     return makeRequest(url)

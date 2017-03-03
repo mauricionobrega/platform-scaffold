@@ -1,9 +1,6 @@
 import {createAction, urlToPathKey} from '../../utils/utils'
-import {getCart} from '../../store/cart/actions'
 import * as selectors from './selectors'
 import * as appSelectors from '../app/selectors'
-import {openModal} from '../../store/modals/actions'
-import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from './constants'
 import productDetailsParser from './parsers/product-details'
 
 import * as commands from '../../integration-manager/commands'
@@ -29,8 +26,4 @@ export const submitCartForm = () => (dispatch, getStore) => {
     const qty = selectors.getItemQuantity(getStore())
 
     return dispatch(commands.addToCart(key, qty))
-        .then(() => {
-            dispatch(openModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL))
-            dispatch(getCart())
-        })
 }
