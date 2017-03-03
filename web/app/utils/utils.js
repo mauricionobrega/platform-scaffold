@@ -1,9 +1,5 @@
 import {createAction as createReduxAction} from 'redux-actions'
 import fromPairs from 'lodash.frompairs'
-import {makeRequest, makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
-
-// Re-export the SDK utilities for now
-export {makeRequest, makeFormEncodedRequest}
 
 // simplify redux-actions createAction method.
 // usage: createAction('Update Campaign', 'id', 'update')
@@ -15,15 +11,6 @@ export const createAction = (description, ...argNames) => {
             (...args) => fromPairs(argNames.map((arg, idx) => [arg, args[idx]]))
             : null
     )
-}
-
-/**
- * Retrieve the wrapped component if there is one, otherwise just returns the passed-in component
- * @param {object} component - a React component, potentially wrapped with react-redux
- * @returns {object} - The component or the WrappedComponent if it exists
- */
-export const getComponentType = (component) => {
-    return component.WrappedComponent || component
 }
 
 /**
