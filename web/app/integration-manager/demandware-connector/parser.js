@@ -4,12 +4,12 @@ const parseCarouselItems = (imageGroups) => {
 
 }
 
-export const parseProductDetails = (productJSON) => {
+export const parseProductDetails = ({name, price, long_description, image_groups}) => {
     return {
-        title: productJSON.name,
-        price: '$0.00', // Hard coded until we get prices on the demandware sandbox
-        description: productJSON.long_description,
-        carouselItems: parseCarouselItems(productJSON.image_groups)
+        title: name,
+        price: `$${price.toFixed(2)}`, // Hard coded until we get prices on the demandware sandbox
+        description: long_description,
+        carouselItems: parseCarouselItems(image_groups)
     }
 }
 
