@@ -2,8 +2,11 @@ import WebViewPlugin from 'progressive-app-sdk/plugins/webViewPlugin'
 import AnchoredLayoutPlugin from 'progressive-app-sdk/plugins/anchoredLayoutPlugin'
 import SegmentedPlugin from 'progressive-app-sdk/plugins/segmentedPlugin'
 
+import Astro from 'progressive-app-sdk/astro-full'
 import TabHeaderController from './tabHeaderController'
 import accountConfig from '../config/accountConfig'
+
+import AppRpc from '../global/app-rpc'
 
 const AccountTabController = function(viewPlugin, headerController, layout, segmentedView, signInView, registerView) {
     this.viewPlugin = viewPlugin
@@ -15,6 +18,21 @@ const AccountTabController = function(viewPlugin, headerController, layout, segm
 
     this.isActive = false
     this.isloaded = false
+    this.isLoggedIn = false
+
+    Astro.registerRpcMethod(AppRpc.names.loggedIn, [], () => {
+        if (!this.isLoggedIn) {
+            this.layout.hideTopViews()
+            this.isLoggedIn = true
+        }
+    })
+
+    Astro.registerRpcMethod(AppRpc.names.guest, [], () => {
+        if (this.isLoggedIn) {
+            this.layout.showTopViews()
+            this.isLoggedIn = false
+        }
+    })
 }
 
 AccountTabController.init = async function() {
@@ -52,7 +70,6 @@ AccountTabController.init = async function() {
                 break
         }
     })
-
     return new AccountTabController(viewPlugin, headerController, layout, segmentedView, signInView, registerView)
 }
 

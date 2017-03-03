@@ -1,5 +1,6 @@
 import {getCheckoutConfigObject} from '../../utils/magento-utils'
-import * as AstroIntegration from '../../utils/astro-integration'
+import {isRunningInAstro} from '../../utils/astro-integration'
+import Astro from '../../vendor/astro-client'
 
 const appParser = ($html) => {
     let isLoggedIn = !!$html.find('.customer-welcome').length
@@ -7,6 +8,14 @@ const appParser = ($html) => {
         // We may be on a checkout page so check the checkout config object
         const config = getCheckoutConfigObject($html)
         isLoggedIn = (config && config.customerData) ? config.customerData.constructor !== Array : isLoggedIn
+    }
+
+    if (isRunningInAstro) {
+        if (isLoggedIn) {
+             Astro.jsRpcMethod('user:loggedIn', [])()
+        } else {
+            Astro.jsRpcMethod('user:guest', [])()
+        }
     }
 
     const result = {isLoggedIn}
@@ -17,11 +26,6 @@ const appParser = ($html) => {
     if (formKeyInput.length) {
         result.formKey = formKeyInput.val()
     }
-
-    AstroIntegration.trigger('user-state:account', {
-        isLoggedIn: isLoggedIn
-    })
-    console.log(result.isLoggedIn)
 
     return result
 }
