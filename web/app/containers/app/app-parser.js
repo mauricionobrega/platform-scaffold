@@ -12,7 +12,7 @@ const appParser = ($html) => {
 
     if (isRunningInAstro) {
         if (isLoggedIn) {
-             Astro.jsRpcMethod('user:loggedIn', [])()
+            Astro.jsRpcMethod('user:loggedIn', [])()
         } else {
             Astro.jsRpcMethod('user:guest', [])()
         }
