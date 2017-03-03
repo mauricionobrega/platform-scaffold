@@ -20,7 +20,6 @@ import {
 } from './constants'
 
 import * as AstroIntegration from '../../utils/astro-integration'
-import {getIsLoggedIn} from '../app/selectors'
 
 const LoginTitle = ({title}) => {
     if (title) {
@@ -59,7 +58,6 @@ class Login extends React.Component {
 
     render() {
         const {
-            isLoggedIn,
             title,
             route: {
                 routeName
@@ -83,34 +81,26 @@ class Login extends React.Component {
                     </Tabs>
                 </div>
             )
+        } else if (routeName === SIGN_IN_SECTION) {
+            return (
+                <div className="t-login">
+                    <SignInPanel />
+                </div>
+            )
+        } else if (routeName === REGISTER_SECTION) {
+            return (
+                <div className="t-login">
+                    <RegisterPanel />
+                </div>
+            )
         } else {
-
-            astro-client.trigger('account', {
-                isLoggedIn: isLoggedIn
-            })
-
-            if (routeName === SIGN_IN_SECTION) {
-                return (
-                    <div className="t-login">
-                        <SignInPanel />
-                    </div>
-                )
-            } else if (routeName === REGISTER_SECTION) {
-                return (
-                    <div className="t-login">
-                        <RegisterPanel />
-                    </div>
-                )
-            } else {
-                console.log('route unsupported: ', routeName)
-                return null
-            }
+            console.log('route unsupported: ', routeName)
+            return null
         }
     }
 }
 
 const mapStateToProps = createStructuredSelector({
-    isLoggedIn: getIsLoggedIn,
     title: selectors.getLoginTitle
 })
 
@@ -119,7 +109,6 @@ const mapDispatchToProps = {
 }
 
 Login.propTypes = {
-    isLoggedIn: PropTypes.bool,
     navigateToSection: PropTypes.func,
     route: PropTypes.object,
     router: PropTypes.object,
