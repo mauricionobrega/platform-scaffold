@@ -1,7 +1,6 @@
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
-
-import {makeRequest, urlToPathKey, makeFormEncodedRequest} from '../../utils/utils'
-import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+import {makeRequest, makeFormEncodedRequest, makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+import {urlToPathKey} from '../../utils/utils'
 
 import {productDetailsParser} from '../../store/products/parser'
 import {pdpAddToCartFormParser} from './parsers'

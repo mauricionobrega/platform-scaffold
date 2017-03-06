@@ -1,4 +1,5 @@
-import {makeRequest, urlToPathKey} from '../../utils/utils'
+import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+import {urlToPathKey} from '../../utils/utils'
 import {receiveCartContents} from '../../store/cart/actions'
 import {receivePdpProductData, receivePdpUIData, onAddToCartSucceess} from '../responses'
 import {parseProductDetails, parseBasketContents} from './parser'
