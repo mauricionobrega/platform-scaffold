@@ -8,6 +8,8 @@
 
 .u-text-all-caps {
     @include text-all-caps(true);
+
+    letter-spacing: initial !important; // @TODO: maybe remove letter-spacing from text-all-caps() method in Spline
 }
 
 

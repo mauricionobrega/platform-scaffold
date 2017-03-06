@@ -1,13 +1,14 @@
 import React from 'react'
 import classNames from 'classnames'
-
 import * as commands from '../../integration-manager/commands'
 
+import Astro from '../../vendor/astro-client'
 import CheckoutShippingReduxForm from './partials/checkout-shipping-form'
 import {ProgressSteps, ProgressStepsItem} from 'progressive-web-sdk/dist/components/progress-steps'
 
 
 const CheckoutShipping = () => {
+    Astro.trigger('checkout:enable-alert')
     const templateClassnames = classNames('t-checkout-shipping u-bg-color-neutral-10 t--loaded')
 
     return (

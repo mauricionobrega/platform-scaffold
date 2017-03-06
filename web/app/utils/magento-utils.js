@@ -37,5 +37,5 @@ export const getCheckoutConfigObject = ($html) => {
 export const getCheckoutEntityID = ($html) => {
     const configObject = getCheckoutConfigObject($html)
 
-    return configObject ? configObject.quoteData.entity_id : ''
+    return configObject && configObject.quoteData ? configObject.quoteData.entity_id : ''
 }

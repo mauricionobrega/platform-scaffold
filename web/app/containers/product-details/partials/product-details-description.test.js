@@ -34,9 +34,8 @@ test('renders the component class correctly', () => {
     expect(wrapper.hasClass(ROOT_CLASS)).toBe(true)
 })
 
-test('renders the description in an AccordionItem', () => {
-    const wrapper = shallow(<ProductDetailsDescription description="The text that we text is text" />)
-
+test('renders the Product Description AccordionItem Header correctly', () => {
+    const wrapper = shallow(<ProductDetailsDescription />)
     const accordion = wrapper
     expect(accordion.type()).toBe(Accordion)
 
@@ -45,5 +44,12 @@ test('renders the description in an AccordionItem', () => {
     expect(accordionItem.type()).toBe(AccordionItem)
 
     expect(accordionItem.prop('header')).toBe('Product Description')
-    expect(accordionItem.html().includes('The text that we text is text')).toBe(true)
+})
+
+test('renders the description in an AccordionItem when it is opened', () => {
+    const wrapper = mount(<ProductDetailsDescription description="The text that we text is text" />)
+    const accordionHeader = wrapper.find('.pw-accordion__header')
+
+    accordionHeader.simulate('click')
+    expect(wrapper.html().includes('The text that we text is text')).toBe(true)
 })

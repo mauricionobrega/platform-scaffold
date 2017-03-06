@@ -98,7 +98,7 @@ export const submitShipping = () => {
                 shipping_method_code: shippingSelections[1]
             }
         }
-        const persistShippingURL = `https://www.merlinspotions.com/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/shipping-information`
+        const persistShippingURL = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/shipping-information`
         dispatch(responses.receiveCheckoutData({shipping: {address}, emailAddress: username}))
         makeJsonEncodedRequest(persistShippingURL, addressInformation, {method: 'POST'})
             .then((response) => response.json())
@@ -117,7 +117,7 @@ export const checkCustomerEmail = () => {
     return (dispatch, getState) => {
         const formValues = getShippingFormValues(getState())
 
-        makeJsonEncodedRequest('https://www.merlinspotions.com/rest/default/V1/customers/isEmailAvailable', {customerEmail: formValues.username}, {method: 'POST'})
+        makeJsonEncodedRequest('/rest/default/V1/customers/isEmailAvailable', {customerEmail: formValues.username}, {method: 'POST'})
             .then((response) => response.text())
             .then((responseText) => {
                 if (/false/.test(responseText)) {
@@ -141,7 +141,7 @@ export const submitSignIn = () => {
         // After comparing our request (using makeRequest, fetch or makeJsonEncodedRequest) to the desktop request (using AJAX)
         // The only difference we could find is that the desktop request is sent via AJAX and therefor includes the header X-Requested-With: XMLHttpRequest
         window.Progressive.$.ajax({
-            url: 'https://www.merlinspotions.com/customer/ajax/login',
+            url: '/customer/ajax/login',
             data: JSON.stringify({username, password, context: 'checkout'}),
             method: 'POST',
             success: (responseData) => {

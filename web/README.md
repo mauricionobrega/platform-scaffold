@@ -7,6 +7,26 @@ npm install
 npm run dev
 ```
 
+## Prevent SSL Errors in Preview (on a Mac)
+
+The development server uses a self-signed SSL certificate which is
+valid, but treated as suspect by browsers. This means that we must
+create and reconfirm security exceptions for it, and avoid localhost
+for certain use cases (such as service workers).
+
+To add the certificate to the Mac system trust store and make the
+browsers accept it, do the following:
+
+1. In the root of the project directory, run `open node_modules/webpack-dev-server/ssl/server.crt`.
+2. Open `Keychain Access` -> go to `Certificates` -> select `localhost`
+3. Right click on the entry and select `Get Info`
+4. Expand the `Trust` section
+5. Set `Secure Socket Layer (SSL)` to `Always Trust`
+6. Close the info window. You will need to enter your password.
+
+This process will allow all projects hosted with `webpack-dev-server`
+version 1.15.0 and up to be trusted by your browsers.
+
 ## Adding a page (container)
 
 ```
@@ -96,7 +116,7 @@ When you develop it might be helpful to run the same test against your local fil
 sudo npm run test:pwa-local
 ```
 
-You **must** keep running `npm run dev` at the same time.
+You **must** keep running `npm run dev` at the same time. `sudo` is required in order to bind to port 80. 
 
 There is also `test:pwa-ci` task (also requires `sudo`) for CI that runs `dev` and `pwa-local` in parallel.
 
@@ -109,9 +129,13 @@ you will need to clone the SDK (note: it is not open on Github).
 git clone git@github.com:mobify/progressive-web-sdk.git
 cd progressive-web-sdk
 npm link
+npm install # REQUIRED!!
+npm run dev:build # Some assets required by the scaffold build are only created by this command (/dist/*)
 ```
 
 Then navigate back to this directory and run:
 ```
+cd ../progressive-web-scaffold/web
 npm link progressive-web-sdk
+npm run dev
 ```
