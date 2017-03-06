@@ -15,7 +15,7 @@ const results = report.match(/<span class="section-result__points">(.*)<\/span>/
 const actualLighthouseScore = parseInt(results[1])
 const minimumLighthouseScore = parseInt(process.env.npm_package_config_min_lighthouse_score)
 
-if(actualLighthouseScore < minimumLighthouseScore) {
+if (actualLighthouseScore < minimumLighthouseScore) {
     console.log(`Lighthouse score is lower than required! ${actualLighthouseScore} < ${minimumLighthouseScore}`)
     process.exit(1)
 } else {
