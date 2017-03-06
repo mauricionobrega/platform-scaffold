@@ -71,13 +71,28 @@ if (isReactRoute()) {
             rel: 'manifest'
         })
 
-        const script = document.createElement('script')
-        script.id = 'progressive-web-script'
+        window.webpackJsonpAsync = (module, exports, webpackRequire) => {
+            const runJsonpAsync = function() {
+                return window.webpackJsonp ?
+                    window.webpackJsonp(module, exports, webpackRequire) :
+                    setTimeout(runJsonpAsync, 50)
+            }
+
+            runJsonpAsync()
+        }
+
+        const vendorScript = document.createElement('script')
+        vendorScript.id = 'progressive-web-script'
+        vendorScript.src = getAssetUrl('vendor.js')
+        body.appendChild(vendorScript)
+
+        const appScript = document.createElement('script')
+        appScript.id = 'progressive-web-script'
         // Setting UTF-8 as our encoding ensures that certain strings (i.e.
         // Japanese text) are not improperly converted to something else.
-        script.charset = 'utf-8'
-        script.src = getAssetUrl('main.js')
-        body.appendChild(script)
+        appScript.charset = 'utf-8'
+        appScript.src = getAssetUrl('main.js')
+        body.appendChild(appScript)
 
         const jQuery = document.createElement('script')
         jQuery.async = true

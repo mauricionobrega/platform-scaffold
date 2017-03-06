@@ -116,7 +116,7 @@ When you develop it might be helpful to run the same test against your local fil
 sudo npm run test:pwa-local
 ```
 
-You **must** keep running `npm run dev` at the same time. `sudo` is required in order to bind to port 80. 
+You **must** keep running `npm run dev` at the same time. `sudo` is required in order to bind to port 80.
 
 There is also `test:pwa-ci` task (also requires `sudo`) for CI that runs `dev` and `pwa-local` in parallel.
 
@@ -138,4 +138,12 @@ Then navigate back to this directory and run:
 cd ../progressive-web-scaffold/web
 npm link progressive-web-sdk
 npm run dev
+```
+
+## Analyze Bundle Size
+
+To visualize bundle script content, run:
+
+```
+MOBIFY_ANALYZE=true npm run build
 ```
