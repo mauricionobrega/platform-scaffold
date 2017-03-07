@@ -16,9 +16,6 @@ import * as selectors from './selectors'
 
 import NotificationManager from '../../components/notification-manager'
 
-// @TODO: Replace this with an action that fetches the SVG file via Ajax
-import sprite from '../../static/svg/sprite-dist/sprite.svg'
-
 // Offline support
 import {Offline} from '../templates'
 import OfflineBanner from '../offline/partials/offline-banner'
@@ -35,6 +32,7 @@ const hidePreloaderWhenCSSIsLoaded = () => {
 class App extends React.Component {
     componentDidMount() {
         hidePreloaderWhenCSSIsLoaded()
+        this.props.fetchSvgSprite()
     }
 
     render() {
@@ -45,7 +43,8 @@ class App extends React.Component {
             fetchError,
             hasFetchedCurrentPath,
             notifications,
-            removeNotification
+            removeNotification,
+            sprite
         } = this.props
 
         const routeProps = children.props.route
@@ -126,21 +125,28 @@ App.propTypes = {
      * The react-router history object
      */
     fetchError: PropTypes.string,
+    fetchSvgSprite: PropTypes.func,
     hasFetchedCurrentPath: PropTypes.bool,
     history: PropTypes.object,
     notifications: PropTypes.array,
-    removeNotification: PropTypes.func
+    removeNotification: PropTypes.func,
+    /**
+     * The SVG icon sprite needed in order for all Icons to work
+     */
+    sprite: PropTypes.string,
 }
 
 const mapStateToProps = createStructuredSelector({
     notifications: selectorToJS(selectors.getNotifications),
     fetchError: selectors.getFetchError,
-    hasFetchedCurrentPath: selectors.hasFetchedCurrentPath
+    hasFetchedCurrentPath: selectors.hasFetchedCurrentPath,
+    sprite: selectors.getSvgSprite
 })
 
 const mapDispatchToProps = {
     removeNotification: appActions.removeNotification,
-    fetchPage: appActions.fetchPage
+    fetchPage: appActions.fetchPage,
+    fetchSvgSprite: () => appActions.fetchSvgSprite()
 }
 
 export default connect(
