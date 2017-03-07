@@ -5,7 +5,7 @@ import {addToCartStarted, addToCartComplete, openItemAddedModal, submitCartForm}
 import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from './constants'
 import {openModal} from '../../store/modals/actions'
 
-import * as utils from '../../utils/utils'
+import * as fetchUtils from 'progressive-web-sdk/dist/utils/fetch-utils'
 
 jest.mock('../../store/cart/actions')
 import {getCart} from '../../store/cart/actions'
@@ -13,13 +13,13 @@ import {getCart} from '../../store/cart/actions'
 /* eslint-disable import/namespace */
 let realMakeFormEncodedRequest
 beforeAll(() => {
-    realMakeFormEncodedRequest = utils.makeFormEncodedRequest
-    utils.makeFormEncodedRequest = jest.fn()
-    utils.makeFormEncodedRequest.mockReturnValue(Promise.resolve())
+    realMakeFormEncodedRequest = fetchUtils.makeFormEncodedRequest
+    fetchUtils.makeFormEncodedRequest = jest.fn()
+    fetchUtils.makeFormEncodedRequest.mockReturnValue(Promise.resolve())
 })
 
 afterAll(() => {
-    utils.makeFormEncodedRequest = realMakeFormEncodedRequest
+    fetchUtils.makeFormEncodedRequest = realMakeFormEncodedRequest
 })
 
 test('submitCartForm makes a request and dispatches updates', () => {
@@ -46,7 +46,7 @@ test('submitCartForm makes a request and dispatches updates', () => {
     const mockDispatch = jest.fn()
     return thunk(mockDispatch, getStore)
         .then(() => {
-            expect(utils.makeFormEncodedRequest).toBeCalledWith(
+            expect(fetchUtils.makeFormEncodedRequest).toBeCalledWith(
                 'submitUrl',
                 {qty: 1},
                 {method: 'POST'})

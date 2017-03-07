@@ -1,10 +1,8 @@
 import {browserHistory} from 'react-router'
-import {createAction, makeRequest} from '../../utils/utils'
-
+import {createAction} from '../../utils/utils'
+import {makeRequest, makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import checkoutPaymentParser from './checkout-payment-parser'
-
-import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 
 import {getPaymentBillingFormValues} from '../../store/form/selectors'
 import {getCustomerEntityID, getEmailAddress} from '../../store/checkout/selectors'
@@ -86,7 +84,7 @@ export const submitPayment = () => {
                 po_number: null
             }
         }
-        const persistPaymentURL = `https://www.merlinspotions.com/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/payment-information`
+        const persistPaymentURL = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/payment-information`
         // Save payment address for confirmation
         dispatch(receiveCheckoutData({payment: {address}}))
         makeJsonEncodedRequest(persistPaymentURL, paymentInformation, {method: 'POST'})
