@@ -102,7 +102,7 @@ class CreditCardForm extends React.Component {
         return (
             <div>
                 <div className="t-checkout-payment__title u-padding-top-lg u-padding-bottom-md">
-                    <h2 className="u-h4">Pay With Card</h2>
+                    <h2 className="u-h4 u-text-uppercase">Pay With Card</h2>
                 </div>
 
                 {hasExistingCreditCard ?

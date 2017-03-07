@@ -26,12 +26,10 @@ const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, shippingRa
                     <CartPromoForm />
                 </AccordionItem>
             </Accordion>
-            <div className="t-cart__summary-title">
-                <div className="u-flexbox u-align-center">
-                    <h2 className="u-flex">
-                        Order Summary
-                    </h2>
-                </div>
+            <div className="t-cart__summary-title u-padding-top-lg u-padding-bottom-md">
+                <h2 className="u-h4 u-text-uppercase">
+                    Order Summary
+                </h2>
             </div>
 
             <div className="u-bg-color-neutral-00 u-border-light-top u-border-light-bottom">
