@@ -7,6 +7,14 @@ npm install
 npm run dev
 ```
 
+If you will be deploying bundles to Mobify Cloud, then follow these steps:
+
+- Make sure you have the `mobify-client` npm module installed
+- Authorize your computer to push bundles by:
+    - Go to [https://cloud.mobify.com/account/](https://cloud.mobify.com/account/) and copy to your clipboard the command under _"For Mobify Client Projects"_
+    - Paste the command into your terminal and run it!
+- You're ready to deply bundles!
+
 ## Prevent SSL Errors in Preview (on a Mac)
 
 The development server uses a self-signed SSL certificate which is
@@ -116,7 +124,7 @@ When you develop it might be helpful to run the same test against your local fil
 sudo npm run test:pwa-local
 ```
 
-You **must** keep running `npm run dev` at the same time. `sudo` is required in order to bind to port 80. 
+You **must** keep running `npm run dev` at the same time. `sudo` is required in order to bind to port 80.
 
 There is also `test:pwa-ci` task (also requires `sudo`) for CI that runs `dev` and `pwa-local` in parallel.
 
