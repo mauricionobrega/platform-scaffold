@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {onRouteChanged, fetchPage, removeAllNotifications} from './containers/app/actions'
-import {triggerMobifyPageView} from 'progressive-web-sdk/dist/analytics'
+
 import {trigger as astroTrigger} from './utils/astro-integration'
 
 import {getURL, getPath} from './utils/utils'
@@ -21,9 +21,7 @@ const template = (WrappedComponent) => {
         dispatchRouteChange({dispatch, location, route}) {
             const url = getURL(location)
 
-            triggerMobifyPageView(route.routeName)
-
-            dispatch(onRouteChanged(url, WrappedComponent))
+            dispatch(onRouteChanged(url, route.routeName))
 
             if (!route.suppressFetch) {
                 dispatch(fetchPage(url, WrappedComponent, route.routeName, route.fetchUrl))
