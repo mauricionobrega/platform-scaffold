@@ -14,7 +14,7 @@ const cartIcon = {
 
 const shoppingCart = {
     id: 'shoppingCart_title',
-    title: 'Shopping Cart'
+    logoUrl: 'file:///logo.png',
 }
 
 const colors = {
