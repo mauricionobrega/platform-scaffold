@@ -9,10 +9,7 @@ import {trigger} from '../../utils/astro-integration'
 
 class CheckoutConfirmation extends React.Component {
     componentDidMount() {
-        trigger('checkout:disable-alert')
-        trigger('cart-updated', {
-            count: 0
-        })
+        trigger('checkout:completed')
     }
 
     render() {
