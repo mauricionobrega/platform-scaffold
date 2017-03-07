@@ -10,7 +10,8 @@ const initialState = fromJS({
     [CURRENT_URL]: window.location.href,
     notifications: [],
     fetchError: null,
-    [FETCHED_PATHS]: {}
+    [FETCHED_PATHS]: {},
+    sprite: ''
 })
 
 export default handleActions({
@@ -39,5 +40,8 @@ export default handleActions({
     [appActions.setPageFetchError]: mergePayload,
     [appActions.clearPageFetchError]: (state) => {
         return state.set('fetchError', null)
+    },
+    [appActions.updateSvgSprite]: (state, {payload}) => {
+        return state.set('sprite', payload.sprite)
     }
 }, initialState)

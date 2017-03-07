@@ -21,6 +21,9 @@ export const setItemQuantity = (quantity) => (dispatch, getStore) => {
     }))
 }
 
+export const addToCartStarted = createAction('Add to cart started')
+export const addToCartComplete = createAction('Add to cart complete')
+
 export const receiveData = createAction('Receive Product Details data')
 export const process = ({payload}) => {
     const {$, $response, url} = payload
@@ -42,6 +45,7 @@ export const goToCheckout = () => (dispatch) => {
 export const submitCartForm = () => (dispatch, getStore) => {
     const formInfo = selectors.getFormInfo(getStore())
     const qty = selectors.getItemQuantity(getStore())
+    dispatch(addToCartStarted())
 
     return makeFormEncodedRequest(formInfo.get('submitUrl'), {
         ...formInfo.get('hiddenInputs').toJS(),
@@ -49,6 +53,7 @@ export const submitCartForm = () => (dispatch, getStore) => {
     }, {
         method: formInfo.get('method')
     }).then(() => {
+        dispatch(addToCartComplete())
         dispatch(openModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL))
         dispatch(getCart())
     })
