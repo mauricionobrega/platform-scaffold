@@ -84,7 +84,7 @@ export const submitPayment = () => {
                 po_number: null
             }
         }
-        const persistPaymentURL = `https://www.merlinspotions.com/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/payment-information`
+        const persistPaymentURL = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/payment-information`
         // Save payment address for confirmation
         dispatch(receiveCheckoutData({payment: {address}}))
         makeJsonEncodedRequest(persistPaymentURL, paymentInformation, {method: 'POST'})
