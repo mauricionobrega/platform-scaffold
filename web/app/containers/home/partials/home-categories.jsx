@@ -31,22 +31,22 @@ CategoryImage.propTypes = {
     alt: PropTypes.string
 }
 
-const HomeCategory = ({category: {href, text}}) => {
+const HomeCategory = ({category: {path, title}}) => {
     const categoryClasses = classNames('t-home__category-section', {
-        'u-text-all-caps': !!text
+        'u-text-all-caps': !!title
     })
 
     return (
         <ListTile
             className={categoryClasses}
-            href={href}
-            startAction={<CategoryImage alt={text} />}
+            href={path}
+            startAction={<CategoryImage alt={title} />}
             endAction={<Icon name="chevron-right" />}
         >
             <div className="u-h2 t-home__category-text u-text-lighter">SHOP</div>
 
-            {text ?
-                <div className="t-home__category-text t--text-large">{text}</div>
+            {title ?
+                <div className="t-home__category-text t--text-large">{title}</div>
             :
                 <SkeletonText
                     className="t-home__category-text t--text-large"
@@ -60,8 +60,8 @@ const HomeCategory = ({category: {href, text}}) => {
 
 HomeCategory.propTypes = {
     category: PropTypes.shape({
-        href: PropTypes.string,
-        text: PropTypes.string
+        path: PropTypes.string,
+        title: PropTypes.string
     })
 }
 

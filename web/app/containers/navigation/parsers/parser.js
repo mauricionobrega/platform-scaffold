@@ -19,6 +19,7 @@ export const parseNavigation = ($, $content) => {
         root.children.push({
             title: $link.text().trim(),
             path: $link.attr('href'),
+            isCategoryLink: true
         })
         if ($item.hasClass('active')) {
             path = $link.attr('href')
