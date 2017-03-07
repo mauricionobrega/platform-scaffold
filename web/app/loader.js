@@ -96,6 +96,11 @@ if (isReactRoute()) {
 
         const vendorScript = document.createElement('script')
         vendorScript.id = 'progressive-web-script'
+        // Setting UTF-8 as our encoding ensures that certain strings (i.e.
+        // Japanese text) are not improperly converted to something else. We
+        // do this on the vendor scripts also just in case any libs we import
+        // have localized strings in them.
+        vendorScript.charset = 'utf-8'
         vendorScript.src = getAssetUrl('vendor.js')
         body.appendChild(vendorScript)
 
