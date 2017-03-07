@@ -42,6 +42,10 @@ const CartModalController = function(modalView, navigationView) {
     this.navigationView.on('cart-updated', (data) => {
         AppEvents.trigger(TabEvents.updateCart, data)
     })
+
+    this.navigationView.on('close', () => {
+        this.hide()
+    })
 }
 
 CartModalController.init = async function() {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 import {GRID_SETTINGS} from '../constants'
 
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -20,7 +20,7 @@ const QuestionLink = ({children, href}) => (
 )
 /* eslint-enable react/prop-types */
 
-const CheckoutConfirmationQuestions = () => (
+const CheckoutConfirmationQuestions = ({onContinueShopping}) => (
     <Grid className="t-checkout-confirmation__questions u-center-piece">
         <GridSpan {...GRID_SETTINGS}>
             <div className="t-checkout-confirmation__heading u-padding-md u-padding-top-lg">
@@ -39,12 +39,17 @@ const CheckoutConfirmationQuestions = () => (
 
         <GridSpan {...GRID_SETTINGS}>
             <div className="u-padding-lg">
-                <Button href="/" className="c--tertiary u-width-full u-text-all-caps">
+                <Button onClick={onContinueShopping} className="c--tertiary u-width-full u-text-all-caps">
                     Continue Shopping
                 </Button>
             </div>
         </GridSpan>
     </Grid>
 )
+
+
+CheckoutConfirmationQuestions.propTypes = {
+    onContinueShopping: PropTypes.func,
+}
 
 export default CheckoutConfirmationQuestions
