@@ -2,9 +2,13 @@ import Promise from 'bluebird'
 
 import AnchoredLayoutPlugin from 'progressive-app-sdk/plugins/anchoredLayoutPlugin'
 import NavigationPlugin from 'progressive-app-sdk/plugins/navigationPlugin'
-import Application from 'progressive-app-sdk/application'
 
+import AppEvents from '../global/app-events'
 import TabHeaderController from './tabHeaderController'
+
+const Events = {
+    updateCart: 'cart:updated'
+}
 
 const TabController = function(tabItem, layout, navigationView, headerController) {
     this.tabItem = tabItem
@@ -41,7 +45,7 @@ TabController.init = async function(tabItem) {
     })
 
     navigationView.on('cart-updated', (data) => {
-        headerController.updateCounter(data.count)
+        AppEvents.trigger(Events.updateCart, data)
     })
 
     navigationView.on('open:cart-modal', () => {
@@ -95,15 +99,10 @@ TabController.prototype.canGoBack = async function() {
     return await this.navigationView.canGoBack()
 }
 
-TabController.prototype.back = async function() {
-    const webView = await this.navigationView.getTopPlugin()
-    const canGoBack = await webView.canGoBack()
-    if (canGoBack) {
-        webView.back()
-    } else {
-        Application.closeApp()
-    }
-
+TabController.prototype.back = function() {
+    this.navigationView.back()
 }
+
+export {Events}
 
 export default TabController
