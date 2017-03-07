@@ -1,7 +1,5 @@
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 
-import * as utils from '../../utils/utils'
-import * as selectors from './selectors'
 import * as analyticConstants from 'progressive-web-sdk/dist/analytics/analytic-constants'
 
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
