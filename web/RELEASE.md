@@ -14,8 +14,5 @@
       * Description: Use highlights from the CHANGELOG.md (only pick out the most significant changes)
 - [ ] Merge `master` into `develop` (no need for review on PR, just merge).
 
-The following instructions only apply if you are also releasing a new bundle:
-- If this is the first time you are deploying a bundle:
-  - [ ] Make sure you have the `mobify-client` npm module installed
-  - [ ] Go to `https://cloud.mobify.com/account/` and at the bottom of the page copy the command to login to mobify cloud.
+## Bundle Release
 - [ ] Run `npm run push -- -m '<X.Y.Z>:<COMMIT_SHA>,<BRANCH_RELEASED_FROM>'`. You can find your `<COMMIT_SHA>` from `git rev-parse --short HEAD`
