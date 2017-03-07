@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import {selectorToJS} from '../../utils/selector-utils'
+import {isRunningInAstro} from '../../utils/astro-integration'
 
 import {hidePreloader} from 'progressive-web-sdk/dist/preloader'
 import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
@@ -14,9 +15,6 @@ import * as appActions from '../app/actions'
 import * as selectors from './selectors'
 
 import NotificationManager from '../../components/notification-manager'
-
-// @TODO: Replace this with an action that fetches the SVG file via Ajax
-import sprite from '../../static/svg/sprite-dist/sprite.svg'
 
 // Offline support
 import {Offline} from '../templates'
@@ -34,6 +32,7 @@ const hidePreloaderWhenCSSIsLoaded = () => {
 class App extends React.Component {
     componentDidMount() {
         hidePreloaderWhenCSSIsLoaded()
+        this.props.fetchSvgSprite()
     }
 
     render() {
@@ -44,7 +43,8 @@ class App extends React.Component {
             fetchError,
             hasFetchedCurrentPath,
             notifications,
-            removeNotification
+            removeNotification,
+            sprite
         } = this.props
 
         const routeProps = children.props.route
@@ -78,8 +78,7 @@ class App extends React.Component {
 
                 <div id="app-wrap" className="t-app__wrapper u-flexbox u-direction-column">
                     <div id="app-header" className="u-flex-none" role="banner">
-
-                        <CurrentHeader headerHasSignIn={routeProps.headerHasSignIn} />
+                        <CurrentHeader headerHasSignIn={routeProps.headerHasSignIn} isRunningInAstro={isRunningInAstro} />
                         {
                             // Only display banner when we are offline and have content to show
                             fetchError && hasFetchedCurrentPath && <OfflineBanner />
@@ -107,7 +106,7 @@ class App extends React.Component {
                                 </main>
 
                                 <div id="app-footer" className="u-flex-none">
-                                    <CurrentFooter />
+                                    <CurrentFooter isRunningInAstro={isRunningInAstro} />
                                 </div>
                             </div>
                         :
@@ -126,21 +125,28 @@ App.propTypes = {
      * The react-router history object
      */
     fetchError: PropTypes.string,
+    fetchSvgSprite: PropTypes.func,
     hasFetchedCurrentPath: PropTypes.bool,
     history: PropTypes.object,
     notifications: PropTypes.array,
-    removeNotification: PropTypes.func
+    removeNotification: PropTypes.func,
+    /**
+     * The SVG icon sprite needed in order for all Icons to work
+     */
+    sprite: PropTypes.string,
 }
 
 const mapStateToProps = createStructuredSelector({
     notifications: selectorToJS(selectors.getNotifications),
     fetchError: selectors.getFetchError,
-    hasFetchedCurrentPath: selectors.hasFetchedCurrentPath
+    hasFetchedCurrentPath: selectors.hasFetchedCurrentPath,
+    sprite: selectors.getSvgSprite
 })
 
 const mapDispatchToProps = {
     removeNotification: appActions.removeNotification,
-    fetchPage: appActions.fetchPage
+    fetchPage: appActions.fetchPage,
+    fetchSvgSprite: () => appActions.fetchSvgSprite()
 }
 
 export default connect(

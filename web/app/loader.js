@@ -1,6 +1,7 @@
-import {getBuildOrigin, getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
+import {getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
 import cacheHashManifest from '../tmp/loader-cache-hash-manifest.json'
+import {isRunningInAstro} from './utils/astro-integration'
 
 window.Progressive = {}
 
@@ -13,7 +14,7 @@ const isReactRoute = () => {
 initCacheManifest(cacheHashManifest)
 
 // This isn't accurate but does describe the case where the PR currently works
-const IS_PREVIEW = getBuildOrigin().indexOf('localhost') !== -1
+const IS_PREVIEW = /mobify-path=true/.test(document.cookie)
 
 const CAPTURING_CDN = '//cdn.mobify.com/capturejs/capture-latest.min.js'
 const SW_LOADER_PATH = `/service-worker-loader.js?preview=${IS_PREVIEW}&b=${cacheHashManifest.buildDate}`
@@ -27,6 +28,19 @@ const loadWorker = () => (
         .then(() => navigator.serviceWorker.ready)
         .catch(() => {})
 )
+
+const loadMain = (target) => {
+    const script = document.createElement('script')
+    script.id = 'progressive-web-script'
+    // Setting UTF-8 as our encoding ensures that certain strings (i.e.
+    // Japanese text) are not improperly converted to something else.
+    script.charset = 'utf-8'
+    script.src = getAssetUrl('main.js')
+
+    if (target) {
+        target.appendChild(script)
+    }
+}
 
 if (isReactRoute()) {
     displayPreloader(preloadCSS, preloadHTML, preloadJS)
@@ -51,7 +65,8 @@ if (isReactRoute()) {
 
     // load the worker if available
     // if no worker is available, we have to assume that promises might not be either.
-    (('serviceWorker' in navigator)
+    // Astro doesn't currently support service workers
+    (('serviceWorker' in navigator && !isRunningInAstro)
      ? loadWorker()
      : {then: (fn) => setTimeout(fn)}
     ).then(() => {
@@ -69,25 +84,29 @@ if (isReactRoute()) {
             rel: 'manifest'
         })
 
-        const script = document.createElement('script')
-        script.id = 'progressive-web-script'
-        // Setting UTF-8 as our encoding ensures that certain strings (i.e.
-        // Japanese text) are not improperly converted to something else.
-        script.charset = 'utf-8'
-        script.src = getAssetUrl('main.js')
-        body.appendChild(script)
-
         const jQuery = document.createElement('script')
         jQuery.async = true
         jQuery.id = 'progressive-web-jquery'
         jQuery.src = getAssetUrl('static/js/jquery.min.js')
         body.appendChild(jQuery)
 
-        const capturing = document.createElement('script')
-        capturing.async = true
-        capturing.id = 'progressive-web-capture'
-        capturing.src = CAPTURING_CDN
-        body.appendChild(capturing)
+        const capturingPromise = new Promise((resolve) => {
+            const capturing = document.createElement('script')
+            capturing.async = true
+            capturing.id = 'progressive-web-capture'
+            capturing.src = CAPTURING_CDN
+            capturing.onload = () => {
+                window.Capture.init((capture) => {
+                    // NOTE: by this time, the captured doc has changed a little bit from original desktop.
+                    // It now has some of our own assets (e.g. main.css) but they can be safely ignored.
+                    window.Progressive.initialCapturedDocHTML = capture.enabledHTMLString()
+                    resolve()
+                })
+            }
+            body.appendChild(capturing)
+        })
+
+        Promise.all([capturingPromise]).then(() => loadMain(body))
     })
 } else {
     const capturing = document.createElement('script')

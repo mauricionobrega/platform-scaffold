@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import {selectorToJS} from '../../../utils/selector-utils'
+
 import {updateItemQuantity} from '../../../store/cart/actions'
 import {openRemoveItemModal, saveToWishlist} from '../actions'
 import {getCartItems, getCartSummaryCount} from '../../../store/cart/selectors'
@@ -39,7 +40,6 @@ const ProductSkeleton = () => (
         <div className="t-cart__product-content-placeholder" />
     </ProductItem>
 )
-
 /* eslint-disable camelcase */
 
 class CartProductItem extends React.Component {
@@ -151,7 +151,7 @@ CartProductItem.propTypes = {
     onSaveLater: PropTypes.func
 }
 
-const CartProductList = ({items, summaryCount, onSaveLater, onUpdateItemQuantity, openRemoveItemModal}) => {
+const CartProductList = ({items, summaryCount, onSaveLater, onUpdateItemQuantity, openRemoveItemModal, onOpenSignIn}) => {
     const isCartEmpty = items.length === 0
 
     return (
@@ -161,8 +161,7 @@ const CartProductList = ({items, summaryCount, onSaveLater, onUpdateItemQuantity
                     <h1 className="u-flex">
                         Cart {summaryCount > 0 && <span>({summaryCount} Items)</span>}
                     </h1>
-
-                    <Button className="u-flex-none u-color-brand" href="/customer/account/login/">
+                    <Button className="u-flex-none u-color-brand" onClick={onOpenSignIn}>
                         <Icon name="user" />
                         Sign in
                     </Button>
@@ -181,6 +180,7 @@ CartProductList.propTypes = {
     items: PropTypes.array,
     openRemoveItemModal: PropTypes.func,
     summaryCount: PropTypes.number,
+    onOpenSignIn: PropTypes.func,
     onSaveLater: PropTypes.func,
     onUpdateItemQuantity: PropTypes.func
 }

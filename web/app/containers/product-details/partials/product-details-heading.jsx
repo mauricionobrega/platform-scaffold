@@ -7,6 +7,8 @@ import {selectorToJS} from '../../../utils/selector-utils'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import Breadcrumbs from 'progressive-web-sdk/dist/components/breadcrumbs'
 
+import {isRunningInAstro} from '../../../utils/astro-integration'
+
 const checkoutBreadcrumb = [
     {
         text: 'Cart',
@@ -16,10 +18,11 @@ const checkoutBreadcrumb = [
 
 const ProductDetailsHeading = ({breadcrumbs, title, price, isInCheckout}) => (
     <div className="t-product-details-heading u-padding-md u-box-shadow u-position-relative u-z-index-1">
-        <div className="t-product-details__breadcrumbs u-margin-bottom-md">
-            <Breadcrumbs items={isInCheckout ? checkoutBreadcrumb : breadcrumbs} />
-        </div>
-
+        {!isRunningInAstro &&
+            <div className="t-product-details__breadcrumbs u-margin-bottom-md">
+                <Breadcrumbs items={isInCheckout ? checkoutBreadcrumb : breadcrumbs} />
+            </div>
+        }
         {title ?
             <h1 className="t-product-details-heading__title u-text-uppercase u-margin-bottom">{title}</h1>
         :

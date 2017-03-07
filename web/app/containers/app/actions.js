@@ -1,7 +1,8 @@
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
-
-import * as utils from '../../utils/utils'
-import * as selectors from './selectors'
+import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
+import {createAction} from '../../utils/utils'
+import {getCurrentUrl} from './selectors'
 
 import appParser from './app-parser'
 
@@ -33,16 +34,20 @@ import {OFFLINE_ASSET_URL} from './constants'
 import {closeModal} from '../../store/modals/actions'
 import {OFFLINE_MODAL} from '../offline/constants'
 
-export const addNotification = utils.createAction('Add Notification')
-export const removeNotification = utils.createAction('Remove Notification')
-export const removeAllNotifications = utils.createAction('Remove All Notifications')
+let isInitialEntryToSite = true
+
+export const addNotification = createAction('Add Notification')
+export const removeNotification = createAction('Remove Notification')
+export const removeAllNotifications = createAction('Remove All Notifications')
+
+export const updateSvgSprite = createAction('Updated SVG sprite', 'sprite')
 
 /**
  * Action dispatched when the route changes
  * @param {string} pageComponent - the component of the entered route
  * @param {string} currentURL - what's currently shown in the address bar
  */
-export const onRouteChanged = utils.createAction('On route changed', 'currentURL', 'pageComponent')
+export const onRouteChanged = createAction('On route changed', 'currentURL', 'pageComponent')
 
 /**
  * Action dispatched when content for a global page render is ready.
@@ -53,7 +58,7 @@ export const onRouteChanged = utils.createAction('On route changed', 'currentURL
  * @param {string} currentURL - what's currently shown in the address bar
  * @param {string} routeName - the name of the route we received the page for
  */
-export const onPageReceived = utils.createAction('On page received',
+export const onPageReceived = createAction('On page received',
     '$',
     '$response',
     'url',
@@ -61,13 +66,13 @@ export const onPageReceived = utils.createAction('On page received',
     'routeName'
 )
 
-export const receiveData = utils.createAction('Receive App Data')
+export const receiveData = createAction('Receive App Data')
 export const process = ({payload: {$response}}) => {
     return receiveData(appParser($response))
 }
 
-export const setPageFetchError = utils.createAction('Set page fetch error', 'fetchError')
-export const clearPageFetchError = utils.createAction('Clear page fetch error')
+export const setPageFetchError = createAction('Set page fetch error', 'fetchError')
+export const clearPageFetchError = createAction('Clear page fetch error')
 
 /**
  * Make a separate request that is intercepted by the worker. The worker will
@@ -99,18 +104,32 @@ export const checkIfOffline = () => {
     }
 }
 
+const requestCapturedDoc = () => {
+    const body = new Blob([window.Progressive.initialCapturedDocHTML], {type: 'text/html'})
+    const capturedDocResponse = new Response(body, {
+        status: 200,
+        statusText: 'OK'
+    })
+
+    return Promise.resolve(capturedDocResponse)
+}
+
 /**
  * Fetch the content for a 'global' page render. This should be driven
  * by react-router, ideally.
  */
 export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
     return (dispatch, getState) => {
-        return utils.makeRequest(fetchUrl || url)
+        const isNotTestingEnvironment = !!window.Progressive
+        const request = isInitialEntryToSite && isNotTestingEnvironment ? requestCapturedDoc() : makeRequest(fetchUrl || url)
+        isInitialEntryToSite = false
+
+        return request
             .then(jqueryResponse)
             .then((res) => {
                 const [$, $response] = res
 
-                const currentURL = selectors.getCurrentUrl(getState())
+                const currentURL = getCurrentUrl(getState())
                 const receivedAction = onPageReceived($, $response, url, currentURL, routeName)
 
                 // Let app-level reducers know about receiving the page
@@ -148,7 +167,6 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                 // worker, but are in fact 'offline'
                 dispatch(checkIfOffline())
             })
-
             .catch((error) => {
                 console.info(error.message)
                 if (error.name !== 'FetchError') {
@@ -157,6 +175,20 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                     dispatch(setPageFetchError(error.message))
                 }
             })
+    }
+}
 
+/**
+ * Until the day that the `use` element's cross-domain issues are fixed, we are
+ * forced to fetch the SVG Sprite's XML as a string and manually inject it into
+ * the DOM. See here for details on the issue with `use`:
+ * @URL: https://bugs.chromium.org/p/chromium/issues/detail?id=470601
+ */
+export const fetchSvgSprite = () => {
+    return (dispatch) => {
+        const spriteUrl = getAssetUrl('static/svg/sprite-dist/sprite.svg')
+        return makeRequest(spriteUrl)
+            .then((response) => response.text())
+            .then((text) => dispatch(updateSvgSprite(text)))
     }
 }
