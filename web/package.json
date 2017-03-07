@@ -68,7 +68,6 @@
     "nightwatch": "0.9.8",
     "nightwatch-commands": "2.0.0",
     "node-sass": "4.1.1",
-    "pem": "1.8.3",
     "postcss-loader": "1.2.1",
     "progressive-web-sdk": "0.13.0",
     "prompt": "1.0.0",
