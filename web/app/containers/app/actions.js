@@ -117,7 +117,8 @@ const requestCapturedDoc = () => {
  */
 export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
     return (dispatch, getState) => {
-        const request = isInitialEntryToSite ? requestCapturedDoc() : makeRequest(fetchUrl || url)
+        const isNotTestingEnvironment = !!window.Progressive
+        const request = isInitialEntryToSite && isNotTestingEnvironment ? requestCapturedDoc() : makeRequest(fetchUrl || url)
         isInitialEntryToSite = false
 
         return request
