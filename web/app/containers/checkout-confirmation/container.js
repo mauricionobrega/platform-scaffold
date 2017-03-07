@@ -5,7 +5,7 @@ import CheckoutConfirmationDetails from './partials/checkout-confirmation-detail
 import CheckoutConfirmationModal from './partials/checkout-confirmation-modal'
 import CheckoutConfirmationQuestions from './partials/checkout-confirmation-questions'
 
-import {trigger} from '../../vendor/astro-client'
+import {trigger} from '../../vendor/astro-integration'
 
 class CheckoutConfirmation extends React.Component {
     componentDidMount() {
