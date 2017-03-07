@@ -1,7 +1,10 @@
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
+
+import * as analyticConstants from 'progressive-web-sdk/dist/analytics/analytic-constants'
+
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
-import {createAction} from '../../utils/utils'
+import {createAction, createActionWithMeta, createAnalyticsMeta} from '../../utils/utils'
 import {getCurrentUrl} from './selectors'
 
 import appParser from './app-parser'
@@ -44,10 +47,13 @@ export const updateSvgSprite = createAction('Updated SVG sprite', 'sprite')
 
 /**
  * Action dispatched when the route changes
- * @param {string} pageComponent - the component of the entered route
  * @param {string} currentURL - what's currently shown in the address bar
+ * @param {string} routeName - Template name for analytic
  */
-export const onRouteChanged = createAction('On route changed', 'currentURL', 'pageComponent')
+export const onRouteChanged = createActionWithMeta(
+    'On route changed',
+    ['currentURL'],
+    (currentURL, routeName) => createAnalyticsMeta(analyticConstants.pageview, {name: routeName}))
 
 /**
  * Action dispatched when content for a global page render is ready.
