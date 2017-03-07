@@ -54,7 +54,7 @@ const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, shippingRa
                     <LedgerRow
                         className="u-flex-none"
                         label="Taxes"
-                        labelAction="Rates are based on your shipping location."
+                        labelAction="Rates based on shipping location"
                         valueAction={calculateButton}
                     />
 
