@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import Immutable from 'immutable'
 
-import {addToCartStarted, addToCartComplete, openItemAddedModal, submitCartForm} from './actions'
+import {addToCartStarted, addToCartComplete, submitCartForm} from './actions'
 import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from './constants'
 import {openModal} from '../../store/modals/actions'
 
