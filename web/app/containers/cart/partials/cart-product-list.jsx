@@ -105,7 +105,7 @@ class CartProductItem extends React.Component {
 
                 <div className="u-flexbox">
                     <Button
-                        className="u-text-small u-color-brand u-flex-none"
+                        className="u-text-small u-color-brand u-flex-none u-text-letter-spacing-normal"
                         innerClassName="c--no-min-width u-padding-start-0 u-padding-bottom-0"
                         href={configure_url}
                         >
@@ -113,7 +113,7 @@ class CartProductItem extends React.Component {
                     </Button>
 
                     <Button
-                        className="u-text-small u-color-brand u-padding-start-0 u-padding-end-0"
+                        className="u-text-small u-color-brand u-padding-start-0 u-padding-end-0 u-text-letter-spacing-normal"
                         innerClassName="u-padding-bottom-0"
                         onClick={this.saveForLater}
                         >
@@ -121,7 +121,7 @@ class CartProductItem extends React.Component {
                     </Button>
 
                     <Button
-                        className="u-text-small u-color-brand qa-cart__remove-item"
+                        className="u-text-small u-color-brand u-text-letter-spacing-normal qa-cart__remove-item"
                         innerClassName="u-padding-end-0 u-padding-bottom-0"
                         onClick={this.removeItem}
                         >
@@ -161,7 +161,7 @@ const CartProductList = ({items, summaryCount, onSaveLater, onUpdateItemQuantity
                     <h1 className="u-flex">
                         Cart {summaryCount > 0 && <span>({summaryCount} Items)</span>}
                     </h1>
-                    <Button className="u-flex-none u-color-brand" onClick={onOpenSignIn}>
+                    <Button className="u-flex-none u-color-brand u-text-letter-spacing-normal" onClick={onOpenSignIn}>
                         <Icon name="user" />
                         Sign in
                     </Button>
