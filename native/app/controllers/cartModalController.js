@@ -39,6 +39,13 @@ const CartModalController = function(modalView, navigationView) {
         this.alertEnabled = true
     })
 
+    this.navigationView.on('checkout:completed', () => {
+        this.alertEnabled = false
+        AppEvents.trigger(TabEvents.updateCart, {
+            count: 0
+        })
+    })
+
     this.navigationView.on('cart-updated', (data) => {
         AppEvents.trigger(TabEvents.updateCart, data)
     })
