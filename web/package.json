@@ -9,7 +9,7 @@
   "siteUrl": "",
   "license": "See license in LICENSE",
   "private": true,
-  "version": "0.13.0",
+  "version": "0.13.1",
   "dependencies": {
     "babel-runtime": "6.11.6",
     "es6-promise": "4.0.5",
@@ -69,7 +69,7 @@
     "nightwatch-commands": "2.0.0",
     "node-sass": "4.1.1",
     "postcss-loader": "1.2.1",
-    "progressive-web-sdk": "0.13.0",
+    "progressive-web-sdk": "0.13.2",
     "prompt": "1.0.0",
     "raw-loader": "0.5.1",
     "react-addons-test-utils": "15.4.1",
