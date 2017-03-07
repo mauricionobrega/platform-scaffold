@@ -11,8 +11,7 @@ import {getFormKey} from '../app/selectors'
 import {selectorToJS} from '../../utils/selector-utils'
 import {browserHistory} from 'react-router'
 
-import {trigger} from '../../vendor/astro-client'
-import {isRunningInAstro} from '../../utils/astro-integration'
+import {isRunningInAstro, trigger} from '../../utils/astro-integration'
 
 // @TODO: blocked until the desktop's Address Book actualy works correctly
 // import * as paymentSelectors from '../../store/checkout/payment/selectors'
