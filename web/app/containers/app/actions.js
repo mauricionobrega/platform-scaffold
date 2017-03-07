@@ -34,6 +34,8 @@ import {OFFLINE_ASSET_URL} from './constants'
 import {closeModal} from '../../store/modals/actions'
 import {OFFLINE_MODAL} from '../offline/constants'
 
+let isInitialEntryToSite = true
+
 export const addNotification = createAction('Add Notification')
 export const removeNotification = createAction('Remove Notification')
 export const removeAllNotifications = createAction('Remove All Notifications')
@@ -102,13 +104,27 @@ export const checkIfOffline = () => {
     }
 }
 
+const requestCapturedDoc = () => {
+    const body = new Blob([window.Progressive.initialCapturedDocHTML], {type: 'text/html'})
+    const capturedDocResponse = new Response(body, {
+        status: 200,
+        statusText: 'OK'
+    })
+
+    return Promise.resolve(capturedDocResponse)
+}
+
 /**
  * Fetch the content for a 'global' page render. This should be driven
  * by react-router, ideally.
  */
 export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
     return (dispatch, getState) => {
-        return makeRequest(fetchUrl || url)
+        const isNotTestingEnvironment = !!window.Progressive
+        const request = isInitialEntryToSite && isNotTestingEnvironment ? requestCapturedDoc() : makeRequest(fetchUrl || url)
+        isInitialEntryToSite = false
+
+        return request
             .then(jqueryResponse)
             .then((res) => {
                 const [$, $response] = res
