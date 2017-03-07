@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
-import {invertSelector} from '../../../utils/selector-utils'
 import * as selectors from '../selectors'
 import * as actions from '../actions'
 
@@ -12,17 +11,12 @@ import Stepper from 'progressive-web-sdk/dist/components/stepper'
 const ProductDetailsAddToCart = ({quantity, ctaText, setQuantity, onSubmit, disabled}) => {
     const stepperProps = {
         decrementIcon: 'minus',
+        disabled,
         incrementIcon: 'plus',
         initialValue: quantity,
         minimumValue: 1,
         onChange: setQuantity,
         className: 'u-flex-none'
-    }
-
-    if (disabled) {
-        stepperProps.initialValue = 0
-        stepperProps.minimumValue = 0
-        stepperProps.maximumValue = 0
     }
 
     return (
@@ -65,7 +59,7 @@ ProductDetailsAddToCart.propTypes = {
 const mapStateToProps = createStructuredSelector({
     ctaText: selectors.getCTAText,
     quantity: selectors.getItemQuantity,
-    disabled: invertSelector(selectors.getProductDetailsContentsLoaded)
+    disabled: selectors.getAddToCartDisabled
 })
 
 const mapDispatchToProps = {
