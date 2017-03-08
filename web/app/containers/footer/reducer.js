@@ -2,7 +2,9 @@ import Immutable from 'immutable'
 import {handleActions} from 'redux-actions'
 import * as footerActions from './actions'
 import * as constants from './constants'
-import {mergePayload} from '../../utils/reducer-utils'
+import {receiveFooterData} from '../../integration-manager/responses'
+
+import {mergePayloadForActions} from '../../utils/reducer-utils'
 import {TextLink} from '../../utils/parser-utils'
 
 export const initialState = Immutable.fromJS({
@@ -12,8 +14,7 @@ export const initialState = Immutable.fromJS({
 })
 
 const footer = handleActions({
-    [footerActions.receiveData]: mergePayload,
-    [footerActions.newsletterSignupComplete]: mergePayload
+    ...mergePayloadForActions(receiveFooterData, footerActions.receiveData, footerActions.newsletterSignupComplete)
 }, initialState)
 
 
