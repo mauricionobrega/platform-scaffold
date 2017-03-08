@@ -6,6 +6,7 @@ import {productDetailsParser} from '../../store/products/parser'
 import {pdpAddToCartFormParser} from './parsers'
 import {checkoutShippingParser, parseCheckoutData} from './checkout/parsers'
 import homeParser from './home/parser'
+import {parseNavigation} from './navigation/parser'
 import * as responses from './../responses'
 import {getCustomerEntityID} from '../../store/checkout/selectors'
 import {getIsLoggedIn} from '../../containers/app/selectors'
@@ -14,6 +15,10 @@ import {getCart} from '../../store/cart/actions'
 import {browserHistory} from 'react-router'
 import {receiveFormInfo} from './../actions'
 import {removeAllNotifications} from '../../containers/app/actions'
+
+export const processAppData = ($, $response) => (dispatch) => {
+    return dispatch(responses.receiveNavigationData(parseNavigation($, $response)))
+}
 
 export const fetchPdpData = (url) => (dispatch) => {
     return makeRequest(url)
@@ -30,6 +35,7 @@ export const fetchHomeData = (url) => (dispatch) => {
     return makeRequest(url)
         .then(jqueryResponse)
         .then(([$, $response]) => {
+            dispatch(processAppData($, $response))
             dispatch(responses.receiveHomeData(homeParser($, $response)))
         })
 }

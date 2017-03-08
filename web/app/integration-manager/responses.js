@@ -15,6 +15,8 @@ export const receiveCheckoutData = createAction('Receive Checkout Data')
 
 export const receiveHomeData = createAction('Receive Home Data')
 
+export const receiveNavigationData = createAction('Receive navigation data')
+
 export const onShippingEmailRecognized = () => {
     return (dispatch) => {
         dispatch(receiveCheckoutShippingData({customerEmailRecognized: true}))
