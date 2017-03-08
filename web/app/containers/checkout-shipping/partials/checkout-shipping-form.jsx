@@ -15,48 +15,6 @@ import ShippingAddressForm from './shipping-address'
 import ShippingEmail from './shipping-email'
 import ShippingMethod from './shipping-method'
 
-
-const CheckoutShippingForm = ({
-    handleSubmit,
-    isLoggedIn,
-    submitShipping
-}) => {
-
-    return (
-        <form className="t-checkout-shipping__form" onSubmit={handleSubmit(submitShipping)} noValidate>
-            <Grid className="u-center-piece">
-                <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 7}}>
-                    {!isLoggedIn && <ShippingEmail />}
-                    <ShippingAddressForm />
-                </GridSpan>
-
-                <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 5}}>
-                    <ShippingMethod />
-                </GridSpan>
-            </Grid>
-        </form>
-    )
-}
-
-CheckoutShippingForm.propTypes = {
-    /**
-     * Whether the form is disabled or not
-     */
-    disabled: React.PropTypes.bool,
-    /**
-     * Redux-form internal
-     */
-    handleSubmit: React.PropTypes.func,
-    /**
-    * Is the user logged in or not
-    */
-    isLoggedIn: React.PropTypes.bool,
-    /**
-    * Submits the shipping form information to the server
-    */
-    submitShipping: React.PropTypes.func
-}
-
 const validate = (values) => {
     const errors = {}
     const requiredFieldNames = [
@@ -80,6 +38,65 @@ const validate = (values) => {
     })
 
     return errors
+}
+
+class CheckoutShippingForm extends React.Component {
+    constructor(props) {
+        super(props)
+        this.onSubmit = this.onSubmit.bind(this)
+    }
+
+    onSubmit(values) {
+        return new Promise((resolve, reject) => {
+            const errors = validate(values)
+            if (!Object.keys(errors).length) {
+                this.props.submitShipping()
+                return resolve()
+            }
+            return reject(new ReduxForm.SubmissionError(errors))
+        })
+    }
+
+    render() {
+        const {
+            handleSubmit,
+            isLoggedIn
+        } = this.props
+
+        return (
+            <form className="t-checkout-shipping__form" onSubmit={handleSubmit(this.onSubmit)} noValidate>
+                <Grid className="u-center-piece">
+                    <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 7}}>
+                        {!isLoggedIn && <ShippingEmail />}
+                        <ShippingAddressForm />
+                    </GridSpan>
+
+                    <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 5}}>
+                        <ShippingMethod />
+                    </GridSpan>
+                </Grid>
+            </form>
+        )
+    }
+}
+
+CheckoutShippingForm.propTypes = {
+    /**
+     * Whether the form is disabled or not
+     */
+    disabled: React.PropTypes.bool,
+    /**
+     * Redux-form internal
+     */
+    handleSubmit: React.PropTypes.func,
+    /**
+    * Is the user logged in or not
+    */
+    isLoggedIn: React.PropTypes.bool,
+    /**
+    * Submits the shipping form information to the server
+    */
+    submitShipping: React.PropTypes.func
 }
 
 const mapStateToProps = createStructuredSelector({
