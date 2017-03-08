@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
-import {selectorToJS} from '../../utils/selector-utils'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import {isRunningInAstro} from '../../utils/astro-integration'
 
 import {hidePreloader} from 'progressive-web-sdk/dist/preloader'
@@ -136,8 +135,8 @@ App.propTypes = {
     sprite: PropTypes.string,
 }
 
-const mapStateToProps = createStructuredSelector({
-    notifications: selectorToJS(selectors.getNotifications),
+const mapStateToProps = createPropsSelector({
+    notifications: selectors.getNotifications,
     fetchError: selectors.getFetchError,
     hasFetchedCurrentPath: selectors.hasFetchedCurrentPath,
     sprite: selectors.getSvgSprite

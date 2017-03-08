@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
-import {selectorToJS} from '../../../utils/selector-utils'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as ReduxForm from 'redux-form'
 
 import {getIsLoggedIn} from '../../app/selectors'
@@ -72,8 +71,8 @@ const validate = (values) => {
     return errors
 }
 
-const mapStateToProps = createStructuredSelector({
-    initialValues: selectorToJS(getShippingInitialValues),
+const mapStateToProps = createPropsSelector({
+    initialValues: getShippingInitialValues,
     isLoggedIn: getIsLoggedIn
 })
 
