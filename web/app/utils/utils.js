@@ -115,5 +115,11 @@ export const getPath = ({pathname, search}) => pathname + search
  * @returns {string} - the full URL for the given location
  */
 export const getURL = (location) =>
-      window.location.origin + getPath(location)
+    window.location.origin + getPath(location)
 
+
+// Regex courtesy of https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie
+export const getCookieValue = (cookieName) => {
+    const result = document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)${cookieName}\\s*\\=\\s*([^;]*).*$)|^.*$`), '$1')
+    return result
+}
