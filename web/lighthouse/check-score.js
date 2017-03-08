@@ -7,7 +7,7 @@ const fs = require('fs')
  * And we're going to parse it here.
  */
 
-const report = fs.readFileSync('./reports/audit-local.html', 'utf8')
+const report = fs.readFileSync('./lighthouse/audit-local.html', 'utf8')
 
 // I confirm that I read & accept http://stackoverflow.com/a/1732454/899937
 const results = report.match(/<span class="section-result__points">(.*)<\/span>/)
