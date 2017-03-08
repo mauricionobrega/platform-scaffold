@@ -16,14 +16,18 @@ import Router from './router'
 // added to the markup in `loader.js`
 import Stylesheet from './stylesheet.scss' // eslint-disable-line no-unused-vars
 
-import {initMobifyAnalytics} from 'progressive-web-sdk/dist/analytics'
+import {analyticManager} from 'progressive-web-sdk/dist/analytics/analytic-manager'
+import {clientAnalytics} from './utils/analytics/client-analytics'
 
 import connector from './integration-manager/merlins-connector'
 import {registerConnector} from './integration-manager'
 
 polyfill()
 
-initMobifyAnalytics(AJS_SLUG) // eslint-disable-line no-undef
+analyticManager.init({
+    projectSlug: AJS_SLUG,      // eslint-disable-line no-undef
+    isDebug: false
+}, clientAnalytics)
 initCacheManifest(cacheHashManifest)
 
 registerConnector(connector)

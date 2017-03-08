@@ -1,6 +1,7 @@
 import {createAction} from '../utils/utils'
 import {addNotification, removeNotification} from '../containers/app/actions'
 import {openModal} from '../store/modals/actions'
+import {addToCartComplete} from '../containers/product-details/actions'
 import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from '../containers/product-details/constants'
 
 
@@ -40,4 +41,7 @@ export const onShippingLoginError = (responseData) => {
     }
 }
 
-export const onAddToCartSucceess = () => (dispatch) => dispatch(openModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL))
+export const onAddToCartSucceess = () => (dispatch) => {
+    dispatch(addToCartComplete())
+    dispatch(openModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL))
+}

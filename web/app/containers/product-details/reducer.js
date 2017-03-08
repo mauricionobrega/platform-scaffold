@@ -7,6 +7,8 @@ import {receivePdpUIData} from '../../integration-manager/responses'
 import {mergePayloadForActions} from '../../utils/reducer-utils'
 
 const reducer = handleActions({
+    [productDetailsActions.addToCartStarted]: (state) => state.set('addToCartInProgress', true),
+    [productDetailsActions.addToCartComplete]: (state) => state.set('addToCartInProgress', false),
     ...mergePayloadForActions(
         productDetailsActions.receiveData,
         productDetailsActions.receiveNewItemQuantity,

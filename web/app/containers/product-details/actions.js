@@ -20,6 +20,9 @@ export const setItemQuantity = (quantity) => (dispatch, getStore) => {
     }))
 }
 
+export const addToCartStarted = createAction('Add to cart started')
+export const addToCartComplete = createAction('Add to cart complete')
+
 export const receiveData = createAction('Receive Product Details data')
 export const process = ({payload}) => {
     const {$, $response, url} = payload
@@ -41,6 +44,7 @@ export const goToCheckout = () => (dispatch) => {
 export const submitCartForm = () => (dispatch, getStore) => {
     const key = appSelectors.getCurrentPathKey(getStore())
     const qty = selectors.getItemQuantity(getStore())
-
+    dispatch(addToCartStarted())
     return dispatch(commands.addToCart(key, qty))
+
 }
