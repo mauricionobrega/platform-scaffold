@@ -18,7 +18,7 @@ trap 'kill $(jobs -pr)' SIGINT SIGTERM EXIT
 # See min_lighthouse_score in package.json
 
 npm run dev &
-sleep 20
+sleep 40
 lighthouse \
 	--chrome-flags='--user-agent="MobifyPreview" --allow-insecure-localhost' \
 	--output=html \
