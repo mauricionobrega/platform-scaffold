@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 
 import {getIsLoggedIn} from '../app/selectors'
 
@@ -51,7 +51,7 @@ CheckoutHeader.propTypes = {
     isRunningInAstro: React.PropTypes.bool
 }
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     isLoggedIn: getIsLoggedIn
 })
 

@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -84,7 +84,7 @@ MiniCart.propTypes = {
     isOpen: PropTypes.bool,
 }
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     contentsLoaded: getCartContentsLoaded,
     isOpen: isModalOpen(MINI_CART_MODAL),
     hasItems: getCartHasItems
