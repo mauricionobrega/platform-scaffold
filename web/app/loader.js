@@ -84,6 +84,31 @@ if (isReactRoute()) {
             rel: 'manifest'
         })
 
+        // This method is defined so that when main.js loads, it doesn't attempt
+        // to load its dependencies synchronously, because it's dependencies
+        // in vendor.js may have not loaded yet. We replace the call to
+        // webpackJsonp in main.js with this webpackJsonpAsync function, which
+        // will wait for webpackJsonp (and thus, vendor.js) to be finished loading.
+        window.webpackJsonpAsync = (module, exports, webpackRequire) => {
+            const runJsonpAsync = function() {
+                return window.webpackJsonp ?
+                    window.webpackJsonp(module, exports, webpackRequire) :
+                    setTimeout(runJsonpAsync, 50)
+            }
+
+            runJsonpAsync()
+        }
+
+        const vendorScript = document.createElement('script')
+        vendorScript.id = 'progressive-web-script'
+        // Setting UTF-8 as our encoding ensures that certain strings (i.e.
+        // Japanese text) are not improperly converted to something else. We
+        // do this on the vendor scripts also just in case any libs we import
+        // have localized strings in them.
+        vendorScript.charset = 'utf-8'
+        vendorScript.src = getAssetUrl('vendor.js')
+        body.appendChild(vendorScript)
+
         const jQuery = document.createElement('script')
         jQuery.async = true
         jQuery.id = 'progressive-web-jquery'
