@@ -24,6 +24,7 @@ const generateRandomString = (chars, length) => {
     return result
 }
 
+// Set the cookie and returns the value
 const generateFormKeyCookie = () => {
     // From Magento page-cache.js
     const allowedCharacters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
