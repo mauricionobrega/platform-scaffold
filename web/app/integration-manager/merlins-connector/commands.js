@@ -7,7 +7,6 @@ import {pdpAddToCartFormParser, appParser} from './parsers'
 import {checkoutShippingParser, parseCheckoutData} from './checkout/parsers'
 import homeParser from './home/parser'
 import {parseNavigation} from './navigation/parser'
-import {parseFooter} from './footer/parser'
 import * as responses from './../responses'
 import {getCustomerEntityID} from '../../store/checkout/selectors'
 import {getIsLoggedIn, getCurrentUrl} from '../../containers/app/selectors'
@@ -30,7 +29,6 @@ const fetchPageData = (url) => (dispatch, getState) => {
             dispatch(receivedAction)
             dispatch(responses.receiveAppData(appParser($response)))
             dispatch(responses.receiveNavigationData(parseNavigation($, $response)))
-            dispatch(responses.receiveFooterData(parseFooter($, $response)))
 
             return res
         })

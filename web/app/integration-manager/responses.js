@@ -17,8 +17,6 @@ export const receiveHomeData = createAction('Receive Home Data')
 
 export const receiveNavigationData = createAction('Receive Navigation Data')
 
-export const receiveFooterData = createAction('Receive Footer Data')
-
 export const onPageReceived = createAction('On page received',
     '$',
     '$response',
