@@ -84,6 +84,11 @@ if (isReactRoute()) {
             rel: 'manifest'
         })
 
+        // This method is defined so that when main.js loads, it doesn't attempt
+        // to load its dependencies synchronously, because it's dependencies
+        // in vendor.js may have not loaded yet. We replace the call to
+        // webpackJsonp in main.js with this webpackJsonpAsync function, which
+        // will wait for webpackJsonp (and thus, vendor.js) to be finished loading.
         window.webpackJsonpAsync = (module, exports, webpackRequire) => {
             const runJsonpAsync = function() {
                 return window.webpackJsonp ?
