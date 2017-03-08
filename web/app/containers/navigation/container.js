@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
-import {selectorToJS} from '../../utils/selector-utils'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 
 import Nav from 'progressive-web-sdk/dist/components/nav'
 import NavMenu from 'progressive-web-sdk/dist/components/nav-menu'
@@ -80,10 +79,10 @@ Navigation.propTypes = {
 }
 
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     path: selectors.getPath,
     isOpen: isModalOpen(NAVIGATION_MODAL),
-    root: selectorToJS(selectors.getNavigationRoot)
+    root: selectors.getNavigationRoot
 })
 
 const mapDispatchToProps = {
