@@ -13,6 +13,8 @@ export const receiveCheckoutShippingData = createAction('Receive Checkout Shippi
 
 export const receiveCheckoutData = createAction('Receive Checkout Data')
 
+export const receiveHomeData = createAction('Receive Home Data')
+
 export const onShippingEmailRecognized = () => {
     return (dispatch) => {
         dispatch(receiveCheckoutShippingData({customerEmailRecognized: true}))

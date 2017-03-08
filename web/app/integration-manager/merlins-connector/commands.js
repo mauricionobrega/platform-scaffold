@@ -5,6 +5,7 @@ import {urlToPathKey} from '../../utils/utils'
 import {productDetailsParser} from '../../store/products/parser'
 import {pdpAddToCartFormParser} from './parsers'
 import {checkoutShippingParser, parseCheckoutData} from './checkout/parsers'
+import homeParser from './home/parser'
 import * as responses from './../responses'
 import {getCustomerEntityID} from '../../store/checkout/selectors'
 import {getIsLoggedIn} from '../../containers/app/selectors'
@@ -23,6 +24,14 @@ export const fetchPdpData = (url) => (dispatch) => {
             dispatch(receiveFormInfo({[urlToPathKey(url)]: pdpAddToCartFormParser($, $response).formInfo}))
         })
         .catch((error) => { console.info(error.message) })
+}
+
+export const fetchHomeData = (url) => (dispatch) => {
+    return makeRequest(url)
+        .then(jqueryResponse)
+        .then(([$, $response]) => {
+            dispatch(responses.receiveHomeData(homeParser($, $response)))
+        })
 }
 
 export const addToCart = (key, qty) => (dispatch, getStore) => {
