@@ -147,3 +147,11 @@ cd ../progressive-web-scaffold/web
 npm link progressive-web-sdk
 npm run dev
 ```
+
+## Analyze Bundle Size
+
+To visualize bundle script content, run:
+
+```
+MOBIFY_ANALYZE=true npm run prod:build
+```
