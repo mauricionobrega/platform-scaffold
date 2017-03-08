@@ -81,7 +81,7 @@ if (analyzeBundle) {
 // Prepare entries for async loading:
 // Webpack doesn't support async loading of the commons and entry bundles out of the box
 // Replace `webpackJsonp` calls with `webpackJsonpAsync` and implement the latter in loader
-// so that it waits  for the vendor script to finish loading
+// so that it waits for the vendor script to finish loading
 // before running the webpackJsonp with the received arguments.
 config.plugins.push(function() {
     this.plugin('after-compile', (compilation, callback) => {
