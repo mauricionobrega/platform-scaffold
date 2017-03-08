@@ -46,5 +46,4 @@ export const submitCartForm = () => (dispatch, getStore) => {
     const qty = selectors.getItemQuantity(getStore())
     dispatch(addToCartStarted())
     return dispatch(commands.addToCart(key, qty))
-
 }
