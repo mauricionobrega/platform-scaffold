@@ -3,33 +3,25 @@ import {makeRequest, makeFormEncodedRequest, makeJsonEncodedRequest} from 'progr
 import {urlToPathKey} from '../../utils/utils'
 
 import {productDetailsParser} from '../../store/products/parser'
-import {pdpAddToCartFormParser, appParser} from './parsers'
+import {pdpAddToCartFormParser} from './parsers'
 import {checkoutShippingParser, parseCheckoutData} from './checkout/parsers'
 import homeParser from './home/parser'
 import {parseNavigation} from './navigation/parser'
 import * as responses from './../responses'
 import {getCustomerEntityID} from '../../store/checkout/selectors'
-import {getIsLoggedIn, getCurrentUrl} from '../../containers/app/selectors'
+import {getIsLoggedIn} from '../../containers/app/selectors'
 import {getShippingFormValues} from '../../store/form/selectors'
 import {getCart} from '../../store/cart/actions'
 import {browserHistory} from 'react-router'
 import {receiveFormInfo} from './../actions'
 import {removeAllNotifications} from '../../containers/app/actions'
 
-const fetchPageData = (url) => (dispatch, getState) => {
+const fetchPageData = (url) => (dispatch) => {
     return makeRequest(url)
         .then(jqueryResponse)
         .then((res) => {
             const [$, $response] = res
-
-            const currentURL = getCurrentUrl(getState())
-            const receivedAction = responses.onPageReceived($, $response, url, currentURL)
-
-            // Let app-level reducers know about receiving the page
-            dispatch(receivedAction)
-            dispatch(responses.receiveAppData(appParser($response)))
             dispatch(responses.receiveNavigationData(parseNavigation($, $response)))
-
             return res
         })
 }
