@@ -17,6 +17,16 @@ export const receiveHomeData = createAction('Receive Home Data')
 
 export const receiveNavigationData = createAction('Receive navigation data')
 
+export const onPageReceived = createAction('On page received',
+    '$',
+    '$response',
+    'url',
+    'currentURL',
+    'routeName'
+)
+
+export const receiveAppData = createAction('Receive App Data')
+
 export const onShippingEmailRecognized = () => {
     return (dispatch) => {
         dispatch(receiveCheckoutShippingData({customerEmailRecognized: true}))

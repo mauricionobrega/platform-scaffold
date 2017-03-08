@@ -3,25 +3,31 @@ import {makeRequest, makeFormEncodedRequest, makeJsonEncodedRequest} from 'progr
 import {urlToPathKey} from '../../utils/utils'
 
 import {productDetailsParser} from '../../store/products/parser'
-import {pdpAddToCartFormParser} from './parsers'
+import {pdpAddToCartFormParser, appParser} from './parsers'
 import {checkoutShippingParser, parseCheckoutData} from './checkout/parsers'
 import homeParser from './home/parser'
 import {parseNavigation} from './navigation/parser'
 import * as responses from './../responses'
 import {getCustomerEntityID} from '../../store/checkout/selectors'
-import {getIsLoggedIn} from '../../containers/app/selectors'
+import {getIsLoggedIn, getCurrentUrl} from '../../containers/app/selectors'
 import {getShippingFormValues} from '../../store/form/selectors'
 import {getCart} from '../../store/cart/actions'
 import {browserHistory} from 'react-router'
 import {receiveFormInfo} from './../actions'
 import {removeAllNotifications} from '../../containers/app/actions'
 
-const fetchPageData = (url) => (dispatch) => {
+const fetchPageData = (url) => (dispatch, getState) => {
     return makeRequest(url)
         .then(jqueryResponse)
         .then((res) => {
             const [$, $response] = res
 
+            const currentURL = getCurrentUrl(getState())
+            const receivedAction = responses.onPageReceived($, $response, url, currentURL)
+
+            // Let app-level reducers know about receiving the page
+            dispatch(receivedAction)
+            dispatch(responses.receiveAppData(appParser($response)))
             dispatch(responses.receiveNavigationData(parseNavigation($, $response)))
 
             return res
@@ -29,7 +35,7 @@ const fetchPageData = (url) => (dispatch) => {
 }
 
 export const fetchPdpData = (url) => (dispatch) => {
-    return fetchPageData(url)
+    return dispatch(fetchPageData(url))
         .then((res) => {
             const [$, $response] = res
             dispatch(responses.receivePdpProductData({[urlToPathKey(url)]: productDetailsParser($, $response)}))
@@ -39,7 +45,7 @@ export const fetchPdpData = (url) => (dispatch) => {
 }
 
 export const fetchHomeData = (url) => (dispatch) => {
-    return fetchPageData(url)
+    return dispatch(fetchPageData(url))
         .then(([$, $response]) => {
             dispatch(responses.receiveHomeData(homeParser($, $response)))
         })
@@ -47,8 +53,9 @@ export const fetchHomeData = (url) => (dispatch) => {
 
 
 export const fetchCheckoutShippingData = (url) => (dispatch) => {
-    return fetchPageData(url)
+    return dispatch(fetchPageData(url))
         .then(([$, $response]) => {
+
             dispatch(responses.receiveCheckoutShippingData(checkoutShippingParser($, $response)))
             dispatch(responses.receiveCheckoutData(parseCheckoutData($response)))
         })
