@@ -1,32 +1,4 @@
-import {createSelector, createSelectorCreator, defaultMemoize} from 'reselect'
-import Immutable from 'immutable'
-
-export const createImmutableComparingSelector = createSelectorCreator(
-    defaultMemoize,
-    Immutable.is
-)
-
-/**
- * Creates a selector that handles the conversion from Immutable
- * objects to plain Javascript objects.
- *
- * If the result of the input selector is identical to its previous
- * result using Immutable.is, this will return the same JS object as
- * the previous call.
- *
- * This simplifies downstream update checks substantially, since a
- * shallow comparison of the resulting JS objects will only show
- * equality if they are deeply equal. This allows optimization of
- * updates using shallow comparisons in reselect, react-redux, and
- * various React utilities.
- *
- * @param {function} selector - A selector returning an Immutable object
- * @returns {function}
- */
-export const selectorToJS = (selector) => createImmutableComparingSelector(
-    selector,
-    (raw) => { return raw ? raw.toJS() : null }
-)
+import {createSelector} from 'reselect'
 
 /**
  * Creates a selector that gets a value from a selected Immutable object.
