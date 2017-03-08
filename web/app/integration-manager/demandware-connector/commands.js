@@ -1,7 +1,7 @@
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {urlToPathKey} from '../../utils/utils'
 import {receiveCartContents} from '../../store/cart/actions'
-import {receivePdpProductData, receivePdpUIData, onAddToCartSucceess} from '../responses'
+import {receivePdpProductData, receivePdpUIData, onAddToCartSucceess, receiveHomeData, receiveNavigationData} from '../responses'
 import {parseProductDetails, parseBasketContents} from './parser'
 
 const SITE_ID = 'Sites-2017refresh-Site'
@@ -56,6 +56,49 @@ const getBasketID = () => {
 const getCurrentProductID = () => {
     const productIDMatch = /(\d+).html/.exec(window.location.href)
     return productIDMatch ? productIDMatch[1] : ''
+}
+
+const fetchNavigationData = () => (dispatch) => {
+    const options = {
+        method: 'GET',
+        headers: new Headers(REQUEST_HEADERS)
+    }
+    return makeRequest(`${API_END_POINT_URL}/categories/root?levels=2`, options)
+        .then((response) => response.json())
+        .then(({categories}) => {
+            const navData = categories.map((category) => {
+                return {
+                    title: category.name,
+                    path: `/s/${SITE_ID}/${category.id}`,
+                    isCategoryLink: true
+                }
+            })
+            return dispatch(receiveNavigationData({
+                path: '/',
+                root: {
+                    title: 'root',
+                    path: '/',
+                    children: [
+                        {
+                            // TODO: Find a way to get this data without hardcoding
+                            title: 'Sign In',
+                            path: `/on/demandware.store/${SITE_ID}/default/Account-Show`,
+                            type: 'AccountNavItem'
+                        },
+                        ...navData
+                    ]
+                }
+            }))
+        })
+}
+
+export const fetchHomeData = () => (dispatch) => {
+    return initDemandWareSession()
+        .then(() => dispatch(fetchNavigationData()))
+        .then(() => {
+            // TODO: How do we get banner info?
+            dispatch(receiveHomeData({banners: [{}, {}, {}]}))
+        })
 }
 
 export const fetchPdpData = () => (dispatch) => {
