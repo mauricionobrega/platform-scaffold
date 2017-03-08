@@ -27,8 +27,8 @@ const validate = (values) => {
         'postcode',
         'telephone'
     ]
-    if (values.username && !values.username.match('@')) {  // Obviously not for real
-        errors.email = 'Enter a valid email address'
+    if (values.username && !/^[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.username)) {
+        errors.username = 'Enter a valid email address'
     }
 
     requiredFieldNames.forEach((fieldName) => {
