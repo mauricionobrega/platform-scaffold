@@ -16,13 +16,20 @@ import {browserHistory} from 'react-router'
 import {receiveFormInfo} from './../actions'
 import {removeAllNotifications} from '../../containers/app/actions'
 
-export const processAppData = ($, $response) => (dispatch) => {
-    return dispatch(responses.receiveNavigationData(parseNavigation($, $response)))
+const fetchPageData = (url) => (dispatch) => {
+    return makeRequest(url)
+        .then(jqueryResponse)
+        .then((res) => {
+            const [$, $response] = res
+
+            dispatch(responses.receiveNavigationData(parseNavigation($, $response)))
+
+            return res
+        })
 }
 
 export const fetchPdpData = (url) => (dispatch) => {
-    return makeRequest(url)
-        .then(jqueryResponse)
+    return fetchPageData(url)
         .then((res) => {
             const [$, $response] = res
             dispatch(responses.receivePdpProductData({[urlToPathKey(url)]: productDetailsParser($, $response)}))
@@ -32,12 +39,20 @@ export const fetchPdpData = (url) => (dispatch) => {
 }
 
 export const fetchHomeData = (url) => (dispatch) => {
-    return makeRequest(url)
-        .then(jqueryResponse)
+    return fetchPageData(url)
         .then(([$, $response]) => {
-            dispatch(processAppData($, $response))
             dispatch(responses.receiveHomeData(homeParser($, $response)))
         })
+}
+
+
+export const fetchCheckoutShippingData = (url) => (dispatch) => {
+    return fetchPageData(url)
+        .then(([$, $response]) => {
+            dispatch(responses.receiveCheckoutShippingData(checkoutShippingParser($, $response)))
+            dispatch(responses.receiveCheckoutData(parseCheckoutData($response)))
+        })
+        .catch((error) => { console.info(error.message) })
 }
 
 export const addToCart = (key, qty) => (dispatch, getStore) => {
@@ -52,19 +67,6 @@ export const addToCart = (key, qty) => (dispatch, getStore) => {
             dispatch(responses.onAddToCartSucceess())
             dispatch(getCart())
         })
-}
-
-
-
-export const fetchCheckoutShippingData = (url) => (dispatch) => {
-    return makeRequest(url)
-        .then(jqueryResponse)
-        .then(([$, $response]) => {
-
-            dispatch(responses.receiveCheckoutShippingData(checkoutShippingParser($, $response)))
-            dispatch(responses.receiveCheckoutData(parseCheckoutData($response)))
-        })
-        .catch((error) => { console.info(error.message) })
 }
 
 export const submitShipping = () => {
