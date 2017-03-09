@@ -1,6 +1,6 @@
 import {createAction, urlToPathKey} from '../../utils/utils'
 import {makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
-import {browserHistory} from 'react-router'
+import {browserHistory} from 'progressive-web-sdk/dist/routing'
 
 import {getCart} from '../../store/cart/actions'
 import * as selectors from './selectors'
