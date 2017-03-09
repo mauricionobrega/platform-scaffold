@@ -18,7 +18,7 @@ trap 'kill $(jobs -pr)' SIGINT SIGTERM EXIT
 # CI will fail the build if the score is below a threshold.
 # See min_lighthouse_score in package.json
 
-apt-get install libnss3-tools
+sudo apt-get install libnss3-tools
 certutil -d sql:$HOME/.pki/nssdb -A -t "P,," -n lighthouse/server.pem -i lighthouse/server.pem
 
 npm run prod:build
