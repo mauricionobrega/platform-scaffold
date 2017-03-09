@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import Immutable from 'immutable'
 
-import {submitCartForm} from './actions'
+import {addToCartStarted, addToCartComplete, submitCartForm} from './actions'
 import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from './constants'
 import {openModal} from '../../store/modals/actions'
 
@@ -53,6 +53,10 @@ test('submitCartForm makes a request and dispatches updates', () => {
 
             expect(mockDispatch).toBeCalled()
             expect(mockDispatch.mock.calls[0][0])
+                .toEqual(addToCartStarted())
+            expect(mockDispatch.mock.calls[1][0])
+                .toEqual(addToCartComplete())
+            expect(mockDispatch.mock.calls[2][0])
                 .toEqual(openModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL))
             expect(getCart).toBeCalled()
         })
