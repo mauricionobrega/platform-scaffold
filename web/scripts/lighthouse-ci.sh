@@ -26,7 +26,8 @@ trap 'kill $(jobs -pr)' SIGINT SIGTERM EXIT
 sudo apt-get install libnss3-tools
 # Initialize database of certificates
 mkdir -p $HOME/.pki/nssdb
-certutil -d sql:$HOME/.pki/nssdb -A -t "P,," -n lighthouse/server.pem -i lighthouse/server.pem
+certutil -d $HOME/.pki/nssdb -N -f lighthouse/cert-db-password
+certutil -d sql:$HOME/.pki/nssdb -A -t "P,," -n lighthouse/server.pem -i lighthouse/server.pem -f lighthouse/cert-db-password
 certutil -d $HOME/.pki/nssdb -L
 
 npm run prod:build
