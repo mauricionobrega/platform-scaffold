@@ -18,11 +18,8 @@ trap 'kill $(jobs -pr)' SIGINT SIGTERM EXIT
 # CI will fail the build if the score is below a threshold.
 # See min_lighthouse_score in package.json
 
-sudo apt-get install libnss3-tools
-# Initialize database of certificates
-mkdir -p $HOME/.pki/nssdb
-certutil -d $HOME/.pki/nssdb -N
-certutil -d sql:$HOME/.pki/nssdb -A -t "P,," -n lighthouse/server.pem -i lighthouse/server.pem
+sudo cp lighthouse/server.pem /usr/local/share/ca-certificates/
+sudo update-ca-certificates
 
 npm run prod:build
 http-server --ssl --cors --p=8443 \
