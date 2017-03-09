@@ -19,7 +19,7 @@ trap 'kill $(jobs -pr)' SIGINT SIGTERM EXIT
 # See min_lighthouse_score in package.json
 
 openssl x509 -outform pem -in lighthouse/server.pem -out lighthouse/server.crt
-sudo cp lighthouse/server.crt /usr/local/share/ca-certificates/
+sudo cp lighthouse/server.crt /usr/local/share/ca-certificates/server.crt
 sudo update-ca-certificates
 
 npm run prod:build
