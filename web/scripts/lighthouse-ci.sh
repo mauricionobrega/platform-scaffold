@@ -19,8 +19,9 @@ trap 'kill $(jobs -pr)' SIGINT SIGTERM EXIT
 # See min_lighthouse_score in package.json
 
 npm run prod:build
-http-server --ssl --key server.pem --cert server.pem --p=8443 build &
-# while true; do nc -l 8443; done
+http-server --ssl --cors --p=8443 \
+	--key lighthouse/server.pem --cert lighthouse/server.pem build &
+
 sleep 5
 lighthouse \
 	--chrome-flags='--user-agent="MobifyPreview" --allow-insecure-localhost' \
