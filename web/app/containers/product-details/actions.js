@@ -1,4 +1,5 @@
-import {createAction, urlToPathKey} from '../../utils/utils'
+import {createAction, getCookieValue, urlToPathKey} from '../../utils/utils'
+import {generateFormKeyCookie} from '../../utils/magento-utils'
 import {makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 
@@ -49,7 +50,8 @@ export const submitCartForm = () => (dispatch, getStore) => {
 
     return makeFormEncodedRequest(formInfo.get('submitUrl'), {
         ...formInfo.get('hiddenInputs').toJS(),
-        qty
+        qty,
+        form_key: getCookieValue('form_key') || generateFormKeyCookie()
     }, {
         method: formInfo.get('method')
     }).then(() => {
