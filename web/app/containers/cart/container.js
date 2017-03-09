@@ -36,7 +36,8 @@ export const continueShopping = () => {
 const EmptyCartContents = ({hide}) => {
     const emptyCartClassnames = classNames('t-cart__empty u-flexbox u-flex u-direction-column u-align-center u-justify-center', {
         'u-visually-hidden': hide,
-        't--hide': hide
+        't--hide': hide,
+        't--viewport-height': isRunningInAstro
     })
 
     return (
