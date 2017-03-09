@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react'
-import {browserHistory} from 'react-router'
-import {Router as SDKRouter, Route, IndexRoute} from 'progressive-web-sdk/dist/routing'
+import {Router as SDKRouter, Route, IndexRoute, browserHistory} from 'progressive-web-sdk/dist/routing'
 import {Provider} from 'react-redux'
 
 // Containers
