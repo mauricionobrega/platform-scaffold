@@ -1,5 +1,3 @@
-import {getCheckoutConfigObject} from '../../utils/magento-utils'
-
 export const pdpAddToCartFormParser = ($, $html) => {
     const $mainContent = $html.find('.page-main')
     const $form = $mainContent.find('#product_addtocart_form')
