@@ -14,29 +14,69 @@ import ShippingAddressForm from './shipping-address'
 import ShippingEmail from './shipping-email'
 import ShippingMethod from './shipping-method'
 
+const validate = (values) => {
+    const errors = {}
+    const requiredFieldNames = [
+        'username',
+        'name',
+        'addressLine1',
+        'city',
+        'country_id',
+        'region_id',
+        'postcode',
+        'telephone'
+    ]
+    if (values.username && !/^[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.username)) {
+        errors.username = 'Enter a valid email address'
+    }
 
-const CheckoutShippingForm = ({
-    handleSubmit,
-    isLoggedIn,
-    submitShipping
-    // disabled,
-    // submitting
-}) => {
+    requiredFieldNames.forEach((fieldName) => {
+        if (!values[fieldName]) {
+            errors[fieldName] = 'Required'
+        }
+    })
 
-    return (
-        <form className="t-checkout-shipping__form" onSubmit={handleSubmit(submitShipping)} noValidate>
-            <Grid className="u-center-piece">
-                <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 7}}>
-                    {!isLoggedIn && <ShippingEmail />}
-                    <ShippingAddressForm />
-                </GridSpan>
+    return errors
+}
 
-                <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 5}}>
-                    <ShippingMethod />
-                </GridSpan>
-            </Grid>
-        </form>
-    )
+class CheckoutShippingForm extends React.Component {
+    constructor(props) {
+        super(props)
+        this.onSubmit = this.onSubmit.bind(this)
+    }
+
+    onSubmit(values) {
+        return new Promise((resolve, reject) => {
+            const errors = validate(values)
+            if (!Object.keys(errors).length) {
+                this.props.submitShipping()
+                return resolve()
+            }
+            return reject(new ReduxForm.SubmissionError(errors))
+        })
+    }
+
+    render() {
+        const {
+            handleSubmit,
+            isLoggedIn
+        } = this.props
+
+        return (
+            <form className="t-checkout-shipping__form" onSubmit={handleSubmit(this.onSubmit)} noValidate>
+                <Grid className="u-center-piece">
+                    <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 7}}>
+                        {!isLoggedIn && <ShippingEmail />}
+                        <ShippingAddressForm />
+                    </GridSpan>
+
+                    <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 5}}>
+                        <ShippingMethod />
+                    </GridSpan>
+                </Grid>
+            </form>
+        )
+    }
 }
 
 CheckoutShippingForm.propTypes = {
@@ -44,7 +84,6 @@ CheckoutShippingForm.propTypes = {
      * Whether the form is disabled or not
      */
     disabled: React.PropTypes.bool,
-
     /**
      * Redux-form internal
      */
@@ -56,19 +95,7 @@ CheckoutShippingForm.propTypes = {
     /**
     * Submits the shipping form information to the server
     */
-    submitShipping: React.PropTypes.func,
-    /**
-     * Redux-form internal
-     */
-    submitting: React.PropTypes.bool,
-}
-
-const validate = (values) => {
-    const errors = {}
-    if (values.email && !values.email.match('@')) {  // Obviously not for real
-        errors.email = 'Enter a valid email address'
-    }
-    return errors
+    submitShipping: React.PropTypes.func
 }
 
 const mapStateToProps = createPropsSelector({

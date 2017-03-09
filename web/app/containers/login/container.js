@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
-import {withRouter} from 'react-router'
+import {withRouter} from 'progressive-web-sdk/dist/routing'
 
 import SignInPanel from './partials/signin-panel'
 import RegisterPanel from './partials/register-panel'

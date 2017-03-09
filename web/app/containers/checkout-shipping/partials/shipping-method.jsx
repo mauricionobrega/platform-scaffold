@@ -58,7 +58,11 @@ ShippingMethod.propTypes = {
         cost: PropTypes.string,
         label: PropTypes.string,
         value: PropTypes.string
-    }))
+    })),
+    /**
+    * (Internal) Added by redux form
+    */
+    submitting: PropTypes.bool
 }
 
 const mapStateToProps = createPropsSelector({

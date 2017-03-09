@@ -134,8 +134,15 @@ const ShippingAddressForm = ({
                     </FieldRow>
 
                     <FieldRow>
-                        <ReduxForm.Field component={Field} name="postcode" label="Postal Code">
-                            <input type="text" noValidate onBlur={fetchShippingMethods} />
+                        <ReduxForm.Field
+                            component={Field}
+                            name="postcode"
+                            label="Postal Code"
+                            customEventHandlers={{
+                                onBlur: fetchShippingMethods
+                            }}
+                        >
+                            <input type="text" noValidate />
                         </ReduxForm.Field>
                     </FieldRow>
 
@@ -181,6 +188,10 @@ ShippingAddressForm.propTypes = {
      * Shows the "Company" and "Apt #" fields
      */
     handleShowCompanyAndApt: React.PropTypes.func,
+    /**
+    * (Internal) added by redux form
+    */
+    invalid: React.PropTypes.bool,
 
     /**
      * Whether the "Company" and "Apt #" fields display
@@ -195,6 +206,10 @@ ShippingAddressForm.propTypes = {
         title: React.PropTypes.string,
         value: React.PropTypes.string
     })),
+    /**
+    * (Internal) Added by redux form
+    */
+    submitting: React.PropTypes.bool
 }
 
 const mapStateToProps = createPropsSelector({

@@ -13,7 +13,7 @@ import {NAVIGATION_MODAL} from './constants'
 import {isModalOpen} from '../../store/selectors'
 import {closeModal} from '../../store/modals/actions'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
-import {withRouter} from 'react-router'
+import {withRouter} from 'progressive-web-sdk/dist/routing'
 
 
 /**
