@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react'
-import {browserHistory} from 'react-router'
 import {Router as SDKRouter, Route, IndexRoute} from 'progressive-web-sdk/dist/routing'
 import {Provider} from 'react-redux'
 
@@ -31,7 +30,7 @@ if (isRunningInAstro) {
 
 const Router = ({store}) => (
     <Provider store={store}>
-        <SDKRouter history={browserHistory}>
+        <SDKRouter>
             <Route path="/" component={App} onChange={OnChange}>
 
                 <IndexRoute component={Home} routeName="home" />
