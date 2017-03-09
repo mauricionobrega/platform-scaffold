@@ -1,8 +1,8 @@
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {urlToPathKey} from '../../utils/utils'
 import {receiveCartContents} from '../../store/cart/actions'
-import {receivePdpProductData, receivePdpUIData, onAddToCartSucceess, receiveHomeData, receiveNavigationData} from '../responses'
-import {parseProductDetails, parseBasketContents} from './parser'
+import * as responses from '../responses'
+import {parseProductDetails, parseBasketContents, parseProductListData, getProductHref} from './parser'
 
 const SITE_ID = 'Sites-2017refresh-Site'
 const API_TYPE = 'shop'
@@ -73,7 +73,7 @@ const fetchNavigationData = () => (dispatch) => {
                     isCategoryLink: true
                 }
             })
-            return dispatch(receiveNavigationData({
+            return dispatch(responses.receiveNavigationData({
                 path: '/',
                 root: {
                     title: 'root',
@@ -97,12 +97,12 @@ export const fetchHomeData = () => (dispatch) => {
         .then(() => dispatch(fetchNavigationData()))
         .then(() => {
             // TODO: How do we get banner info?
-            dispatch(receiveHomeData({banners: [{}, {}, {}]}))
+            dispatch(responses.receiveHomeData({banners: [{}, {}, {}]}))
         })
 }
 
 export const fetchPdpData = () => (dispatch) => {
-    const productURL = `${API_END_POINT_URL}/products/${getCurrentProductID()}?expand=prices,images`
+    const productURL = `${API_END_POINT_URL}/products/${getCurrentProductID()}?expand=prices,images,variations`
     const productPathKey = urlToPathKey(window.location.href)
     return initDemandWareSession()
         .then(() => {
@@ -113,8 +113,8 @@ export const fetchPdpData = () => (dispatch) => {
             makeRequest(productURL, options)
                 .then((response) => response.json())
                 .then((responseJSON) => {
-                    dispatch(receivePdpProductData({[productPathKey]: parseProductDetails(responseJSON)}))
-                    dispatch(receivePdpUIData({[productPathKey]: {itemQuantity: responseJSON.step_quantity, ctaText: 'Add To Cart'}}))
+                    dispatch(responses.receivePdpProductData({[productPathKey]: parseProductDetails(responseJSON)}))
+                    dispatch(responses.receivePdpUIData({[productPathKey]: {itemQuantity: responseJSON.step_quantity, ctaText: 'Add To Cart'}}))
                 })
         })
         .then(() => {
@@ -132,6 +132,52 @@ export const fetchPdpData = () => (dispatch) => {
                 })
         })
 
+}
+
+export const fetchProductListData = (url) => (dispatch) => {
+    const categoryIDMatch = /\/([^/]+)$/.exec(url)
+    const categoryID = categoryIDMatch ? categoryIDMatch[1] : ''
+    const urlPathKey = urlToPathKey(url)
+
+    return initDemandWareSession()
+        .then(() => {
+            const options = {
+                method: 'GET',
+                headers: new Headers(REQUEST_HEADERS)
+            }
+            makeRequest(`${API_END_POINT_URL}/categories/${categoryID}`, options)
+                .then((response) => response.json())
+                .then((responseJSON) => {
+                    dispatch(responses.receiveCategory({
+                        // TODO: figure out breadcrumb
+                        [urlPathKey]: {title: responseJSON.name}
+                    }))
+                    if (responseJSON.parent_category_id !== 'root') {
+                        makeRequest(`${API_END_POINT_URL}/categories/${responseJSON.parent_category_id}`, options)
+                            .then((response) => response.json())
+                            .then((responseJSON) => {
+                                dispatch(responses.receiveCategory({
+                                    [urlPathKey]: {parentName: responseJSON.name, parentHref: `/s/${SITE_ID}/${responseJSON.id}`}
+                                }))
+                            })
+                    }
+                })
+                .then(() => {
+                    makeRequest(`${API_END_POINT_URL}/product_search?expand=images,prices&q=&refine_1=cgid=${categoryID}`, options)
+                        .then((response) => response.json())
+                        .then(({hits}) => {
+                            const productListData = parseProductListData(hits)
+                            const categoryData = {
+                                products: Object.keys(productListData)
+                            }
+
+                            dispatch(responses.receiveProductListProductData(productListData))
+                            dispatch(responses.receiveCategory({
+                                [urlPathKey]: categoryData
+                            }))
+                        })
+                })
+        })
 }
 
 
@@ -157,7 +203,7 @@ export const addToCart = () => (dispatch) => {
                         })
                         .then((responseJSON) => {
                             dispatch(receiveCartContents(parseBasketContents(responseJSON)))
-                            dispatch(onAddToCartSucceess())
+                            dispatch(responses.onAddToCartSucceess())
                         })
                         .catch((error) => {
                             console.log(error)

@@ -29,3 +29,33 @@ export const parseBasketContents = ({product_items, product_sub_total}) => {
         summary_count: items && items.length
     }
 }
+
+// TODO: find a better way to get this URL
+export const getProductHref = (productID) => `/s/2017refresh/${productID}.html`
+
+export const parseProductHit = ({product_id, product_name, price, image}) => {
+    return {
+        title: product_name,
+        price: `$${price.toFixed(2).toString()}`,
+        link: {
+            href: getProductHref(product_id),
+            text: product_name
+        },
+        image: {
+            alt: image.alt,
+            src: image.link
+        },
+        carouselItems: [{
+            img: image.link,
+            position: 1
+        }]
+    }
+}
+
+export const parseProductListData = (products) => {
+    const productListData = {}
+    products.forEach((productHit) => {
+        productListData[getProductHref(productHit.product_id)] = parseProductHit(productHit)
+    })
+    return productListData
+}
