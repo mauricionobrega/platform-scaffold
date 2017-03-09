@@ -18,7 +18,6 @@ import CheckoutPayment from '../checkout-payment/container'
 import CheckoutConfirmation from '../checkout-confirmation/container'
 import Login from '../login/container'
 import ProductDetails from '../product-details/container'
-import ProductList from '../product-list/container'
 import * as checkoutActions from '../../store/checkout/actions'
 // import * as checkoutShippingUIActions from '../checkout-shipping/actions'
 import * as checkoutConfirmationActions from '../checkout-confirmation/actions'
@@ -28,8 +27,6 @@ import * as loginActions from '../login/actions'
 import * as productDetailsActions from '../product-details/actions'
 import * as footerActions from '../footer/actions'
 import * as navigationActions from '../navigation/actions'
-import * as productsActions from '../../store/products/actions'
-import * as categoriesActions from '../../store/categories/actions'
 
 import {OFFLINE_ASSET_URL} from './constants'
 import {closeModal} from '../../store/modals/actions'
@@ -145,9 +142,6 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                 } else if (pageComponent === ProductDetails) {
                     dispatch(productDetailsActions.process(receivedAction))
                     // dispatch(productsActions.processProductDetails(receivedAction))
-                } else if (pageComponent === ProductList) {
-                    dispatch(categoriesActions.process(receivedAction))
-                    dispatch(productsActions.processProductList(receivedAction))
                 } else if (pageComponent === CheckoutShipping) {
                     // dispatch(checkoutShippingUIActions.process(receivedAction))
                     // dispatch(checkoutActions.processCheckoutData(receivedAction))
@@ -161,7 +155,11 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                     dispatch(checkoutConfirmationActions.process(receivedAction))
                     // Resets the cart count to 0
                     dispatch(cartActions.getCart())
-                }
+                } /* else if (pageComponent === ProductList) {
+                    dispatch(categoriesActions.process(receivedAction))
+                    dispatch(productsActions.processProductList(receivedAction))
+                }*/
+
                 dispatch(footerActions.process(receivedAction))
                 dispatch(navigationActions.process(receivedAction))
 

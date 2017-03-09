@@ -1,6 +1,6 @@
-import {extractMagentoJson} from '../../utils/magento-utils'
-import {getTextFrom, parseTextLink, parseImage} from '../../utils/parser-utils'
-import {urlToPathKey} from '../../utils/utils'
+import {extractMagentoJson} from '../../../utils/magento-utils'
+import {getTextFrom, parseTextLink, parseImage} from '../../../utils/parser-utils'
+import {urlToPathKey} from '../../../utils/utils'
 
 const parseCarouselItems = (magentoObject) => {
     const carouselSetup = magentoObject

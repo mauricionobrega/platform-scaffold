@@ -17,3 +17,5 @@ export const checkCustomerEmail = (...args) => connector.checkCustomerEmail(...a
 export const submitSignIn = (...args) => connector.submitSignIn(...args)
 
 export const fetchHomeData = (...args) => connector.fetchHomeData(...args)
+
+export const fetchProductListData = (...args) => connector.fetchProductListData(...args)

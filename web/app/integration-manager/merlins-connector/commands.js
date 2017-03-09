@@ -2,11 +2,12 @@ import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import {makeRequest, makeFormEncodedRequest, makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {urlToPathKey} from '../../utils/utils'
 
-import {productDetailsParser} from '../../store/products/parser'
 import {pdpAddToCartFormParser} from './parsers'
 import {checkoutShippingParser, parseCheckoutData} from './checkout/parsers'
 import homeParser from './home/parser'
 import {parseNavigation} from './navigation/parser'
+import categoryProductsParser from './categories/parser'
+import {productListParser, productDetailsParser} from './products/parser'
 import * as responses from './../responses'
 import {getCustomerEntityID} from '../../store/checkout/selectors'
 import {getIsLoggedIn} from '../../containers/app/selectors'
@@ -34,6 +35,18 @@ export const fetchPdpData = (url) => (dispatch) => {
             dispatch(receiveFormInfo({[urlToPathKey(url)]: pdpAddToCartFormParser($, $response).formInfo}))
         })
         .catch((error) => { console.info(error.message) })
+}
+
+export const fetchProductListData = (url) => (dispatch) => {
+    return dispatch(fetchPageData(url))
+        .then((res) => {
+            const [$, $response] = res
+            // Receive page contents
+            dispatch(responses.receiveProductListProductData(productListParser($, $response)))
+            dispatch(responses.receiveCategory({
+                [urlToPathKey(url)]: categoryProductsParser($, $response)
+            }))
+        })
 }
 
 export const fetchHomeData = (url) => (dispatch) => {
