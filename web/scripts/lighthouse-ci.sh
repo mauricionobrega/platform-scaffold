@@ -19,8 +19,9 @@ trap 'kill $(jobs -pr)' SIGINT SIGTERM EXIT
 # See min_lighthouse_score in package.json
 
 openssl x509 -outform pem -in lighthouse/server.pem -out lighthouse/server.crt
-sudo cp lighthouse/server.crt /usr/local/share/ca-certificates/server.crt
+sudo cp lighthouse/server.crt /usr/local/share/ca-certificates/
 sudo update-ca-certificates
+cat /etc/ssl/certs/ca-certificates.crt
 
 npm run prod:build
 http-server --ssl --cors --p=8443 \
