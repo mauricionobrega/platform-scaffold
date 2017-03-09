@@ -18,6 +18,7 @@ trap 'kill $(jobs -pr)' SIGINT SIGTERM EXIT
 # CI will fail the build if the score is below a threshold.
 # See min_lighthouse_score in package.json
 
+openssl x509 -outform pem -in lighthouse/server.pem -out lighthouse/server.crt
 sudo cp lighthouse/server.crt /usr/local/share/ca-certificates/
 sudo update-ca-certificates
 
