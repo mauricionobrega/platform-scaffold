@@ -1,4 +1,5 @@
 import {createAction, getCookieValue, urlToPathKey} from '../../utils/utils'
+import {generateFormKeyCookie} from '../../utils/magento-utils'
 import {makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {browserHistory} from 'react-router'
 
@@ -11,30 +12,6 @@ import productDetailsParser from './parsers/product-details'
 
 import {isRunningInAstro} from '../../utils/astro-integration'
 import Astro from '../../vendor/astro-client'
-
-// From Magento page-cache.js
-const generateRandomString = (chars, length) => {
-    let result = ''
-    length = length > 0 ? length : 1
-
-    while (length--) {
-        result += chars[Math.round(Math.random() * (chars.length - 1))]
-    }
-
-    return result
-}
-
-// Set the cookie and returns the value
-const generateFormKeyCookie = () => {
-    // From Magento page-cache.js
-    const allowedCharacters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    const length = 16
-    const generatedKey = generateRandomString(allowedCharacters, length)
-    const lifetime = 3600
-    const expires = new Date((new Date().getTime()) + lifetime * 1000)
-    document.cookie = `form_key=${encodeURIComponent(generatedKey)}; expires=${expires.toGMTString()}; domain=.${window.location.hostname}`
-    return generatedKey
-}
 
 export const receiveNewItemQuantity = createAction('Set item quantity')
 export const setItemQuantity = (quantity) => (dispatch, getStore) => {
