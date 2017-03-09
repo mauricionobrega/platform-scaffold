@@ -4,13 +4,9 @@ export const register = (commands) => {
     connector = commands
 }
 
-export const fetchPdpData = (...args) => {
-    return connector.fetchPdpData(...args)
-}
+export const fetchPdpData = (...args) => connector.fetchPdpData(...args)
 
-export const addToCart = (...args) => {
-    return connector.addToCart(...args)
-}
+export const addToCart = (...args) => connector.addToCart(...args)
 
 export const fetchCheckoutShippingData = (...args) => connector.fetchCheckoutShippingData(...args)
 
