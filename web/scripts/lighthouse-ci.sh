@@ -19,6 +19,9 @@ trap 'kill $(jobs -pr)' SIGINT SIGTERM EXIT
 # See min_lighthouse_score in package.json
 
 sudo apt-get install libnss3-tools
+# Initialize database of certificates
+mkdir -p $HOME/.pki/nssdb
+certutil -d $HOME/.pki/nssdb -N
 certutil -d sql:$HOME/.pki/nssdb -A -t "P,," -n lighthouse/server.pem -i lighthouse/server.pem
 
 npm run prod:build
