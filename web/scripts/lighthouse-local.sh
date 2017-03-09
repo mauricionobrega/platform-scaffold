@@ -10,10 +10,12 @@ URL=https://www.merlinspotions.com/#mobify-override\&mobify-path=true\&mobify-ur
 # version 54.0. Use a custom user agent containing "MobifyPreview" so that 
 # Preview will accept our requests, and disable device emulation so that the
 # "MobifyPreview" user agent does not get overridden. 
+# Make sure you have trusted the self-signed SSL certificate. 
+# See 'Prevent SSL Errors in Preview' in the README.
 
 lighthouse \
 	--view \
-	--chrome-flags='--user-agent="MobifyPreview" --allow-insecure-localhost' \
+	--chrome-flags='--user-agent="MobifyPreview" --allow-insecure-localhost --unsafely-treat-insecure-origin-as-secure' \
 	--output=html \
 	--output-path=${OUTPUT_PATH} \
 	--disable-device-emulation=true \
