@@ -18,7 +18,7 @@ trap 'kill $(jobs -pr)' SIGINT SIGTERM EXIT
 # CI will fail the build if the score is below a threshold.
 # See min_lighthouse_score in package.json
 
-sudo cp lighthouse/server.pem /usr/local/share/ca-certificates/
+sudo cp lighthouse/server.crt /usr/local/share/ca-certificates/
 sudo update-ca-certificates
 
 npm run prod:build
