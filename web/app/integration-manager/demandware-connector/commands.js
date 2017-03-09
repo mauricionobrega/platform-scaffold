@@ -113,7 +113,11 @@ export const fetchPdpData = () => (dispatch) => {
             makeRequest(productURL, options)
                 .then((response) => response.json())
                 .then((responseJSON) => {
-                    dispatch(responses.receivePdpProductData({[productPathKey]: parseProductDetails(responseJSON)}))
+                    const productDetailsData = parseProductDetails(responseJSON)
+                    productDetailsData.variations.forEach(({variationID}) => {
+                        dispatch(responses.receivePdpProductData({[getProductHref(variationID)]: productDetailsData}))
+                    })
+                    dispatch(responses.receivePdpProductData({[productPathKey]: productDetailsData}))
                     dispatch(responses.receivePdpUIData({[productPathKey]: {itemQuantity: responseJSON.step_quantity, ctaText: 'Add To Cart'}}))
                 })
         })
