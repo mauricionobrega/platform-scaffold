@@ -9,7 +9,7 @@ const API_TYPE = 'shop'
 const API_VERSION = 'v17_2'
 const DW_CLIENT_ID = '5640cc6b-f5e9-466e-9134-9853e9f9db93'
 const API_END_POINT_URL = `/s/${SITE_ID}/dw/${API_TYPE}/${API_VERSION}`
-const REQUEST_HEADERS = {
+const requestHeaders = {
     'Content-Type': 'application/json',
     'x-dw-client-id': DW_CLIENT_ID
 }
@@ -18,13 +18,13 @@ const initDemandWareSession = () => {
     const options = {
         method: 'POST',
         body: '{ type : "session" }',
-        headers: new Headers(REQUEST_HEADERS)
+        headers: requestHeaders
     }
     return makeRequest(`${API_END_POINT_URL}/customers/auth`, options)
         .then((response) => {
             // To Do: Add this to the store???
-            REQUEST_HEADERS.Authorization = response.headers.get('Authorization')
-            options.headers.set('Authorization', response.headers.get('Authorization'))
+            requestHeaders.Authorization = response.headers.get('Authorization')
+            options.headers.Authorization = response.headers.get('Authorization')
         })
         .then(() => {
             makeRequest(`${API_END_POINT_URL}/sessions`, options)
@@ -41,7 +41,7 @@ const getBasketID = () => {
     }
     const options = {
         method: 'POST',
-        headers: new Headers(REQUEST_HEADERS)
+        headers: requestHeaders
     }
     return makeRequest(`${API_END_POINT_URL}/baskets`, options)
         .then((response) => response.json())
@@ -65,7 +65,7 @@ export const fetchPdpData = () => (dispatch) => {
         .then(() => {
             const options = {
                 method: 'GET',
-                headers: new Headers(REQUEST_HEADERS)
+                headers: requestHeaders
             }
             makeRequest(productURL, options)
                 .then((response) => response.json())
@@ -79,7 +79,7 @@ export const fetchPdpData = () => (dispatch) => {
                 .then((basketID) => {
                     const options = {
                         method: 'GET',
-                        headers: new Headers(REQUEST_HEADERS)
+                        headers: requestHeaders
                     }
                     return makeRequest(`${API_END_POINT_URL}/baskets/${basketID}`, options)
                 })
@@ -98,7 +98,7 @@ export const addToCart = () => (dispatch) => {
 
             const options = {
                 method: 'POST',
-                headers: new Headers(REQUEST_HEADERS),
+                headers: requestHeaders,
                 body: `[{product_id: "${getCurrentProductID()}" , quantity: 1.00}]`
             }
 
