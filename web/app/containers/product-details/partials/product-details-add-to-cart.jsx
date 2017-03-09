@@ -4,6 +4,7 @@ import {createStructuredSelector} from 'reselect'
 import * as selectors from '../selectors'
 import * as actions from '../actions'
 
+import ProductDetailsVariations from './product-details-variations'
 import Button from 'progressive-web-sdk/dist/components/button'
 import Icon from 'progressive-web-sdk/dist/components/icon'
 import Stepper from 'progressive-web-sdk/dist/components/stepper'
@@ -21,6 +22,8 @@ const ProductDetailsAddToCart = ({quantity, ctaText, setQuantity, onSubmit, disa
 
     return (
         <form className="u-padding-start-md u-padding-end-md">
+            <ProductDetailsVariations />
+
             <div className="u-margin-top-lg">
                 <label htmlFor="quantity">Quantity</label>
 
@@ -53,13 +56,13 @@ ProductDetailsAddToCart.propTypes = {
     onSubmit: PropTypes.func.isRequired,
     ctaText: PropTypes.string,
     disabled: PropTypes.bool,
-    quantity: PropTypes.number
+    quantity: PropTypes.number,
 }
 
 const mapStateToProps = createStructuredSelector({
     ctaText: selectors.getCTAText,
     quantity: selectors.getItemQuantity,
-    disabled: selectors.getAddToCartDisabled
+    disabled: selectors.getAddToCartDisabled,
 })
 
 const mapDispatchToProps = {

@@ -10,7 +10,7 @@ export const parseProductDetails = ({name, price, long_description, image_groups
         price: `$${price.toFixed(2)}`, // Hard coded until we get prices on the demandware sandbox
         description: long_description,
         carouselItems: parseCarouselItems(image_groups),
-        variationsOptions: variation_attributes,
+        variationOptions: variation_attributes,
         variations: variants.map(({product_id, variation_values}) => {
             return {
                 variationID: product_id,
