@@ -18,13 +18,16 @@ trap 'kill $(jobs -pr)' SIGINT SIGTERM EXIT
 # CI will fail the build if the score is below a threshold.
 # See min_lighthouse_score in package.json
 
+apt-get install libnss3-tools
+certutil -d sql:$HOME/.pki/nssdb -A -t "P,," -n lighthouse/server.pem -i lighthouse/server.pem
+
 npm run prod:build
 http-server --ssl --cors --p=8443 \
 	--key lighthouse/server.pem --cert lighthouse/server.pem build &
 
 sleep 5
 lighthouse \
-	--chrome-flags='--user-agent="MobifyPreview" --allow-insecure-localhost' \
+	--chrome-flags='--user-agent="MobifyPreview" --allow-insecure-localhost --unsafely-treat-insecure-origin-as-secure' \
 	--output=html \
 	--output-path=${OUTPUT_PATH} \
 	--disable-device-emulation=true \
