@@ -7,7 +7,7 @@ import {checkoutShippingParser, parseCheckoutData} from './checkout/parsers'
 import homeParser from './home/parser'
 import {parseNavigation} from './navigation/parser'
 import categoryProductsParser from './categories/parser'
-import {productListParser, productDetailsParser} from './products/parser'
+import {productListParser, productDetailsParser, productDetailsUIParser} from './products/parser'
 import * as responses from './../responses'
 import {getCustomerEntityID} from '../../store/checkout/selectors'
 import {getIsLoggedIn} from '../../containers/app/selectors'
@@ -32,6 +32,7 @@ export const fetchPdpData = (url) => (dispatch) => {
         .then((res) => {
             const [$, $response] = res
             dispatch(responses.receivePdpProductData({[urlToPathKey(url)]: productDetailsParser($, $response)}))
+            dispatch(responses.receivePdpUIData({[urlToPathKey(url)]: productDetailsUIParser($, $response)}))
             dispatch(receiveFormInfo({[urlToPathKey(url)]: pdpAddToCartFormParser($, $response).formInfo}))
         })
         .catch((error) => { console.info(error.message) })
@@ -76,7 +77,6 @@ export const addToCart = (key, qty) => (dispatch, getStore) => {
 
     return makeFormEncodedRequest(formInfo.get('submitUrl'), formValues, {method: formInfo.get('method')})
         .then(() => {
-            dispatch(responses.onAddToCartSucceess())
             dispatch(getCart())
         })
 }

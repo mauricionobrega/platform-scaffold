@@ -48,13 +48,13 @@ export const submitCartForm = (formValues) => (dispatch, getStore) => {
     const currentState = getStore()
     const key = appSelectors.getCurrentPathKey(currentState)
     const qty = selectors.getItemQuantity(currentState)
-    const variations = selectors.getVariationOptions(currentState).toJS()
+    const variations = selectors.getVariationOptions(currentState)
     dispatch(addToCartStarted())
 
     return new Promise((resolve, reject) => {
         const errors = {}
         if (variations) {
-            variations.forEach(({id, name}) => {
+            variations.toJS().forEach(({id, name}) => {
                 if (!formValues[id]) {
                     errors[id] = `Please select a ${name}.`
                 }
