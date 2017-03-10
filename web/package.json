@@ -13,7 +13,6 @@
   "dependencies": {
     "babel-runtime": "6.11.6",
     "es6-promise": "4.0.5",
-    "http-server": "^0.9.0",
     "immutable": "3.8.1",
     "lodash.frompairs": "4.0.1",
     "react": "15.4.1",
@@ -54,6 +53,7 @@
     "express": "4.14.0",
     "extract-text-webpack-plugin": "2.0.0-beta.4",
     "html-to-json": "0.6.0",
+    "http-server": "0.9.0",
     "ignore-styles": "5.0.1",
     "imagemin-power-cli": "0.4.0",
     "ip": "1.1.4",
