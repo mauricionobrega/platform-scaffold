@@ -139,9 +139,6 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
 
                 if (pageComponent === Login) {
                     dispatch(loginActions.process(receivedAction))
-                } else if (pageComponent === ProductDetails) {
-                    dispatch(productDetailsActions.process(receivedAction))
-                    // dispatch(productsActions.processProductDetails(receivedAction))
                 } else if (pageComponent === CheckoutShipping) {
                     // dispatch(checkoutShippingUIActions.process(receivedAction))
                     // dispatch(checkoutActions.processCheckoutData(receivedAction))
@@ -158,7 +155,10 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                 } /* else if (pageComponent === ProductList) {
                     dispatch(categoriesActions.process(receivedAction))
                     dispatch(productsActions.processProductList(receivedAction))
-                }*/
+                } else if (pageComponent === ProductDetails) {
+                    dispatch(productDetailsActions.process(receivedAction))
+                    dispatch(productsActions.processProductDetails(receivedAction))
+                } */
 
                 dispatch(footerActions.process(receivedAction))
                 dispatch(navigationActions.process(receivedAction))

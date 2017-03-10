@@ -4,7 +4,7 @@ const parseCarouselItems = (imageGroups) => {
 
 }
 
-export const parseProductDetails = ({name, price, long_description, image_groups, variants, variation_attributes}) => {
+export const parseProductDetails = ({name, price, long_description, image_groups, variants, variation_attributes, variation_values}) => {
     return {
         title: name,
         price: `$${price.toFixed(2)}`, // Hard coded until we get prices on the demandware sandbox
@@ -16,25 +16,28 @@ export const parseProductDetails = ({name, price, long_description, image_groups
                 variationID: product_id,
                 variationValues: variation_values
             }
-        })
+        }),
+        selectedVariations: variation_values
     }
 }
 
 
 export const parseBasketContents = ({product_items, product_sub_total}) => {
-    const items = product_items.map(({product_name, base_price, quantity}) => {
+    /* eslint-disable camelcase */
+    const items = product_items ? product_items.map(({product_name, base_price, quantity}) => {
         return {
             product_name,
             product_price: `$${base_price.toFixed(2).toString()}`,
             product_image: {},
             qty: quantity
         }
-    })
+    }) : []
     return {
         items,
-        subtotal: `$${product_sub_total.toFixed(2).toString()}`,
+        subtotal: product_sub_total ? `$${product_sub_total.toFixed(2).toString()}` : '$0.00',
         summary_count: items && items.length
     }
+    /* eslint-enable camelcase:  */
 }
 
 // TODO: find a better way to get this URL
@@ -54,7 +57,7 @@ export const parseProductHit = ({product_id, product_name, price, image}) => {
         },
         carouselItems: [{
             img: image.link,
-            position: 1
+            position: '1'
         }]
     }
 }

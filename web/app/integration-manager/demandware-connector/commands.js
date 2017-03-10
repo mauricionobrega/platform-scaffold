@@ -33,13 +33,7 @@ const initDemandWareSession = () => {
         })
 }
 
-const getBasketID = () => {
-    const basketMatch = /mob-basket=([^;]+);/.exec(document.cookie)
-    if (basketMatch) {
-        return new Promise((resolve) => {
-            resolve(basketMatch[1])
-        })
-    }
+const createNewBasket = () => {
     const options = {
         method: 'POST',
         headers: new Headers(REQUEST_HEADERS)
@@ -52,6 +46,16 @@ const getBasketID = () => {
             document.cookie = `mob-basket=${basketID}`
             return basketID
         })
+}
+
+const getBasketID = () => {
+    const basketMatch = /mob-basket=([^;]+);/.exec(document.cookie)
+    if (basketMatch) {
+        return new Promise((resolve) => {
+            resolve(basketMatch[1])
+        })
+    }
+    return createNewBasket()
 }
 
 const getCurrentProductID = () => {
@@ -185,13 +189,9 @@ export const fetchProductListData = (url) => (dispatch) => {
         })
 }
 
-export const getProductVariationData = (variationSelections, availableVariations) => (dispatch, getState) => {
-
+export const getProductVariationData = (variationSelections, availableVariations) => (dispatch) => {
     if (variationSelections.color && variationSelections.size) {
         // TODO: ^^ don't hard code this check, use the state instead?
-        // determine the product ID for this combination of selections
-        // Update the URL?
-        // fetch the page data
         const selectedVariationData = availableVariations.filter(({variationValues: {color, size}}) => {
             return color === variationSelections.color && size === variationSelections.size
         })[0]
@@ -221,6 +221,8 @@ export const addToCart = () => (dispatch) => {
                             if (response.ok) {
                                 return response.json()
                             }
+                            createNewBasket()
+                            dispatch(addToCart())
                             throw new Error('Unable to add item to cart')
                         })
                         .then((responseJSON) => {

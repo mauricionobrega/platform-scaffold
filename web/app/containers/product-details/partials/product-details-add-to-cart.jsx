@@ -57,6 +57,7 @@ ProductDetailsAddToCart.propTypes = {
     onSubmit: PropTypes.func.isRequired,
     ctaText: PropTypes.string,
     disabled: PropTypes.bool,
+    initialValues: PropTypes.object,
     quantity: PropTypes.number,
 }
 
@@ -64,6 +65,7 @@ const mapStateToProps = createStructuredSelector({
     ctaText: selectors.getCTAText,
     quantity: selectors.getItemQuantity,
     disabled: selectors.getAddToCartDisabled,
+    initialValues: selectors.getSelectedVariations
 })
 
 const mapDispatchToProps = {
@@ -74,4 +76,4 @@ const mapDispatchToProps = {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(ReduxForm.reduxForm({form: 'product-add-to-cart'})(ProductDetailsAddToCart))
+)(ReduxForm.reduxForm({form: 'product-add-to-cart', enableReinitialize: true})(ProductDetailsAddToCart))
