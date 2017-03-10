@@ -42,9 +42,11 @@ const createNewBasket = () => {
         .then((response) => response.json())
         .then((responseJSON) => {
             const basketID = responseJSON.basket_id
-
-            document.cookie = `mob-basket=${basketID}`
-            return basketID
+            if (basketID) {
+                document.cookie = `mob-basket=${basketID}`
+                return basketID
+            }
+            throw new Error('Unable to create new basket')
         })
 }
 
@@ -204,72 +206,33 @@ export const getProductVariationData = (variationSelections, availableVariations
 }
 
 export const addToCart = () => (dispatch) => {
-    return initDemandWareSession()
-        .then(() => {
+    // return initDemandWareSession()
+    //     .then(() => {
 
-            const options = {
-                method: 'POST',
-                headers: new Headers(REQUEST_HEADERS),
-                body: `[{product_id: "${getCurrentProductID()}" , quantity: 1.00}]`
-            }
+    const options = {
+        method: 'POST',
+        headers: new Headers(REQUEST_HEADERS),
+        body: `[{product_id: "${getCurrentProductID()}" , quantity: 1.00}]`
+    }
 
-            return getBasketID()
-                .then((basketID) => {
-                    // TO DO: Add error handling here
-                    makeRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, options)
-                        .then((response) => {
-                            if (response.ok) {
-                                return response.json()
-                            }
-                            createNewBasket()
-                            dispatch(addToCart())
-                            throw new Error('Unable to add item to cart')
-                        })
-                        .then((responseJSON) => {
-                            dispatch(receiveCartContents(parseBasketContents(responseJSON)))
-                            dispatch(responses.onAddToCartSucceess())
-                        })
-                        .catch((error) => {
-                            console.log(error)
-                        })
+    return getBasketID()
+        .then((basketID) => {
+            // TO DO: Add error handling here
+            return makeRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, options)
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json()
+                    }
+                    throw new Error('Unable to add item to cart')
                 })
-
-
-
-
-            // TO DO: Check for existing Basket id before creating one
-            // return makeRequest(`${API_END_POINT_URL}/baskets`, options)
-            //     .then((response) => response.json())
-            //     .then((responseJSON) => {
-            //         const basketID = responseJSON.basket_id
-            //         options.body = '[{product_id: "701643427208", quantity: 1.00}]'
-            //
-            //         // TO DO: Add error handling here
-            //         makeRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, options)
-            //             .then((response) => {
-            //                 if (response.ok) {
-            //                     return response.json()
-            //                 }
-            //                 throw new Error('Unable to add item to cart')
-            //             })
-            //             .then((responseJSON) => {
-            //                 // Add content to cart prop
-            //                 const items = responseJSON.product_items.map(({product_name, price, product_id}) => {
-            //                     return {
-            //                         product_name,
-            //                         product_price: price,
-            //                         product_url: `${API_END_POINT_URL}${product_id}.html`,
-            //                         product_image: {}
-            //                     }
-            //                 })
-            //                 dispatch(receiveCartContents({items, summary_count: items.length}))
-            //                 dispatch(onAddToCartSucceess())
-            //             })
-            //             .catch((error) => {
-            //                 console.log(error)
-            //             })
-            //     })
+                .then((responseJSON) => {
+                    dispatch(receiveCartContents(parseBasketContents(responseJSON)))
+                })
+                .catch((error) => {
+                    throw error
+                })
         })
+        // })
 }
 
 export const fetchCheckoutShippingData = () => {

@@ -1,8 +1,5 @@
 import {createAction} from '../utils/utils'
 import {addNotification, removeNotification} from '../containers/app/actions'
-import {openModal} from '../store/modals/actions'
-import {addToCartComplete} from '../containers/product-details/actions'
-import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from '../containers/product-details/constants'
 
 export const receivePdpProductData = createAction('Receive PDP product data')
 export const receivePdpUIData = createAction('Receive PDP UI data')
@@ -39,9 +36,4 @@ export const onShippingLoginError = (responseData) => {
             showRemoveButton: true
         }))
     }
-}
-
-export const onAddToCartSucceess = () => (dispatch) => {
-    dispatch(addToCartComplete())
-    dispatch(openModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL))
 }

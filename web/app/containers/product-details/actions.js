@@ -1,12 +1,13 @@
 import {createAction, urlToPathKey} from '../../utils/utils'
 import {browserHistory} from 'react-router'
+import {SubmissionError} from 'redux-form'
 import * as selectors from './selectors'
 import * as appSelectors from '../app/selectors'
 import {getFormValues} from '../../store/form/selectors'
 import productDetailsParser from './parsers/product-details'
 
 import * as commands from '../../integration-manager/commands'
-import {closeModal} from '../../store/modals/actions'
+import {closeModal, openModal} from '../../store/modals/actions'
 import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from './constants'
 
 import {isRunningInAstro} from '../../utils/astro-integration'
@@ -42,11 +43,41 @@ export const goToCheckout = () => (dispatch) => {
     }
 }
 
-export const submitCartForm = () => (dispatch, getStore) => {
-    const key = appSelectors.getCurrentPathKey(getStore())
-    const qty = selectors.getItemQuantity(getStore())
+
+export const submitCartForm = (formValues) => (dispatch, getStore) => {
+    const currentState = getStore()
+    const key = appSelectors.getCurrentPathKey(currentState)
+    const qty = selectors.getItemQuantity(currentState)
+    const variations = selectors.getVariationOptions(currentState).toJS()
     dispatch(addToCartStarted())
-    return dispatch(commands.addToCart(key, qty))
+
+    return new Promise((resolve, reject) => {
+        const errors = {}
+        if (variations) {
+            variations.forEach(({id, name}) => {
+                if (!formValues[id]) {
+                    errors[id] = `Please select a ${name}.`
+                }
+            })
+        }
+        if (Object.keys(errors).length) {
+            // dispatch(addToCartComplete())
+            return reject(new SubmissionError(errors))
+        }
+        return resolve(true)
+    })
+    .then(() => {
+        return dispatch(commands.addToCart(key, qty))
+    })
+    .then(() => {
+        dispatch(addToCartComplete())
+        dispatch(openModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL))
+    })
+    .catch((error) => {
+        dispatch(addToCartComplete())
+        throw error
+    })
+
 }
 
 export const onVariationBlur = () => (dispatch, getStore) => {

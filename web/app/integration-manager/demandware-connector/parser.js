@@ -17,7 +17,7 @@ export const parseProductDetails = ({name, price, long_description, image_groups
                 variationValues: variation_values
             }
         }),
-        selectedVariations: variation_values
+        initialValues: variation_values
     }
 }
 
