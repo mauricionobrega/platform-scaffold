@@ -61,7 +61,7 @@ const getCurrentProductID = () => {
 const fetchNavigationData = () => (dispatch) => {
     const options = {
         method: 'GET',
-        headers: new Headers(REQUEST_HEADERS)
+        headers: requestHeaders
     }
     return makeRequest(`${API_END_POINT_URL}/categories/root?levels=2`, options)
         .then((response) => response.json())
@@ -96,7 +96,8 @@ export const fetchHomeData = () => (dispatch) => {
     return initDemandWareSession()
         .then(() => dispatch(fetchNavigationData()))
         .then(() => {
-            // TODO: How do we get banner info?
+            // Banners are being pulled from the bundle right now
+            // so we just need an array with the correct number of objects
             dispatch(receiveHomeData({banners: [{}, {}, {}]}))
         })
 }
