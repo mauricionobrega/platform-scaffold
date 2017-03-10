@@ -4,6 +4,7 @@ import * as ReduxForm from 'redux-form'
 import {createStructuredSelector} from 'reselect'
 import * as selectors from '../selectors'
 import * as actions from '../actions'
+import {selectorToJS} from '../../../utils/selector-utils'
 
 import ProductDetailsVariations from './product-details-variations'
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -65,7 +66,7 @@ const mapStateToProps = createStructuredSelector({
     ctaText: selectors.getCTAText,
     quantity: selectors.getItemQuantity,
     disabled: selectors.getAddToCartDisabled,
-    initialValues: selectors.getSelectedVariations
+    initialValues: selectorToJS(selectors.getSelectedVariations)
 })
 
 const mapDispatchToProps = {
