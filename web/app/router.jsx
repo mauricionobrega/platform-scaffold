@@ -52,8 +52,12 @@ const Router = ({store}) => (
                     route path so we specify a fetchUrl to make sure when we
                     fetch it's using the URL for the desktop page
                 */}
-                <Route component={CheckoutPayment} path="checkout/payment/" fetchUrl="/checkout/#payment" routeName="checkout-payment" Header={CheckoutHeader} Footer={CheckoutFooter} />
-                <Route component={CheckoutConfirmation} path="checkout/onepage/success/" routeName="checkout-confirmation" Header={CheckoutHeader} Footer={CheckoutFooter} />
+                <Route component={CheckoutPayment} path="checkout/payment/" fetchUrl="/checkout/#payment" routeName="checkout-payment" Header={CheckoutHeader} headerHasSignIn={true}
+                    Footer={CheckoutFooter}
+                    />
+                <Route component={CheckoutConfirmation} path="checkout/onepage/success/" routeName="checkout-confirmation" Header={CheckoutHeader} headerHasSignIn={true}
+                    Footer={CheckoutFooter}
+                    />
             </Route>
         </SDKRouter>
     </Provider>
