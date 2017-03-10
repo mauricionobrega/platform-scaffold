@@ -115,43 +115,6 @@ export const addToCart = () => (dispatch) => {
                     console.log(error)
                 })
         })
-
-
-
-
-            // TO DO: Check for existing Basket id before creating one
-            // return makeRequest(`${API_END_POINT_URL}/baskets`, options)
-            //     .then((response) => response.json())
-            //     .then((responseJSON) => {
-            //         const basketID = responseJSON.basket_id
-            //         options.body = '[{product_id: "701643427208", quantity: 1.00}]'
-            //
-            //         // TO DO: Add error handling here
-            //         makeRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, options)
-            //             .then((response) => {
-            //                 if (response.ok) {
-            //                     return response.json()
-            //                 }
-            //                 throw new Error('Unable to add item to cart')
-            //             })
-            //             .then((responseJSON) => {
-            //                 // Add content to cart prop
-            //                 const items = responseJSON.product_items.map(({product_name, price, product_id}) => {
-            //                     return {
-            //                         product_name,
-            //                         product_price: price,
-            //                         product_url: `${API_END_POINT_URL}${product_id}.html`,
-            //                         product_image: {}
-            //                     }
-            //                 })
-            //                 dispatch(receiveCartContents({items, summary_count: items.length}))
-            //                 dispatch(onAddToCartSucceess())
-            //             })
-            //             .catch((error) => {
-            //                 console.log(error)
-            //             })
-            //     })
-        })
 }
 
 export const fetchCheckoutShippingData = () => {
