@@ -23,6 +23,8 @@ afterAll(() => {
 })
 
 test('submitCartForm makes a request and dispatches updates', () => {
+    const formKeyValue = '12345'
+    document.cookie = `form_key=${formKeyValue}`
     const thunk = submitCartForm()
     expect(typeof thunk).toBe('function')
 
@@ -48,7 +50,8 @@ test('submitCartForm makes a request and dispatches updates', () => {
         .then(() => {
             expect(fetchUtils.makeFormEncodedRequest).toBeCalledWith(
                 'submitUrl',
-                {qty: 1},
+                {form_key: formKeyValue,
+                    qty: 1},
                 {method: 'POST'})
 
             expect(mockDispatch).toBeCalled()
