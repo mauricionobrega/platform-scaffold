@@ -21,9 +21,9 @@ sudo apt-get install libnss3-tools
 # Initialize database of certificates
 mkdir -p $HOME/.pki/nssdb
 # Pass in a password 
-certutil -d $HOME/.pki/nssdb -N -f lighthouse/cert-db-password
+certutil -d $HOME/.pki/nssdb -N --empty-password
 # Add self-signed SSL certificate
-certutil -d sql:$HOME/.pki/nssdb -A -t "P,," -n lighthouse/server.pem -i lighthouse/server.pem -f lighthouse/cert-db-password
+certutil -d sql:$HOME/.pki/nssdb -A -t "P,," -n lighthouse/server.pem -i lighthouse/server.pem
 
 npm run prod:build
 http-server --ssl --cors --p=8443 \
