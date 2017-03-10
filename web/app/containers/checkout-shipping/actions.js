@@ -1,4 +1,4 @@
-import {browserHistory} from 'react-router'
+import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {createAction} from '../../utils/utils'
 import CheckoutShipping from './container'
 import checkoutShippingParser from './parsers/checkout-shipping'
