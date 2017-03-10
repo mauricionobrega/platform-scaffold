@@ -2,7 +2,7 @@ import {handleActions} from 'redux-actions'
 import {fromJS} from 'immutable'
 import {mergePayloadForActions} from '../../utils/reducer-utils'
 
-import {receiveData} from './actions'
+import {receiveHomeData} from '../../integration-manager/responses'
 
 const CATEGORY_PLACEHOLDER_COUNT = 6
 
@@ -12,5 +12,5 @@ const initialState = fromJS({
 })
 
 export default handleActions({
-    ...mergePayloadForActions(receiveData)
+    ...mergePayloadForActions(receiveHomeData)
 }, initialState)

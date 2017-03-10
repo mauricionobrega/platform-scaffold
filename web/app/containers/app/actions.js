@@ -16,7 +16,6 @@ import Cart from '../cart/container'
 import CheckoutShipping from '../checkout-shipping/container'
 import CheckoutPayment from '../checkout-payment/container'
 import CheckoutConfirmation from '../checkout-confirmation/container'
-import Home from '../home/container'
 import Login from '../login/container'
 import ProductDetails from '../product-details/container'
 import ProductList from '../product-list/container'
@@ -25,7 +24,6 @@ import * as checkoutActions from '../../store/checkout/actions'
 import * as checkoutConfirmationActions from '../checkout-confirmation/actions'
 import * as checkoutShippingActions from '../../store/checkout/shipping/actions'
 import * as cartActions from '../../store/cart/actions'
-import * as homeActions from '../home/actions'
 import * as loginActions from '../login/actions'
 import * as productDetailsActions from '../product-details/actions'
 import * as footerActions from '../footer/actions'
@@ -142,9 +140,7 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                 dispatch(receivedAction)
                 dispatch(process(receivedAction))
 
-                if (pageComponent === Home) {
-                    dispatch(homeActions.process(receivedAction))
-                } else if (pageComponent === Login) {
+                if (pageComponent === Login) {
                     dispatch(loginActions.process(receivedAction))
                 } else if (pageComponent === ProductDetails) {
                     dispatch(productDetailsActions.process(receivedAction))
@@ -168,6 +164,7 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                 }
                 dispatch(footerActions.process(receivedAction))
                 dispatch(navigationActions.process(receivedAction))
+
 
                 // Finally, let's check if we received a cached response from the
                 // worker, but are in fact 'offline'

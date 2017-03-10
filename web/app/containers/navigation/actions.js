@@ -1,5 +1,5 @@
 import {createAction} from '../../utils/utils'
-import {parseNavigation} from './parsers/parser'
+import {parseNavigation} from './parser'
 
 export const receiveData = createAction('Receive navigation data')
 
