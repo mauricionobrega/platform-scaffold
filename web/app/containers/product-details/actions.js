@@ -2,6 +2,7 @@ import {createAction, urlToPathKey} from '../../utils/utils'
 import {browserHistory} from 'react-router'
 import * as selectors from './selectors'
 import * as appSelectors from '../app/selectors'
+import {getFormValues} from '../../store/form/selectors'
 import productDetailsParser from './parsers/product-details'
 
 import * as commands from '../../integration-manager/commands'
@@ -46,4 +47,11 @@ export const submitCartForm = () => (dispatch, getStore) => {
     const qty = selectors.getItemQuantity(getStore())
     dispatch(addToCartStarted())
     return dispatch(commands.addToCart(key, qty))
+}
+
+export const onVariationBlur = () => (dispatch, getStore) => {
+    const currentState = getStore()
+    const variationSelections = getFormValues('product-add-to-cart')(currentState)
+    const availableVariations = selectors.getProductVariations(currentState).toJS()
+    dispatch(commands.getProductVariationData(variationSelections, availableVariations))
 }

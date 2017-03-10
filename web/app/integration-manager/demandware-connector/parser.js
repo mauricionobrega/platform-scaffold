@@ -11,7 +11,7 @@ export const parseProductDetails = ({name, price, long_description, image_groups
         description: long_description,
         carouselItems: parseCarouselItems(image_groups),
         variationOptions: variation_attributes,
-        variations: variants.map(({product_id, variation_values}) => {
+        availableVariations: variants.map(({product_id, variation_values}) => {
             return {
                 variationID: product_id,
                 variationValues: variation_values

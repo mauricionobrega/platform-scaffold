@@ -2,6 +2,7 @@ import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {urlToPathKey} from '../../utils/utils'
 import {receiveCartContents} from '../../store/cart/actions'
 import * as responses from '../responses'
+import {browserHistory} from 'react-router'
 import {parseProductDetails, parseBasketContents, parseProductListData, getProductHref} from './parser'
 
 const SITE_ID = 'Sites-2017refresh-Site'
@@ -114,7 +115,7 @@ export const fetchPdpData = () => (dispatch) => {
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     const productDetailsData = parseProductDetails(responseJSON)
-                    productDetailsData.variations.forEach(({variationID}) => {
+                    productDetailsData.availableVariations.forEach(({variationID}) => {
                         dispatch(responses.receivePdpProductData({[getProductHref(variationID)]: productDetailsData}))
                     })
                     dispatch(responses.receivePdpProductData({[productPathKey]: productDetailsData}))
@@ -184,6 +185,23 @@ export const fetchProductListData = (url) => (dispatch) => {
         })
 }
 
+export const getProductVariationData = (variationSelections, availableVariations) => (dispatch, getState) => {
+
+    if (variationSelections.color && variationSelections.size) {
+        // TODO: ^^ don't hard code this check, use the state instead?
+        // determine the product ID for this combination of selections
+        // Update the URL?
+        // fetch the page data
+        const selectedVariationData = availableVariations.filter(({variationValues: {color, size}}) => {
+            return color === variationSelections.color && size === variationSelections.size
+        })[0]
+        if (selectedVariationData) {
+            browserHistory.push({
+                pathname: getProductHref(selectedVariationData.variationID)
+            })
+        }
+    }
+}
 
 export const addToCart = () => (dispatch) => {
     return initDemandWareSession()

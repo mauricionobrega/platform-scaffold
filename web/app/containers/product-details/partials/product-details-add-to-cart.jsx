@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
+import * as ReduxForm from 'redux-form'
 import {createStructuredSelector} from 'reselect'
 import * as selectors from '../selectors'
 import * as actions from '../actions'
@@ -73,4 +74,4 @@ const mapDispatchToProps = {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(ProductDetailsAddToCart)
+)(ReduxForm.reduxForm({form: 'product-add-to-cart'})(ProductDetailsAddToCart))
