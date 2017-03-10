@@ -17,3 +17,9 @@ export const pwaNavigate = Astro.isRunningInApp()
  * http://astro.mobify.com/latest/advanced/webview-appjs-communication/
  */
 export const trigger = Astro.trigger
+
+/**
+ * Triggers a JS RPC method in Astro
+ * http://astro.mobify.com/latest/advanced/webview-appjs-communication/
+ */
+export const jsRpcMethod = Astro.jsRpcMethod

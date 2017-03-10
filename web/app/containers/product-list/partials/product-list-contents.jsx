@@ -22,20 +22,18 @@ ResultList.propTypes = {
 }
 
 const NoResultsList = ({bodyText}) => (
-    <List className="c--borderless">
-        <div className="u-flexbox u-direction-column u-align-center">
-            <Image
-                className="u-flex-none"
-                alt="Crystal Ball"
-                width="122px"
-                height="110px"
-                src={getAssetUrl('static/img/global/no-results.png')} />
+    <div className="u-flexbox u-direction-column u-align-center">
+        <Image
+            className="u-flex-none"
+            alt="Crystal Ball"
+            width="122px"
+            height="110px"
+            src={getAssetUrl('static/img/global/no-results.png')} />
 
-            <div className="t-product-list__no-results-text u-text-align-center">
-                {bodyText}
-            </div>
+        <div className="t-product-list__no-results-text u-text-align-center">
+            {bodyText}
         </div>
-    </List>
+    </div>
 )
 
 NoResultsList.propTypes = {
