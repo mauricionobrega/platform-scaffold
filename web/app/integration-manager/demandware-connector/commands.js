@@ -74,15 +74,13 @@ export const fetchPdpData = () => (dispatch) => {
                     dispatch(receivePdpUIData({[productPathKey]: {itemQuantity: responseJSON.step_quantity, ctaText: 'Add To Cart'}}))
                 })
         })
-        .then(() => {
-            return getBasketID()
-                .then((basketID) => {
-                    const options = {
-                        method: 'GET',
-                        headers: requestHeaders
-                    }
-                    return makeRequest(`${API_END_POINT_URL}/baskets/${basketID}`, options)
-                })
+        .then(getBasketID)
+        .then((basketID) => {
+            const options = {
+                method: 'GET',
+                headers: requestHeaders
+            }
+            return makeRequest(`${API_END_POINT_URL}/baskets/${basketID}`, options)
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     dispatch(receiveCartContents(parseBasketContents(responseJSON)))
@@ -94,32 +92,29 @@ export const fetchPdpData = () => (dispatch) => {
 
 export const addToCart = () => (dispatch) => {
     return initDemandWareSession()
-        .then(() => {
-
+        .then(getBasketID)
+        .then((basketID) => {
             const options = {
                 method: 'POST',
                 headers: requestHeaders,
                 body: `[{product_id: "${getCurrentProductID()}" , quantity: 1.00}]`
             }
-
-            return getBasketID()
-                .then((basketID) => {
-                    // TO DO: Add error handling here
-                    makeRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, options)
-                        .then((response) => {
-                            if (response.ok) {
-                                return response.json()
-                            }
-                            throw new Error('Unable to add item to cart')
-                        })
-                        .then((responseJSON) => {
-                            dispatch(receiveCartContents(parseBasketContents(responseJSON)))
-                            dispatch(onAddToCartSucceess())
-                        })
-                        .catch((error) => {
-                            console.log(error)
-                        })
+            // TO DO: Add error handling here
+            return makeRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, options)
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json()
+                    }
+                    throw new Error('Unable to add item to cart')
                 })
+                .then((responseJSON) => {
+                    dispatch(receiveCartContents(parseBasketContents(responseJSON)))
+                    dispatch(onAddToCartSucceess())
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        })
 
 
 
