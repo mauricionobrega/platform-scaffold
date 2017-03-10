@@ -67,7 +67,7 @@ export const fetchPdpData = () => (dispatch) => {
                 method: 'GET',
                 headers: requestHeaders
             }
-            makeRequest(productURL, options)
+            return makeRequest(productURL, options)
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     dispatch(receivePdpProductData({[productPathKey]: parseProductDetails(responseJSON)}))
