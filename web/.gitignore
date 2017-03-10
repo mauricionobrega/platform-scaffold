@@ -2,8 +2,7 @@
 build.tar
 
 coverage
-
+reports
 tests/reports
 tests/screenshots
-
 lighthouse/audit*.html
