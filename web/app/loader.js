@@ -34,8 +34,9 @@ const loadWorker = () => (
 // webpackJsonp is a webpack code splitting vendor wrapper
 // webpackJsonpAsync should wait and call webpackJsonp with payload when all dependencies are loaded
 let allAsyncDependenciesReady = false
-const asyncRunApp = () => {
+const asyncRunApp = (result) => {
     allAsyncDependenciesReady = true
+    return result
 }
 
 const asyncInitApp = () => {
