@@ -29,16 +29,10 @@ const loadWorker = () => (
         .catch(() => {})
 )
 
-// asyncRunApp is called when all async scripts load promises are resolved
 // webpackJsonpAsync is a custom async webpack code splitting chunk wrapper
 // webpackJsonp is a webpack code splitting vendor wrapper
 // webpackJsonpAsync should wait and call webpackJsonp with payload when all dependencies are loaded
 let allAsyncDependenciesReady = false
-const asyncRunApp = (result) => {
-    allAsyncDependenciesReady = true
-    return result
-}
-
 const asyncInitApp = () => {
     window.webpackJsonpAsync = (module, exports, webpackRequire) => {
         const runJsonpAsync = function() {
@@ -150,7 +144,11 @@ if (isReactRoute()) {
             capturingPromise,
             mainPromise,
             vendorPromise
-        ]).then(asyncRunApp)
+        ]).then((result) => {
+            // asyncInitApp will now be able to resolve itself!
+            allAsyncDependenciesReady = true
+            return result
+        })
     })
 } else {
     const capturing = document.createElement('script')
