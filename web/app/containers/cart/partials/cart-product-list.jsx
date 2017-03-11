@@ -76,7 +76,7 @@ class CartProductItem extends React.Component {
         return (
             <ProductItem
                 className={productItemClassNames}
-                title={<h2 className="u-h3">{product_name}</h2>}
+                title={<h2 className="u-h5 u-text-font-family u-text-semi-bold">{product_name}</h2>}
                 image={<ProductImage {...product_image} />}
                 >
                 <p className="u-color-neutral-50">Color: Maroon</p>
@@ -105,7 +105,7 @@ class CartProductItem extends React.Component {
 
                 <div className="u-flexbox">
                     <Button
-                        className="u-text-small u-color-brand u-flex-none"
+                        className="u-text-small u-color-brand u-flex-none u-text-letter-spacing-normal"
                         innerClassName="c--no-min-width u-padding-start-0 u-padding-bottom-0"
                         href={configure_url}
                         >
@@ -113,7 +113,7 @@ class CartProductItem extends React.Component {
                     </Button>
 
                     <Button
-                        className="u-text-small u-color-brand u-padding-start-0 u-padding-end-0"
+                        className="u-text-small u-color-brand u-padding-start-0 u-padding-end-0 u-text-letter-spacing-normal"
                         innerClassName="u-padding-bottom-0"
                         onClick={this.saveForLater}
                         >
@@ -121,7 +121,7 @@ class CartProductItem extends React.Component {
                     </Button>
 
                     <Button
-                        className="u-text-small u-color-brand qa-cart__remove-item"
+                        className="u-text-small u-color-brand u-text-letter-spacing-normal qa-cart__remove-item"
                         innerClassName="u-padding-end-0 u-padding-bottom-0"
                         onClick={this.removeItem}
                         >
@@ -158,10 +158,10 @@ const CartProductList = ({items, summaryCount, onSaveLater, onUpdateItemQuantity
         <div className="t-cart__product-list">
             <div className="t-cart__product-list-title u-padding-top-md u-padding-bottom-md">
                 <div className="u-flexbox u-align-center">
-                    <h1 className="u-flex">
-                        Cart {summaryCount > 0 && <span>({summaryCount} Items)</span>}
+                    <h1 className="u-flex u-text-uppercase">
+                        Cart {summaryCount > 0 && <span className="u-text-lighter">({summaryCount} Items)</span>}
                     </h1>
-                    <Button className="u-flex-none u-color-brand" onClick={onOpenSignIn}>
+                    <Button className="u-flex-none u-color-brand u-text-letter-spacing-normal" onClick={onOpenSignIn}>
                         <Icon name="user" />
                         Sign in
                     </Button>

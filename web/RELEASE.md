@@ -13,3 +13,6 @@
       * Release title: `X.Y.Z - <release_name>`
       * Description: Use highlights from the CHANGELOG.md (only pick out the most significant changes)
 - [ ] Merge `master` into `develop` (no need for review on PR, just merge).
+
+## Bundle Release
+- [ ] Run `npm run push -- -m '<X.Y.Z>:<COMMIT_SHA>,<BRANCH_RELEASED_FROM>'`. You can find your `<COMMIT_SHA>` from `git rev-parse --short HEAD`

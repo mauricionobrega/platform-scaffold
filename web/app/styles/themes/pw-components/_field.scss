@@ -120,6 +120,11 @@ $base__disabled-select-triangle: 'data:image/svg+xml;utf8,<svg xmlns="http://www
         padding-left: $unit * 4; // 1
     }
 
+    .pw-field__inner {
+        display: flex;
+        align-items: center;
+    }
+
     .c-field__label,
     .pw-field__label {
         margin-bottom: 0; // 4
