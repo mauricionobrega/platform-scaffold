@@ -11,6 +11,7 @@ module.exports = {
     ],
     serverHost: '0.0.0.0',
     serverPort: 4000,
+    assetsDir: '../app',
     skipComponentsWithoutExample: false,
     updateWebpackConfig(webpackConfig) {
         // Supply our own renderer for styleguide
@@ -34,7 +35,7 @@ module.exports = {
             // Loader for styleguide & project styles
             {
                 test: /\.scss$/,
-                loader: 'style!css!sass',
+                loader: 'style!css?-url!sass',
                 include: [
                     /node_modules\/progressive-web-sdk/,
                     /app/
