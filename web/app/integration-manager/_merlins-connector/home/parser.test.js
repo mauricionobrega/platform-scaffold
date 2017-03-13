@@ -1,9 +1,9 @@
-/* eslint-env jquery, jest */
+/* eslint-env jquery, jest, node */
 import {jquerifyHtmlFile} from 'progressive-web-sdk/dist/test-utils'
 import homeParser from './parser'
 
 describe('the home parser', () => {
-    const $content = jquerifyHtmlFile('app/integration-manager/merlins-connector/home/parser.test.html')
+    const $content = jquerifyHtmlFile(`${__dirname}/parser.test.html`)
     const parsedContent = homeParser($, $content)
 
     it('should extract the home content from the rendered HTML', () => {

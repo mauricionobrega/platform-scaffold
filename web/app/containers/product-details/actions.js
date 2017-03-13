@@ -4,7 +4,7 @@ import * as selectors from './selectors'
 import * as appSelectors from '../app/selectors'
 import productDetailsParser from './parsers/product-details'
 
-import * as commands from '../../integration-manager/commands'
+import {addToCart} from '../../integration-manager/commands'
 import {closeModal} from '../../store/modals/actions'
 import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from './constants'
 
@@ -45,5 +45,5 @@ export const submitCartForm = () => (dispatch, getStore) => {
     const key = appSelectors.getCurrentPathKey(getStore())
     const qty = selectors.getItemQuantity(getStore())
     dispatch(addToCartStarted())
-    return dispatch(commands.addToCart(key, qty))
+    return dispatch(addToCart(key, qty))
 }
