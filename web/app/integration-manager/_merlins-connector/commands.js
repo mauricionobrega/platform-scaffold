@@ -1,12 +1,10 @@
-import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
-import {makeRequest, makeFormEncodedRequest, makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+import {makeFormEncodedRequest, makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {urlToPathKey} from '../../utils/utils'
+import {fetchPageData} from './utils'
 
 import {productDetailsParser} from '../../store/products/parser'
 import {pdpAddToCartFormParser} from './parsers'
 import {checkoutShippingParser, parseCheckoutData} from './checkout/parsers'
-import homeParser from './home/parser'
-import {parseNavigation} from './navigation/parser'
 import * as responses from './../responses'
 import {getCustomerEntityID} from '../../store/checkout/selectors'
 import {getIsLoggedIn} from '../../containers/app/selectors'
@@ -16,15 +14,7 @@ import {browserHistory} from 'react-router'
 import {receiveFormInfo} from './../actions'
 import {removeAllNotifications} from '../../containers/app/actions'
 
-const fetchPageData = (url) => (dispatch) => {
-    return makeRequest(url)
-        .then(jqueryResponse)
-        .then((res) => {
-            const [$, $response] = res
-            dispatch(responses.receiveNavigationData(parseNavigation($, $response)))
-            return res
-        })
-}
+import * as homeCommands from './home/commands'
 
 export const fetchPdpData = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
@@ -35,14 +25,6 @@ export const fetchPdpData = (url) => (dispatch) => {
         })
         .catch((error) => { console.info(error.message) })
 }
-
-export const fetchHomeData = (url) => (dispatch) => {
-    return dispatch(fetchPageData(url))
-        .then(([$, $response]) => {
-            dispatch(responses.receiveHomeData(homeParser($, $response)))
-        })
-}
-
 
 export const fetchCheckoutShippingData = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
@@ -170,4 +152,15 @@ export const submitSignIn = () => {
             }
         })
     }
+}
+
+export default {
+    fetchPdpData,
+    fetchCheckoutShippingData,
+    addToCart,
+    makeFormEncodedRequest,
+    submitShipping,
+    checkCustomerEmail,
+    submitSignIn,
+    home: homeCommands
 }
