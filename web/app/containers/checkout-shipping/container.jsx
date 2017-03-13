@@ -29,8 +29,8 @@ const CheckoutShipping = () => {
     )
 }
 
-CheckoutShipping.fetcher = (url, dispatch) => {
-    dispatch(commands.fetchCheckoutShippingData(url))
-}
+CheckoutShipping.fetcher = (url, routeName, dispatch) =>
+    dispatch(commands.fetchCheckoutShippingData(url, routeName))
+
 
 export default CheckoutShipping

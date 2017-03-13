@@ -10,6 +10,15 @@ export const receiveNavigationData = createAction('Receive Navigation Data')
 export const receiveProductListProductData = createAction('Receive ProductList product data')
 export const receiveFooterData = createAction('Receive Footer Data')
 export const receiveCategory = createAction('Receive Category Data')
+export const setPageFetchError = createAction('Set page fetch error', 'fetchError')
+export const receiveAppData = createAction('Receive App Data')
+export const onPageReceived = createAction('On page received',
+    '$',
+    '$response',
+    'url',
+    'currentURL',
+    'routeName'
+)
 
 export const onShippingEmailRecognized = () => {
     return (dispatch) => {

@@ -2,7 +2,7 @@ import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import {makeRequest, makeFormEncodedRequest, makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {urlToPathKey} from '../../utils/utils'
 
-import {pdpAddToCartFormParser} from './parsers'
+import {pdpAddToCartFormParser, appParser} from './parsers'
 import {checkoutShippingParser, parseCheckoutData} from './checkout/parsers'
 import homeParser from './home/parser'
 import {parseNavigation} from './navigation/parser'
@@ -11,26 +11,42 @@ import categoryProductsParser from './categories/parser'
 import {productListParser, productDetailsParser, productDetailsUIParser} from './products/parser'
 import * as responses from './../responses'
 import {getCustomerEntityID} from '../../store/checkout/selectors'
-import {getIsLoggedIn} from '../../containers/app/selectors'
+import {getIsLoggedIn, getCurrentUrl} from '../../containers/app/selectors'
 import {getShippingFormValues} from '../../store/form/selectors'
 import {getCart} from '../../store/cart/actions'
 import {browserHistory} from 'react-router'
 import {receiveFormInfo} from './../actions'
 import {removeAllNotifications} from '../../containers/app/actions'
 
-const fetchPageData = (url) => (dispatch) => {
+
+const fetchPageData = (url, routeName) => (dispatch, getState) => {
     return makeRequest(url)
         .then(jqueryResponse)
         .then((res) => {
             const [$, $response] = res
+            const currentURL = getCurrentUrl(getState())
+            const receivedAction = responses.onPageReceived($, $response, url, currentURL, routeName)
+
+            // Let app-level reducers know about receiving the page
+            dispatch(receivedAction)
+            dispatch(responses.receiveAppData(appParser(receivedAction.payload.$response)))
+
             dispatch(responses.receiveNavigationData(parseNavigation($, $response)))
             dispatch(responses.receiveFooterData(parseFooter($, $response)))
             return res
         })
+        .catch((error) => {
+            console.info(error.message)
+            if (error.name !== 'FetchError') {
+                throw error
+            } else {
+                dispatch(responses.setPageFetchError(error.message))
+            }
+        })
 }
 
-export const fetchPdpData = (url) => (dispatch) => {
-    return dispatch(fetchPageData(url))
+export const fetchPdpData = (url, routeName) => (dispatch) => {
+    return dispatch(fetchPageData(url, routeName))
         .then((res) => {
             const [$, $response] = res
             dispatch(responses.receivePdpProductData({[urlToPathKey(url)]: productDetailsParser($, $response)}))
@@ -40,8 +56,8 @@ export const fetchPdpData = (url) => (dispatch) => {
         .catch((error) => { console.info(error.message) })
 }
 
-export const fetchProductListData = (url) => (dispatch) => {
-    return dispatch(fetchPageData(url))
+export const fetchProductListData = (url, routeName) => (dispatch) => {
+    return dispatch(fetchPageData(url, routeName))
         .then((res) => {
             const [$, $response] = res
             // Receive page contents
@@ -52,16 +68,16 @@ export const fetchProductListData = (url) => (dispatch) => {
         })
 }
 
-export const fetchHomeData = (url) => (dispatch) => {
-    return dispatch(fetchPageData(url))
+export const fetchHomeData = (url, routeName) => (dispatch) => {
+    return dispatch(fetchPageData(url, routeName))
         .then(([$, $response]) => {
             dispatch(responses.receiveHomeData(homeParser($, $response)))
         })
 }
 
 
-export const fetchCheckoutShippingData = (url) => (dispatch) => {
-    return dispatch(fetchPageData(url))
+export const fetchCheckoutShippingData = (url, routeName) => (dispatch) => {
+    return dispatch(fetchPageData(url, routeName))
         .then(([$, $response]) => {
 
             dispatch(responses.receiveCheckoutShippingData(checkoutShippingParser($, $response)))

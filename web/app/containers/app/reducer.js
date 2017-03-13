@@ -1,9 +1,11 @@
 import {handleActions} from 'redux-actions'
 import {fromJS, List} from 'immutable'
-import {mergePayloadForActions, mergePayload} from '../../utils/reducer-utils'
+import {mergePayloadForActions} from '../../utils/reducer-utils'
 import {urlToPathKey} from '../../utils/utils'
 
 import * as appActions from './actions'
+
+import {onPageReceived, receiveAppData, setPageFetchError} from '../../integration-manager/responses'
 import {CURRENT_URL, FETCHED_PATHS} from './constants'
 
 const initialState = fromJS({
@@ -15,11 +17,16 @@ const initialState = fromJS({
 })
 
 export default handleActions({
-    ...mergePayloadForActions(appActions.receiveData),
+    ...mergePayloadForActions(appActions.receiveData, receiveAppData, appActions.setPageFetchError, setPageFetchError),
     [appActions.onRouteChanged]: (state, {payload: {currentURL}}) => {
         return state.set(CURRENT_URL, currentURL)
     },
+    // Remove this reducer once we've fully converted to the integration manager
     [appActions.onPageReceived]: (state, {payload: {url}}) => {
+        const path = urlToPathKey(url)
+        return state.setIn([FETCHED_PATHS, path], true)
+    },
+    [onPageReceived]: (state, {payload: {url}}) => {
         const path = urlToPathKey(url)
         return state.setIn([FETCHED_PATHS, path], true)
     },
@@ -37,7 +44,6 @@ export default handleActions({
     [appActions.removeAllNotifications]: (state) => {
         return state.set('notifications', List())
     },
-    [appActions.setPageFetchError]: mergePayload,
     [appActions.clearPageFetchError]: (state) => {
         return state.set('fetchError', null)
     },
