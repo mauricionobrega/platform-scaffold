@@ -13,7 +13,6 @@ export const fetchPdpData = (url) => (dispatch) => {
 
             const pathKey = urlToPathKey(url)
 
-            debugger
             dispatch(receiveProductDetailsUIData({[pathKey]: productDetailsUIParser($, $response)}))
             dispatch(receiveProductDetailsProductData({[pathKey]: productDetailsParser($, $response)}))
             dispatch(receiveFormInfo({[pathKey]: pdpAddToCartFormParser($, $response).formInfo}))
