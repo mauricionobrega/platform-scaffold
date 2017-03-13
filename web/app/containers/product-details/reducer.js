@@ -2,7 +2,10 @@ import Immutable from 'immutable'
 import {handleActions} from 'redux-actions'
 
 import * as productDetailsActions from './actions'
-import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../../integration-manager/product-details/responses'
+import {
+    receiveProductDetailsProductData,
+    receiveProductDetailsUIData
+} from '../../integration-manager/product-details/responses'
 
 import {mergePayloadForActions} from '../../utils/reducer-utils'
 
