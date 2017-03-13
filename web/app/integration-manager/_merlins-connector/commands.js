@@ -32,8 +32,7 @@ export const addToCart = (key, qty) => (dispatch, getStore) => {
 
     return makeFormEncodedRequest(formInfo.get('submitUrl'), formValues, {method: formInfo.get('method')})
         .then(() => {
-            dispatch(responses.onAddToCartSucceess())
-            dispatch(getCart())
+            return dispatch(getCart())
         })
 }
 

@@ -4,7 +4,7 @@ import * as selectors from './selectors'
 import * as appSelectors from '../app/selectors'
 
 import {addToCart} from '../../integration-manager/commands'
-import {closeModal} from '../../store/modals/actions'
+import {openModal, closeModal} from '../../store/modals/actions'
 import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from './constants'
 
 import {isRunningInAstro} from '../../utils/astro-integration'
@@ -38,4 +38,14 @@ export const submitCartForm = () => (dispatch, getStore) => {
     const qty = selectors.getItemQuantity(getStore())
     dispatch(addToCartStarted())
     return dispatch(addToCart(key, qty))
+        .then(() => {
+            dispatch(openModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL))
+        })
+        .catch((error) => {
+            // TODO?? How do we communicate errors to the user?? Modal?
+            console.error('Error adding to cart:', error)
+        })
+        .then(() => {
+            dispatch(addToCartComplete())
+        })
 }

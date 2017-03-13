@@ -2,17 +2,14 @@
 import Immutable from 'immutable'
 import * as fetchUtils from 'progressive-web-sdk/dist/utils/fetch-utils'
 
-import {addToCartStarted, addToCartComplete, submitCartForm} from './actions'
-import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from './constants'
-import {openModal} from '../../store/modals/actions'
+jest.mock('./')
+import {addToCartStarted, submitCartForm} from './actions'
 
 jest.mock('../../integration-manager/commands')
 import {addToCart} from '../../integration-manager/commands'
 
-jest.mock('../../store/cart/actions')
-import {getCart} from '../../store/cart/actions'
-
 /* eslint-disable import/namespace */
+
 let realMakeFormEncodedRequest
 
 beforeAll(() => {
@@ -27,7 +24,7 @@ afterAll(() => {
     fetchUtils.makeFormEncodedRequest = realMakeFormEncodedRequest
 })
 
-test('submitCartForm makes a request and dispatches updates', () => {
+test('submitCartForm marks operation as in progress and adds to cart', () => {
     const submitCartFormThunk = submitCartForm()
     expect(typeof submitCartFormThunk).toBe('function')
 
@@ -47,8 +44,9 @@ test('submitCartForm makes a request and dispatches updates', () => {
         expect(mockDispatch).toBeCalled()
         expect(mockDispatch.mock.calls[0][0]).toEqual(addToCartStarted())
         expect(mockDispatch.mock.calls[1][0]).toEqual(addToCart('/', 1))
-        expect(mockDispatch.mock.calls[2][0]).toEqual(addToCartComplete())
-        expect(mockDispatch.mock.calls[3][0]).toEqual(openModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL))
-        expect(getCart).toBeCalled()
     })
+})
+
+test('submitCartForm shows the "added to cart" modal if it succeeds', () => {
+
 })
