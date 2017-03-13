@@ -28,7 +28,7 @@ const PaymentProductItem = ({
     )
 
     return (
-        <ProductItem
+        <ProductItem widthPercentage="20%"
             className="u-padding-top-lg u-padding-bottom-lg u-padding-start u-padding-end"
             title={<h2 className="u-h5">{product_name}</h2>}
             image={productImage}

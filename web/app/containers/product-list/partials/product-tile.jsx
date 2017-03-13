@@ -31,7 +31,7 @@ const ProductTile = ({className, image, link, price}) => {
 
     return (
         <ListTile className="t-product-list__product-tile u-card" {...link}>
-            <ProductItem
+            <ProductItem widthPercentage="45%"
                 {...image}
                 className={classNames('u-align-center', className)}
                 title={title}
