@@ -142,6 +142,8 @@ export const submitSignIn = () => {
 }
 
 export default {
+    // These individual commands are temporary until we can refactor them into the
+    // sub-areas they belong in.
     fetchCheckoutShippingData,
     addToCart,
     makeFormEncodedRequest,
