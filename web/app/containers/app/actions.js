@@ -44,6 +44,8 @@ export const removeNotification = createAction('Remove Notification')
 export const removeAllNotifications = createAction('Remove All Notifications')
 
 export const updateSvgSprite = createAction('Updated SVG sprite', 'sprite')
+export const showLazyLoadedImage = createAction('Displaying lazy loaded image', 'identifier', 'src')
+
 
 /**
  * Action dispatched when the route changes

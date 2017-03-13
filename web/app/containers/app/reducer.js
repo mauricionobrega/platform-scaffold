@@ -11,7 +11,8 @@ const initialState = fromJS({
     notifications: [],
     fetchError: null,
     [FETCHED_PATHS]: {},
-    sprite: ''
+    sprite: '',
+    lazyLoadImages: {}
 })
 
 export default handleActions({
@@ -43,5 +44,23 @@ export default handleActions({
     },
     [appActions.updateSvgSprite]: (state, {payload}) => {
         return state.set('sprite', payload.sprite)
+    },
+    [appActions.showLazyLoadedImage]: (state, {payload: {identifier, src}}) => {
+        return state.mergeDeep({
+            lazyLoadImages: {
+                // identifier: the category that the image belongs to on the
+                //      homepage. Could be `promoImage`, `categoryImage`, or
+                //      'articleImage'
+                // src: is the image's src and acts as a dictionary key. The
+                //      key's value is used to indicate whether or not the image
+                //      should render.
+                //
+                // See the `lazyLoadedImage` function in the home container for
+                // where this is used.
+                //
+                // See ticket WEB-1204
+                [identifier]: {[src]: true}
+            }
+        })
     }
 }, initialState)
