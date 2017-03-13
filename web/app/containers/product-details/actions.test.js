@@ -1,25 +1,16 @@
 /* eslint-env jest */
 import Immutable from 'immutable'
 
-import {addToCartStarted, addToCartComplete, submitCartForm} from './actions'
-import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from './constants'
-import {openModal} from '../../store/modals/actions'
+import {addToCartStarted, submitCartForm} from './actions'
 
-import * as fetchUtils from 'progressive-web-sdk/dist/utils/fetch-utils'
 
-jest.mock('../../store/cart/actions')
-import {getCart} from '../../store/cart/actions'
+import * as commands from '../../integration-manager/commands'
 
 /* eslint-disable import/namespace */
-let realMakeFormEncodedRequest
 beforeAll(() => {
-    realMakeFormEncodedRequest = fetchUtils.makeFormEncodedRequest
-    fetchUtils.makeFormEncodedRequest = jest.fn()
-    fetchUtils.makeFormEncodedRequest.mockReturnValue(Promise.resolve())
 })
 
 afterAll(() => {
-    fetchUtils.makeFormEncodedRequest = realMakeFormEncodedRequest
 })
 
 test('submitCartForm makes a request and dispatches updates', () => {
@@ -43,21 +34,13 @@ test('submitCartForm makes a request and dispatches updates', () => {
         }
     })
 
+    commands.addToCart = jest.fn()
     const mockDispatch = jest.fn()
-    return thunk(mockDispatch, getStore)
-        .then(() => {
-            expect(fetchUtils.makeFormEncodedRequest).toBeCalledWith(
-                'submitUrl',
-                {qty: 1},
-                {method: 'POST'})
+    thunk(mockDispatch, getStore)
 
-            expect(mockDispatch).toBeCalled()
-            expect(mockDispatch.mock.calls[0][0])
-                .toEqual(addToCartStarted())
-            expect(mockDispatch.mock.calls[1][0])
-                .toEqual(addToCartComplete())
-            expect(mockDispatch.mock.calls[2][0])
-                .toEqual(openModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL))
-            expect(getCart).toBeCalled()
-        })
+    expect(mockDispatch).toBeCalled()
+    expect(mockDispatch.mock.calls[0][0])
+        .toEqual(addToCartStarted())
+    expect(mockDispatch.mock.calls[1][0])
+        .toEqual(commands.addToCart())
 })
