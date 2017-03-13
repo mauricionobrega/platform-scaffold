@@ -32,11 +32,10 @@ const loadWorker = () => (
 // webpackJsonpAsync is a custom async webpack code splitting chunk wrapper
 // webpackJsonp is a webpack code splitting vendor wrapper
 // webpackJsonpAsync should wait and call webpackJsonp with payload when all dependencies are loaded
-let allAsyncDependenciesReady = false
 const asyncInitApp = () => {
     window.webpackJsonpAsync = (module, exports, webpackRequire) => {
         const runJsonpAsync = function() {
-            return (allAsyncDependenciesReady && window.webpackJsonp)
+            return (window.webpackJsonp)
                 ? window.webpackJsonp(module, exports, webpackRequire)
                 : setTimeout(runJsonpAsync, 50)
         }
@@ -116,13 +115,15 @@ if (isReactRoute()) {
         const capturingPromise = makeScriptPromise({
             id: 'progressive-web-capture',
             src: CAPTURING_CDN,
-            onload: (resolve) => {
+            onload: (resolveOnload) => {
                 window.Capture.init((capture) => {
                     // NOTE: by this time, the captured doc has changed a little
                     // bit from original desktop. It now has some of our own
                     // assets (e.g. main.css) but they can be safely ignored.
-                    window.Progressive.initialCapturedDocHTML = capture.enabledHTMLString()
-                    resolve()
+                    window.Progressive.initialCapturedDocHTML = new Promise((resolveCapture) => {
+                        resolveCapture(capture.enabledHTMLString())
+                    })
+                    resolveOnload()
                 })
             }
         })
@@ -144,11 +145,7 @@ if (isReactRoute()) {
             capturingPromise,
             mainPromise,
             vendorPromise
-        ]).then((result) => {
-            // asyncInitApp will now be able to resolve itself!
-            allAsyncDependenciesReady = true
-            return result
-        })
+        ])
     })
 } else {
     const capturing = document.createElement('script')
