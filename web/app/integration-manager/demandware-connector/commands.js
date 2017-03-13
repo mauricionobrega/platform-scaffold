@@ -9,7 +9,7 @@ const API_TYPE = 'shop'
 const API_VERSION = 'v17_2'
 const DW_CLIENT_ID = '5640cc6b-f5e9-466e-9134-9853e9f9db93'
 const API_END_POINT_URL = `/s/${SITE_ID}/dw/${API_TYPE}/${API_VERSION}`
-const REQUEST_HEADERS = {
+const requestHeaders = {
     'Content-Type': 'application/json',
     'x-dw-client-id': DW_CLIENT_ID
 }
@@ -18,13 +18,13 @@ const initDemandWareSession = () => {
     const options = {
         method: 'POST',
         body: '{ type : "session" }',
-        headers: new Headers(REQUEST_HEADERS)
+        headers: requestHeaders
     }
     return makeRequest(`${API_END_POINT_URL}/customers/auth`, options)
         .then((response) => {
             // To Do: Add this to the store???
-            REQUEST_HEADERS.Authorization = response.headers.get('Authorization')
-            options.headers.set('Authorization', response.headers.get('Authorization'))
+            requestHeaders.Authorization = response.headers.get('Authorization')
+            options.headers.Authorization = response.headers.get('Authorization')
         })
         .then(() => {
             makeRequest(`${API_END_POINT_URL}/sessions`, options)
@@ -41,7 +41,7 @@ const getBasketID = () => {
     }
     const options = {
         method: 'POST',
-        headers: new Headers(REQUEST_HEADERS)
+        headers: requestHeaders
     }
     return makeRequest(`${API_END_POINT_URL}/baskets`, options)
         .then((response) => response.json())
@@ -61,7 +61,7 @@ const getCurrentProductID = () => {
 const fetchNavigationData = () => (dispatch) => {
     const options = {
         method: 'GET',
-        headers: new Headers(REQUEST_HEADERS)
+        headers: requestHeaders
     }
     return makeRequest(`${API_END_POINT_URL}/categories/root?levels=2`, options)
         .then((response) => response.json())
@@ -96,7 +96,8 @@ export const fetchHomeData = () => (dispatch) => {
     return initDemandWareSession()
         .then(() => dispatch(fetchNavigationData()))
         .then(() => {
-            // TODO: How do we get banner info?
+            // Banners are being pulled from the bundle right now
+            // so we just need an array with the correct number of objects
             dispatch(receiveHomeData({banners: [{}, {}, {}]}))
         })
 }
@@ -108,24 +109,22 @@ export const fetchPdpData = () => (dispatch) => {
         .then(() => {
             const options = {
                 method: 'GET',
-                headers: new Headers(REQUEST_HEADERS)
+                headers: requestHeaders
             }
-            makeRequest(productURL, options)
+            return makeRequest(productURL, options)
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     dispatch(receivePdpProductData({[productPathKey]: parseProductDetails(responseJSON)}))
                     dispatch(receivePdpUIData({[productPathKey]: {itemQuantity: responseJSON.step_quantity, ctaText: 'Add To Cart'}}))
                 })
         })
-        .then(() => {
-            return getBasketID()
-                .then((basketID) => {
-                    const options = {
-                        method: 'GET',
-                        headers: new Headers(REQUEST_HEADERS)
-                    }
-                    return makeRequest(`${API_END_POINT_URL}/baskets/${basketID}`, options)
-                })
+        .then(getBasketID)
+        .then((basketID) => {
+            const options = {
+                method: 'GET',
+                headers: requestHeaders
+            }
+            return makeRequest(`${API_END_POINT_URL}/baskets/${basketID}`, options)
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     dispatch(receiveCartContents(parseBasketContents(responseJSON)))
@@ -137,68 +136,28 @@ export const fetchPdpData = () => (dispatch) => {
 
 export const addToCart = () => (dispatch) => {
     return initDemandWareSession()
-        .then(() => {
-
+        .then(getBasketID)
+        .then((basketID) => {
             const options = {
                 method: 'POST',
-                headers: new Headers(REQUEST_HEADERS),
+                headers: requestHeaders,
                 body: `[{product_id: "${getCurrentProductID()}" , quantity: 1.00}]`
             }
-
-            return getBasketID()
-                .then((basketID) => {
-                    // TO DO: Add error handling here
-                    makeRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, options)
-                        .then((response) => {
-                            if (response.ok) {
-                                return response.json()
-                            }
-                            throw new Error('Unable to add item to cart')
-                        })
-                        .then((responseJSON) => {
-                            dispatch(receiveCartContents(parseBasketContents(responseJSON)))
-                            dispatch(onAddToCartSucceess())
-                        })
-                        .catch((error) => {
-                            console.log(error)
-                        })
+            // TO DO: Add error handling here
+            return makeRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, options)
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json()
+                    }
+                    throw new Error('Unable to add item to cart')
                 })
-
-
-
-
-            // TO DO: Check for existing Basket id before creating one
-            // return makeRequest(`${API_END_POINT_URL}/baskets`, options)
-            //     .then((response) => response.json())
-            //     .then((responseJSON) => {
-            //         const basketID = responseJSON.basket_id
-            //         options.body = '[{product_id: "701643427208", quantity: 1.00}]'
-            //
-            //         // TO DO: Add error handling here
-            //         makeRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, options)
-            //             .then((response) => {
-            //                 if (response.ok) {
-            //                     return response.json()
-            //                 }
-            //                 throw new Error('Unable to add item to cart')
-            //             })
-            //             .then((responseJSON) => {
-            //                 // Add content to cart prop
-            //                 const items = responseJSON.product_items.map(({product_name, price, product_id}) => {
-            //                     return {
-            //                         product_name,
-            //                         product_price: price,
-            //                         product_url: `${API_END_POINT_URL}${product_id}.html`,
-            //                         product_image: {}
-            //                     }
-            //                 })
-            //                 dispatch(receiveCartContents({items, summary_count: items.length}))
-            //                 dispatch(onAddToCartSucceess())
-            //             })
-            //             .catch((error) => {
-            //                 console.log(error)
-            //             })
-            //     })
+                .then((responseJSON) => {
+                    dispatch(receiveCartContents(parseBasketContents(responseJSON)))
+                    dispatch(onAddToCartSucceess())
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         })
 }
 
