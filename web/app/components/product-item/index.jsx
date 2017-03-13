@@ -43,7 +43,7 @@ const ProductItem = ({
 
 
             {image &&
-                <div className="u-padding-end u-flex-none" style={{width:widthPercentage}}>
+                <div className="u-padding-end u-flex-none" style={{width: widthPercentage}}>
                     {image}
                 </div>
             }
