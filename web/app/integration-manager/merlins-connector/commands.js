@@ -83,6 +83,11 @@ export const addToCart = (key, qty) => (dispatch, getStore) => {
         })
 }
 
+export const submitNewsletter = (formData) => {
+    return makeFormEncodedRequest('/newsletter/subscriber/new/', formData, {method: 'POST'})
+}
+
+
 export const submitShipping = () => {
     return (dispatch, getState) => {
         const currentState = getState()
