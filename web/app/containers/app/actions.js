@@ -111,7 +111,7 @@ export const checkIfOffline = () => {
 }
 
 const requestCapturedDoc = () => {
-    return window.Progressive.initialCapturedDocHTML.then((initialCapturedDocHTML) => {
+    return window.Progressive.capturedDocHTMLPromise.then((initialCapturedDocHTML) => {
         const body = new Blob([initialCapturedDocHTML], {type: 'text/html'})
         const capturedDocResponse = new Response(body, {
             status: 200,

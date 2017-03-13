@@ -53,25 +53,22 @@ if (isReactRoute()) {
     reactTarget.className = 'react-target'
     body.appendChild(reactTarget)
 
-    const makeScriptPromise = ({id, src, onload}) => {
-        return new Promise((resolve) => {
-            const script = document.createElement('script')
+    const loadScript = ({id, src, onload}) => {
+        const script = document.createElement('script')
 
-            // Setting UTF-8 as our encoding ensures that certain strings (i.e.
-            // Japanese text) are not improperly converted to something else. We
-            // do this on the vendor scripts also just in case any libs we
-            // import have localized strings in them.
-            script.charset = 'utf-8'
-            script.async = true
-            script.id = id
-            script.src = src
-            script.onload = typeof onload === typeof function() {}
-                ? () => onload(resolve)
-                : resolve
-            script.onerror = resolve
+        // Setting UTF-8 as our encoding ensures that certain strings (i.e.
+        // Japanese text) are not improperly converted to something else. We
+        // do this on the vendor scripts also just in case any libs we
+        // import have localized strings in them.
+        script.charset = 'utf-8'
+        script.async = true
+        script.id = id
+        script.src = src
+        script.onload = typeof onload === typeof function() {}
+            ? onload // resolve
+            : () => {}
 
-            body.appendChild(script)
-        })
+        body.appendChild(script)
     }
 
     /* eslint-disable max-len */
@@ -107,45 +104,38 @@ if (isReactRoute()) {
             rel: 'manifest'
         })
 
-        const jQueryPromise = makeScriptPromise({
+        asyncInitApp()
+
+        window.Progressive.capturedDocHTMLPromise = new Promise((resolve) => {
+            loadScript({
+                id: 'progressive-web-capture',
+                src: CAPTURING_CDN,
+                onload: () => {
+                    window.Capture.init((capture) => {
+                        // NOTE: by this time, the captured doc has changed a little
+                        // bit from original desktop. It now has some of our own
+                        // assets (e.g. main.css) but they can be safely ignored.
+                        resolve(capture.enabledHTMLString())
+                    })
+                },
+                onerror: resolve
+            })
+        })
+
+        loadScript({
             id: 'progressive-web-jquery',
             src: getAssetUrl('static/js/jquery.min.js')
         })
 
-        const capturingPromise = makeScriptPromise({
-            id: 'progressive-web-capture',
-            src: CAPTURING_CDN,
-            onload: (resolveOnload) => {
-                window.Capture.init((capture) => {
-                    // NOTE: by this time, the captured doc has changed a little
-                    // bit from original desktop. It now has some of our own
-                    // assets (e.g. main.css) but they can be safely ignored.
-                    window.Progressive.initialCapturedDocHTML = new Promise((resolveCapture) => {
-                        resolveCapture(capture.enabledHTMLString())
-                    })
-                    resolveOnload()
-                })
-            }
-        })
-
-        const mainPromise = makeScriptPromise({
+        loadScript({
             id: 'progressive-web-main',
             src: getAssetUrl('main.js')
         })
 
-        const vendorPromise = makeScriptPromise({
+        loadScript({
             id: 'progressive-web-vendor',
             src: getAssetUrl('vendor.js')
         })
-
-        // Load all dependencies asynchronously
-        asyncInitApp()
-        Promise.all([
-            jQueryPromise,
-            capturingPromise,
-            mainPromise,
-            vendorPromise
-        ])
     })
 } else {
     const capturing = document.createElement('script')
