@@ -35,6 +35,7 @@ const Router = ({store}) => (
             <Route path="/" component={App} onChange={OnChange}>
 
                 <IndexRoute component={Home} routeName="home" />
+                <Route component={Home} path="*/Home-Show*" routeName="home" />
                 <Route component={Cart} path="checkout/cart/" routeName="cart" />
                 <Route component={Login} path="customer/account/login/" routeName="signin" />
                 <Route component={Login} path="customer/account/create/" routeName="register" />
