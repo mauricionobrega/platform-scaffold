@@ -8,6 +8,7 @@ export const receiveCheckoutData = createAction('Receive Checkout Data')
 export const receiveHomeData = createAction('Receive Home Data')
 export const receiveNavigationData = createAction('Receive Navigation Data')
 export const receiveProductListProductData = createAction('Receive ProductList product data')
+export const receiveFooterData = createAction('Receive Footer Data')
 export const receiveCategory = createAction('Receive Category Data')
 
 export const onShippingEmailRecognized = () => {

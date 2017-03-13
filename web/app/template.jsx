@@ -25,9 +25,7 @@ const template = (WrappedComponent) => {
 
             if (WrappedComponent.fetcher) {
                 WrappedComponent.fetcher(url, dispatch)
-            }
-
-            if (!route.suppressFetch) {
+            } else if (!route.suppressFetch) {
                 dispatch(fetchPage(url, WrappedComponent, route.routeName, route.fetchUrl))
             }
         }

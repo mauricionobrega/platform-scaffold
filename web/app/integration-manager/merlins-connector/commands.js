@@ -6,6 +6,7 @@ import {pdpAddToCartFormParser} from './parsers'
 import {checkoutShippingParser, parseCheckoutData} from './checkout/parsers'
 import homeParser from './home/parser'
 import {parseNavigation} from './navigation/parser'
+import {parseFooter} from './footer/parser'
 import categoryProductsParser from './categories/parser'
 import {productListParser, productDetailsParser, productDetailsUIParser} from './products/parser'
 import * as responses from './../responses'
@@ -23,6 +24,7 @@ const fetchPageData = (url) => (dispatch) => {
         .then((res) => {
             const [$, $response] = res
             dispatch(responses.receiveNavigationData(parseNavigation($, $response)))
+            dispatch(responses.receiveFooterData(parseFooter($, $response)))
             return res
         })
 }
