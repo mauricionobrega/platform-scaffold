@@ -20,7 +20,7 @@ import {analyticManager} from 'progressive-web-sdk/dist/analytics/analytic-manag
 import {clientAnalytics} from './utils/analytics/client-analytics'
 
 // import connector from './integration-manager/_merlins-connector'
-import connector from './integration-manager/demandware-connector'
+import connector from './integration-manager/_demandware-connector'
 
 import {registerConnector} from './integration-manager'
 
