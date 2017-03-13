@@ -1,11 +1,18 @@
 import {extractMagentoJson} from '../../../utils/magento-utils'
-import {getTextFrom} from '../../../utils/parser-utils'
+import {getTextFrom, parseTextLink} from '../../../utils/parser-utils'
+
+const UENC_REGEX = /\/uenc\/([^/]+),\//
 
 const parseCarouselItems = (magentoObject) => {
     const carouselSetup = magentoObject
           .getIn(['[data-gallery-role=gallery-placeholder]', 'mage/gallery/gallery', 'data'])
           .sortBy((item) => item.get('position'))
     return carouselSetup.toJS()
+}
+
+const parseBreadcrumbs = ($, $breadcrumbsLinks) => {
+    return $breadcrumbsLinks.get()
+        .map((breadcrumbLink) => parseTextLink($(breadcrumbLink)))
 }
 
 export const productDetailsParser = ($, $html) => {
@@ -16,6 +23,41 @@ export const productDetailsParser = ($, $html) => {
         price: getTextFrom($mainContent, '.product-info-price .price-wrapper .price'),
         carouselItems: parseCarouselItems(magentoObject),
         description: getTextFrom($mainContent, '.product.info.detailed .product.attibute.description p')
+    }
+}
+
+export const productDetailsUIParser = ($, $html) => {
+    const $breadcrumbs = (
+        $html
+            .find('.breadcrumbs')
+            .find('li')
+            .not(':last-child')
+            .find('a')
+    )
+
+    const $mainContent = $html.find('.page-main')
+    const $form = $mainContent.find('#product_addtocart_form')
+
+    const hiddenInputs = {}
+    $form.find('input[type="hidden"]').each((idx, input) => {
+        const $input = $(input)
+        hiddenInputs[$input.attr('name')] = $input.val()
+    })
+
+    const submitUrl = $form.attr('action')
+    const uencMatch = UENC_REGEX.exec(submitUrl)
+    const uenc = uencMatch ? uencMatch[1] : ''
+
+    return {
+        breadcrumbs: parseBreadcrumbs($, $breadcrumbs),
+        uenc,
+        formInfo: {
+            submitUrl: $form.attr('action'),
+            method: $form.attr('method'),
+            hiddenInputs
+        },
+        itemQuantity: parseInt($form.find('#qty').val()),
+        ctaText: $form.find('.tocart').text()
     }
 }
 

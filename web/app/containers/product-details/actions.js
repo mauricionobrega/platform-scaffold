@@ -1,8 +1,7 @@
-import {createAction, urlToPathKey} from '../../utils/utils'
+import {createAction} from '../../utils/utils'
 import {browserHistory} from 'react-router'
 import * as selectors from './selectors'
 import * as appSelectors from '../app/selectors'
-import productDetailsParser from './parsers/product-details'
 
 import {addToCart} from '../../integration-manager/commands'
 import {closeModal} from '../../store/modals/actions'
@@ -22,13 +21,6 @@ export const setItemQuantity = (quantity) => (dispatch, getStore) => {
 
 export const addToCartStarted = createAction('Add to cart started')
 export const addToCartComplete = createAction('Add to cart complete')
-
-export const receiveData = createAction('Receive Product Details data')
-export const process = ({payload}) => {
-    const {$, $response, url} = payload
-    const parsed = productDetailsParser($, $response)
-    return receiveData({[urlToPathKey(url)]: parsed})
-}
 
 export const goToCheckout = () => (dispatch) => {
     dispatch(closeModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL))

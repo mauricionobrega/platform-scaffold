@@ -4,8 +4,6 @@ import {openModal} from '../store/modals/actions'
 import {addToCartComplete} from '../containers/product-details/actions'
 import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from '../containers/product-details/constants'
 
-export const receivePdpProductData = createAction('Receive PDP product data')
-
 export const receivePdpUIData = createAction('Receive PDP UI data')
 
 export const receiveCheckoutShippingData = createAction('Receive Checkout Shipping data')
