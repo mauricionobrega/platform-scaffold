@@ -152,13 +152,7 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                     dispatch(checkoutConfirmationActions.process(receivedAction))
                     // Resets the cart count to 0
                     dispatch(cartActions.getCart())
-                } /* else if (pageComponent === ProductList) {
-                    dispatch(categoriesActions.process(receivedAction))
-                    dispatch(productsActions.processProductList(receivedAction))
-                } else if (pageComponent === ProductDetails) {
-                    dispatch(productDetailsActions.process(receivedAction))
-                    dispatch(productsActions.processProductDetails(receivedAction))
-                } */
+                }
 
                 dispatch(footerActions.process(receivedAction))
                 dispatch(navigationActions.process(receivedAction))
