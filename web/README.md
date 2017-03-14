@@ -182,7 +182,7 @@ npm run dev:build # Some assets required by the scaffold build are only created 
 
 Then navigate back to this directory and run:
 ```
-cd ../progressive-web-scaffold/web
+cd ../platform-scaffold/web
 npm link progressive-web-sdk
 npm run dev
 ```
