@@ -1,5 +1,5 @@
 import {createAction, urlToPathKey} from '../../utils/utils'
-import {browserHistory} from 'react-router'
+import {browserHistory} from 'progressive-web-sdk/dist/routing'
 
 import * as selectors from './selectors'
 import * as appSelectors from '../app/selectors'
