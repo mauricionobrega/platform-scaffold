@@ -1,15 +1,11 @@
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {urlToPathKey} from '../../utils/utils'
+import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {receiveCartContents} from '../../store/cart/actions'
-<<<<<<< HEAD:web/app/integration-manager/demandware-connector/commands.js
-import * as responses from '../responses'
-import {browserHistory} from 'react-router'
-import {parseProductDetails, parseBasketContents, parseProductListData, getProductHref} from './parser'
-=======
 import {receiveHomeData, receiveNavigationData} from '../responses'
-import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../product-details/responses'
-import {parseProductDetails, parseBasketContents} from './parser'
->>>>>>> cbc6f1258b4a7b394a8bc6c3b2eeded9accd6af5:web/app/integration-manager/_demandware-connector/commands.js
+import {receiveProductDetailsProductData, receiveProductListProductData, receiveProductDetailsUIData} from '../product-details/responses'
+import {receiveCategory} from '../categories/responses'
+import {parseProductDetails, parseBasketContents, parseProductListData, getProductHref} from './parser'
 
 const SITE_ID = 'Sites-2017refresh-Site'
 const API_TYPE = 'shop'
@@ -86,7 +82,7 @@ const fetchNavigationData = () => (dispatch) => {
                     isCategoryLink: true
                 }
             })
-            return dispatch(responses.receiveNavigationData({
+            return dispatch(receiveNavigationData({
                 path: '/',
                 root: {
                     title: 'root',
@@ -160,12 +156,12 @@ export const fetchProductListData = (url) => (dispatch) => {
         .then(() => {
             const options = {
                 method: 'GET',
-                headers: new Headers(REQUEST_HEADERS)
+                headers: requestHeaders
             }
             makeRequest(`${API_END_POINT_URL}/categories/${categoryID}`, options)
                 .then((response) => response.json())
                 .then((responseJSON) => {
-                    dispatch(responses.receiveCategory({
+                    dispatch(receiveCategory({
                         // TODO: figure out breadcrumb
                         [urlPathKey]: {title: responseJSON.name}
                     }))
@@ -173,7 +169,7 @@ export const fetchProductListData = (url) => (dispatch) => {
                         makeRequest(`${API_END_POINT_URL}/categories/${responseJSON.parent_category_id}`, options)
                             .then((response) => response.json())
                             .then((responseJSON) => {
-                                dispatch(responses.receiveCategory({
+                                dispatch(receiveCategory({
                                     [urlPathKey]: {parentName: responseJSON.name, parentHref: `/s/${SITE_ID}/${responseJSON.id}`}
                                 }))
                             })
@@ -188,8 +184,8 @@ export const fetchProductListData = (url) => (dispatch) => {
                                 products: Object.keys(productListData)
                             }
 
-                            dispatch(responses.receiveProductListProductData(productListData))
-                            dispatch(responses.receiveCategory({
+                            dispatch(receiveProductListProductData(productListData))
+                            dispatch(receiveCategory({
                                 [urlPathKey]: categoryData
                             }))
                         })
@@ -214,7 +210,7 @@ export const getProductVariationData = (variationSelections, availableVariations
 export const addToCart = () => (dispatch) => {
     const options = {
         method: 'POST',
-        headers: new Headers(REQUEST_HEADERS),
+        headers: requestHeaders,
         body: `[{product_id: "${getCurrentProductID()}" , quantity: 1.00}]`
     }
 
