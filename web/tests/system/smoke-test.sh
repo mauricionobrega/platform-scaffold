@@ -49,3 +49,5 @@ fi
 #       npm run test:e2e --tests $testfiles
 #   fi
 # fi
+
+npm run test:e2e
