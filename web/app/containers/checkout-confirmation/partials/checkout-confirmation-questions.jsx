@@ -8,7 +8,7 @@ import List from 'progressive-web-sdk/dist/components/list'
 import ListTile from 'progressive-web-sdk/dist/components/list-tile'
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 
-import {isRunningInAstro, trigger} from '../../utils/astro-integration'
+import {isRunningInAstro, trigger} from '../../../utils/astro-integration'
 
 /* eslint-disable react/prop-types */
 const QuestionLink = ({children, href}) => (
