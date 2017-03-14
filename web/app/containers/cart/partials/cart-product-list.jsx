@@ -114,7 +114,7 @@ class CartProductItem extends React.Component {
 
                     <Button
                         className="u-text-small u-color-brand u-padding-start-0 u-padding-end-0 u-text-letter-spacing-normal"
-                        innerClassName="u-padding-bottom-0"
+                        innerClassName="u-padding-bottom-0 u-padding-start-0"
                         onClick={this.saveForLater}
                         >
                         Save for Later
@@ -122,7 +122,7 @@ class CartProductItem extends React.Component {
 
                     <Button
                         className="u-text-small u-color-brand u-text-letter-spacing-normal qa-cart__remove-item"
-                        innerClassName="u-padding-end-0 u-padding-bottom-0"
+                        innerClassName="u-padding-end-0 u-padding-bottom-0 u-padding-start-0"
                         onClick={this.removeItem}
                         >
                         Remove
