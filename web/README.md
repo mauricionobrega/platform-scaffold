@@ -88,6 +88,45 @@ npm run build-sprites
 
 Icon sprites are a technique for creating easy to use icons. [Learn more here](https://medium.com/@webprolific/why-and-how-i-m-using-svg-over-fonts-for-icons-7241dab890f0#.1v9l7c7q2) about the technique and why we use it over icon fonts.
 
+## Linting
+
+This project comes with a linter setup using `eslint`,
+`eslint-plugin-react`, `eslint-plugin-import`, and
+`eslint-plugin-jsx-a11y`. By default, it uses the Mobify code style
+(https://www.github.com/mobify/mobify-code-style). Run the linter
+using:
+
+```
+npm run lint
+```
+
+If this code style is a poor match for your pre-existing practices,
+there are two ways you can modify the linter configuration to suit
+your use case better. For small changes, you can add rules to the
+`.eslintrc.yml` file in the root web directory. Rules specified in
+this file override rules in the Mobify standard; the following `rules`
+section adds an additional rule and disables an existing rule:
+
+```yaml
+rules:
+  react/react-in-js-scope: error
+  camelcase: off
+```
+
+For larger differences from the Mobify code style, you can replace the
+Mobify config with a different configuration base. This involves
+editing the `extends` section in `.eslintrc.yml`. For example, if you
+use the Airbnb style guide, replace the contents of `.eslintrc.yml`
+with:
+
+```yaml
+extends:
+  - airbnb
+```
+
+These methods can be combined to use a different standard with minor
+local variations.
+
 ## Tests
 
 To run the full test suite, you can use:
