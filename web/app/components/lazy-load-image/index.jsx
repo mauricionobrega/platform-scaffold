@@ -1,5 +1,8 @@
 import React, {PropTypes} from 'react'
 import classNames from 'classnames'
+import throttle from 'lodash.throttle'
+
+const SCROLL_CHECK_INTERVAL = 200
 
 const componentClass = 'c-lazy-load-image'
 
@@ -16,7 +19,7 @@ class LazyLoadImage extends React.Component {
             visible: false
         }
 
-        this.handleScroll = this.handleScroll.bind(this)
+        this.handleScroll = throttle(this.handleScroll.bind(this), SCROLL_CHECK_INTERVAL)
         this.checkVisible = this.checkVisible.bind(this)
     }
 
