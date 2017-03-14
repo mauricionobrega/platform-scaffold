@@ -10,6 +10,8 @@ import {isFormResponseInvalid} from './parsers/common'
 import signinParser from './parsers/signin'
 import registerParser from './parsers/register'
 
+import {isRunningInAstro, jsRpcMethod} from '../../utils/astro-integration'
+
 export const receiveData = createAction('Receive Login Data')
 
 export const process = ({payload: {$, $response, routeName}}) => {
@@ -103,15 +105,18 @@ const sendForm = (href, formValues, formSelector, resolve, reject) => {
                 const error = {
                     _error: 'Username or password is incorrect'
                 }
-                reject(new SubmissionError(error))
-            } else {
-                window.location.href = '/customer/account'
-                resolve(true)
+                return reject(new SubmissionError(error))
             }
+            if (isRunningInAstro) {
+                jsRpcMethod('user:loggedIn', [])()
+            }
+            window.location.href = '/customer/account'
+            return resolve(true)
         })
         .catch((error) => {
-            console.error('Failed to login due to network error.', error)
-            reject({})
+            if (error.name !== SubmissionError) {
+                reject(new SubmissionError({_error: 'Failed to login due to network error.'}))
+            }
         })
 }
 

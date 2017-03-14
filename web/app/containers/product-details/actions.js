@@ -1,6 +1,7 @@
-import {createAction, urlToPathKey} from '../../utils/utils'
+import {createAction, getCookieValue, urlToPathKey} from '../../utils/utils'
+import {generateFormKeyCookie} from '../../utils/magento-utils'
 import {makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
-import {browserHistory} from 'react-router'
+import {browserHistory} from 'progressive-web-sdk/dist/routing'
 
 import {getCart} from '../../store/cart/actions'
 import * as selectors from './selectors'
@@ -20,6 +21,9 @@ export const setItemQuantity = (quantity) => (dispatch, getStore) => {
         }
     }))
 }
+
+export const addToCartStarted = createAction('Add to cart started')
+export const addToCartComplete = createAction('Add to cart complete')
 
 export const receiveData = createAction('Receive Product Details data')
 export const process = ({payload}) => {
@@ -42,13 +46,16 @@ export const goToCheckout = () => (dispatch) => {
 export const submitCartForm = () => (dispatch, getStore) => {
     const formInfo = selectors.getFormInfo(getStore())
     const qty = selectors.getItemQuantity(getStore())
+    dispatch(addToCartStarted())
 
     return makeFormEncodedRequest(formInfo.get('submitUrl'), {
         ...formInfo.get('hiddenInputs').toJS(),
-        qty
+        qty,
+        form_key: getCookieValue('form_key') || generateFormKeyCookie()
     }, {
         method: formInfo.get('method')
     }).then(() => {
+        dispatch(addToCartComplete())
         dispatch(openModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL))
         dispatch(getCart())
     })

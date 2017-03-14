@@ -9,6 +9,9 @@ import productReducer from './products/reducer'
 import checkoutReducer from './checkout/reducer'
 import {reducer as formReducer} from 'redux-form'
 
+import analytics from 'redux-analytics'
+import {analyticManager} from 'progressive-web-sdk/dist/analytics/analytic-manager'
+
 const noop = (f) => f
 
 const reducer = combineReducers({
@@ -23,7 +26,8 @@ const reducer = combineReducers({
 
 const configureStore = (initialState) => {
     const middlewares = [
-        thunk
+        thunk,
+        analytics(({type, payload}, state) => analyticManager.distribute(type, payload, state))
     ]
 
     const store = createStore(

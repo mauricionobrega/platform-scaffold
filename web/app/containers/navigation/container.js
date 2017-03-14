@@ -14,7 +14,7 @@ import {NAVIGATION_MODAL} from './constants'
 import {isModalOpen} from '../../store/selectors'
 import {closeModal} from '../../store/modals/actions'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
-import {withRouter} from 'react-router'
+import {withRouter} from 'progressive-web-sdk/dist/routing'
 
 
 /**
@@ -48,7 +48,7 @@ const Navigation = (props) => {
                 <HeaderBar>
                     <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
                         <h2 className="t-navigation__title u-heading-family u-text-uppercase">
-                            <span className="u-text-lighter">Merlin's</span> Potions
+                            <span className="u-text-extra-lighter">Merlin's</span> Potions
                         </h2>
                     </HeaderBarTitle>
 

@@ -1,11 +1,12 @@
 /* eslint-disable react/self-closing-comp */
 import React, {PropTypes} from 'react'
 import Button from 'progressive-web-sdk/dist/components/button'
+import ListTile from 'progressive-web-sdk/dist/components/list-tile'
+import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
+import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
 // Merlins Potions Nearby Widget Config
 import merlinsPotionsNearbyConfig from '../../../config/merlins-potions-nearby-config.json'
-
-const componentClass = 'c-nearest-stores'
 
 /**
  * Merlins Donde Nearby Widget
@@ -47,18 +48,29 @@ class HomeNearestStores extends React.Component {
         const closestLocations = merlinsPotionsNearbyConfig.configs
 
         return (
-            <div className={componentClass}>
+            <div className="t-home__nearest-stores">
                 <div className="u-card u-padding-md u-padding-top-lg u-padding-bottom-lg">
                     <h2 className="u-padding-bottom-md u-border-light-bottom u-text-uppercase">{title}</h2>
 
                     <div className="u-margin-bottom-md">
 
-                        {closestLocations.map((id, idx) => {
-                            let selectorString = id.selector
+                        {closestLocations.map((selector, idx) => { // id seems like a misleading var name
+                            let selectorString = selector.selector
                             selectorString = selectorString.slice(1, selectorString.length)
 
                             return (
-                                <div id={selectorString} key={idx}></div>
+                                <div id={selectorString} key={idx}>
+                                    <ListTile
+                                        className="u-border-light-bottom"
+                                        startAction={<SkeletonBlock height="20px" width="20px" />}
+                                        endAction={<SkeletonBlock height="20px" width="20px" />}
+                                    >
+                                        <SkeletonText
+                                            style={{height: '25px', lineHeight: '20px'}}
+                                            width="100px"
+                                        />
+                                    </ListTile>
+                                </div>
                             )
                         })}
                     </div>
