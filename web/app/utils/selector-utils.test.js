@@ -1,56 +1,7 @@
 /* eslint-env jest */
 import Immutable from 'immutable'
-import {createSelector} from 'reselect'
 
-import {selectorToJS, createGetSelector, invertSelector, createHasSelector} from './selector-utils'
-
-describe('selectorToJS', () => {
-    test('creates selectors that return identical JS objects when the Immutable objects don\'t change', () => {
-        const rootSelector = (state) => state
-        const selector = selectorToJS(createSelector(
-            rootSelector,
-            ({contents}) => contents
-        ))
-
-        const referenceSelector = createSelector(
-            rootSelector,
-            ({contents}) => contents.toJS()
-        )
-
-        const state1 = {
-            contents: Immutable.List([1, 2, 3])
-        }
-
-        const state2 = {
-            contents: Immutable.List([1, 2]).push(3)
-        }
-
-        expect(state1.contents).not.toBe(state2.contents)
-        expect(Immutable.is(state1.contents, state2.contents)).toBe(true)
-
-        expect(referenceSelector(state1)).not.toBe(referenceSelector(state2))
-        expect(selector(state1)).toBe(selector(state2))
-    })
-
-    test('creates selectors that return null if a falsy input is selected', () => {
-        const rootSelector = (state) => state
-        const selector = selectorToJS(createSelector(
-            rootSelector,
-            ({present}) => present
-        ))
-
-        const state1 = {
-            present: Immutable.List()
-        }
-
-        const state2 = {
-            absent: Immutable.List()
-        }
-
-        expect(selector(state1)).not.toBeNull()
-        expect(selector(state2)).toBeNull()
-    })
-})
+import {createGetSelector, invertSelector, createHasSelector} from './selector-utils'
 
 describe('createGetSelector', () => {
     test('creates selectors that get the string key from the input map', () => {

@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as selectors from '../selectors'
 import {stripEvent} from '../../../utils/utils'
 import {isModalOpen} from '../../../store/selectors'
@@ -70,7 +70,7 @@ ProductDetailsItemAddedModal.propTypes = {
     onGoToCheckout: PropTypes.func,
 }
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     productImage: selectors.getFirstProductImage,
     open: isModalOpen(PRODUCT_DETAILS_ITEM_ADDED_MODAL),
     quantity: selectors.getItemQuantity,

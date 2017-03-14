@@ -1,8 +1,7 @@
 import React, {PropTypes} from 'react'
 import classNames from 'classnames'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
-import {selectorToJS} from '../../../utils/selector-utils'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
 import Icon from 'progressive-web-sdk/dist/components/icon'
@@ -79,8 +78,8 @@ HomeCategories.propTypes = {
     categories: PropTypes.array.isRequired
 }
 
-const mapStateToProps = createStructuredSelector({
-    categories: selectorToJS(selectors.getHomeCategories)
+const mapStateToProps = createPropsSelector({
+    categories: selectors.getHomeCategories
 })
 
 export default connect(mapStateToProps)(HomeCategories)

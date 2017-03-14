@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import {GRID_SETTINGS} from '../constants'
 import * as selectors from '../selectors'
@@ -60,7 +60,7 @@ CheckoutConfirmationSplash.propTypes = {
     orderUrl: PropTypes.string,
 }
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     emailAddress: getEmailAddress,
     orderNumber: selectors.getOrderNumber,
     orderUrl: selectors.getOrderUrl
