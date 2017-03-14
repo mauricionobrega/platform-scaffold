@@ -1,4 +1,4 @@
-import {getCheckoutConfigObject} from '../../utils/magento-utils'
+import {getCheckoutConfigObject} from '../../../utils/magento-utils'
 
 export const appParser = ($html) => {
     let isLoggedIn = !!$html.find('.customer-welcome').length
