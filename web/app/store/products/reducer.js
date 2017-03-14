@@ -1,8 +1,7 @@
 import Immutable from 'immutable'
 import {handleActions} from 'redux-actions'
 import {mergePayloadForActions} from '../../utils/reducer-utils'
-import {receiveProductListProductData} from '../../integration-manager/responses'
-import {receiveProductDetailsProductData} from '../../integration-manager/product-details/responses'
+import {receiveProductDetailsProductData, receiveProductListProductData} from '../../integration-manager/products/responses'
 
 
 const initialState = Immutable.Map()

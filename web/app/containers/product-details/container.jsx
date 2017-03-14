@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {fetchPdpData} from '../../integration-manager/product-details/commands'
+import {fetchPdpData} from '../../integration-manager/products/commands'
 
 import ProductDetailsHeading from './partials/product-details-heading'
 import ProductDetailsCarousel from './partials/product-details-carousel'

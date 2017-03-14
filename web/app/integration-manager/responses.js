@@ -6,8 +6,6 @@ export const receiveCheckoutShippingData = createAction('Receive Checkout Shippi
 export const receiveCheckoutData = createAction('Receive Checkout Data')
 export const receiveHomeData = createAction('Receive Home Data')
 export const receiveNavigationData = createAction('Receive Navigation Data')
-export const receiveProductListProductData = createAction('Receive ProductList product data')
-export const receiveCategory = createAction('Receive Category Data')
 
 export const onShippingEmailRecognized = () => {
     return (dispatch) => {

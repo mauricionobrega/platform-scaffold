@@ -4,3 +4,4 @@ export const receiveProductDetailsUIData = createAction('Receive Product Details
 
 export const receiveProductDetailsProductData = createAction('Receive Product Details product data')
 
+export const receiveProductListProductData = createAction('Receive ProductList product data')

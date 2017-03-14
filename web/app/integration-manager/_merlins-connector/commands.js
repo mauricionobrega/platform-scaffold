@@ -1,10 +1,7 @@
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {makeFormEncodedRequest, makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
-import {urlToPathKey} from '../../utils/utils'
 import {fetchPageData} from './app/commands'
 
-import categoryProductsParser from './categories/parser'
-import {productListParser} from './products/parsers'
 import {checkoutShippingParser, parseCheckoutData} from './checkout/parsers'
 import * as responses from './../responses'
 import {getCustomerEntityID} from '../../store/checkout/selectors'
@@ -14,20 +11,9 @@ import {getCart} from '../../store/cart/actions'
 import {removeAllNotifications} from '../../containers/app/actions'
 
 import * as homeCommands from './home/commands'
-import * as productDetailsCommands from './product-details/commands'
+import * as productsCommands from './products/commands'
+import * as categoriesCommands from './categories/commands'
 
-
-export const fetchProductListData = (url) => (dispatch) => {
-    return dispatch(fetchPageData(url))
-        .then((res) => {
-            const [$, $response] = res
-            // Receive page contents
-            dispatch(responses.receiveProductListProductData(productListParser($, $response)))
-            dispatch(responses.receiveCategory({
-                [urlToPathKey(url)]: categoryProductsParser($, $response)
-            }))
-        })
-}
 
 export const fetchCheckoutShippingData = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
@@ -167,5 +153,6 @@ export default {
     submitSignIn,
 
     home: homeCommands,
-    productDetails: productDetailsCommands
+    products: productsCommands,
+    categories: categoriesCommands
 }
