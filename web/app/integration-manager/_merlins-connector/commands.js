@@ -1,48 +1,17 @@
-import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
-import {makeRequest, makeFormEncodedRequest, makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
-import {urlToPathKey} from '../../utils/utils'
+import {browserHistory} from 'progressive-web-sdk/dist/routing'
+import {makeFormEncodedRequest, makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+import {fetchPageData} from './utils'
 
-import {productDetailsParser} from '../../store/products/parser'
-import {pdpAddToCartFormParser} from './parsers'
 import {checkoutShippingParser, parseCheckoutData} from './checkout/parsers'
-import homeParser from './home/parser'
-import {parseNavigation} from './navigation/parser'
 import * as responses from './../responses'
 import {getCustomerEntityID} from '../../store/checkout/selectors'
 import {getIsLoggedIn} from '../../containers/app/selectors'
 import {getShippingFormValues} from '../../store/form/selectors'
 import {getCart} from '../../store/cart/actions'
-import {browserHistory} from 'progressive-web-sdk/dist/routing'
-import {receiveFormInfo} from './../actions'
 import {removeAllNotifications} from '../../containers/app/actions'
 
-const fetchPageData = (url) => (dispatch) => {
-    return makeRequest(url)
-        .then(jqueryResponse)
-        .then((res) => {
-            const [$, $response] = res
-            dispatch(responses.receiveNavigationData(parseNavigation($, $response)))
-            return res
-        })
-}
-
-export const fetchPdpData = (url) => (dispatch) => {
-    return dispatch(fetchPageData(url))
-        .then((res) => {
-            const [$, $response] = res
-            dispatch(responses.receivePdpProductData({[urlToPathKey(url)]: productDetailsParser($, $response)}))
-            dispatch(receiveFormInfo({[urlToPathKey(url)]: pdpAddToCartFormParser($, $response).formInfo}))
-        })
-        .catch((error) => { console.info(error.message) })
-}
-
-export const fetchHomeData = (url) => (dispatch) => {
-    return dispatch(fetchPageData(url))
-        .then(([$, $response]) => {
-            dispatch(responses.receiveHomeData(homeParser($, $response)))
-        })
-}
-
+import * as homeCommands from './home/commands'
+import * as productDetailsCommands from './product-details/commands'
 
 export const fetchCheckoutShippingData = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
@@ -63,8 +32,7 @@ export const addToCart = (key, qty) => (dispatch, getStore) => {
 
     return makeFormEncodedRequest(formInfo.get('submitUrl'), formValues, {method: formInfo.get('method')})
         .then(() => {
-            dispatch(responses.onAddToCartSucceess())
-            dispatch(getCart())
+            return dispatch(getCart())
         })
 }
 
@@ -170,4 +138,18 @@ export const submitSignIn = () => {
             }
         })
     }
+}
+
+export default {
+    // These individual commands are temporary until we can refactor them into the
+    // sub-areas they belong in.
+    fetchCheckoutShippingData,
+    addToCart,
+    makeFormEncodedRequest,
+    submitShipping,
+    checkCustomerEmail,
+    submitSignIn,
+
+    home: homeCommands,
+    productDetails: productDetailsCommands
 }

@@ -8,6 +8,7 @@ const homeParser = ($, $html) => {
         $html.find(BANNER_SELECTOR),
         (banner) => parseImage($(banner).find('img'))
     )
+
     return {banners}
 }
 
