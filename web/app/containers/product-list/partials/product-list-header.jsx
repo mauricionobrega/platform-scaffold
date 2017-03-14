@@ -20,8 +20,8 @@ const ProductListHeader = ({title, contentsLoaded}) => (
             }
             <div className="u-margin-top-md">
                 {contentsLoaded ?
-                    <h1 className="u-text-lighter u-text-uppercase">{title}</h1>
-                        :
+                    <h1 className="u-text-extra-lighter u-text-uppercase">{title}</h1>
+                :
                     <SkeletonText lines={1} type="h1" width="100px" />
                 }
             </div>
@@ -35,10 +35,9 @@ const ProductListHeader = ({title, contentsLoaded}) => (
                 width="60px"
                 src={getAssetUrl(`static/img/categories/${title.trim().replace(/\s+/g, '-')
                 .toLowerCase()}@2x.png`)}
-                />
-            }
+            />
+        }
     </div>
-
 )
 
 ProductListHeader.propTypes = {

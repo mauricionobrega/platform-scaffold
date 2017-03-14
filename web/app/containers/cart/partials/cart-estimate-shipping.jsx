@@ -21,7 +21,7 @@ export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateP
             <HeaderBar>
                 <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
                     <h1 className="u-h4 u-heading-family u-text-uppercase">
-                        <span className="u-text-lighter">Estimate Shipping</span>
+                        <span className="u-text-extra-lighter">Estimate Shipping</span>
                     </h1>
                 </HeaderBarTitle>
 

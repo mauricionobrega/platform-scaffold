@@ -18,8 +18,8 @@ const CheckoutHeader = function({isLoggedIn, isRunningInAstro}) {
             <HeaderBar className="t-checkout-header__bar">
                 <HeaderBarTitle className="u-flex-none u-padding-start u-text-align-start">
                     <h2 className="t-checkout-header__title u-heading-family u-text-uppercase">
-                        <span className="u-text-lighter">MERLIN'S</span> CHECKOUT
-                            </h2>
+                        <span className="u-text-extra-lighter">MERLIN'S</span> CHECKOUT
+                    </h2>
                 </HeaderBarTitle>
 
                 <Icon name="lock" size="medium" className="u-flex-none" />
