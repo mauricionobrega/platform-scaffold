@@ -3,7 +3,7 @@ import {urlToPathKey} from '../../utils/utils'
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {receiveCartContents} from '../../store/cart/actions'
 import {receiveHomeData, receiveNavigationData} from '../responses'
-import {receiveProductDetailsProductData, receiveProductListProductData, receiveProductDetailsUIData} from '../product-details/responses'
+import {receiveProductDetailsProductData, receiveProductListProductData, receiveProductDetailsUIData} from '../products/responses'
 import {receiveCategory} from '../categories/responses'
 import {parseProductDetails, parseBasketContents, parseProductListData, getProductHref} from './parser'
 
