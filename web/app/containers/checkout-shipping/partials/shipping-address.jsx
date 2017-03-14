@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
-import {selectorToJS} from '../../../utils/selector-utils'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as ReduxForm from 'redux-form'
 import {normalizePhone} from '../../../utils/normalize-utils'
 
@@ -213,11 +212,11 @@ ShippingAddressForm.propTypes = {
     submitting: React.PropTypes.bool
 }
 
-const mapStateToProps = createStructuredSelector({
-    countries: selectorToJS(getCountries),
+const mapStateToProps = createPropsSelector({
+    countries: getCountries,
     formTitle: getShippingFormTitle,
     isCompanyOrAptShown: getIsCompanyOrAptShown,
-    regions: selectorToJS(getAvailableRegions(SHIPPING_FORM_NAME))
+    regions: getAvailableRegions(SHIPPING_FORM_NAME)
 })
 
 const mapDispatchToProps = {

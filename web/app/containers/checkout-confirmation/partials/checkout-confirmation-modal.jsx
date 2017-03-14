@@ -2,7 +2,7 @@ import React from 'react'
 import {CHECKOUT_CONFIRMATION_MODAL} from '../constants'
 import {closeModal} from '../../../store/modals/actions'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import {isModalOpen} from '../../../store/selectors'
 import {stripEvent} from '../../../utils/utils'
@@ -71,7 +71,7 @@ CheckoutConfirmationModal.propTypes = {
     isOpen: React.PropTypes.bool,
 }
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     isOpen: isModalOpen(CHECKOUT_CONFIRMATION_MODAL)
 })
 

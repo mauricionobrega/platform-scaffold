@@ -34,6 +34,10 @@ $cart__custom-ease-out: cubic-bezier(0.35, 0.35, 0.32, 1);
 
     transition: opacity 0.5s ease-in, transform 0.5s $cart__custom-ease-out;
 
+    &.t--viewport-height {
+        min-height: 100vh;
+    }
+
     &.t--hide {
         margin-bottom: -100% !important; // 1
 

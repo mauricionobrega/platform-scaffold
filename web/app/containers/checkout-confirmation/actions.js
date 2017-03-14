@@ -8,7 +8,6 @@ import * as shippingSelectors from '../../store/checkout/shipping/selectors'
 import * as formSelectors from '../../store/form/selectors'
 import {getEmailAddress} from '../../store/checkout/selectors'
 import {getFormKey} from '../app/selectors'
-import {selectorToJS} from '../../utils/selector-utils'
 
 // @TODO: blocked until the desktop's Address Book actualy works correctly
 // import * as paymentSelectors from '../../store/checkout/payment/selectors'
@@ -81,7 +80,7 @@ const buildFormData = (formCredentials) => {
 
 export const updatingShippingAndBilling = () => {
     return (dispatch, getState) => {
-        const shippingData = selectorToJS(shippingSelectors.getShippingAddress)(getState())
+        const shippingData = shippingSelectors.getShippingAddress(getState()).toJS()
         const formData = buildFormData({
             form_key: getFormKey(getState()),
             success_url: '',

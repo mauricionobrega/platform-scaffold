@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react'
-import {createStructuredSelector} from 'reselect'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as selectors from '../selectors'
 import * as actions from '../actions'
 import {connect} from 'react-redux'
@@ -39,7 +39,7 @@ FooterNewsletterSubscription.propTypes = {
     onSubmit: PropTypes.func
 }
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     newsletter: selectors.getNewsletter
 })
 

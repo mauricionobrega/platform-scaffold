@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
-import {withRouter} from 'react-router'
+import {createPropsSelector} from 'reselect-immutable-helpers'
+import {withRouter} from 'progressive-web-sdk/dist/routing'
 
 import SignInPanel from './partials/signin-panel'
 import RegisterPanel from './partials/register-panel'
@@ -100,7 +100,7 @@ class Login extends React.Component {
     }
 }
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     title: selectors.getLoginTitle
 })
 

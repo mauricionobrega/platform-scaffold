@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import classNames from 'classnames'
 
@@ -36,7 +36,8 @@ export const continueShopping = () => {
 const EmptyCartContents = ({hide}) => {
     const emptyCartClassnames = classNames('t-cart__empty u-flexbox u-flex u-direction-column u-align-center u-justify-center', {
         'u-visually-hidden': hide,
-        't--hide': hide
+        't--hide': hide,
+        't--viewport-height': isRunningInAstro
     })
 
     return (
@@ -109,7 +110,7 @@ Cart.propTypes = {
     removeItemID: PropTypes.string
 }
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     contentsLoaded: getCartContentsLoaded,
     hasItems: getCartHasItems
 })

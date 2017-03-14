@@ -29,16 +29,18 @@ const loadWorker = () => (
         .catch(() => {})
 )
 
-const loadMain = (target) => {
-    const script = document.createElement('script')
-    script.id = 'progressive-web-script'
-    // Setting UTF-8 as our encoding ensures that certain strings (i.e.
-    // Japanese text) are not improperly converted to something else.
-    script.charset = 'utf-8'
-    script.src = getAssetUrl('main.js')
+// webpackJsonpAsync is a custom async webpack code splitting chunk wrapper
+// webpackJsonp is a webpack code splitting vendor wrapper
+// webpackJsonpAsync should wait and call webpackJsonp with payload when all dependencies are loaded
+const asyncInitApp = () => {
+    window.webpackJsonpAsync = (module, exports, webpackRequire) => {
+        const runJsonpAsync = function() {
+            return (window.webpackJsonp)
+                ? window.webpackJsonp(module, exports, webpackRequire)
+                : setTimeout(runJsonpAsync, 50)
+        }
 
-    if (target) {
-        target.appendChild(script)
+        runJsonpAsync()
     }
 }
 
@@ -50,6 +52,24 @@ if (isReactRoute()) {
     const reactTarget = document.createElement('div')
     reactTarget.className = 'react-target'
     body.appendChild(reactTarget)
+
+    const loadScript = ({id, src, onload}) => {
+        const script = document.createElement('script')
+
+        // Setting UTF-8 as our encoding ensures that certain strings (i.e.
+        // Japanese text) are not improperly converted to something else. We
+        // do this on the vendor scripts also just in case any libs we
+        // import have localized strings in them.
+        script.charset = 'utf-8'
+        script.async = true
+        script.id = id
+        script.src = src
+        script.onload = typeof onload === typeof function() {}
+            ? onload
+            : () => {}
+
+        body.appendChild(script)
+    }
 
     /* eslint-disable max-len */
     loadAsset('meta', {
@@ -84,54 +104,38 @@ if (isReactRoute()) {
             rel: 'manifest'
         })
 
-        // This method is defined so that when main.js loads, it doesn't attempt
-        // to load its dependencies synchronously, because it's dependencies
-        // in vendor.js may have not loaded yet. We replace the call to
-        // webpackJsonp in main.js with this webpackJsonpAsync function, which
-        // will wait for webpackJsonp (and thus, vendor.js) to be finished loading.
-        window.webpackJsonpAsync = (module, exports, webpackRequire) => {
-            const runJsonpAsync = function() {
-                return window.webpackJsonp ?
-                    window.webpackJsonp(module, exports, webpackRequire) :
-                    setTimeout(runJsonpAsync, 50)
-            }
+        asyncInitApp()
 
-            runJsonpAsync()
-        }
-
-        const vendorScript = document.createElement('script')
-        vendorScript.id = 'progressive-web-script'
-        // Setting UTF-8 as our encoding ensures that certain strings (i.e.
-        // Japanese text) are not improperly converted to something else. We
-        // do this on the vendor scripts also just in case any libs we import
-        // have localized strings in them.
-        vendorScript.charset = 'utf-8'
-        vendorScript.src = getAssetUrl('vendor.js')
-        body.appendChild(vendorScript)
-
-        const jQuery = document.createElement('script')
-        jQuery.async = true
-        jQuery.id = 'progressive-web-jquery'
-        jQuery.src = getAssetUrl('static/js/jquery.min.js')
-        body.appendChild(jQuery)
-
-        const capturingPromise = new Promise((resolve) => {
-            const capturing = document.createElement('script')
-            capturing.async = true
-            capturing.id = 'progressive-web-capture'
-            capturing.src = CAPTURING_CDN
-            capturing.onload = () => {
-                window.Capture.init((capture) => {
-                    // NOTE: by this time, the captured doc has changed a little bit from original desktop.
-                    // It now has some of our own assets (e.g. main.css) but they can be safely ignored.
-                    window.Progressive.initialCapturedDocHTML = capture.enabledHTMLString()
-                    resolve()
-                })
-            }
-            body.appendChild(capturing)
+        window.Progressive.capturedDocHTMLPromise = new Promise((resolve) => {
+            loadScript({
+                id: 'progressive-web-capture',
+                src: CAPTURING_CDN,
+                onload: () => {
+                    window.Capture.init((capture) => {
+                        // NOTE: by this time, the captured doc has changed a little
+                        // bit from original desktop. It now has some of our own
+                        // assets (e.g. main.css) but they can be safely ignored.
+                        resolve(capture.enabledHTMLString())
+                    })
+                },
+                onerror: resolve
+            })
         })
 
-        Promise.all([capturingPromise]).then(() => loadMain(body))
+        loadScript({
+            id: 'progressive-web-jquery',
+            src: getAssetUrl('static/js/jquery.min.js')
+        })
+
+        loadScript({
+            id: 'progressive-web-main',
+            src: getAssetUrl('main.js')
+        })
+
+        loadScript({
+            id: 'progressive-web-vendor',
+            src: getAssetUrl('vendor.js')
+        })
     })
 } else {
     const capturing = document.createElement('script')
