@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import {createSelector} from 'reselect'
-import {createGetSelector, createHasSelector} from '../../utils/selector-utils'
+import {createGetSelector, createHasSelector} from 'reselect-immutable-helpers'
 import {getCart} from '../selectors'
 
 export const getCartContentsLoaded = createHasSelector(getCart, 'items')
