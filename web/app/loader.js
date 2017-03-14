@@ -65,7 +65,7 @@ if (isReactRoute()) {
         script.id = id
         script.src = src
         script.onload = typeof onload === typeof function() {}
-            ? onload // resolve
+            ? onload
             : () => {}
 
         body.appendChild(script)
