@@ -10,7 +10,7 @@ const selectors = {
     address: 'input[name="addressLine1"]',
     city: 'input[name*="city"]',
     country: 'select[name*="country"]',
-    state: 'select[name*="region"]',
+    state: '[name*="region"]',
     postCode: 'input[name*="code"]',
     phone: 'input[name*="phone"]',
     lastShippingInfo: 'input[name*="phone"]', // Used to verify that shipping info has been completed
@@ -99,7 +99,7 @@ Checkout.prototype.fillShippingInfo = function() {
         .setValue(selectors.name, userData.name)
         .setValue(selectors.address, userData.address)
         .setValue(selectors.city, userData.city)
-        .setValue(selectors.country, userData.name)
+        .setValue(selectors.country, userData.country)
         .setValue(selectors.state, userData.state)
         .setValue(selectors.postCode, userData.postCode)
         .setValue(selectors.phone, userData.phone)
