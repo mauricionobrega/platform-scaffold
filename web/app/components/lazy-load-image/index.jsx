@@ -1,8 +1,6 @@
 import React, {PropTypes} from 'react'
 import classNames from 'classnames'
 
-import LazyLoader from 'progressive-web-sdk/dist/components/lazy-loader'
-
 const componentClass = 'c-lazy-load-image'
 
 /**
