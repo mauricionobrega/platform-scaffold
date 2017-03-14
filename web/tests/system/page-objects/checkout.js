@@ -65,7 +65,7 @@ Checkout.prototype.continueAsRegistered = function() {
         .log('Navigating to Registered Checkout')
         .waitForElementVisible(selectors.registeredEmail)
         .setValue(selectors.registeredEmail, userData.registeredEmail)
-        // The password field is not displayed to the user until focus is 
+        // The password field is not displayed to the user until focus is
         // removed from the email field.
         .click(selectors.checkoutTemplateIdentifier)
         .waitForElementVisible(selectors.registeredPassword)

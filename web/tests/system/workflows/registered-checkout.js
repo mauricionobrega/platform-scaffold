@@ -77,13 +77,8 @@ export default {
         browser.waitForElementVisible(checkout.selectors.lastShippingInfo)
     },
 
-    'Checkout - Registered - Step 8 - Fill out Registered Checkout Payment Details form': (browser) => {
+    'Checkout - Registered - Step 8 - Fill out Registered Checkout Payment Details form': () => {
         checkout.continueToPayment()
-        // Pre-filled card on Merlins Potions
-        // checkout.fillPaymentDetails()
-        // browser
-        //     .waitForElementVisible(checkout.selectors.lastPaymentDetail)
-        //     .assert.valueContains(checkout.selectors.lastPaymentDetail, checkout.userData.lastPaymentDetail)
     },
 
     'Checkout - Registered - Step 9 - Verify Submit Order button is visible': (browser) => {

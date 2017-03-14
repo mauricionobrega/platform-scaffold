@@ -2,13 +2,11 @@ import process from 'process'
 import Home from '../page-objects/home'
 import ProductList from '../page-objects/product-list'
 import ProductDetails from '../page-objects/product-details'
-import Cart from '../page-objects/cart'
 import Checkout from '../page-objects/checkout'
 
 let home
 let productList
 let productDetails
-let cart
 let checkout
 
 const PRODUCT_LIST_INDEX = process.env.PRODUCT_LIST_INDEX || 2
@@ -21,7 +19,6 @@ export default {
         home = new Home(browser)
         productList = new ProductList(browser)
         productDetails = new ProductDetails(browser)
-        cart = new Cart(browser)
         checkout = new Checkout(browser)
     },
 
@@ -70,13 +67,8 @@ export default {
         browser.waitForElementVisible(checkout.selectors.lastShippingInfo)
     },
 
-    'Checkout - Guest - Step 7 - Fill out Guest Checkout Payment Details form': (browser) => {
+    'Checkout - Guest - Step 7 - Fill out Guest Checkout Payment Details form': () => {
         checkout.continueToPayment()
-        // Pre-filled card on Merlins Potions
-        // checkout.fillPaymentDetails()
-        // browser
-        //     .waitForElementVisible(checkout.selectors.lastPaymentDetail)
-        //     .assert.valueContains(checkout.selectors.lastPaymentDetail, checkout.userData.lastPaymentDetail)
     },
 
     'Checkout - Guest - Step 8 - Verify Submit Order button is visible': (browser) => {
