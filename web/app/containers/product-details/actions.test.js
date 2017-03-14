@@ -16,8 +16,6 @@ describe('Add to Cart', () => {
     const mockDispatch = jest.fn()
     mockDispatch.mockImplementation((...args) => args[0])
 
-    let realMakeFormEncodedRequest
-
     const getStore = () => ({
         ui: {
             app: Immutable.fromJS({currentURL: 'https://test.mobify.com/'}),
@@ -25,16 +23,6 @@ describe('Add to Cart', () => {
                 '/': {itemQuantity: 1}
             })
         }
-    })
-
-    beforeAll(() => {
-        realMakeFormEncodedRequest = fetchUtils.makeFormEncodedRequest
-        fetchUtils.makeFormEncodedRequest = jest.fn()
-        fetchUtils.makeFormEncodedRequest.mockReturnValue(Promise.resolve())
-    })
-
-    afterAll(() => {
-        fetchUtils.makeFormEncodedRequest = realMakeFormEncodedRequest
     })
 
     beforeEach(() => {
