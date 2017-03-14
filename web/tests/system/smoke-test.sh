@@ -23,8 +23,11 @@ if [ "$CURRENT_BRANCH" != "master" ]; then
     # Kill background processes when this script exits.
     trap 'kill $(jobs -p)' EXIT
     export ACTIVE_PROFILE=local
-    npm run dev &
-    while ! echo exit | nc localhost 8443; do sleep 20; done
+    # npm run dev &
+    # while ! echo exit | nc localhost 8443; do sleep 20; done
+    npm run prod:build
+    http-server --ssl --cors --p=8443 \
+      --key lighthouse/server.pem --cert lighthouse/server.pem build &
 else
     echo "Running tests against production"
     export ACTIVE_PROFILE=production
