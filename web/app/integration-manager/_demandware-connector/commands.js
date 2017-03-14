@@ -1,16 +1,22 @@
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {urlToPathKey} from '../../utils/utils'
 import {receiveCartContents} from '../../store/cart/actions'
+<<<<<<< HEAD:web/app/integration-manager/demandware-connector/commands.js
 import * as responses from '../responses'
 import {browserHistory} from 'react-router'
 import {parseProductDetails, parseBasketContents, parseProductListData, getProductHref} from './parser'
+=======
+import {receiveHomeData, receiveNavigationData} from '../responses'
+import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../product-details/responses'
+import {parseProductDetails, parseBasketContents} from './parser'
+>>>>>>> cbc6f1258b4a7b394a8bc6c3b2eeded9accd6af5:web/app/integration-manager/_demandware-connector/commands.js
 
 const SITE_ID = 'Sites-2017refresh-Site'
 const API_TYPE = 'shop'
 const API_VERSION = 'v17_2'
 const DW_CLIENT_ID = '5640cc6b-f5e9-466e-9134-9853e9f9db93'
 const API_END_POINT_URL = `/s/${SITE_ID}/dw/${API_TYPE}/${API_VERSION}`
-const REQUEST_HEADERS = {
+const requestHeaders = {
     'Content-Type': 'application/json',
     'x-dw-client-id': DW_CLIENT_ID
 }
@@ -19,13 +25,13 @@ const initDemandWareSession = () => {
     const options = {
         method: 'POST',
         body: '{ type : "session" }',
-        headers: new Headers(REQUEST_HEADERS)
+        headers: requestHeaders
     }
     return makeRequest(`${API_END_POINT_URL}/customers/auth`, options)
         .then((response) => {
             // To Do: Add this to the store???
-            REQUEST_HEADERS.Authorization = response.headers.get('Authorization')
-            options.headers.set('Authorization', response.headers.get('Authorization'))
+            requestHeaders.Authorization = response.headers.get('Authorization')
+            options.headers.Authorization = response.headers.get('Authorization')
         })
         .then(() => {
             makeRequest(`${API_END_POINT_URL}/sessions`, options)
@@ -36,7 +42,7 @@ const initDemandWareSession = () => {
 const createNewBasket = () => {
     const options = {
         method: 'POST',
-        headers: new Headers(REQUEST_HEADERS)
+        headers: requestHeaders
     }
     return makeRequest(`${API_END_POINT_URL}/baskets`, options)
         .then((response) => response.json())
@@ -68,7 +74,7 @@ const getCurrentProductID = () => {
 const fetchNavigationData = () => (dispatch) => {
     const options = {
         method: 'GET',
-        headers: new Headers(REQUEST_HEADERS)
+        headers: requestHeaders
     }
     return makeRequest(`${API_END_POINT_URL}/categories/root?levels=2`, options)
         .then((response) => response.json())
@@ -103,8 +109,9 @@ export const fetchHomeData = () => (dispatch) => {
     return initDemandWareSession()
         .then(() => dispatch(fetchNavigationData()))
         .then(() => {
-            // TODO: How do we get banner info?
-            dispatch(responses.receiveHomeData({banners: [{}, {}, {}]}))
+            // Banners are being pulled from the bundle right now
+            // so we just need an array with the correct number of objects
+            dispatch(receiveHomeData({banners: [{}, {}, {}]}))
         })
 }
 
@@ -115,28 +122,27 @@ export const fetchPdpData = () => (dispatch) => {
         .then(() => {
             const options = {
                 method: 'GET',
-                headers: new Headers(REQUEST_HEADERS)
+                headers: requestHeaders
             }
-            makeRequest(productURL, options)
+            return makeRequest(productURL, options)
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     const productDetailsData = parseProductDetails(responseJSON)
                     productDetailsData.availableVariations.forEach(({variationID}) => {
-                        dispatch(responses.receivePdpProductData({[getProductHref(variationID)]: productDetailsData}))
+                        dispatch(receiveProductDetailsProductData({[getProductHref(variationID)]: productDetailsData}))
                     })
-                    dispatch(responses.receivePdpProductData({[productPathKey]: productDetailsData}))
-                    dispatch(responses.receivePdpUIData({[productPathKey]: {itemQuantity: responseJSON.step_quantity, ctaText: 'Add To Cart'}}))
+                    dispatch(receiveProductDetailsProductData({[productPathKey]: productDetailsData}))
+                    dispatch(receiveProductDetailsUIData({[productPathKey]: {itemQuantity: responseJSON.step_quantity, ctaText: 'Add To Cart'}}))
+
                 })
         })
-        .then(() => {
-            return getBasketID()
-                .then((basketID) => {
-                    const options = {
-                        method: 'GET',
-                        headers: new Headers(REQUEST_HEADERS)
-                    }
-                    return makeRequest(`${API_END_POINT_URL}/baskets/${basketID}`, options)
-                })
+        .then(getBasketID)
+        .then((basketID) => {
+            const options = {
+                method: 'GET',
+                headers: requestHeaders
+            }
+            return makeRequest(`${API_END_POINT_URL}/baskets/${basketID}`, options)
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     dispatch(receiveCartContents(parseBasketContents(responseJSON)))
@@ -206,9 +212,6 @@ export const getProductVariationData = (variationSelections, availableVariations
 }
 
 export const addToCart = () => (dispatch) => {
-    // return initDemandWareSession()
-    //     .then(() => {
-
     const options = {
         method: 'POST',
         headers: new Headers(REQUEST_HEADERS),
@@ -232,7 +235,6 @@ export const addToCart = () => (dispatch) => {
                     throw error
                 })
         })
-        // })
 }
 
 export const fetchCheckoutShippingData = () => {

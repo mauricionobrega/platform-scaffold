@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 
-OUTPUT_PATH=./lighthouse/audit-prod.html
+OUTPUT_PATH=./reports/audit-prod.html
 URL=https://www.merlinspotions.com
 
 lighthouse \
+	--view \
 	--output=html \
 	--output-path=$OUTPUT_PATH \
 	$URL
-
-open $OUTPUT_PATH

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import * as commands from '../../integration-manager/commands'
+import {fetchPdpData} from '../../integration-manager/products/commands'
 
 import ProductDetailsHeading from './partials/product-details-heading'
 import ProductDetailsCarousel from './partials/product-details-carousel'
@@ -21,7 +21,7 @@ const ProductDetails = ({route: {routeName}}) => {
 }
 
 ProductDetails.fetcher = (url, dispatch) => {
-    dispatch(commands.fetchPdpData(url))
+    dispatch(fetchPdpData(url))
 }
 
 ProductDetails.propTypes = {

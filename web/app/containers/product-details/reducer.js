@@ -2,7 +2,10 @@ import Immutable from 'immutable'
 import {handleActions} from 'redux-actions'
 
 import * as productDetailsActions from './actions'
-import {receivePdpUIData} from '../../integration-manager/responses'
+import {
+    receiveProductDetailsProductData,
+    receiveProductDetailsUIData
+} from '../../integration-manager/products/responses'
 
 import {mergePayloadForActions} from '../../utils/reducer-utils'
 
@@ -10,9 +13,9 @@ const reducer = handleActions({
     [productDetailsActions.addToCartStarted]: (state) => state.set('addToCartInProgress', true),
     [productDetailsActions.addToCartComplete]: (state) => state.set('addToCartInProgress', false),
     ...mergePayloadForActions(
-        productDetailsActions.receiveData,
+        receiveProductDetailsUIData,
         productDetailsActions.receiveNewItemQuantity,
-        receivePdpUIData
+        receiveProductDetailsProductData
     )
 }, Immutable.Map())
 

@@ -2,6 +2,8 @@ import {extractMagentoJson} from '../../../utils/magento-utils'
 import {getTextFrom, parseTextLink, parseImage} from '../../../utils/parser-utils'
 import {urlToPathKey} from '../../../utils/utils'
 
+const UENC_REGEX = /\/uenc\/([^/]+),\//
+
 const parseCarouselItems = (magentoObject) => {
     const carouselSetup = magentoObject
           .getIn(['[data-gallery-role=gallery-placeholder]', 'mage/gallery/gallery', 'data'])
@@ -9,27 +11,9 @@ const parseCarouselItems = (magentoObject) => {
     return carouselSetup.toJS()
 }
 
-export const productListParser = ($, $html) => {
-    const $products = $html.find('.item.product-item')
-    const productMap = {}
-    $products.each((_, product) => {
-        const $product = $(product)
-        const link = parseTextLink($product.find('.product-item-link'))
-        const image = parseImage($product.find('.product-image-photo'))
-        productMap[urlToPathKey(link.href)] = {
-            title: link.text.trim(),
-            price: getTextFrom($product, '.price'),
-            link,
-            image,
-            carouselItems: [
-                {
-                    img: image.src,
-                    position: '1'
-                }
-            ]
-        }
-    })
-    return productMap
+const parseBreadcrumbs = ($, $breadcrumbsLinks) => {
+    return $breadcrumbsLinks.get()
+        .map((breadcrumbLink) => parseTextLink($(breadcrumbLink)))
 }
 
 export const productDetailsParser = ($, $html) => {
@@ -42,14 +26,6 @@ export const productDetailsParser = ($, $html) => {
         description: getTextFrom($mainContent, '.product.info.detailed .product.attibute.description p')
     }
 }
-
-
-const parseBreadcrumbs = ($, $breadcrumbsLinks) => {
-    return $breadcrumbsLinks.get()
-        .map((breadcrumbLink) => parseTextLink($(breadcrumbLink)))
-}
-
-const UENC_REGEX = /\/uenc\/([^/]+),\//
 
 export const productDetailsUIParser = ($, $html) => {
     const $breadcrumbs = (
@@ -84,4 +60,48 @@ export const productDetailsUIParser = ($, $html) => {
         itemQuantity: parseInt($form.find('#qty').val()),
         ctaText: $form.find('.tocart').text()
     }
+}
+
+export const pdpAddToCartFormParser = ($, $html) => {
+    const $mainContent = $html.find('.page-main')
+    const $form = $mainContent.find('#product_addtocart_form')
+
+    const hiddenInputs = {}
+    $form.find('input[type="hidden"]').each((idx, input) => {
+        const $input = $(input)
+        hiddenInputs[$input.attr('name')] = $input.val()
+    })
+
+    return {
+        formInfo: {
+            submitUrl: $form.attr('action'),
+            method: $form.attr('method'),
+            hiddenInputs
+        },
+        itemQuantity: parseInt($form.find('#qty').val()),
+        ctaText: $form.find('.tocart').text()
+    }
+}
+
+export const productListParser = ($, $html) => {
+    const $products = $html.find('.item.product-item')
+    const productMap = {}
+    $products.each((_, product) => {
+        const $product = $(product)
+        const link = parseTextLink($product.find('.product-item-link'))
+        const image = parseImage($product.find('.product-image-photo'))
+        productMap[urlToPathKey(link.href)] = {
+            title: link.text.trim(),
+            price: getTextFrom($product, '.price'),
+            link,
+            image,
+            carouselItems: [
+                {
+                    img: image.src,
+                    position: '1'
+                }
+            ]
+        }
+    })
+    return productMap
 }
