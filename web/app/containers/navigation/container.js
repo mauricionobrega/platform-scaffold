@@ -43,7 +43,7 @@ const Navigation = (props) => {
     }
 
     return (
-        <Sheet className="t-navigation" open={isOpen} onDismiss={closeNavigation} maskOpacity={0.7}>
+        <Sheet className="t-navigation" open={isOpen} onDismiss={closeNavigation} maskOpacity={0.7} coverage="85%">
             <Nav root={root.title ? root : null} path={path} onPathChange={onPathChange}>
                 <HeaderBar>
                     <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">

@@ -67,7 +67,7 @@ class MiniCart extends React.Component {
         const {hasItems, contentsLoaded, isOpen, closeMiniCart} = this.props
 
         return (
-            <Sheet className="t-mini-cart" open={isOpen} onDismiss={closeMiniCart} maskOpacity={0.7} effect="slide-right">
+            <Sheet className="t-mini-cart" open={isOpen} onDismiss={closeMiniCart} maskOpacity={0.7} effect="slide-right" coverage="85%">
                 <MiniCartHeader closeMiniCart={closeMiniCart} />
 
                 {contentsLoaded && <MiniCartMain hasItems={hasItems} closeMiniCart={closeMiniCart} />}
