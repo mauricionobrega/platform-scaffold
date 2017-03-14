@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
-import {selectorToJS} from '../../utils/selector-utils'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 
 import Nav from 'progressive-web-sdk/dist/components/nav'
 import NavMenu from 'progressive-web-sdk/dist/components/nav-menu'
@@ -48,7 +47,7 @@ const Navigation = (props) => {
                 <HeaderBar>
                     <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
                         <h2 className="t-navigation__title u-heading-family u-text-uppercase">
-                            <span className="u-text-lighter">Merlin's</span> Potions
+                            <span className="u-text-extra-lighter">Merlin's</span> Potions
                         </h2>
                     </HeaderBarTitle>
 
@@ -80,10 +79,10 @@ Navigation.propTypes = {
 }
 
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     path: selectors.getPath,
     isOpen: isModalOpen(NAVIGATION_MODAL),
-    root: selectorToJS(selectors.getNavigationRoot)
+    root: selectors.getNavigationRoot
 })
 
 const mapDispatchToProps = {

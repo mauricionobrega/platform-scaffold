@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as selectors from '../selectors'
 
 import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/accordion'
@@ -17,7 +17,7 @@ ProductDetailsDescription.propTypes = {
     description: PropTypes.string
 }
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     description: selectors.getProductDescription
 })
 

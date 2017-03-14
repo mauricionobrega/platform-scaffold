@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import {CART_REMOVE_ITEM_MODAL} from '../constants'
 import {removeFromCart} from '../../../store/cart/actions'
@@ -83,7 +83,7 @@ CartRemoveItemModal.propTypes = {
     removeItemID: React.PropTypes.string
 }
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     isOpen: isModalOpen(CART_REMOVE_ITEM_MODAL),
     removeItemID: getRemoveItemID
 })
