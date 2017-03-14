@@ -43,7 +43,7 @@ export const submitCartForm = () => (dispatch, getStore) => {
         })
         .catch((error) => {
             // TODO?? How do we communicate errors to the user?? Modal?
-            console.error('Error adding to cart:', error)
+            console.error(`Error adding to cart: ${error}`)
         })
         .then(() => {
             dispatch(addToCartComplete())
