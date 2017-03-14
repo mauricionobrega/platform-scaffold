@@ -1,13 +1,10 @@
 import {createAction} from '../utils/utils'
 import {addNotification, removeNotification} from '../containers/app/actions'
 
-export const receivePdpProductData = createAction('Receive PDP product data')
-export const receivePdpUIData = createAction('Receive PDP UI data')
 export const receiveCheckoutShippingData = createAction('Receive Checkout Shipping data')
 export const receiveCheckoutData = createAction('Receive Checkout Data')
 export const receiveHomeData = createAction('Receive Home Data')
 export const receiveNavigationData = createAction('Receive Navigation Data')
-export const receiveProductListProductData = createAction('Receive ProductList product data')
 export const receiveFooterData = createAction('Receive Footer Data')
 export const receiveCategory = createAction('Receive Category Data')
 export const setPageFetchError = createAction('Set page fetch error', 'fetchError')

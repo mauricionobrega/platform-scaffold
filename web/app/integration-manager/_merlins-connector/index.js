@@ -1,4 +1,4 @@
-import * as commands from './commands'
+import commands from './commands'
 import reducer from './reducer'
 
 const connector = {commands, reducer}

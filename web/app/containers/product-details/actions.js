@@ -1,13 +1,13 @@
-import {createAction, urlToPathKey} from '../../utils/utils'
-import {browserHistory} from 'react-router'
+import {browserHistory} from 'progressive-web-sdk/dist/routing'
+import {createAction} from '../../utils/utils'
 import {SubmissionError} from 'redux-form'
+
 import * as selectors from './selectors'
 import * as appSelectors from '../app/selectors'
 import {getFormValues} from '../../store/form/selectors'
-import productDetailsParser from './parsers/product-details'
 
-import * as commands from '../../integration-manager/commands'
-import {closeModal, openModal} from '../../store/modals/actions'
+import {addToCart, getProductVariationData} from '../../integration-manager/commands'
+import {openModal, closeModal} from '../../store/modals/actions'
 import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from './constants'
 
 import {isRunningInAstro} from '../../utils/astro-integration'
@@ -24,13 +24,6 @@ export const setItemQuantity = (quantity) => (dispatch, getStore) => {
 
 export const addToCartStarted = createAction('Add to cart started')
 export const addToCartComplete = createAction('Add to cart complete')
-
-export const receiveData = createAction('Receive Product Details data')
-export const process = ({payload}) => {
-    const {$, $response, url} = payload
-    const parsed = productDetailsParser($, $response)
-    return receiveData({[urlToPathKey(url)]: parsed})
-}
 
 export const goToCheckout = () => (dispatch) => {
     dispatch(closeModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL))
@@ -66,17 +59,13 @@ export const submitCartForm = (formValues) => (dispatch, getStore) => {
         }
         return resolve(true)
     })
-    .then(() => {
-        return dispatch(commands.addToCart(key, qty))
-    })
-    .then(() => {
-        dispatch(addToCartComplete())
-        dispatch(openModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL))
-    })
+    .then(() => dispatch(addToCart(key, qty)))
+    .then(() => dispatch(openModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL)))
     .catch((error) => {
-        dispatch(addToCartComplete())
-        throw error
+        // TODO?? How do we communicate errors to the user?? Modal?
+        console.error(`Error adding to cart: ${error}`)
     })
+    .then(() => dispatch(addToCartComplete()))
 
 }
 
@@ -84,5 +73,5 @@ export const onVariationBlur = () => (dispatch, getStore) => {
     const currentState = getStore()
     const variationSelections = getFormValues('product-add-to-cart')(currentState)
     const availableVariations = selectors.getProductVariations(currentState).toJS()
-    dispatch(commands.getProductVariationData(variationSelections, availableVariations))
+    return dispatch(getProductVariationData(variationSelections, availableVariations))
 }

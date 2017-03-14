@@ -63,10 +63,10 @@ dispatch(addNotification({
 
 ## Docs with Styleguide
 
-To run the project documentation, including a live styleguide, use:
+To run the project's styleguide, use:
 
 ```
-npm run docs:dev
+npm run styleguide
 ```
 
 ## SVG Images and Icons

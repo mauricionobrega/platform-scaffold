@@ -33,9 +33,32 @@ export const getCheckoutConfigObject = ($html) => {
     return {}
 }
 
-
 export const getCheckoutEntityID = ($html) => {
     const configObject = getCheckoutConfigObject($html)
 
     return configObject && configObject.quoteData ? configObject.quoteData.entity_id : ''
+}
+
+// From Magento page-cache.js
+const generateRandomString = (chars, length) => {
+    let result = ''
+    length = length > 0 ? length : 1
+
+    while (length--) {
+        result += chars[Math.round(Math.random() * (chars.length - 1))]
+    }
+
+    return result
+}
+
+// Set the cookie and returns the value
+export const generateFormKeyCookie = () => {
+    // From Magento page-cache.js
+    const allowedCharacters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    const length = 16
+    const generatedKey = generateRandomString(allowedCharacters, length)
+    const lifetime = 3600
+    const expires = new Date((new Date().getTime()) + lifetime * 1000)
+    document.cookie = `form_key=${encodeURIComponent(generatedKey)}; expires=${expires.toGMTString()}; domain=.${window.location.hostname}`
+    return generatedKey
 }
