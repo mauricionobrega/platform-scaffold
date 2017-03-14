@@ -4,14 +4,14 @@ import throttle from 'lodash.throttle'
 
 const SCROLL_CHECK_INTERVAL = 200
 
-const componentClass = 'c-lazy-load-image'
+const componentClass = 'c-lazy-load-content'
 
 /**
  * Lazy load image: content will render immediately
  * if its in view or will show when scrolled to it
  */
 
-class LazyLoadImage extends React.Component {
+class LazyLoadContent extends React.Component {
     constructor(props) {
         super(props)
 
@@ -39,6 +39,8 @@ class LazyLoadImage extends React.Component {
             this.setState({
                 visible: true
             })
+
+            window.removeEventListener('scroll', this.handleScroll)
         }
     }
 
@@ -57,13 +59,11 @@ class LazyLoadImage extends React.Component {
     render() {
         const {
             className,
-            image,
+            content,
             placeholder
         } = this.props
 
-        const classes = classNames(componentClass, className, {
-            // 'c--modifier': bool ? true : false
-        })
+        const classes = classNames(componentClass, className)
 
         return (
             <div
@@ -71,7 +71,7 @@ class LazyLoadImage extends React.Component {
                 ref={(el) => { this.el = el }}
             >
                 {this.state.visible ?
-                    image
+                    content
                 :
                     placeholder
                 }
@@ -80,24 +80,31 @@ class LazyLoadImage extends React.Component {
     }
 }
 
-LazyLoadImage.defaultProps = {
+LazyLoadContent.defaultProps = {
     threshold: 0
 }
 
 
-LazyLoadImage.propTypes = {
+LazyLoadContent.propTypes = {
+    /**
+     * Content that will be revealed when scrolled to
+     */
+    content: PropTypes.node.isRequired,
+
     /**
      * Adds values to the `class` attribute of the root element
      */
     className: PropTypes.string,
 
-    image: PropTypes.node,
-
+    /**
+     * Placeholder content when actual content is not revealed
+     */
     placeholder: PropTypes.node,
+
     /**
      * Number of pixels out the viewport before loading the content
      */
     threshold: PropTypes.number
 }
 
-export default LazyLoadImage
+export default LazyLoadContent

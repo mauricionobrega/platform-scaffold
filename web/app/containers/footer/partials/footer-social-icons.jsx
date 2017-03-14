@@ -1,6 +1,6 @@
 import React from 'react'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
-import LazyLoadImage from '../../../components/lazy-load-image'
+import LazyLoadContent from '../../../components/lazy-load-content'
 import Image from 'progressive-web-sdk/dist/components/image'
 
 const social = [
@@ -16,8 +16,8 @@ const FooterSocialIcons = () => {
             <div className="u-flexbox u-justify-center u-padding-md">
                 {social.map(([url, icon, title]) =>
                     <a href={url} className="t-footer__social-link" key={url}>
-                        <LazyLoadImage
-                            image={
+                        <LazyLoadContent
+                            content={
                                 <Image
                                     src={getAssetUrl(icon)}
                                     alt={title}
@@ -25,7 +25,7 @@ const FooterSocialIcons = () => {
                                     width="32"
                                 />
                             }
-                            placeholder={<span className="u-visually-hidden">{title}</span>}
+                            placeholder={<span className="u-visually-hidden">Image loading</span>}
                             threshold={100}
                         />
                     </a>

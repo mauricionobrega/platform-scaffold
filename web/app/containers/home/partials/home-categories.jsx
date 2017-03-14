@@ -9,16 +9,19 @@ import Image from 'progressive-web-sdk/dist/components/image'
 import ListTile from 'progressive-web-sdk/dist/components/list-tile'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
-import LazyLoadImage from '../../../components/lazy-load-image'
+import LazyLoadContent from '../../../components/lazy-load-content'
 import * as selectors from '../selectors'
 
 const CategoryImage = ({alt}) => {
+    const placeholder = <SkeletonBlock height="60" width="60" />
+
     if (!alt) {
-        return (<SkeletonBlock height="60px" width="60px" />)
+        return placeholder
     }
+
     return (
-        <LazyLoadImage
-            image={
+        <LazyLoadContent
+            content={
                 <Image
                     src={getAssetUrl(`static/img/categories/${alt.trim().replace(/\s+/g, '-')
                             .toLowerCase()}@2x.png`)}
@@ -27,7 +30,7 @@ const CategoryImage = ({alt}) => {
                     width="60"
                 />
             }
-            placeholder={<SkeletonBlock height="60" width="60" />}
+            placeholder={placeholder}
         />
     )
 }
