@@ -13,4 +13,3 @@ export const fetchPageData = (url) => (dispatch) => {
             return res
         })
 }
-

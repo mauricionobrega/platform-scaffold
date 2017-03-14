@@ -1,7 +1,7 @@
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {makeFormEncodedRequest, makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {urlToPathKey} from '../../utils/utils'
-import {fetchPageData} from './utils'
+import {fetchPageData} from './app/commands'
 
 import categoryProductsParser from './categories/parser'
 import {productListParser} from './products/parsers'

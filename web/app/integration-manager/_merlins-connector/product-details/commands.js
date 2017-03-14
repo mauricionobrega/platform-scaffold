@@ -1,7 +1,7 @@
 import {urlToPathKey} from '../../../utils/utils'
 import {receiveFormInfo} from '../../actions'
 
-import {fetchPageData} from '../utils'
+import {fetchPageData} from '../app/commands'
 
 import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../../product-details/responses'
 import {productDetailsParser, productDetailsUIParser, pdpAddToCartFormParser} from './parsers'
@@ -19,4 +19,3 @@ export const fetchPdpData = (url) => (dispatch) => {
         })
         .catch((error) => { console.info(error.message) })
 }
-

@@ -1,4 +1,4 @@
-import {fetchPageData} from '../utils'
+import {fetchPageData} from '../app/commands'
 import homeParser from './parser'
 import {receiveHomeData} from '../../responses'
 
@@ -8,4 +8,3 @@ export const fetchHomeData = (url) => (dispatch) => {
             dispatch(receiveHomeData(homeParser($, $response)))
         })
 }
-
