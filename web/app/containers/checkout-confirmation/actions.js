@@ -9,9 +9,6 @@ import * as formSelectors from '../../store/form/selectors'
 import {getEmailAddress} from '../../store/checkout/selectors'
 import {getFormKey} from '../app/selectors'
 import {selectorToJS} from '../../utils/selector-utils'
-import {browserHistory} from 'react-router'
-
-import {isRunningInAstro, trigger} from '../../utils/astro-integration'
 
 // @TODO: blocked until the desktop's Address Book actualy works correctly
 // import * as paymentSelectors from '../../store/checkout/payment/selectors'
@@ -162,15 +159,5 @@ export const submitRegisterForm = () => {
                     showRemoveButton: true
                 }))
             })
-    }
-}
-
-export const continueShopping = () => {
-    if (isRunningInAstro) {
-        // If we're running in Astro, we want to dismiss open the cart modal,
-        // otherwise, navigating is taken care of by the button press
-        trigger('close')
-    } else {
-        browserHistory.push('/')
     }
 }

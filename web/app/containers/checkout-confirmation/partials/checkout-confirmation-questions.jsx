@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react'
+import React from 'react'
 import {GRID_SETTINGS} from '../constants'
 
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -6,6 +6,9 @@ import {Grid, GridSpan} from 'progressive-web-sdk/dist/components/grid'
 import Icon from 'progressive-web-sdk/dist/components/icon'
 import List from 'progressive-web-sdk/dist/components/list'
 import ListTile from 'progressive-web-sdk/dist/components/list-tile'
+import {browserHistory} from 'react-router'
+
+import {isRunningInAstro, trigger} from '../../utils/astro-integration'
 
 /* eslint-disable react/prop-types */
 const QuestionLink = ({children, href}) => (
@@ -20,7 +23,17 @@ const QuestionLink = ({children, href}) => (
 )
 /* eslint-enable react/prop-types */
 
-const CheckoutConfirmationQuestions = ({onContinueShopping}) => (
+const continueShopping = () => {
+    if (isRunningInAstro) {
+        // If we're running in Astro, we want to dismiss open the cart modal,
+        // otherwise, navigating is taken care of by the button press
+        trigger('close')
+    } else {
+        browserHistory.push('/')
+    }
+}
+
+const CheckoutConfirmationQuestions = () => (
     <Grid className="t-checkout-confirmation__questions u-center-piece">
         <GridSpan {...GRID_SETTINGS}>
             <div className="t-checkout-confirmation__heading u-padding-md u-padding-top-lg">
@@ -39,17 +52,12 @@ const CheckoutConfirmationQuestions = ({onContinueShopping}) => (
 
         <GridSpan {...GRID_SETTINGS}>
             <div className="u-padding-lg">
-                <Button onClick={onContinueShopping} className="c--tertiary u-width-full u-text-all-caps">
+                <Button onClick={continueShopping} className="c--tertiary u-width-full u-text-all-caps">
                     Continue Shopping
                 </Button>
             </div>
         </GridSpan>
     </Grid>
 )
-
-
-CheckoutConfirmationQuestions.propTypes = {
-    onContinueShopping: PropTypes.func,
-}
 
 export default CheckoutConfirmationQuestions
