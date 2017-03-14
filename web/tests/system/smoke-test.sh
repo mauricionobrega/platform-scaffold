@@ -27,7 +27,7 @@ if [ "$CURRENT_BRANCH" != "master" ]; then
     # while ! echo exit | nc localhost 8443; do sleep 20; done
     npm run prod:build
     http-server --ssl --cors --p=8443 \
-      --key lighthouse/server.pem --cert lighthouse/server.pem build &
+      --key lighthouse/server.pem --cert lighthouse/server.pem build & > /dev/null 2>&1
 else
     echo "Running tests against production"
     export ACTIVE_PROFILE=production
