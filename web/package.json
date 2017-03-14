@@ -62,7 +62,7 @@
     "ignore-styles": "5.0.1",
     "imagemin-power-cli": "0.4.0",
     "ip": "1.1.4",
-    "jest-cli": "^19.0.2",
+    "jest-cli": "18.0.0",
     "jsdom": "9.9.1",
     "json-loader": "0.5.4",
     "lighthouse": "1.5.1",
