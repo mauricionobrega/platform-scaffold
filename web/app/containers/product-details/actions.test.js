@@ -14,6 +14,8 @@ afterAll(() => {
 })
 
 test('submitCartForm makes a request and dispatches updates', () => {
+    const formKeyValue = '12345'
+    document.cookie = `form_key=${formKeyValue}`
     const thunk = submitCartForm()
     expect(typeof thunk).toBe('function')
 

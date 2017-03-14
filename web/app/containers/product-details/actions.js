@@ -1,5 +1,6 @@
 import {createAction, urlToPathKey} from '../../utils/utils'
 import {browserHistory} from 'react-router'
+
 import * as selectors from './selectors'
 import * as appSelectors from '../app/selectors'
 import productDetailsParser from './parsers/product-details'
