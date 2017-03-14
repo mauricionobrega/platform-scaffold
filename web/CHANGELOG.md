@@ -1,7 +1,11 @@
 ## To be released
 
+## 0.15.1 (March 14, 2017)
+- More performance improvements (i.e. fonts, script loading tweaks, etc.)
+
 ## 0.15.0 (March 10, 2017)
 - Fix for add-to-cart when Magento Full Page Cache is enabled [#406](https://github.com/mobify/progressive-web-scaffold/pull/406)
+- Performance improvements (i.e. code splitting, etc.)
 
 ## 0.14.0 (March 3, 2017)
 - Add support for Progressive Mobile Apps
