@@ -1,5 +1,5 @@
 import {createSelector} from 'reselect'
-import {createGetSelector} from '../../utils/selector-utils'
+import {createGetSelector} from 'reselect-immutable-helpers'
 import {getUi} from '../../store/selectors'
 
 export const getCheckoutPayment = createSelector(getUi, ({checkoutPayment}) => checkoutPayment)

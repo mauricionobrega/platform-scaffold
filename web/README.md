@@ -13,7 +13,7 @@ If you will be deploying bundles to Mobify Cloud, then follow these steps:
 - Authorize your computer to push bundles by:
     - Go to [https://cloud.mobify.com/account/](https://cloud.mobify.com/account/) and copy to your clipboard the command under _"For Mobify Client Projects"_
     - Paste the command into your terminal and run it!
-- You're ready to deply bundles!
+- You're ready to deploy bundles!
 
 ## Prevent SSL Errors in Preview (on a Mac)
 
