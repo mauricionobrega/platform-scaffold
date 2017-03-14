@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
-import {selectorToJS} from '../../../utils/selector-utils'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 
 import {updateItemQuantity} from '../../../store/cart/actions'
 import {openRemoveItemModal, saveToWishlist} from '../actions'
@@ -185,8 +184,8 @@ CartProductList.propTypes = {
     onUpdateItemQuantity: PropTypes.func
 }
 
-const mapStateToProps = createStructuredSelector({
-    items: selectorToJS(getCartItems),
+const mapStateToProps = createPropsSelector({
+    items: getCartItems,
     summaryCount: getCartSummaryCount
 })
 

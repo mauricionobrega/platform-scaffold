@@ -4,7 +4,7 @@
   "aJSSlug": "merlinspotions-2",
   "repository": {
     "type": "git",
-    "url": "http://github.com/mobify/progressive-web-scaffold"
+    "url": "http://github.com/mobify/platform-scaffold"
   },
   "siteUrl": "",
   "license": "See license in LICENSE",
@@ -23,6 +23,7 @@
     "redux-analytics": "0.3.1",
     "redux-thunk": "2.1.0",
     "reselect": "2.5.4",
+    "reselect-immutable-helpers": "1.2.1",
     "sw-toolbox": "3.4.0",
     "whatwg-fetch": "1.0.0"
   },
@@ -137,8 +138,8 @@
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 11,
-        "functions": 31,
+        "branches": 13,
+        "functions": 26,
         "lines": 50,
         "statements": 47
       }

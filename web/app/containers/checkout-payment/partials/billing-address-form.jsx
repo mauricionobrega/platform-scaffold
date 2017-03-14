@@ -1,8 +1,7 @@
 import React, {PropTypes} from 'react'
 import * as ReduxForm from 'redux-form'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
-import {selectorToJS} from '../../../utils/selector-utils'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 
 // Selectors
 import * as selectors from '../selectors'
@@ -222,14 +221,14 @@ BillingAddressForm.propTypes = {
     toggleNewAddressFields: PropTypes.func,
 }
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     city: getCity,
-    countries: selectorToJS(getCountries),
+    countries: getCountries,
     isCompanyOrAptShown: selectors.getIsCompanyOrAptShown,
     name: getShippingFullName,
     newShippingAddressIsEnabled: selectors.getNewShippingAddressIsEnabled,
     postcode: getPostcode,
-    regions: selectorToJS(getRegions),
+    regions: getRegions,
     street: getStreetLineOne,
 })
 
