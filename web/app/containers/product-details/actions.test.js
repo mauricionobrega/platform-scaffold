@@ -1,6 +1,5 @@
 /* eslint-env jest */
 import Immutable from 'immutable'
-import * as fetchUtils from 'progressive-web-sdk/dist/utils/fetch-utils'
 
 import {openModal} from '../../store/modals/actions'
 
