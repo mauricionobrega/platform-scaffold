@@ -36,16 +36,16 @@ fi
 # Run the tests to verify that checkout flow still works.
 # If on CIRCLE, it will find all test files under /workflows to distribute evenly among machines for parallelism
 # If there is not, then it will run locally
-VALUE=${CIRCLECI:-}
+# VALUE=${CIRCLECI:-}
 
-if [[  -z "${VALUE}" ]]; then
-    npm run test:e2e
-else
-  testfiles=$(find ./tests/system/workflows/ -name '*.js'| sort | awk "NR % ${CIRCLE_NODE_TOTAL} == ${CIRCLE_NODE_INDEX}")
-  if [ -z "$testfiles" ]
-  then
-      echo "more parallelism than tests"
-  else
-      npm run test:e2e --tests $testfiles
-  fi
-fi
+# if [[  -z "${VALUE}" ]]; then
+#     npm run test:e2e
+# else
+#   testfiles=$(find ./tests/system/workflows/ -name '*.js'| sort | awk "NR % ${CIRCLE_NODE_TOTAL} == ${CIRCLE_NODE_INDEX}")
+#   if [ -z "$testfiles" ]
+#   then
+#       echo "more parallelism than tests"
+#   else
+#       npm run test:e2e --tests $testfiles
+#   fi
+# fi
