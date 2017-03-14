@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import {createSelector} from 'reselect'
+import {createGetSelector} from 'reselect-immutable-helpers'
 
-import {createGetSelector} from '../../../utils/selector-utils'
 import {getFormValues} from '../../form/selectors'
 import {getCheckout} from '../../selectors'
 
