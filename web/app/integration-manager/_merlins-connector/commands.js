@@ -1,3 +1,4 @@
+import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {makeFormEncodedRequest, makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {fetchPageData} from './utils'
 
@@ -7,7 +8,6 @@ import {getCustomerEntityID} from '../../store/checkout/selectors'
 import {getIsLoggedIn} from '../../containers/app/selectors'
 import {getShippingFormValues} from '../../store/form/selectors'
 import {getCart} from '../../store/cart/actions'
-import {browserHistory} from 'react-router'
 import {removeAllNotifications} from '../../containers/app/actions'
 
 import * as homeCommands from './home/commands'

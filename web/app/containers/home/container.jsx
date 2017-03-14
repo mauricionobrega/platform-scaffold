@@ -16,6 +16,7 @@ const Home = () => {
 }
 
 Home.fetcher = (url, dispatch) => {
+    console.log('hello')
     dispatch(fetchHomeData(url))
 }
 

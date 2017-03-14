@@ -1,5 +1,6 @@
+import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {createAction} from '../../utils/utils'
-import {browserHistory} from 'react-router'
+
 import * as selectors from './selectors'
 import * as appSelectors from '../app/selectors'
 

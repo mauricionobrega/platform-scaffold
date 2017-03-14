@@ -1,4 +1,5 @@
 import {getCheckoutConfigObject} from '../../utils/magento-utils'
+import {isRunningInAstro, jsRpcMethod} from '../../utils/astro-integration'
 
 const appParser = ($html) => {
     let isLoggedIn = !!$html.find('.customer-welcome').length
@@ -6,6 +7,14 @@ const appParser = ($html) => {
         // We may be on a checkout page so check the checkout config object
         const config = getCheckoutConfigObject($html)
         isLoggedIn = (config && config.customerData) ? config.customerData.constructor !== Array : isLoggedIn
+    }
+
+    if (isRunningInAstro) {
+        if (isLoggedIn) {
+            jsRpcMethod('user:loggedIn', [])()
+        } else {
+            jsRpcMethod('user:guest', [])()
+        }
     }
 
     const result = {isLoggedIn}
