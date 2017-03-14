@@ -17,14 +17,12 @@ import CheckoutShipping from '../checkout-shipping/container'
 import CheckoutPayment from '../checkout-payment/container'
 import CheckoutConfirmation from '../checkout-confirmation/container'
 import Login from '../login/container'
-import ProductDetails from '../product-details/container'
 import * as checkoutActions from '../../store/checkout/actions'
 // import * as checkoutShippingUIActions from '../checkout-shipping/actions'
 import * as checkoutConfirmationActions from '../checkout-confirmation/actions'
 import * as checkoutShippingActions from '../../store/checkout/shipping/actions'
 import * as cartActions from '../../store/cart/actions'
 import * as loginActions from '../login/actions'
-import * as productDetailsActions from '../product-details/actions'
 import * as footerActions from '../footer/actions'
 import * as navigationActions from '../navigation/actions'
 
@@ -139,9 +137,6 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
 
                 if (pageComponent === Login) {
                     dispatch(loginActions.process(receivedAction))
-                } else if (pageComponent === ProductDetails) {
-                    dispatch(productDetailsActions.process(receivedAction))
-                    // dispatch(productsActions.processProductDetails(receivedAction))
                 } else if (pageComponent === CheckoutShipping) {
                     // dispatch(checkoutShippingUIActions.process(receivedAction))
                     // dispatch(checkoutActions.processCheckoutData(receivedAction))

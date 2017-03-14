@@ -1,6 +1,6 @@
 import React from 'react'
 
-import * as commands from '../../integration-manager/commands'
+import {fetchHomeData} from '../../integration-manager/home/commands'
 
 // Partials
 import HomeCarousel from './partials/home-carousel'
@@ -16,7 +16,8 @@ const Home = () => {
 }
 
 Home.fetcher = (url, dispatch) => {
-    dispatch(commands.fetchHomeData(url))
+    console.log('hello')
+    dispatch(fetchHomeData(url))
 }
 
 export default Home

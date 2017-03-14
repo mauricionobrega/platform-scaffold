@@ -2,10 +2,16 @@ import React, {PropTypes} from 'react'
 import classnames from 'classnames'
 import styles from '../app/stylesheet.scss'
 
+import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
+import sprite from '../app/static/svg/sprite-dist/sprite.svg'
+
 import s from './Layout.css'
 
 const Renderer = ({title, components, toc, sidebar}) => (
     <div className={classnames(s.root, {[s.withoutSidebar]: !sidebar})}>
+        <DangerousHTML html={sprite}>
+            {(htmlObj) => <div hidden dangerouslySetInnerHTML={htmlObj} />}
+        </DangerousHTML>
         <main className={s.wrapper}>
             <div className={s.content}>
                 <div className={s.components}>

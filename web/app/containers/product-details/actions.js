@@ -1,11 +1,11 @@
-import {createAction, urlToPathKey} from '../../utils/utils'
-import {browserHistory} from 'react-router'
+import {browserHistory} from 'progressive-web-sdk/dist/routing'
+import {createAction} from '../../utils/utils'
+
 import * as selectors from './selectors'
 import * as appSelectors from '../app/selectors'
-import productDetailsParser from './parsers/product-details'
 
-import * as commands from '../../integration-manager/commands'
-import {closeModal} from '../../store/modals/actions'
+import {addToCart} from '../../integration-manager/commands'
+import {openModal, closeModal} from '../../store/modals/actions'
 import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from './constants'
 
 import {isRunningInAstro} from '../../utils/astro-integration'
@@ -23,13 +23,6 @@ export const setItemQuantity = (quantity) => (dispatch, getStore) => {
 export const addToCartStarted = createAction('Add to cart started')
 export const addToCartComplete = createAction('Add to cart complete')
 
-export const receiveData = createAction('Receive Product Details data')
-export const process = ({payload}) => {
-    const {$, $response, url} = payload
-    const parsed = productDetailsParser($, $response)
-    return receiveData({[urlToPathKey(url)]: parsed})
-}
-
 export const goToCheckout = () => (dispatch) => {
     dispatch(closeModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL))
     if (isRunningInAstro) {
@@ -45,5 +38,15 @@ export const submitCartForm = () => (dispatch, getStore) => {
     const key = appSelectors.getCurrentPathKey(getStore())
     const qty = selectors.getItemQuantity(getStore())
     dispatch(addToCartStarted())
-    return dispatch(commands.addToCart(key, qty))
+    return dispatch(addToCart(key, qty))
+        .then(() => {
+            dispatch(openModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL))
+        })
+        .catch((error) => {
+            // TODO?? How do we communicate errors to the user?? Modal?
+            console.error(`Error adding to cart: ${error}`)
+        })
+        .then(() => {
+            dispatch(addToCartComplete())
+        })
 }

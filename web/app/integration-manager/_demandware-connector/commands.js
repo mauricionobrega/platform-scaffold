@@ -1,7 +1,8 @@
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {urlToPathKey} from '../../utils/utils'
 import {receiveCartContents} from '../../store/cart/actions'
-import {receivePdpProductData, receivePdpUIData, onAddToCartSucceess, receiveHomeData, receiveNavigationData} from '../responses'
+import {receiveHomeData, receiveNavigationData} from '../responses'
+import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../product-details/responses'
 import {parseProductDetails, parseBasketContents} from './parser'
 
 const SITE_ID = 'Sites-2017refresh-Site'
@@ -114,8 +115,8 @@ export const fetchPdpData = () => (dispatch) => {
             return makeRequest(productURL, options)
                 .then((response) => response.json())
                 .then((responseJSON) => {
-                    dispatch(receivePdpProductData({[productPathKey]: parseProductDetails(responseJSON)}))
-                    dispatch(receivePdpUIData({[productPathKey]: {itemQuantity: responseJSON.step_quantity, ctaText: 'Add To Cart'}}))
+                    dispatch(receiveProductDetailsProductData({[productPathKey]: parseProductDetails(responseJSON)}))
+                    dispatch(receiveProductDetailsUIData({[productPathKey]: {itemQuantity: responseJSON.step_quantity, ctaText: 'Add To Cart'}}))
                 })
         })
         .then(getBasketID)
@@ -152,11 +153,7 @@ export const addToCart = () => (dispatch) => {
                     throw new Error('Unable to add item to cart')
                 })
                 .then((responseJSON) => {
-                    dispatch(receiveCartContents(parseBasketContents(responseJSON)))
-                    dispatch(onAddToCartSucceess())
-                })
-                .catch((error) => {
-                    console.log(error)
+                    return dispatch(receiveCartContents(parseBasketContents(responseJSON)))
                 })
         })
 }
