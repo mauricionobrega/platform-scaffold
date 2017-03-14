@@ -26,6 +26,7 @@ const FooterSocialIcons = () => {
                                 />
                             }
                             placeholder={<span className="u-visually-hidden">{title}</span>}
+                            threshold={100}
                         />
                     </a>
                 )}

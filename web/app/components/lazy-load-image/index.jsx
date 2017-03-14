@@ -34,7 +34,7 @@ class LazyLoadImage extends React.Component {
     checkVisible() {
         const topPosition = this.el.getBoundingClientRect().top
 
-        if (topPosition <= window.innerHeight + window.scrollY) {
+        if (topPosition <= window.innerHeight + window.scrollY - this.props.threshold) {
             this.setState({
                 visible: true
             })
@@ -79,9 +79,12 @@ class LazyLoadImage extends React.Component {
     }
 }
 
+LazyLoadImage.defaultProps = {
+    threshold: 0
+}
+
 
 LazyLoadImage.propTypes = {
-
     /**
      * Adds values to the `class` attribute of the root element
      */
@@ -89,7 +92,11 @@ LazyLoadImage.propTypes = {
 
     image: PropTypes.node,
 
-    placeholder: PropTypes.node
+    placeholder: PropTypes.node,
+    /**
+     * Number of pixels out the viewport before loading the content
+     */
+    threshold: PropTypes.number
 }
 
 export default LazyLoadImage
