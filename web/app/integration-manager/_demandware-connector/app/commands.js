@@ -19,10 +19,7 @@ export const initDemandWareSession = () => {
             // To Do: Add this to the store???
             requestHeaders.Authorization = response.headers.get('Authorization')
             options.headers.Authorization = response.headers.get('Authorization')
-        })
-        .then(() => {
-            makeRequest(`${API_END_POINT_URL}/sessions`, options)
-
+            return makeRequest(`${API_END_POINT_URL}/sessions`, options)
         })
 }
 
