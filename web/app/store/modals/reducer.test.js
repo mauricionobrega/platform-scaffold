@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 import Immutable from 'immutable'
 import modalReducer from './reducer'
 import {openModal, closeModal, closeAllModals} from './actions'
