@@ -46,11 +46,6 @@
 
 .t-footer__social-link {
     display: block;
-    width: 32px;
-    height: 32px;
-
-    background-repeat: no-repeat;
-    background-size: 32px 32px;
 
     & + & {
         margin-left: $unit*3;
