@@ -5,7 +5,6 @@ let connector = {}
 
 export const register = (commands) => {
     connector = commands
-
     registerHome(commands.home)
     registerProductDetails(commands.productDetails)
 }

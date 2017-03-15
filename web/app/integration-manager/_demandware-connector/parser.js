@@ -13,6 +13,11 @@ export const parseProductDetails = ({name, price, long_description, image_groups
     }
 }
 
+export const getCurrentProductID = () => {
+    const productIDMatch = /(\d+).html/.exec(window.location.href)
+    return productIDMatch ? productIDMatch[1] : ''
+}
+
 
 export const parseBasketContents = ({product_items, product_sub_total}) => {
     const items = product_items.map(({product_name, base_price, quantity}) => {
