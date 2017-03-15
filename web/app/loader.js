@@ -91,6 +91,12 @@ if (isReactRoute()) {
      : {then: (fn) => setTimeout(fn)}
     ).then(() => {
         loadAsset('link', {
+            href: getAssetUrl('static/ico/favicon.ico'),
+            rel: 'icon',
+            type: 'image/x-icon'
+        })
+
+        loadAsset('link', {
             href: getAssetUrl('main.css'),
             rel: 'stylesheet',
             type: 'text/css',
