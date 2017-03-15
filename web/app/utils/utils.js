@@ -127,5 +127,5 @@ export const getCookieValue = (cookieName) => {
 
 // converts the image URL to a high resolution format
 export const getHighResImage = (src) => {
-    return src.replace(/thumbnail\/\d+x\d+/, 'small_image/240x300/')
+    return src.replace(/thumbnail\/\d+x\d+/, 'small_image/240x300')
 }
