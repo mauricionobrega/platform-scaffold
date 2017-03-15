@@ -91,9 +91,19 @@ if (isReactRoute()) {
      : {then: (fn) => setTimeout(fn)}
     ).then(() => {
         loadAsset('link', {
-            href: getAssetUrl('static/ico/favicon.ico'),
-            rel: 'icon',
-            type: 'image/x-icon'
+            href: getAssetUrl('static/img/global/favicon.png'),
+            rel: 'icon'
+        })
+
+        loadAsset('link', {
+            href: getAssetUrl('static/img/global/favicon.png'),
+            rel: 'apple-touch-icon'
+        })
+
+        loadAsset('link', {
+            href: getAssetUrl('static/img/global/favicon@2x.png'),
+            rel: 'apple-touch-icon',
+            sizes: '96x96'
         })
 
         loadAsset('link', {
