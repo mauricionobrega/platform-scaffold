@@ -20,18 +20,15 @@ const CategoryImage = ({alt}) => {
     }
 
     return (
-        <LazyLoadContent
-            content={
-                <Image
-                    src={getAssetUrl(`static/img/categories/${alt.trim().replace(/\s+/g, '-')
-                            .toLowerCase()}@2x.png`)}
-                    alt={alt}
-                    height="60"
-                    width="60"
-                />
-            }
-            placeholder={placeholder}
-        />
+        <LazyLoadContent placeholder={placeholder}>
+            <Image
+                src={getAssetUrl(`static/img/categories/${alt.trim().replace(/\s+/g, '-')
+                        .toLowerCase()}@2x.png`)}
+                alt={alt}
+                height="60"
+                width="60"
+            />
+        </LazyLoadContent>
     )
 }
 

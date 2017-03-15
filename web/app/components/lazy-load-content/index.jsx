@@ -59,7 +59,7 @@ class LazyLoadContent extends React.Component {
     render() {
         const {
             className,
-            content,
+            children,
             placeholder
         } = this.props
 
@@ -71,7 +71,7 @@ class LazyLoadContent extends React.Component {
                 ref={(el) => { this.el = el }}
             >
                 {this.state.visible ?
-                    content
+                    children
                 :
                     placeholder
                 }
@@ -89,7 +89,7 @@ LazyLoadContent.propTypes = {
     /**
      * Content that will be revealed when scrolled to
      */
-    content: PropTypes.node.isRequired,
+    children: PropTypes.node.isRequired,
 
     /**
      * Adds values to the `class` attribute of the root element

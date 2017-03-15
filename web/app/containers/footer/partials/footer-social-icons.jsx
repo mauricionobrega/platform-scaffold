@@ -17,17 +17,16 @@ const FooterSocialIcons = () => {
                 {social.map(([url, icon, title]) =>
                     <a href={url} className="t-footer__social-link" key={url}>
                         <LazyLoadContent
-                            content={
-                                <Image
-                                    src={getAssetUrl(icon)}
-                                    alt={title}
-                                    height="32"
-                                    width="32"
-                                />
-                            }
                             placeholder={<span className="u-visually-hidden">Image loading</span>}
                             threshold={100}
-                        />
+                        >
+                            <Image
+                                src={getAssetUrl(icon)}
+                                alt={title}
+                                height="32"
+                                width="32"
+                            />
+                        </LazyLoadContent>
                     </a>
                 )}
             </div>
