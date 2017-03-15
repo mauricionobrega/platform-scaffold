@@ -18,7 +18,7 @@ import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/d
 
 export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateProvinces, submitEstimateShipping, handleSubmit}) => {
     return (
-        <Sheet className="t-cart__estimate-shipping-modal" open={isOpen} onDismiss={closeModal} maskOpacity={0.7} effect="slide-right">
+        <Sheet className="t-cart__estimate-shipping-modal" open={isOpen} onDismiss={closeModal} maskOpacity={0.7} effect="slide-right" coverage="85%">
             <HeaderBar>
                 <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
                     <h1 className="u-h4 u-heading-family u-text-uppercase">
