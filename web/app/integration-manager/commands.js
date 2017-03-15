@@ -6,7 +6,6 @@ let connector = {}
 
 export const register = (commands) => {
     connector = commands
-
     registerHome(commands.home)
     registerProducts(commands.products)
     registerCategories(commands.categories)
