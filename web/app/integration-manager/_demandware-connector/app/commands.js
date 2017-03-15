@@ -1,6 +1,6 @@
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {receiveNavigationData} from '../../responses'
-import {parseCategories} from '../parser'
+import {parseCategories} from '../parsers'
 
 import {API_END_POINT_URL, DW_CLIENT_ID, SITE_ID} from '../constants'
 

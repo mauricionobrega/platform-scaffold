@@ -1,5 +1,5 @@
 
-import {SITE_ID} from '../constants'
+import {SITE_ID} from './constants'
 
 const parseCarouselItems = (imageGroups) => {
     const largeImages = imageGroups.filter((imageGroup) => imageGroup.view_type === 'large')[0]
