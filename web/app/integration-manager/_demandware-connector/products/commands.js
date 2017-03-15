@@ -1,9 +1,9 @@
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
-import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../../product-details/responses'
+import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../../products/responses'
 import {receiveCartContents} from '../../../store/cart/actions'
 import {urlToPathKey} from '../../../utils/utils'
 import {requestHeaders, initDemandWareSession, getBasketID} from '../app/commands'
-import {parseProductDetails, getCurrentProductID, parseBasketContents} from '../parser'
+import {parseProductDetails, getCurrentProductID, parseBasketContents, getProductHref} from '../parsers'
 import {API_END_POINT_URL} from '../constants'
 
 export const fetchPdpData = () => (dispatch) => {
@@ -18,7 +18,11 @@ export const fetchPdpData = () => (dispatch) => {
             return makeRequest(productURL, options)
                 .then((response) => response.json())
                 .then((responseJSON) => {
-                    dispatch(receiveProductDetailsProductData({[productPathKey]: parseProductDetails(responseJSON)}))
+                    const productDetailsData = parseProductDetails(responseJSON)
+                    productDetailsData.availableVariations.forEach(({variationID}) => {
+                        dispatch(receiveProductDetailsProductData({[getProductHref(variationID)]: productDetailsData}))
+                    })
+                    dispatch(receiveProductDetailsProductData({[productPathKey]: productDetailsData}))
                     dispatch(receiveProductDetailsUIData({[productPathKey]: {itemQuantity: responseJSON.step_quantity, ctaText: 'Add To Cart'}}))
                 })
         })
@@ -35,4 +39,18 @@ export const fetchPdpData = () => (dispatch) => {
                 })
         })
 
+}
+
+export const getProductVariationData = (variationSelections, availableVariations) => (dispatch) => {
+    if (variationSelections.color && variationSelections.size) {
+        // TODO: ^^ don't hard code this check, use the state instead?
+        const selectedVariationData = availableVariations.filter(({variationValues: {color, size}}) => {
+            return color === variationSelections.color && size === variationSelections.size
+        })[0]
+        if (selectedVariationData) {
+            browserHistory.push({
+                pathname: getProductHref(selectedVariationData.variationID)
+            })
+        }
+    }
 }

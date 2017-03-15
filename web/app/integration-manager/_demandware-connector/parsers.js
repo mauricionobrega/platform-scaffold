@@ -45,7 +45,6 @@ export const parseBasketContents = ({product_items, product_sub_total}) => {
     /* eslint-enable camelcase:  */
 }
 
-// TODO: find a better way to get this URL
 export const getProductHref = (productID) => `/s/2017refresh/${productID}.html`
 
 export const parseProductHit = ({product_id, product_name, price, image}) => {
