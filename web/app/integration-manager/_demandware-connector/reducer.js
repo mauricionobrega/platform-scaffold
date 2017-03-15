@@ -1,12 +1,14 @@
 import {handleActions} from 'redux-actions'
-import {receiveFormInfo} from '../actions'
 
 import Immutable from 'immutable'
 
+// import {someAction} from './actions'
+
 const initialState = Immutable.Map()
 
+// Add Demandware-specific actions here
 const reducer = handleActions({
-    [receiveFormInfo]: (state) => state
+    // [someAction]: (state, {payload}) => state.mergeDeep(payload)
 }, initialState)
 
 export default reducer
