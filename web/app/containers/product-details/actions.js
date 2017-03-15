@@ -1,10 +1,12 @@
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {createAction} from '../../utils/utils'
+import {SubmissionError} from 'redux-form'
 
 import * as selectors from './selectors'
 import * as appSelectors from '../app/selectors'
+import {getFormValues} from '../../store/form/selectors'
 
-import {addToCart} from '../../integration-manager/commands'
+import {addToCart, getProductVariationData} from '../../integration-manager/commands'
 import {openModal, closeModal} from '../../store/modals/actions'
 import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from './constants'
 
@@ -34,19 +36,41 @@ export const goToCheckout = () => (dispatch) => {
     }
 }
 
-export const submitCartForm = () => (dispatch, getStore) => {
-    const key = appSelectors.getCurrentPathKey(getStore())
-    const qty = selectors.getItemQuantity(getStore())
+
+export const submitCartForm = (formValues) => (dispatch, getStore) => {
+    const currentState = getStore()
+    const key = appSelectors.getCurrentPathKey(currentState)
+    const qty = selectors.getItemQuantity(currentState)
+    const variations = selectors.getVariationOptions(currentState)
     dispatch(addToCartStarted())
-    return dispatch(addToCart(key, qty))
-        .then(() => {
-            dispatch(openModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL))
-        })
-        .catch((error) => {
-            // TODO?? How do we communicate errors to the user?? Modal?
-            console.error(`Error adding to cart: ${error}`)
-        })
-        .then(() => {
-            dispatch(addToCartComplete())
-        })
+
+    return new Promise((resolve, reject) => {
+        const errors = {}
+        if (variations) {
+            variations.toJS().forEach(({id, name}) => {
+                if (!formValues[id]) {
+                    errors[id] = `Please select a ${name}.`
+                }
+            })
+        }
+        if (Object.keys(errors).length) {
+            return reject(new SubmissionError(errors))
+        }
+        return resolve(true)
+    })
+    .then(() => dispatch(addToCart(key, qty)))
+    .then(() => dispatch(openModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL)))
+    .catch((error) => {
+        // TODO?? How do we communicate errors to the user?? Modal?
+        console.error(`Error adding to cart: ${error}`)
+    })
+    .then(() => dispatch(addToCartComplete()))
+
+}
+
+export const onVariationBlur = () => (dispatch, getStore) => {
+    const currentState = getStore()
+    const variationSelections = getFormValues('product-add-to-cart')(currentState)
+    const availableVariations = selectors.getProductVariations(currentState).toJS()
+    return dispatch(getProductVariationData(variationSelections, availableVariations))
 }

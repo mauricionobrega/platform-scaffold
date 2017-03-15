@@ -1,14 +1,17 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
+import * as ReduxForm from 'redux-form'
 import {createStructuredSelector} from 'reselect'
 import * as selectors from '../selectors'
 import * as actions from '../actions'
+import {selectorToJS} from '../../../utils/selector-utils'
 
+import ProductDetailsVariations from './product-details-variations'
 import Button from 'progressive-web-sdk/dist/components/button'
 import Icon from 'progressive-web-sdk/dist/components/icon'
 import Stepper from 'progressive-web-sdk/dist/components/stepper'
 
-const ProductDetailsAddToCart = ({quantity, ctaText, setQuantity, onSubmit, disabled}) => {
+const ProductDetailsAddToCart = ({quantity, ctaText, setQuantity, onSubmit, disabled, handleSubmit}) => {
     const stepperProps = {
         decrementIcon: 'minus',
         disabled,
@@ -20,7 +23,9 @@ const ProductDetailsAddToCart = ({quantity, ctaText, setQuantity, onSubmit, disa
     }
 
     return (
-        <form className="u-padding-start-md u-padding-end-md">
+        <form className="u-padding-start-md u-padding-end-md" onSubmit={handleSubmit(onSubmit)}>
+            <ProductDetailsVariations />
+
             <div className="u-margin-top-lg">
                 <label htmlFor="quantity">Quantity</label>
 
@@ -36,12 +41,11 @@ const ProductDetailsAddToCart = ({quantity, ctaText, setQuantity, onSubmit, disa
             </div>
 
             <Button
-                type="button"
+                type="submit"
                 icon="plus"
                 title={ctaText}
                 showIconText={true}
                 className="c--primary u-width-full u-text-uppercase u-margin-bottom-lg t-product-details__add-to-cart"
-                onClick={onSubmit}
                 disabled={disabled}
             />
         </form>
@@ -53,13 +57,16 @@ ProductDetailsAddToCart.propTypes = {
     onSubmit: PropTypes.func.isRequired,
     ctaText: PropTypes.string,
     disabled: PropTypes.bool,
+    handleSubmit: PropTypes.func,
+    initialValues: PropTypes.object,
     quantity: PropTypes.number
 }
 
 const mapStateToProps = createStructuredSelector({
     ctaText: selectors.getCTAText,
     quantity: selectors.getItemQuantity,
-    disabled: selectors.getAddToCartDisabled
+    disabled: selectors.getAddToCartDisabled,
+    initialValues: selectorToJS(selectors.getProductInitialValues)
 })
 
 const mapDispatchToProps = {
@@ -67,7 +74,12 @@ const mapDispatchToProps = {
     onSubmit: actions.submitCartForm
 }
 
+const ProductDetailsAddToCartReduxForm = ReduxForm.reduxForm({
+    form: 'product-add-to-cart',
+    enableReinitialize: true
+})(ProductDetailsAddToCart)
+
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(ProductDetailsAddToCart)
+)(ProductDetailsAddToCartReduxForm)

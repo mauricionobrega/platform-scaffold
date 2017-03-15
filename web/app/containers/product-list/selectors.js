@@ -29,6 +29,8 @@ export const getHasProducts = createSelector(
 
 export const getNumItems = createGetSelector(getSelectedCategory, 'itemCount')
 export const getProductListTitle = createGetSelector(getSelectedCategory, 'title')
+export const getProductListParentHref = createGetSelector(getSelectedCategory, 'parentHref', '/')
+export const getProductListParentName = createGetSelector(getSelectedCategory, 'parentName', 'Home')
 export const getNoResultsText = createGetSelector(getSelectedCategory, 'noResultsText')
 
 export const getProductListProducts = createSelector(

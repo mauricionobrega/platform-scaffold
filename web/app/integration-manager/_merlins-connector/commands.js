@@ -31,7 +31,6 @@ export const addToCart = (key, qty) => (dispatch, getStore) => {
         ...formInfo.get('hiddenInputs').toJS(),
         qty
     }
-
     return makeFormEncodedRequest(formInfo.get('submitUrl'), formValues, {method: formInfo.get('method')})
         .then(() => {
             return dispatch(getCart())

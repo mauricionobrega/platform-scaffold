@@ -1,9 +1,11 @@
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {urlToPathKey} from '../../utils/utils'
+import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {receiveCartContents} from '../../store/cart/actions'
 import {receiveHomeData, receiveNavigationData} from '../responses'
-import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../product-details/responses'
-import {parseProductDetails, parseBasketContents} from './parser'
+import {receiveProductDetailsProductData, receiveProductListProductData, receiveProductDetailsUIData} from '../products/responses'
+import {receiveCategory} from '../categories/responses'
+import {parseProductDetails, parseBasketContents, parseProductListData, getProductHref} from './parser'
 
 const SITE_ID = 'Sites-2017refresh-Site'
 const API_TYPE = 'shop'
@@ -33,13 +35,7 @@ const initDemandWareSession = () => {
         })
 }
 
-const getBasketID = () => {
-    const basketMatch = /mob-basket=([^;]+);/.exec(document.cookie)
-    if (basketMatch) {
-        return new Promise((resolve) => {
-            resolve(basketMatch[1])
-        })
-    }
+const createNewBasket = () => {
     const options = {
         method: 'POST',
         headers: requestHeaders
@@ -48,10 +44,22 @@ const getBasketID = () => {
         .then((response) => response.json())
         .then((responseJSON) => {
             const basketID = responseJSON.basket_id
-
-            document.cookie = `mob-basket=${basketID}`
-            return basketID
+            if (basketID) {
+                document.cookie = `mob-basket=${basketID}`
+                return basketID
+            }
+            throw new Error('Unable to create new basket')
         })
+}
+
+const getBasketID = () => {
+    const basketMatch = /mob-basket=([^;]+);/.exec(document.cookie)
+    if (basketMatch) {
+        return new Promise((resolve) => {
+            resolve(basketMatch[1])
+        })
+    }
+    return createNewBasket()
 }
 
 const getCurrentProductID = () => {
@@ -104,7 +112,7 @@ export const fetchHomeData = () => (dispatch) => {
 }
 
 export const fetchPdpData = () => (dispatch) => {
-    const productURL = `${API_END_POINT_URL}/products/${getCurrentProductID()}?expand=prices,images`
+    const productURL = `${API_END_POINT_URL}/products/${getCurrentProductID()}?expand=prices,images,variations`
     const productPathKey = urlToPathKey(window.location.href)
     return initDemandWareSession()
         .then(() => {
@@ -115,8 +123,13 @@ export const fetchPdpData = () => (dispatch) => {
             return makeRequest(productURL, options)
                 .then((response) => response.json())
                 .then((responseJSON) => {
-                    dispatch(receiveProductDetailsProductData({[productPathKey]: parseProductDetails(responseJSON)}))
+                    const productDetailsData = parseProductDetails(responseJSON)
+                    productDetailsData.availableVariations.forEach(({variationID}) => {
+                        dispatch(receiveProductDetailsProductData({[getProductHref(variationID)]: productDetailsData}))
+                    })
+                    dispatch(receiveProductDetailsProductData({[productPathKey]: productDetailsData}))
                     dispatch(receiveProductDetailsUIData({[productPathKey]: {itemQuantity: responseJSON.step_quantity, ctaText: 'Add To Cart'}}))
+
                 })
         })
         .then(getBasketID)
@@ -134,16 +147,75 @@ export const fetchPdpData = () => (dispatch) => {
 
 }
 
+export const fetchProductListData = (url) => (dispatch) => {
+    const categoryIDMatch = /\/([^/]+)$/.exec(url)
+    const categoryID = categoryIDMatch ? categoryIDMatch[1] : ''
+    const urlPathKey = urlToPathKey(url)
+
+    return initDemandWareSession()
+        .then(() => {
+            const options = {
+                method: 'GET',
+                headers: requestHeaders
+            }
+            makeRequest(`${API_END_POINT_URL}/categories/${categoryID}`, options)
+                .then((response) => response.json())
+                .then((responseJSON) => {
+                    dispatch(receiveCategory({
+                        // TODO: figure out breadcrumb
+                        [urlPathKey]: {title: responseJSON.name}
+                    }))
+                    if (responseJSON.parent_category_id !== 'root') {
+                        makeRequest(`${API_END_POINT_URL}/categories/${responseJSON.parent_category_id}`, options)
+                            .then((response) => response.json())
+                            .then((responseJSON) => {
+                                dispatch(receiveCategory({
+                                    [urlPathKey]: {parentName: responseJSON.name, parentHref: `/s/${SITE_ID}/${responseJSON.id}`}
+                                }))
+                            })
+                    }
+                })
+                .then(() => {
+                    makeRequest(`${API_END_POINT_URL}/product_search?expand=images,prices&q=&refine_1=cgid=${categoryID}`, options)
+                        .then((response) => response.json())
+                        .then(({hits}) => {
+                            const productListData = parseProductListData(hits)
+                            const categoryData = {
+                                products: Object.keys(productListData)
+                            }
+
+                            dispatch(receiveProductListProductData(productListData))
+                            dispatch(receiveCategory({
+                                [urlPathKey]: categoryData
+                            }))
+                        })
+                })
+        })
+}
+
+export const getProductVariationData = (variationSelections, availableVariations) => (dispatch) => {
+    if (variationSelections.color && variationSelections.size) {
+        // TODO: ^^ don't hard code this check, use the state instead?
+        const selectedVariationData = availableVariations.filter(({variationValues: {color, size}}) => {
+            return color === variationSelections.color && size === variationSelections.size
+        })[0]
+        if (selectedVariationData) {
+            browserHistory.push({
+                pathname: getProductHref(selectedVariationData.variationID)
+            })
+        }
+    }
+}
 
 export const addToCart = () => (dispatch) => {
-    return initDemandWareSession()
-        .then(getBasketID)
+    const options = {
+        method: 'POST',
+        headers: requestHeaders,
+        body: `[{product_id: "${getCurrentProductID()}" , quantity: 1.00}]`
+    }
+
+    return getBasketID()
         .then((basketID) => {
-            const options = {
-                method: 'POST',
-                headers: requestHeaders,
-                body: `[{product_id: "${getCurrentProductID()}" , quantity: 1.00}]`
-            }
             // TO DO: Add error handling here
             return makeRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, options)
                 .then((response) => {
@@ -152,8 +224,9 @@ export const addToCart = () => (dispatch) => {
                     }
                     throw new Error('Unable to add item to cart')
                 })
-                .then((responseJSON) => {
-                    return dispatch(receiveCartContents(parseBasketContents(responseJSON)))
+                .then((responseJSON) => dispatch(receiveCartContents(parseBasketContents(responseJSON))))
+                .catch((error) => {
+                    throw error
                 })
         })
 }

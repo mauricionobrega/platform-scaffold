@@ -21,3 +21,5 @@ export const submitShipping = (...args) => connector.submitShipping(...args)
 export const checkCustomerEmail = (...args) => connector.checkCustomerEmail(...args)
 
 export const submitSignIn = (...args) => connector.submitSignIn(...args)
+
+export const getProductVariationData = (...args) => connector.getProductVariationData(...args)
