@@ -24,7 +24,6 @@
     "redux-thunk": "2.1.0",
     "reselect": "2.5.4",
     "reselect-immutable-helpers": "1.2.1",
-    "sw-toolbox": "3.4.0",
     "whatwg-fetch": "1.0.0"
   },
   "devDependencies": {
