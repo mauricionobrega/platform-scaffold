@@ -1,3 +1,6 @@
+
+import {SITE_ID} from '../constants'
+
 const parseCarouselItems = (imageGroups) => {
     const largeImages = imageGroups.filter((imageGroup) => imageGroup.view_type === 'large')[0]
     return largeImages.images.map(({alt, link}, idx) => ({alt, img: link, position: idx.toString()}))
@@ -33,4 +36,15 @@ export const parseBasketContents = ({product_items, product_sub_total}) => {
         subtotal: `$${product_sub_total.toFixed(2).toString()}`,
         summary_count: items && items.length
     }
+}
+
+export const parseCategories = (categories) => {
+    return categories.map((category) => {
+        return {
+            title: category.name,
+            path: `/s/${SITE_ID}/${category.id}`,
+            isCategoryLink: true,
+            children: category.categories ? parseCategories(category.categories) : []
+        }
+    })
 }
