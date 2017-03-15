@@ -5,7 +5,7 @@ import {urlToPathKey} from '../../utils/utils'
 
 import * as appActions from './actions'
 
-import {onPageReceived, receiveAppData, setPageFetchError} from '../../integration-manager/responses'
+import {receiveAppData, setPageFetchError} from '../../integration-manager/responses'
 import {CURRENT_URL, FETCHED_PATHS} from './constants'
 
 const initialState = fromJS({
@@ -26,7 +26,7 @@ export default handleActions({
         const path = urlToPathKey(url)
         return state.setIn([FETCHED_PATHS, path], true)
     },
-    [onPageReceived]: (state, {payload: {url}}) => {
+    [appActions.setFetchedPage]: (state, {payload: {url}}) => {
         const path = urlToPathKey(url)
         return state.setIn([FETCHED_PATHS, path], true)
     },

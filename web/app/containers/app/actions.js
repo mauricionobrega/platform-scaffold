@@ -65,6 +65,8 @@ export const onPageReceived = createAction('On page received',
     'routeName'
 )
 
+export const setFetchedPage = createAction('Set fetched page', 'url')
+
 export const receiveData = createAction('Receive App Data')
 export const process = ({payload: {$response}}) => {
     return receiveData(appParser($response))
