@@ -24,7 +24,7 @@ const CheckoutHeader = function({headerHasSignIn, isLoggedIn, isRunningInAstro})
 
                 <Icon name="lock" size="medium" className="u-flex-none" />
 
-                {(!isLoggedIn && !headerHasSignIn) &&
+                {(!isLoggedIn && headerHasSignIn) &&
                     <div className="u-flex u-text-align-end">
                         <Button
                             className="u-text-letter-spacing-normal"
