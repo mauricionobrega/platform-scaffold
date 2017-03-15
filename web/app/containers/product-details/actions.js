@@ -54,7 +54,6 @@ export const submitCartForm = (formValues) => (dispatch, getStore) => {
             })
         }
         if (Object.keys(errors).length) {
-            // dispatch(addToCartComplete())
             return reject(new SubmissionError(errors))
         }
         return resolve(true)
