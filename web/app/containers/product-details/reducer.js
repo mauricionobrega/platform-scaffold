@@ -5,7 +5,7 @@ import * as productDetailsActions from './actions'
 import {
     receiveProductDetailsProductData,
     receiveProductDetailsUIData
-} from '../../integration-manager/product-details/responses'
+} from '../../integration-manager/products/responses'
 
 import {mergePayloadForActions} from '../../utils/reducer-utils'
 

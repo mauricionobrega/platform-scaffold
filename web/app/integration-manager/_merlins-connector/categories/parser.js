@@ -1,7 +1,7 @@
 import {parseTextLink, getTextFrom} from '../../../utils/parser-utils'
 import {urlToPathKey} from '../../../utils/utils'
 
-const productListParser = ($, $html) => {
+const categoryProductsParser = ($, $html) => {
     const $numItems = $html.find('#toolbar-amount .toolbar-number').first()
 
     const products = $
@@ -19,4 +19,4 @@ const productListParser = ($, $html) => {
     }
 }
 
-export default productListParser
+export default categoryProductsParser

@@ -1,6 +1,6 @@
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {makeFormEncodedRequest, makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
-import {fetchPageData} from './utils'
+import {fetchPageData} from './app/commands'
 
 import {checkoutShippingParser, parseCheckoutData} from './checkout/parsers'
 import * as responses from './../responses'
@@ -11,7 +11,9 @@ import {getCart} from '../../store/cart/actions'
 import {removeAllNotifications} from '../../containers/app/actions'
 
 import * as homeCommands from './home/commands'
-import * as productDetailsCommands from './product-details/commands'
+import * as productsCommands from './products/commands'
+import * as categoriesCommands from './categories/commands'
+
 
 export const fetchCheckoutShippingData = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
@@ -151,5 +153,6 @@ export default {
     submitSignIn,
 
     home: homeCommands,
-    productDetails: productDetailsCommands
+    products: productsCommands,
+    categories: categoriesCommands
 }

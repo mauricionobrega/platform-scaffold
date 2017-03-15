@@ -1,5 +1,6 @@
 import {extractMagentoJson} from '../../../utils/magento-utils'
-import {getTextFrom, parseTextLink} from '../../../utils/parser-utils'
+import {getTextFrom, parseTextLink, parseImage} from '../../../utils/parser-utils'
+import {urlToPathKey} from '../../../utils/utils'
 
 const UENC_REGEX = /\/uenc\/([^/]+),\//
 
@@ -80,4 +81,27 @@ export const pdpAddToCartFormParser = ($, $html) => {
         itemQuantity: parseInt($form.find('#qty').val()),
         ctaText: $form.find('.tocart').text()
     }
+}
+
+export const productListParser = ($, $html) => {
+    const $products = $html.find('.item.product-item')
+    const productMap = {}
+    $products.each((_, product) => {
+        const $product = $(product)
+        const link = parseTextLink($product.find('.product-item-link'))
+        const image = parseImage($product.find('.product-image-photo'))
+        productMap[urlToPathKey(link.href)] = {
+            title: link.text.trim(),
+            price: getTextFrom($product, '.price'),
+            link,
+            image,
+            carouselItems: [
+                {
+                    img: image.src,
+                    position: '1'
+                }
+            ]
+        }
+    })
+    return productMap
 }

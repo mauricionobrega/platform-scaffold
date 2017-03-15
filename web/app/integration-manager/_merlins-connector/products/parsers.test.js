@@ -1,7 +1,7 @@
 /* eslint-env jquery, jest, node */
 import {jquerifyHtmlFile} from 'progressive-web-sdk/dist/test-utils'
 import {isURL} from 'validator'
-import {productDetailsParser, productDetailsUIParser} from './parsers'
+import {productDetailsParser, productDetailsUIParser, productListParser} from './parsers'
 
 /* eslint-disable max-nested-callbacks */
 
@@ -44,6 +44,25 @@ describe('the ProductDetails UI parser', () => {
         expect(parsedContent.formInfo.method).toBe('post')
         Object.keys(parsedContent.formInfo.hiddenInputs).forEach((key) => {
             expect(typeof parsedContent.formInfo.hiddenInputs[key]).toBe('string')
+        })
+    })
+})
+
+describe('the ProductList product parser', () => {
+    const $content = jquerifyHtmlFile(`${__dirname}/product-list.test.html`)
+    const parsedContent = productListParser($, $content)
+
+    it('should extract the product list content from the rendered HTML', () => {
+        const urls = Object.keys(parsedContent)
+        expect(urls.length).toBe(7)
+        const expected = {
+            productKeys: ['title', 'price', 'link', 'image', 'carouselItems'],
+            imageKeys: ['title', 'alt', 'src']
+        }
+        // Test that the shallow properties of the product list object are correct
+        urls.forEach((url) => {
+            expect(Object.keys(parsedContent[url])).toEqual(expected.productKeys)
+            expect(Object.keys(parsedContent[url].image)).toEqual(expected.imageKeys)
         })
     })
 })
