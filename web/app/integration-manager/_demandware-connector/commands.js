@@ -60,6 +60,6 @@ export default {
     submitSignIn,
 
     home: homeCommands,
-    productDetails: productsCommands,
+    products: productsCommands,
     categories: categoriesCommands
 }

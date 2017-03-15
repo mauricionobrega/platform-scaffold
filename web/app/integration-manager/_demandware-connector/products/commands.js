@@ -1,4 +1,5 @@
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../../products/responses'
 import {receiveCartContents} from '../../../store/cart/actions'
 import {urlToPathKey} from '../../../utils/utils'
@@ -7,7 +8,7 @@ import {parseProductDetails, getCurrentProductID, parseBasketContents, getProduc
 import {API_END_POINT_URL} from '../constants'
 
 export const fetchPdpData = () => (dispatch) => {
-    const productURL = `${API_END_POINT_URL}/products/${getCurrentProductID()}?expand=prices,images`
+    const productURL = `${API_END_POINT_URL}/products/${getCurrentProductID()}?expand=prices,images,variations`
     const productPathKey = urlToPathKey(window.location.href)
     return initDemandWareSession()
         .then(() => {

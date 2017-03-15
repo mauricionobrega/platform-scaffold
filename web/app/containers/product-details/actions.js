@@ -6,7 +6,8 @@ import * as selectors from './selectors'
 import * as appSelectors from '../app/selectors'
 import {getFormValues} from '../../store/form/selectors'
 
-import {addToCart, getProductVariationData} from '../../integration-manager/commands'
+import {addToCart} from '../../integration-manager/commands'
+import {getProductVariationData} from '../../integration-manager/products/commands'
 import {openModal, closeModal} from '../../store/modals/actions'
 import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from './constants'
 
