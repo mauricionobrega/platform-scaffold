@@ -13,7 +13,7 @@ const ProductItem = ({
     image,
     price,
     title,
-    widthPercentage
+    customWidth
 }) => {
     const classes = classNames('c-product-item', 'u-flexbox', 'u-row-reverse', className)
 
@@ -43,7 +43,7 @@ const ProductItem = ({
 
 
             {image &&
-                <div className="u-padding-end u-flex-none" style={{width: widthPercentage}}>
+                <div className="u-padding-end u-flex-none" style={{width: customWidth}}>
                     {image}
                 </div>
             }
@@ -84,9 +84,9 @@ ProductItem.propTypes = {
     price: PropTypes.node,
 
     /**
-     * Designates the image width
+     * Designates the custom width that accepets valid css units
      */
-    widthPercentage: PropTypes.string
+    customWidth: PropTypes.string
 }
 
 export default ProductItem

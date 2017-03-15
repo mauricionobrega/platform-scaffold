@@ -33,7 +33,7 @@ const ProductDetailsItemAddedModal = ({open, onDismiss, quantity, title, price, 
         <div className="u-flexbox u-column u-flex u-padding-md">
             {/* Modal product information */}
             <div className="u-flex u-margin-bottom-md">
-                <ProductItem widthPercentage="20%"
+                <ProductItem customWidth="20%"
                     title={<h2 className="c-h4">{title}</h2>}
                     image={<img role="presentation" src={productImage} alt="" width="60px" />}
                 >

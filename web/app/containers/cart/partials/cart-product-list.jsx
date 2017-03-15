@@ -74,7 +74,7 @@ class CartProductItem extends React.Component {
         } = this.props
 
         return (
-            <ProductItem widthPercentage="40%"
+            <ProductItem customWidth="40%"
                 className={productItemClassNames}
                 title={<h2 className="u-h5 u-text-font-family u-text-semi-bold">{product_name}</h2>}
                 image={<ProductImage {...product_image} />}
