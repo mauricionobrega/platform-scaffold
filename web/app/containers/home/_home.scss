@@ -20,6 +20,11 @@
 
     font-family: $header-font-family;
 
+    // Added with webfontloader. See loadFonts() in app/container.js
+    .wf-active & {
+        font-family: $loaded-header-font-family;
+    }
+
     .pw-carousel__inner {
         max-height: 84vw; // 3
 
