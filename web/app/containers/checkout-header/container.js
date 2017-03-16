@@ -8,7 +8,7 @@ import Button from 'progressive-web-sdk/dist/components/button'
 import {HeaderBar, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 import Icon from 'progressive-web-sdk/dist/components/icon'
 
-const CheckoutHeader = function({isLoggedIn, isRunningInAstro}) {
+const CheckoutHeader = function({headerHasSignIn, isLoggedIn, isRunningInAstro}) {
     if (isRunningInAstro) {
         return null
     }
@@ -24,7 +24,7 @@ const CheckoutHeader = function({isLoggedIn, isRunningInAstro}) {
 
                 <Icon name="lock" size="medium" className="u-flex-none" />
 
-                {!isLoggedIn &&
+                {(!isLoggedIn && headerHasSignIn) &&
                     <div className="u-flex u-text-align-end">
                         <Button
                             className="u-text-letter-spacing-normal"
@@ -42,6 +42,10 @@ const CheckoutHeader = function({isLoggedIn, isRunningInAstro}) {
 }
 
 CheckoutHeader.propTypes = {
+    /**
+    * Whether the header has sign in
+    */
+    headerHasSignIn: React.PropTypes.bool,
     /**
     * Is the user logged in or not
     */
