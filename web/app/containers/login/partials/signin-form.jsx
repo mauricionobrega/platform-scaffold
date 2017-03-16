@@ -1,8 +1,7 @@
 import React, {PropTypes} from 'react'
 import {reduxForm} from 'redux-form'
-import {createStructuredSelector} from 'reselect'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import {connect} from 'react-redux'
-import {selectorToJS} from '../../../utils/selector-utils'
 import * as selectors from '../selectors'
 import {isModalOpen} from '../../../store/selectors'
 import {openModal, closeModal} from '../../../store/modals/actions'
@@ -104,12 +103,12 @@ const ReduxSignInForm = reduxForm({
     form: 'signin-form'
 })(SignInForm)
 
-const mapStateToProps = createStructuredSelector({
-    fields: selectorToJS(selectors.signin.form.getFields),
+const mapStateToProps = createPropsSelector({
+    fields: selectors.signin.form.getFields,
     href: selectors.signin.form.getHref,
     modalOpen: isModalOpen(SIGN_IN_SECTION),
     submitText: selectors.signin.form.getSubmitText,
-    forgotPassword: selectorToJS(selectors.signin.form.getForgotPassword)
+    forgotPassword: selectors.signin.form.getForgotPassword
 })
 
 const mapDispatchToProps = {

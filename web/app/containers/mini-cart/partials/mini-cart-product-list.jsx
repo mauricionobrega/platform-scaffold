@@ -1,8 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import classNames from 'classnames'
-import {selectorToJS} from '../../../utils/selector-utils'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import Image from 'progressive-web-sdk/dist/components/image'
@@ -70,8 +69,8 @@ MiniCartProductList.propTypes = {
     subtotal: PropTypes.string
 }
 
-const mapStateToProps = createStructuredSelector({
-    items: selectorToJS(selectors.getCartItems),
+const mapStateToProps = createPropsSelector({
+    items: selectors.getCartItems,
     subtotal: selectors.getCartSubtotal
 })
 

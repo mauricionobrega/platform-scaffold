@@ -13,7 +13,7 @@ If you will be deploying bundles to Mobify Cloud, then follow these steps:
 - Authorize your computer to push bundles by:
     - Go to [https://cloud.mobify.com/account/](https://cloud.mobify.com/account/) and copy to your clipboard the command under _"For Mobify Client Projects"_
     - Paste the command into your terminal and run it!
-- You're ready to deply bundles!
+- You're ready to deploy bundles!
 
 ## Prevent SSL Errors in Preview (on a Mac)
 
@@ -63,10 +63,10 @@ dispatch(addNotification({
 
 ## Docs with Styleguide
 
-To run the project documentation, including a live styleguide, use:
+To run the project's styleguide, use:
 
 ```
-npm run docs:dev
+npm run styleguide
 ```
 
 ## SVG Images and Icons
@@ -87,6 +87,45 @@ npm run build-sprites
 ```
 
 Icon sprites are a technique for creating easy to use icons. [Learn more here](https://medium.com/@webprolific/why-and-how-i-m-using-svg-over-fonts-for-icons-7241dab890f0#.1v9l7c7q2) about the technique and why we use it over icon fonts.
+
+## Linting
+
+This project comes with a linter setup using `eslint`,
+`eslint-plugin-react`, `eslint-plugin-import`, and
+`eslint-plugin-jsx-a11y`. By default, it uses the Mobify code style
+(https://www.github.com/mobify/mobify-code-style). Run the linter
+using:
+
+```
+npm run lint
+```
+
+If this code style is a poor match for your pre-existing practices,
+there are two ways you can modify the linter configuration to suit
+your use case better. For small changes, you can add rules to the
+`.eslintrc.yml` file in the root web directory. Rules specified in
+this file override rules in the Mobify standard; the following `rules`
+section adds an additional rule and disables an existing rule:
+
+```yaml
+rules:
+  react/react-in-js-scope: error
+  camelcase: off
+```
+
+For larger differences from the Mobify code style, you can replace the
+Mobify config with a different configuration base. This involves
+editing the `extends` section in `.eslintrc.yml`. For example, if you
+use the Airbnb style guide, replace the contents of `.eslintrc.yml`
+with:
+
+```yaml
+extends:
+  - airbnb
+```
+
+These methods can be combined to use a different standard with minor
+local variations.
 
 ## Tests
 
@@ -143,7 +182,7 @@ npm run dev:build # Some assets required by the scaffold build are only created 
 
 Then navigate back to this directory and run:
 ```
-cd ../progressive-web-scaffold/web
+cd ../platform-scaffold/web
 npm link progressive-web-sdk
 npm run dev
 ```

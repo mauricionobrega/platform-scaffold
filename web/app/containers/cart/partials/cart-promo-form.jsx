@@ -20,7 +20,7 @@ const CartPromoForm = (props) => {
                 </ReduxForm.Field>
 
                 <Button type="submit"
-                    className="c--tertiary u-margin-0"
+                    className="c--tertiary u-margin-0 u-text-uppercase"
                     disabled={disabled || submitting}>
                     Apply
                 </Button>
