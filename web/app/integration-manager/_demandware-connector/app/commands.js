@@ -1,5 +1,6 @@
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {receiveNavigationData} from '../../responses'
+import {getCart} from '../cart/commands'
 
 import {API_END_POINT_URL, SITE_ID, REQUEST_HEADERS} from '../constants'
 
@@ -22,7 +23,6 @@ export const initDemandWareSession = () => {
     let authorization
     return makeRequest(`${API_END_POINT_URL}/customers/auth`, options)
         .then((response) => {
-            debugger
             authorization = response.headers.get('Authorization')
             options.headers.Authorization = authorization
             document.cookie = `mob-session-auth=${authorization}`
@@ -69,4 +69,14 @@ export const fetchNavigationData = (headers) => (dispatch) => {
                 }
             }))
         })
+}
+
+export const initApp = () => (dispatch) => {
+    let headers
+    return initDemandWareSession()
+        .then((requestHeaders) => {
+            headers = requestHeaders
+            return dispatch(fetchNavigationData(headers))
+        })
+        .then(() => dispatch(getCart(headers)))
 }

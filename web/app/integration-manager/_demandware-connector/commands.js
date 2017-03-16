@@ -3,16 +3,16 @@ import {receiveCartContents} from '../../store/cart/actions'
 import {parseBasketContents, getCurrentProductID} from './parser'
 
 import {API_END_POINT_URL} from './constants'
-import {initDemandWareSession} from './app/commands'
 
 import * as homeCommands from './home/commands'
 import * as productDetailsCommands from './product-details/commands'
 import * as cartCommands from './cart/commands'
+import * as appCommands from './app/commands'
 
 
 const addToCart = () => (dispatch) => {
     let headers
-    return initDemandWareSession()
+    return appCommands.initDemandWareSession()
         .then((requestHeaders) => {
             headers = requestHeaders
             return cartCommands.getBasketID(headers)
@@ -64,5 +64,6 @@ export default {
 
     home: homeCommands,
     products: productDetailsCommands,
-    cart: cartCommands
+    cart: cartCommands,
+    app: appCommands
 }
