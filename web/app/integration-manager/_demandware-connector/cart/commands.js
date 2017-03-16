@@ -1,6 +1,6 @@
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {receiveCartContents} from '../../cart/responses'
-import {parseBasketContents} from '../parser'
+import {parseBasketContents} from '../parsers'
 import {requestHeaders} from '../app/commands'
 import {API_END_POINT_URL} from '../constants'
 
@@ -36,7 +36,6 @@ export const getCart = () => (dispatch) => {
             return makeRequest(`${API_END_POINT_URL}/baskets/${basketID}`, options)
                 .then((response) => response.json())
                 .then((responseJSON) => {
-                    console.log('GET CART!!!!')
                     dispatch(receiveCartContents(parseBasketContents(responseJSON)))
                 })
         })
