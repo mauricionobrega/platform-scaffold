@@ -1,32 +1,46 @@
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {receiveNavigationData} from '../../responses'
 
-import {API_END_POINT_URL, DW_CLIENT_ID, SITE_ID} from '../constants'
+import {API_END_POINT_URL, SITE_ID, REQUEST_HEADERS} from '../constants'
 
-export const requestHeaders = {
-    'Content-Type': 'application/json',
-    'x-dw-client-id': DW_CLIENT_ID
-}
 
 export const initDemandWareSession = () => {
+    const authorizationMatch = /mob-session-auth=([^;]+);/.exec(document.cookie)
+    if (authorizationMatch) {
+        return new Promise((resolve) => {
+            resolve({
+                ...REQUEST_HEADERS,
+                Authorization: authorizationMatch[1]
+            })
+        })
+    }
     const options = {
         method: 'POST',
         body: '{ type : "session" }',
-        headers: requestHeaders
+        headers: REQUEST_HEADERS
     }
+    let authorization
     return makeRequest(`${API_END_POINT_URL}/customers/auth`, options)
         .then((response) => {
-            // To Do: Add this to the store???
-            requestHeaders.Authorization = response.headers.get('Authorization')
-            options.headers.Authorization = response.headers.get('Authorization')
+            debugger
+            authorization = response.headers.get('Authorization')
+            options.headers.Authorization = authorization
+            document.cookie = `mob-session-auth=${authorization}`
             return makeRequest(`${API_END_POINT_URL}/sessions`, options)
+        })
+        .then(() => {
+            // Once the session has been opened return the authorization headers to the request
+            return {
+                ...REQUEST_HEADERS,
+                Authorization: authorization
+            }
         })
 }
 
-export const fetchNavigationData = () => (dispatch) => {
+export const fetchNavigationData = (headers) => (dispatch) => {
     const options = {
         method: 'GET',
-        headers: requestHeaders
+        headers
     }
     return makeRequest(`${API_END_POINT_URL}/categories/root?levels=2`, options)
         .then((response) => response.json())

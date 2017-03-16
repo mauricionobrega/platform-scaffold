@@ -3,7 +3,7 @@ import {receiveCartContents} from '../../store/cart/actions'
 import {parseBasketContents, getCurrentProductID} from './parser'
 
 import {API_END_POINT_URL} from './constants'
-import {requestHeaders, initDemandWareSession} from './app/commands'
+import {initDemandWareSession} from './app/commands'
 
 import * as homeCommands from './home/commands'
 import * as productDetailsCommands from './product-details/commands'
@@ -11,12 +11,16 @@ import * as cartCommands from './cart/commands'
 
 
 const addToCart = () => (dispatch) => {
+    let headers
     return initDemandWareSession()
-        .then(cartCommands.getBasketID)
+        .then((requestHeaders) => {
+            headers = requestHeaders
+            return cartCommands.getBasketID(headers)
+        })
         .then((basketID) => {
             const options = {
                 method: 'POST',
-                headers: requestHeaders,
+                headers,
                 body: `[{product_id: "${getCurrentProductID()}" , quantity: 1.00}]`
             }
             // TO DO: Add error handling here

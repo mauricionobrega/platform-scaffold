@@ -1,10 +1,17 @@
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {receiveCartContents} from '../../cart/responses'
 import {parseBasketContents} from '../parser'
-import {requestHeaders} from '../app/commands'
+import {initDemandWareSession} from '../app/commands'
 import {API_END_POINT_URL} from '../constants'
 
-export const getBasketID = () => {
+const storeBasketID = (repsonseJSON) => {
+    const basketID = responseJSON.basket_id
+
+    document.cookie = `mob-basket=${basketID}`
+    return basketID
+}
+
+export const getBasketID = (requestHeaders) => {
     const basketMatch = /mob-basket=([^;]+);/.exec(document.cookie)
     if (basketMatch) {
         return new Promise((resolve) => {
@@ -13,15 +20,19 @@ export const getBasketID = () => {
     }
     const options = {
         method: 'POST',
-        headers: requestHeaders
     }
-    return makeRequest(`${API_END_POINT_URL}/baskets`, options)
-        .then((response) => response.json())
-        .then((responseJSON) => {
-            const basketID = responseJSON.basket_id
 
-            document.cookie = `mob-basket=${basketID}`
-            return basketID
+    if (requestHeaders) {
+        return makeRequest(`${API_END_POINT_URL}/baskets`, {...options, headers: requestHeaders})
+            .then((response) => response.json())
+            .then(storeBasketID)
+    }
+
+    return initDemandWareSession()
+        .then((requestHeaders) => {
+            makeRequest(`${API_END_POINT_URL}/baskets`, {...options, headers: requestHeaders})
+                .then((response) => response.json())
+                .then(storeBasketID)
         })
 }
 
@@ -36,7 +47,6 @@ export const getCart = () => (dispatch) => {
             return makeRequest(`${API_END_POINT_URL}/baskets/${basketID}`, options)
                 .then((response) => response.json())
                 .then((responseJSON) => {
-                    console.log('GET CART!!!!')
                     dispatch(receiveCartContents(parseBasketContents(responseJSON)))
                 })
         })
