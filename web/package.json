@@ -95,7 +95,7 @@
   },
   "config": {
     "sdk_generator_version": 2,
-    "min_lighthouse_score": 40
+    "min_lighthouse_score": 80
   },
   "scripts": {
     "add:component": "sdk-generate component",
