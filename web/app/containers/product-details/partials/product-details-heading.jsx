@@ -1,8 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
 import * as selectors from '../selectors'
-import {selectorToJS} from '../../../utils/selector-utils'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import Breadcrumbs from 'progressive-web-sdk/dist/components/breadcrumbs'
@@ -44,8 +43,8 @@ ProductDetailsHeading.propTypes = {
     title: PropTypes.string
 }
 
-const mapStateToProps = createStructuredSelector({
-    breadcrumbs: selectorToJS(selectors.getProductDetailsBreadcrumbs),
+const mapStateToProps = createPropsSelector({
+    breadcrumbs: selectors.getProductDetailsBreadcrumbs,
     title: selectors.getProductTitle,
     price: selectors.getProductPrice
 })

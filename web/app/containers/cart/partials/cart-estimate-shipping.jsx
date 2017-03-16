@@ -1,8 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import * as ReduxForm from 'redux-form'
-import {createStructuredSelector} from 'reselect'
-import {selectorToJS} from '../../../utils/selector-utils'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import {CART_ESTIMATE_SHIPPING_MODAL, ESTIMATE_FORM_NAME} from '../constants'
 import {closeModal} from '../../../store/modals/actions'
 import {isModalOpen} from '../../../store/selectors'
@@ -18,11 +17,11 @@ import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/d
 
 export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateProvinces, submitEstimateShipping, handleSubmit}) => {
     return (
-        <Sheet className="t-cart__estimate-shipping-modal" open={isOpen} onDismiss={closeModal} maskOpacity={0.7} effect="slide-right">
+        <Sheet className="t-cart__estimate-shipping-modal" open={isOpen} onDismiss={closeModal} maskOpacity={0.7} effect="slide-right" coverage="85%">
             <HeaderBar>
                 <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
                     <h1 className="u-h4 u-heading-family u-text-uppercase">
-                        <span className="u-text-lighter">Estimate Shipping</span>
+                        <span className="u-text-extra-lighter">Estimate Shipping</span>
                     </h1>
                 </HeaderBarTitle>
 
@@ -98,10 +97,10 @@ CartEstimateShippingModal.propTypes = {
     submitEstimateShipping: React.PropTypes.func,
 }
 
-const mapStateToProps = createStructuredSelector({
-    countries: selectorToJS(getCountries),
+const mapStateToProps = createPropsSelector({
+    countries: getCountries,
     isOpen: isModalOpen(CART_ESTIMATE_SHIPPING_MODAL),
-    stateProvinces: selectorToJS(getAvailableRegions(ESTIMATE_FORM_NAME))
+    stateProvinces: getAvailableRegions(ESTIMATE_FORM_NAME)
 })
 
 const mapDispatchToProps = {

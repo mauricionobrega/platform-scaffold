@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 import * as ReduxForm from 'redux-form'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import {PAYMENT_EXISTING_CARD, PAYMENT_NEW_CARD, AMEX_CARD, DEFAULT_CARD, NUMBER_FIELD} from '../constants'
 
@@ -173,7 +173,7 @@ CreditCardForm.propTypes = {
     toggleCardInputRadio: PropTypes.func,
 }
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     cvvType: selectors.getCvvType,
     hasExistingCreditCard: selectors.getHasExistingCreditCard,
     isNewCardInputSelected: selectors.getIsNewCardInputSelected
