@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import {selectorToJS} from '../../utils/selector-utils'
+import {extractPathFromURL} from '../../utils/utils'
 
 import Nav from 'progressive-web-sdk/dist/components/nav'
 import NavMenu from 'progressive-web-sdk/dist/components/nav-menu'
@@ -36,13 +37,7 @@ const Navigation = (props) => {
 
     const onPathChange = (path, isLeaf) => {
         if (isLeaf) {
-            let routerPath = path
-            if (!/^\//.test(path)) {
-                const url = new URL(path)
-                // Path in the nav expected to be on this domain. React-router now only accepts
-                // a path, instead of a full url.
-                routerPath = url.pathname + url.search + url.hash
-            }
+            const routerPath = extractPathFromURL(path, true)
             router.push(routerPath)
             setNavigationPath('/')
             closeNavigation()
