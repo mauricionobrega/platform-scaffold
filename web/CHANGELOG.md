@@ -1,5 +1,12 @@
 ## To be released
+
+## 0.16.0 (March 15, 2017)
 - Renamed repo from `progressive-web-scaffold` to `platform-scaffold`
+- More performance updates (i.e. defer font loading, lazy load images etc.)
+- Redesign preloader
+- Fixes for bugs, typoes
+- Add documentation (i.e. Linting configuration)
+- Remove Selector Utils
 
 ## 0.15.1 (March 14, 2017)
 - More performance improvements (i.e. fonts, script loading tweaks, etc.)
