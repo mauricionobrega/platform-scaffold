@@ -27,18 +27,16 @@ export const fetchPdpData = () => (dispatch) => {
                     dispatch(receiveProductDetailsUIData({[productPathKey]: {itemQuantity: responseJSON.step_quantity, ctaText: 'Add To Cart'}}))
                 })
         })
-        .then(getBasketID)
-        .then((basketID) => {
-            const options = {
-                method: 'GET',
-                headers: requestHeaders
-            }
-            return makeRequest(`${API_END_POINT_URL}/baskets/${basketID}`, options)
-                .then((response) => response.json())
-                .then((responseJSON) => {
-                    dispatch(receiveCartContents(parseBasketContents(responseJSON)))
-                })
-        })
+        // .then(getBasketID)
+        // .then((basketID) => {
+        //     const options = {
+        //         method: 'GET',
+        //         headers: requestHeaders
+        //     }
+        //     return makeRequest(`${API_END_POINT_URL}/baskets/${basketID}`, options)
+        //         .then((response) => response.json())
+        //         .then((responseJSON) => dispatch(receiveCartContents(parseBasketContents(responseJSON))))
+        // })
 
 }
 
