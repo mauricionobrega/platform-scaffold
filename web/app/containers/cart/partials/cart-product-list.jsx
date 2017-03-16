@@ -1,7 +1,8 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createPropsSelector} from 'reselect-immutable-helpers'
+import {getHighResImage} from '../../../utils/utils'
 
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import {updateItemQuantity} from '../../../store/cart/actions'
 import {openRemoveItemModal, saveToWishlist} from '../actions'
 import {getCartItems, getCartSummaryCount} from '../../../store/cart/selectors'
@@ -71,12 +72,13 @@ class CartProductItem extends React.Component {
             qty,
             product_price
         } = this.props
+        const imageSrc = getHighResImage(product_image.src)
 
         return (
             <ProductItem customWidth="40%"
                 className={productItemClassNames}
                 title={<h2 className="u-h5 u-text-font-family u-text-semi-bold">{product_name}</h2>}
-                image={<ProductImage {...product_image} />}
+                image={<ProductImage {...product_image} src={imageSrc} />}
                 >
                 <p className="u-color-neutral-50">Color: Maroon</p>
                 <p className="u-margin-bottom-sm u-color-neutral-50">Size: XL</p>
