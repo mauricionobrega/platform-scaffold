@@ -134,7 +134,7 @@
       "!app/vendor/*.js",
       "!app/containers/{templates,reducers}.js",
       "!app/**/{container,constants,selectors}.{js,jsx}",
-      "!{dev-server,proxy,lighthouse,coverage,build,tests,webpack}/**/*.js",
+      "!{dev-server,proxy,lighthouse,coverage,build,tests,webpack,worker}/**/*.js",
       "!styleguide/**/*.{js,jsx}",
       "!app/loader-routes.js",
       "!web/worker/main.js",
