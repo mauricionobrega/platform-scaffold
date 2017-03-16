@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import {selectorToJS} from '../../utils/selector-utils'
+import {extractPathFromURL} from '../../utils/utils'
 
 import Nav from 'progressive-web-sdk/dist/components/nav'
 import NavMenu from 'progressive-web-sdk/dist/components/nav-menu'
@@ -13,6 +14,7 @@ import * as selectors from './selectors'
 import {NAVIGATION_MODAL} from './constants'
 import {isModalOpen} from '../../store/selectors'
 import {closeModal} from '../../store/modals/actions'
+import {setNavigationPath} from './actions'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 import {withRouter} from 'progressive-web-sdk/dist/routing'
 
@@ -31,15 +33,17 @@ const itemFactory = (type, props) => {
 
 
 const Navigation = (props) => {
-    const {path, isOpen, root, closeNavigation, router} = props
+    const {path, isOpen, root, closeNavigation, router, setNavigationPath} = props
 
-    const onPathChange = (path) => {
-        const url = new URL(path)
-        // Path in the nav expected to be on this domain. React-router now only accepts
-        // a path, instead of a full url.
-        const routerPath = url.pathname + url.search + url.hash
-        router.push(routerPath)
-        closeNavigation()
+    const onPathChange = (path, isLeaf) => {
+        if (isLeaf) {
+            const routerPath = extractPathFromURL(path, true)
+            router.push(routerPath)
+            setNavigationPath('/')
+            closeNavigation()
+        } else {
+            setNavigationPath(path)
+        }
     }
 
     return (
@@ -77,6 +81,10 @@ Navigation.propTypes = {
      * The react-router router object.
      */
     router: PropTypes.object,
+    /**
+    * Sets the current path for the navigation menu
+    */
+    setNavigationPath: PropTypes.func
 }
 
 
@@ -87,7 +95,8 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = {
-    closeNavigation: () => closeModal(NAVIGATION_MODAL)
+    closeNavigation: () => closeModal(NAVIGATION_MODAL),
+    setNavigationPath,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Navigation))

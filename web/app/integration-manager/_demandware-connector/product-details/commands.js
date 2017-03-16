@@ -3,7 +3,7 @@ import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../
 import {receiveCartContents} from '../../../store/cart/actions'
 import {urlToPathKey} from '../../../utils/utils'
 import {requestHeaders, initDemandWareSession, getBasketID} from '../app/commands'
-import {parseProductDetails, getCurrentProductID, parseBasketContents} from '../parser'
+import {parseProductDetails, getCurrentProductID, parseBasketContents} from '../parsers'
 import {API_END_POINT_URL} from '../constants'
 
 export const fetchPdpData = () => (dispatch) => {
