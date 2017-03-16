@@ -1,8 +1,9 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
-import {selectorToJS} from '../../utils/selector-utils'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import {isRunningInAstro} from '../../utils/astro-integration'
+import classNames from 'classnames'
+import WebFont from 'webfontloader'
 
 import {hidePreloader} from 'progressive-web-sdk/dist/preloader'
 import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
@@ -33,6 +34,11 @@ class App extends React.Component {
     componentDidMount() {
         hidePreloaderWhenCSSIsLoaded()
         this.props.fetchSvgSprite()
+        WebFont.load({
+            google: {
+                families: ['Oswald:200,400']
+            }
+        })
     }
 
     render() {
@@ -65,10 +71,12 @@ class App extends React.Component {
             {target: '#app-footer', label: 'Skip to footer'},
         ]
 
+        const appClassNames = classNames('t-app', `t-app--${routeProps.routeName}`)
+
         return (
             <div
                 id="app"
-                className={`t-app t-app--${routeProps.routeName}`}
+                className={appClassNames}
                 style={{display: 'none'}}
             >
                 <DangerousHTML html={sprite}>
@@ -136,8 +144,8 @@ App.propTypes = {
     sprite: PropTypes.string,
 }
 
-const mapStateToProps = createStructuredSelector({
-    notifications: selectorToJS(selectors.getNotifications),
+const mapStateToProps = createPropsSelector({
+    notifications: selectors.getNotifications,
     fetchError: selectors.getFetchError,
     hasFetchedCurrentPath: selectors.hasFetchedCurrentPath,
     sprite: selectors.getSvgSprite

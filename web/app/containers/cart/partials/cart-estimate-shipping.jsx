@@ -1,8 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import * as ReduxForm from 'redux-form'
-import {createStructuredSelector} from 'reselect'
-import {selectorToJS} from '../../../utils/selector-utils'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import {CART_ESTIMATE_SHIPPING_MODAL, ESTIMATE_FORM_NAME} from '../constants'
 import {closeModal} from '../../../store/modals/actions'
 import {isModalOpen} from '../../../store/selectors'
@@ -98,10 +97,10 @@ CartEstimateShippingModal.propTypes = {
     submitEstimateShipping: React.PropTypes.func,
 }
 
-const mapStateToProps = createStructuredSelector({
-    countries: selectorToJS(getCountries),
+const mapStateToProps = createPropsSelector({
+    countries: getCountries,
     isOpen: isModalOpen(CART_ESTIMATE_SHIPPING_MODAL),
-    stateProvinces: selectorToJS(getAvailableRegions(ESTIMATE_FORM_NAME))
+    stateProvinces: getAvailableRegions(ESTIMATE_FORM_NAME)
 })
 
 const mapDispatchToProps = {

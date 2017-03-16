@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import {GRID_SETTINGS} from '../constants'
 import {getIsLoggedIn} from '../../app/selectors'
 import * as selectors from '../selectors'
@@ -60,7 +60,7 @@ CheckoutConfirmationDetails.propTypes = {
     isRegistrationFormHidden: PropTypes.bool
 }
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     isLoggedIn: getIsLoggedIn,
     isRegistrationFormHidden: selectors.getIsRegistrationFormHidden
 })

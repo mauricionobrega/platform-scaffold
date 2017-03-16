@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
-import {selectorToJS} from '../../../utils/selector-utils'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import throttle from 'lodash.throttle'
 
@@ -197,8 +196,8 @@ OrderSummary.propTypes = {
     toggleFixedPlaceOrder: PropTypes.func
 }
 
-const mapStateToProps = createStructuredSelector({
-    cartItems: selectorToJS(cartSelectors.getCartItems),
+const mapStateToProps = createPropsSelector({
+    cartItems: cartSelectors.getCartItems,
     subtotalExclTax: cartSelectors.getSubtotalExcludingTax,
     subtotalInclTax: cartSelectors.getSubtotalIncludingTax,
     summaryCount: cartSelectors.getCartSummaryCount,

@@ -1,8 +1,7 @@
 import React, {PropTypes} from 'react'
 import classNames from 'classnames'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
-import {selectorToJS} from '../../../utils/selector-utils'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
 import Icon from 'progressive-web-sdk/dist/components/icon'
@@ -10,20 +9,26 @@ import Image from 'progressive-web-sdk/dist/components/image'
 import ListTile from 'progressive-web-sdk/dist/components/list-tile'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
+import LazyLoadContent from '../../../components/lazy-load-content'
 import * as selectors from '../selectors'
 
 const CategoryImage = ({alt}) => {
+    const placeholder = <SkeletonBlock height="60" width="60" />
+
     if (!alt) {
-        return (<SkeletonBlock height="60px" width="60px" />)
+        return placeholder
     }
+
     return (
-        <Image
-            src={getAssetUrl(`static/img/categories/${alt.trim().replace(/\s+/g, '-')
-            .toLowerCase()}@2x.png`)}
-            alt={alt}
-            height="60px"
-            width="60px"
-        />
+        <LazyLoadContent placeholder={placeholder}>
+            <Image
+                src={getAssetUrl(`static/img/categories/${alt.trim().replace(/\s+/g, '-')
+                        .toLowerCase()}@2x.png`)}
+                alt={alt}
+                height="60"
+                width="60"
+            />
+        </LazyLoadContent>
     )
 }
 
@@ -79,8 +84,8 @@ HomeCategories.propTypes = {
     categories: PropTypes.array.isRequired
 }
 
-const mapStateToProps = createStructuredSelector({
-    categories: selectorToJS(selectors.getHomeCategories)
+const mapStateToProps = createPropsSelector({
+    categories: selectors.getHomeCategories
 })
 
 export default connect(mapStateToProps)(HomeCategories)

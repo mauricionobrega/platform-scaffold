@@ -1,4 +1,5 @@
 ## To be released
+- Renamed repo from `progressive-web-scaffold` to `platform-scaffold`
 
 ## 0.15.1 (March 14, 2017)
 - More performance improvements (i.e. fonts, script loading tweaks, etc.)

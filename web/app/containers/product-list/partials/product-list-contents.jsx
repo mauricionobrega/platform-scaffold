@@ -1,9 +1,8 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as selectors from '../selectors'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
-import {selectorToJS} from '../../../utils/selector-utils'
 
 import List from 'progressive-web-sdk/dist/components/list'
 import Image from 'progressive-web-sdk/dist/components/image'
@@ -62,12 +61,12 @@ ProductListContents.propTypes = {
     numItems: PropTypes.string
 }
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     hasProducts: selectors.getHasProducts,
     contentsLoaded: selectors.getProductListContentsLoaded,
     noResultsText: selectors.getNoResultsText,
     numItems: selectors.getNumItems,
-    products: selectorToJS(selectors.getProductListProducts)
+    products: selectors.getProductListProducts
 })
 
 
