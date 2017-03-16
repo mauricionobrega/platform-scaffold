@@ -1,8 +1,7 @@
 import React, {PropTypes} from 'react'
 import classNames from 'classnames'
 import Button from 'progressive-web-sdk/dist/components/button'
-import Icon from 'progressive-web-sdk/dist/components/icon'
-
+import {noop} from 'progressive-web-sdk/dist/utils/utils'
 
 class Notification extends React.Component {
     constructor(props) {
@@ -94,10 +93,7 @@ class Notification extends React.Component {
 
                 {showRemoveButton &&
                     <div className={`${baseClass}__action u-flex-none u-padding`}>
-                        <Button className="c--icon-only" onClick={this.dismissNotification}>
-                            <Icon name="close" />
-                            <span className="u-visually-hidden">Remove</span>
-                        </Button>
+                        <Button icon="close" title="Remove" onClick={this.dismissNotification} />
                     </div>
                 }
             </div>
@@ -107,7 +103,7 @@ class Notification extends React.Component {
 
 
 Notification.defaultProps = {
-    removeNotification: () => {},
+    removeNotification: noop,
     timeout: 1500
 }
 
