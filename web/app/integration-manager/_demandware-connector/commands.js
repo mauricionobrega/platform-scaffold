@@ -1,6 +1,6 @@
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {receiveCartContents} from '../../store/cart/actions'
-import {parseBasketContents, getCurrentProductID} from './parser'
+import {parseBasketContents, getCurrentProductID} from './parsers'
 
 import {API_END_POINT_URL} from './constants'
 

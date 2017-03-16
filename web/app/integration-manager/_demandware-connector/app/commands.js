@@ -1,6 +1,7 @@
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {receiveNavigationData} from '../../responses'
 import {getCart} from '../cart/commands'
+import {parseCategories} from '../parsers'
 
 import {API_END_POINT_URL, SITE_ID, REQUEST_HEADERS} from '../constants'
 
@@ -45,13 +46,7 @@ export const fetchNavigationData = (headers) => (dispatch) => {
     return makeRequest(`${API_END_POINT_URL}/categories/root?levels=2`, options)
         .then((response) => response.json())
         .then(({categories}) => {
-            const navData = categories.map((category) => {
-                return {
-                    title: category.name,
-                    path: `/s/${SITE_ID}/${category.id}`,
-                    isCategoryLink: true
-                }
-            })
+            const navData = parseCategories(categories)
             return dispatch(receiveNavigationData({
                 path: '/',
                 root: {
