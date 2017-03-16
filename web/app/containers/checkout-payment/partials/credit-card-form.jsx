@@ -3,6 +3,7 @@ import * as ReduxForm from 'redux-form'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
+import classNames from 'classnames'
 import {PAYMENT_EXISTING_CARD, PAYMENT_NEW_CARD, AMEX_CARD, DEFAULT_CARD, NUMBER_FIELD} from '../constants'
 
 // Selectors
@@ -118,7 +119,7 @@ class CreditCardForm extends React.Component {
                             </ReduxForm.Field>
                         </FieldRow>
 
-                        <div className={isNewCardInputSelected ? 'u-padding-md u-margin-top-md u-border-light t-checkout-payment__add-new-card' : 'u-margin-top-md t-checkout-payment__add-new-card'}>
+                        <div className={classNames('u-margin-top-md t-checkout-payment__add-new-card', {'u-padding-md u-border-light': isNewCardInputSelected})}>
                             <FieldRow>
                                 <ReduxForm.Field
                                     component={Field}
