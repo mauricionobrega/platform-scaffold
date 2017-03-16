@@ -1,7 +1,4 @@
-/*
-* This file and the related test files are a dupe of the one in the merlin's connector
-* Remove this file once the cart section has been fully converted to the merlin's connector
-*/
+
 export const textFromFragment = (fragment) => {
     const e = document.createElement('div')
     e.innerHTML = fragment

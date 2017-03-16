@@ -3,15 +3,16 @@ import {receiveCartContents} from '../../store/cart/actions'
 import {parseBasketContents, getCurrentProductID} from './parser'
 
 import {API_END_POINT_URL} from './constants'
-import {requestHeaders, initDemandWareSession, getBasketID} from './app/commands'
+import {requestHeaders, initDemandWareSession} from './app/commands'
 
 import * as homeCommands from './home/commands'
 import * as productDetailsCommands from './product-details/commands'
+import * as cartCommands from './cart/commands'
 
 
 const addToCart = () => (dispatch) => {
     return initDemandWareSession()
-        .then(getBasketID)
+        .then(cartCommands.getBasketID)
         .then((basketID) => {
             const options = {
                 method: 'POST',
@@ -58,5 +59,6 @@ export default {
     submitSignIn,
 
     home: homeCommands,
-    products: productDetailsCommands
+    products: productDetailsCommands,
+    cart: cartCommands
 }

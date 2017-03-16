@@ -23,6 +23,8 @@ export const receiveCartContents = utils.createAction('Received Cart Contents')
 
 /**
  * Get the contents of the users cart
+ * This function is a dupe of the one in the merlin's connector
+ * Remove this function once the cart section has been fully converted to the merlin's connector
  */
 export const getCart = () => (dispatch) => {
     const opts = {
