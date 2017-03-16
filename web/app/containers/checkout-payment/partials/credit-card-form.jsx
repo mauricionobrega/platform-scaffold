@@ -118,7 +118,7 @@ class CreditCardForm extends React.Component {
                             </ReduxForm.Field>
                         </FieldRow>
 
-                        <div className={isNewCardInputSelected ? 'u-padding-md u-margin-top-md u-border-light' : 'u-margin-top-md'}>
+                        <div className={isNewCardInputSelected ? 'u-padding-md u-margin-top-md u-border-light t-checkout-payment__add-new-card' : 'u-margin-top-md t-checkout-payment__add-new-card'}>
                             <FieldRow>
                                 <ReduxForm.Field
                                     component={Field}
@@ -130,7 +130,7 @@ class CreditCardForm extends React.Component {
                             </FieldRow>
 
                             {isNewCardInputSelected &&
-                                <div className="u-margin-top-lg u-padding-top">
+                                <div className="u-margin-top-lg u-padding-top t-checkout-payment__add-new-card-form">
                                     {creditCardForm}
                                 </div>
                             }
