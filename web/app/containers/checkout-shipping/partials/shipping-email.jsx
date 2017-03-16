@@ -36,7 +36,7 @@ const ShippingEmail = ({submitSignIn, customerEmailRecognized, checkCustomerEmai
                             onBlur: checkCustomerEmail
                         }}
                     >
-                        <input type="email" noValidate />
+                        <input type="email" noValidate placeholder="Email Address" />
                     </ReduxForm.Field>
                 </FieldRow>
 
