@@ -71,3 +71,23 @@ describe('Event listeners', () => {
         expect(window.removeEventListener).toHaveBeenCalledWith('scroll', handler)
     })
 })
+
+describe('handleScroll', () => {
+    test('calls checkVisible if not visible', () => {
+        const wrapper = mount(<LazyLoadContent>test</LazyLoadContent>)
+        wrapper.setState({visible: false})
+        wrapper.instance().checkVisible = jest.fn()
+
+        wrapper.instance().handleScroll()
+        expect(wrapper.instance().checkVisible).toBeCalled()
+    })
+
+    test('does nothing if visible', () => {
+        const wrapper = mount(<LazyLoadContent>test</LazyLoadContent>)
+        wrapper.instance().checkVisible = jest.fn()
+
+        expect(wrapper.state('visible')).toBeTruthy()
+        wrapper.instance().handleScroll()
+        expect(wrapper.instance().checkVisible).not.toBeCalled()
+    })
+})
