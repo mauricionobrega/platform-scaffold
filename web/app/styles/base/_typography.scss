@@ -1,15 +1,6 @@
 // Typography
 // ===
 
-// Fonts
-// ---
-
-//
-// 1. Linter workaround
-
-$base-typography__fonts: 'https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,600i,700,700i|Oswald:300,400,700'; // 1
-@import url($base-typography__fonts);
-
 // Headers
 // ---
 
@@ -24,6 +15,11 @@ h6 {
     font-family: $header-font-family;
     font-weight: normal;
     line-height: 1.25;
+
+    // Added with webfontloader. See loadFonts() in app/container.js
+    .wf-active & {
+        font-family: $loaded-header-font-family;
+    }
 }
 
 h1 {

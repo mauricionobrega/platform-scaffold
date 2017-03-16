@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
-import {selectorToJS} from '../../../utils/selector-utils'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as selectors from '../selectors'
 
 import Carousel from 'progressive-web-sdk/dist/components/carousel'
@@ -72,9 +71,9 @@ ProductDetailsCarousel.propTypes = {
     }))
 }
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     contentsLoaded: selectors.getProductDetailsContentsLoaded,
-    items: selectorToJS(selectors.getProductCarouselItems)
+    items: selectors.getProductCarouselItems
 })
 
 export default connect(mapStateToProps)(ProductDetailsCarousel)
