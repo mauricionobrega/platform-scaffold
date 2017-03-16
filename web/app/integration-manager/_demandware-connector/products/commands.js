@@ -1,10 +1,9 @@
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../../products/responses'
-import {receiveCartContents} from '../../../store/cart/actions'
 import {urlToPathKey} from '../../../utils/utils'
-import {requestHeaders, initDemandWareSession, getBasketID} from '../app/commands'
-import {parseProductDetails, getCurrentProductID, parseBasketContents, getProductHref} from '../parsers'
+import {requestHeaders, initDemandWareSession} from '../app/commands'
+import {parseProductDetails, getCurrentProductID, getProductHref} from '../parsers'
 import {API_END_POINT_URL} from '../constants'
 
 export const fetchPdpData = () => (dispatch) => {
