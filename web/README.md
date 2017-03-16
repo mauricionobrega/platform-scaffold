@@ -7,13 +7,18 @@ npm install
 npm run dev
 ```
 
-If you will be deploying bundles to Mobify Cloud, then follow these steps:
+## Deploying Bundle to Mobify Cloud
 
-- Make sure you have the `mobify-client` npm module installed
-- Authorize your computer to push bundles by:
-    - Go to [https://cloud.mobify.com/account/](https://cloud.mobify.com/account/) and copy to your clipboard the command under _"For Mobify Client Projects"_
-    - Paste the command into your terminal and run it!
-- You're ready to deploy bundles!
+If you will be deploying bundles to Mobify Cloud, then follow these steps to authorize your computer:
+- Go to [https://cloud.mobify.com/account/](https://cloud.mobify.com/account/) and find your API key.
+- Run the following command in your terminal: 
+```
+npm run save-credentials -- -u <myEmail@organization.com> -k <myAPIkey>
+```
+- You're now ready to deploy bundles! To deploy bundles you run the following command:
+```
+npm run push -- -m "Test push by <name>"
+```
 
 ## Prevent SSL Errors in Preview
 
