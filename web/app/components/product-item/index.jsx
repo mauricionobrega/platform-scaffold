@@ -74,6 +74,11 @@ ProductItem.propTypes = {
     className: PropTypes.string,
 
     /**
+     * Designates the custom width that accepets valid css units
+     */
+    customWidth: PropTypes.string,
+
+    /**
      * Image of the product. Usually an `<img />` tag or `<Image />` component
      */
     image: PropTypes.node,
@@ -81,12 +86,7 @@ ProductItem.propTypes = {
     /**
      * Designates the ProductItem's unit price
      */
-    price: PropTypes.node,
-
-    /**
-     * Designates the custom width that accepets valid css units
-     */
-    customWidth: PropTypes.string
+    price: PropTypes.node
 }
 
 export default ProductItem
