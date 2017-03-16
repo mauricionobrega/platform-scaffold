@@ -1,23 +1,24 @@
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+
 import {receiveCartContents} from '../../store/cart/actions'
 import {parseBasketContents, getCurrentProductID} from './parsers'
 
 import {API_END_POINT_URL} from './constants'
-import {requestHeaders, initDemandWareSession, getBasketID} from './app/commands'
+import {requestHeaders, getBasketID} from './app/commands'
 
 import * as homeCommands from './home/commands'
-import * as productDetailsCommands from './product-details/commands'
+import * as productsCommands from './products/commands'
+import * as categoriesCommands from './categories/commands'
 
+export const addToCart = () => (dispatch) => {
+    const options = {
+        method: 'POST',
+        headers: requestHeaders,
+        body: `[{product_id: "${getCurrentProductID()}" , quantity: 1.00}]`
+    }
 
-const addToCart = () => (dispatch) => {
-    return initDemandWareSession()
-        .then(getBasketID)
+    return getBasketID()
         .then((basketID) => {
-            const options = {
-                method: 'POST',
-                headers: requestHeaders,
-                body: `[{product_id: "${getCurrentProductID()}" , quantity: 1.00}]`
-            }
             // TO DO: Add error handling here
             return makeRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, options)
                 .then((response) => {
@@ -26,9 +27,7 @@ const addToCart = () => (dispatch) => {
                     }
                     throw new Error('Unable to add item to cart')
                 })
-                .then((responseJSON) => {
-                    return dispatch(receiveCartContents(parseBasketContents(responseJSON)))
-                })
+                .then((responseJSON) => dispatch(receiveCartContents(parseBasketContents(responseJSON))))
         })
 }
 
@@ -58,5 +57,6 @@ export default {
     submitSignIn,
 
     home: homeCommands,
-    products: productDetailsCommands
+    products: productsCommands,
+    categories: categoriesCommands
 }

@@ -34,7 +34,6 @@ const Router = ({store}) => (
             <Route path="/" component={App} onChange={OnChange}>
 
                 <IndexRoute component={Home} routeName="home" />
-                <Route component={Home} path="*/Home-Show*" routeName="home" />
                 <Route component={Cart} path="checkout/cart/" routeName="cart" />
                 <Route component={Login} path="customer/account/login/" routeName="signin" />
                 <Route component={Login} path="customer/account/create/" routeName="register" />
@@ -55,6 +54,16 @@ const Router = ({store}) => (
                 */}
                 <Route component={CheckoutPayment} path="checkout/payment/" fetchUrl="/checkout/#payment" routeName="checkout-payment" Header={CheckoutHeader} Footer={CheckoutFooter} />
                 <Route component={CheckoutConfirmation} path="checkout/onepage/success/" routeName="checkout-confirmation" Header={CheckoutHeader} Footer={CheckoutFooter} />
+
+
+
+                <Route component={Home} path="*/Home-Show*" routeName="home" />
+                <Route component={ProductList} path="*/womens-*" routeName="productListPage" />
+                <Route component={ProductList} path="*/mens-*" routeName="productListPage" />
+                <Route component={ProductList} path="*/newarrivals-*" routeName="productListPage" />
+                <Route component={ProductList} path="*/electronics-*" routeName="productListPage" />
+                <Route component={ProductList} path="*/Search-Show?cgid=root&srule=top-sellers*" routeName="productListPage" />
+
             </Route>
         </SDKRouter>
     </Provider>
