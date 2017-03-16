@@ -58,5 +58,5 @@ export default {
     submitSignIn,
 
     home: homeCommands,
-    productDetails: productDetailsCommands
+    products: productDetailsCommands
 }

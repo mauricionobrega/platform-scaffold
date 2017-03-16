@@ -1,5 +1,5 @@
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
-import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../../product-details/responses'
+import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../../products/responses'
 import {receiveCartContents} from '../../../store/cart/actions'
 import {urlToPathKey} from '../../../utils/utils'
 import {requestHeaders, initDemandWareSession, getBasketID} from '../app/commands'
