@@ -1,14 +1,15 @@
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+
 import {receiveCartContents} from '../../store/cart/actions'
 import {parseBasketContents, getCurrentProductID} from './parsers'
 
 import {API_END_POINT_URL} from './constants'
 
 import * as homeCommands from './home/commands'
-import * as productDetailsCommands from './product-details/commands'
+import * as productsCommands from './products/commands'
+import * as categoriesCommands from './categories/commands'
 import * as cartCommands from './cart/commands'
 import * as appCommands from './app/commands'
-
 
 const addToCart = () => (dispatch) => {
     let headers
@@ -31,8 +32,9 @@ const addToCart = () => (dispatch) => {
                     }
                     throw new Error('Unable to add item to cart')
                 })
-                .then((responseJSON) => {
-                    return dispatch(receiveCartContents(parseBasketContents(responseJSON)))
+                .then((responseJSON) => dispatch(receiveCartContents(parseBasketContents(responseJSON))))
+                .catch((error) => {
+                    throw error
                 })
         })
 }
@@ -63,7 +65,8 @@ export default {
     submitSignIn,
 
     home: homeCommands,
-    products: productDetailsCommands,
+    products: productsCommands,
+    categories: categoriesCommands,
     cart: cartCommands,
     app: appCommands
 }

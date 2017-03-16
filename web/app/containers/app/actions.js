@@ -155,7 +155,6 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                 dispatch(footerActions.process(receivedAction))
                 dispatch(navigationActions.process(receivedAction))
 
-
                 // Finally, let's check if we received a cached response from the
                 // worker, but are in fact 'offline'
                 dispatch(checkIfOffline())

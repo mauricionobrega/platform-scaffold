@@ -55,6 +55,9 @@ export const getProductDetailsBreadcrumbs = createGetSelector(
 )
 export const getProductTitle = createGetSelector(getSelectedProduct, 'title')
 export const getProductPrice = createGetSelector(getSelectedProduct, 'price')
+export const getVariationOptions = createGetSelector(getSelectedProduct, 'variationOptions')
+export const getProductVariations = createGetSelector(getSelectedProduct, 'availableVariations')
+export const getProductInitialValues = createGetSelector(getSelectedProduct, 'initialValues')
 export const getProductDescription = createGetSelector(getSelectedProduct, 'description')
 export const getProductCarouselItems = createGetSelector(getSelectedProduct, 'carouselItems', Immutable.List())
 export const getFirstProductCarouselItem = createGetSelector(
