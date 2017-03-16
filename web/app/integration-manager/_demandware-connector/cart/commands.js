@@ -1,0 +1,43 @@
+import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+import {receiveCartContents} from '../../cart/responses'
+import {parseBasketContents} from '../parser'
+import {requestHeaders} from '../app/commands'
+import {API_END_POINT_URL} from '../constants'
+
+export const getBasketID = () => {
+    const basketMatch = /mob-basket=([^;]+);/.exec(document.cookie)
+    if (basketMatch) {
+        return new Promise((resolve) => {
+            resolve(basketMatch[1])
+        })
+    }
+    const options = {
+        method: 'POST',
+        headers: requestHeaders
+    }
+    return makeRequest(`${API_END_POINT_URL}/baskets`, options)
+        .then((response) => response.json())
+        .then((responseJSON) => {
+            const basketID = responseJSON.basket_id
+
+            document.cookie = `mob-basket=${basketID}`
+            return basketID
+        })
+}
+
+
+export const getCart = () => (dispatch) => {
+    return getBasketID()
+        .then((basketID) => {
+            const options = {
+                method: 'GET',
+                headers: requestHeaders
+            }
+            return makeRequest(`${API_END_POINT_URL}/baskets/${basketID}`, options)
+                .then((response) => response.json())
+                .then((responseJSON) => {
+                    console.log('GET CART!!!!')
+                    dispatch(receiveCartContents(parseBasketContents(responseJSON)))
+                })
+        })
+}

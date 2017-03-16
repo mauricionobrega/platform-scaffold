@@ -54,30 +54,3 @@ export const fetchNavigationData = () => (dispatch) => {
             }))
         })
 }
-
-const createNewBasket = () => {
-    const options = {
-        method: 'POST',
-        headers: requestHeaders
-    }
-    return makeRequest(`${API_END_POINT_URL}/baskets`, options)
-        .then((response) => response.json())
-        .then((responseJSON) => {
-            const basketID = responseJSON.basket_id
-            if (basketID) {
-                document.cookie = `mob-basket=${basketID}`
-                return basketID
-            }
-            throw new Error('Unable to create new basket')
-        })
-}
-
-export const getBasketID = () => {
-    const basketMatch = /mob-basket=([^;]+);/.exec(document.cookie)
-    if (basketMatch) {
-        return new Promise((resolve) => {
-            resolve(basketMatch[1])
-        })
-    }
-    return createNewBasket()
-}

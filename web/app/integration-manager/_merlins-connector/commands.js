@@ -14,6 +14,7 @@ import {removeAllNotifications} from '../../containers/app/actions'
 import * as homeCommands from './home/commands'
 import * as productsCommands from './products/commands'
 import * as categoriesCommands from './categories/commands'
+import * as cartCommands from './cart/commands'
 
 
 export const fetchCheckoutShippingData = (url, routeName) => (dispatch) => {
@@ -159,5 +160,6 @@ export default {
 
     home: homeCommands,
     products: productsCommands,
-    categories: categoriesCommands
+    categories: categoriesCommands,
+    cart: cartCommands
 }
