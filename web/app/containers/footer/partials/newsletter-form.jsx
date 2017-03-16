@@ -5,10 +5,9 @@ import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 
-const NewsletterForm = (props) => {
-    const {handleSubmit, disabled, submitting} = props
+const NewsletterForm = ({handleSubmit, disabled, submitting, onSubmit}) => {
     return (
-        <form onSubmit={handleSubmit} noValidate>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <FieldRow>
                 <ReduxForm.Field component={Field} name="email">
                     <input type="email"
@@ -33,16 +32,18 @@ NewsletterForm.propTypes = {
      * Whether the form is disabled or not
      */
     disabled: React.PropTypes.bool,
-
     /**
      * Redux-form internal
      */
     handleSubmit: React.PropTypes.func,
-
     /**
      * Redux-form internal
      */
-    submitting: React.PropTypes.bool
+    submitting: React.PropTypes.bool,
+    /**
+    * Submits the form
+    */
+    onSubmit: React.PropTypes.func
 }
 
 const validate = (values) => {

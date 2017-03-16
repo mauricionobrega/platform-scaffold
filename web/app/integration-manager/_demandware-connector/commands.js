@@ -33,9 +33,6 @@ const addToCart = () => (dispatch) => {
                     throw new Error('Unable to add item to cart')
                 })
                 .then((responseJSON) => dispatch(receiveCartContents(parseBasketContents(responseJSON))))
-                .catch((error) => {
-                    throw error
-                })
         })
 }
 
