@@ -6,7 +6,6 @@ let connector = {}
 
 export const register = (commands) => {
     connector = commands
-
     registerHome(commands.home)
     registerProducts(commands.products)
     registerCategories(commands.categories)
@@ -21,7 +20,5 @@ export const submitShipping = (...args) => connector.submitShipping(...args)
 export const checkCustomerEmail = (...args) => connector.checkCustomerEmail(...args)
 
 export const submitSignIn = (...args) => connector.submitSignIn(...args)
-
-export const getProductVariationData = (...args) => connector.getProductVariationData(...args)
 
 export const submitNewsletter = (...args) => connector.submitNewsletter(...args)

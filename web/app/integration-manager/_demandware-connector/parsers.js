@@ -1,26 +1,25 @@
+
+import {SITE_ID} from './constants'
+
 const parseCarouselItems = (imageGroups) => {
     const largeImages = imageGroups.filter((imageGroup) => imageGroup.view_type === 'large')[0]
     return largeImages.images.map(({alt, link}, idx) => ({alt, img: link, position: idx.toString()}))
 
 }
 
-export const parseProductDetails = ({name, price, long_description, image_groups, variants, variation_attributes, variation_values}) => {
+export const parseProductDetails = ({name, price, long_description, image_groups}) => {
     return {
         title: name,
         price: `$${price.toFixed(2)}`, // Hard coded until we get prices on the demandware sandbox
         description: long_description,
-        carouselItems: parseCarouselItems(image_groups),
-        variationOptions: variation_attributes,
-        availableVariations: variants.map(({product_id, variation_values}) => {
-            return {
-                variationID: product_id,
-                variationValues: variation_values
-            }
-        }),
-        initialValues: variation_values
+        carouselItems: parseCarouselItems(image_groups)
     }
 }
 
+export const getCurrentProductID = () => {
+    const productIDMatch = /(\d+).html/.exec(window.location.href)
+    return productIDMatch ? productIDMatch[1] : ''
+}
 
 export const parseBasketContents = ({product_items, product_sub_total}) => {
     /* eslint-disable camelcase */
@@ -40,7 +39,17 @@ export const parseBasketContents = ({product_items, product_sub_total}) => {
     /* eslint-enable camelcase:  */
 }
 
-// TODO: find a better way to get this URL
+export const parseCategories = (categories) => {
+    return categories.map((category) => {
+        return {
+            title: category.name,
+            path: `/s/${SITE_ID}/${category.id}`,
+            isCategoryLink: true,
+            children: category.categories ? parseCategories(category.categories) : []
+        }
+    })
+}
+
 export const getProductHref = (productID) => `/s/2017refresh/${productID}.html`
 
 export const parseProductHit = ({product_id, product_name, price, image}) => {

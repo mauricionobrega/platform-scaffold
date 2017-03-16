@@ -89,18 +89,25 @@ export const stripEvent = (fn) => () => fn()
 
 
 /**
- * Converts a full URL to the preferred format for keying the redux store,
- * i.e. the path and query string
- */
-export const urlToPathKey = (url) => {
+* Converts a URL to the relative URL
+* @param {string} url - the url to be converted (if it's already relative it will be returned as is)
+* @param {bool} includeHash - indicates if the URL hash should be included in the relative URL returns
+*/
+export const extractPathFromURL = (url, includeHash) => {
     if (/^\//.test(url)) {
         // The URL is already relative, so just return it
         return url
     }
     const urlObject = new URL(url)
 
-    return `${urlObject.pathname}${urlObject.search}`
+    return `${urlObject.pathname}${urlObject.search}${includeHash ? url.hash : ''}`
 }
+
+/**
+ * Converts a full URL to the preferred format for keying the redux store,
+ * i.e. the path and query string
+ */
+export const urlToPathKey = (url) => extractPathFromURL(url, false)
 
 /**
  * Returns a path given a `location` object.
