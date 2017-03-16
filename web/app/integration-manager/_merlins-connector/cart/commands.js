@@ -1,6 +1,6 @@
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
-import {removeNotification} from '../../containers/app/actions'
-import {receiveCartContents} from '../cart/responses'
+import {removeNotification} from '../../../containers/app/actions'
+import {receiveCartContents} from '../../cart/responses'
 import parseCart from './parser'
 
 const LOAD_CART_SECTION_URL = '/customer/section/load/?sections=cart%2Cmessages&update_section_id=true'

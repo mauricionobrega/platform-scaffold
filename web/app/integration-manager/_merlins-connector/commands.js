@@ -7,7 +7,6 @@ import * as responses from './../responses'
 import {getCustomerEntityID} from '../../store/checkout/selectors'
 import {getIsLoggedIn} from '../../containers/app/selectors'
 import {getShippingFormValues} from '../../store/form/selectors'
-import {getCart} from '../../store/cart/actions'
 import {removeAllNotifications} from '../../containers/app/actions'
 
 
@@ -35,7 +34,7 @@ export const addToCart = (key, qty) => (dispatch, getStore) => {
     }
     return makeFormEncodedRequest(formInfo.get('submitUrl'), formValues, {method: formInfo.get('method')})
         .then(() => {
-            return dispatch(getCart())
+            return dispatch(cartCommands.getCart())
         })
 }
 
