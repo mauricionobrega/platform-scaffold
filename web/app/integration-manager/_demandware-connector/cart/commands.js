@@ -3,12 +3,6 @@ import {receiveCartContents} from '../../cart/responses'
 import {parseBasketContents} from '../parsers'
 import {API_END_POINT_URL} from '../constants'
 
-const storeBasketID = (responseJSON) => {
-    const basketID = responseJSON.basket_id
-
-    document.cookie = `mob-basket=${basketID}`
-    return basketID
-}
 
 export const getBasketID = (headers) => {
     const basketMatch = /mob-basket=([^;]+);/.exec(document.cookie)
@@ -24,7 +18,12 @@ export const getBasketID = (headers) => {
 
     return makeRequest(`${API_END_POINT_URL}/baskets`, options)
         .then((response) => response.json())
-        .then(storeBasketID)
+        .then((responseJSON) => {
+            const basketID = responseJSON.basket_id
+
+            document.cookie = `mob-basket=${basketID}`
+            return basketID
+        })
 }
 
 
