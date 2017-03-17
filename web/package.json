@@ -6,7 +6,7 @@
     "type": "git",
     "url": "http://github.com/mobify/platform-scaffold"
   },
-  "siteUrl": "",
+  "siteUrl": "https://www.merlinspotions.com/",
   "license": "See license in LICENSE",
   "private": true,
   "version": "0.13.1",
@@ -98,7 +98,7 @@
   },
   "config": {
     "sdk_generator_version": 2,
-    "min_lighthouse_score": 40
+    "min_lighthouse_score": 80
   },
   "scripts": {
     "add:component": "sdk-generate component",
