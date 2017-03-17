@@ -17,7 +17,7 @@ import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/d
 
 export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateProvinces, submitEstimateShipping, handleSubmit}) => {
     return (
-        <Sheet className="t-cart__estimate-shipping-modal" open={isOpen} onDismiss={closeModal} maskOpacity={0.7} effect="slide-right">
+        <Sheet className="t-cart__estimate-shipping-modal" open={isOpen} onDismiss={closeModal} maskOpacity={0.7} effect="slide-right" coverage="85%">
             <HeaderBar>
                 <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
                     <h1 className="u-h4 u-heading-family u-text-uppercase">
@@ -34,7 +34,7 @@ export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateP
             <div className="u-padding-md">
                 <form onSubmit={handleSubmit(submitEstimateShipping)}>
                     <FieldRow>
-                        <ReduxForm.Field component={Field} name="country_id" label="Country">
+                        <ReduxForm.Field component={Field} className="pw--has-select" name="country_id" label="Country">
                             <select>
                                 {countries.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
                             </select>
@@ -47,7 +47,7 @@ export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateP
                                 <input type="text" noValidate />
                             </ReduxForm.Field>
                         :
-                            <ReduxForm.Field component={Field} name="region_id" label="State/Province">
+                            <ReduxForm.Field component={Field} className="pw--has-select" name="region_id" label="State/Province">
                                 <select>
                                     {stateProvinces.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
                                 </select>

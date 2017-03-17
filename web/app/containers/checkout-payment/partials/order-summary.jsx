@@ -69,7 +69,7 @@ class OrderSummary extends React.Component {
         return (
             <div className="t-checkout-payment__order-summary">
                 <div className="t-checkout-payment__title u-padding-top-lg u-padding-bottom-md">
-                    <h2 className="u-h4">Order Summary</h2>
+                    <h2 className="u-h4 u-text-uppercase">Order Summary</h2>
                 </div>
 
                 <div className="u-border-light-top u-border-light-bottom u-bg-color-neutral-00 t-checkout-payment__card">
