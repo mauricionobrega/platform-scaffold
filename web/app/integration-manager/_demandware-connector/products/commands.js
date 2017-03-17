@@ -7,7 +7,7 @@ import {parseProductDetails, getCurrentProductID, getProductHref} from '../parse
 import {API_END_POINT_URL} from '../constants'
 
 export const fetchPdpData = () => (dispatch) => {
-    const productURL = `${API_END_POINT_URL}/products/${getCurrentProductID()}?expand=prices,images`
+    const productURL = `${API_END_POINT_URL}/products/${getCurrentProductID()}?expand=prices,images,variations`
     const productPathKey = urlToPathKey(window.location.href)
     return initDemandWareSession()
         .then((headers) => {
