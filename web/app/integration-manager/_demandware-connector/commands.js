@@ -4,7 +4,7 @@ import {receiveCartContents} from '../../store/cart/actions'
 import {parseBasketContents, getCurrentProductID} from './parsers'
 
 import {API_END_POINT_URL} from './constants'
-import {requestHeaders, getBasketID} from './app/commands'
+import {requestHeaders} from './app/commands'
 
 import * as homeCommands from './home/commands'
 import * as productsCommands from './products/commands'
