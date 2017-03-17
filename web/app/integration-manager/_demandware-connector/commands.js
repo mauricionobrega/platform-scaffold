@@ -4,11 +4,12 @@ import {receiveCartContents} from '../../store/cart/actions'
 import {parseBasketContents, getCurrentProductID} from './parsers'
 
 import {API_END_POINT_URL} from './constants'
-import {requestHeaders, getBasketID} from './app/commands'
+import {requestHeaders} from './app/commands'
 
 import * as homeCommands from './home/commands'
 import * as productsCommands from './products/commands'
 import * as categoriesCommands from './categories/commands'
+import * as cartCommands from './cart/commands'
 
 export const addToCart = () => (dispatch) => {
     const options = {
@@ -17,7 +18,7 @@ export const addToCart = () => (dispatch) => {
         body: `[{product_id: "${getCurrentProductID()}" , quantity: 1.00}]`
     }
 
-    return getBasketID()
+    return cartCommands.getBasketID()
         .then((basketID) => {
             // TO DO: Add error handling here
             return makeRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, options)
@@ -58,5 +59,6 @@ export default {
 
     home: homeCommands,
     products: productsCommands,
-    categories: categoriesCommands
+    categories: categoriesCommands,
+    cart: cartCommands
 }

@@ -7,15 +7,21 @@ const parseCarouselItems = (imageGroups) => {
 
 }
 
-export const parseProductDetails = ({name, price, long_description, image_groups}) => {
+export const parseProductDetails = ({name, price, long_description, image_groups, variants, variation_attributes}) => {
     return {
         title: name,
-        price: `$${price.toFixed(2)}`, // Hard coded until we get prices on the demandware sandbox
+        price: `$${price.toFixed(2)}`,
         description: long_description,
-        carouselItems: parseCarouselItems(image_groups)
+        carouselItems: parseCarouselItems(image_groups),
+        variationOptions: variation_attributes,
+        availableVariations: variants.map(({product_id, variation_values}) => {
+            return {
+                variationID: product_id,
+                variationValues: variation_values
+            }
+        })
     }
 }
-
 export const getCurrentProductID = () => {
     const productIDMatch = /(\d+).html/.exec(window.location.href)
     return productIDMatch ? productIDMatch[1] : ''

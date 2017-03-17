@@ -7,16 +7,17 @@ import * as responses from './../responses'
 import {getCustomerEntityID} from '../../store/checkout/selectors'
 import {getIsLoggedIn} from '../../containers/app/selectors'
 import {getShippingFormValues} from '../../store/form/selectors'
-import {getCart} from '../../store/cart/actions'
 import {removeAllNotifications} from '../../containers/app/actions'
+
 
 import * as homeCommands from './home/commands'
 import * as productsCommands from './products/commands'
 import * as categoriesCommands from './categories/commands'
+import * as cartCommands from './cart/commands'
 
 
-export const fetchCheckoutShippingData = (url) => (dispatch) => {
-    return dispatch(fetchPageData(url))
+export const fetchCheckoutShippingData = (url, routeName) => (dispatch) => {
+    return dispatch(fetchPageData(url, routeName))
         .then(([$, $response]) => {
 
             dispatch(responses.receiveCheckoutShippingData(checkoutShippingParser($, $response)))
@@ -33,9 +34,14 @@ export const addToCart = (key, qty) => (dispatch, getStore) => {
     }
     return makeFormEncodedRequest(formInfo.get('submitUrl'), formValues, {method: formInfo.get('method')})
         .then(() => {
-            return dispatch(getCart())
+            return dispatch(cartCommands.getCart())
         })
 }
+
+export const submitNewsletter = (formData) => {
+    return makeFormEncodedRequest('/newsletter/subscriber/new/', formData, {method: 'POST'})
+}
+
 
 export const submitShipping = () => {
     return (dispatch, getState) => {
@@ -153,5 +159,6 @@ export default {
 
     home: homeCommands,
     products: productsCommands,
-    categories: categoriesCommands
+    categories: categoriesCommands,
+    cart: cartCommands
 }

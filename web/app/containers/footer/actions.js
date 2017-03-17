@@ -1,7 +1,7 @@
 import * as parser from './parsers/parser'
 import * as constants from './constants'
 import * as utils from '../../utils/utils'
-import {makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+import * as commands from '../../integration-manager/commands'
 
 export const receiveData = utils.createAction('Receive footer data')
 
@@ -14,7 +14,7 @@ export const newsletterSignupComplete = utils.createAction('Newsletter signup co
     'signupStatus'
 )
 
-export const signUpToNewsletter = (action, method, data) => {
+export const signUpToNewsletter = (data) => {
     return (dispatch) => {
 
         const onSuccess = () => {
@@ -25,7 +25,7 @@ export const signUpToNewsletter = (action, method, data) => {
             dispatch(newsletterSignupComplete(constants.SIGNUP_FAILED))
         }
 
-        return makeFormEncodedRequest(action, data, {method})
+        return commands.submitNewsletter(data)
             .then(onSuccess)
             .catch(onFail)
     }
