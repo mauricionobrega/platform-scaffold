@@ -3,5 +3,7 @@ import {receiveHomeData} from '../../responses'
 export const fetchHomeData = () => (dispatch) => {
     // Banners are being pulled from the bundle right now
     // so we just need an array with the correct number of objects
-    return dispatch(receiveHomeData({banners: [{}, {}, {}]}))
+    return new Promise(() => {
+        return dispatch(receiveHomeData({banners: [{}, {}, {}]}))
+    })
 }
