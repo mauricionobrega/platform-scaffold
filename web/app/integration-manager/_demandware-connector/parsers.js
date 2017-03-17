@@ -58,10 +58,17 @@ export const parseCategories = (categories) => {
 
 export const getProductHref = (productID) => `/s/2017refresh/${productID}.html`
 
-export const parseProductHit = ({product_id, product_name, price, image}) => {
+export const parseProductHit = ({product_id, product_name, price, prices, image}) => {
+    // Some products don't have _any_ pricing on them!
+    const finalPrice = price || (prices && prices['usd-sale-prices']) || undefined
+    let formattedPrice = '$ N/A'
+    if (finalPrice) {
+        formattedPrice = finalPrice.toFixed(2).toString()
+    }
+
     return {
         title: product_name,
-        price: `$${price.toFixed(2).toString()}`,
+        price: formattedPrice,
         link: {
             href: getProductHref(product_id),
             text: product_name
