@@ -17,7 +17,7 @@ PREVIEW=#mobify-override\&mobify-path=true\&mobify-url=https://localhost:8443/lo
 
 lighthouse \
 	--view \
-	--chrome-flags='--user-agent="MobifyPreview" --allow-insecure-localhost --unsafely-treat-insecure-origin-as-secure' \
+	--chrome-flags='--user-agent="MobifyPreview" --allow-insecure-localhost' \
 	--output=html \
 	--output-path=${OUTPUT_PATH} \
 	--disable-device-emulation=true \
