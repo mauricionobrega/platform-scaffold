@@ -19,9 +19,16 @@ describe('Add to Cart', () => {
         ui: {
             app: Immutable.fromJS({currentURL: 'https://test.mobify.com/'}),
             productDetails: Immutable.fromJS({
-                '/': {itemQuantity: 1}
+                '/': {
+                    itemQuantity: 1
+                }
             })
-        }
+        },
+        products: Immutable.fromJS({
+            '/': {
+                variationOptions: undefined
+            }
+        })
     })
 
     beforeEach(() => {
