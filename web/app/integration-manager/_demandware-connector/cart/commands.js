@@ -1,6 +1,6 @@
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {receiveCartContents} from '../../cart/responses'
-import {parseBasketContents} from '../parser'
+import {parseBasketContents} from '../parsers'
 import {API_END_POINT_URL} from '../constants'
 
 const storeBasketID = (responseJSON) => {
