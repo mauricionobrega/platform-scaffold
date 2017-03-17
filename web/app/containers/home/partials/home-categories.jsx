@@ -13,7 +13,7 @@ import LazyLoadContent from '../../../components/lazy-load-content'
 import * as selectors from '../selectors'
 
 const CategoryImage = ({alt}) => {
-    const placeholder = <SkeletonBlock height="60" width="60" />
+    const placeholder = <SkeletonBlock height="60px" width="60px" />
 
     if (!alt) {
         return placeholder
@@ -25,8 +25,8 @@ const CategoryImage = ({alt}) => {
                 src={getAssetUrl(`static/img/categories/${alt.trim().replace(/\s+/g, '-')
                         .toLowerCase()}@2x.png`)}
                 alt={alt}
-                height="60"
-                width="60"
+                height="60px"
+                width="60px"
             />
         </LazyLoadContent>
     )

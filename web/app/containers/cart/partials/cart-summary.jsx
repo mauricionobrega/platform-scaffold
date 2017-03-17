@@ -10,29 +10,29 @@ import Button from 'progressive-web-sdk/dist/components/button'
 import CartPromoForm from './cart-promo-form'
 import Icon from 'progressive-web-sdk/dist/components/icon'
 import {Ledger, LedgerRow} from 'progressive-web-sdk/dist/components/ledger'
+import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/accordion'
 
 const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, shippingRate, onCalculateClick}) => {
     const calculateButton = (
-        <Button innerClassName="u-padding-end-0 u-color-brand" onClick={onCalculateClick}>
+        <Button innerClassName="u-padding-end-0 u-color-brand u-text-letter-spacing-normal" onClick={onCalculateClick}>
             Calculate <Icon name="chevron-right" />
         </Button>
     )
 
     return (
         <div className="t-cart__summary">
-            <div className="t-cart__summary-title">
-                <div className="u-flexbox u-align-center">
-                    <h2 className="u-flex">
-                        Order Summary
-                    </h2>
-                </div>
+            <Accordion className="u-margin-top u-bg-color-neutral-00">
+                <AccordionItem header="Promo code">
+                    <CartPromoForm />
+                </AccordionItem>
+            </Accordion>
+            <div className="t-cart__summary-title u-padding-top-lg u-padding-bottom-md">
+                <h2 className="u-h4 u-text-uppercase">
+                    Order Summary
+                </h2>
             </div>
 
             <div className="u-bg-color-neutral-00 u-border-light-top u-border-light-bottom">
-                <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg">
-                    <CartPromoForm />
-                </div>
-
                 <Ledger className="u-border-light-top">
                     <LedgerRow
                         label={`Subtotal (${summaryCount} items)`}
@@ -52,7 +52,7 @@ const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, shippingRa
                     <LedgerRow
                         className="u-flex-none"
                         label="Taxes"
-                        labelAction="Rates are based on your shipping location."
+                        labelAction="Rates based on shipping location"
                         valueAction={calculateButton}
                     />
 
