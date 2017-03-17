@@ -30,7 +30,7 @@ export const initDemandWareSession = () => {
             return makeRequest(`${API_END_POINT_URL}/sessions`, options)
         })
         .then(() => {
-            // Once the session has been opened return the authorization headers to the request
+            // Once the session has been opened return the authorization headers to the next request
             return {
                 ...REQUEST_HEADERS,
                 Authorization: authorization
