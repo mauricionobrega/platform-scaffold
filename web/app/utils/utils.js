@@ -100,7 +100,7 @@ export const extractPathFromURL = (url, includeHash) => {
     }
     const urlObject = new URL(url)
 
-    return `${urlObject.pathname}${urlObject.search}${includeHash ? url.hash : ''}`
+    return `${urlObject.pathname}${urlObject.search}${includeHash ? urlObject.hash : ''}`
 }
 
 /**
