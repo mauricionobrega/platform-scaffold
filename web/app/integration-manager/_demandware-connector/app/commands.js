@@ -28,13 +28,13 @@ export const initDemandWareSession = () => {
             options.headers.Authorization = authorization
             document.cookie = `mob-session-auth=${authorization}`
             return makeRequest(`${API_END_POINT_URL}/sessions`, options)
-        })
-        .then(() => {
-            // Once the session has been opened return the authorization headers to the next request
-            return {
-                ...REQUEST_HEADERS,
-                Authorization: authorization
-            }
+                .then(() => {
+                    // Once the session has been opened return the authorization headers to the next request
+                    return {
+                        ...REQUEST_HEADERS,
+                        Authorization: authorization
+                    }
+                })
         })
 }
 
