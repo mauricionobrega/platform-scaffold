@@ -4,6 +4,8 @@ import {createStructuredSelector} from 'reselect'
 import {selectorToJS} from '../../utils/selector-utils'
 import {isRunningInAstro} from '../../utils/astro-integration'
 
+import {initApp} from '../../integration-manager/app/commands'
+
 import {hidePreloader} from 'progressive-web-sdk/dist/preloader'
 import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
 import SkipLinks from 'progressive-web-sdk/dist/components/skip-links'
@@ -33,6 +35,7 @@ class App extends React.Component {
     componentDidMount() {
         hidePreloaderWhenCSSIsLoaded()
         this.props.fetchSvgSprite()
+        this.props.initApp()
     }
 
     render() {
@@ -128,6 +131,10 @@ App.propTypes = {
     fetchSvgSprite: PropTypes.func,
     hasFetchedCurrentPath: PropTypes.bool,
     history: PropTypes.object,
+    /**
+    * Calls a command in the integration manager that initializes some app data
+    */
+    initApp: PropTypes.func,
     notifications: PropTypes.array,
     removeNotification: PropTypes.func,
     /**
@@ -146,7 +153,8 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = {
     removeNotification: appActions.removeNotification,
     fetchPage: appActions.fetchPage,
-    fetchSvgSprite: () => appActions.fetchSvgSprite()
+    fetchSvgSprite: () => appActions.fetchSvgSprite(),
+    initApp
 }
 
 export default connect(

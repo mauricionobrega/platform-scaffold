@@ -1,36 +1,16 @@
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {receiveNavigationData} from '../../responses'
+import {getCart} from '../cart/commands'
 import {parseCategories} from '../parsers'
+import {initDemandWareSession} from '../utils'
 
-import {API_END_POINT_URL, DW_CLIENT_ID, SITE_ID} from '../constants'
-
-export const requestHeaders = {
-    'Content-Type': 'application/json',
-    'x-dw-client-id': DW_CLIENT_ID
-}
-
-export const initDemandWareSession = () => {
-    const options = {
-        method: 'POST',
-        body: '{ type : "session" }',
-        headers: requestHeaders
-    }
-    return makeRequest(`${API_END_POINT_URL}/customers/auth`, options)
-        .then((response) => {
-            // To Do: Add this to the store???
-            requestHeaders.Authorization = response.headers.get('Authorization')
-            options.headers.Authorization = response.headers.get('Authorization')
-            return makeRequest(`${API_END_POINT_URL}/sessions`, options)
-        })
-}
+import {API_END_POINT_URL, SITE_ID} from '../constants'
 
 
-
-
-export const fetchNavigationData = () => (dispatch) => {
+export const fetchNavigationData = (headers) => (dispatch) => {
     const options = {
         method: 'GET',
-        headers: requestHeaders
+        headers
     }
     return makeRequest(`${API_END_POINT_URL}/categories/root?levels=2`, options)
         .then((response) => response.json())
@@ -53,4 +33,14 @@ export const fetchNavigationData = () => (dispatch) => {
                 }
             }))
         })
+}
+
+export const initApp = () => (dispatch) => {
+    let headers
+    return initDemandWareSession()
+        .then((requestHeaders) => {
+            headers = requestHeaders
+            return dispatch(fetchNavigationData(headers))
+        })
+        .then(() => dispatch(getCart(headers)))
 }
