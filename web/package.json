@@ -138,7 +138,6 @@
       "!{dev-server,proxy,lighthouse,coverage,build,tests,webpack,worker}/**/*.js",
       "!styleguide/**/*.{js,jsx}",
       "!app/loader-routes.js",
-      "!web/worker/main.js",
       "!service-worker-loader.js"
     ],
     "coverageThreshold": {
