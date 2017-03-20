@@ -22,9 +22,11 @@ const addToCart = () => (dispatch) => {
             const options = {
                 method: 'POST',
                 headers,
-                body: `[{product_id: "${getCurrentProductID()}" , quantity: 1.00}]`
+                body: JSON.stringify([{
+                    product_id: getCurrentProductID().toString(),
+                    quantity: 1.00
+                }])
             }
-            // TO DO: Add error handling here
             return makeRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, options)
                 .then((response) => {
                     if (response.ok) {
