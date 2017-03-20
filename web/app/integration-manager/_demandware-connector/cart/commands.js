@@ -1,10 +1,10 @@
-import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+import {makeDemandwareRequest} from '../utils'
 import {receiveCartContents} from '../../cart/responses'
 import {parseBasketContents} from '../parsers'
 import {API_END_POINT_URL} from '../constants'
 
 
-export const getBasketID = (headers) => {
+export const getBasketID = () => {
     const basketMatch = /mob-basket=([^;]+);/.exec(document.cookie)
     if (basketMatch) {
         return new Promise((resolve) => {
@@ -12,11 +12,10 @@ export const getBasketID = (headers) => {
         })
     }
     const options = {
-        method: 'POST',
-        headers
+        method: 'POST'
     }
 
-    return makeRequest(`${API_END_POINT_URL}/baskets`, options)
+    return makeDemandwareRequest(`${API_END_POINT_URL}/baskets`, options)
         .then((response) => response.json())
         .then((responseJSON) => {
             const basketID = responseJSON.basket_id
@@ -27,14 +26,13 @@ export const getBasketID = (headers) => {
 }
 
 
-export const getCart = (headers) => (dispatch) => {
-    return getBasketID(headers)
+export const getCart = () => (dispatch) => {
+    return getBasketID()
         .then((basketID) => {
             const options = {
-                method: 'GET',
-                headers
+                method: 'GET'
             }
-            return makeRequest(`${API_END_POINT_URL}/baskets/${basketID}`, options)
+            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}`, options)
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     dispatch(receiveCartContents(parseBasketContents(responseJSON)))

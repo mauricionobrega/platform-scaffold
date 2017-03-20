@@ -1,9 +1,8 @@
-import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
-
 import {receiveCartContents} from '../../store/cart/actions'
 import {parseBasketContents, getCurrentProductID} from './parsers'
 
 import {API_END_POINT_URL} from './constants'
+import {makeDemandwareRequest} from './utils'
 
 import * as homeCommands from './home/commands'
 import * as productsCommands from './products/commands'
@@ -12,22 +11,16 @@ import * as cartCommands from './cart/commands'
 import * as appCommands from './app/commands'
 
 const addToCart = () => (dispatch) => {
-    let headers
-    return appCommands.initDemandWareSession()
-        .then((requestHeaders) => {
-            headers = requestHeaders
-            return cartCommands.getBasketID(headers)
-        })
+    return cartCommands.getBasketID()
         .then((basketID) => {
             const options = {
                 method: 'POST',
-                headers,
                 body: JSON.stringify([{
                     product_id: getCurrentProductID().toString(),
                     quantity: 1.00
                 }])
             }
-            return makeRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, options)
+            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, options)
                 .then((response) => {
                     if (response.ok) {
                         return response.json()

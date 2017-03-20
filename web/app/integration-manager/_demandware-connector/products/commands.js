@@ -1,30 +1,25 @@
-import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../../products/responses'
 import {urlToPathKey} from '../../../utils/utils'
-import {initDemandWareSession} from '../app/commands'
+import {makeDemandwareRequest} from '../utils'
 import {parseProductDetails, getCurrentProductID, getProductHref} from '../parsers'
 import {API_END_POINT_URL} from '../constants'
 
 export const fetchPdpData = () => (dispatch) => {
     const productURL = `${API_END_POINT_URL}/products/${getCurrentProductID()}?expand=prices,images,variations`
     const productPathKey = urlToPathKey(window.location.href)
-    return initDemandWareSession()
-        .then((headers) => {
-            const options = {
-                method: 'GET',
-                headers
-            }
-            return makeRequest(productURL, options)
-                .then((response) => response.json())
-                .then((responseJSON) => {
-                    const productDetailsData = parseProductDetails(responseJSON)
-                    productDetailsData.availableVariations.forEach(({variationID}) => {
-                        dispatch(receiveProductDetailsProductData({[getProductHref(variationID)]: productDetailsData}))
-                    })
-                    dispatch(receiveProductDetailsProductData({[productPathKey]: productDetailsData}))
-                    dispatch(receiveProductDetailsUIData({[productPathKey]: {itemQuantity: responseJSON.step_quantity, ctaText: 'Add To Cart'}}))
-                })
+    const options = {
+        method: 'GET'
+    }
+    return makeDemandwareRequest(productURL, options)
+        .then((response) => response.json())
+        .then((responseJSON) => {
+            const productDetailsData = parseProductDetails(responseJSON)
+            productDetailsData.availableVariations.forEach(({variationID}) => {
+                dispatch(receiveProductDetailsProductData({[getProductHref(variationID)]: productDetailsData}))
+            })
+            dispatch(receiveProductDetailsProductData({[productPathKey]: productDetailsData}))
+            dispatch(receiveProductDetailsUIData({[productPathKey]: {itemQuantity: responseJSON.step_quantity, ctaText: 'Add To Cart'}}))
         })
 
 }
