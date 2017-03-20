@@ -130,19 +130,20 @@
     "cacheDirectory": "./node_modules/.cache",
     "collectCoverageFrom": [
       "**/*.{js,jsx}",
+      "!app/{loader.js,main.jsx}",
       "!app/static/js/*.js",
       "!app/vendor/*.js",
-      "!app/containers/reducers.js",
-      "!app/**/container.{js,jsx}",
-      "!{dev-server,lighthouse,coverage,build,tests,webpack}/**/*.js",
+      "!app/containers/{templates,reducers}.js",
+      "!app/**/{container,constants,selectors}.{js,jsx}",
+      "!{dev-server,proxy,lighthouse,coverage,build,tests,webpack,worker}/**/*.js",
       "!styleguide/**/*.{js,jsx}",
       "!app/loader-routes.js",
-      "!web/worker/main.js"
+      "!service-worker-loader.js"
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 13,
-        "functions": 26,
+        "branches": 18,
+        "functions": 35,
         "lines": 50,
         "statements": 47
       }

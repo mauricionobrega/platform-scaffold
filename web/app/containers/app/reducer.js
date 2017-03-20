@@ -6,7 +6,7 @@ import {urlToPathKey} from '../../utils/utils'
 import * as appActions from './actions'
 import {CURRENT_URL, FETCHED_PATHS} from './constants'
 
-const initialState = fromJS({
+export const initialState = fromJS({
     [CURRENT_URL]: window.location.href,
     notifications: [],
     fetchError: null,
