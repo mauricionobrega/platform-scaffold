@@ -5,17 +5,6 @@ import {SIGNUP_SUCCESSFUL, SIGNUP_FAILED} from './constants'
 jest.mock('../../integration-manager/commands')
 import {submitNewsletter} from '../../integration-manager/commands'
 
-let realFetch
-beforeAll(() => {
-    realFetch = global.fetch
-    global.fetch = jest.fn()
-
-})
-
-afterAll(() => {
-    global.fetch = realFetch
-})
-
 test('signUpToNewsletter submits the form and dispatches the success action on success', () => {
     const mockDispatch = jest.fn()
     mockDispatch.mockImplementation((...args) => args[0])

@@ -31,7 +31,6 @@ export const fetchPdpData = () => (dispatch) => {
 
 export const getProductVariationData = (variationSelections, availableVariations, variationOptions) => (dispatch) => {
     let isFullySelected = true
-
     variationOptions.forEach(({id}) => {
         if (!variationSelections[id]) {
             isFullySelected = false
