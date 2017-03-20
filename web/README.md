@@ -186,15 +186,18 @@ You can run [Lighthouse](https://github.com/GoogleChrome/lighthouse) test agains
 npm run test:pwa-prod
 ```
 
-When you develop it might be helpful to run the same test against your local files:
+When you develop it might be helpful to run the same test against your local files. This assumes you have `npm run dev` running in another tab:
 
 ```
-sudo npm run test:pwa-local
+npm run test:pwa-local
 ```
 
-You **must** keep running `npm run dev` at the same time. `sudo` is required in order to bind to port 80.
+For CI builds, this command builds and serves the bundle for testing with Preview:
 
-There is also `test:pwa-ci` task (also requires `sudo`) for CI that runs `dev` and `pwa-local` in parallel.
+```
+npm run test:pwa-ci
+```
+
 
 ## Developing against `develop` of the Progressive Web SDK
 
