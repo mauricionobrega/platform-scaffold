@@ -22,6 +22,7 @@ export const parseProductDetails = ({name, price, long_description, image_groups
         })
     }
 }
+
 export const getCurrentProductID = () => {
     const productIDMatch = /(\d+).html/.exec(window.location.href)
     return productIDMatch ? productIDMatch[1] : ''

@@ -1,27 +1,26 @@
-import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
-
 import {receiveCartContents} from '../../store/cart/actions'
 import {parseBasketContents, getCurrentProductID} from './parsers'
 
 import {API_END_POINT_URL} from './constants'
-import {requestHeaders} from './app/commands'
+import {makeDemandwareRequest} from './utils'
 
 import * as homeCommands from './home/commands'
 import * as productsCommands from './products/commands'
 import * as categoriesCommands from './categories/commands'
 import * as cartCommands from './cart/commands'
+import * as appCommands from './app/commands'
 
-export const addToCart = () => (dispatch) => {
-    const options = {
-        method: 'POST',
-        headers: requestHeaders,
-        body: `[{product_id: "${getCurrentProductID()}" , quantity: 1.00}]`
-    }
-
+const addToCart = () => (dispatch) => {
     return cartCommands.getBasketID()
         .then((basketID) => {
-            // TO DO: Add error handling here
-            return makeRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, options)
+            const options = {
+                method: 'POST',
+                body: JSON.stringify([{
+                    product_id: getCurrentProductID().toString(),
+                    quantity: 1.00
+                }])
+            }
+            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, options)
                 .then((response) => {
                     if (response.ok) {
                         return response.json()
@@ -60,5 +59,6 @@ export default {
     home: homeCommands,
     products: productsCommands,
     categories: categoriesCommands,
-    cart: cartCommands
+    cart: cartCommands,
+    app: appCommands
 }

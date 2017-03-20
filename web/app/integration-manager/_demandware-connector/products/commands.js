@@ -1,49 +1,37 @@
-import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../../products/responses'
 import {urlToPathKey} from '../../../utils/utils'
-import {requestHeaders, initDemandWareSession} from '../app/commands'
+import {makeDemandwareRequest} from '../utils'
 import {parseProductDetails, getCurrentProductID, getProductHref} from '../parsers'
 import {API_END_POINT_URL} from '../constants'
 
 export const fetchPdpData = () => (dispatch) => {
     const productURL = `${API_END_POINT_URL}/products/${getCurrentProductID()}?expand=prices,images,variations`
     const productPathKey = urlToPathKey(window.location.href)
-    return initDemandWareSession()
-        .then(() => {
-            const options = {
-                method: 'GET',
-                headers: requestHeaders
-            }
-            return makeRequest(productURL, options)
-                .then((response) => response.json())
-                .then((responseJSON) => {
-                    const productDetailsData = parseProductDetails(responseJSON)
-                    if (productDetailsData.availableVariations) {
-                        productDetailsData.availableVariations.forEach(({variationID}) => {
-                            dispatch(receiveProductDetailsProductData({[getProductHref(variationID)]: productDetailsData}))
-                        })
-                    }
-                    dispatch(receiveProductDetailsProductData({[productPathKey]: productDetailsData}))
-                    dispatch(receiveProductDetailsUIData({[productPathKey]: {itemQuantity: responseJSON.step_quantity, ctaText: 'Add To Cart'}}))
-                })
+    const options = {
+        method: 'GET'
+    }
+    return makeDemandwareRequest(productURL, options)
+        .then((response) => response.json())
+        .then((responseJSON) => {
+            const productDetailsData = parseProductDetails(responseJSON)
+            productDetailsData.availableVariations.forEach(({variationID}) => {
+                dispatch(receiveProductDetailsProductData({[getProductHref(variationID)]: productDetailsData}))
+            })
+            dispatch(receiveProductDetailsProductData({[productPathKey]: productDetailsData}))
+            dispatch(receiveProductDetailsUIData({[productPathKey]: {itemQuantity: responseJSON.step_quantity, ctaText: 'Add To Cart'}}))
         })
-        // .then(getBasketID)
-        // .then((basketID) => {
-        //     const options = {
-        //         method: 'GET',
-        //         headers: requestHeaders
-        //     }
-        //     return makeRequest(`${API_END_POINT_URL}/baskets/${basketID}`, options)
-        //         .then((response) => response.json())
-        //         .then((responseJSON) => dispatch(receiveCartContents(parseBasketContents(responseJSON))))
-        // })
-
 }
 
-export const getProductVariationData = (variationSelections, availableVariations) => (dispatch) => {
-    if (variationSelections.color && variationSelections.size) {
-        // TODO: ^^ don't hard code this check, use the state instead?
+export const getProductVariationData = (variationSelections, availableVariations, variationOptions) => (dispatch) => {
+    let isFullySelected = true
+    variationOptions.forEach(({id}) => {
+        if (!variationSelections[id]) {
+            isFullySelected = false
+        }
+    })
+
+    if (isFullySelected) {
         const selectedVariationData = availableVariations.filter(({variationValues: {color, size}}) => {
             return color === variationSelections.color && size === variationSelections.size
         })[0]

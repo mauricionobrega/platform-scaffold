@@ -1,9 +1,10 @@
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
-import {parseNavigation} from '../navigation/parser'
 
+import {getCart} from '../cart/commands'
 import {appParser} from './parser'
 import {parseFooter} from '../footer/parser'
+import {parseNavigation} from '../navigation/parser'
 import {receiveNavigationData, receiveAppData, receiveFooterData, setPageFetchError} from '../../responses'
 
 export const fetchPageData = (url) => (dispatch) => {
@@ -25,4 +26,8 @@ export const fetchPageData = (url) => (dispatch) => {
                 dispatch(setPageFetchError(error.message))
             }
         })
+}
+
+export const initApp = () => (dispatch) => {
+    return dispatch(getCart())
 }
