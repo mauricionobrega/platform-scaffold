@@ -2,7 +2,9 @@
 
 const chalk = require('chalk')
 const ip = require('ip')
+const urlencode = require('urlencode')
 
+const url = process.env.npm_package_siteUrl
 const divider = chalk.gray('\n-----------------------------------')
 
 /**
@@ -23,6 +25,8 @@ const logger = {
     appStarted: (port) => {
         console.log(`Server started ${chalk.green('✓')}`)
 
+        const encodedUrl = urlencode(url)
+
         console.log(
             chalk.bold('Access URLs:') + '\n' + // eslint-disable-line prefer-template
             divider + '\n' +
@@ -33,7 +37,7 @@ const logger = {
 
         console.log(
             chalk.bold('Preview URL: ') + // eslint-disable-line prefer-template
-            chalk.magenta(`https://preview.mobify.com/?url=https%3A%2F%2Fwww.merlinspotions.com%2F&site_folder=https%3A%2F%2Flocalhost%3A${port}%2Floader.js&disabled=0&domain=&scope=0`) + '\n' +
+            chalk.magenta(`https://preview.mobify.com/?url=${encodedUrl}&site_folder=https%3A%2F%2Flocalhost%3A${port}%2Floader.js&disabled=0&domain=&scope=0`) + '\n' +
             divider + '\n' +
             chalk.blue(`Press ${chalk.italic('CTRL-C')} to stop`) + '\n'
         )
