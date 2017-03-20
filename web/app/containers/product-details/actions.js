@@ -78,5 +78,6 @@ export const onVariationBlur = () => (dispatch, getStore) => {
     const currentState = getStore()
     const variationSelections = getFormValues('product-add-to-cart')(currentState)
     const availableVariations = selectors.getProductVariations(currentState).toJS()
-    return dispatch(getProductVariationData(variationSelections, availableVariations))
+    const variationOptions = selectors.getVariationOptions(currentState).toJS()
+    return dispatch(getProductVariationData(variationSelections, availableVariations, variationOptions))
 }

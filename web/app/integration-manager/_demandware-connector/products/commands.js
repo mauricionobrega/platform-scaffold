@@ -29,9 +29,16 @@ export const fetchPdpData = () => (dispatch) => {
 
 }
 
-export const getProductVariationData = (variationSelections, availableVariations) => (dispatch) => {
-    if (variationSelections.color && variationSelections.size) {
-        // TODO: ^^ don't hard code this check, use the state instead?
+export const getProductVariationData = (variationSelections, availableVariations, variationOptions) => (dispatch) => {
+    let isFullySelected = true
+
+    variationOptions.forEach(({id}) => {
+        if (!variationSelections[id]) {
+            isFullySelected = false
+        }
+    })
+
+    if (isFullySelected) {
         const selectedVariationData = availableVariations.filter(({variationValues: {color, size}}) => {
             return color === variationSelections.color && size === variationSelections.size
         })[0]
@@ -41,4 +48,6 @@ export const getProductVariationData = (variationSelections, availableVariations
             })
         }
     }
+
+
 }
