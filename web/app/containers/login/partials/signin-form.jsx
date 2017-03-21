@@ -41,10 +41,10 @@ class SignInForm extends React.Component {
             submitting,
             handleSubmit,
             // props from store
-            href,
             fields,
             submitText,
             forgotPassword,
+            isFormLoaded,
             modalOpen
         } = this.props
 
@@ -73,7 +73,7 @@ class SignInForm extends React.Component {
                         <Button
                             className="c--primary u-width-full"
                             type="submit"
-                            disabled={submitting || !href}
+                            disabled={submitting || !isFormLoaded}
                         >
                             <span className="u-text-uppercase">{submitText || 'Login'}</span>
                         </Button>
@@ -92,6 +92,7 @@ SignInForm.propTypes = {
     handleSubmit: PropTypes.func,
     href: PropTypes.string,
     invalid: PropTypes.bool,
+    isFormLoaded: PropTypes.bool,
     modalOpen: PropTypes.bool,
     openInfoModal: PropTypes.func,
     submitForm: PropTypes.func,
@@ -107,6 +108,7 @@ const ReduxSignInForm = reduxForm({
 const mapStateToProps = createStructuredSelector({
     fields: selectorToJS(selectors.signin.form.getFields),
     href: selectors.signin.form.getHref,
+    isFormLoaded: selectors.signin.getIsFormLoaded,
     modalOpen: isModalOpen(SIGN_IN_SECTION),
     submitText: selectors.signin.form.getSubmitText,
     forgotPassword: selectorToJS(selectors.signin.form.getForgotPassword)

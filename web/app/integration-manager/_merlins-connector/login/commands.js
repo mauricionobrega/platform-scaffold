@@ -17,12 +17,18 @@ export const fetchLoginData = (url, routeName) => (dispatch) => {
             const [$, $response] = res
             if (routeName === 'signin') {
                 return dispatch(receiveLoginPageData({
-                    signinSection: signinParser($, $response)
+                    signinSection: {
+                        isFormLoaded: true,
+                        ...signinParser($, $response)
+                    }
                 }))
             }
 
             return dispatch(receiveLoginPageData({
-                registerSection: registerParser($, $response)
+                registerSection: {
+                    isFormLoaded: true,
+                    ...registerParser($, $response)
+                }
             }))
         })
 }
@@ -49,4 +55,18 @@ export const submitLoginForm = (href, formValues, formSelector, resolve, reject)
                 reject(new SubmissionError({_error: 'Failed to login due to network error.'}))
             }
         })
+}
+
+const findPathForRoute = (routes, routeName) => {
+    const path = routes[0].childRoutes.find((route) => route.routeName === routeName).path
+    return `/${path}`
+}
+
+/**
+ * Uses React router to navigate between different pages. Takes care of browser history, etc.
+ */
+export const navigateToSection = (router, routes, sectionName) => {
+    return () => {
+        router.push(findPathForRoute(routes, sectionName))
+    }
 }

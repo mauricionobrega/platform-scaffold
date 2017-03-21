@@ -4,7 +4,7 @@ import {getCart} from '../cart/commands'
 import {parseCategories} from '../parsers'
 import {initDemandWareSession} from '../utils'
 
-import {API_END_POINT_URL, SITE_ID} from '../constants'
+import {API_END_POINT_URL, SIGN_IN_URL} from '../constants'
 
 
 export const fetchNavigationData = (headers) => (dispatch) => {
@@ -25,7 +25,7 @@ export const fetchNavigationData = (headers) => (dispatch) => {
                         {
                             // TODO: Find a way to get this data without hardcoding
                             title: 'Sign In',
-                            path: `/on/demandware.store/${SITE_ID}/default/Account-Show`,
+                            path: SIGN_IN_URL,
                             type: 'AccountNavItem'
                         },
                         ...navData

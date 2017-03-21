@@ -7,3 +7,4 @@ export const REQUEST_HEADERS = {
     'Content-Type': 'application/json',
     'x-dw-client-id': DW_CLIENT_ID
 }
+export const SIGN_IN_URL = `/on/demandware.store/${SITE_ID}/default/Account-Show`

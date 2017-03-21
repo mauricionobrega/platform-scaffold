@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import {withRouter} from 'progressive-web-sdk/dist/routing'
 
-import {fetchLoginData} from '../../integration-manager/login/commands'
+import {fetchLoginData, navigateToSection} from '../../integration-manager/login/commands'
 
 import SignInPanel from './partials/signin-panel'
 import RegisterPanel from './partials/register-panel'
@@ -11,7 +11,6 @@ import RegisterPanel from './partials/register-panel'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import {Tabs, TabsPanel} from 'progressive-web-sdk/dist/components/tabs'
 
-import * as actions from './actions'
 import * as selectors from './selectors'
 import {
     SIGN_IN_SECTION,
@@ -109,7 +108,7 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = {
-    navigateToSection: actions.navigateToSection
+    navigateToSection
 }
 
 Login.propTypes = {

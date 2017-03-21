@@ -9,6 +9,7 @@ import * as productsCommands from './products/commands'
 import * as categoriesCommands from './categories/commands'
 import * as cartCommands from './cart/commands'
 import * as appCommands from './app/commands'
+import * as loginCommands from './login/commands'
 
 const addToCart = () => (dispatch) => {
     return cartCommands.getBasketID()
@@ -60,5 +61,6 @@ export default {
     products: productsCommands,
     categories: categoriesCommands,
     cart: cartCommands,
-    app: appCommands
+    app: appCommands,
+    login: loginCommands
 }

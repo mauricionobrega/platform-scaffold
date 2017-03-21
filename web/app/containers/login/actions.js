@@ -106,17 +106,3 @@ export const submitRegisterForm = (formValues, resolve, reject) => {
         return submitLoginForm(href, formValues, '.form-create-account', resolve, reject)
     }
 }
-
-const findPathForRoute = (routes, routeName) => {
-    const path = routes[0].childRoutes.find((route) => route.routeName === routeName).path
-    return `/${path}`
-}
-
-/**
- * Uses React router to navigate between different pages. Takes care of browser history, etc.
- */
-export const navigateToSection = (router, routes, sectionName) => {
-    return () => {
-        router.push(findPathForRoute(routes, sectionName))
-    }
-}

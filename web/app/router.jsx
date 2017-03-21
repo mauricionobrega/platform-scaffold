@@ -63,6 +63,7 @@ const Router = ({store}) => (
                 <Route component={ProductList} path="*/newarrivals-*" routeName="productListPage" />
                 <Route component={ProductList} path="*/electronics-*" routeName="productListPage" />
                 <Route component={ProductList} path="*/Search-Show?cgid=root&srule=top-sellers*" routeName="productListPage" />
+                <Route component={Login} path="*/Account-Show*" routeName="signin" />
 
             </Route>
         </SDKRouter>
