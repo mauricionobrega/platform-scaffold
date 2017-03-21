@@ -33,7 +33,7 @@ export const fetchLoginData = (url, routeName) => (dispatch) => {
         })
 }
 
-export const submitLoginForm = (href, formValues, formSelector, resolve, reject) => {
+const submitForm = (href, formValues, formSelector, resolve, reject) => {
     return makeFormEncodedRequest(href, formValues, {method: 'POST'})
         .then(jqueryResponse)
         .then((res) => {
@@ -56,6 +56,12 @@ export const submitLoginForm = (href, formValues, formSelector, resolve, reject)
             }
         })
 }
+
+export const submitLoginForm = (href, formValues, resolve, reject) =>
+    submitForm(href, formValues, '.form-login', resolve, reject)
+
+export const submitRegistrationForm = (href, formValues, resolve, reject) =>
+    submitForm(href, formValues, '.form-create-account', resolve, reject)
 
 const findPathForRoute = (routes, routeName) => {
     const path = routes[0].childRoutes.find((route) => route.routeName === routeName).path
