@@ -11,7 +11,7 @@ npm run dev
 
 If you will be deploying bundles to Mobify Cloud, then follow these steps to authorize your computer:
 - Go to [https://cloud.mobify.com/account/](https://cloud.mobify.com/account/) and find your API key.
-- Run the following command in your terminal: 
+- Run the following command in your terminal:
 ```
 npm run save-credentials -- -u <myEmail@organization.com> -k <myAPIkey>
 ```
@@ -20,49 +20,43 @@ npm run save-credentials -- -u <myEmail@organization.com> -k <myAPIkey>
 npm run push -- -m "Test push by <name>"
 ```
 
-## Prevent SSL Errors in Preview
+## 🔒 Avoiding HTTPS errors in local development
 
-The development server uses a self-signed SSL certificate which is
-valid, but treated as suspect by browsers. This means that we must
-create and reconfirm security exceptions for it, and avoid localhost
-for certain use cases (such as service workers). Follow the below
-instructions to prevent security warnings from occurring when loading
-your bundle and service worker from localhost.
+The development server uses a self-signed SSL certificate which is valid, but
+must be added to your operating system to work correctly.
 
-### Mac OS X
+### macOS
 
-To add the certificate to the Mac system trust store and make the
-browsers accept it, do the following:
+To add the certificate to the Mac system trust store:
 
-1. In the root of the project directory, run `open node_modules/webpack-dev-server/ssl/server.crt`.
-2. Open `Keychain Access` -> go to `Certificates` -> select `localhost`.
-3. Right click on the entry and select `Get Info`.
+0. Open https://localhost:8443. *You should see a security warning.* ⚠️
+1. In the root of the project directory, run `open dev-server/localhost.pem`.
+2. Add the certifcate to your `login` Keychain.
+2. In `Keychain Access` open `Certificates` and find `Mobify Development Server`.
+3. Right click it and select `Get Info`.
 4. Expand the `Trust` section.
 5. Set `Secure Socket Layer (SSL)` to `Always Trust`.
 6. Close the info window. You will need to enter your password.
-
-This process will allow all projects hosted with `webpack-dev-server`
-version 1.15.0 and up to be trusted by your browsers.
+7. Open https://localhost:8443 in your browser. *The warning is gone!* 🎉
 
 ### Windows
 
-To add the webpack dev-server certificate to the Windows Trusted Root Certificate Store,
-and make the browsers accept it, do the following:
+To add the certificate to the Windows Trusted Root Certificate Store:
 
-1. Start Menu -> Run `mmc.exe`.
-2. File -> Add/Remove Snap-in.
-3. Select "Certificates" and click Add.
-4. Select "Computer Account" and click Next.
-5. Select "Local Computer" and click Finish.
-6. Click OK to close the Add or Remove Snap Ins dialog.
-7. Expand the Certificates node and right-click on the Trusted Roots Certification Authorities node.
-8. Select All Tasks -> Import.
-9. Import the file at `$\web\node_modules\webpack-dev-server\ssl\server`. Leave all other settings as is while importing.
+0.  Open https://localhost:8443. *You should see a security warning.* ⚠️
+1.  Start Menu → Run `mmc.exe`.
+2.  File → Add/Remove Snap-in.
+3.  Select "Certificates" and click Add.
+4.  Select "Computer Account" and click Next.
+5.  Select "Local Computer" and click Finish.
+6.  Click OK to close the Add or Remove Snap Ins dialog.
+7.  Expand the Certificates node and right-click on the Trusted Roots Certification Authorities node.
+8.  Select All Tasks → Import.
+9.  Import the file at `$\web\dev-server\localhost.pem`. Leave all other settings as is while importing.
 10. After clicking Finish, you should get an alert saying "Import Successful".
 11. Exit the window. You do not need to save the console settings so click No when prompted.
+12. Open https://localhost:8443 in your browser. *The warning is gone!* 🎉
 
-This process will allow all projects hosted with `webpack-dev-server`
-version 1.15.0 and up to be trusted by your browsers.
 
 ## Adding a page (container)
 
