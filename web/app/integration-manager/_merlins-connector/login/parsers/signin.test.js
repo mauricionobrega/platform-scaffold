@@ -1,10 +1,10 @@
-/* eslint-env jquery, jest */
+/* eslint-env jquery, jest, node */
 import {jquerifyHtmlFile} from 'progressive-web-sdk/dist/test-utils'
 import {isURL} from 'validator'
 import loginParser from './signin'
 
 describe('the Login parser', () => {
-    const $content = jquerifyHtmlFile('app/containers/login/parsers/signin-example.html')
+    const $content = jquerifyHtmlFile(`${__dirname}/signin-example.html`)
     const parsedContent = loginParser($, $content)
 
     test('extracts the title from the page', () => {
