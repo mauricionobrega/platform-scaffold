@@ -3,8 +3,10 @@
 
 # Location to save the generated HTML report.
 OUTPUT_PATH=./lighthouse/audit-local.html
-# Change www.merlinspotions.com to the project's URL. 
-URL='https://www.merlinspotions.com/#mobify-override&mobify-path=true&mobify-url=https://localhost:8443/loader.js&mobify-global=true&mobify-domain=&mobify-all=true&mobify=1&mobify-debug=1&mobify-js=1'
+# See package.json's siteUrl key.
+URL=${1-$npm_package_siteUrl}
+# Append Mobify Hash to the URL to force the Mobify Tag to load the local bundle.
+PREVIEW=#mobify-override\&mobify-path=true\&mobify-url=https://localhost:8443/loader.js\&mobify-global=true\&mobify-domain=\&mobify-all=true\&mobify=1\&mobify-debug=1\&mobify-js=1
 
 trap 'kill $(jobs -pr)' SIGINT SIGTERM EXIT
 
@@ -31,10 +33,10 @@ http-server --ssl --cors --p=8443 \
 
 sleep 5
 lighthouse \
-	--chrome-flags='--user-agent="MobifyPreview" --allow-insecure-localhost --unsafely-treat-insecure-origin-as-secure' \
+	--chrome-flags='--user-agent="MobifyPreview" --allow-insecure-localhost' \
 	--output=html \
 	--output-path=${OUTPUT_PATH} \
 	--disable-device-emulation=true \
-	"${URL}"
+	"${URL}${PREVIEW}"
 
 node ./lighthouse/check-score.js

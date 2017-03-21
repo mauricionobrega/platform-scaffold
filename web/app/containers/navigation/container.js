@@ -1,8 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
-import {selectorToJS} from '../../utils/selector-utils'
 import {extractPathFromURL} from '../../utils/utils'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 
 import Nav from 'progressive-web-sdk/dist/components/nav'
 import NavMenu from 'progressive-web-sdk/dist/components/nav-menu'
@@ -47,7 +46,7 @@ const Navigation = (props) => {
     }
 
     return (
-        <Sheet className="t-navigation" open={isOpen} onDismiss={closeNavigation} maskOpacity={0.7}>
+        <Sheet className="t-navigation" open={isOpen} onDismiss={closeNavigation} maskOpacity={0.7} coverage="85%">
             <Nav root={root.title ? root : null} path={path} onPathChange={onPathChange}>
                 <HeaderBar>
                     <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
@@ -88,10 +87,10 @@ Navigation.propTypes = {
 }
 
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     path: selectors.getPath,
     isOpen: isModalOpen(NAVIGATION_MODAL),
-    root: selectorToJS(selectors.getNavigationRoot)
+    root: selectors.getNavigationRoot
 })
 
 const mapDispatchToProps = {

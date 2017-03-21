@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import * as ReduxForm from 'redux-form'
-import {createStructuredSelector} from 'reselect'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as selectors from '../selectors'
 import * as actions from '../actions'
 import {selectorToJS} from '../../../utils/selector-utils'
@@ -62,7 +62,7 @@ ProductDetailsAddToCart.propTypes = {
     quantity: PropTypes.number
 }
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     ctaText: selectors.getCTAText,
     quantity: selectors.getItemQuantity,
     disabled: selectors.getAddToCartDisabled,

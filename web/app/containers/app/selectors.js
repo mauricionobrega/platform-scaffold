@@ -1,5 +1,5 @@
 import {createSelector} from 'reselect'
-import {createGetSelector, createHasSelector} from '../../utils/selector-utils'
+import {createGetSelector, createHasSelector} from 'reselect-immutable-helpers'
 import {getUi} from '../../store/selectors'
 import {urlToPathKey} from '../../utils/utils'
 import {CURRENT_URL, FETCHED_PATHS} from './constants'

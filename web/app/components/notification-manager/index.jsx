@@ -14,6 +14,10 @@ const NotificationManager = ({
     )
 }
 
+NotificationManager.defaultProps = {
+    notifications: []
+}
+
 NotificationManager.propTypes = {
     actions: PropTypes.object,
     notifications: PropTypes.array
