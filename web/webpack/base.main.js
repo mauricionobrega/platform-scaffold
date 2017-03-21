@@ -49,11 +49,10 @@ const config = {
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        cacheDirectory: `${__dirname}/tmp`
-                    }
+                loader: 'babel-loader',
+                options: {
+                    cacheDirectory: `${__dirname}/tmp`,
+                    plugins: ['syntax-dynamic-import']
                 }
             },
             {

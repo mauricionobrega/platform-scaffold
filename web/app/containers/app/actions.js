@@ -13,7 +13,10 @@ import {ESTIMATE_FORM_NAME} from '../cart/constants'
 import {SHIPPING_FORM_NAME} from '../checkout-shipping/constants'
 
 import Cart from '../cart/container'
-import CheckoutShipping from '../checkout-shipping/container'
+import {
+    UnwrappedCheckoutShipping
+} from '../templates'
+// import CheckoutShipping from '../checkout-shipping/container'
 import CheckoutPayment from '../checkout-payment/container'
 import CheckoutConfirmation from '../checkout-confirmation/container'
 import Home from '../home/container'
@@ -155,7 +158,7 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                 } else if (pageComponent === ProductList) {
                     dispatch(categoriesActions.process(receivedAction))
                     dispatch(productsActions.processProductList(receivedAction))
-                } else if (pageComponent === CheckoutShipping) {
+                } else if (pageComponent === UnwrappedCheckoutShipping) {
                     dispatch(checkoutShippingUIActions.process(receivedAction))
                     dispatch(checkoutActions.processCheckoutData(receivedAction))
                     dispatch(checkoutShippingActions.fetchShippingMethodsEstimate(SHIPPING_FORM_NAME))
