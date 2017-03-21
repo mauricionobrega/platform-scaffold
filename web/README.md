@@ -29,33 +29,33 @@ must be added to your operating system to work correctly.
 
 To add the certificate to the Mac system trust store:
 
-0. Open https://localhost:8443. *You should see a security warning.* ⚠️
-1. In the root of the project directory, run `open dev-server/localhost.pem`.
-2. Add the certifcate to your `login` Keychain.
-2. In `Keychain Access` open `Certificates` and find `Mobify Development Server`.
-3. Right click it and select `Get Info`.
-4. Expand the `Trust` section.
-5. Set `Secure Socket Layer (SSL)` to `Always Trust`.
-6. Close the info window. You will need to enter your password.
-7. Open https://localhost:8443 in your browser. *The warning is gone!* 🎉
+1. Open https://localhost:8443. *You should see a security warning.* ⚠️
+2. In the root of the project directory, run `open dev-server/localhost.pem`.
+3. Add the certificate to your `login` Keychain.
+4. In `Keychain Access` search for `Mobify Development Server`.
+5. Right click it and select `Get Info`.
+6. Expand the `Trust` section.
+7. Set `Secure Socket Layer (SSL)` to `Always Trust`.
+8. Close the info window. You will need to enter your password.
+9. Open https://localhost:8443 in your browser. *The warning is gone!* 🎉
 
 ### Windows
 
 To add the certificate to the Windows Trusted Root Certificate Store:
 
-0.  Open https://localhost:8443. *You should see a security warning.* ⚠️
-1.  Start Menu → Run `mmc.exe`.
-2.  File → Add/Remove Snap-in.
-3.  Select "Certificates" and click Add.
-4.  Select "Computer Account" and click Next.
-5.  Select "Local Computer" and click Finish.
-6.  Click OK to close the Add or Remove Snap Ins dialog.
-7.  Expand the Certificates node and right-click on the Trusted Roots Certification Authorities node.
-8.  Select All Tasks → Import.
-9.  Import the file at `$\web\dev-server\localhost.pem`. Leave all other settings as is while importing.
-10. After clicking Finish, you should get an alert saying "Import Successful".
-11. Exit the window. You do not need to save the console settings so click No when prompted.
-12. Open https://localhost:8443 in your browser. *The warning is gone!* 🎉
+1.  Open https://localhost:8443. *You should see a security warning.* ⚠️
+2.  Start Menu → Run `mmc.exe`.
+3.  File → Add/Remove Snap-in.
+4.  Select "Certificates" and click Add.
+5.  Select "Computer Account" and click Next.
+6.  Select "Local Computer" and click Finish.
+7.  Click OK to close the Add or Remove Snap Ins dialog.
+8.  Expand the Certificates node and right-click on the Trusted Roots Certification Authorities node.
+9.  Select All Tasks → Import.
+10.  Import the file at `$\web\dev-server\localhost.pem`. Leave all other settings as is while importing.
+11. After clicking Finish, you should get an alert saying "Import Successful".
+12. Exit the window. You do not need to save the console settings so click No when prompted.
+13. Open https://localhost:8443 in your browser. *The warning is gone!* 🎉
 
 
 ## Adding a page (container)
