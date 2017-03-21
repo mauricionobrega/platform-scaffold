@@ -2,7 +2,6 @@
 
 const chalk = require('chalk')
 const ip = require('ip')
-const urlencode = require('urlencode')
 
 const url = process.env.npm_package_siteUrl
 const siteFolder = (port) => {
@@ -28,8 +27,8 @@ const logger = {
     appStarted: (port) => {
         console.log(`Server started ${chalk.green('✓')}`)
 
-        const encodedUrl = urlencode(url)
-        const encodedSiteFolder = urlencode(siteFolder(port))
+        const encodedUrl = encodeURIComponent(url)
+        const encodedSiteFolder = encodeURIComponent(siteFolder(port))
 
         console.log(
             chalk.bold('Access URLs:') + '\n' + // eslint-disable-line prefer-template
