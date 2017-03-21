@@ -1,5 +1,5 @@
 /* eslint-disable newline-per-chained-call */
-import {getTextFrom} from '../../../utils/parser-utils'
+import {getTextFrom} from '../../../../utils/parser-utils'
 import {parseFields, parseHiddenInputs} from './common'
 
 const parseFormSection = ($, $formSection) => {

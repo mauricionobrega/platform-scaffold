@@ -2,9 +2,30 @@ import {makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import {SubmissionError} from 'redux-form'
 
+import {fetchPageData} from '../app/commands'
+import {receiveLoginPageData} from '../../login/responses'
+
 import {isRunningInAstro, jsRpcMethod} from '../../../utils/astro-integration'
 import {isFormResponseInvalid} from './parsers/common'
+import signinParser from './parsers/signin'
+import registerParser from './parsers/register'
 
+
+export const fetchLoginData = (url, routeName) => (dispatch) => {
+    return dispatch(fetchPageData(url))
+        .then((res) => {
+            const [$, $response] = res
+            if (routeName === 'signin') {
+                return dispatch(receiveLoginPageData({
+                    signinSection: signinParser($, $response)
+                }))
+            }
+
+            return dispatch(receiveLoginPageData({
+                registerSection: registerParser($, $response)
+            }))
+        })
+}
 
 export const submitLoginForm = (href, formValues, formSelector, resolve, reject) => {
     return makeFormEncodedRequest(href, formValues, {method: 'POST'})

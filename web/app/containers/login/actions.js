@@ -1,30 +1,9 @@
-import {createAction} from '../../utils/utils'
 import isEmail from 'validator/lib/isEmail'
 import {SubmissionError} from 'redux-form'
 import {getLogin} from './selectors'
-import {SIGN_IN_SECTION, REGISTER_SECTION} from './constants'
 
 import {submitLoginForm} from '../../integration-manager/login/commands'
 
-import signinParser from './parsers/signin'
-import registerParser from './parsers/register'
-
-
-export const receiveData = createAction('Receive Login Data')
-
-export const process = ({payload: {$, $response, routeName}}) => {
-    if (routeName === SIGN_IN_SECTION) {
-        return receiveData({
-            signinSection: signinParser($, $response)
-        })
-    } else if (routeName === REGISTER_SECTION) {
-        return receiveData({
-            registerSection: registerParser($, $response)
-        })
-    }
-    // This shouldn't happen, but just in case...
-    return receiveData()
-}
 
 const validateSignInForm = (formValues) => {
     const errors = {

@@ -3,6 +3,8 @@ import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 import {withRouter} from 'progressive-web-sdk/dist/routing'
 
+import {fetchLoginData} from '../../integration-manager/login/commands'
+
 import SignInPanel from './partials/signin-panel'
 import RegisterPanel from './partials/register-panel'
 
@@ -99,6 +101,8 @@ class Login extends React.Component {
         }
     }
 }
+
+Login.fetcher = (url, routeName, dispatch) => dispatch(fetchLoginData(url, routeName))
 
 const mapStateToProps = createStructuredSelector({
     title: selectors.getLoginTitle
