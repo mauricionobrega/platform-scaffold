@@ -4,7 +4,6 @@ import * as ReduxForm from 'redux-form'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as selectors from '../selectors'
 import * as actions from '../actions'
-import {selectorToJS} from '../../../utils/selector-utils'
 
 import ProductDetailsVariations from './product-details-variations'
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -66,7 +65,7 @@ const mapStateToProps = createPropsSelector({
     ctaText: selectors.getCTAText,
     quantity: selectors.getItemQuantity,
     disabled: selectors.getAddToCartDisabled,
-    initialValues: selectorToJS(selectors.getProductInitialValues)
+    initialValues: selectors.getProductInitialValues
 })
 
 const mapDispatchToProps = {
