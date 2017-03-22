@@ -74,10 +74,11 @@ const validateRegisterForm = (formValues) => {
     return errors
 }
 
-const handleLoginSuccess = () => {
+const handleLoginSuccess = (href) => {
     if (isRunningInAstro) {
         jsRpcMethod('user:loggedIn', [])()
     }
+    window.location.href = href
 }
 
 export const submitSignInForm = (formValues, resolve, reject) => {

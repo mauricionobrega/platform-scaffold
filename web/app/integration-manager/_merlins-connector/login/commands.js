@@ -39,8 +39,7 @@ const submitForm = (href, formValues, formSelector, resolve, reject) => {
                 }
                 return reject(new SubmissionError(error))
             }
-            window.location.href = '/customer/account'
-            return resolve(true)
+            return '/customer/account'
         })
         .catch((error) => {
             if (error.name !== SubmissionError) {
