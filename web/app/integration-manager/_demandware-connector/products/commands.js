@@ -1,6 +1,6 @@
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../../products/responses'
-import {urlToPathKey} from '../../../utils/utils'
+import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 import {makeDemandwareRequest} from '../utils'
 import {parseProductDetails, getCurrentProductID, getProductHref} from '../parsers'
 import {API_END_POINT_URL} from '../constants'

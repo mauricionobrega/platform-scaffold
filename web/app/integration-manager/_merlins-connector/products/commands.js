@@ -1,4 +1,4 @@
-import {urlToPathKey} from '../../../utils/utils'
+import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 import {receiveFormInfo} from '../actions'
 
 import {fetchPageData} from '../app/commands'
