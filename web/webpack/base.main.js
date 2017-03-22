@@ -14,7 +14,7 @@ const config = {
     devtool: 'cheap-source-map',
     entry: [
         'whatwg-fetch',
-        './app/main.jsx',
+        './app/main.jsx'
     ],
     output: {
         path: path.resolve(process.cwd(), 'build'),
@@ -27,6 +27,11 @@ const config = {
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
             minChunks: (module) => /node_modules/.test(module.resource)
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            filename: 'astro-client.js',
+            async: 'astro-client',
+            minChunks: (module) => /astro-client/.test(module.resource)
         }),
         new ExtractTextPlugin({
             filename: '[name].css'
