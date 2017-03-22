@@ -13,6 +13,7 @@ const ProductItem = ({
     image,
     price,
     title,
+    customWidth
 }) => {
     const classes = classNames('c-product-item', 'u-flexbox', 'u-row-reverse', className)
 
@@ -25,7 +26,7 @@ const ProductItem = ({
                     </p>
                 }
 
-                <div className="u-margin-bottom-sm u-text-uppercase">
+                <div className="u-margin-bottom-sm u-text-capitilize">
                     {title}
                 </div>
 
@@ -42,7 +43,7 @@ const ProductItem = ({
 
 
             {image &&
-                <div className="u-padding-end u-flex-none">
+                <div className="u-padding-end u-flex-none" style={{width: customWidth}}>
                     {image}
                 </div>
             }
@@ -73,6 +74,11 @@ ProductItem.propTypes = {
     className: PropTypes.string,
 
     /**
+     * Designates the custom width that accepets valid css units
+     */
+    customWidth: PropTypes.string,
+
+    /**
      * Image of the product. Usually an `<img />` tag or `<Image />` component
      */
     image: PropTypes.node,
@@ -80,7 +86,7 @@ ProductItem.propTypes = {
     /**
      * Designates the ProductItem's unit price
      */
-    price: PropTypes.node,
+    price: PropTypes.node
 }
 
 export default ProductItem

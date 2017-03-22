@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
-import {selectorToJS} from '../../../utils/selector-utils'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import throttle from 'lodash.throttle'
 
@@ -70,7 +69,7 @@ class OrderSummary extends React.Component {
         return (
             <div className="t-checkout-payment__order-summary">
                 <div className="t-checkout-payment__title u-padding-top-lg u-padding-bottom-md">
-                    <h2 className="u-h4">Order Summary</h2>
+                    <h2 className="u-h4 u-text-uppercase">Order Summary</h2>
                 </div>
 
                 <div className="u-border-light-top u-border-light-bottom u-bg-color-neutral-00 t-checkout-payment__card">
@@ -197,8 +196,8 @@ OrderSummary.propTypes = {
     toggleFixedPlaceOrder: PropTypes.func
 }
 
-const mapStateToProps = createStructuredSelector({
-    cartItems: selectorToJS(cartSelectors.getCartItems),
+const mapStateToProps = createPropsSelector({
+    cartItems: cartSelectors.getCartItems,
     subtotalExclTax: cartSelectors.getSubtotalExcludingTax,
     subtotalInclTax: cartSelectors.getSubtotalIncludingTax,
     summaryCount: cartSelectors.getCartSummaryCount,

@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
-import {selectorToJS} from '../../../utils/selector-utils'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as ReduxForm from 'redux-form'
 import {normalizePhone} from '../../../utils/normalize-utils'
 
@@ -58,7 +57,7 @@ const ShippingAddressForm = ({
                     </ReduxForm.Field>
                 </FieldRow> */ }
 
-                <div className="u-padding-md u-margin-top-md u-border-light">
+                <div className="u-margin-top-md">
                     {/* <FieldRow>
                         <ReduxForm.Field
                             component={Field}
@@ -113,7 +112,7 @@ const ShippingAddressForm = ({
                     </FieldRow>
 
                     <FieldRow>
-                        <ReduxForm.Field component={Field} name="country_id" label="Country">
+                        <ReduxForm.Field component={Field} className="pw--has-select" name="country_id" label="Country">
                             <select>
                                 {countries.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
                             </select>
@@ -126,7 +125,7 @@ const ShippingAddressForm = ({
                                 <input type="text" noValidate />
                             </ReduxForm.Field>
                         :
-                            <ReduxForm.Field component={Field} name="region_id" label="State/Province">
+                            <ReduxForm.Field component={Field} className="pw--has-select" name="region_id" label="State/Province">
                                 <select>
                                     {regions.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
                                 </select>
@@ -213,11 +212,11 @@ ShippingAddressForm.propTypes = {
     submitting: React.PropTypes.bool
 }
 
-const mapStateToProps = createStructuredSelector({
-    countries: selectorToJS(getCountries),
+const mapStateToProps = createPropsSelector({
+    countries: getCountries,
     formTitle: getShippingFormTitle,
     isCompanyOrAptShown: getIsCompanyOrAptShown,
-    regions: selectorToJS(getAvailableRegions(SHIPPING_FORM_NAME))
+    regions: getAvailableRegions(SHIPPING_FORM_NAME)
 })
 
 const mapDispatchToProps = {
