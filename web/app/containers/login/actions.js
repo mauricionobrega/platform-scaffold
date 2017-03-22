@@ -1,5 +1,5 @@
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
-import {createAction} from '../../utils/utils'
+import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 import {makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import isEmail from 'validator/lib/isEmail'
 import {SubmissionError} from 'redux-form'

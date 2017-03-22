@@ -1,5 +1,5 @@
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
-import {createAction} from '../../utils/utils'
+import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 import {SubmissionError} from 'redux-form'
 
 import * as selectors from './selectors'
