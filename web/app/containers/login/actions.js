@@ -2,7 +2,7 @@ import isEmail from 'validator/lib/isEmail'
 import {SubmissionError} from 'redux-form'
 import {getLogin} from './selectors'
 
-import {isRunningInAstro, jsRpcMethod} from '../../../utils/astro-integration'
+import {isRunningInAstro, jsRpcMethod} from '../../utils/astro-integration'
 import {login, registerUser} from '../../integration-manager/login/commands'
 
 
