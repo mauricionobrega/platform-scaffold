@@ -5,7 +5,6 @@ import {SubmissionError} from 'redux-form'
 import {fetchPageData} from '../app/commands'
 import {receiveLoginPageData} from '../../login/responses'
 
-import {isRunningInAstro, jsRpcMethod} from '../../../utils/astro-integration'
 import {isFormResponseInvalid} from './parsers/common'
 import signinParser from './parsers/signin'
 import registerParser from './parsers/register'
@@ -22,14 +21,15 @@ export const fetchLoginData = (url, routeName) => (dispatch) => {
                         ...signinParser($, $response)
                     }
                 }))
+            } else if (routeName === 'register') {
+                return dispatch(receiveLoginPageData({
+                    registerSection: {
+                        isFormLoaded: true,
+                        ...registerParser($, $response)
+                    }
+                }))
             }
-
-            return dispatch(receiveLoginPageData({
-                registerSection: {
-                    isFormLoaded: true,
-                    ...registerParser($, $response)
-                }
-            }))
+            return dispatch(receiveLoginPageData())
         })
 }
 
@@ -44,11 +44,7 @@ const submitForm = (href, formValues, formSelector, resolve, reject) => {
                 }
                 return reject(new SubmissionError(error))
             }
-            if (isRunningInAstro) {
-                jsRpcMethod('user:loggedIn', [])()
-            }
-            window.location.href = '/customer/account'
-            return resolve(true)
+            return '/customer/account'
         })
         .catch((error) => {
             if (error.name !== SubmissionError) {
@@ -57,10 +53,10 @@ const submitForm = (href, formValues, formSelector, resolve, reject) => {
         })
 }
 
-export const submitLoginForm = (href, formValues, resolve, reject) =>
+export const login = (href, formValues, resolve, reject) =>
     submitForm(href, formValues, '.form-login', resolve, reject)
 
-export const submitRegistrationForm = (href, formValues, resolve, reject) =>
+export const registerUser = (href, formValues, resolve, reject) =>
     submitForm(href, formValues, '.form-create-account', resolve, reject)
 
 const findPathForRoute = (routes, routeName) => {

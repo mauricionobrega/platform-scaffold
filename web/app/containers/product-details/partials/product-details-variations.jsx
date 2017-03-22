@@ -1,9 +1,8 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import * as ReduxForm from 'redux-form'
-import {createStructuredSelector} from 'reselect'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as selectors from '../selectors'
-import {selectorToJS} from '../../../utils/selector-utils'
 import {onVariationBlur} from '../actions'
 
 import Field from 'progressive-web-sdk/dist/components/field'
@@ -49,8 +48,8 @@ ProductDetailsVariations.propTypes = {
     onVariationBlur: PropTypes.func
 }
 
-const mapStateToProps = createStructuredSelector({
-    variations: selectorToJS(selectors.getVariationOptions)
+const mapStateToProps = createPropsSelector({
+    variations: selectors.getVariationOptions
 })
 
 const mapDispatchToProps = {

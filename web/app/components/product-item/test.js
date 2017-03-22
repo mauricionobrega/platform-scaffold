@@ -32,3 +32,17 @@ test('renders the contents of the className prop if present', () => {
         expect(wrapper.hasClass(name)).toBe(true)
     })
 })
+
+test('renders the category if it is passed in', () => {
+    const wrapper = shallow(<ProductItem title="Title" category="Category!" />)
+
+    const categoryTag = wrapper.find('.c-product-item__category')
+    expect(categoryTag.length).toBe(1)
+    expect(categoryTag.text()).toBe('Category!')
+})
+
+test('renders the price if it is passed in', () => {
+    const wrapper = shallow(<ProductItem title="Title" price="$0.99" />)
+
+    expect(wrapper.find('div').someWhere((div) => div.text() === '$0.99')).toBe(true)
+})

@@ -38,11 +38,12 @@
 // ---
 //
 // 1. Ensure that the icons do NOT shrink
+// 2. Match width and height to the mock
 
 .pw-progress-steps__badge {
     flex: 0 0 auto; // 1
-    width: $unit * 4;
-    height: $unit * 4;
+    width: $unit * 3; // 2
+    height: $unit * 3; // 2
     border: 0;
 
     border-radius: 0;

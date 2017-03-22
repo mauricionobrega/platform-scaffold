@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 
 import {getIsLoggedIn} from '../app/selectors'
 
@@ -8,7 +8,7 @@ import Button from 'progressive-web-sdk/dist/components/button'
 import {HeaderBar, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 import Icon from 'progressive-web-sdk/dist/components/icon'
 
-const CheckoutHeader = function({isLoggedIn, isRunningInAstro}) {
+const CheckoutHeader = function({headerHasSignIn, isLoggedIn, isRunningInAstro}) {
     if (isRunningInAstro) {
         return null
     }
@@ -24,9 +24,10 @@ const CheckoutHeader = function({isLoggedIn, isRunningInAstro}) {
 
                 <Icon name="lock" size="medium" className="u-flex-none" />
 
-                {!isLoggedIn &&
+                {(!isLoggedIn && headerHasSignIn) &&
                     <div className="u-flex u-text-align-end">
                         <Button
+                            className="u-text-letter-spacing-normal"
                             href="/customer/account/login/"
                             innerClassName="u-color-neutral-10"
                             >
@@ -42,6 +43,10 @@ const CheckoutHeader = function({isLoggedIn, isRunningInAstro}) {
 
 CheckoutHeader.propTypes = {
     /**
+    * Whether the header has sign in
+    */
+    headerHasSignIn: React.PropTypes.bool,
+    /**
     * Is the user logged in or not
     */
     isLoggedIn: React.PropTypes.bool,
@@ -51,7 +56,7 @@ CheckoutHeader.propTypes = {
     isRunningInAstro: React.PropTypes.bool
 }
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     isLoggedIn: getIsLoggedIn
 })
 

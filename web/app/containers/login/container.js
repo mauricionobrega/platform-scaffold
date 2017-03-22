@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import {withRouter} from 'progressive-web-sdk/dist/routing'
 
 import {fetchLoginData, navigateToSection} from '../../integration-manager/login/commands'
@@ -103,7 +103,7 @@ class Login extends React.Component {
 
 Login.fetcher = (url, routeName, dispatch) => dispatch(fetchLoginData(url, routeName))
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     title: selectors.getLoginTitle
 })
 

@@ -6,6 +6,9 @@ import {Grid, GridSpan} from 'progressive-web-sdk/dist/components/grid'
 import Icon from 'progressive-web-sdk/dist/components/icon'
 import List from 'progressive-web-sdk/dist/components/list'
 import ListTile from 'progressive-web-sdk/dist/components/list-tile'
+import {browserHistory} from 'progressive-web-sdk/dist/routing'
+
+import {isRunningInAstro, trigger} from '../../../utils/astro-integration'
 
 /* eslint-disable react/prop-types */
 const QuestionLink = ({children, href}) => (
@@ -19,6 +22,16 @@ const QuestionLink = ({children, href}) => (
     </ListTile>
 )
 /* eslint-enable react/prop-types */
+
+const continueShopping = () => {
+    if (isRunningInAstro) {
+        // If we're running in Astro, we want to dismiss open the cart modal,
+        // otherwise, navigating is taken care of by the button press
+        trigger('close')
+    } else {
+        browserHistory.push('/')
+    }
+}
 
 const CheckoutConfirmationQuestions = () => (
     <Grid className="t-checkout-confirmation__questions u-center-piece">
@@ -39,7 +52,7 @@ const CheckoutConfirmationQuestions = () => (
 
         <GridSpan {...GRID_SETTINGS}>
             <div className="u-padding-lg">
-                <Button href="/" className="c--tertiary u-width-full u-text-all-caps">
+                <Button onClick={continueShopping} className="c--tertiary u-width-full u-text-all-caps">
                     Continue Shopping
                 </Button>
             </div>

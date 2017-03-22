@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import {CART_WISHLIST_MODAL} from '../constants'
 import {closeModal} from '../../../store/modals/actions'
@@ -137,7 +137,7 @@ CartWishlistModal.propTypes = {
     isOpen: PropTypes.bool,
 }
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     isOpen: isModalOpen(CART_WISHLIST_MODAL),
     isLoggedIn: getIsLoggedIn,
     isComplete: getIsWishlistAddComplete

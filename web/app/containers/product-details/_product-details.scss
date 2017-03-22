@@ -37,6 +37,10 @@
         display: flex;
         flex-direction: column;
     }
+
+    .pw-sheet__wrapper {
+        justify-content: flex-end;
+    }
 }
 
 .t-product-details__item-added-modal-close {
