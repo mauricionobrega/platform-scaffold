@@ -51,8 +51,8 @@ const submitForm = (href, formValues, formSelector, resolve, reject) => {
         })
 }
 
-export const submitLoginForm = (href, formValues, resolve, reject) =>
+export const login = (href, formValues, resolve, reject) =>
     submitForm(href, formValues, '.form-login', resolve, reject)
 
-export const submitRegistrationForm = (href, formValues, resolve, reject) =>
+export const registerUser = (href, formValues, resolve, reject) =>
     submitForm(href, formValues, '.form-create-account', resolve, reject)

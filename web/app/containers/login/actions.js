@@ -2,7 +2,7 @@ import isEmail from 'validator/lib/isEmail'
 import {SubmissionError} from 'redux-form'
 import {getLogin} from './selectors'
 
-import {submitLoginForm, submitRegistrationForm} from '../../integration-manager/login/commands'
+import {login, registerUser} from '../../integration-manager/login/commands'
 
 
 const validateSignInForm = (formValues) => {
@@ -86,7 +86,7 @@ export const submitSignInForm = (formValues, resolve, reject) => {
             formValues[input.name] = input.value
         })
 
-        return submitLoginForm(href, formValues, resolve, reject)
+        return login(href, formValues, resolve, reject)
     }
 }
 
@@ -103,7 +103,7 @@ export const submitRegisterForm = (formValues, resolve, reject) => {
             formValues[input.name] = input.value
         })
 
-        return submitRegistrationForm(href, formValues, resolve, reject)
+        return registerUser(href, formValues, resolve, reject)
     }
 }
 
