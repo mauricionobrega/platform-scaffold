@@ -19,11 +19,13 @@ export const fetchLoginData = (url, routeName) => (dispatch) => {
                 return dispatch(receiveLoginPageData({
                     signinSection: signinParser($, $response)
                 }))
+            } else if (routeName === 'register') {
+                return dispatch(receiveLoginPageData({
+                    registerSection: registerParser($, $response)
+                }))
             }
 
-            return dispatch(receiveLoginPageData({
-                registerSection: registerParser($, $response)
-            }))
+            return dispatch(receiveLoginPageData())
         })
 }
 
