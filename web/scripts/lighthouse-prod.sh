@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 OUTPUT_PATH=./reports/audit-prod.html
-URL=https://www.merlinspotions.com
+# See package.json's siteUrl key.
+URL=${1-$npm_package_siteUrl}
 
 lighthouse \
 	--view \

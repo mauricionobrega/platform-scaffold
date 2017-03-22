@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 
 import Badge from 'progressive-web-sdk/dist/components/badge'
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -42,7 +42,7 @@ CartAction.propTypes = {
     onClick: PropTypes.func
 }
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     itemCount: getCartSummaryCount
 })
 

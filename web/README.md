@@ -7,33 +7,56 @@ npm install
 npm run dev
 ```
 
-If you will be deploying bundles to Mobify Cloud, then follow these steps:
+## Deploying Bundle to Mobify Cloud
 
-- Make sure you have the `mobify-client` npm module installed
-- Authorize your computer to push bundles by:
-    - Go to [https://cloud.mobify.com/account/](https://cloud.mobify.com/account/) and copy to your clipboard the command under _"For Mobify Client Projects"_
-    - Paste the command into your terminal and run it!
-- You're ready to deply bundles!
+If you will be deploying bundles to Mobify Cloud, then follow these steps to authorize your computer:
+- Go to [https://cloud.mobify.com/account/](https://cloud.mobify.com/account/) and find your API key.
+- Run the following command in your terminal:
+```
+npm run save-credentials -- -u <myEmail@organization.com> -k <myAPIkey>
+```
+- You're now ready to deploy bundles! To deploy bundles you run the following command:
+```
+npm run push -- -m "Test push by <name>"
+```
 
-## Prevent SSL Errors in Preview (on a Mac)
+## 🔒 Avoiding HTTPS errors in local development
 
-The development server uses a self-signed SSL certificate which is
-valid, but treated as suspect by browsers. This means that we must
-create and reconfirm security exceptions for it, and avoid localhost
-for certain use cases (such as service workers).
+The development server uses a self-signed SSL certificate which is valid, but
+must be added to your operating system to work correctly.
 
-To add the certificate to the Mac system trust store and make the
-browsers accept it, do the following:
+### macOS
 
-1. In the root of the project directory, run `open node_modules/webpack-dev-server/ssl/server.crt`.
-2. Open `Keychain Access` -> go to `Certificates` -> select `localhost`
-3. Right click on the entry and select `Get Info`
-4. Expand the `Trust` section
-5. Set `Secure Socket Layer (SSL)` to `Always Trust`
-6. Close the info window. You will need to enter your password.
+To add the certificate to the Mac system trust store:
 
-This process will allow all projects hosted with `webpack-dev-server`
-version 1.15.0 and up to be trusted by your browsers.
+1. Open https://localhost:8443. *You should see a security warning.* ⚠️
+2. In the root of the project directory, run `open dev-server/localhost.pem`.
+3. Add the certificate to your `login` Keychain.
+4. In `Keychain Access` search for `Mobify Development Server`.
+5. Right click it and select `Get Info`.
+6. Expand the `Trust` section.
+7. Set `Secure Socket Layer (SSL)` to `Always Trust`.
+8. Close the info window. You will need to enter your password.
+9. Open https://localhost:8443 in your browser. *The warning is gone!* 🎉
+
+### Windows
+
+To add the certificate to the Windows Trusted Root Certificate Store:
+
+1.  Open https://localhost:8443. *You should see a security warning.* ⚠️
+2.  Start Menu → Run `mmc.exe`.
+3.  File → Add/Remove Snap-in.
+4.  Select "Certificates" and click Add.
+5.  Select "Computer Account" and click Next.
+6.  Select "Local Computer" and click Finish.
+7.  Click OK to close the Add or Remove Snap Ins dialog.
+8.  Expand the Certificates node and right-click on the Trusted Roots Certification Authorities node.
+9.  Select All Tasks → Import.
+10.  Import the file at `$\web\dev-server\localhost.pem`. Leave all other settings as is while importing.
+11. After clicking Finish, you should get an alert saying "Import Successful".
+12. Exit the window. You do not need to save the console settings so click No when prompted.
+13. Open https://localhost:8443 in your browser. *The warning is gone!* 🎉
+
 
 ## Adding a page (container)
 
@@ -88,6 +111,45 @@ npm run build-sprites
 
 Icon sprites are a technique for creating easy to use icons. [Learn more here](https://medium.com/@webprolific/why-and-how-i-m-using-svg-over-fonts-for-icons-7241dab890f0#.1v9l7c7q2) about the technique and why we use it over icon fonts.
 
+## Linting
+
+This project comes with a linter setup using `eslint`,
+`eslint-plugin-react`, `eslint-plugin-import`, and
+`eslint-plugin-jsx-a11y`. By default, it uses the Mobify code style
+(https://www.github.com/mobify/mobify-code-style). Run the linter
+using:
+
+```
+npm run lint
+```
+
+If this code style is a poor match for your pre-existing practices,
+there are two ways you can modify the linter configuration to suit
+your use case better. For small changes, you can add rules to the
+`.eslintrc.yml` file in the root web directory. Rules specified in
+this file override rules in the Mobify standard; the following `rules`
+section adds an additional rule and disables an existing rule:
+
+```yaml
+rules:
+  react/react-in-js-scope: error
+  camelcase: off
+```
+
+For larger differences from the Mobify code style, you can replace the
+Mobify config with a different configuration base. This involves
+editing the `extends` section in `.eslintrc.yml`. For example, if you
+use the Airbnb style guide, replace the contents of `.eslintrc.yml`
+with:
+
+```yaml
+extends:
+  - airbnb
+```
+
+These methods can be combined to use a different standard with minor
+local variations.
+
 ## Tests
 
 To run the full test suite, you can use:
@@ -118,15 +180,18 @@ You can run [Lighthouse](https://github.com/GoogleChrome/lighthouse) test agains
 npm run test:pwa-prod
 ```
 
-When you develop it might be helpful to run the same test against your local files:
+When you develop it might be helpful to run the same test against your local files. This assumes you have `npm run dev` running in another tab:
 
 ```
-sudo npm run test:pwa-local
+npm run test:pwa-local
 ```
 
-You **must** keep running `npm run dev` at the same time. `sudo` is required in order to bind to port 80.
+For CI builds, this command builds and serves the bundle for testing with Preview:
 
-There is also `test:pwa-ci` task (also requires `sudo`) for CI that runs `dev` and `pwa-local` in parallel.
+```
+npm run test:pwa-ci
+```
+
 
 ## Developing against `develop` of the Progressive Web SDK
 
@@ -143,7 +208,7 @@ npm run dev:build # Some assets required by the scaffold build are only created 
 
 Then navigate back to this directory and run:
 ```
-cd ../progressive-web-scaffold/web
+cd ../platform-scaffold/web
 npm link progressive-web-sdk
 npm run dev
 ```

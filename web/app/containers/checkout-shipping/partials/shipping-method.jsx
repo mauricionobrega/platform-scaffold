@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
-import {selectorToJS} from '../../../utils/selector-utils'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as ReduxForm from 'redux-form'
 
 import {getShippingMethods} from '../../../store/checkout/shipping/selectors'
@@ -66,9 +65,9 @@ ShippingMethod.propTypes = {
     submitting: PropTypes.bool
 }
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     entityID: getCustomerEntityID,
-    shippingMethods: selectorToJS(getShippingMethods)
+    shippingMethods: getShippingMethods
 })
 
 

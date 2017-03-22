@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react'
-import {createStructuredSelector} from 'reselect'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import {connect} from 'react-redux'
 import * as selectors from '../selectors'
 import * as actions from '../actions'
@@ -34,7 +34,7 @@ SignInPanel.propTypes = {
     submitForm: PropTypes.func
 }
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     description: selectors.signin.getDescription,
     heading: selectors.signin.getHeading,
     requiredText: selectors.signin.getRequiredText

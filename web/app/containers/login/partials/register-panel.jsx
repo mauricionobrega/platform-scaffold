@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react'
-import {createStructuredSelector} from 'reselect'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import {connect} from 'react-redux'
 import * as selectors from '../selectors'
 import * as actions from '../actions'
@@ -30,7 +30,7 @@ RegisterPanel.propTypes = {
     submitForm: PropTypes.func
 }
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     description: selectors.register.getDescription,
     heading: selectors.register.getHeading,
     requiredText: selectors.register.getRequiredText
