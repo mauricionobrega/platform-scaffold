@@ -1,18 +1,6 @@
 import {createAction as createReduxAction} from 'redux-actions'
 import fromPairs from 'lodash.frompairs'
 
-// simplify redux-actions createAction method.
-// usage: createAction('Update Campaign', 'id', 'update')
-// instead of: createAction('Update Campaign', (id, update) => ({id, update}))
-export const createAction = (description, ...argNames) => {
-    return createReduxAction(
-        description,
-        argNames.length ?
-            (...args) => fromPairs(argNames.map((arg, idx) => [arg, args[idx]]))
-            : null
-    )
-}
-
 /**
  * Wraps an action creator function so that the React synthetic action
  * is not passed in. This is necessary to avoid spurious warnings from
