@@ -1,4 +1,4 @@
-import {createAction} from '../../utils/utils'
+import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 import {extractMagentoShippingStepData, getCheckoutEntityID, extractMagentoJson} from '../../utils/magento-utils'
 
 import parseLocations from './locations/parser'
@@ -6,7 +6,7 @@ import {parseShippingInitialValues} from './shipping/parser'
 
 export const receiveCheckoutData = createAction('Receive Checkout Data')
 
-export const receiveShippingMethodInitialValues = createAction('Receive Shipping Method Initial Values', 'shipping')
+export const receiveShippingMethodInitialValues = createAction('Receive Shipping Method Initial Values', ['shipping'])
 
 export const processCheckoutData = ({payload: {$response}}) => {
     return (dispatch) => {
