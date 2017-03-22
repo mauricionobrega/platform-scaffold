@@ -5,7 +5,6 @@ import {SubmissionError} from 'redux-form'
 import {fetchPageData} from '../app/commands'
 import {receiveLoginPageData} from '../../login/responses'
 
-import {isRunningInAstro, jsRpcMethod} from '../../../utils/astro-integration'
 import {isFormResponseInvalid} from './parsers/common'
 import signinParser from './parsers/signin'
 import registerParser from './parsers/register'
@@ -39,9 +38,6 @@ const submitForm = (href, formValues, formSelector, resolve, reject) => {
                     _error: 'Username or password is incorrect'
                 }
                 return reject(new SubmissionError(error))
-            }
-            if (isRunningInAstro) {
-                jsRpcMethod('user:loggedIn', [])()
             }
             window.location.href = '/customer/account'
             return resolve(true)
