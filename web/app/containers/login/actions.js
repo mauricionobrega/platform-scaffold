@@ -86,7 +86,7 @@ export const submitSignInForm = (formValues, resolve, reject) => {
             formValues[input.name] = input.value
         })
 
-        return submitLoginForm(href, formValues, resolve, reject)
+        return dispatch(submitLoginForm(href, formValues, resolve, reject))
     }
 }
 
