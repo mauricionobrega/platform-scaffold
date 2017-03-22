@@ -38,6 +38,16 @@
     }
 }
 
+.t-checkout-payment__add-new-card {
+    transition: padding 0.2s ease-out;
+}
+
+.t-checkout-payment__add-new-card-form {
+    opacity: 0;
+
+    animation: fadeIn 0.2s 0.2s ease-out 1 forwards;
+}
+
 
 // Fixed Place Order
 // ---

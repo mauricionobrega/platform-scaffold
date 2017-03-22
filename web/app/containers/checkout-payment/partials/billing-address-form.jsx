@@ -1,8 +1,7 @@
 import React, {PropTypes} from 'react'
 import * as ReduxForm from 'redux-form'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
-import {selectorToJS} from '../../../utils/selector-utils'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 
 // Selectors
 import * as selectors from '../selectors'
@@ -70,7 +69,7 @@ class BillingAddressForm extends React.Component {
         return (
             <div>
                 <div className="t-checkout-payment__title u-padding-top-lg u-padding-bottom-md">
-                    <h2 className="u-h4">Billing Address</h2>
+                    <h2 className="u-h4 u-text-uppercase">Billing Address</h2>
                 </div>
 
                 <div className="u-border-light-top u-border-light-bottom u-bg-color-neutral-00 t-checkout-payment__card">
@@ -133,7 +132,7 @@ class BillingAddressForm extends React.Component {
                             </FieldRow>
 
                             <FieldRow>
-                                <ReduxForm.Field component={Field} name="region_id" label="State/Province">
+                                <ReduxForm.Field component={Field} className="pw--has-select" name="region_id" label="State/Province">
                                     <select>
                                         {regions.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
                                     </select>
@@ -148,7 +147,7 @@ class BillingAddressForm extends React.Component {
                             </FieldRow>
 
                             <FieldRow>
-                                <ReduxForm.Field component={Field} name="country_id" label="Country">
+                                <ReduxForm.Field component={Field} className="pw--has-select" name="country_id" label="Country">
                                     <select>
                                         {countries.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
                                     </select>
@@ -222,14 +221,14 @@ BillingAddressForm.propTypes = {
     toggleNewAddressFields: PropTypes.func,
 }
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     city: getCity,
-    countries: selectorToJS(getCountries),
+    countries: getCountries,
     isCompanyOrAptShown: selectors.getIsCompanyOrAptShown,
     name: getShippingFullName,
     newShippingAddressIsEnabled: selectors.getNewShippingAddressIsEnabled,
     postcode: getPostcode,
-    regions: selectorToJS(getRegions),
+    regions: getRegions,
     street: getStreetLineOne,
 })
 

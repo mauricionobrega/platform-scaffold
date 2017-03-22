@@ -106,13 +106,15 @@ export const checkIfOffline = () => {
 }
 
 const requestCapturedDoc = () => {
-    const body = new Blob([window.Progressive.initialCapturedDocHTML], {type: 'text/html'})
-    const capturedDocResponse = new Response(body, {
-        status: 200,
-        statusText: 'OK'
-    })
+    return window.Progressive.capturedDocHTMLPromise.then((initialCapturedDocHTML) => {
+        const body = new Blob([initialCapturedDocHTML], {type: 'text/html'})
+        const capturedDocResponse = new Response(body, {
+            status: 200,
+            statusText: 'OK'
+        })
 
-    return Promise.resolve(capturedDocResponse)
+        return Promise.resolve(capturedDocResponse)
+    })
 }
 
 /**
@@ -122,14 +124,15 @@ const requestCapturedDoc = () => {
 export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
     return (dispatch, getState) => {
         const isNotTestingEnvironment = !!window.Progressive
-        const request = isInitialEntryToSite && isNotTestingEnvironment ? requestCapturedDoc() : makeRequest(fetchUrl || url)
+        const request = isInitialEntryToSite && isNotTestingEnvironment
+            ? requestCapturedDoc()
+            : makeRequest(fetchUrl || url)
         isInitialEntryToSite = false
 
         return request
             .then(jqueryResponse)
             .then((res) => {
                 const [$, $response] = res
-
                 const currentURL = getCurrentUrl(getState())
                 const receivedAction = onPageReceived($, $response, url, currentURL, routeName)
 

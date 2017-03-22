@@ -85,7 +85,9 @@ export const createActionWithMeta = (description, payloadArgumentNames, metaCrea
  * @param {function} fn - an action creator function
  * @returns {function} - the wrapped action creator
  */
-export const stripEvent = (fn) => () => fn()
+export const stripEvent = (fn) =>
+/* istanbul ignore next */
+    () => fn()
 
 
 /**
@@ -129,4 +131,10 @@ export const getURL = (location) =>
 export const getCookieValue = (cookieName) => {
     const result = document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)${cookieName}\\s*\\=\\s*([^;]*).*$)|^.*$`), '$1')
     return result
+}
+
+
+// converts the image URL to a high resolution format
+export const getHighResImage = (src) => {
+    return src.replace(/thumbnail\/\d+x\d+/, 'small_image/240x300')
 }

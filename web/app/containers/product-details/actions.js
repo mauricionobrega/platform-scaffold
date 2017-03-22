@@ -34,7 +34,7 @@ export const goToCheckout = () => (dispatch) => {
         // otherwise, navigating is taken care of by the button press
         Astro.trigger('open:cart-modal')
     } else {
-        browserHistory.push('/checkout/')
+        browserHistory.push('/checkout/cart/')
     }
 }
 
