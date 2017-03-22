@@ -24,7 +24,6 @@ export const fetchLoginData = () => (dispatch) => {
                 form: {
                     sections: [{
                         heading: 'Personal Information',
-
                     }, {
                         heading: 'Sign-in Information',
                     }]
@@ -50,7 +49,7 @@ export const submitLoginForm = (href, {login}, resolve, reject) => (dispatch) =>
         .then((response) => response.json())
         .then((responseJSON) => {
             if (responseJSON.fault) {
-                return reject(new SubmissionError({_error: 'Unable to login, please check your credentials and try again.'}))
+                return reject(new SubmissionError({_error: 'Username or password is incorrect'}))
             }
             return resolve()
         })
