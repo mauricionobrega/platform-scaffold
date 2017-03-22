@@ -88,6 +88,7 @@ Checkout.prototype.fillShippingInfo = function() {
     // Fill out Shipping info form fields
     this.browser
         .log('Fill out Shipping Info form fields')
+        .waitForElementVisible(selectors.name)
         .clearValue(selectors.name)
         .clearValue(selectors.address)
         .clearValue(selectors.city)

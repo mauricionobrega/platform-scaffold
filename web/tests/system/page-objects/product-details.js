@@ -1,8 +1,8 @@
 const selectors = {
     productDetailsTemplateIdentifier: '.t-product-details',
     addItem: '.t-product-details__add-to-cart:not([disabled])',
-    itemAdded: '.product-list__item-added-modal',
-    goToCheckout: '.product-list__item-added-modal .c--primary'
+    itemAdded: '.t-product-details__item-added-modal',
+    goToCheckout: '.t-product-details__item-added-modal .c--primary'
 }
 
 const ProductDetails = function(browser) {
@@ -20,7 +20,7 @@ ProductDetails.prototype.addItemToCart = function() {
     return this
 }
 
-ProductDetails.prototype.navigateToCheckout = function() {
+ProductDetails.prototype.navigateToCart = function() {
     // Navigate from ProductDetails to Checkout
     this.browser
         .log('Navigating to cart')

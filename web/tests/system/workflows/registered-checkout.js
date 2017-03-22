@@ -30,58 +30,67 @@ export default {
         browser.end()
     },
 
-    'Checkout - Registered - Step 1 - Navigate to Home': (browser) => {
+    // The following tests are conducted in sequence within the same session.
+
+    'Checkout - Registered - Navigate to Home': (browser) => {
         browser
             .preview()
             .waitForElementVisible(home.selectors.wrapper)
             .assert.visible(home.selectors.wrapper)
     },
 
-    'Checkout - Registered - Step 2 - Navigate from Home to ProductList': (browser) => {
+    'Checkout - Registered - Navigate from Home to ProductList': (browser) => {
         home.navigateToProductList(PRODUCT_LIST_INDEX)
         browser
             .waitForElementVisible(productList.selectors.productListTemplateIdentifier)
             .assert.visible(productList.selectors.productListTemplateIdentifier)
     },
 
-    'Checkout - Registered - Step 3 - Navigate from ProductList to ProductDetails': (browser) => {
+    'Checkout - Registered - Navigate from ProductList to ProductDetails': (browser) => {
         productList.navigateToProductDetails(PRODUCT_INDEX)
         browser
             .waitForElementVisible(productDetails.selectors.productDetailsTemplateIdentifier)
             .assert.visible(productDetails.selectors.productDetailsTemplateIdentifier)
     },
 
-    'Checkout - Registered - Step 4 - Add item to Shopping Cart': (browser) => {
+    'Checkout - Registered - Add item to Shopping Cart': (browser) => {
         productDetails.addItemToCart()
         browser
             .waitForElementVisible(productDetails.selectors.itemAdded)
             .assert.visible(productDetails.selectors.itemAdded)
     },
 
-    'Checkout - Registered - Step 5 - Navigate from ProductDetails to Checkout': (browser) => {
-        productDetails.navigateToCheckout()
+    'Checkout - Registered - Navigate from ProductDetails to Cart': (browser) => {
+        productDetails.navigateToCart()
+        browser
+            .waitForElementVisible(cart.selectors.cartTemplateIdentifier)
+            .assert.visible(cart.selectors.cartTemplateIdentifier)
+    },
+
+    'Checkout - Registered - Navigate from Cart to Checkout': (browser) => {
+        cart.navigateToCheckout()
         browser
             .waitForElementVisible(checkout.selectors.checkoutTemplateIdentifier)
             .assert.visible(checkout.selectors.checkoutTemplateIdentifier)
     },
 
-    'Checkout - Registered - Step 6 - Continue to Registered Checkout': (browser) => {
+    'Checkout - Registered - Continue to Registered Checkout': (browser) => {
         checkout.continueAsRegistered()
         browser
             .waitForElementVisible(checkout.selectors.checkoutTemplateIdentifier)
             .assert.visible(checkout.selectors.checkoutTemplateIdentifier)
     },
 
-    'Checkout - Registered - Step 7 - Fill out Shipping Info form': (browser) => {
+    'Checkout - Registered - Fill out Shipping Info form': (browser) => {
         checkout.fillShippingInfo()
         browser.waitForElementVisible(checkout.selectors.lastShippingInfo)
     },
 
-    'Checkout - Registered - Step 8 - Fill out Registered Checkout Payment Details form': () => {
+    'Checkout - Registered - Fill out Registered Checkout Payment Details form': () => {
         checkout.continueToPayment()
     },
 
-    'Checkout - Registered - Step 9 - Verify Submit Order button is visible': (browser) => {
+    'Checkout - Registered - Verify Submit Order button is visible': (browser) => {
         browser
             .waitForElementVisible(checkout.selectors.submitOrder)
             .assert.visible(checkout.selectors.submitOrder)
