@@ -1,5 +1,3 @@
-import {createAction as createReduxAction} from 'redux-actions'
-import fromPairs from 'lodash.frompairs'
 
 /**
  * Wraps an action creator function so that the React synthetic action
