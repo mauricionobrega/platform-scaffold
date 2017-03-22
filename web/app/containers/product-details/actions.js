@@ -6,8 +6,10 @@ import * as selectors from './selectors'
 import * as appSelectors from '../app/selectors'
 import {getFormValues} from '../../store/form/selectors'
 
-import {addToCart, getProductVariationData} from '../../integration-manager/commands'
+import {addToCart} from '../../integration-manager/commands'
+import {getProductVariationData} from '../../integration-manager/products/commands'
 import {openModal, closeModal} from '../../store/modals/actions'
+import {addNotification} from '../app/actions'
 import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from './constants'
 
 import {isRunningInAstro} from '../../utils/astro-integration'
@@ -32,7 +34,7 @@ export const goToCheckout = () => (dispatch) => {
         // otherwise, navigating is taken care of by the button press
         Astro.trigger('open:cart-modal')
     } else {
-        browserHistory.push('/checkout/')
+        browserHistory.push('/checkout/cart/')
     }
 }
 
@@ -61,8 +63,12 @@ export const submitCartForm = (formValues) => (dispatch, getStore) => {
     .then(() => dispatch(addToCart(key, qty)))
     .then(() => dispatch(openModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL)))
     .catch((error) => {
-        // TODO?? How do we communicate errors to the user?? Modal?
         console.error(`Error adding to cart: ${error}`)
+        return dispatch(addNotification({
+            content: 'Unable to add item to the cart.',
+            id: 'addToCartError',
+            showRemoveButton: true
+        }))
     })
     .then(() => dispatch(addToCartComplete()))
 
@@ -72,5 +78,6 @@ export const onVariationBlur = () => (dispatch, getStore) => {
     const currentState = getStore()
     const variationSelections = getFormValues('product-add-to-cart')(currentState)
     const availableVariations = selectors.getProductVariations(currentState).toJS()
-    return dispatch(getProductVariationData(variationSelections, availableVariations))
+    const variationOptions = selectors.getVariationOptions(currentState).toJS()
+    return dispatch(getProductVariationData(variationSelections, availableVariations, variationOptions))
 }

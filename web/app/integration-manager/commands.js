@@ -1,15 +1,18 @@
 import {register as registerHome} from './home/commands'
 import {register as registerProducts} from './products/commands'
 import {register as registerCategories} from './categories/commands'
+import {register as registerCart} from './cart/commands'
+import {register as registerApp} from './app/commands'
 
 let connector = {}
 
 export const register = (commands) => {
     connector = commands
-
+    registerApp(commands.app)
     registerHome(commands.home)
     registerProducts(commands.products)
     registerCategories(commands.categories)
+    registerCart(commands.cart)
 }
 
 export const addToCart = (...args) => connector.addToCart(...args)
@@ -22,4 +25,4 @@ export const checkCustomerEmail = (...args) => connector.checkCustomerEmail(...a
 
 export const submitSignIn = (...args) => connector.submitSignIn(...args)
 
-export const getProductVariationData = (...args) => connector.getProductVariationData(...args)
+export const submitNewsletter = (...args) => connector.submitNewsletter(...args)

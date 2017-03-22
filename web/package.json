@@ -4,9 +4,9 @@
   "aJSSlug": "merlinspotions-2",
   "repository": {
     "type": "git",
-    "url": "http://github.com/mobify/progressive-web-scaffold"
+    "url": "http://github.com/mobify/platform-scaffold"
   },
-  "siteUrl": "",
+  "siteUrl": "https://www.merlinspotions.com/",
   "license": "See license in LICENSE",
   "private": true,
   "version": "0.13.1",
@@ -16,6 +16,8 @@
     "immutable": "3.8.1",
     "lodash.frompairs": "4.0.1",
     "react": "15.4.1",
+    "react-addons-shallow-compare": "15.4.1",
+    "react-addons-transition-group": "15.4.1",
     "react-dom": "15.4.1",
     "react-redux": "4.4.5",
     "redux": "3.6.0",
@@ -23,7 +25,9 @@
     "redux-analytics": "0.3.1",
     "redux-thunk": "2.1.0",
     "reselect": "2.5.4",
+    "reselect-immutable-helpers": "1.2.1",
     "sw-toolbox": "3.4.0",
+    "webfontloader": "1.6.27",
     "whatwg-fetch": "1.0.0"
   },
   "devDependencies": {
@@ -57,8 +61,8 @@
     "http-proxy": "1.15.1",
     "http-server": "0.9.0",
     "ignore-styles": "5.0.1",
-    "imagemin-power-cli": "0.4.0",
     "imagemin-pngquant": "5.0.0",
+    "imagemin-power-cli": "0.4.0",
     "ip": "1.1.4",
     "jest-cli": "18.0.0",
     "jsdom": "9.9.1",
@@ -95,7 +99,7 @@
   },
   "config": {
     "sdk_generator_version": 2,
-    "min_lighthouse_score": 40
+    "min_lighthouse_score": 80
   },
   "scripts": {
     "add:component": "sdk-generate component",
@@ -127,19 +131,20 @@
     "cacheDirectory": "./node_modules/.cache",
     "collectCoverageFrom": [
       "**/*.{js,jsx}",
+      "!app/{loader.js,main.jsx}",
       "!app/static/js/*.js",
       "!app/vendor/*.js",
-      "!app/containers/reducers.js",
-      "!app/**/container.{js,jsx}",
-      "!{dev-server,lighthouse,coverage,build,tests,webpack}/**/*.js",
+      "!app/containers/{templates,reducers}.js",
+      "!app/**/{container,constants,selectors}.{js,jsx}",
+      "!{dev-server,proxy,lighthouse,coverage,build,tests,webpack,worker}/**/*.js",
       "!styleguide/**/*.{js,jsx}",
       "!app/loader-routes.js",
-      "!web/worker/main.js"
+      "!service-worker-loader.js"
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 11,
-        "functions": 31,
+        "branches": 18,
+        "functions": 35,
         "lines": 50,
         "statements": 47
       }

@@ -1,8 +1,7 @@
 import React, {PropTypes} from 'react'
 import {reduxForm} from 'redux-form'
-import {createStructuredSelector} from 'reselect'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import {connect} from 'react-redux'
-import {selectorToJS} from '../../../utils/selector-utils'
 import * as selectors from '../selectors'
 import {isModalOpen} from '../../../store/selectors'
 import {openModal, closeModal} from '../../../store/modals/actions'
@@ -112,8 +111,8 @@ const ReduxRegisterForm = reduxForm({
     form: 'register-form'
 })(RegisterForm)
 
-const mapStateToProps = createStructuredSelector({
-    sections: selectorToJS(selectors.register.form.getSections),
+const mapStateToProps = createPropsSelector({
+    sections: selectors.register.form.getSections,
     href: selectors.register.form.getHref,
     modalOpen: isModalOpen(REGISTER_SECTION),
     submitText: selectors.register.form.getSubmitText

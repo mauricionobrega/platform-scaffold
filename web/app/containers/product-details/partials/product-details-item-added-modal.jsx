@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as selectors from '../selectors'
 import {stripEvent} from '../../../utils/utils'
 import {isModalOpen} from '../../../store/selectors'
@@ -14,7 +14,7 @@ import ProductItem from '../../../components/product-item'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
 const ProductDetailsItemAddedModal = ({open, onDismiss, quantity, title, price, productImage, onGoToCheckout}) => (
-    <Sheet open={open} onDismiss={onDismiss} effect="slide-bottom" className="product-list__item-added-modal" coverage="50%">
+    <Sheet open={open} onDismiss={onDismiss} effect="slide-bottom" className="t-product-details__item-added-modal" coverage="50%" shrinkToContent>
         {/* Modal header */}
         <div className="u-flex-none u-border-bottom">
             <div className="u-flexbox u-align-center">
@@ -33,7 +33,7 @@ const ProductDetailsItemAddedModal = ({open, onDismiss, quantity, title, price, 
         <div className="u-flexbox u-column u-flex u-padding-md">
             {/* Modal product information */}
             <div className="u-flex u-margin-bottom-md">
-                <ProductItem
+                <ProductItem customWidth="20%"
                     title={<h2 className="c-h4">{title}</h2>}
                     image={<img role="presentation" src={productImage} alt="" width="60px" />}
                 >
@@ -70,7 +70,7 @@ ProductDetailsItemAddedModal.propTypes = {
     onGoToCheckout: PropTypes.func,
 }
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     productImage: selectors.getFirstProductImage,
     open: isModalOpen(PRODUCT_DETAILS_ITEM_ADDED_MODAL),
     quantity: selectors.getItemQuantity,

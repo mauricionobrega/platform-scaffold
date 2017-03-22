@@ -1,8 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import * as ReduxForm from 'redux-form'
-import {createStructuredSelector} from 'reselect'
-import {selectorToJS} from '../../../utils/selector-utils'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 
 // Selectors
 import {getShippingInitialValues} from '../../../store/checkout/shipping/selectors'
@@ -50,8 +49,8 @@ CheckoutPaymentForm.propTypes = {
     submitting: PropTypes.bool
 }
 
-const mapStateToProps = createStructuredSelector({
-    initialValues: selectorToJS(getShippingInitialValues)
+const mapStateToProps = createPropsSelector({
+    initialValues: getShippingInitialValues
 })
 
 const mapDispatchToProps = {

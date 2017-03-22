@@ -85,22 +85,31 @@ export const createActionWithMeta = (description, payloadArgumentNames, metaCrea
  * @param {function} fn - an action creator function
  * @returns {function} - the wrapped action creator
  */
-export const stripEvent = (fn) => () => fn()
+export const stripEvent = (fn) =>
+/* istanbul ignore next */
+    () => fn()
 
 
 /**
- * Converts a full URL to the preferred format for keying the redux store,
- * i.e. the path and query string
- */
-export const urlToPathKey = (url) => {
+* Converts a URL to the relative URL
+* @param {string} url - the url to be converted (if it's already relative it will be returned as is)
+* @param {bool} includeHash - indicates if the URL hash should be included in the relative URL returns
+*/
+export const extractPathFromURL = (url, includeHash) => {
     if (/^\//.test(url)) {
         // The URL is already relative, so just return it
         return url
     }
     const urlObject = new URL(url)
 
-    return `${urlObject.pathname}${urlObject.search}`
+    return `${urlObject.pathname}${urlObject.search}${includeHash ? urlObject.hash : ''}`
 }
+
+/**
+ * Converts a full URL to the preferred format for keying the redux store,
+ * i.e. the path and query string
+ */
+export const urlToPathKey = (url) => extractPathFromURL(url, false)
 
 /**
  * Returns a path given a `location` object.
@@ -122,4 +131,10 @@ export const getURL = (location) =>
 export const getCookieValue = (cookieName) => {
     const result = document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)${cookieName}\\s*\\=\\s*([^;]*).*$)|^.*$`), '$1')
     return result
+}
+
+
+// converts the image URL to a high resolution format
+export const getHighResImage = (src) => {
+    return src.replace(/thumbnail\/\d+x\d+/, 'small_image/240x300')
 }

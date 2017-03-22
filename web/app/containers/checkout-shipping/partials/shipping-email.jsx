@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as ReduxForm from 'redux-form'
 
 import {checkCustomerEmail, submitSignIn} from '../../../integration-manager/commands'
@@ -36,7 +36,7 @@ const ShippingEmail = ({submitSignIn, customerEmailRecognized, checkCustomerEmai
                             onBlur: checkCustomerEmail
                         }}
                     >
-                        <input type="email" noValidate />
+                        <input type="email" noValidate placeholder="Email Address" />
                     </ReduxForm.Field>
                 </FieldRow>
 
@@ -78,7 +78,7 @@ ShippingEmail.propTypes = {
     submitSignIn: React.PropTypes.func
 }
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     customerEmailRecognized: getCustomerEmailRecognized,
     emailError: getEmailError
 })

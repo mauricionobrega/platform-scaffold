@@ -16,8 +16,7 @@ const ProductList = () => {
     )
 }
 
-ProductList.fetcher = (url, dispatch) => {
-    dispatch(fetchProductListData(url))
-}
+ProductList.fetcher = (url, dispatch) => dispatch(fetchProductListData(url))
+
 
 export default ProductList

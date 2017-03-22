@@ -1,4 +1,4 @@
-import {createGetSelector} from '../utils/selector-utils'
+import {createGetSelector} from 'reselect-immutable-helpers'
 
 export const getUi = ({ui}) => ui
 

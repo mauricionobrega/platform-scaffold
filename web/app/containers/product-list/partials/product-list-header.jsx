@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createStructuredSelector} from 'reselect'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as selectors from '../selectors'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
@@ -47,7 +47,7 @@ ProductListHeader.propTypes = {
     title: PropTypes.string
 }
 
-const mapStateToProps = createStructuredSelector({
+const mapStateToProps = createPropsSelector({
     contentsLoaded: selectors.getProductListContentsLoaded,
     parentHref: selectors.getProductListParentHref,
     parentName: selectors.getProductListParentName,

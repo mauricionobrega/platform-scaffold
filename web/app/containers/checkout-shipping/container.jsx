@@ -16,7 +16,7 @@ const CheckoutShipping = () => {
             <div className="u-bg-color-neutral-00 u-border-light-bottom">
                 <div className="t-checkout-shipping__progress">
                     <ProgressSteps>
-                        <ProgressStepsItem icon="cart-full" title="Cart" href="#" />
+                        <ProgressStepsItem icon="cart-full" title="Cart" href="/checkout/cart/" />
                         <ProgressStepsItem icon="shipping" title="Shipping" current />
                         <ProgressStepsItem icon="payment-full" title="Payment" />
                         <ProgressStepsItem icon="done" title="Done" />
@@ -29,8 +29,8 @@ const CheckoutShipping = () => {
     )
 }
 
-CheckoutShipping.fetcher = (url, dispatch) => {
+CheckoutShipping.fetcher = (url, dispatch) =>
     dispatch(commands.fetchCheckoutShippingData(url))
-}
+
 
 export default CheckoutShipping
