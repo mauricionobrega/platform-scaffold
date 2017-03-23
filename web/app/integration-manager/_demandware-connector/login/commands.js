@@ -73,6 +73,6 @@ export const login = (href, {login}, resolve, reject) => (dispatch) => {
         })
 }
 
-export const registerUser = (href, formValues, resolve, reject) => (dispatch) => {
+export const registerUser = () => (dispatch) => {
     return dispatch()
 }
