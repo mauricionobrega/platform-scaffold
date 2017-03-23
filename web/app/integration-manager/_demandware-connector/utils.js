@@ -55,3 +55,11 @@ export const makeDemandwareRequest = (url, options) => {
             return makeRequest(url, requestOptions)
         })
 }
+
+export const makeDemandwareUnAuthenticatedRequest = (url, options) => {
+    const requestOptions = {
+        ...options,
+        headers: REQUEST_HEADERS
+    }
+    return makeRequest(url, requestOptions)
+}
