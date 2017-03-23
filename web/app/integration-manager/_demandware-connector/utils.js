@@ -1,7 +1,26 @@
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {API_END_POINT_URL, REQUEST_HEADERS} from './constants'
 
-export const initDemandWareSession = () => {
+export const initDemandwareSession = (authorization) => {
+    const options = {
+        method: 'POST',
+        body: '{ type : "session" }',
+        headers: {
+            ...REQUEST_HEADERS,
+            Authorization: authorization
+        }
+    }
+    return makeRequest(`${API_END_POINT_URL}/sessions`, options)
+        .then(() => {
+            // Once the session has been opened return the authorization headers to the next request
+            return {
+                ...REQUEST_HEADERS,
+                Authorization: authorization
+            }
+        })
+}
+
+export const initDemandWareAuthAndSession = () => {
     const authorizationMatch = /mob-session-auth=([^;]+);/.exec(document.cookie)
     if (authorizationMatch) {
         return new Promise((resolve) => {
@@ -22,19 +41,12 @@ export const initDemandWareSession = () => {
             authorization = response.headers.get('Authorization')
             options.headers.Authorization = authorization
             document.cookie = `mob-session-auth=${authorization}`
-            return makeRequest(`${API_END_POINT_URL}/sessions`, options)
-                .then(() => {
-                    // Once the session has been opened return the authorization headers to the next request
-                    return {
-                        ...REQUEST_HEADERS,
-                        Authorization: authorization
-                    }
-                })
+            return initDemandwareSession(authorization)
         })
 }
 
 export const makeDemandwareRequest = (url, options) => {
-    return initDemandWareSession()
+    return initDemandWareAuthAndSession()
         .then((headers) => {
             const requestOptions = {
                 ...options,

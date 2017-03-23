@@ -2,7 +2,7 @@ import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {receiveNavigationData} from '../../responses'
 import {getCart} from '../cart/commands'
 import {parseCategories} from '../parsers'
-import {initDemandWareSession} from '../utils'
+import {initDemandWareAuthAndSession} from '../utils'
 
 import {API_END_POINT_URL, SIGN_IN_URL} from '../constants'
 
@@ -24,7 +24,6 @@ export const fetchNavigationData = (headers) => (dispatch) => {
                     children: [
                         {
                             // TODO: Find a way to get this data without hardcoding
-                            title: 'Sign In',
                             path: SIGN_IN_URL,
                             type: 'AccountNavItem'
                         },
@@ -37,7 +36,7 @@ export const fetchNavigationData = (headers) => (dispatch) => {
 
 export const initApp = () => (dispatch) => {
     let headers
-    return initDemandWareSession()
+    return initDemandWareAuthAndSession()
         .then((requestHeaders) => {
             headers = requestHeaders
             return dispatch(fetchNavigationData(headers))

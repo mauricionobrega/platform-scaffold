@@ -4,6 +4,8 @@ import {getLogin} from './selectors'
 
 import {isRunningInAstro, jsRpcMethod} from '../../utils/astro-integration'
 import {login, registerUser} from '../../integration-manager/login/commands'
+import {browserHistory} from 'progressive-web-sdk/dist/routing'
+import isReactRoute from '../../utils/is-react-route'
 
 
 const validateSignInForm = (formValues) => {
@@ -78,7 +80,14 @@ const handleLoginSuccess = (href) => {
     if (isRunningInAstro) {
         jsRpcMethod('user:loggedIn', [])()
     }
-    window.location.href = href
+
+    // This is only here because there is no account page in the PWA right now
+    // Once we've added one we should navigate to the account page after successfully logging in
+    if (isReactRoute(href)) {
+        browserHistory.push({pathname: href})
+    } else {
+        window.location.href = href
+    }
 }
 
 export const submitSignInForm = (formValues, resolve, reject) => {
@@ -93,7 +102,6 @@ export const submitSignInForm = (formValues, resolve, reject) => {
         hiddenInputs.forEach((input) => {
             formValues[input.name] = input.value
         })
-
         return dispatch(login(href, formValues, resolve, reject))
             .then(handleLoginSuccess)
     }

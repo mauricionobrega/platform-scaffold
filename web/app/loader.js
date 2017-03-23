@@ -2,14 +2,9 @@ import {getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dis
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
 import cacheHashManifest from '../tmp/loader-cache-hash-manifest.json'
 import {isRunningInAstro} from './utils/astro-integration'
+import isReactRoute from './utils/is-react-route'
 
 window.Progressive = {}
-
-import ReactRegexes from './loader-routes'
-
-const isReactRoute = () => {
-    return ReactRegexes.some((regex) => regex.test(window.location.pathname))
-}
 
 initCacheManifest(cacheHashManifest)
 
@@ -44,7 +39,7 @@ const asyncInitApp = () => {
     }
 }
 
-if (isReactRoute()) {
+if (isReactRoute(window.location.pathname)) {
     displayPreloader(preloadCSS, preloadHTML, preloadJS)
 
     // Create React mounting target
