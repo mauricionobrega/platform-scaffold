@@ -1,6 +1,28 @@
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {API_END_POINT_URL, REQUEST_HEADERS} from './constants'
 
+const getAuthTokenPayload = (authToken) => {
+    // The token consists of 3 parts: header, payload and signature
+    // separated by a '.', each part is encoded
+    // we only need the payload
+    return JSON.parse(window.atob(authToken.split('.')[1]))
+}
+
+export const isUserLoggedIn = (authorization) => {
+    const {sub} = getAuthTokenPayload(authorization)
+    const subData = JSON.parse(sub)
+    return !subData.customer_info.guest
+}
+
+export const storeAuthToken = (authorization) => {
+    document.cookie = `mob-auth=${authorization}`
+}
+
+export const getAuthToken = () => {
+    const authorizationMatch = /mob-auth=([^;]+);/.exec(document.cookie)
+    return authorizationMatch ? authorizationMatch[1] : undefined
+}
+
 export const initDemandwareSession = (authorization) => {
     const options = {
         method: 'POST',
