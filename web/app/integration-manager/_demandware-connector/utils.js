@@ -46,6 +46,7 @@ export const initDemandWareAuthAndSession = () => {
     const authorizationToken = getAuthToken()
     if (authorizationToken) {
         const {exp} = getAuthTokenPayload(authorizationToken.replace('Bearer ', ''))
+        // Get current Unix time in seconds (not milliseconds)
         const currentTime = Math.floor(Date.now() / 1000)
         if (currentTime >= exp) {
             // The token is still valid
