@@ -43,14 +43,33 @@ export const initDemandwareSession = (authorization) => {
 }
 
 export const initDemandWareAuthAndSession = () => {
-    const authorizationMatch = /mob-session-auth=([^;]+);/.exec(document.cookie)
-    if (authorizationMatch) {
-        return new Promise((resolve) => {
-            resolve({
+    const authorizationToken = getAuthToken()
+    if (authorizationToken) {
+        const {exp} = getAuthTokenPayload(authorizationToken.replace('Bearer ', ''))
+        const currentTime = Math.floor(Date.now() / 1000)
+        if (currentTime >= exp) {
+            // The token is still valid
+            return {
                 ...REQUEST_HEADERS,
-                Authorization: authorizationMatch[1]
+                Authorization: authorizationToken
+            }
+        }
+        // The token has expired, refresh it
+        const requestOptions = {
+            method: 'POST',
+            body: '{ type : "refresh" }',
+            headers: {
+                ...REQUEST_HEADERS,
+                Authorization: authorizationToken
+            }
+        }
+        return makeRequest(`${API_END_POINT_URL}/customers/auth`, requestOptions)
+            .then((response) => {
+                return {
+                    ...REQUEST_HEADERS,
+                    Authorization: response.headers.get('Authorization')
+                }
             })
-        })
     }
     const options = {
         method: 'POST',
@@ -62,7 +81,7 @@ export const initDemandWareAuthAndSession = () => {
         .then((response) => {
             authorization = response.headers.get('Authorization')
             options.headers.Authorization = authorization
-            document.cookie = `mob-session-auth=${authorization}`
+            storeAuthToken(authorization)
             return initDemandwareSession(authorization)
         })
 }
