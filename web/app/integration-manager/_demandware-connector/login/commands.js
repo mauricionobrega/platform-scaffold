@@ -1,7 +1,7 @@
 import {noop} from 'progressive-web-sdk/dist/utils/utils'
 import {receiveLoginPageData} from '../../login/responses'
 import {receiveAppData} from '../../responses'
-import {initDemandwareSession, storeAuthToken} from '../utils'
+import {initDemandwareSession, storeAuthToken, makeDemandwareRequest} from '../utils'
 import {getCart} from '../cart/commands'
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {SubmissionError} from 'redux-form'
@@ -73,6 +73,27 @@ export const login = (href, {login}, resolve, reject) => (dispatch) => {
         })
 }
 
-export const registerUser = () => (dispatch) => {
-    return dispatch()
+export const registerUser = (href, {firstname, lastname, email, password}, resolve, reject) => (dispatch) => {
+    const requestOptions = {
+        method: 'POST',
+        body: JSON.stringify({
+            password,
+            customer: {
+                first_name: firstname,
+                last_name: lastname,
+                login: email,
+                email
+            }
+        })
+    }
+    return makeDemandwareRequest(`${API_END_POINT_URL}/customers`, requestOptions)
+        .then((response) => response.json())
+        .then((responseJSON) => {
+            if (responseJSON.fault) {
+                return reject(new SubmissionError({_error: 'Unable to create account.'}))
+            }
+            // Creating a user doesn't sign them in automatically, so dispatch the login event
+            return dispatch(login('', {login: {username: email, password}}, resolve, reject))
+        })
+
 }
