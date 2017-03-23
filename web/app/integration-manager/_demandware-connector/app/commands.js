@@ -1,18 +1,12 @@
-import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
-import {receiveNavigationData} from '../../responses'
+import * as utils from '../utils'
+import {receiveNavigationData, receiveAppData} from '../../responses'
 import {getCart} from '../cart/commands'
 import {parseCategories} from '../parsers'
-import {initDemandWareAuthAndSession} from '../utils'
 
 import {API_END_POINT_URL, SIGN_IN_URL} from '../constants'
 
-
-export const fetchNavigationData = (headers) => (dispatch) => {
-    const options = {
-        method: 'GET',
-        headers
-    }
-    return makeRequest(`${API_END_POINT_URL}/categories/root?levels=2`, options)
+export const fetchNavigationData = () => (dispatch) => {
+    return utils.makeDemandwareUnAuthenticatedRequest(`${API_END_POINT_URL}/categories/root?levels=2`, {method: 'GET'})
         .then((response) => response.json())
         .then(({categories}) => {
             const navData = parseCategories(categories)
@@ -35,11 +29,8 @@ export const fetchNavigationData = (headers) => (dispatch) => {
 }
 
 export const initApp = () => (dispatch) => {
-    let headers
-    return initDemandWareAuthAndSession()
-        .then((requestHeaders) => {
-            headers = requestHeaders
-            return dispatch(fetchNavigationData(headers))
-        })
-        .then(() => dispatch(getCart(headers)))
+    return utils.initDemandWareAuthAndSession()
+        .then(() => dispatch(fetchNavigationData()))
+        .then(() => dispatch(receiveAppData({isLoggedIn: utils.isUserLoggedIn(utils.getAuthToken())})))
+        .then(() => dispatch(getCart()))
 }

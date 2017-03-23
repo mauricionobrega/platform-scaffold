@@ -1,8 +1,8 @@
 import {noop} from 'progressive-web-sdk/dist/utils/utils'
 import {receiveLoginPageData} from '../../login/responses'
 import {receiveAppData} from '../../responses'
-import {initDemandwareSession} from '../utils'
-import {getCart} from '../app/commands'
+import {initDemandwareSession, storeAuthToken} from '../utils'
+import {getCart} from '../cart/commands'
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {SubmissionError} from 'redux-form'
 
@@ -60,12 +60,10 @@ export const login = (href, {login}, resolve, reject) => (dispatch) => {
                 return reject(new SubmissionError({_error: 'Username or password is incorrect'}))
             }
             const authorization = responseHeaders.get('Authorization')
-            document.cookie = `mob-session-auth=${authorization}`
+            storeAuthToken(authorization)
+            dispatch(receiveAppData({isLoggedIn: true}))
             return initDemandwareSession(authorization)
-                .then(() => {
-                    dispatch(receiveAppData({isLoggedIn: true}))
-                    return dispatch(getCart())
-                })
+                .then(() => dispatch(getCart()))
                 .then(() => {
                     // Navigate to the homepage, since we haven't made an account page yet
                     // and demandware's account page is at the same URL as their login page
