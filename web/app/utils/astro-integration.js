@@ -23,3 +23,9 @@ export const trigger = Astro.trigger
  * http://astro.mobify.com/latest/advanced/webview-appjs-communication/
  */
 export const jsRpcMethod = Astro.jsRpcMethod
+
+/**
+ * Exports Astro as a listener
+ */
+export const onAstroEvent = Astro.on
+export const disableAstroEvent = Astro.off

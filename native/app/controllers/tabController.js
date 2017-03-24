@@ -6,10 +6,6 @@ import NavigationPlugin from 'progressive-app-sdk/plugins/navigationPlugin'
 import AppEvents from '../global/app-events'
 import TabHeaderController from './tabHeaderController'
 
-const Events = {
-    updateCart: 'cart:updated'
-}
-
 const TabController = function(tabItem, layout, navigationView, headerController) {
     this.tabItem = tabItem
     this.id = tabItem.id
@@ -44,12 +40,16 @@ TabController.init = async function(tabItem) {
         navigationView.back()
     })
 
-    navigationView.on('cart-updated', (data) => {
-        AppEvents.trigger(Events.updateCart, data)
+    navigationView.on('cart:count-updated', (data) => {
+        AppEvents.trigger(AppEvents.updateCart, data)
     })
 
     navigationView.on('open:cart-modal', () => {
         headerController.showCartModal()
+    })
+
+    AppEvents.on(AppEvents.cartNeedsUpdate, async () => {
+        navigationView.trigger('cart:needs-update')
     })
 
     return new TabController(tabItem, layout, navigationView, headerController)
@@ -102,7 +102,5 @@ TabController.prototype.canGoBack = async function() {
 TabController.prototype.back = function() {
     this.navigationView.back()
 }
-
-export {Events}
 
 export default TabController
