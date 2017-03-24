@@ -5,15 +5,17 @@ import {onAstroEvent, disableAstroEvent} from '../../utils/astro-integration'
 
 import {getCart} from '../../store/cart/actions'
 
+const needsUpdateEvent = 'cart:needs-update'
+
 class NativeConnector extends React.Component {
     componentDidMount() {
-        onAstroEvent('cart:needs-update', () => {
+        onAstroEvent(needsUpdateEvent, () => {
             this.props.refreshCart()
         })
     }
 
     componentWillUnmount() {
-        disableAstroEvent('cart:needs-update')
+        disableAstroEvent(needsUpdateEvent)
     }
 
     render() {
