@@ -3,7 +3,8 @@ import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as ReduxForm from 'redux-form'
 
-import {checkCustomerEmail, checkoutSignIn} from '../../../integration-manager/checkout/commands'
+import {checkoutSignIn} from '../../../integration-manager/checkout/commands'
+import {checkCustomerEmail} from '../actions'
 import {getCustomerEmailRecognized, getEmailError} from '../selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'

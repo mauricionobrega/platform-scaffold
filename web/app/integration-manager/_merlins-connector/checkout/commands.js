@@ -125,14 +125,10 @@ export const checkCustomerEmail = () => {
     return (dispatch, getState) => {
         const formValues = getShippingFormValues(getState())
 
-        makeJsonEncodedRequest('/rest/default/V1/customers/isEmailAvailable', {customerEmail: formValues.username}, {method: 'POST'})
+        return makeJsonEncodedRequest('/rest/default/V1/customers/isEmailAvailable', {customerEmail: formValues.username}, {method: 'POST'})
             .then((response) => response.text())
             .then((responseText) => {
-                if (/false/.test(responseText)) {
-                    dispatch(onShippingEmailRecognized())
-                } else {
-                    dispatch(onShippingEmailNotRecognized())
-                }
+                return /true/.test(responseText)
             })
     }
 }
