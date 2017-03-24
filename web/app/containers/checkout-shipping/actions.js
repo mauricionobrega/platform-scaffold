@@ -1,5 +1,5 @@
 import {createAction} from '../../utils/utils'
-import {submitShipping as submitShippingCommand, checkCustomerEmail as checkCustomerEmailCommand} from '../../integration-manager/checkout/commands'
+import {submitShipping as submitShippingCommand, checkCustomerEmail as checkCustomerEmailCommand, checkoutSignIn} from '../../integration-manager/checkout/commands'
 import {getShippingFormValues} from '../../store/form/selectors'
 import {addNotification, removeNotification} from '../app/actions'
 
@@ -24,14 +24,20 @@ const onShippingEmailAvailable = () => {
     }
 }
 
-export const onShippingLoginError = (responseData) => {
+export const onShippingLoginError = (errorMessage) => {
     return (dispatch) => {
         dispatch(addNotification({
-            content: responseData.message,
+            content: errorMessage,
             id: 'shippingEmailError',
             showRemoveButton: true
         }))
     }
+}
+
+export const submitSignIn = () => (dispatch, getState) => {
+    const formValues = getShippingFormValues(getState())
+    return dispatch(checkoutSignIn(formValues))
+        .catch((error) => dispatch(onShippingLoginError(error.message)))
 }
 
 export const submitShipping = () => (dispatch, getState) => {

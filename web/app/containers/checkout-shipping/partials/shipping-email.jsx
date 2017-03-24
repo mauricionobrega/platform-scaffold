@@ -3,8 +3,7 @@ import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as ReduxForm from 'redux-form'
 
-import {checkoutSignIn} from '../../../integration-manager/checkout/commands'
-import {checkCustomerEmail} from '../actions'
+import {checkCustomerEmail, submitSignIn} from '../actions'
 import {getCustomerEmailRecognized, getEmailError} from '../selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -85,7 +84,7 @@ const mapStateToProps = createPropsSelector({
 })
 
 const mapDispatchToProps = {
-    submitSignIn: checkoutSignIn,
+    submitSignIn,
     checkCustomerEmail
 }
 
