@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import * as commands from '../../integration-manager/commands'
+import {fetchCheckoutShippingData} from '../../integration-manager/checkout/commands'
 
 import Astro from '../../vendor/astro-client'
 import CheckoutShippingReduxForm from './partials/checkout-shipping-form'
@@ -30,7 +30,7 @@ const CheckoutShipping = () => {
 }
 
 CheckoutShipping.fetcher = (url, dispatch) =>
-    dispatch(commands.fetchCheckoutShippingData(url))
+    dispatch(fetchCheckoutShippingData(url))
 
 
 export default CheckoutShipping
