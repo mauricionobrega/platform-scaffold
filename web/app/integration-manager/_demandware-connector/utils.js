@@ -66,9 +66,11 @@ export const initDemandWareAuthAndSession = () => {
         }
         return makeRequest(`${API_END_POINT_URL}/customers/auth`, requestOptions)
             .then((response) => {
+                const authorizationToken = response.headers.get('Authorization')
+                storeAuthToken(authorizationToken)
                 return {
                     ...REQUEST_HEADERS,
-                    Authorization: response.headers.get('Authorization')
+                    Authorization: authorizationToken
                 }
             })
     }
