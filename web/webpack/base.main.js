@@ -9,6 +9,7 @@ const CopyPlugin = require('copy-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const analyzeBundle = process.env.MOBIFY_ANALYZE === 'true'
+const usePreact = process.env.USE_PREACT === 'true'
 
 const config = {
     devtool: 'cheap-source-map',
@@ -21,7 +22,15 @@ const config = {
         filename: '[name].js'
     },
     resolve: {
-        extensions: ['.js', '.jsx', '.json']
+        extensions: ['.js', '.jsx', '.json'],
+        alias: usePreact ? {
+            react: path.resolve(process.cwd(), 'node_modules', 'preact-compat'),
+            'react-dom': path.resolve(process.cwd(), 'node_modules', 'preact-compat'),
+            'react-addons-css-transition-group': path.resolve(process.cwd(), 'node_modules', 'preact-css-transition-group'),
+            'react-addons-shallow-compare': path.resolve(process.cwd(), 'node_modules', 'preact-shallow-compare')
+        } : {
+            react: path.resolve(process.cwd(), 'node_modules', 'react')
+        }
     },
     plugins: [
         new webpack.optimize.CommonsChunkPlugin({
@@ -48,11 +57,12 @@ const config = {
         rules: [
             {
                 test: /\.jsx?$/,
-                exclude: /node_modules/,
+                exclude: /node_modules(?!\/preact-compat\/src)/,
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        cacheDirectory: `${__dirname}/tmp`
+                        cacheDirectory: `${__dirname}/tmp`,
+                        presets: ['es2015']
                     }
                 }
             },
