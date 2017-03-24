@@ -9,7 +9,7 @@ const CopyPlugin = require('copy-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const analyzeBundle = process.env.MOBIFY_ANALYZE === 'true'
-const usePreact = process.env.USE_PREACT === 'true'
+const useReact = process.env.USE_REACT === 'true'
 
 const config = {
     devtool: 'cheap-source-map',
@@ -23,13 +23,13 @@ const config = {
     },
     resolve: {
         extensions: ['.js', '.jsx', '.json'],
-        alias: usePreact ? {
+        alias: useReact ? {
+            react: path.resolve(process.cwd(), 'node_modules', 'react')
+        } : {
             react: path.resolve(process.cwd(), 'node_modules', 'preact-compat'),
             'react-dom': path.resolve(process.cwd(), 'node_modules', 'preact-compat'),
             'react-addons-css-transition-group': path.resolve(process.cwd(), 'node_modules', 'preact-css-transition-group'),
             'react-addons-shallow-compare': path.resolve(process.cwd(), 'node_modules', 'preact-shallow-compare')
-        } : {
-            react: path.resolve(process.cwd(), 'node_modules', 'react')
         }
     },
     plugins: [
