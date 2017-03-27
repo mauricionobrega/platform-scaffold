@@ -13,9 +13,6 @@ import TabBarController from './controllers/tabBarController'
 import {getInitialTabId} from './config/tabBarConfig'
 import OnboardingModalController from './onboarding/onboardingModalController'
 
-// This is a progressive project
-Astro.navigationType = Astro.navigationTypes.progressive
-
 window.run = async function() {
     const runApp = async function() {
         const onboardingModalController = await OnboardingModalController.init()
