@@ -1,6 +1,6 @@
 # Progressive Mobile App SDK Scaffold
 
-This directory contains the Progressive Mobile App SDK (Astro) Scaffold. It is a fully functioning iOS and Android app demoing the Merlins Potions e-commerce store and is a part of the Mobify Platform.
+This directory contains the Progressive Mobile App SDK (Astro) Scaffold. It is a fully functioning iOS and Android app demoing the Merlins Potions e-commerce store and is a part of the Mobify Platform. It is built and maintained by the Apps team. For questions and support, head on to `#progressive-app-astro`.
 
 ## Requirements
 
@@ -8,29 +8,28 @@ This directory contains the Progressive Mobile App SDK (Astro) Scaffold. It is a
 * node 6 LTS\*
 * npm 3
 
-\* We recommend using [nvm](https://github.com/creationix/nvm#installation) to manage your node and npm versions. 
+We recommend using [nvm](https://github.com/creationix/nvm#installation) to manage your node and npm versions. 
 
-## Getting Started
+## Setup
 
-To get started with a Progressive App project, follow these steps:
+Before you get started, take some time to look through [the Getting Started Guide](http://astro.mobify.com/latest/guides/before-you-begin/). Once you're familiar with progressive apps, follow these steps to set up this project to start developing:
 
 - Clone this repository
 - Navigate to the `native` folder in your terminal
 - Run `npm run deps`
 
-For iOS:
-- Open Xcode
-- Open the `scaffold.xcworkspace` file
-- Run the app
+## Run
+To run the app, follow these steps.
 
-For Android:
+### iOS
+To run the app for iOS, follow these steps:
+- Open the `scaffold.xcworkspace` file in the 
+- Make sure you have the `scaffold` target selected.
+- Build and run the app (`CMD+R`)
+
+### Android
+To run the app for Android, follow these steps:
 - Open Android Studio
 - Select `Import Project`
 - Select the build.gradle file inside the `android` folder
 - Gradle will now build your dependencies, once it's done, you can run the app.
-
-#Generator
-
-You can use the [generator](scripts/generator.sh) to generate a new Progressive Mobile app.
-
-
