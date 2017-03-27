@@ -6,7 +6,7 @@ import {normalizePhone} from '../../../utils/normalize-utils'
 
 import {showCompanyAndApt} from '../actions'
 import {SHIPPING_FORM_NAME} from '../constants'
-import {fetchShippingMethodsEstimate} from '../../../store/checkout/shipping/actions'
+import {fetchShippingMethodsEstimate} from '../../../integration-manager/checkout/commands'
 import {getShippingFormTitle, getIsCompanyOrAptShown} from '../selectors'
 import {getCountries, getAvailableRegions} from '../../../store/checkout/locations/selectors'
 

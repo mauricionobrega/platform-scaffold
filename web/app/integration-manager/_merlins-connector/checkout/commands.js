@@ -1,11 +1,13 @@
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {checkoutShippingParser, parseCheckoutData, parseShippingMethods} from './parsers'
+import {parseCheckoutEntityID} from '../../../utils/magento-utils'
 import {receiveCheckoutShippingData, receiveCheckoutData, receiveShippingMethodInitialValues} from './../../checkout/responses'
 import {fetchPageData} from '../app/commands'
-import {getCustomerEntityID} from '../../../store/checkout/selectors'
+import {getCustomerEntityID} from '../selectors'
 import {getIsLoggedIn} from '../../../containers/app/selectors'
 import {getShippingFormValues, getFormValues, getFormRegisteredFields} from '../../../store/form/selectors'
+import {receiveEntityID} from '../actions'
 import {removeAllNotifications} from '../../../containers/app/actions'
 import {SHIPPING_FORM_NAME} from '../../../containers/checkout-shipping/constants'
 
@@ -50,7 +52,9 @@ export const fetchShippingMethodsEstimate = (formKey) => {
 export const fetchCheckoutShippingData = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then(([$, $response]) => {
-
+            // entity_id is used for API calls
+            const customerEntityID = parseCheckoutEntityID($response)
+            dispatch(receiveEntityID({customerEntityID}))
             dispatch(receiveCheckoutShippingData(checkoutShippingParser($, $response)))
             return dispatch(receiveCheckoutData(parseCheckoutData($response)))
         })

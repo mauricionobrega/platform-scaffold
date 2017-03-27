@@ -8,3 +8,4 @@ export const fetchCheckoutShippingData = (...args) => connector.fetchCheckoutShi
 export const submitShipping = (...args) => connector.submitShipping(...args)
 export const checkCustomerEmail = (...args) => connector.checkCustomerEmail(...args)
 export const checkoutSignIn = (...args) => connector.checkoutSignIn(...args)
+export const fetchShippingMethodsEstimate = (...args) => connector.fetchShippingMethodsEstimate(...args)

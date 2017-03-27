@@ -5,3 +5,4 @@ import {createAction} from '../../utils/utils'
 // by the app should go into ./responses.js
 
 export const receiveFormInfo = createAction('Receive Form Info')
+export const receiveEntityID = createAction('Receive Customer Entity ID')
