@@ -28,7 +28,7 @@ export const fetchLoginData = (url, routeName) => (dispatch) => {
         })
 }
 
-const submitForm = (href, formValues, formSelector, resolve, reject) => {
+const submitForm = (href, formValues, formSelector) => {
     return makeFormEncodedRequest(href, formValues, {method: 'POST'})
         .then(jqueryResponse)
         .then((res) => {
@@ -37,19 +37,20 @@ const submitForm = (href, formValues, formSelector, resolve, reject) => {
                 const error = {
                     _error: 'Username or password is incorrect'
                 }
-                return reject(new SubmissionError(error))
+                throw new SubmissionError(error)
             }
             return '/customer/account'
         })
         .catch((error) => {
-            if (error.name !== SubmissionError) {
-                reject(new SubmissionError({_error: 'Failed to login due to network error.'}))
+            if (error.name !== 'SubmissionError') {
+                throw new SubmissionError({_error: 'Failed to login due to network error.'})
             }
+            throw error
         })
 }
 
-export const login = (href, formValues, resolve, reject) =>
-    submitForm(href, formValues, '.form-login', resolve, reject)
+export const login = (href, formValues) =>
+    submitForm(href, formValues, '.form-login')
 
-export const registerUser = (href, formValues, resolve, reject) =>
-    submitForm(href, formValues, '.form-create-account', resolve, reject)
+export const registerUser = (href, formValues) =>
+    submitForm(href, formValues, '.form-create-account')

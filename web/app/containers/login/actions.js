@@ -94,8 +94,9 @@ export const submitSignInForm = (formValues, resolve, reject) => {
             formValues[input.name] = input.value
         })
 
-        return login(href, formValues, resolve, reject)
+        return login(href, formValues)
             .then(handleLoginSuccess)
+            .catch((error) => reject(error))
     }
 }
 
@@ -112,8 +113,9 @@ export const submitRegisterForm = (formValues, resolve, reject) => {
             formValues[input.name] = input.value
         })
 
-        return registerUser(href, formValues, resolve, reject)
+        return registerUser(href, formValues)
             .then(handleLoginSuccess)
+            .catch((error) => reject(error))
     }
 }
 
