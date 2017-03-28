@@ -25,7 +25,7 @@ import * as footerActions from '../footer/actions'
 import * as navigationActions from '../navigation/actions'
 
 import {OFFLINE_ASSET_URL} from './constants'
-import {closeModal} from '../../store/modals/actions'
+import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {OFFLINE_MODAL} from '../offline/constants'
 
 let isInitialEntryToSite = true

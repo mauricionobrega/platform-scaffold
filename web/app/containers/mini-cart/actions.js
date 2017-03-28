@@ -1,5 +1,5 @@
 import {getCart} from '../../store/cart/actions'
-import * as modalActions from '../../store/modals/actions'
+import * as modalActions from 'progressive-web-sdk/dist/store/modals/actions'
 import {MINI_CART_MODAL} from './constants'
 
 export const requestOpenMiniCart = () => (dispatch) => {

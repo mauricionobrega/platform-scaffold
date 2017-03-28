@@ -1,15 +1,15 @@
 import {handleActions} from 'redux-actions'
 import {Map} from 'immutable'
 
-import * as modalActions from './actions'
+import * as modalActions from 'progressive-web-sdk/dist/store/modals/actions'
 import * as appActions from '../../containers/app/actions'
 
 const initialState = Map()
 
 const modalReducer = handleActions({
-    [modalActions.openModal]: (state, {payload: modalName}) =>
+    [modalActions.openModal]: (state, {payload: {modalName}}) =>
         state.set(modalName, true),
-    [modalActions.closeModal]: (state, {payload: modalName}) =>
+    [modalActions.closeModal]: (state, {payload: {modalName}}) =>
         state.set(modalName, false),
     [modalActions.closeAllModals]: () => initialState,
     [appActions.onRouteChanged]: () => initialState

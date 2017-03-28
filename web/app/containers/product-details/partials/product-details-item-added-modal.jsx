@@ -6,7 +6,7 @@ import {stripEvent} from '../../../utils/utils'
 import {isModalOpen} from '../../../store/selectors'
 import * as productDetailsActions from '../actions'
 import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from '../constants'
-import {closeModal} from '../../../store/modals/actions'
+import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import Icon from 'progressive-web-sdk/dist/components/icon'

@@ -8,7 +8,7 @@ import {getFormValues} from '../../store/form/selectors'
 
 import {addToCart} from '../../integration-manager/commands'
 import {getProductVariationData} from '../../integration-manager/products/commands'
-import {openModal, closeModal} from '../../store/modals/actions'
+import {openModal, closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {addNotification} from '../app/actions'
 import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from './constants'
 

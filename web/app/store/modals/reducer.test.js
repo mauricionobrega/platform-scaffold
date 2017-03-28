@@ -2,7 +2,7 @@
 
 import Immutable from 'immutable'
 import modalReducer from './reducer'
-import {openModal, closeModal, closeAllModals} from './actions'
+import {openModal, closeModal, closeAllModals} from 'progressive-web-sdk/dist/store/modals/actions'
 import {onRouteChanged} from '../../containers/app/actions'
 
 test('openModal opens a modal', () => {

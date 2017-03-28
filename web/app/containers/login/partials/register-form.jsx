@@ -4,7 +4,7 @@ import {createPropsSelector} from 'reselect-immutable-helpers'
 import {connect} from 'react-redux'
 import * as selectors from '../selectors'
 import {isModalOpen} from '../../../store/selectors'
-import {openModal, closeModal} from '../../../store/modals/actions'
+import {openModal, closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {REGISTER_SECTION} from '../constants'
 
 import Button from 'progressive-web-sdk/dist/components/button'
