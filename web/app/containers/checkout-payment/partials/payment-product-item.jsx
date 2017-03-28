@@ -36,7 +36,7 @@ const PaymentProductItem = ({
         >
             <div className="u-flexbox u-align-bottom">
                 <div className="u-flex-none u-color-neutral-50 u-text-small">
-                    {options.map(({label, value}, idx) => (
+                    {options && options.map(({label, value}, idx) => (
                         <p
                             className={idx > 0 ? 'u-margin-top-sm' : ''}
                             key={`${item_id}-option-${idx}`}
