@@ -15,7 +15,7 @@ import template from '../template'
 // import UnwrappedCheckoutConfirmation from './checkout-confirmation/container'
 // import UnwrappedCheckoutPayment from './checkout-payment/container'
 // import UnwrappedCheckoutShipping from './checkout-shipping/container'
-import UnwrappedHome from './home/container'
+// import UnwrappedHome from './home/container'
 // import UnwrappedLogin from './login/container'
 // import UnwrappedProductDetails from './product-details/container'
 // import UnwrappedProductList from './product-list/container'
@@ -25,6 +25,11 @@ const LoadingComponent = () => false
 
 export const UnwrappedCart = Loadable({
     loader: () => import('./cart/container'),
+    LoadingComponent
+})
+
+export const UnwrappedHome = Loadable({
+    loader: () => import('./home/container'),
     LoadingComponent
 })
 

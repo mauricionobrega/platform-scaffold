@@ -15,6 +15,7 @@ import {SHIPPING_FORM_NAME} from '../checkout-shipping/constants'
 // import Cart from '../cart/container'
 import {
     UnwrappedCart,
+    UnwrappedHome,
     UnwrappedCheckoutConfirmation,
     UnwrappedCheckoutPayment,
     UnwrappedCheckoutShipping,
@@ -25,7 +26,7 @@ import {
 // import CheckoutShipping from '../checkout-shipping/container'
 // import CheckoutPayment from '../checkout-payment/container'
 // import CheckoutConfirmation from '../checkout-confirmation/container'
-import Home from '../home/container'
+// import Home from '../home/container'
 // import Login from '../login/container'
 // import ProductDetails from '../product-details/container'
 // import ProductList from '../product-list/container'
@@ -154,7 +155,7 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                 dispatch(receivedAction)
                 dispatch(process(receivedAction))
 
-                if (pageComponent === Home) {
+                if (pageComponent === UnwrappedHome) {
                     dispatch(homeActions.process(receivedAction))
                 } else if (pageComponent === UnwrappedLogin) {
                     dispatch(loginActions.process(receivedAction))

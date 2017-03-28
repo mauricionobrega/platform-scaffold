@@ -28,6 +28,7 @@ import {
     UnwrappedCheckoutConfirmation,
     UnwrappedCheckoutPayment,
     UnwrappedCheckoutShipping,
+    UnwrappedHome,
     UnwrappedLogin,
     UnwrappedProductDetails,
     UnwrappedProductList
@@ -55,6 +56,7 @@ class App extends React.Component {
         UnwrappedCheckoutConfirmation.preload()
         UnwrappedCheckoutPayment.preload()
         UnwrappedCheckoutShipping.preload()
+        UnwrappedHome.preload()
         UnwrappedLogin.preload()
         UnwrappedProductDetails.preload()
         UnwrappedProductList.preload()
