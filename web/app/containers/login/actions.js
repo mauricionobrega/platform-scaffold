@@ -79,9 +79,8 @@ const handleLoginSuccess = (href) => {
     if (isRunningInAstro) {
         jsRpcMethod('user:loggedIn', [])()
     }
-
     // This is only here because there is no account page in the PWA right now
-    // Once we've added one we should navigate to the account page after successfully logging in
+    // Once we've added one we should user browserHistory to navigate to the account page after successfully logging in
     if (isReactRoute(href)) {
         browserHistory.push({pathname: href})
     } else {
