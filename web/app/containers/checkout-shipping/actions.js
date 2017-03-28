@@ -1,4 +1,6 @@
-import {createAction} from '../../utils/utils'
+import {browserHistory} from 'progressive-web-sdk/dist/routing'
+import {createAction, splitFullName} from '../../utils/utils'
+import {receiveCheckoutData} from '../../store/checkout/actions'
 import {submitShipping as submitShippingCommand, checkCustomerEmail as checkCustomerEmailCommand, checkoutSignIn} from '../../integration-manager/checkout/commands'
 import {getShippingFormValues} from '../../store/form/selectors'
 import {addNotification, removeNotification} from '../app/actions'
@@ -43,7 +45,19 @@ export const submitSignIn = () => (dispatch, getState) => {
 export const submitShipping = () => (dispatch, getState) => {
     const currentState = getState()
     const formValues = getShippingFormValues(currentState)
-    return dispatch(submitShippingCommand(formValues))
+    const {firstname, lastname} = splitFullName(formValues.name)
+    const address = {
+        firstname,
+        lastname,
+        ...formValues
+    }
+    dispatch(receiveCheckoutData({shipping: {address}, emailAddress: formValues.username}))
+    return dispatch(submitShippingCommand(address))
+        .then(() => {
+            browserHistory.push({
+                pathname: '/checkout/payment/'
+            })
+        })
 }
 
 export const checkCustomerEmail = () => (dispatch) => {
