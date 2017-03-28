@@ -69,7 +69,6 @@
     "jsdom": "9.9.1",
     "json-loader": "0.5.4",
     "lighthouse": "1.6.0",
-    "lodash": "4.2.0",
     "minimist": "1.2.0",
     "mobify-code-style": "2.7.3",
     "nightwatch": "0.9.8",
