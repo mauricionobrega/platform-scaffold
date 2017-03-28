@@ -52,9 +52,9 @@ export const submitPayment = () => {
                 company,
                 addressLine1,
                 addressLine2,
-                country_id,
+                countryId,
                 city,
-                region_id,
+                regionId,
                 postcode,
             } = getPaymentBillingFormValues(currentState)
             const names = name.split(' ')
@@ -66,8 +66,8 @@ export const submitPayment = () => {
                 postcode,
                 city,
                 street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1],
-                regionId: region_id,
-                countryId: country_id,
+                regionId,
+                countryId,
                 saveInAddressBook: false
             }
         }

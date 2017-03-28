@@ -20,8 +20,8 @@ const validate = (values) => {
         'name',
         'addressLine1',
         'city',
-        'country_id',
-        'region_id',
+        'countryId',
+        'regionId',
         'postcode',
         'telephone'
     ]

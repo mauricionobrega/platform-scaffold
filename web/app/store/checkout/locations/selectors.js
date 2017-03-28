@@ -9,7 +9,7 @@ export const getLocations = createGetSelector(getCheckout, 'locations', Immutabl
 export const getCountries = createGetSelector(getLocations, 'countries', Immutable.List())
 export const getRegions = createGetSelector(getLocations, 'regions', Immutable.List())
 
-export const getSelectedCountryID = (formKey) => createSelector(getFormValues(formKey), (values) => { return values ? values.country_id : null })
+export const getSelectedCountryID = (formKey) => createSelector(getFormValues(formKey), (values) => { return values ? values.countryId : null })
 
 export const getDefaultRegionEntry = createGetSelector(getRegions, 0)
 

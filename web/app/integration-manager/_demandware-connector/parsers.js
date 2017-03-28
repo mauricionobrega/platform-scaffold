@@ -44,7 +44,7 @@ export const parseBasketContents = ({product_items, product_sub_total}) => {
         subtotal: formatPrice(product_sub_total ? product_sub_total : 0),
         summary_count: items && items.length
     }
-    /* eslint-enable camelcase:  */
+    /* eslint-enable camelcase  */
 }
 
 export const parseCategories = (categories) => {

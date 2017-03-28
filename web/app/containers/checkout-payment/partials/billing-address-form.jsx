@@ -6,7 +6,7 @@ import {createPropsSelector} from 'reselect-immutable-helpers'
 // Selectors
 import * as selectors from '../selectors'
 import {getCountries, getRegions} from '../../../store/checkout/locations/selectors'
-import {getShippingFullName, getStreetLineOne, getCity, getPostcode} from '../../../store/checkout/shipping/selectors'
+import {getShippingFullName, getAddressLineOne, getCity, getPostcode} from '../../../store/checkout/shipping/selectors'
 
 // Actions
 import * as checkoutPaymentActions from '../actions'
@@ -132,7 +132,7 @@ class BillingAddressForm extends React.Component {
                             </FieldRow>
 
                             <FieldRow>
-                                <ReduxForm.Field component={Field} className="pw--has-select" name="region_id" label="State/Province">
+                                <ReduxForm.Field component={Field} className="pw--has-select" name="regionId" label="State/Province">
                                     <select>
                                         {regions.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
                                     </select>
@@ -147,7 +147,7 @@ class BillingAddressForm extends React.Component {
                             </FieldRow>
 
                             <FieldRow>
-                                <ReduxForm.Field component={Field} className="pw--has-select" name="country_id" label="Country">
+                                <ReduxForm.Field component={Field} className="pw--has-select" name="countryId" label="Country">
                                     <select>
                                         {countries.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
                                     </select>
@@ -229,7 +229,7 @@ const mapStateToProps = createPropsSelector({
     newShippingAddressIsEnabled: selectors.getNewShippingAddressIsEnabled,
     postcode: getPostcode,
     regions: getRegions,
-    street: getStreetLineOne,
+    street: getAddressLineOne,
 })
 
 const mapDispatchToProps = {
