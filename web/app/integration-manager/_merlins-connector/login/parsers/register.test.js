@@ -26,10 +26,5 @@ describe('the Registration parser', () => {
                 expect(typeof field.required).toBe('boolean')
             })
         })
-        form.hiddenInputs.forEach((input) => {
-            expect(typeof input.name).toBe('string')
-            expect(typeof input.type).toBe('string')
-            expect(typeof input.value).toBeDefined()
-        })
     })
 })

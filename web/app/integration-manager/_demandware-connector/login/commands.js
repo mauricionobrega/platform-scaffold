@@ -38,7 +38,7 @@ export const fetchLoginData = () => (dispatch) => {
 
 export const navigateToSection = () => (dispatch) => noop()
 
-export const login = (href, {login}, resolve, reject) => (dispatch) => {
+export const login = ({login}) => (dispatch) => {
 
     const authorizationData = window.btoa(`${login.username}:${login.password}`)
     const requestOptions = {
@@ -57,7 +57,7 @@ export const login = (href, {login}, resolve, reject) => (dispatch) => {
         })
         .then((responseJSON) => {
             if (responseJSON.fault) {
-                return reject(new SubmissionError({_error: 'Username or password is incorrect'}))
+                throw new SubmissionError({_error: 'Username or password is incorrect'})
             }
             const authorization = responseHeaders.get('Authorization')
             storeAuthToken(authorization)

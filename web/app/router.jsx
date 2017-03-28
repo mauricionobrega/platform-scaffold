@@ -58,11 +58,11 @@ const Router = ({store}) => (
 
 
                 <Route component={Home} path="*/Home-Show*" routeName="home" />
-                <Route component={ProductList} path="*/womens-*" routeName="productListPage" />
-                <Route component={ProductList} path="*/mens-*" routeName="productListPage" />
-                <Route component={ProductList} path="*/newarrivals-*" routeName="productListPage" />
-                <Route component={ProductList} path="*/electronics-*" routeName="productListPage" />
-                <Route component={ProductList} path="*/Search-Show?cgid=root&srule=top-sellers*" routeName="productListPage" />
+                <Route component={ProductList} path="*/womens*" routeName="productListPage" />
+                <Route component={ProductList} path="*/mens*" routeName="productListPage" />
+                <Route component={ProductList} path="*/newarrivals*" routeName="productListPage" />
+                <Route component={ProductList} path="*/electronics*" routeName="productListPage" />
+                <Route component={ProductList} path="*/Search-Show?*" routeName="productListPage" />
                 <Route component={Login} path="*/Account-Show*" routeName="signin" />
 
             </Route>

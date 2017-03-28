@@ -1,6 +1,5 @@
 import isEmail from 'validator/lib/isEmail'
 import {SubmissionError} from 'redux-form'
-import {getLogin} from './selectors'
 
 import {isRunningInAstro, jsRpcMethod} from '../../utils/astro-integration'
 import {login, registerUser} from '../../integration-manager/login/commands'
@@ -91,36 +90,27 @@ const handleLoginSuccess = (href) => {
 }
 
 export const submitSignInForm = (formValues, resolve, reject) => {
-    return (dispatch, getStore) => {
+    return (dispatch) => {
         const errors = validateSignInForm(formValues)
         if (errors._error || Object.keys(errors.login).length) {
             return reject(new SubmissionError(errors))
         }
-        const loginData = getLogin(getStore()).toJS()
-        const {href, hiddenInputs} = loginData.signinSection.form
 
-        hiddenInputs.forEach((input) => {
-            formValues[input.name] = input.value
-        })
-        return dispatch(login(href, formValues, resolve, reject))
+        return dispatch(login(formValues))
             .then(handleLoginSuccess)
+            .catch((error) => reject(error))
     }
 }
 
 export const submitRegisterForm = (formValues, resolve, reject) => {
-    return (dispatch, getStore) => {
+    return (dispatch) => {
         const errors = validateRegisterForm(formValues)
         if (errors._error || Object.keys(errors).length) {
             return reject(new SubmissionError(errors))
         }
-        const loginData = getLogin(getStore()).toJS()
-        const {href, hiddenInputs} = loginData.registerSection.form
 
-        hiddenInputs.forEach((input) => {
-            formValues[input.name] = input.value
-        })
-
-        return dispatch(registerUser(href, formValues, resolve, reject))
+        return dispatch(registerUser(formValues))
             .then(handleLoginSuccess)
+            .catch((error) => reject(error))
     }
 }
