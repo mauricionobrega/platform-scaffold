@@ -1,6 +1,7 @@
 import {getBasketID} from '../cart/commands'
 import {makeDemandwareRequest} from '../utils'
 import {API_END_POINT_URL} from '../constants'
+import {STATES} from './constants'
 import {receiveCheckoutData, receiveShippingMethodInitialValues} from './../../checkout/responses'
 
 
@@ -37,7 +38,17 @@ export const fetchCheckoutShippingData = () => (dispatch) => {
             return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}`, {method: 'GET'})
                 .then((response) => response.json())
                 .then((responseJSON) => {
-                    console.log(responseJSON) // What should we populate here? anything? skip this step maybe?
+                    dispatch(receiveCheckoutData({
+                        locations: {
+                            countries: [{value: 'us', label: 'United States'}],
+                            regions: [
+                                {
+                                    label: 'Please select a region, state or province.'
+                                },
+                                ...STATES
+                            ]
+                        }
+                    }))
                 })
                 .then(() => dispatch(fetchShippingMethodsEstimate()))
         })
