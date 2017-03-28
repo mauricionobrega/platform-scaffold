@@ -22,6 +22,17 @@ import {Offline} from '../templates'
 import OfflineBanner from '../offline/partials/offline-banner'
 import OfflineModal from '../offline/partials/offline-modal'
 
+// Lazy load containers
+import {
+    UnwrappedCart,
+    UnwrappedCheckoutConfirmation,
+    UnwrappedCheckoutPayment,
+    UnwrappedCheckoutShipping,
+    UnwrappedLogin,
+    UnwrappedProductDetails,
+    UnwrappedProductList
+} from '../templates'
+
 const hidePreloaderWhenCSSIsLoaded = () => {
     if (window.Progressive.stylesheetLoaded) {
         hidePreloader()
@@ -39,6 +50,14 @@ class App extends React.Component {
                 families: ['Oswald:200,400']
             }
         })
+
+        UnwrappedCart.preload()
+        UnwrappedCheckoutConfirmation.preload()
+        UnwrappedCheckoutPayment.preload()
+        UnwrappedCheckoutShipping.preload()
+        UnwrappedLogin.preload()
+        UnwrappedProductDetails.preload()
+        UnwrappedProductList.preload()
     }
 
     render() {

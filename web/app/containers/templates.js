@@ -11,20 +11,50 @@ import template from '../template'
 // Don't split the PDP out from the main app, so that we can have instant page transitions
 
 
-import UnwrappedCart from './cart/container'
-import UnwrappedCheckoutConfirmation from './checkout-confirmation/container'
-import UnwrappedCheckoutPayment from './checkout-payment/container'
+// import UnwrappedCart from './cart/container'
+// import UnwrappedCheckoutConfirmation from './checkout-confirmation/container'
+// import UnwrappedCheckoutPayment from './checkout-payment/container'
 // import UnwrappedCheckoutShipping from './checkout-shipping/container'
 import UnwrappedHome from './home/container'
-import UnwrappedLogin from './login/container'
-import UnwrappedProductDetails from './product-details/container'
-import UnwrappedProductList from './product-list/container'
+// import UnwrappedLogin from './login/container'
+// import UnwrappedProductDetails from './product-details/container'
+// import UnwrappedProductList from './product-list/container'
 import UnwrappedOffline from './offline/container'
 
 const LoadingComponent = () => false
 
+export const UnwrappedCart = Loadable({
+    loader: () => import('./cart/container'),
+    LoadingComponent
+})
+
+export const UnwrappedCheckoutConfirmation = Loadable({
+    loader: () => import('./checkout-confirmation/container'),
+    LoadingComponent
+})
+
+export const UnwrappedCheckoutPayment = Loadable({
+    loader: () => import('./checkout-payment/container'),
+    LoadingComponent
+})
+
 export const UnwrappedCheckoutShipping = Loadable({
     loader: () => import('./checkout-shipping/container'),
+    LoadingComponent
+})
+
+export const UnwrappedLogin = Loadable({
+    loader: () => import('./login/container'),
+    LoadingComponent
+})
+
+export const UnwrappedProductDetails = Loadable({
+    loader: () => import('./product-details/container'),
+    LoadingComponent
+})
+
+export const UnwrappedProductList = Loadable({
+    loader: () => import('./product-list/container'),
     LoadingComponent
 })
 
