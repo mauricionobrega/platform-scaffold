@@ -1,9 +1,9 @@
+import {SubmissionError} from 'redux-form'
 import {getBasketID} from '../cart/commands'
 import {makeDemandwareRequest} from '../utils'
 import {API_END_POINT_URL} from '../constants'
 import {STATES} from './constants'
 import {receiveCheckoutData, receiveShippingMethodInitialValues} from './../../checkout/responses'
-
 
 import {noop} from 'progressive-web-sdk/dist/utils/utils'
 
@@ -13,9 +13,6 @@ export const fetchShippingMethodsEstimate = () => (dispatch) => {
             return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/shipments/me/shipping_methods`, {method: 'GET'})
                 .then((response) => response.json())
                 .then((responseJSON) => {
-                    const initialValues = {
-                        shipping_method: responseJSON.default_shipping_method_id
-                    }
                     const shippingMethods = responseJSON.applicable_shipping_methods.map((shippingMethod) => {
                         return {
                             label: `${shippingMethod.name} - ${shippingMethod.description}`,
@@ -24,29 +21,53 @@ export const fetchShippingMethodsEstimate = () => (dispatch) => {
                         }
                     })
 
-                    dispatch(receiveCheckoutData({shipping: {shippingMethods}}))
-                    return dispatch(receiveShippingMethodInitialValues({initialValues}))
+                    return dispatch(receiveCheckoutData({shipping: {shippingMethods}}))
                 })
         })
 }
 
 export const fetchCheckoutShippingData = () => (dispatch) => {
-    // return dispatch(fetchShippingMethodsEstimate())
-
     return getBasketID()
         .then((basketID) => {
             return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}`, {method: 'GET'})
                 .then((response) => response.json())
                 .then((responseJSON) => {
-                    dispatch(receiveCheckoutData({
+                    const {
+                        customer_info: {
+                            email
+                        },
+                        shipments: [{
+                            shipping_address,
+                            shipping_method
+                        }]
+                    } = responseJSON
+                    let initialValues
+                    /* eslint-disable camelcase */
+                    if (shipping_address) {
+                        initialValues = {
+                            username: email,
+                            name: shipping_address.full_name,
+                            company: shipping_address.company_name,
+                            addressLine1: shipping_address.address1,
+                            addressLine2: shipping_address.address2,
+                            countryId: shipping_address.country_code,
+                            city: shipping_address.city,
+                            regionId: shipping_address.state_code,
+                            postcode: shipping_address.postal_code,
+                            telephone: shipping_address.phone,
+                            shipping_method: shipping_method ? shipping_method.id : undefined
+                        }
+                    } else {
+                        initialValues = {
+                            countryId: 'us'
+                        }
+                    }
+                    dispatch(receiveShippingMethodInitialValues({initialValues}))
+                    /* eslint-enable camelcase */
+                    return dispatch(receiveCheckoutData({
                         locations: {
                             countries: [{value: 'us', label: 'United States'}],
-                            regions: [
-                                {
-                                    label: 'Please select a region, state or province.'
-                                },
-                                ...STATES
-                            ]
+                            regions: STATES
                         }
                     }))
                 })
@@ -54,8 +75,66 @@ export const fetchCheckoutShippingData = () => (dispatch) => {
         })
 }
 
-export const submitShipping = noop
+export const submitShipping = (formValues) => (dispatch) => {
+    const {
+        name,
+        firstname,
+        lastname,
+        username,
+        company,
+        addressLine1,
+        addressLine2,
+        countryId,
+        city,
+        regionId,
+        postcode,
+        telephone,
+        shipping_method
+    } = formValues
+    return getBasketID()
+        .then((basketID) => {
+            const requestOptions = {
+                method: 'PUT',
+                body: JSON.stringify({
+                    email: username,
+                    customer_name: name
+                })
+            }
+            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/customer`, requestOptions)
+                .then(() => basketID)
+        })
+        .then((basketID) => {
+            const requestOptions = {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    shipping_address: {
+                        address1: addressLine1,
+                        address2: addressLine2,
+                        city,
+                        country_code: countryId,
+                        first_name: firstname,
+                        last_name: lastname,
+                        full_name: name,
+                        phone: telephone,
+                        postal_code: postcode,
+                        state_code: regionId,
+                        company_name: company
+                    },
+                    shipping_method: {
+                        id: shipping_method
+                    }
+                })
+            }
+            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/shipments/me`, requestOptions)
+                .then((response) => response.json())
+                .then((responseJSON) => {
+                    if (responseJSON.fault) {
+                        throw new SubmissionError({_error: 'Unable to save shipping data'})
+                    }
+                })
+        })
+}
 
-export const checkCustomerEmail = noop
+export const checkCustomerEmail = () => (dispatch) => dispatch(noop)
 
-export const checkoutSignIn = noop
+export const checkoutSignIn = () => (dispatch) => dispatch(noop)

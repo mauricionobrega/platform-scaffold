@@ -1,5 +1,5 @@
-import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+import {SubmissionError} from 'redux-form'
 import {checkoutShippingParser, parseCheckoutData, parseShippingMethods} from './parsers'
 import {parseCheckoutEntityID} from '../../../utils/magento-utils'
 import {receiveCheckoutShippingData, receiveCheckoutData, receiveShippingMethodInitialValues} from './../../checkout/responses'
@@ -69,7 +69,8 @@ export const submitShipping = (formValues) => {
     return (dispatch, getState) => {
         const currentState = getState()
         const {
-            name,
+            firstname,
+            lastname,
             company,
             addressLine1,
             addressLine2,
@@ -83,11 +84,10 @@ export const submitShipping = (formValues) => {
         } = formValues
         const entityID = getCustomerEntityID(currentState)
         const isLoggedIn = getIsLoggedIn(currentState)
-        const names = name.split(' ')
         const shippingSelections = shipping_method.split('_')
         const address = {
-            firstname: names.slice(0, -1).join(' '),
-            lastname: names.slice(-1).join(' '),
+            firstname,
+            lastname,
             company: company || '',
             telephone,
             postcode,
@@ -110,15 +110,11 @@ export const submitShipping = (formValues) => {
             }
         }
         const persistShippingURL = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/shipping-information`
-        dispatch(receiveCheckoutData({shipping: {address}, emailAddress: username}))
         return makeJsonEncodedRequest(persistShippingURL, addressInformation, {method: 'POST'})
             .then((response) => response.json())
             .then((responseJSON) => {
-                if (responseJSON.payment_methods) {
-                    // TO DO: send response data to the next container
-                    browserHistory.push({
-                        pathname: '/checkout/payment/'
-                    })
+                if (!responseJSON.payment_methods) {
+                    throw new SubmissionError({_error: 'Unable to save shipping address'})
                 }
             })
     }
