@@ -21,7 +21,6 @@ export const fetchPdpData = () => (dispatch) => {
             dispatch(receiveProductDetailsProductData({[productPathKey]: productDetailsData}))
             dispatch(receiveProductDetailsUIData({[productPathKey]: {itemQuantity: responseJSON.step_quantity, ctaText: 'Add To Cart'}}))
         })
-
 }
 
 export const getProductVariationData = (variationSelections, availableVariations, variationOptions) => (dispatch) => {
@@ -42,6 +41,4 @@ export const getProductVariationData = (variationSelections, availableVariations
             })
         }
     }
-
-
 }

@@ -1,16 +1,17 @@
 
 import {SITE_ID} from './constants'
 
+const formatPrice = (price) => `$${price.toFixed(2)}`
+
 const parseCarouselItems = (imageGroups) => {
     const largeImages = imageGroups.filter((imageGroup) => imageGroup.view_type === 'large')[0]
     return largeImages.images.map(({alt, link}, idx) => ({alt, img: link, position: idx.toString()}))
-
 }
 
 export const parseProductDetails = ({name, price, long_description, image_groups, variants, variation_attributes}) => {
     return {
         title: name,
-        price: `$${price.toFixed(2)}`,
+        price: `${formatPrice(price)}`,
         description: long_description,
         carouselItems: parseCarouselItems(image_groups),
         variationOptions: variation_attributes,
@@ -33,14 +34,14 @@ export const parseBasketContents = ({product_items, product_sub_total}) => {
     const items = product_items ? product_items.map(({product_name, base_price, quantity}) => {
         return {
             product_name,
-            product_price: `$${base_price.toFixed(2).toString()}`,
+            product_price: `${formatPrice(base_price)}`,
             product_image: {},
             qty: quantity
         }
     }) : []
     return {
         items,
-        subtotal: product_sub_total ? `$${product_sub_total.toFixed(2).toString()}` : '$0.00',
+        subtotal: formatPrice(product_sub_total ? product_sub_total : 0),
         summary_count: items && items.length
     }
     /* eslint-enable camelcase:  */
@@ -59,10 +60,17 @@ export const parseCategories = (categories) => {
 
 export const getProductHref = (productID) => `/s/2017refresh/${productID}.html`
 
-export const parseProductHit = ({product_id, product_name, price, image}) => {
+export const parseProductHit = ({product_id, product_name, price, prices, image}) => {
+    // Some products don't have _any_ pricing on them!
+    const finalPrice = price || (prices && prices['usd-sale-prices']) || undefined
+    let formattedPrice = '$ N/A'
+    if (finalPrice) {
+        formattedPrice = `${formatPrice(finalPrice)}`
+    }
+
     return {
         title: product_name,
-        price: `$${price.toFixed(2).toString()}`,
+        price: formattedPrice,
         link: {
             href: getProductHref(product_id),
             text: product_name
