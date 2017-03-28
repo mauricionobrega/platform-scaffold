@@ -1,5 +1,5 @@
 import {urlToPathKey} from '../../../utils/utils'
-import {receiveFormInfo} from '../../actions'
+import {receiveFormInfo} from '../actions'
 
 import {fetchPageData} from '../app/commands'
 

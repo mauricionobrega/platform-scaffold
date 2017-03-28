@@ -1,6 +1,5 @@
 import isEmail from 'validator/lib/isEmail'
 import {SubmissionError} from 'redux-form'
-import {getLogin} from './selectors'
 
 import {isRunningInAstro, jsRpcMethod} from '../../utils/astro-integration'
 import {login, registerUser} from '../../integration-manager/login/commands'
@@ -87,12 +86,6 @@ export const submitSignInForm = (formValues, resolve, reject) => {
         if (errors._error || Object.keys(errors.login).length) {
             return reject(new SubmissionError(errors))
         }
-        // const loginData = getLogin(getStore()).toJS()
-        // const {href, hiddenInputs} = loginData.signinSection.form
-        //
-        // hiddenInputs.forEach((input) => {
-        //     formValues[input.name] = input.value
-        // })
 
         return dispatch(login(formValues))
             .then(handleLoginSuccess)
@@ -106,12 +99,6 @@ export const submitRegisterForm = (formValues, resolve, reject) => {
         if (errors._error || Object.keys(errors).length) {
             return reject(new SubmissionError(errors))
         }
-        // const loginData = getLogin(getStore()).toJS()
-        // const {href, hiddenInputs} = loginData.registerSection.form
-        //
-        // hiddenInputs.forEach((input) => {
-        //     formValues[input.name] = input.value
-        // })
 
         return dispatch(registerUser(formValues))
             .then(handleLoginSuccess)
