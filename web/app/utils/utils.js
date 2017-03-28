@@ -136,5 +136,13 @@ export const getCookieValue = (cookieName) => {
 
 // converts the image URL to a high resolution format
 export const getHighResImage = (src) => {
-    return src.replace(/thumbnail\/\d+x\d+/, 'small_image/240x300')
+    return src ? src.replace(/thumbnail\/\d+x\d+/, 'small_image/240x300') : src
+}
+
+export const splitFullName = (fullname) => {
+    const names = fullname.split(' ')
+    return {
+        firstname: names.slice(0, -1).join(' '),
+        lastname: names.slice(-1).join(' ')
+    }
 }
