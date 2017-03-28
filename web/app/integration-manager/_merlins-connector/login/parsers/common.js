@@ -1,5 +1,5 @@
 /* eslint-disable newline-per-chained-call */
-import {getTextFrom} from '../../../utils/parser-utils'
+import {getTextFrom} from '../../../../utils/parser-utils'
 
 export const parseFields = ($, $fields) => {
     return $fields.map((_, field) => {
@@ -15,17 +15,6 @@ export const parseFields = ($, $fields) => {
                 title: getTextFrom($tooltip, '.toggle'),
                 content: getTextFrom($tooltip, '.content')
             } : false
-        }
-    })
-}
-
-export const parseHiddenInputs = ($, $inputs) => {
-    return $inputs.map((_, input) => {
-        const $input = $(input)
-        return {
-            name: $input.attr('name'),
-            type: 'hidden',
-            value: $input.val()
         }
     })
 }
