@@ -2,6 +2,8 @@ import {makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import {SubmissionError} from 'redux-form'
 
+import {receiveLoginHref, receiveRegisterHref} from '../actions'
+import {getLoginHref, getFormKey, getRegisterHref} from '../selectors'
 import {fetchPageData} from '../app/commands'
 import {receiveLoginPageData} from '../../login/responses'
 
@@ -15,10 +17,12 @@ export const fetchLoginData = (url, routeName) => (dispatch) => {
         .then((res) => {
             const [$, $response] = res
             if (routeName === 'signin') {
+                dispatch(receiveLoginHref($response.find('.form-login').attr('action')))
                 return dispatch(receiveLoginPageData({
                     signinSection: signinParser($, $response)
                 }))
             } else if (routeName === 'register') {
+                dispatch(receiveRegisterHref($response.find('.form-create-account').attr('action')))
                 return dispatch(receiveLoginPageData({
                     registerSection: registerParser($, $response)
                 }))
@@ -49,8 +53,17 @@ const submitForm = (href, formValues, formSelector) => {
         })
 }
 
-export const login = (href, formValues) =>
-    submitForm(href, formValues, '.form-login')
+export const login = (formValues) => (dispatch, getState) => {
+    const currentState = getState()
+    const href = getLoginHref(currentState)
+    const formKey = getFormKey(currentState)
+    return submitForm(href, {...formValues, form_key: formKey}, '.form-login')
+}
 
-export const registerUser = (href, formValues) =>
-    submitForm(href, formValues, '.form-create-account')
+
+export const registerUser = (href, formValues) => (dispatch, getState) => {
+    const currentState = getState()
+    const href = getRegisterHref(currentState)
+    const formKey = getFormKey(currentState)
+    return submitForm(href, {...formValues, form_key: formKey}, '.form-create-account')
+}

@@ -1,6 +1,6 @@
 /* eslint-disable newline-per-chained-call */
 import {getTextFrom} from '../../../../utils/parser-utils'
-import {parseFields, parseHiddenInputs} from './common'
+import {parseFields} from './common'
 
 const parseForm = ($, $form) => {
     return {
@@ -10,7 +10,6 @@ const parseForm = ($, $form) => {
             title: getTextFrom($form, '.action.remind')
         },
         fields: $.makeArray(parseFields($, $form.find('.field:not(.note)'))),
-        hiddenInputs: $.makeArray(parseHiddenInputs($, $form.find('input[type="hidden"]'))),
         submitText: getTextFrom($form, 'button[type="submit"]')
     }
 }
