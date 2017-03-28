@@ -136,11 +136,6 @@ if (isReactRoute()) {
             id: 'progressive-web-vendor',
             src: getAssetUrl('vendor.js')
         })
-
-        loadScript({
-            is: 'astro-client',
-            src: getAssetUrl('astro-client.js')
-        })
     })
 } else {
     const capturing = document.createElement('script')

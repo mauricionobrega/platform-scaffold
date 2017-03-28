@@ -28,11 +28,6 @@ const config = {
             name: 'vendor',
             minChunks: (module) => /node_modules/.test(module.resource)
         }),
-        new webpack.optimize.CommonsChunkPlugin({
-            filename: 'astro-client.js',
-            async: 'astro-client',
-            minChunks: (module) => /astro-client/.test(module.resource)
-        }),
         new ExtractTextPlugin({
             filename: '[name].css'
         }),
