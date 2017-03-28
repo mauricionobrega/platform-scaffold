@@ -6,6 +6,7 @@ import Astro from 'progressive-app-sdk/astro-full'
 import TabHeaderController from './tabHeaderController'
 import accountConfig from '../config/accountConfig'
 
+import AppEvents from '../global/app-events'
 import AppRpc from '../global/app-rpc'
 
 const AccountTabController = function(viewPlugin, headerController, layout, segmentedView, signInView, registerView) {
@@ -28,6 +29,7 @@ const AccountTabController = function(viewPlugin, headerController, layout, segm
         this.layout.hideTopViews()
         this.isLoggedIn = true
         this.layout.setContentView(signInView)
+        AppEvents.trigger(AppEvents.didSignIn)
     })
 
     Astro.registerRpcMethod(AppRpc.names.guest, [], () => {
