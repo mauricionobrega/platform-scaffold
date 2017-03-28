@@ -1,6 +1,6 @@
 /* eslint-disable newline-per-chained-call */
-import {getTextFrom} from '../../../utils/parser-utils'
-import {parseFields, parseHiddenInputs} from './common'
+import {getTextFrom} from '../../../../utils/parser-utils'
+import {parseFields} from './common'
 
 const parseFormSection = ($, $formSection) => {
     return {
@@ -12,7 +12,6 @@ const parseFormSection = ($, $formSection) => {
 const parseForm = ($, $form, $infoSection, $accountSection) => {
     return {
         href: $form.attr('action'),
-        hiddenInputs: $.makeArray(parseHiddenInputs($, $form.find('input[type="hidden"]'))),
         submitText: getTextFrom($form, 'button[type="submit"]'),
         sections: [
             parseFormSection($, $infoSection),

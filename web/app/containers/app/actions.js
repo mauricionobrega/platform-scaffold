@@ -16,13 +16,11 @@ import Cart from '../cart/container'
 import CheckoutShipping from '../checkout-shipping/container'
 import CheckoutPayment from '../checkout-payment/container'
 import CheckoutConfirmation from '../checkout-confirmation/container'
-import Login from '../login/container'
 import * as checkoutActions from '../../store/checkout/actions'
 // import * as checkoutShippingUIActions from '../checkout-shipping/actions'
 import * as checkoutConfirmationActions from '../checkout-confirmation/actions'
 import * as checkoutShippingActions from '../../store/checkout/shipping/actions'
 import * as cartActions from '../../store/cart/actions'
-import * as loginActions from '../login/actions'
 import * as footerActions from '../footer/actions'
 import * as navigationActions from '../navigation/actions'
 
@@ -140,9 +138,7 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                 dispatch(receivedAction)
                 dispatch(process(receivedAction))
 
-                if (pageComponent === Login) {
-                    dispatch(loginActions.process(receivedAction))
-                } else if (pageComponent === CheckoutShipping) {
+                if (pageComponent === CheckoutShipping) {
                     // dispatch(checkoutShippingUIActions.process(receivedAction))
                     // dispatch(checkoutActions.processCheckoutData(receivedAction))
                     dispatch(checkoutShippingActions.fetchShippingMethodsEstimate(SHIPPING_FORM_NAME))

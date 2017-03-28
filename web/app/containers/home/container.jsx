@@ -15,6 +15,6 @@ const Home = () => {
     )
 }
 
-Home.fetcher = (url, dispatch) => dispatch(fetchHomeData(url))
+Home.fetcher = (url, routeName, dispatch) => dispatch(fetchHomeData(url, routeName))
 
 export default Home

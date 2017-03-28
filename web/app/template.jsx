@@ -24,7 +24,7 @@ const template = (WrappedComponent) => {
             dispatch(onRouteChanged(url, route.routeName))
 
             if (WrappedComponent.fetcher) {
-                WrappedComponent.fetcher(url, dispatch)
+                WrappedComponent.fetcher(url, route.routeName, dispatch)
                     .then(() => dispatch(setFetchedPage(url)))
                     .then(() => dispatch(checkIfOffline()))
             } else if (!route.suppressFetch) {
