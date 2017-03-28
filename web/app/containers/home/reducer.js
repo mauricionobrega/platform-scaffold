@@ -12,5 +12,5 @@ const initialState = fromJS({
 })
 
 export default handleActions({
-    receiveData: mergePayload
+    [receiveData]: mergePayload
 }, initialState)

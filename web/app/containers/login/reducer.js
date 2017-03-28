@@ -117,5 +117,5 @@ const initialState = Immutable.fromJS({
 })
 
 export default handleActions({
-    receiveData: mergePayload
+    [receiveData]: mergePayload
 }, initialState)
