@@ -15,12 +15,14 @@ export const createBasket = () => {
 
     return makeDemandwareRequest(`${API_END_POINT_URL}/baskets`, options)
         .then((response) => response.json())
-        .then((responseJSON) => {
-            const basketID = responseJSON.basket_id
 
+        /* eslint-disable camelcase */
+        .then(({basket_id}) => {
+            const basketID = basket_id
             storeBasketID(basketID)
             return basketID
         })
+        /* eslint-enable camelcase */
 }
 
 
