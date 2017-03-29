@@ -12,7 +12,7 @@ import * as appCommands from './app/commands'
 import * as loginCommands from './login/commands'
 
 const addToCart = () => (dispatch) => {
-    return cartCommands.getBasketID()
+    return cartCommands.createBasket()
         .then((basketID) => {
             const options = {
                 method: 'POST',

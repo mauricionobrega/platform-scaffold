@@ -1,6 +1,9 @@
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {API_END_POINT_URL, REQUEST_HEADERS} from './constants'
 
+const AUTH_KEY_NAME = 'mob-auth'
+const BASKET_KEY_NAME = 'mob-basket'
+
 const getAuthTokenPayload = (authToken) => {
     // The token consists of 3 parts: header, payload and signature
     // separated by a '.', each part is encoded
@@ -15,12 +18,23 @@ export const isUserLoggedIn = (authorization) => {
 }
 
 export const storeAuthToken = (authorization) => {
-    document.cookie = `mob-auth=${authorization}`
+    window.sessionStorage.setItem(AUTH_KEY_NAME, authorization)
 }
 
 export const getAuthToken = () => {
-    const authorizationMatch = /mob-auth=([^;]+);/.exec(document.cookie)
-    return authorizationMatch ? authorizationMatch[1] : undefined
+    return window.sessionStorage.getItem(AUTH_KEY_NAME)
+}
+
+export const deleteBasketID = () => {
+    window.sessionStorage.removeItem(BASKET_KEY_NAME)
+}
+
+export const getBasketID = () => {
+    return window.sessionStorage.getItem(BASKET_KEY_NAME)
+}
+
+export const storeBasketID = (basketID) => {
+    window.sessionStorage.setItem(BASKET_KEY_NAME, basketID)
 }
 
 export const initDemandwareSession = (authorization) => {
@@ -35,10 +49,7 @@ export const initDemandwareSession = (authorization) => {
     return makeRequest(`${API_END_POINT_URL}/sessions`, options)
         .then(() => {
             // Once the session has been opened return the authorization headers to the next request
-            return {
-                ...REQUEST_HEADERS,
-                Authorization: authorization
-            }
+            return options.headers
         })
 }
 
@@ -48,12 +59,12 @@ export const initDemandWareAuthAndSession = () => {
         const {exp} = getAuthTokenPayload(authorizationToken.replace('Bearer ', ''))
         // Get current Unix time in seconds (not milliseconds)
         const currentTime = Math.floor(Date.now() / 1000)
-        if (currentTime >= exp) {
+        if (currentTime <= exp) {
             // The token is still valid
-            return {
+            return Promise.resolve({
                 ...REQUEST_HEADERS,
                 Authorization: authorizationToken
-            }
+            })
         }
         // The token has expired, refresh it
         const requestOptions = {
@@ -66,9 +77,11 @@ export const initDemandWareAuthAndSession = () => {
         }
         return makeRequest(`${API_END_POINT_URL}/customers/auth`, requestOptions)
             .then((response) => {
+                const authorizationToken = response.headers.get('Authorization')
+                storeAuthToken(authorizationToken)
                 return {
                     ...REQUEST_HEADERS,
-                    Authorization: response.headers.get('Authorization')
+                    Authorization: authorizationToken
                 }
             })
     }
@@ -81,7 +94,6 @@ export const initDemandWareAuthAndSession = () => {
     return makeRequest(`${API_END_POINT_URL}/customers/auth`, options)
         .then((response) => {
             authorization = response.headers.get('Authorization')
-            options.headers.Authorization = authorization
             storeAuthToken(authorization)
             return initDemandwareSession(authorization)
         })

@@ -5,3 +5,5 @@ coverage
 tests/reports
 tests/screenshots
 lighthouse/audit*.html
+
+app/loader-routes.js

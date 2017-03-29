@@ -4,7 +4,7 @@ import * as analyticConstants from 'progressive-web-sdk/dist/analytics/analytic-
 
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
-import {createAction, createActionWithMeta, createAnalyticsMeta} from '../../utils/utils'
+import {createAction, createActionWithAnalytics} from 'progressive-web-sdk/dist/utils/action-creation'
 import {getCurrentUrl} from './selectors'
 
 import appParser from './app-parser'
@@ -34,17 +34,19 @@ export const addNotification = createAction('Add Notification')
 export const removeNotification = createAction('Remove Notification')
 export const removeAllNotifications = createAction('Remove All Notifications')
 
-export const updateSvgSprite = createAction('Updated SVG sprite', 'sprite')
+export const updateSvgSprite = createAction('Updated SVG sprite', ['sprite'])
 
 /**
  * Action dispatched when the route changes
  * @param {string} currentURL - what's currently shown in the address bar
  * @param {string} routeName - Template name for analytic
  */
-export const onRouteChanged = createActionWithMeta(
+export const onRouteChanged = createActionWithAnalytics(
     'On route changed',
     ['currentURL'],
-    (currentURL, routeName) => createAnalyticsMeta(analyticConstants.pageview, {name: routeName}))
+    analyticConstants.pageview,
+    (currentURL, routeName) => ({name: routeName})
+)
 
 /**
  * Action dispatched when content for a global page render is ready.
@@ -55,22 +57,22 @@ export const onRouteChanged = createActionWithMeta(
  * @param {string} currentURL - what's currently shown in the address bar
  * @param {string} routeName - the name of the route we received the page for
  */
-export const onPageReceived = createAction('On page received',
+export const onPageReceived = createAction('On page received', [
     '$',
     '$response',
     'url',
     'currentURL',
     'routeName'
-)
+])
 
-export const setFetchedPage = createAction('Set fetched page', 'url')
+export const setFetchedPage = createAction('Set fetched page', ['url'])
 
 export const receiveData = createAction('Receive App Data')
 export const process = ({payload: {$response}}) => {
     return receiveData(appParser($response))
 }
 
-export const setPageFetchError = createAction('Set page fetch error', 'fetchError')
+export const setPageFetchError = createAction('Set page fetch error', ['fetchError'])
 export const clearPageFetchError = createAction('Clear page fetch error')
 
 /**

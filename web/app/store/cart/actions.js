@@ -5,8 +5,8 @@
  *
  * All requests require a session, eg. 'Cookie: PHPSESSID=as337c3fq7751n9gn1o3enacf7'
  */
+import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 import parse from './parsers/parser'
-import * as utils from '../../utils/utils'
 
 import {makeFormEncodedRequest, makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {addNotification, removeNotification} from '../../containers/app/actions'
@@ -19,7 +19,7 @@ const baseHeaders = {
     Accept: 'application/json',
 }
 
-export const receiveCartContents = utils.createAction('Received Cart Contents')
+export const receiveCartContents = createAction('Received Cart Contents')
 
 /**
  * Get the contents of the users cart

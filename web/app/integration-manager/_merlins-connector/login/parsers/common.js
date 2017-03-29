@@ -19,15 +19,4 @@ export const parseFields = ($, $fields) => {
     })
 }
 
-export const parseHiddenInputs = ($, $inputs) => {
-    return $inputs.map((_, input) => {
-        const $input = $(input)
-        return {
-            name: $input.attr('name'),
-            type: 'hidden',
-            value: $input.val()
-        }
-    })
-}
-
 export const isFormResponseInvalid = ($response, formSelector) => $response.find(formSelector).length

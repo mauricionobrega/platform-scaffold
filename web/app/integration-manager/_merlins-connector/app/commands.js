@@ -5,6 +5,7 @@ import {getCart} from '../cart/commands'
 import {appParser} from './parser'
 import {parseFooter} from '../footer/parser'
 import {parseNavigation} from '../navigation/parser'
+import {receiveFormKey} from '../actions'
 import {receiveNavigationData, receiveAppData, receiveFooterData, setPageFetchError} from '../../responses'
 
 export const fetchPageData = (url) => (dispatch) => {
@@ -12,8 +13,9 @@ export const fetchPageData = (url) => (dispatch) => {
         .then(jqueryResponse)
         .then((res) => {
             const [$, $response] = res
-
-            dispatch(receiveAppData(appParser($response)))
+            const appData = appParser($response)
+            dispatch(receiveFormKey(appData.formKey))
+            dispatch(receiveAppData({...appData}))
             dispatch(receiveNavigationData(parseNavigation($, $response)))
             dispatch(receiveFooterData(parseFooter($, $response)))
             return res

@@ -1,4 +1,3 @@
-// import * as constants from './constants'
-import * as utils from '../../utils/utils'
+import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 
-export const toggleHeader = utils.createAction('Toggled the header', 'isCollapsed')
+export const toggleHeader = createAction('Toggled the header', ['isCollapsed'])

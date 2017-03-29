@@ -1,11 +1,10 @@
 import isEmail from 'validator/lib/isEmail'
 import {SubmissionError} from 'redux-form'
-import {getLogin} from './selectors'
 
 import {isRunningInAstro, jsRpcMethod} from '../../utils/astro-integration'
 import {login, registerUser} from '../../integration-manager/login/commands'
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
-import isReactRoute from '../../utils/is-react-route'
+import isReactRoute from 'progressive-web-sdk/dist/routing/is-react-route'
 
 
 const validateSignInForm = (formValues) => {
@@ -80,9 +79,8 @@ const handleLoginSuccess = (href) => {
     if (isRunningInAstro) {
         jsRpcMethod('user:loggedIn', [])()
     }
-
     // This is only here because there is no account page in the PWA right now
-    // Once we've added one we should navigate to the account page after successfully logging in
+    // Once we've added one we should user browserHistory to navigate to the account page after successfully logging in
     if (isReactRoute(href)) {
         browserHistory.push({pathname: href})
     } else {
@@ -91,36 +89,27 @@ const handleLoginSuccess = (href) => {
 }
 
 export const submitSignInForm = (formValues, resolve, reject) => {
-    return (dispatch, getStore) => {
+    return (dispatch) => {
         const errors = validateSignInForm(formValues)
         if (errors._error || Object.keys(errors.login).length) {
             return reject(new SubmissionError(errors))
         }
-        const loginData = getLogin(getStore()).toJS()
-        const {href, hiddenInputs} = loginData.signinSection.form
 
-        hiddenInputs.forEach((input) => {
-            formValues[input.name] = input.value
-        })
-        return dispatch(login(href, formValues, resolve, reject))
+        return dispatch(login(formValues))
             .then(handleLoginSuccess)
+            .catch((error) => reject(error))
     }
 }
 
 export const submitRegisterForm = (formValues, resolve, reject) => {
-    return (dispatch, getStore) => {
+    return (dispatch) => {
         const errors = validateRegisterForm(formValues)
         if (errors._error || Object.keys(errors).length) {
             return reject(new SubmissionError(errors))
         }
-        const loginData = getLogin(getStore()).toJS()
-        const {href, hiddenInputs} = loginData.registerSection.form
 
-        hiddenInputs.forEach((input) => {
-            formValues[input.name] = input.value
-        })
-
-        return dispatch(registerUser(href, formValues, resolve, reject))
+        return dispatch(registerUser(formValues))
             .then(handleLoginSuccess)
+            .catch((error) => reject(error))
     }
 }
