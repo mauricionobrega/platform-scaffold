@@ -2,8 +2,11 @@ import {getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dis
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
 import cacheHashManifest from '../tmp/loader-cache-hash-manifest.json'
 import {isRunningInAstro} from './utils/astro-integration'
-import isReactRoute, {setRouteList} from 'progressive-web-sdk/dist/routing/is-react-route'
 import ReactRegexes from './loader-routes'
+
+const isReactRoute = () => {
+     return ReactRegexes.some((regex) => regex.test(window.location.pathname))
+ }
 
 window.Progressive = {}
 
@@ -41,7 +44,6 @@ const asyncInitApp = () => {
     }
 }
 
-setRouteList(ReactRegexes)
 
 if (isReactRoute(window.location.pathname)) {
     displayPreloader(preloadCSS, preloadHTML, preloadJS)
