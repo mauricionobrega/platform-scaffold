@@ -1,6 +1,6 @@
 import {noop} from 'progressive-web-sdk/dist/utils/utils'
 import {receiveLoginPageData} from '../../login/responses'
-import {receiveAppData} from '../../responses'
+import {receiveAppData, setLoggedIn} from '../../responses'
 import {initDemandwareSession, storeAuthToken} from '../utils'
 import {getCart} from '../cart/commands'
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
@@ -86,7 +86,7 @@ export const login = ({login}) => (dispatch) => {
             }
             const authorization = responseHeaders.get('Authorization')
             storeAuthToken(authorization)
-            dispatch(receiveAppData({isLoggedIn: true}))
+            dispatch(setLoggedIn(true))
             return initDemandwareSession(authorization)
                 .then(() => dispatch(getCart()))
                 .then(() => {

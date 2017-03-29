@@ -1,5 +1,5 @@
 import * as utils from '../utils'
-import {receiveNavigationData, receiveAppData} from '../../responses'
+import {receiveNavigationData, setLoggedIn} from '../../responses'
 import {getCart} from '../cart/commands'
 import {parseCategories} from '../parsers'
 
@@ -31,6 +31,6 @@ export const fetchNavigationData = () => (dispatch) => {
 export const initApp = () => (dispatch) => {
     return utils.initDemandWareAuthAndSession()
         .then(() => dispatch(fetchNavigationData()))
-        .then(() => dispatch(receiveAppData({isLoggedIn: utils.isUserLoggedIn(utils.getAuthToken())})))
+        .then(() => dispatch(setLoggedIn(utils.isUserLoggedIn(utils.getAuthToken()))))
         .then(() => dispatch(getCart()))
 }
