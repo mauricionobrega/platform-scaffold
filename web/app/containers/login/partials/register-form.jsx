@@ -3,7 +3,7 @@ import {reduxForm} from 'redux-form'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import {connect} from 'react-redux'
 import * as selectors from '../selectors'
-import {isModalOpen} from '../../../store/selectors'
+import {isModalOpen} from 'progressive-web-sdk/dist/store/modals/selectors'
 import {openModal, closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {REGISTER_SECTION} from '../constants'
 

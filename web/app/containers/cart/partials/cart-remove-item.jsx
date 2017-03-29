@@ -5,7 +5,7 @@ import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import {CART_REMOVE_ITEM_MODAL} from '../constants'
 import {removeFromCart} from '../../../store/cart/actions'
 import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
-import {isModalOpen} from '../../../store/selectors'
+import {isModalOpen} from 'progressive-web-sdk/dist/store/modals/selectors'
 import {getRemoveItemID} from '../selectors'
 
 import Sheet from 'progressive-web-sdk/dist/components/sheet'

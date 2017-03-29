@@ -4,7 +4,7 @@ import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
-import {isModalOpen} from '../../../store/selectors'
+import {isModalOpen} from 'progressive-web-sdk/dist/store/modals/selectors'
 import {stripEvent} from '../../../utils/utils'
 
 import Button from 'progressive-web-sdk/dist/components/button'
