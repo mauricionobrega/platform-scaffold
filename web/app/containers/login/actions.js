@@ -4,7 +4,7 @@ import {SubmissionError} from 'redux-form'
 import {isRunningInAstro, jsRpcMethod} from '../../utils/astro-integration'
 import {login, registerUser} from '../../integration-manager/login/commands'
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
-import isReactRoute from '../../utils/is-react-route'
+import isReactRoute from 'progressive-web-sdk/dist/routing/is-react-route'
 
 
 const validateSignInForm = (formValues) => {

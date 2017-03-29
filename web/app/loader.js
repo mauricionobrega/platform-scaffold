@@ -2,7 +2,7 @@ import {getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dis
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
 import cacheHashManifest from '../tmp/loader-cache-hash-manifest.json'
 import {isRunningInAstro} from './utils/astro-integration'
-import isReactRoute from './utils/is-react-route'
+import isReactRoute from 'progressive-web-sdk/dist/routing/is-react-route'
 
 window.Progressive = {}
 
