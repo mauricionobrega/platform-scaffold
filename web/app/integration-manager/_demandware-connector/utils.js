@@ -22,6 +22,18 @@ export const getAuthToken = () => {
     return window.sessionStorage.getItem('mob-auth')
 }
 
+export const deleteBasketID = () => {
+    window.sessionStorage.removeItem('mob-basket')
+}
+
+export const getBasketID = () => {
+    return window.sessionStorage.getitem('mob-basket')
+}
+
+export const storeBasketID = (basketID) => {
+    window.sessionStorage.setItem('mob-basket', basketID)
+}
+
 export const initDemandwareSession = (authorization) => {
     const options = {
         method: 'POST',
