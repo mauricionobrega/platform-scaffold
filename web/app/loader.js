@@ -25,7 +25,6 @@ const loadWorker = () => (
         .catch(() => {})
 )
 
-setRouteList(ReactRegexes)
 
 // webpackJsonpAsync is a custom async webpack code splitting chunk wrapper
 // webpackJsonp is a webpack code splitting vendor wrapper
@@ -41,6 +40,8 @@ const asyncInitApp = () => {
         runJsonpAsync()
     }
 }
+
+setRouteList(ReactRegexes)
 
 if (isReactRoute(window.location.pathname)) {
     displayPreloader(preloadCSS, preloadHTML, preloadJS)
