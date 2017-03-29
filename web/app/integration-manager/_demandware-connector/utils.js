@@ -15,12 +15,11 @@ export const isUserLoggedIn = (authorization) => {
 }
 
 export const storeAuthToken = (authorization) => {
-    document.cookie = `mob-auth=${authorization}`
+    window.sessionStorage.setItem('mob-auth', authorization)
 }
 
 export const getAuthToken = () => {
-    const authorizationMatch = /mob-auth=([^;]+);/.exec(document.cookie)
-    return authorizationMatch ? authorizationMatch[1] : undefined
+    return window.sessionStorage.getItem('mob-auth')
 }
 
 export const initDemandwareSession = (authorization) => {
@@ -48,12 +47,12 @@ export const initDemandWareAuthAndSession = () => {
         const {exp} = getAuthTokenPayload(authorizationToken.replace('Bearer ', ''))
         // Get current Unix time in seconds (not milliseconds)
         const currentTime = Math.floor(Date.now() / 1000)
-        if (currentTime >= exp) {
+        if (currentTime <= exp) {
             // The token is still valid
-            return {
+            return Promise.resolve({
                 ...REQUEST_HEADERS,
                 Authorization: authorizationToken
-            }
+            })
         }
         // The token has expired, refresh it
         const requestOptions = {

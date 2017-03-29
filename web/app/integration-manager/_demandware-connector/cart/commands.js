@@ -5,11 +5,9 @@ import {API_END_POINT_URL} from '../constants'
 
 
 export const getBasketID = () => {
-    const basketMatch = /mob-basket=([^;]+);/.exec(document.cookie)
-    if (basketMatch) {
-        return new Promise((resolve) => {
-            resolve(basketMatch[1])
-        })
+    const basketID = window.sessionStorage.getItem('mob-basket')
+    if (basketID) {
+        return Promise.resolve(basketID)
     }
     const options = {
         method: 'POST'
@@ -20,7 +18,7 @@ export const getBasketID = () => {
         .then((responseJSON) => {
             const basketID = responseJSON.basket_id
 
-            document.cookie = `mob-basket=${basketID}`
+            window.sessionStorage.setItem('mob-basket', basketID)
             return basketID
         })
 }
