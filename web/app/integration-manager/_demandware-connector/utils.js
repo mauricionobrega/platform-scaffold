@@ -1,6 +1,9 @@
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {API_END_POINT_URL, REQUEST_HEADERS} from './constants'
 
+const AUTH_KEY_NAME = 'mob-auth'
+const BASKET_KEY_NAME = 'mob-basket'
+
 const getAuthTokenPayload = (authToken) => {
     // The token consists of 3 parts: header, payload and signature
     // separated by a '.', each part is encoded
@@ -15,23 +18,23 @@ export const isUserLoggedIn = (authorization) => {
 }
 
 export const storeAuthToken = (authorization) => {
-    window.sessionStorage.setItem('mob-auth', authorization)
+    window.sessionStorage.setItem(AUTH_KEY_NAME, authorization)
 }
 
 export const getAuthToken = () => {
-    return window.sessionStorage.getItem('mob-auth')
+    return window.sessionStorage.getItem(AUTH_KEY_NAME)
 }
 
 export const deleteBasketID = () => {
-    window.sessionStorage.removeItem('mob-basket')
+    window.sessionStorage.removeItem(BASKET_KEY_NAME)
 }
 
 export const getBasketID = () => {
-    return window.sessionStorage.getItem('mob-basket')
+    return window.sessionStorage.getItem(BASKET_KEY_NAME)
 }
 
 export const storeBasketID = (basketID) => {
-    window.sessionStorage.setItem('mob-basket', basketID)
+    window.sessionStorage.setItem(BASKET_KEY_NAME, basketID)
 }
 
 export const initDemandwareSession = (authorization) => {
