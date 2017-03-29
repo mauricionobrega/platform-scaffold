@@ -23,8 +23,8 @@ const FooterSocialIcons = () => {
                             <Image
                                 src={getAssetUrl(icon)}
                                 alt={title}
-                                height="32"
-                                width="32"
+                                height="32px"
+                                width="32px"
                             />
                         </LazyLoadContent>
                     </a>

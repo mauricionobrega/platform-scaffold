@@ -45,7 +45,9 @@ const asyncInitApp = () => {
 }
 
 if (isReactRoute()) {
-    displayPreloader(preloadCSS, preloadHTML, preloadJS)
+    if (!isRunningInAstro) {
+        displayPreloader(preloadCSS, preloadHTML, preloadJS)
+    }
 
     // Create React mounting target
     const body = document.getElementsByTagName('body')[0]
@@ -90,22 +92,6 @@ if (isReactRoute()) {
      ? loadWorker()
      : {then: (fn) => setTimeout(fn)}
     ).then(() => {
-        loadAsset('link', {
-            href: getAssetUrl('static/img/global/favicon.png'),
-            rel: 'icon'
-        })
-
-        loadAsset('link', {
-            href: getAssetUrl('static/img/global/favicon.png'),
-            rel: 'apple-touch-icon'
-        })
-
-        loadAsset('link', {
-            href: getAssetUrl('static/img/global/favicon@2x.png'),
-            rel: 'apple-touch-icon',
-            sizes: '96x96'
-        })
-
         loadAsset('link', {
             href: getAssetUrl('main.css'),
             rel: 'stylesheet',

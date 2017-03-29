@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react'
+import {getHighResImage} from '../../../utils/utils'
 
 // SDK Components
 import Image from 'progressive-web-sdk/dist/components/image'
@@ -20,7 +21,7 @@ const PaymentProductItem = ({
 }) => {
     const productImage = (
         <Image
-            src={product_image.src}
+            src={getHighResImage(product_image.src)}
             alt={product_image.alt}
             width="104px"
             height="104px"
@@ -28,7 +29,7 @@ const PaymentProductItem = ({
     )
 
     return (
-        <ProductItem
+        <ProductItem customWidth="20%"
             className="u-padding-top-lg u-padding-bottom-lg u-padding-start u-padding-end"
             title={<h2 className="u-h5">{product_name}</h2>}
             image={productImage}

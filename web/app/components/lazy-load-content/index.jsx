@@ -20,7 +20,6 @@ class LazyLoadContent extends React.Component {
         }
 
         this.handleScroll = throttle(this.handleScroll.bind(this), SCROLL_CHECK_INTERVAL)
-        this.checkVisible = this.checkVisible.bind(this)
     }
 
     componentDidMount() {
@@ -45,15 +44,9 @@ class LazyLoadContent extends React.Component {
     }
 
     handleScroll() {
-        const {
-            visible
-        } = this.state
-
-        if (visible) {
-            return
+        if (!this.state.visible) {
+            this.checkVisible()
         }
-
-        this.checkVisible()
     }
 
     render() {
