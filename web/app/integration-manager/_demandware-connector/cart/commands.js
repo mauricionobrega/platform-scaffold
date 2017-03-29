@@ -1,15 +1,13 @@
-import {makeDemandwareRequest} from '../utils'
+import {makeDemandwareRequest, storeBasketID, getBasketID} from '../utils'
 import {receiveCartContents} from '../../cart/responses'
 import {parseBasketContents} from '../parsers'
 import {API_END_POINT_URL} from '../constants'
 
 
-export const getBasketID = () => {
-    const basketMatch = /mob-basket=([^;]+);/.exec(document.cookie)
-    if (basketMatch) {
-        return new Promise((resolve) => {
-            resolve(basketMatch[1])
-        })
+export const createBasket = () => {
+    const basketID = getBasketID()
+    if (basketID) {
+        return Promise.resolve(basketID)
     }
     const options = {
         method: 'POST'
@@ -17,17 +15,18 @@ export const getBasketID = () => {
 
     return makeDemandwareRequest(`${API_END_POINT_URL}/baskets`, options)
         .then((response) => response.json())
-        .then((responseJSON) => {
-            const basketID = responseJSON.basket_id
 
-            document.cookie = `mob-basket=${basketID}`
-            return basketID
+        /* eslint-disable camelcase */
+        .then(({basket_id}) => {
+            storeBasketID(basket_id)
+            return basket_id
         })
+        /* eslint-enable camelcase */
 }
 
 
 export const getCart = () => (dispatch) => {
-    return getBasketID()
+    return createBasket()
         .then((basketID) => {
             const options = {
                 method: 'GET'

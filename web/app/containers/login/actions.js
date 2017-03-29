@@ -3,6 +3,8 @@ import {SubmissionError} from 'redux-form'
 
 import {isRunningInAstro, jsRpcMethod} from '../../utils/astro-integration'
 import {login, registerUser} from '../../integration-manager/login/commands'
+import {browserHistory} from 'progressive-web-sdk/dist/routing'
+import isReactRoute from 'progressive-web-sdk/dist/routing/is-react-route'
 
 
 const validateSignInForm = (formValues) => {
@@ -77,7 +79,13 @@ const handleLoginSuccess = (href) => {
     if (isRunningInAstro) {
         jsRpcMethod('user:loggedIn', [])()
     }
-    window.location.href = href
+    // This is only here because there is no account page in the PWA right now
+    // Once we've added one we should user browserHistory to navigate to the account page after successfully logging in
+    if (isReactRoute(href)) {
+        browserHistory.push({pathname: href})
+    } else {
+        window.location.href = href
+    }
 }
 
 export const submitSignInForm = (formValues, resolve, reject) => {
@@ -103,19 +111,5 @@ export const submitRegisterForm = (formValues, resolve, reject) => {
         return dispatch(registerUser(formValues))
             .then(handleLoginSuccess)
             .catch((error) => reject(error))
-    }
-}
-
-const findPathForRoute = (routes, routeName) => {
-    const path = routes[0].childRoutes.find((route) => route.routeName === routeName).path
-    return `/${path}`
-}
-
-/**
- * Uses React router to navigate between different pages. Takes care of browser history, etc.
- */
-export const navigateToSection = (router, routes, sectionName) => {
-    return () => {
-        router.push(findPathForRoute(routes, sectionName))
     }
 }

@@ -14,7 +14,8 @@ const sectionKeys = [
     ['getDescription', 'description'],
     ['getHeading', 'heading'],
     ['getRequiredText', 'requiredText'],
-    ['getFormInfo', 'form']
+    ['getFormInfo', 'form'],
+    ['getIsFormLoaded', 'isFormLoaded']
 ]
 
 const makeSelectorsFrom = (selector, keys) => fromPairs(

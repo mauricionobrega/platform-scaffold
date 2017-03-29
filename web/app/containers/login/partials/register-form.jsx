@@ -40,7 +40,7 @@ class RegisterForm extends React.Component {
             // props from parent
             sections,
             submitText,
-            href,
+            isFormLoaded,
             modalOpen
         } = this.props
 
@@ -83,7 +83,7 @@ class RegisterForm extends React.Component {
                 <Button
                     className="c--primary u-width-full u-margin-top-lg"
                     type="submit"
-                    disabled={submitting || !href}
+                    disabled={submitting || !isFormLoaded}
                 >
                     <span className="u-text-uppercase">{submitText || 'Create an Account'}</span>
                 </Button>
@@ -98,6 +98,7 @@ RegisterForm.propTypes = {
     handleSubmit: PropTypes.func,
     href: PropTypes.string,
     invalid: PropTypes.bool,
+    isFormLoaded: PropTypes.bool,
     modalOpen: PropTypes.bool,
     openInfoModal: PropTypes.func,
     sections: PropTypes.array,
@@ -113,7 +114,7 @@ const ReduxRegisterForm = reduxForm({
 
 const mapStateToProps = createPropsSelector({
     sections: selectors.register.form.getSections,
-    href: selectors.register.form.getHref,
+    isFormLoaded: selectors.register.getIsFormLoaded,
     modalOpen: isModalOpen(REGISTER_SECTION),
     submitText: selectors.register.form.getSubmitText
 })

@@ -20,16 +20,21 @@ export const fetchLoginData = (url, routeName) => (dispatch) => {
                 const signInData = signinParser($, $response)
                 dispatch(receiveLoginHref(signInData.form.href))
                 return dispatch(receiveLoginPageData({
-                    signinSection: signInData
+                    signinSection: {
+                        isFormLoaded: true,
+                        ...signInData
+                    }
                 }))
             } else if (routeName === 'register') {
                 const registerData = registerParser($, $response)
                 dispatch(receiveRegisterHref(registerData.form.href))
                 return dispatch(receiveLoginPageData({
-                    registerSection: registerData
+                    registerSection: {
+                        isFormLoaded: true,
+                        ...registerData
+                    }
                 }))
             }
-
             return dispatch(receiveLoginPageData())
         })
 }
@@ -62,10 +67,23 @@ export const login = (formValues) => (dispatch, getState) => {
     return submitForm(href, {...formValues, form_key: formKey}, '.form-login')
 }
 
-
 export const registerUser = (href, formValues) => (dispatch, getState) => {
     const currentState = getState()
     const href = getRegisterHref(currentState)
     const formKey = getFormKey(currentState)
     return submitForm(href, {...formValues, form_key: formKey}, '.form-create-account')
+}
+
+const findPathForRoute = (routes, routeName) => {
+    const path = routes[0].childRoutes.find((route) => route.routeName === routeName).path
+    return `/${path}`
+}
+
+/**
+ * Uses React router to navigate between different pages. Takes care of browser history, etc.
+ */
+export const navigateToSection = (router, routes, sectionName) => {
+    return () => {
+        router.push(findPathForRoute(routes, sectionName))
+    }
 }

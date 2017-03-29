@@ -2,14 +2,13 @@ import {getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dis
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
 import cacheHashManifest from '../tmp/loader-cache-hash-manifest.json'
 import {isRunningInAstro} from './utils/astro-integration'
-
-window.Progressive = {}
-
 import ReactRegexes from './loader-routes'
 
 const isReactRoute = () => {
     return ReactRegexes.some((regex) => regex.test(window.location.pathname))
 }
+
+window.Progressive = {}
 
 initCacheManifest(cacheHashManifest)
 
@@ -29,6 +28,7 @@ const loadWorker = () => (
         .catch(() => {})
 )
 
+
 // webpackJsonpAsync is a custom async webpack code splitting chunk wrapper
 // webpackJsonp is a webpack code splitting vendor wrapper
 // webpackJsonpAsync should wait and call webpackJsonp with payload when all dependencies are loaded
@@ -44,7 +44,8 @@ const asyncInitApp = () => {
     }
 }
 
-if (isReactRoute()) {
+
+if (isReactRoute(window.location.pathname)) {
     displayPreloader(preloadCSS, preloadHTML, preloadJS)
 
     // Create React mounting target
