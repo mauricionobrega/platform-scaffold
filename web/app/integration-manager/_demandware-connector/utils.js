@@ -34,10 +34,7 @@ export const initDemandwareSession = (authorization) => {
     return makeRequest(`${API_END_POINT_URL}/sessions`, options)
         .then(() => {
             // Once the session has been opened return the authorization headers to the next request
-            return {
-                ...REQUEST_HEADERS,
-                Authorization: authorization
-            }
+            return options.headers
         })
 }
 
@@ -82,7 +79,6 @@ export const initDemandWareAuthAndSession = () => {
     return makeRequest(`${API_END_POINT_URL}/customers/auth`, options)
         .then((response) => {
             authorization = response.headers.get('Authorization')
-            options.headers.Authorization = authorization
             storeAuthToken(authorization)
             return initDemandwareSession(authorization)
         })
