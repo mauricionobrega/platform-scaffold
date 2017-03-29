@@ -29,6 +29,7 @@
     "redux-thunk": "2.2.0",
     "reselect": "3.0.0",
     "reselect-immutable-helpers": "1.2.2",
+    "runtypes": "0.9.1",
     "webfontloader": "1.6.27",
     "whatwg-fetch": "1.0.0"
   },
