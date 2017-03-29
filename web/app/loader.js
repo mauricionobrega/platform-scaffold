@@ -2,7 +2,8 @@ import {getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dis
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
 import cacheHashManifest from '../tmp/loader-cache-hash-manifest.json'
 import {isRunningInAstro} from './utils/astro-integration'
-import isReactRoute from 'progressive-web-sdk/dist/routing/is-react-route'
+import isReactRoute, {setRouteList} from 'progressive-web-sdk/dist/routing/is-react-route'
+import ReactRegexes from './loader-routes'
 
 window.Progressive = {}
 
@@ -23,6 +24,8 @@ const loadWorker = () => (
         .then(() => navigator.serviceWorker.ready)
         .catch(() => {})
 )
+
+setRouteList(ReactRegexes)
 
 // webpackJsonpAsync is a custom async webpack code splitting chunk wrapper
 // webpackJsonp is a webpack code splitting vendor wrapper
