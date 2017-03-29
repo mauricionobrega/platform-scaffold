@@ -18,9 +18,8 @@ export const createBasket = () => {
 
         /* eslint-disable camelcase */
         .then(({basket_id}) => {
-            const basketID = basket_id
-            storeBasketID(basketID)
-            return basketID
+            storeBasketID(basket_id)
+            return basket_id
         })
         /* eslint-enable camelcase */
 }
