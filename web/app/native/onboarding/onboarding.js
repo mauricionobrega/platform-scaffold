@@ -6,7 +6,7 @@ import {render} from 'react-dom'
 import Onboarding from '../../containers/onboarding/container'
 
 // Astro
-import Astro from '../../vendor/astro-client'
+import {jsRpcMethod} from '../../utils/astro-integration'
 
 import Stylesheet from './index.scss' // eslint-disable-line no-unused-vars
 
@@ -29,7 +29,7 @@ const notifications = {
     actionButton: {
         title: 'ENABLE',
         action: () => {
-            Astro.jsRpcMethod('push:enable', [])()
+            jsRpcMethod('push:enable', [])()
         }
     }
 }
@@ -41,19 +41,19 @@ const login = {
     actionButton: {
         title: 'SIGN IN',
         action: () => {
-            Astro.jsRpcMethod('sign-in:Show', [])()
+            jsRpcMethod('sign-in:Show', [])()
         }
     },
     laterButton: {
         title: 'LATER',
         action: () => {
-            Astro.jsRpcMethod('onboardingHide', [])()
+            jsRpcMethod('onboardingHide', [])()
         }
     },
     primaryButton: {
         title: 'REGISTER NOW',
         action: () => {
-            Astro.jsRpcMethod('register:Show', [])()
+            jsRpcMethod('register:Show', [])()
         }
     }
 }

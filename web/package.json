@@ -15,6 +15,7 @@
     "es6-promise": "4.0.5",
     "immutable": "3.8.1",
     "lodash.frompairs": "4.0.1",
+    "mobify-progressive-app-sdk": "http://github.com/mobify/astro#develop",
     "react": "15.4.1",
     "react-addons-shallow-compare": "15.4.1",
     "react-addons-transition-group": "15.4.1",
