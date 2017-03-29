@@ -4,7 +4,7 @@ import {parseBasketContents} from '../parsers'
 import {API_END_POINT_URL} from '../constants'
 
 
-export const getBasketID = () => {
+export const createBasket = () => {
     const basketID = getBasketID()
     if (basketID) {
         return Promise.resolve(basketID)
@@ -25,7 +25,7 @@ export const getBasketID = () => {
 
 
 export const getCart = () => (dispatch) => {
-    return getBasketID()
+    return createBasket()
         .then((basketID) => {
             const options = {
                 method: 'GET'

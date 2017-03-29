@@ -27,7 +27,7 @@ export const deleteBasketID = () => {
 }
 
 export const getBasketID = () => {
-    return window.sessionStorage.getitem('mob-basket')
+    return window.sessionStorage.getItem('mob-basket')
 }
 
 export const storeBasketID = (basketID) => {
