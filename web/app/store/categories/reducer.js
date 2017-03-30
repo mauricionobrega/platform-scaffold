@@ -1,12 +1,12 @@
 import Immutable from 'immutable'
 import {handleActions} from 'redux-actions'
-import {mergePayloadForActions} from '../../utils/reducer-utils'
+import {mergePayload} from '../../utils/reducer-utils'
 import {receiveCategory} from './actions'
 
 const initialState = Immutable.Map()
 
 const categoryReducer = handleActions({
-    ...mergePayloadForActions(receiveCategory)
+    [receiveCategory]: mergePayload
 }, initialState)
 
 export default categoryReducer
