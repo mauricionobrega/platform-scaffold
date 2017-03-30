@@ -4,7 +4,7 @@ import * as footerActions from './actions'
 import * as constants from './constants'
 import {receiveFooterData} from '../../integration-manager/responses'
 
-import {mergePayloadForActions} from '../../utils/reducer-utils'
+import {mergePayload} from '../../utils/reducer-utils'
 import {TextLink} from '../../utils/parser-utils'
 
 export const initialState = Immutable.fromJS({
@@ -14,7 +14,9 @@ export const initialState = Immutable.fromJS({
 })
 
 const footer = handleActions({
-    ...mergePayloadForActions(footerActions.receiveData, footerActions.newsletterSignupComplete, receiveFooterData)
+    [footerActions.receiveData]: mergePayload,
+    [footerActions.newsletterSignupComplete]: mergePayload,
+    receiveFooterData: mergePayload
 }, initialState)
 
 
