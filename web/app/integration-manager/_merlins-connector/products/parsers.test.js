@@ -1,7 +1,7 @@
 /* eslint-env jquery, jest, node */
 import {jquerifyHtmlFile} from 'progressive-web-sdk/dist/test-utils'
 import {isURL} from 'validator'
-import {productDetailsParser, productDetailsUIParser, productListParser} from './parsers'
+import {productDetailsParser, productListParser} from './parsers'
 
 /* eslint-disable max-nested-callbacks */
 
