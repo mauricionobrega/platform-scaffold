@@ -16,9 +16,6 @@ const AccountTabController = function(viewPlugin, headerController, layout, segm
     this.segmentedView = segmentedView
     this.signInView = signInView
     this.registerView = registerView
-
-    this.isActive = false
-    this.isloaded = false
     this.isLoggedIn = false
 
     Astro.registerRpcMethod(AppRpc.names.loggedIn, [], () => {
@@ -53,11 +50,11 @@ AccountTabController.init = async function() {
     await viewPlugin.addTopView(headerController.viewPlugin)
     await viewPlugin.setContentView(layout)
 
-    signInView.navigate(accountConfig.signIn.url)
-    registerView.navigate(accountConfig.register.url)
-
     await layout.setContentView(signInView)
     await layout.addTopView(segmentedView)
+
+    signInView.navigate(accountConfig.signIn.url)
+    registerView.navigate(accountConfig.register.url)
 
     await segmentedView.setItems([
         accountConfig.signIn,
@@ -88,23 +85,12 @@ AccountTabController.prototype.showSignIn = async function() {
     await this.segmentedView.selectItem(accountConfig.signIn.key)
 }
 
-AccountTabController.prototype.reload = async function() {
-    await this.signInView.navigate(accountConfig.signIn.url)
-    await this.registerView.navigate(accountConfig.register.url)
-    this.loaded = true
+AccountTabController.prototype.reload = function() {
+    this.signInView.navigate(accountConfig.signIn.url)
+    this.registerView.navigate(accountConfig.register.url)
 }
 
-AccountTabController.prototype.activate = function() {
-    if (!this.isActive) {
-        this.isActive = true
-        if (!this.loaded) {
-            this.reload()
-        }
-    }
-}
-
-AccountTabController.prototype.deactivate = function() {
-    this.isActive = false
-}
+AccountTabController.prototype.activate = () => {} // noop, there is no popping to root in the account tab
+AccountTabController.prototype.deactivate = () => {} // noop, there is no popping to root in the account tab
 
 export default AccountTabController
