@@ -135,6 +135,6 @@ export const submitShipping = (formValues) => (dispatch) => {
         })
 }
 
-export const checkCustomerEmail = () => (dispatch) => dispatch(noop)
+export const checkCustomerEmail = () => () => Promise.resolve(true)
 
 export const checkoutSignIn = () => (dispatch) => dispatch(noop)
