@@ -1,7 +1,18 @@
-import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 import {createAction as createReduxAction} from 'redux-actions'
 
 import * as Runtypes from 'runtypes'
+
+const Nullable = (type) => Runtypes.Union(type, Runtypes.Null, Runtypes.Undefined)
+
+const Link = Runtypes.Record({
+    href: Runtypes.String,
+    text: Runtypes.String
+})
+
+const Image = Runtypes.Record({
+    alt: Runtypes.String,
+    src: Runtypes.String
+})
 
 const Breadcrumb = Runtypes.Record({
     href: Runtypes.String,
@@ -37,6 +48,36 @@ export const receiveProductDetailsUIData = createTypedAction(
     Runtypes.Dictionary(ProductUIData)
 )
 
-export const receiveProductDetailsProductData = createAction('Receive Product Details product data')
+const CarouselItem = Runtypes.Optional({
+    thumb: Nullable(Runtypes.String),
+    img: Runtypes.String,
+    full: Runtypes.String,
+    caption: Nullable(Runtypes.String),
+    position: Runtypes.String,
+    isMain: Runtypes.Boolean
+})
 
-export const receiveProductListProductData = createAction('Receive ProductList product data')
+const ProductDetailsData = Runtypes.Record({
+    title: Runtypes.String,
+    price: Runtypes.String,
+    carouselItems: Runtypes.Array(CarouselItem),
+    description: Runtypes.String
+})
+
+const ProductDetailsListData = Runtypes.Record({
+    title: Runtypes.String,
+    price: Runtypes.String,
+    carouselItems: Runtypes.Array(CarouselItem),
+    link: Link,
+    image: Image
+})
+
+export const receiveProductDetailsProductData = createTypedAction(
+    'Receive Product Details product data',
+    Runtypes.Dictionary(ProductDetailsData)
+)
+
+export const receiveProductListProductData = createTypedAction(
+    'Receive ProductList product data',
+    Runtypes.Dictionary(ProductDetailsListData)
+)
