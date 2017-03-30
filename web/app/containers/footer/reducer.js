@@ -16,7 +16,7 @@ export const initialState = Immutable.fromJS({
 const footer = handleActions({
     [footerActions.receiveData]: mergePayload,
     [footerActions.newsletterSignupComplete]: mergePayload,
-    receiveFooterData: mergePayload
+    [receiveFooterData]: mergePayload
 }, initialState)
 
 
