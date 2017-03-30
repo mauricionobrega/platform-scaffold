@@ -22,7 +22,7 @@ npm run push -- -m "Test push by <name>"
 
 ## 🔒 Avoiding HTTPS errors in local development
 
-The development server uses a self-signed SSL certificate which is valid, but
+The development server uses a self-signed SSL certificate which is valid but
 must be added to your operating system to work correctly.
 
 ### macOS
@@ -73,7 +73,7 @@ npm run add:component
 ## Using the notification system
 
 The scaffold comes with a system to notify users with messages that drop down
-from the header, and can be dismissed. To make your own, add the following code
+from the header and can be dismissed. To make your own, add the following code
 to the actions file of your component in the desired action. Example:
 
 ```
