@@ -44,9 +44,10 @@ const asyncInitApp = () => {
     }
 }
 
-
-if (isReactRoute(window.location.pathname)) {
-    displayPreloader(preloadCSS, preloadHTML, preloadJS)
+if (isReactRoute()) {
+    if (!isRunningInAstro) {
+        displayPreloader(preloadCSS, preloadHTML, preloadJS)
+    }
 
     // Create React mounting target
     const body = document.getElementsByTagName('body')[0]

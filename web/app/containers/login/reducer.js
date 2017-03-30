@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import {handleActions} from 'redux-actions'
-import {mergePayloadForActions} from '../../utils/reducer-utils'
+import {mergePayload} from '../../utils/reducer-utils'
 import {receiveLoginPageData} from '../../integration-manager/login/responses'
 
 const signinFields = [
@@ -117,5 +117,5 @@ const initialState = Immutable.fromJS({
 })
 
 export default handleActions({
-    ...mergePayloadForActions(receiveLoginPageData)
+    [receiveLoginPageData]: mergePayload
 }, initialState)
