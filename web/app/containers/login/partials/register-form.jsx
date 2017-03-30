@@ -3,8 +3,8 @@ import {reduxForm} from 'redux-form'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import {connect} from 'react-redux'
 import * as selectors from '../selectors'
-import {isModalOpen} from '../../../store/selectors'
-import {openModal, closeModal} from '../../../store/modals/actions'
+import {isModalOpen} from 'progressive-web-sdk/dist/store/modals/selectors'
+import {openModal, closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {REGISTER_SECTION} from '../constants'
 
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -40,7 +40,7 @@ class RegisterForm extends React.Component {
             // props from parent
             sections,
             submitText,
-            href,
+            isFormLoaded,
             modalOpen
         } = this.props
 
@@ -83,7 +83,7 @@ class RegisterForm extends React.Component {
                 <Button
                     className="c--primary u-width-full u-margin-top-lg"
                     type="submit"
-                    disabled={submitting || !href}
+                    disabled={submitting || !isFormLoaded}
                 >
                     <span className="u-text-uppercase">{submitText || 'Create an Account'}</span>
                 </Button>
@@ -98,6 +98,7 @@ RegisterForm.propTypes = {
     handleSubmit: PropTypes.func,
     href: PropTypes.string,
     invalid: PropTypes.bool,
+    isFormLoaded: PropTypes.bool,
     modalOpen: PropTypes.bool,
     openInfoModal: PropTypes.func,
     sections: PropTypes.array,
@@ -113,7 +114,7 @@ const ReduxRegisterForm = reduxForm({
 
 const mapStateToProps = createPropsSelector({
     sections: selectors.register.form.getSections,
-    href: selectors.register.form.getHref,
+    isFormLoaded: selectors.register.getIsFormLoaded,
     modalOpen: isModalOpen(REGISTER_SECTION),
     submitText: selectors.register.form.getSubmitText
 })

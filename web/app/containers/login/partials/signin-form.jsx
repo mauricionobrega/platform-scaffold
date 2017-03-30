@@ -3,8 +3,8 @@ import {reduxForm} from 'redux-form'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import {connect} from 'react-redux'
 import * as selectors from '../selectors'
-import {isModalOpen} from '../../../store/selectors'
-import {openModal, closeModal} from '../../../store/modals/actions'
+import {isModalOpen} from 'progressive-web-sdk/dist/store/modals/selectors'
+import {openModal, closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {SIGN_IN_SECTION} from '../constants'
 
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -40,10 +40,10 @@ class SignInForm extends React.Component {
             submitting,
             handleSubmit,
             // props from store
-            href,
             fields,
             submitText,
             forgotPassword,
+            isFormLoaded,
             modalOpen
         } = this.props
 
@@ -72,7 +72,7 @@ class SignInForm extends React.Component {
                         <Button
                             className="c--primary u-width-full"
                             type="submit"
-                            disabled={submitting || !href}
+                            disabled={submitting || !isFormLoaded}
                         >
                             <span className="u-text-uppercase">{submitText || 'Login'}</span>
                         </Button>
@@ -91,6 +91,7 @@ SignInForm.propTypes = {
     handleSubmit: PropTypes.func,
     href: PropTypes.string,
     invalid: PropTypes.bool,
+    isFormLoaded: PropTypes.bool,
     modalOpen: PropTypes.bool,
     openInfoModal: PropTypes.func,
     submitForm: PropTypes.func,
@@ -106,6 +107,7 @@ const ReduxSignInForm = reduxForm({
 const mapStateToProps = createPropsSelector({
     fields: selectors.signin.form.getFields,
     href: selectors.signin.form.getHref,
+    isFormLoaded: selectors.signin.getIsFormLoaded,
     modalOpen: isModalOpen(SIGN_IN_SECTION),
     submitText: selectors.signin.form.getSubmitText,
     forgotPassword: selectors.signin.form.getForgotPassword

@@ -1,6 +1,7 @@
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
-import {createAction, urlToPathKey} from '../../utils/utils'
-import {closeModal, openModal} from '../../store/modals/actions'
+import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
+import {urlToPathKey} from '../../utils/utils'
+import {closeModal, openModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {fetchShippingMethodsEstimate} from '../../store/checkout/shipping/actions'
 import {
     CART_ESTIMATE_SHIPPING_MODAL,
@@ -16,8 +17,8 @@ import {addNotification} from '../app/actions'
 import {getFormKey, getIsLoggedIn} from '../app/selectors'
 
 export const receiveData = createAction('Receive Cart Data')
-export const setRemoveItemId = createAction('Set item id for removal', 'removeItemId')
-export const setIsWishlistComplete = createAction('Set wishlist add complete', 'isWishlistAddComplete')
+export const setRemoveItemId = createAction('Set item id for removal', ['removeItemId'])
+export const setIsWishlistComplete = createAction('Set wishlist add complete', ['isWishlistAddComplete'])
 
 export const submitEstimateShipping = () => {
     return (dispatch) => {

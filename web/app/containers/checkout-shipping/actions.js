@@ -1,4 +1,4 @@
-import {createAction} from '../../utils/utils'
+import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 import {submitShipping as submitShippingCommand, checkCustomerEmail as checkCustomerEmailCommand, checkoutSignIn} from '../../integration-manager/checkout/commands'
 import {getShippingFormValues} from '../../store/form/selectors'
 import {addNotification, removeNotification} from '../app/actions'

@@ -3,13 +3,14 @@ import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import {withRouter} from 'progressive-web-sdk/dist/routing'
 
+import {fetchLoginData, navigateToSection} from '../../integration-manager/login/commands'
+
 import SignInPanel from './partials/signin-panel'
 import RegisterPanel from './partials/register-panel'
 
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import {Tabs, TabsPanel} from 'progressive-web-sdk/dist/components/tabs'
 
-import * as actions from './actions'
 import * as selectors from './selectors'
 import {
     SIGN_IN_SECTION,
@@ -100,12 +101,14 @@ class Login extends React.Component {
     }
 }
 
+Login.fetcher = (url, routeName, dispatch) => dispatch(fetchLoginData(url, routeName))
+
 const mapStateToProps = createPropsSelector({
     title: selectors.getLoginTitle
 })
 
 const mapDispatchToProps = {
-    navigateToSection: actions.navigateToSection
+    navigateToSection
 }
 
 Login.propTypes = {
