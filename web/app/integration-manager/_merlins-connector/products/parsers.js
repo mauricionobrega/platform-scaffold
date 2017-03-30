@@ -62,13 +62,9 @@ export const pdpAddToCartFormParser = ($, $html) => {
     })
 
     return {
-        formInfo: {
-            submitUrl: $form.attr('action'),
-            method: $form.attr('method'),
-            hiddenInputs
-        },
-        itemQuantity: parseInt($form.find('#qty').val()),
-        ctaText: $form.find('.tocart').text()
+        submitUrl: $form.attr('action'),
+        method: $form.attr('method'),
+        hiddenInputs
     }
 }
 
