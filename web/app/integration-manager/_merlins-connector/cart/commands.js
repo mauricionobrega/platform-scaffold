@@ -9,6 +9,8 @@ import {fetchPageData} from '../app/commands'
 import {parseCheckoutEntityID, extractMagentoJson} from '../../../utils/magento-utils'
 
 const LOAD_CART_SECTION_URL = '/customer/section/load/?sections=cart%2Cmessages&update_section_id=true'
+const REMOVE_CART_ITEM_URL = '/checkout/sidebar/removeItem/'
+// const UPDATE_ITEM_URL = '/checkout/sidebar/updateItemQty/'
 const BASE_HEADERS = {
     Accept: 'application/json',
 }
@@ -25,6 +27,31 @@ export const getCart = () => (dispatch) => {
         .then((response) => response.text())
         .then((responseText) => dispatch(receiveCartContents(parseCart(responseText))))
 }
+
+/**
+ * Remove an item from the users cart
+ *
+ * Notes:
+ *
+ * - The `item_id` present in the data returned from getCart.
+ * - Response is 200 with JSON: `{"success":true}` on success
+ * - Response is 200 with JSON: `{"success":false,"error_message":"We can't find the quote item."}` if item not in cart
+ * - Important: The cart contents rendered in the main HTML is *not* updated until `getCart()` has been called which
+ *   busts a cache. You are expected to call `removeFromCart()` then `getCart()` every time.
+ */
+export const removeFromCart = (itemId) => {
+    return (dispatch, getState) => {
+        return makeFormEncodedRequest(REMOVE_CART_ITEM_URL, {item_id: itemId, form_key: getFormKey(getState())}, {method: 'POST'})
+            .then((response) => response.json())
+            .then((responseJSON) => {
+                if (responseJSON.success) {
+                    return dispatch(getCart())
+                }
+                throw new Error('Unable to remove item')
+            })
+    }
+}
+
 const ESTIMATE_FIELD_PATH = ['#block-summary', 'Magento_Ui/js/core/app', 'components', 'block-summary', 'children', 'block-shipping', 'children', 'address-fieldsets', 'children']
 
 export const fetchCartPageData = (url) => (dispatch) => {

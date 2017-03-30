@@ -10,7 +10,8 @@ import {
     CART_WISHLIST_MODAL,
     ADD_TO_WISHLIST_URL
 } from './constants'
-import {removeFromCart} from '../../store/cart/actions'
+// import {removeFromCart} from '../../store/cart/actions'
+import {removeFromCart} from '../../integration-manager/cart/commands'
 import {makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {getUenc} from '../product-details/selectors'
 import {addNotification} from '../app/actions'
@@ -80,4 +81,15 @@ export const openRemoveItemModal = (itemId) => {
         dispatch(openModal(CART_REMOVE_ITEM_MODAL))
         dispatch(setRemoveItemId(itemId))
     }
+}
+
+export const removeItem = (itemID) => (dispatch) => {
+    return dispatch(removeFromCart(itemID))
+        .catch((error) => {
+            dispatch(addNotification({
+                content: error.message,
+                id: 'cartUpdateError',
+                showRemoveButton: true
+            }))
+        })
 }

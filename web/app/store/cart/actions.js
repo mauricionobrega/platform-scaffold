@@ -38,35 +38,6 @@ export const getCart = () => (dispatch) => {
 }
 
 /**
- * Remove an item from the users cart
- *
- * Notes:
- *
- * - The `item_id` present in the data returned from getCart.
- * - Response is 200 with JSON: `{"success":true}` on success
- * - Response is 200 with JSON: `{"success":false,"error_message":"We can't find the quote item."}` if item not in cart
- * - Important: The cart contents rendered in the main HTML is *not* updated until `getCart()` has been called which
- *   busts a cache. You are expected to call `removeFromCart()` then `getCart()` every time.
- */
-export const removeFromCart = (itemId) => {
-    return (dispatch, getState) => {
-        return makeFormEncodedRequest(REMOVE_CART_ITEM_URL, {item_id: itemId, form_key: getFormKey(getState())}, {method: 'POST'})
-            .then((response) => response.json())
-            .then((responseJSON) => {
-                if (responseJSON.success) {
-                    dispatch(getCart())
-                } else {
-                    dispatch(addNotification({
-                        content: `Unable to remove item`,
-                        id: 'cartUpdateError',
-                        showRemoveButton: true
-                    }))
-                }
-            })
-    }
-}
-
-/**
  * Update the quantity of an item in the users cart
  *
  * Notes:
