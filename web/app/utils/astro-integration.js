@@ -41,3 +41,9 @@ export const jsRpcMethod = (methodName, methodArgs) => {
  * is just a no-op.
  */
 export const pwaNavigate = () => jsRpcMethod('pwa-navigate', ['url'])()
+
+/**
+ * Exports Astro as a listener
+ */
+export const onAstroEvent = Astro.on
+export const disableAstroEvent = Astro.off

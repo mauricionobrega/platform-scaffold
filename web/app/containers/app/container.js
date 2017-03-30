@@ -11,6 +11,7 @@ import Header from '../../containers/header/container'
 import Footer from '../../containers/footer/container'
 import MiniCart from '../../containers/mini-cart/container'
 import Navigation from '../../containers/navigation/container'
+import NativeConnector from '../native-connector/container'
 import * as appActions from '../app/actions'
 import * as selectors from './selectors'
 
@@ -84,6 +85,9 @@ class App extends React.Component {
                 <SkipLinks items={skipLinksItems} />
 
                 <div id="app-wrap" className="t-app__wrapper u-flexbox u-direction-column">
+                    {isRunningInAstro &&
+                        <NativeConnector />
+                    }
                     <div id="app-header" className="u-flex-none" role="banner">
                         <CurrentHeader headerHasSignIn={routeProps.headerHasSignIn} />
                         {
