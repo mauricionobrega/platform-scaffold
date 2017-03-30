@@ -6,9 +6,14 @@ import {render} from 'react-dom'
 import Onboarding from '../../containers/onboarding/container'
 
 // Astro
+import Astro from 'mobify-progressive-app-sdk/dist/astro-client'
 import {jsRpcMethod} from '../../utils/astro-integration'
 
 import Stylesheet from './index.scss' // eslint-disable-line no-unused-vars
+
+window.Progressive = {
+    AstroPromise: Promise.resolve(Astro)
+}
 
 const location = {
     imageURL: 'static/img/onboarding/location.png',

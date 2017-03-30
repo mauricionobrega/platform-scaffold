@@ -7,23 +7,37 @@ export const isRunningInAstro = isRunningIn.app()
  * This is exactly the same method as documented here:
  * http://astro.mobify.com/latest/advanced/webview-appjs-communication/
  */
-export const trigger = isRunningInAstro
-    ? window.Progressive.Astro.trigger
-    : () => {}
+export const trigger = (eventName, params) => {
+    if (isRunningInAstro) {
+        window.Progressive.AstroPromise.then((client) =>
+            client.trigger(eventName, params)
+        )
+    }
+}
 
 /**
  * Triggers a JS RPC method in Astro
  * http://astro.mobify.com/latest/advanced/webview-appjs-communication/
  */
-export const jsRpcMethod = isRunningInAstro
-    ? window.Progressive.Astro.jsRpcMethod
-    : () => {}
+export const jsRpcMethod = (methodName, methodArgs) => {
+    let result = () => {}
+
+    if (isRunningInAstro) {
+        // The original Astro.jsRpcMethod returns a function via Promise.promisify,
+        // which is why we return a function as per below.
+        result = () => {
+            return window.Progressive.AstroPromise.then((client) =>
+                client.jsRpcMethod(methodName, methodArgs)()
+            )
+        }
+    }
+
+    return result
+}
 
 /**
  * Provides coordination with the native app (Astro)
  * If we aren't in a native app then the function
  * is just a no-op.
  */
-export const pwaNavigate = isRunningInAstro
-    ? jsRpcMethod('pwa-navigate', ['url'])
-    : () => {}
+export const pwaNavigate = () => jsRpcMethod('pwa-navigate', ['url'])()

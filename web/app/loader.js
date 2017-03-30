@@ -4,7 +4,7 @@ import cacheHashManifest from '../tmp/loader-cache-hash-manifest.json'
 import {isRunningInAstro} from './utils/astro-integration'
 
 window.Progressive = {
-    Astro: {}
+    AstroPromise: {}
 }
 
 import ReactRegexes from './loader-routes'
@@ -128,7 +128,7 @@ if (isReactRoute()) {
         })
 
         if (isRunningInAstro) {
-            window.Progressive.Astro = new Promise((resolve) => {
+            window.Progressive.AstroPromise = new Promise((resolve) => {
                 loadScript({
                     id: 'progressive-web-app',
                     src: ASTRO_CLIENT_CDN,
