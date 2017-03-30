@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 import {handleActions} from 'redux-actions'
 import * as checkoutPaymentActions from './actions'
 import {DEFAULT_CARD} from './constants'
-import {mergePayloadForActions} from '../../utils/reducer-utils'
+import {mergePayload} from '../../utils/reducer-utils'
 
 const initialState = Immutable.fromJS({
     isFixedPlaceOrderShown: true,
@@ -11,13 +11,11 @@ const initialState = Immutable.fromJS({
 })
 
 const checkoutPayment = handleActions({
-    ...mergePayloadForActions(
-        checkoutPaymentActions.toggleFixedPlaceOrder,
-        checkoutPaymentActions.toggleCardInputRadio,
-        checkoutPaymentActions.toggleCompanyAptField,
-        checkoutPaymentActions.toggleNewAddressFields,
-        checkoutPaymentActions.setCvvType
-    )
+    [checkoutPaymentActions.toggleFixedPlaceOrder]: mergePayload,
+    [checkoutPaymentActions.toggleCardInputRadio]: mergePayload,
+    [checkoutPaymentActions.toggleCompanyAptField]: mergePayload,
+    [checkoutPaymentActions.toggleNewAddressFields]: mergePayload,
+    [checkoutPaymentActions.setCvvType]: mergePayload
 }, initialState)
 
 
