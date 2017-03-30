@@ -5,6 +5,7 @@ import * as cartSelectors from '../../../store/cart/selectors'
 import {CART_ESTIMATE_SHIPPING_MODAL} from '../constants'
 import {openModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {getDefaultShippingRate} from '../../../store/checkout/shipping/selectors'
+import {getCheckoutURL} from '../../app/selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import CartPromoForm from './cart-promo-form'
@@ -12,7 +13,7 @@ import Icon from 'progressive-web-sdk/dist/components/icon'
 import {Ledger, LedgerRow} from 'progressive-web-sdk/dist/components/ledger'
 import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/accordion'
 
-const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, shippingRate, onCalculateClick}) => {
+const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, shippingRate, onCalculateClick, checkoutURL}) => {
     const calculateButton = (
         <Button innerClassName="u-padding-end-0 u-color-brand u-text-letter-spacing-normal" onClick={onCalculateClick}>
             Calculate <Icon name="chevron-right" />
@@ -66,7 +67,7 @@ const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, shippingRa
                 <div className="u-padding-end-md u-padding-bottom-lg u-padding-start-md">
                     <Button
                         className="c--primary u-flex-none u-width-full u-text-uppercase"
-                        href="/checkout/">
+                        href={checkoutURL}>
                         <Icon name="lock" />
                         Proceed To Checkout
                     </Button>
@@ -78,6 +79,7 @@ const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, shippingRa
 
 
 CartSummary.propTypes = {
+    checkoutURL: PropTypes.string,
     shippingRate: PropTypes.string,
     subtotalExclTax: PropTypes.string,
     subtotalInclTax: PropTypes.string,
@@ -86,6 +88,7 @@ CartSummary.propTypes = {
 }
 
 const mapStateToProps = createPropsSelector({
+    checkoutURL: getCheckoutURL,
     shippingRate: getDefaultShippingRate,
     subtotalExclTax: cartSelectors.getSubtotalExcludingTax,
     subtotalInclTax: cartSelectors.getSubtotalIncludingTax,

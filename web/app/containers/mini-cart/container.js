@@ -11,6 +11,7 @@ import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {MINI_CART_MODAL} from './constants'
 import {stripEvent} from '../../utils/utils'
 import {getCartContentsLoaded, getCartHasItems} from '../../store/cart/selectors'
+import {getCheckoutURL} from '../app/selectors'
 
 import MiniCartHeader from './partials/mini-cart-header'
 import MiniCartProductList from './partials/mini-cart-product-list'
@@ -30,7 +31,7 @@ const MiniCartEmpty = () => (
     </div>
 )
 
-const MiniCartMain = ({hasItems, closeMiniCart}) => {
+const MiniCartMain = ({hasItems, closeMiniCart, checkoutURL}) => {
     const buttonClasses = 'c--primary u-width-full u-text-uppercase'
 
     return (
@@ -39,7 +40,7 @@ const MiniCartMain = ({hasItems, closeMiniCart}) => {
 
             <div className="u-padding-top-lg u-flex-none">
                 {hasItems ?
-                    <Button href="/checkout/" className={buttonClasses}>
+                    <Button href={checkoutURL} className={buttonClasses}>
                         Go To Checkout
                     </Button>
                 :
@@ -53,22 +54,24 @@ const MiniCartMain = ({hasItems, closeMiniCart}) => {
 }
 
 MiniCartMain.propTypes = {
+    checkoutURL: PropTypes.string,
     closeMiniCart: PropTypes.func,
     hasItems: PropTypes.bool
 }
 
 
-const MiniCart = ({hasItems, contentsLoaded, isOpen, closeMiniCart}) => {
+const MiniCart = ({hasItems, contentsLoaded, isOpen, closeMiniCart, checkoutURL}) => {
     return (
         <Sheet className="t-mini-cart" open={isOpen} onDismiss={closeMiniCart} maskOpacity={0.7} effect="slide-right" coverage="85%">
             <MiniCartHeader closeMiniCart={closeMiniCart} />
 
-            {contentsLoaded && <MiniCartMain hasItems={hasItems} closeMiniCart={closeMiniCart} />}
+            {contentsLoaded && <MiniCartMain hasItems={hasItems} closeMiniCart={closeMiniCart} checkoutURL={checkoutURL} />}
         </Sheet>
     )
 }
 
 MiniCart.propTypes = {
+    checkoutURL: PropTypes.string,
     closeMiniCart: PropTypes.func,
     contentsLoaded: PropTypes.bool,
     getCart: PropTypes.func,
@@ -77,6 +80,7 @@ MiniCart.propTypes = {
 }
 
 const mapStateToProps = createPropsSelector({
+    checkoutURL: getCheckoutURL,
     contentsLoaded: getCartContentsLoaded,
     isOpen: isModalOpen(MINI_CART_MODAL),
     hasItems: getCartHasItems
