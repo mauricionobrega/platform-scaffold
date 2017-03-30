@@ -36,11 +36,9 @@ export const productDetailsUIParser = ($, $html) => {
             .find('a')
     )
 
-    const $mainContent = $html.find('.page-main')
-    const $form = $mainContent.find('#product_addtocart_form')
+    const $form = $html.find('.page-main #product_addtocart_form')
 
-    const submitUrl = $form.attr('action')
-    const uencMatch = UENC_REGEX.exec(submitUrl)
+    const uencMatch = UENC_REGEX.exec($form.attr('action'))
     const uenc = uencMatch ? uencMatch[1] : ''
 
     return {
@@ -52,8 +50,7 @@ export const productDetailsUIParser = ($, $html) => {
 }
 
 export const pdpAddToCartFormParser = ($, $html) => {
-    const $mainContent = $html.find('.page-main')
-    const $form = $mainContent.find('#product_addtocart_form')
+    const $form = $html.find('.page-main #product_addtocart_form')
 
     const hiddenInputs = {}
     $form.find('input[type="hidden"]').each((idx, input) => {
@@ -76,7 +73,7 @@ export const productListParser = ($, $html) => {
         const link = parseTextLink($product.find('.product-item-link'))
         const image = parseImage($product.find('.product-image-photo'))
         productMap[urlToPathKey(link.href)] = {
-            title: link.text.trim(),
+            title: link.text,
             price: getTextFrom($product, '.price'),
             link,
             image,
