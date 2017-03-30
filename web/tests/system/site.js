@@ -14,11 +14,11 @@ var Site = {
     profiles: {
         local: {
             bundleUrl: 'https://localhost:8443/loader.js',
-            "siteUrl": "http://www.merlinspotions.com"
+            siteUrl: process.env.npm_package_siteUrl
         },
         production: {
             bundleUrl: '',
-            "siteUrl": "http://www.merlinspotions.com",
+            siteUrl: process.env.npm_package_siteUrl,
             production: true
         }
     }

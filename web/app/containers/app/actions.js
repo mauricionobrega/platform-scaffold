@@ -4,7 +4,7 @@ import * as analyticConstants from 'progressive-web-sdk/dist/analytics/analytic-
 
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
-import {createAction, createActionWithMeta, createAnalyticsMeta} from '../../utils/utils'
+import {createAction, createActionWithAnalytics} from 'progressive-web-sdk/dist/utils/action-creation'
 import {getCurrentUrl} from './selectors'
 
 import appParser from './app-parser'
@@ -14,18 +14,16 @@ import {ESTIMATE_FORM_NAME} from '../cart/constants'
 import Cart from '../cart/container'
 import CheckoutPayment from '../checkout-payment/container'
 import CheckoutConfirmation from '../checkout-confirmation/container'
-import Login from '../login/container'
 import * as checkoutActions from '../../store/checkout/actions'
 // import * as checkoutShippingUIActions from '../checkout-shipping/actions'
 import * as checkoutConfirmationActions from '../checkout-confirmation/actions'
 import * as checkoutShippingActions from '../../store/checkout/shipping/actions'
 import * as cartActions from '../../store/cart/actions'
-import * as loginActions from '../login/actions'
 import * as footerActions from '../footer/actions'
 import * as navigationActions from '../navigation/actions'
 
 import {OFFLINE_ASSET_URL} from './constants'
-import {closeModal} from '../../store/modals/actions'
+import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {OFFLINE_MODAL} from '../offline/constants'
 
 let isInitialEntryToSite = true
@@ -34,17 +32,19 @@ export const addNotification = createAction('Add Notification')
 export const removeNotification = createAction('Remove Notification')
 export const removeAllNotifications = createAction('Remove All Notifications')
 
-export const updateSvgSprite = createAction('Updated SVG sprite', 'sprite')
+export const updateSvgSprite = createAction('Updated SVG sprite', ['sprite'])
 
 /**
  * Action dispatched when the route changes
  * @param {string} currentURL - what's currently shown in the address bar
  * @param {string} routeName - Template name for analytic
  */
-export const onRouteChanged = createActionWithMeta(
+export const onRouteChanged = createActionWithAnalytics(
     'On route changed',
     ['currentURL'],
-    (currentURL, routeName) => createAnalyticsMeta(analyticConstants.pageview, {name: routeName}))
+    analyticConstants.pageview,
+    (currentURL, routeName) => ({name: routeName})
+)
 
 /**
  * Action dispatched when content for a global page render is ready.
@@ -55,22 +55,22 @@ export const onRouteChanged = createActionWithMeta(
  * @param {string} currentURL - what's currently shown in the address bar
  * @param {string} routeName - the name of the route we received the page for
  */
-export const onPageReceived = createAction('On page received',
+export const onPageReceived = createAction('On page received', [
     '$',
     '$response',
     'url',
     'currentURL',
     'routeName'
-)
+])
 
-export const setFetchedPage = createAction('Set fetched page', 'url')
+export const setFetchedPage = createAction('Set fetched page', ['url'])
 
 export const receiveData = createAction('Receive App Data')
 export const process = ({payload: {$response}}) => {
     return receiveData(appParser($response))
 }
 
-export const setPageFetchError = createAction('Set page fetch error', 'fetchError')
+export const setPageFetchError = createAction('Set page fetch error', ['fetchError'])
 export const clearPageFetchError = createAction('Clear page fetch error')
 
 /**
@@ -138,9 +138,7 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                 dispatch(receivedAction)
                 dispatch(process(receivedAction))
 
-                if (pageComponent === Login) {
-                    dispatch(loginActions.process(receivedAction))
-                } else if (pageComponent === Cart) {
+                if (pageComponent === Cart) {
                     dispatch(checkoutActions.processCartCheckoutData(receivedAction))
                     dispatch(checkoutShippingActions.fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME))
                 } else if (pageComponent === CheckoutPayment) {

@@ -1,4 +1,4 @@
-import {createAction} from '../../utils/utils'
+import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 
 export const receiveProductDetailsUIData = createAction('Receive Product Details UI data')
 

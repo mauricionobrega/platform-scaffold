@@ -7,6 +7,7 @@ import * as categoriesCommands from './categories/commands'
 import * as cartCommands from './cart/commands'
 import * as appCommands from './app/commands'
 import * as checkoutCommands from './checkout/commands'
+import * as loginCommands from './login/commands'
 
 
 export const addToCart = (key, qty) => (dispatch, getStore) => {
@@ -35,5 +36,6 @@ export default {
     products: productsCommands,
     categories: categoriesCommands,
     cart: cartCommands,
-    app: appCommands
+    app: appCommands,
+    login: loginCommands
 }

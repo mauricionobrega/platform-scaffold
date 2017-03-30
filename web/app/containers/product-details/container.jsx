@@ -20,7 +20,7 @@ const ProductDetails = ({route: {routeName}}) => {
     )
 }
 
-ProductDetails.fetcher = (url, dispatch) => dispatch(fetchPdpData(url))
+ProductDetails.fetcher = (url, routeName, dispatch) => dispatch(fetchPdpData(url, routeName))
 
 ProductDetails.propTypes = {
     /**

@@ -1,5 +1,5 @@
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
-import {createAction} from '../../utils/utils'
+import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 import {makeRequest, makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import checkoutPaymentParser from './checkout-payment-parser'
@@ -12,11 +12,11 @@ import {getIsLoggedIn} from '../app/selectors'
 import {receiveCheckoutData} from '../../store/checkout/actions'
 
 export const receiveContents = createAction('Received CheckoutPayment Contents')
-export const toggleFixedPlaceOrder = createAction('Toggled the fixed "Place Order" container', 'isFixedPlaceOrderShown')
-export const toggleCardInputRadio = createAction('Toggled the card method radio input', 'isNewCardInputSelected')
-export const toggleCompanyAptField = createAction('Showing the "Company" and "Apt #" fields', 'isCompanyOrAptShown')
-export const toggleNewAddressFields = createAction('Toggled new address fields', 'newShippingAddressIsEnabled')
-export const setCvvType = createAction('Setting CVV type', 'cvvType')
+export const toggleFixedPlaceOrder = createAction('Toggled the fixed "Place Order" container', ['isFixedPlaceOrderShown'])
+export const toggleCardInputRadio = createAction('Toggled the card method radio input', ['isNewCardInputSelected'])
+export const toggleCompanyAptField = createAction('Showing the "Company" and "Apt #" fields', ['isCompanyOrAptShown'])
+export const toggleNewAddressFields = createAction('Toggled new address fields', ['newShippingAddressIsEnabled'])
+export const setCvvType = createAction('Setting CVV type', ['cvvType'])
 
 export const receiveResponse = (response) => {
     return (dispatch) => {

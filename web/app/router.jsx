@@ -64,6 +64,7 @@ const Router = ({store}) => (
                 <Route component={ProductList} path="*/electronics*" routeName="productListPage" />
                 <Route component={ProductList} path="*/Search-Show?*" routeName="productListPage" />
                 <Route component={CheckoutShipping} path="*/COShipping-Start*" routeName="checkingShipping" Header={CheckoutHeader} Footer={CheckoutFooter} headerHasSignIn />
+                <Route component={Login} path="*/Account-Show*" routeName="signin" />
 
             </Route>
         </SDKRouter>

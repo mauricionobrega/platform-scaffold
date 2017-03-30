@@ -4,6 +4,7 @@ import {register as registerCategories} from './categories/commands'
 import {register as registerCart} from './cart/commands'
 import {register as registerApp} from './app/commands'
 import {register as registerCheckout} from './checkout/commands'
+import {register as registerLogin} from './login/commands'
 
 let connector = {}
 
@@ -15,6 +16,7 @@ export const register = (commands) => {
     registerCategories(commands.categories)
     registerCart(commands.cart)
     registerCheckout(commands.checkout)
+    registerLogin(commands.login)
 }
 
 export const addToCart = (...args) => connector.addToCart(...args)
