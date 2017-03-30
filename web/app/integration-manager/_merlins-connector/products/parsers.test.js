@@ -35,19 +35,6 @@ describe('the ProductDetails product parser', () => {
     })
 })
 
-describe('the ProductDetails UI parser', () => {
-    const $content = jquerifyHtmlFile(`${__dirname}/product-details-example.html`)
-    const parsedContent = productDetailsUIParser($, $content)
-
-    test('extracts form info from the add-to-cart form', () => {
-        expect(isURL(parsedContent.formInfo.submitUrl)).toBe(true)
-        expect(parsedContent.formInfo.method).toBe('post')
-        Object.keys(parsedContent.formInfo.hiddenInputs).forEach((key) => {
-            expect(typeof parsedContent.formInfo.hiddenInputs[key]).toBe('string')
-        })
-    })
-})
-
 describe('the ProductList product parser', () => {
     const $content = jquerifyHtmlFile(`${__dirname}/product-list.test.html`)
     const parsedContent = productListParser($, $content)
