@@ -1,7 +1,7 @@
 /* eslint-env jest */
 
 import {fetchPage, setPageFetchError, clearPageFetchError, checkIfOffline} from './actions'
-import {closeModal} from '../../store/modals/actions'
+import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {OFFLINE_MODAL} from '../offline/constants'
 import {OFFLINE_ASSET_URL} from './constants'
 

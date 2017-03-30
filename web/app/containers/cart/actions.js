@@ -1,7 +1,7 @@
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 import {urlToPathKey} from '../../utils/utils'
-import {closeModal, openModal} from '../../store/modals/actions'
+import {closeModal, openModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {fetchShippingMethodsEstimate} from '../../store/checkout/shipping/actions'
 import {
     CART_ESTIMATE_SHIPPING_MODAL,

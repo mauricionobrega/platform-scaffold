@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as cartSelectors from '../../../store/cart/selectors'
 import {CART_ESTIMATE_SHIPPING_MODAL} from '../constants'
-import {openModal} from '../../../store/modals/actions'
+import {openModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {getDefaultShippingRate} from '../../../store/checkout/shipping/selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
