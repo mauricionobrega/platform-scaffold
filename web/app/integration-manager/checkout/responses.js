@@ -1,4 +1,4 @@
-import {createAction} from '../../utils/utils'
+import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 
 export const receiveCheckoutShippingData = createAction('Receive Checkout Shipping data')
 export const receiveCheckoutData = createAction('Receive Checkout Data')
