@@ -38,13 +38,12 @@ TabBarController.init = async function() {
 
     const tabControllerPromises = tabBarConfig.items.map((item) => {
         if (item.type === 'custom') {
-            switch (item.id) {
-                case 'account':
-                    return AccountTabController.init().then((controller) => {
-                        tabControllers[item.id] = controller
-                    })
-                default:
-                    return null
+            if (item.id === 'account') {
+                return AccountTabController.init().then((controller) => {
+                    tabControllers[item.id] = controller
+                })
+            } else {
+                return null
             }
         } else {
             return TabController.init(item).then((controller) => {
