@@ -45,5 +45,17 @@ export const pwaNavigate = () => jsRpcMethod('pwa-navigate', ['url'])()
 /**
  * Exports Astro as a listener
  */
-export const onAstroEvent = Astro.on
-export const disableAstroEvent = Astro.off
+export const onAstroEvent = (eventName, callback) => {
+    if (isRunningInAstro) {
+        window.Progressive.AstroPromise.then((client) =>
+            client.on(eventName, callback)
+        )
+    }
+}
+export const disableAstroEvent = (event, callback, context) => {
+    if (isRunningInAstro) {
+        window.Progressive.AstroPromise.then((client) =>
+            client.off(event, callback, context)
+        )
+    }
+}
