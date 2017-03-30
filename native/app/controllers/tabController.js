@@ -18,7 +18,7 @@ const TabController = function(tabItem, layout, navigationView, headerController
     this.headerController = headerController
 
     this.isActive = false
-    this.loaded = false
+    this.navigationView.navigateToUrl(tabItem.rootUrl)
 }
 
 TabController.init = async function(tabItem) {
@@ -75,8 +75,6 @@ TabController.prototype.reload = async function() {
     } else {
         console.log(`Top plugin on ${this.tabItem.title} tab does not support reload!`)
     }
-
-    this.loaded = true
 }
 
 TabController.prototype.activate = function() {
@@ -84,10 +82,6 @@ TabController.prototype.activate = function() {
         this.navigationView.popToRoot({animated: true})
     } else {
         this.isActive = true
-
-        if (!this.loaded) {
-            this.reload()
-        }
     }
 }
 

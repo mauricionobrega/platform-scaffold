@@ -2,21 +2,15 @@ import Immutable from 'immutable'
 import {handleActions} from 'redux-actions'
 
 import * as productDetailsActions from './actions'
-import {
-    receiveProductDetailsProductData,
-    receiveProductDetailsUIData
-} from '../../integration-manager/products/responses'
+import {receiveProductDetailsUIData} from '../../integration-manager/products/responses'
 
-import {mergePayloadForActions} from '../../utils/reducer-utils'
+import {mergePayload} from '../../utils/reducer-utils'
 
 const reducer = handleActions({
     [productDetailsActions.addToCartStarted]: (state) => state.set('addToCartInProgress', true),
     [productDetailsActions.addToCartComplete]: (state) => state.set('addToCartInProgress', false),
-    ...mergePayloadForActions(
-        receiveProductDetailsUIData,
-        productDetailsActions.receiveNewItemQuantity,
-        receiveProductDetailsProductData
-    )
+    [receiveProductDetailsUIData]: mergePayload,
+    [productDetailsActions.receiveNewItemQuantity]: mergePayload
 }, Immutable.Map())
 
 export default reducer

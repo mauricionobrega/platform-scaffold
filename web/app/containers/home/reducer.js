@@ -1,6 +1,6 @@
 import {handleActions} from 'redux-actions'
 import {fromJS} from 'immutable'
-import {mergePayloadForActions} from '../../utils/reducer-utils'
+import {mergePayload} from '../../utils/reducer-utils'
 
 import {receiveHomeData} from '../../integration-manager/responses'
 
@@ -12,5 +12,5 @@ const initialState = fromJS({
 })
 
 export default handleActions({
-    ...mergePayloadForActions(receiveHomeData)
+    [receiveHomeData]: mergePayload
 }, initialState)
