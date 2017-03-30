@@ -1,5 +1,5 @@
 import {SubmissionError} from 'redux-form'
-import {getBasketID} from '../cart/commands'
+import {createBasket} from '../cart/commands'
 import {makeDemandwareRequest} from '../utils'
 import {API_END_POINT_URL} from '../constants'
 import {STATES} from './constants'
@@ -8,7 +8,7 @@ import {receiveCheckoutData, receiveShippingMethodInitialValues} from './../../c
 import {noop} from 'progressive-web-sdk/dist/utils/utils'
 
 export const fetchShippingMethodsEstimate = () => (dispatch) => {
-    return getBasketID()
+    return createBasket()
         .then((basketID) => {
             return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/shipments/me/shipping_methods`, {method: 'GET'})
                 .then((response) => response.json())
@@ -27,7 +27,7 @@ export const fetchShippingMethodsEstimate = () => (dispatch) => {
 }
 
 export const fetchCheckoutShippingData = () => (dispatch) => {
-    return getBasketID()
+    return createBasket()
         .then((basketID) => {
             return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}`, {method: 'GET'})
                 .then((response) => response.json())
@@ -91,7 +91,7 @@ export const submitShipping = (formValues) => (dispatch) => {
         telephone,
         shipping_method
     } = formValues
-    return getBasketID()
+    return createBasket()
         .then((basketID) => {
             const requestOptions = {
                 method: 'PUT',

@@ -5,7 +5,7 @@ import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import checkoutPaymentParser from './checkout-payment-parser'
 
 import {getPaymentBillingFormValues} from '../../store/form/selectors'
-import {getEmailAddress} from '../../store/checkout/selectors'
+import {getEmailAddress, getCustomerEntityID} from '../../store/checkout/selectors'
 import {getShippingAddress} from '../../store/checkout/shipping/selectors'
 import {getIsLoggedIn} from '../app/selectors'
 
