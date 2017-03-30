@@ -12,10 +12,8 @@ import appParser from './app-parser'
 import {ESTIMATE_FORM_NAME} from '../cart/constants'
 import {SHIPPING_FORM_NAME} from '../checkout-shipping/constants'
 
-// import Cart from '../cart/container'
 import {
     UnwrappedCart,
-    UnwrappedHome,
     UnwrappedCheckoutConfirmation,
     UnwrappedCheckoutPayment,
     UnwrappedCheckoutShipping,
@@ -23,13 +21,9 @@ import {
     UnwrappedProductDetails,
     UnwrappedProductList
 } from '../templates'
-// import CheckoutShipping from '../checkout-shipping/container'
-// import CheckoutPayment from '../checkout-payment/container'
-// import CheckoutConfirmation from '../checkout-confirmation/container'
-// import Home from '../home/container'
-// import Login from '../login/container'
-// import ProductDetails from '../product-details/container'
-// import ProductList from '../product-list/container'
+
+import Home from '../home/container'
+
 import * as checkoutActions from '../../store/checkout/actions'
 import * as checkoutConfirmationActions from '../checkout-confirmation/actions'
 import * as checkoutShippingUIActions from '../checkout-shipping/actions'
@@ -155,7 +149,7 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                 dispatch(receivedAction)
                 dispatch(process(receivedAction))
 
-                if (pageComponent === UnwrappedHome) {
+                if (pageComponent === Home) {
                     dispatch(homeActions.process(receivedAction))
                 } else if (pageComponent === UnwrappedLogin) {
                     dispatch(loginActions.process(receivedAction))

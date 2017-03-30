@@ -6,30 +6,14 @@ import Loadable from 'react-loadable'
 
 import template from '../template'
 
-// Try loading the checkout as a separate chunk entirely
-
-// Don't split the PDP out from the main app, so that we can have instant page transitions
-
-
-// import UnwrappedCart from './cart/container'
-// import UnwrappedCheckoutConfirmation from './checkout-confirmation/container'
-// import UnwrappedCheckoutPayment from './checkout-payment/container'
-// import UnwrappedCheckoutShipping from './checkout-shipping/container'
-// import UnwrappedHome from './home/container'
-// import UnwrappedLogin from './login/container'
-// import UnwrappedProductDetails from './product-details/container'
-// import UnwrappedProductList from './product-list/container'
+// Don't split the Home container out from the main app, so that we can have instant page transitions
+import UnwrappedHome from './home/container'
 import UnwrappedOffline from './offline/container'
 
 const LoadingComponent = () => false
 
 export const UnwrappedCart = Loadable({
     loader: () => import('./cart/container'),
-    LoadingComponent
-})
-
-export const UnwrappedHome = Loadable({
-    loader: () => import('./home/container'),
     LoadingComponent
 })
 

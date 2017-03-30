@@ -17,6 +17,8 @@ import * as selectors from './selectors'
 
 import NotificationManager from '../../components/notification-manager'
 
+import {requestIdleCallback} from '../../utils/utils'
+
 // Offline support
 import {Offline} from '../templates'
 import OfflineBanner from '../offline/partials/offline-banner'
@@ -28,7 +30,6 @@ import {
     UnwrappedCheckoutConfirmation,
     UnwrappedCheckoutPayment,
     UnwrappedCheckoutShipping,
-    UnwrappedHome,
     UnwrappedLogin,
     UnwrappedProductDetails,
     UnwrappedProductList
@@ -52,14 +53,17 @@ class App extends React.Component {
             }
         })
 
-        UnwrappedCart.preload()
-        UnwrappedCheckoutConfirmation.preload()
-        UnwrappedCheckoutPayment.preload()
-        UnwrappedCheckoutShipping.preload()
-        UnwrappedHome.preload()
-        UnwrappedLogin.preload()
-        UnwrappedProductDetails.preload()
-        UnwrappedProductList.preload()
+        // Lazy load other containers when browser is at the end of frame
+        // to prevent jank
+        requestIdleCallback(() => {
+            UnwrappedCart.preload()
+            UnwrappedCheckoutConfirmation.preload()
+            UnwrappedCheckoutPayment.preload()
+            UnwrappedCheckoutShipping.preload()
+            UnwrappedLogin.preload()
+            UnwrappedProductDetails.preload()
+            UnwrappedProductList.preload()
+        })
     }
 
     render() {
