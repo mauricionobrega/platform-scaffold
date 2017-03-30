@@ -94,7 +94,7 @@ export const registerUser = (href, {firstname, lastname, email, password}, resol
             if (responseJSON.fault) {
                 return reject(new SubmissionError({_error: 'Unable to create account.'}))
             }
-            // Creating a user doesn't sign them in automatically, so dispatch the login event
+            // Creating a user doesn't sign them in automatically, so dispatch the login command
             return dispatch(login('', {login: {username: email, password}}, resolve, reject))
         })
 
