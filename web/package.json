@@ -74,7 +74,7 @@
     "nightwatch-commands": "2.0.0",
     "node-sass": "4.5.0",
     "postcss-loader": "1.2.1",
-    "progressive-web-sdk": "0.13.3",
+    "progressive-web-sdk": "0.14.1",
     "prompt": "1.0.0",
     "raw-loader": "0.5.1",
     "react-addons-test-utils": "15.4.1",
