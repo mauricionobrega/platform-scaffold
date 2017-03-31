@@ -3,7 +3,8 @@
 //
 // This component displays unfilled star characters and then displays another set of
 // filled in stars on top of the unfilled stars to show the current star rating. 
-// Partial star ratings are not yet supported.
+// Partial star ratings are not yet supported. 
+// Could use something like this for a half star... clip-path: inset(0px 50% 0px 0px);
 // This could be easily modified to support a hover state for an interactive version.
 // All of this is based on the work of Chris Coyier.
 // Original code snippet shared by Coyier here: https://css-tricks.com/star-ratings/
