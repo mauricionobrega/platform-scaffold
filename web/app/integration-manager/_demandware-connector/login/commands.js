@@ -74,7 +74,7 @@ export const login = ({login}) => (dispatch) => {
         })
 }
 
-export const registerUser = ({firstname, lastname, email, password}, resolve, reject) => (dispatch) => {
+export const registerUser = ({firstname, lastname, email, password}) => (dispatch) => {
     const requestOptions = {
         method: 'POST',
         body: JSON.stringify({
