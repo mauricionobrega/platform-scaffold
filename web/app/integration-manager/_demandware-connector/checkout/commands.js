@@ -13,11 +13,11 @@ export const fetchShippingMethodsEstimate = () => (dispatch) => {
             return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/shipments/me/shipping_methods`, {method: 'GET'})
                 .then((response) => response.json())
                 .then((responseJSON) => {
-                    const shippingMethods = responseJSON.applicable_shipping_methods.map((shippingMethod) => {
+                    const shippingMethods = responseJSON.applicable_shipping_methods.map(({name, description, price, id}) => {
                         return {
-                            label: `${shippingMethod.name} - ${shippingMethod.description}`,
-                            cost: `$${shippingMethod.price.toFixed(2)}`,
-                            value: shippingMethod.id
+                            label: `${name} - ${description}`,
+                            cost: `$${price.toFixed(2)}`,
+                            value: id
                         }
                     })
 
