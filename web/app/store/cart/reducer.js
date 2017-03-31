@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import {handleActions} from 'redux-actions'
-import {receiveCartContents} from './actions'
+import {receiveCartContents} from '../../integration-manager/cart'
 import {mergeSkipLists} from '../../utils/reducer-utils'
 
 
