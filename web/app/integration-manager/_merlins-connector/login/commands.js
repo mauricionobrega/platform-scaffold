@@ -67,7 +67,7 @@ export const login = (formValues) => (dispatch, getState) => {
     return submitForm(href, {...formValues, form_key: formKey}, '.form-login')
 }
 
-export const registerUser = (href, formValues) => (dispatch, getState) => {
+export const registerUser = (formValues) => (dispatch, getState) => {
     const currentState = getState()
     const href = getRegisterHref(currentState)
     const formKey = getFormKey(currentState)

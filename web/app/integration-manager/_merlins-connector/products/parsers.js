@@ -1,6 +1,6 @@
 import {extractMagentoJson} from '../../../utils/magento-utils'
 import {getTextFrom, parseTextLink, parseImage} from '../../../utils/parser-utils'
-import {urlToPathKey} from '../../../utils/utils'
+import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 
 const UENC_REGEX = /\/uenc\/([^/]+),\//
 
@@ -36,35 +36,21 @@ export const productDetailsUIParser = ($, $html) => {
             .find('a')
     )
 
-    const $mainContent = $html.find('.page-main')
-    const $form = $mainContent.find('#product_addtocart_form')
+    const $form = $html.find('.page-main #product_addtocart_form')
 
-    const hiddenInputs = {}
-    $form.find('input[type="hidden"]').each((idx, input) => {
-        const $input = $(input)
-        hiddenInputs[$input.attr('name')] = $input.val()
-    })
-
-    const submitUrl = $form.attr('action')
-    const uencMatch = UENC_REGEX.exec(submitUrl)
+    const uencMatch = UENC_REGEX.exec($form.attr('action'))
     const uenc = uencMatch ? uencMatch[1] : ''
 
     return {
         breadcrumbs: parseBreadcrumbs($, $breadcrumbs),
         uenc,
-        formInfo: {
-            submitUrl: $form.attr('action'),
-            method: $form.attr('method'),
-            hiddenInputs
-        },
         itemQuantity: parseInt($form.find('#qty').val()),
         ctaText: $form.find('.tocart').text()
     }
 }
 
 export const pdpAddToCartFormParser = ($, $html) => {
-    const $mainContent = $html.find('.page-main')
-    const $form = $mainContent.find('#product_addtocart_form')
+    const $form = $html.find('.page-main #product_addtocart_form')
 
     const hiddenInputs = {}
     $form.find('input[type="hidden"]').each((idx, input) => {
@@ -73,13 +59,9 @@ export const pdpAddToCartFormParser = ($, $html) => {
     })
 
     return {
-        formInfo: {
-            submitUrl: $form.attr('action'),
-            method: $form.attr('method'),
-            hiddenInputs
-        },
-        itemQuantity: parseInt($form.find('#qty').val()),
-        ctaText: $form.find('.tocart').text()
+        submitUrl: $form.attr('action'),
+        method: $form.attr('method'),
+        hiddenInputs
     }
 }
 
@@ -91,7 +73,7 @@ export const productListParser = ($, $html) => {
         const link = parseTextLink($product.find('.product-item-link'))
         const image = parseImage($product.find('.product-image-photo'))
         productMap[urlToPathKey(link.href)] = {
-            title: link.text.trim(),
+            title: link.text,
             price: getTextFrom($product, '.price'),
             link,
             image,

@@ -1,7 +1,7 @@
 /* eslint-env jquery, jest, node */
 import {jquerifyHtmlFile} from 'progressive-web-sdk/dist/test-utils'
 import {isURL} from 'validator'
-import {productDetailsParser, productDetailsUIParser, productListParser} from './parsers'
+import {productDetailsParser, productListParser} from './parsers'
 
 /* eslint-disable max-nested-callbacks */
 
@@ -32,19 +32,6 @@ describe('the ProductDetails product parser', () => {
 
     it('extracts the description from the page', () => {
         expect(typeof parsedContent.description).toBe('string')
-    })
-})
-
-describe('the ProductDetails UI parser', () => {
-    const $content = jquerifyHtmlFile(`${__dirname}/product-details-example.html`)
-    const parsedContent = productDetailsUIParser($, $content)
-
-    test('extracts form info from the add-to-cart form', () => {
-        expect(isURL(parsedContent.formInfo.submitUrl)).toBe(true)
-        expect(parsedContent.formInfo.method).toBe('post')
-        Object.keys(parsedContent.formInfo.hiddenInputs).forEach((key) => {
-            expect(typeof parsedContent.formInfo.hiddenInputs[key]).toBe('string')
-        })
     })
 })
 
