@@ -3,8 +3,7 @@ import {connect} from 'react-redux'
 import {getHighResImage} from '../../../utils/utils'
 
 import {createPropsSelector} from 'reselect-immutable-helpers'
-import {updateItemQuantity} from '../../../store/cart/actions'
-import {openRemoveItemModal, saveToWishlist} from '../actions'
+import {openRemoveItemModal, saveToWishlist, updateItem} from '../actions'
 import {getCartItems, getCartSummaryCount} from '../../../store/cart/selectors'
 import {noop} from 'progressive-web-sdk/dist/utils/utils'
 
@@ -192,7 +191,7 @@ const mapStateToProps = createPropsSelector({
 })
 
 const mapDispatchToProps = {
-    onUpdateItemQuantity: updateItemQuantity,
+    onUpdateItemQuantity: updateItem,
     onSaveLater: saveToWishlist,
     openRemoveItemModal
 }

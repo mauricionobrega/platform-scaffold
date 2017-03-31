@@ -10,7 +10,7 @@ import {parseCheckoutEntityID, extractMagentoJson} from '../../../utils/magento-
 
 const LOAD_CART_SECTION_URL = '/customer/section/load/?sections=cart%2Cmessages&update_section_id=true'
 const REMOVE_CART_ITEM_URL = '/checkout/sidebar/removeItem/'
-// const UPDATE_ITEM_URL = '/checkout/sidebar/updateItemQty/'
+const UPDATE_ITEM_URL = '/checkout/sidebar/updateItemQty/'
 const BASE_HEADERS = {
     Accept: 'application/json',
 }
@@ -52,12 +52,39 @@ export const removeFromCart = (itemId) => {
     }
 }
 
+/**
+ * Update the quantity of an item in the users cart
+ *
+ * Notes:
+ *
+ * - Response is 200 with JSON: `{"success":true}` on success
+ * - Response is 200 with JSON: `{"success":false,"error_message":"We can't find the quote item."}` if item not in cart
+ */
+export const updateItemQuantity = (itemId, itemQuantity) => {
+    return (dispatch, getState) => {
+        const requestData = {
+            item_id: itemId,
+            item_qty: itemQuantity,
+            form_key: getFormKey(getState())
+        }
+
+        return makeFormEncodedRequest(UPDATE_ITEM_URL, requestData, {method: 'POST'})
+            .then((response) => response.json())
+            .then((responseJSON) => {
+                if (responseJSON.success) {
+                    return dispatch(getCart())
+                }
+                throw new Error('Unable to update Quantity')
+            })
+    }
+}
+
 const ESTIMATE_FIELD_PATH = ['#block-summary', 'Magento_Ui/js/core/app', 'components', 'block-summary', 'children', 'block-shipping', 'children', 'address-fieldsets', 'children']
 
 export const fetchCartPageData = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then((res) => {
-            const [$, $response] = res
+            const [$, $response] = res // eslint-disable-line no-unused-vars
             const customerEntityID = parseCheckoutEntityID($response)
             const magentoFieldData = extractMagentoJson($response).getIn(ESTIMATE_FIELD_PATH)
             const locationsData = parseLocations(magentoFieldData)
