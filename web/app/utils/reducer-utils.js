@@ -1,12 +1,6 @@
 import Immutable from 'immutable'
 export const mergePayload = (state, {payload}) => state.mergeDeep(payload)
 
-export const mergePayloadForActions = (...actions) => {
-    const handlers = {}
-    actions.forEach((action) => { handlers[action] = mergePayload })
-    return handlers
-}
-
 const isList = Immutable.List.isList
 // Ensures the new list is always used when merging Maps that contain lists
 // Otherwise we would end up with something like this:
