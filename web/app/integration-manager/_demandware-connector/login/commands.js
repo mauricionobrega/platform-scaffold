@@ -71,7 +71,6 @@ export const login = ({login}) => (dispatch) => {
                     // and demandware's account page is at the same URL as their login page
                     return '/on/demandware.store/Sites-2017refresh-Site/default/Home-Show'
                 })
-
         })
 }
 
@@ -92,10 +91,10 @@ export const registerUser = ({firstname, lastname, email, password}, resolve, re
         .then((response) => response.json())
         .then((responseJSON) => {
             if (responseJSON.fault) {
-                return reject(new SubmissionError({_error: 'Unable to create account.'}))
+                throw new SubmissionError({_error: 'Unable to create account.'})
             }
             // Creating a user doesn't sign them in automatically, so dispatch the login command
-            return dispatch(login('', {login: {username: email, password}}, resolve, reject))
+            return dispatch(login({login: {username: email, password}}))
         })
 
 }
