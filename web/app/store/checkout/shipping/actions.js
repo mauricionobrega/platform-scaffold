@@ -23,8 +23,8 @@ export const fetchShippingMethodsEstimate = (formKey) => {
             const getRegisteredFieldValue = (fieldName) => {
                 return registeredFieldNames.includes(fieldName) ? formValues[fieldName] : undefined
             }
-            address.country_id = getRegisteredFieldValue('country_id')
-            address.region_id = getRegisteredFieldValue('region_id')
+            address.country_id = getRegisteredFieldValue('countryId')
+            address.region_id = getRegisteredFieldValue('regionId')
             address.postcode = getRegisteredFieldValue('postcode')
             if (formValues.region) {
                 address.region = getRegisteredFieldValue('region')

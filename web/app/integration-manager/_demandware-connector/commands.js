@@ -9,6 +9,7 @@ import * as productsCommands from './products/commands'
 import * as categoriesCommands from './categories/commands'
 import * as cartCommands from './cart/commands'
 import * as appCommands from './app/commands'
+import * as checkoutCommands from './checkout/commands'
 import * as loginCommands from './login/commands'
 
 const addToCart = () => (dispatch) => {
@@ -32,35 +33,16 @@ const addToCart = () => (dispatch) => {
         })
 }
 
-const fetchCheckoutShippingData = () => {
-    console.log('Fetch checkout shipping data')
-}
-
-const submitShipping = () => {
-    console.log('submit shipping form')
-}
-
-const checkCustomerEmail = () => {
-    console.log('Check customer email')
-}
-
-const submitSignIn = () => {
-    console.log('Submit sign in form')
-}
-
 export default {
     // These individual commands are temporary until we can refactor them into the
     // sub-areas they belong in.
-    fetchCheckoutShippingData,
     addToCart,
-    submitShipping,
-    checkCustomerEmail,
-    submitSignIn,
 
     home: homeCommands,
     products: productsCommands,
     categories: categoriesCommands,
     cart: cartCommands,
     app: appCommands,
+    checkout: checkoutCommands,
     login: loginCommands
 }
