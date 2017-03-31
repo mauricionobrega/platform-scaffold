@@ -1,3 +1,4 @@
+import {createAction as createReduxAction} from 'redux-actions'
 
 /**
  * Wraps an action creator function so that the React synthetic action
@@ -45,3 +46,19 @@ export const splitFullName = (fullname) => {
         lastname: names.slice(-1).join(' ')
     }
 }
+
+
+const typecheck = (type, value) => {
+    try {
+        type.check(value)
+    } catch (e) {
+        console.info(e)
+        console.log(value)
+    }
+    return value
+}
+
+export const createTypedAction = (description, type) => createReduxAction(
+    description,
+    (payload) => typecheck(type, payload)
+)

@@ -1,22 +1,6 @@
-import {createAction as createReduxAction} from 'redux-actions'
-
 import * as Runtypes from 'runtypes'
 import {ProductUIData, ProductDetailsData, ProductDetailsListData} from './types'
-
-const typecheck = (type, value) => {
-    try {
-        type.check(value)
-    } catch (e) {
-        console.info(e)
-        console.log(value)
-    }
-    return value
-}
-
-const createTypedAction = (description, type) => createReduxAction(
-    description,
-    (payload) => typecheck(type, payload)
-)
+import {createTypedAction} from '../../utils/utils'
 
 export const receiveProductDetailsUIData = createTypedAction(
     'Receive Product Details UI data',
