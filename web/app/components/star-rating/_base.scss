@@ -1,0 +1,46 @@
+// StarRating
+// ===
+//
+// Component description here
+
+
+// Variables
+// ---
+
+
+// StarRating root
+// ---
+
+.c-star-rating {
+    // Root Class. Contains all core styles, typically for the component's
+    // wrapper element.
+    unicode-bidi: bidi-override;
+    direction: rtl;
+}
+
+.c-star-rating > span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+}
+
+.c-star-rating > solid {
+   content: "\2605"; // The solid star character in Unicode
+   position: absolute;
+}
+
+
+// Modifiers
+// ---
+//
+// .c-star-rating.c--modifier {
+//     ...
+// }
+
+
+// Sub components
+// ---
+//
+// .c-star-rating__sub-component {
+//     ...
+// }

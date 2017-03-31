@@ -5,6 +5,8 @@ import {createPropsSelector} from 'reselect-immutable-helpers'
 
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import Breadcrumbs from 'progressive-web-sdk/dist/components/breadcrumbs'
+import StarRating from '../../../components/star-rating'
+
 
 import {isRunningInAstro} from '../../../utils/astro-integration'
 
@@ -22,8 +24,15 @@ const ProductDetailsHeading = ({breadcrumbs, title, price, isInCheckout}) => (
                 <Breadcrumbs items={isInCheckout ? checkoutBreadcrumb : breadcrumbs} />
             </div>
         }
+
         {title ?
             <h1 className="t-product-details-heading__title u-text-uppercase u-margin-bottom">{title}</h1>
+        :
+            <SkeletonBlock width="50%" height="32px" className="u-margin-bottom" />
+        }
+
+        {title ?
+            <StarRating numStars={3} />
         :
             <SkeletonBlock width="50%" height="32px" className="u-margin-bottom" />
         }
