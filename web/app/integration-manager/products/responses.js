@@ -23,7 +23,6 @@ const Breadcrumb = Runtypes.Record({
 const ProductUIData = Runtypes.Record({
     breadcrumbs: Runtypes.Array(Breadcrumb),
     uenc: Runtypes.String,
-    formInfo: Runtypes.Always,
     itemQuantity: Runtypes.Number,
     ctaText: Runtypes.String
 })
