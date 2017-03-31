@@ -33,7 +33,7 @@ export const fetchShippingMethodsEstimate = (formKey) => {
             }
         }
         const getEstimateURL = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/estimate-shipping-methods`
-        makeJsonEncodedRequest(getEstimateURL, {address}, {method: 'POST'})
+        return makeJsonEncodedRequest(getEstimateURL, {address}, {method: 'POST'})
             .then((response) => response.json())
             .then((responseJSON) => {
                 const shippingMethods = parseShippingMethods(responseJSON)

@@ -4,7 +4,6 @@ import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as ReduxForm from 'redux-form'
 
 import {getShippingMethods} from '../../../store/checkout/shipping/selectors'
-import {getCustomerEntityID} from '../../../store/checkout/selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
@@ -48,10 +47,6 @@ const ShippingMethod = ({shippingMethods}) => {
 
 ShippingMethod.propTypes = {
     /**
-    * An identifier for the current users cart
-    */
-    entityID: PropTypes.string,
-    /**
     * The available shipping methods for the order
     */
     shippingMethods: PropTypes.arrayOf(PropTypes.shape({
@@ -66,7 +61,6 @@ ShippingMethod.propTypes = {
 }
 
 const mapStateToProps = createPropsSelector({
-    entityID: getCustomerEntityID,
     shippingMethods: getShippingMethods
 })
 

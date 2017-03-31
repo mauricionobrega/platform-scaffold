@@ -1,4 +1,4 @@
-import {extractMagentoShippingStepData, getCheckoutEntityID} from '../../../utils/magento-utils'
+import {extractMagentoShippingStepData} from '../../../utils/magento-utils'
 
 
 export const checkoutShippingParser = ($, $html) => {
@@ -48,16 +48,25 @@ export const parseLocations = (shippingStepData) => {
     }
 }
 
-
 export const parseCheckoutData = ($response) => {
-    const customerEntityID = getCheckoutEntityID($response)
     const magentoFieldData = extractMagentoShippingStepData($response).getIn(['children', 'shipping-address-fieldset', 'children'])
     const initialValues = parseShippingInitialValues(magentoFieldData)
     const locationsData = parseLocations(magentoFieldData)
     return {
-        // entity_id is used for API calls
-        customerEntityID,
         ...locationsData,
         shipping: {initialValues}
     }
+}
+
+export const parseShippingMethods = (shippingMethods) => {
+    if (!shippingMethods || !shippingMethods.map) {
+        return []
+    }
+    return shippingMethods.map((method) => {
+        return {
+            label: `${method.method_title} - ${method.carrier_title}`,
+            cost: `$${method.price_incl_tax.toFixed(2)}`,
+            value: `${method.carrier_code}_${method.method_code}`
+        }
+    })
 }

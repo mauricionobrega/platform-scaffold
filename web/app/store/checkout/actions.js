@@ -1,5 +1,6 @@
 import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
-import {extractMagentoShippingStepData, getCheckoutEntityID, extractMagentoJson} from '../../utils/magento-utils'
+import {extractMagentoShippingStepData, parseCheckoutEntityID, extractMagentoJson} from '../../utils/magento-utils'
+
 
 import parseLocations from './locations/parser'
 import {parseShippingInitialValues} from './shipping/parser'
@@ -10,7 +11,7 @@ export const receiveShippingMethodInitialValues = createAction('Receive Shipping
 
 export const processCheckoutData = ({payload: {$response}}) => {
     return (dispatch) => {
-        const customerEntityID = getCheckoutEntityID($response)
+        const customerEntityID = parseCheckoutEntityID($response)
         const magentoFieldData = extractMagentoShippingStepData($response).getIn(['children', 'shipping-address-fieldset', 'children'])
         const initialValues = parseShippingInitialValues(magentoFieldData)
         const locationsData = parseLocations(magentoFieldData)
@@ -29,7 +30,7 @@ const ESTIMATE_FIELD_PATH = ['#block-summary', 'Magento_Ui/js/core/app', 'compon
 
 export const processCartCheckoutData = ({payload: {$response}}) => {
     return (dispatch) => {
-        const customerEntityID = getCheckoutEntityID($response)
+        const customerEntityID = parseCheckoutEntityID($response)
         const magentoFieldData = extractMagentoJson($response).getIn(ESTIMATE_FIELD_PATH)
         const locationsData = parseLocations(magentoFieldData)
 
