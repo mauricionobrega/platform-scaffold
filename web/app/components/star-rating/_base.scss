@@ -1,7 +1,12 @@
 // StarRating
 // ===
 //
-// Component description here
+// This component displays unfilled star characters and then displays another set of
+// filled in stars on top of the unfilled stars to show the current star rating. 
+// Partial star ratings are not yet supported.
+// This could be easily modified to support a hover state for an interactive version.
+// All of this is based on the work of Chris Coyier.
+// Original code snippet shared by Coyier here: https://css-tricks.com/star-ratings/
 
 
 // Variables
@@ -12,10 +17,13 @@
 // ---
 
 .c-star-rating {
-    // Root Class. Contains all core styles, typically for the component's
-    // wrapper element.
-    unicode-bidi: bidi-override;
-    direction: rtl;
+    // Root Class.
+    // We need to reverse the order of the child elements (the stars) as they appear in 
+    // the JSX (highest star to lowest star) because we can't use CSS to select 
+    // the _preceding_ children, we can only select the _succeeding_ children.
+    unicode-bidi: bidi-override; // Allows us to use the direction property below
+    direction: rtl; // Right-to-left
+    text-align: left;
 }
 
 .c-star-rating > span {
@@ -24,9 +32,11 @@
   width: 1.1em;
 }
 
-.c-star-rating > solid {
+.c-star-rating > span.filled-in:before {
    content: "\2605"; // The solid star character in Unicode
    position: absolute;
+   top: 0;
+   left: 0;
 }
 
 

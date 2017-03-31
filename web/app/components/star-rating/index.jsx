@@ -17,11 +17,11 @@ const StarRating = ({
 
     return (
         <div className={classes}>
-            <span className={numStars <= 5 ? 'solid' : ''}>☆</span>
-            <span className={numStars <= 4 ? 'solid' : ''}>☆</span>
-            <span className={numStars <= 3 ? 'solid' : ''}>☆</span>
-            <span className={numStars <= 2 ? 'solid' : ''}>☆</span>
-            <span className={numStars <= 1 ? 'solid' : ''}>☆</span>
+            <span className={numStars === 5 ? 'filled-in' : ''}>☆</span>
+            <span className={numStars >= 4 ? 'filled-in' : ''}>☆</span>
+            <span className={numStars >= 3 ? 'filled-in' : ''}>☆</span>
+            <span className={numStars >= 2 ? 'filled-in' : ''}>☆</span>
+            <span className={numStars >= 1 ? 'filled-in' : ''}>☆</span>
         </div>
     )
 }
