@@ -25,15 +25,12 @@ const onShippingEmailAvailable = () => {
     }
 }
 
-export const onShippingLoginError = (errorMessage) => {
-    return (dispatch) => {
-        dispatch(addNotification({
-            content: errorMessage,
-            id: 'shippingEmailError',
-            showRemoveButton: true
-        }))
-    }
-}
+export const onShippingLoginError = (errorMessage) =>
+    addNotification({
+        content: errorMessage,
+        id: 'shippingEmailError',
+        showRemoveButton: true
+    })
 
 export const submitSignIn = () => (dispatch, getState) => {
     const formValues = getShippingFormValues(getState())
