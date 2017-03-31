@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {onRouteChanged, fetchPage, removeAllNotifications} from './containers/app/actions'
+import Duncan from './utils/duncan'
 
 import {trigger as astroTrigger} from './utils/astro-integration'
 
@@ -23,11 +24,7 @@ const template = (WrappedComponent) => {
 
             dispatch(onRouteChanged(url, route.routeName))
 
-            const pageView = new CustomEvent('progressive-web-event', {
-                detail: 'page-view'
-            })
-
-            window.dispatchEvent(pageView)
+            Duncan.pageView()
 
             if (!route.suppressFetch) {
                 dispatch(fetchPage(url, WrappedComponent, route.routeName, route.fetchUrl))
