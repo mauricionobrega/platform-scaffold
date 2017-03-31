@@ -1,7 +1,7 @@
 import {handleActions} from 'redux-actions'
 import {fromJS, List} from 'immutable'
 import {mergePayload} from '../../utils/reducer-utils'
-import {urlToPathKey} from '../../utils/utils'
+import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 
 import * as appActions from './actions'
 

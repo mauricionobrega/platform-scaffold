@@ -1,4 +1,4 @@
-import {urlToPathKey} from '../../../utils/utils'
+import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 import {receiveCategory} from '../../categories/responses'
 import {receiveProductListProductData} from '../../products/responses'
 import categoryProductsParser from './parser'

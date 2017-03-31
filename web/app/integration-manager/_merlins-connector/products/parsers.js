@@ -1,6 +1,6 @@
 import {extractMagentoJson} from '../../../utils/magento-utils'
 import {getTextFrom, parseTextLink, parseImage} from '../../../utils/parser-utils'
-import {urlToPathKey} from '../../../utils/utils'
+import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 
 const UENC_REGEX = /\/uenc\/([^/]+),\//
 
