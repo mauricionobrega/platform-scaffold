@@ -5,8 +5,6 @@ import {API_END_POINT_URL} from '../constants'
 import {STATES} from './constants'
 import {receiveCheckoutData, receiveShippingMethodInitialValues} from './../../checkout/responses'
 
-import {noop} from 'progressive-web-sdk/dist/utils/utils'
-
 export const fetchShippingMethodsEstimate = () => (dispatch) => {
     return createBasket()
         .then((basketID) => {
@@ -135,6 +133,11 @@ export const submitShipping = (formValues) => (dispatch) => {
         })
 }
 
+// We're not currently checking the customer's email on the demandware site
+// Return true to prevent the welcome banner from showing
 export const checkCustomerEmail = () => () => Promise.resolve(true)
 
-export const checkoutSignIn = () => (dispatch) => dispatch(noop)
+// Checkout sign in is currently not implemented on our demandware site
+// The merlin's designs for checkout sign in don't translate well to
+// the functionality available to us with demandware
+export const checkoutSignIn = () => () => Promise.resolve()
