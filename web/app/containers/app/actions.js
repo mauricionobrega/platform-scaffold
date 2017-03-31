@@ -138,10 +138,7 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                 dispatch(receivedAction)
                 dispatch(process(receivedAction))
 
-                if (pageComponent === Cart) {
-                    dispatch(checkoutActions.processCartCheckoutData(receivedAction))
-                    dispatch(checkoutShippingActions.fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME))
-                } else if (pageComponent === CheckoutPayment) {
+                if (pageComponent === CheckoutPayment) {
                     dispatch(checkoutActions.processCheckoutData(receivedAction))
                 } else if (pageComponent === CheckoutConfirmation) {
                     dispatch(checkoutConfirmationActions.process(receivedAction))

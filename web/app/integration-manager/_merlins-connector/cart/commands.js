@@ -95,6 +95,6 @@ export const fetchCartPageData = (url) => (dispatch) => {
             }))
         })
         .then(() => {
-            console.log('FETCH SHIPPING ESTIMATE DATA')
+            // TODO: fetch shipping estimate data
         })
 }
