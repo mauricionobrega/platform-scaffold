@@ -54,7 +54,7 @@ export const fetchCheckoutShippingData = (url) => (dispatch) => {
         .then(([$, $response]) => {
             // entity_id is used for API calls
             const customerEntityID = parseCheckoutEntityID($response)
-            dispatch(receiveEntityID({customerEntityID}))
+            dispatch(receiveEntityID(customerEntityID))
             dispatch(receiveCheckoutShippingData(checkoutShippingParser($, $response)))
             return dispatch(receiveCheckoutData(parseCheckoutData($response)))
         })

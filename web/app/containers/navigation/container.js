@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {extractPathFromURL} from '../../utils/utils'
+import {extractPathFromURL} from 'progressive-web-sdk/dist/utils/utils'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 
 import Nav from 'progressive-web-sdk/dist/components/nav'

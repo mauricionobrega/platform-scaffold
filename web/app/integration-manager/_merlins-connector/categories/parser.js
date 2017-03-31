@@ -1,5 +1,5 @@
 import {parseTextLink, getTextFrom} from '../../../utils/parser-utils'
-import {urlToPathKey} from '../../../utils/utils'
+import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 
 const categoryProductsParser = ($, $html) => {
     const $numItems = $html.find('#toolbar-amount .toolbar-number').first()
