@@ -23,6 +23,12 @@ const template = (WrappedComponent) => {
 
             dispatch(onRouteChanged(url, route.routeName))
 
+            const pageView = new CustomEvent('progressive-web-event', {
+                detail: 'page-view'
+            })
+
+            window.dispatchEvent(pageView)
+
             if (!route.suppressFetch) {
                 dispatch(fetchPage(url, WrappedComponent, route.routeName, route.fetchUrl))
             }
