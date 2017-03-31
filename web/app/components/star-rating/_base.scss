@@ -26,26 +26,21 @@
     text-align: left;
 }
 
-.c-star-rating > span {
+.c-star-rating-star {
   display: inline-block;
   position: relative;
   width: 1.1em;
 }
 
-.c-star-rating > span.filled-in:before {
-   content: "\2605"; // The solid star character in Unicode
-   position: absolute;
-   top: 0;
-   left: 0;
-}
-
-
 // Modifiers
 // ---
 //
-// .c-star-rating.c--modifier {
-//     ...
-// }
+.c-star-rating-star.c--filled-in:before {
+  content: "\2605"; // The solid star character in Unicode
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 
 
 // Sub components
