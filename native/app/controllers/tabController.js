@@ -52,6 +52,10 @@ TabController.init = async function(tabItem) {
         navigationView.trigger('cart:needs-update')
     })
 
+    AppEvents.on(AppEvents.didSignIn, async () => {
+        navigationView.trigger('cart:needs-update')
+    })
+
     return new TabController(tabItem, layout, navigationView, headerController)
 }
 
