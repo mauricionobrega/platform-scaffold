@@ -8,12 +8,6 @@ import AlertViewPlugin from 'progressive-app-sdk/plugins/alertViewPlugin'
 import AppEvents from '../global/app-events'
 import CartHeaderController from './cartHeaderController'
 import CartConfig from '../config/cartConfig'
-import {Events as TabEvents} from './tabController'
-
-const Events = {
-    signInShow: 'sign-in:show',
-    shopShow: 'shop:show'
-}
 
 const CartModalController = function(modalView, navigationView) {
     this.isShowing = false
@@ -23,12 +17,12 @@ const CartModalController = function(modalView, navigationView) {
 
     this.navigationView.on('sign-in:clicked', () => {
         this.hide()
-        AppEvents.trigger(Events.signInShow)
+        AppEvents.trigger(AppEvents.signInShow)
     })
 
     this.navigationView.on('continue:clicked', () => {
         this.hide()
-        AppEvents.trigger(Events.shopShow)
+        AppEvents.trigger(AppEvents.shopShow)
     })
 
     this.navigationView.on('checkout:disable-alert', () => {
@@ -41,13 +35,15 @@ const CartModalController = function(modalView, navigationView) {
 
     this.navigationView.on('checkout:completed', () => {
         this.alertEnabled = false
-        AppEvents.trigger(TabEvents.updateCart, {
-            count: 0
-        })
+        AppEvents.trigger(AppEvents.cartNeedsUpdate)
     })
 
-    this.navigationView.on('cart-updated', (data) => {
-        AppEvents.trigger(TabEvents.updateCart, data)
+    this.navigationView.on('cart:updated', () => {
+        AppEvents.trigger(AppEvents.cartNeedsUpdate)
+    })
+
+    this.navigationView.on('cart:count-updated', (data) => {
+        AppEvents.trigger(AppEvents.updateCart, data)
     })
 
     this.navigationView.on('close', () => {
@@ -111,7 +107,7 @@ CartModalController.init = async function() {
     return cartModalController
 }
 
-CartModalController.prototype.show = async function() {
+CartModalController.prototype.show = function() {
     if (this.isShowing) {
         return
     }
@@ -127,7 +123,5 @@ CartModalController.prototype.hide = async function() {
 CartModalController.prototype.isActiveItem = function() {
     return this.isShowing
 }
-
-export {Events}
 
 export default CartModalController
