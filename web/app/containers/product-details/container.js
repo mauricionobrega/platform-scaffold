@@ -1,4 +1,5 @@
 import React from 'react'
+
 import ProductDetailsHeading from './partials/product-details-heading'
 import ProductDetailsCarousel from './partials/product-details-carousel'
 import ProductDetailsDescription from './partials/product-details-description'
