@@ -9,20 +9,20 @@ import ConnectedHeader from './container'
 const Header = ConnectedHeader.WrappedComponent
 
 describe('The header', () => {
-    const originalisRunningInAstro = AstroIntegration.isRunningInAstro
+    const originalIsRunningInAstro = AstroIntegration.isRunningInAstro
 
     afterEach(() => {
         // Value of `isRunningInAstro` might have been overwritten in test
-        AstroIntegration.isRunningInAstro = originalisRunningInAstro
+        AstroIntegration.isRunningInAstro = originalIsRunningInAstro
     })
 
-    test('1 Should not render header at all if running in an Astro app', () => {
+    test('Should not render header at all if running in an Astro app', () => {
         AstroIntegration.isRunningInAstro = true
         const header = shallow(<Header />)
         expect(header.children().length).toBe(0)
     })
 
-    test('2 Should render header if not running in an Astro app', () => {
+    test('Should render header if not running in an Astro app', () => {
         AstroIntegration.isRunningInAstro = false
         const header = shallow(<Header />)
         expect(header.children().length).not.toBe(0)

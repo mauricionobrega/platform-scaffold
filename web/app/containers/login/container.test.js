@@ -9,11 +9,11 @@ import ConnectedLogin from './container'
 const Login = ConnectedLogin.WrappedComponent
 
 describe('The Login', () => {
-    const originalisRunningInAstro = AstroIntegration.isRunningInAstro
+    const originalIsRunningInAstro = AstroIntegration.isRunningInAstro
 
     afterEach(() => {
         // Value of `isRunningInAstro` might have been overwritten in test
-        AstroIntegration.isRunningInAstro = originalisRunningInAstro
+        AstroIntegration.isRunningInAstro = originalIsRunningInAstro
     })
 
     test('Should render tab if not running in Astro', () => {

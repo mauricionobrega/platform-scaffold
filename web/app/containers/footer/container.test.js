@@ -8,11 +8,11 @@ import * as AstroIntegration from '../../utils/astro-integration'
 import Footer from './container'
 
 describe('The footer', () => {
-    const originalisRunningInAstro = AstroIntegration.isRunningInAstro
+    const originalIsRunningInAstro = AstroIntegration.isRunningInAstro
 
     afterEach(() => {
         // Value of `isRunningInAstro` might have been overwritten in test
-        AstroIntegration.isRunningInAstro = originalisRunningInAstro
+        AstroIntegration.isRunningInAstro = originalIsRunningInAstro
     })
 
     test('Should not render footer at all if running in an Astro app', () => {

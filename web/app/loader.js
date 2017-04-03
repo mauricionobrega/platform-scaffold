@@ -4,7 +4,7 @@ import cacheHashManifest from '../tmp/loader-cache-hash-manifest.json'
 import {isRunningInAstro} from './utils/astro-integration'
 
 window.Progressive = {
-    AstroPromise: {}
+    AstroPromise: Promise.resolve({})
 }
 
 import ReactRegexes from './loader-routes'
@@ -19,7 +19,7 @@ initCacheManifest(cacheHashManifest)
 const IS_PREVIEW = /mobify-path=true/.test(document.cookie)
 
 const CAPTURING_CDN = '//cdn.mobify.com/capturejs/capture-latest.min.js'
-const ASTRO_CLIENT_CDN = '//assets.mobify.com/astro/astro-client-0.18.0.min.js'
+const ASTRO_CLIENT_CDN = '//assets.mobify.com/astro/astro-client-1.0.0-beta3.min.js'
 const SW_LOADER_PATH = `/service-worker-loader.js?preview=${IS_PREVIEW}&b=${cacheHashManifest.buildDate}`
 
 import preloadHTML from 'raw-loader!./preloader/preload.html'
