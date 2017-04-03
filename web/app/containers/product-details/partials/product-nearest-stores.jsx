@@ -1,5 +1,6 @@
 /* eslint-disable react/self-closing-comp */
 import React, {PropTypes} from 'react'
+
 import Button from 'progressive-web-sdk/dist/components/button'
 import ListTile from 'progressive-web-sdk/dist/components/list-tile'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
