@@ -6,7 +6,7 @@ import {render} from 'react-dom'
 import Onboarding from '../../containers/onboarding/container'
 
 // Astro
-import Astro from 'mobify-progressive-app-sdk/dist/astro-client'
+import Astro from '../../vendor/astro-client'
 import {jsRpcMethod} from '../../utils/astro-integration'
 
 import Stylesheet from './index.scss' // eslint-disable-line no-unused-vars
