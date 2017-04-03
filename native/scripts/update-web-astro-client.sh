@@ -20,3 +20,5 @@ if [ ! -e "$ROOT/node_modules/mobify-progressive-app-sdk/dist/astro-client.js" ]
         npm run build:astro_client
     popd
 fi
+
+cp -f "$ROOT/node_modules/mobify-progressive-app-sdk/dist/astro-detect.js" ../web/app/vendor/astro-detect.js

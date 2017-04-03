@@ -1,4 +1,4 @@
-import isRunningIn from 'mobify-progressive-app-sdk/dist/astro-detect'
+import isRunningIn from '../vendor/astro-detect'
 
 export const isRunningInAstro = isRunningIn.app()
 

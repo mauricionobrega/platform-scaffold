@@ -1,3 +1,4 @@
+/* global NATIVE_WEBPACK_ASTRO_VERSION */
 import {getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
 import cacheHashManifest from '../tmp/loader-cache-hash-manifest.json'
@@ -17,9 +18,10 @@ initCacheManifest(cacheHashManifest)
 
 // This isn't accurate but does describe the case where the PR currently works
 const IS_PREVIEW = /mobify-path=true/.test(document.cookie)
+const ASTRO_VERSION = NATIVE_WEBPACK_ASTRO_VERSION // replaced at build time
 
 const CAPTURING_CDN = '//cdn.mobify.com/capturejs/capture-latest.min.js'
-const ASTRO_CLIENT_CDN = '//assets.mobify.com/astro/astro-client-1.0.0-beta3.min.js'
+const ASTRO_CLIENT_CDN = `//assets.mobify.com/astro/astro-client-${ASTRO_VERSION}.min.js`
 const SW_LOADER_PATH = `/service-worker-loader.js?preview=${IS_PREVIEW}&b=${cacheHashManifest.buildDate}`
 
 import preloadHTML from 'raw-loader!./preloader/preload.html'
