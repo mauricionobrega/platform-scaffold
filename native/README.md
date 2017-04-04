@@ -61,7 +61,7 @@ Development of progressive mobile apps occurs in two streams:
 - The structure of the app is developed inside this folder, `native`.
 
 To preview local changes made to the content, you must run a local preview server. You can do that by following [these instructions](../web#setup). Your computer will now serve a local bundle over `https` on port `8443`. Changes made to the `web` folder while running the development server appear on reload of the page. Changes made to the native structure of the app (inside this folder) require compiling and running the app.
-By default, the [configuration](../app/baseConfig.js) will show a preview window if the `previewEnabled` flag is `true`.
+By default, the [configuration](../native/app/config/baseConfig.js) will show a preview window if the `previewEnabled` flag is `true`.
 
 ## Deployment
 Deployment of the Scaffold is handled by Buddybuild. See [Buddybuild's deployment guide](http://docs.buddybuild.com/docs/deploy-manually) for more information.
