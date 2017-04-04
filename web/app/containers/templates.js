@@ -1,6 +1,6 @@
 // The wrapping is implemented here to avoid a circular dependency
 // involving the containers and the app actions.
-
+import React from 'react'
 import Loadable from 'react-loadable'
 
 import template from '../template'
@@ -8,42 +8,43 @@ import template from '../template'
 // Don't split the Home container out from the main app, so that we can have instant page transitions
 import UnwrappedHome from './home/container'
 import UnwrappedOffline from './offline/container'
+import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
-const LoadingComponent = () => false
+const LoadingPlaceholder = () => <SkeletonBlock height="100vh" width="100%" />
 
 export const UnwrappedCart = Loadable({
     loader: () => import('./cart/container'),
-    LoadingComponent
+    LoadingPlaceholder
 })
 
 export const UnwrappedCheckoutConfirmation = Loadable({
     loader: () => import('./checkout-confirmation/container'),
-    LoadingComponent
+    LoadingPlaceholder
 })
 
 export const UnwrappedCheckoutPayment = Loadable({
     loader: () => import('./checkout-payment/container'),
-    LoadingComponent
+    LoadingPlaceholder
 })
 
 export const UnwrappedCheckoutShipping = Loadable({
     loader: () => import('./checkout-shipping/container'),
-    LoadingComponent
+    LoadingPlaceholder
 })
 
 export const UnwrappedLogin = Loadable({
     loader: () => import('./login/container'),
-    LoadingComponent
+    LoadingPlaceholder
 })
 
 export const UnwrappedProductDetails = Loadable({
     loader: () => import('./product-details/container'),
-    LoadingComponent
+    LoadingPlaceholder
 })
 
 export const UnwrappedProductList = Loadable({
     loader: () => import('./product-list/container'),
-    LoadingComponent
+    LoadingPlaceholder
 })
 
 export const Cart = template(UnwrappedCart)
