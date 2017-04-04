@@ -39,3 +39,6 @@ To run the app for Android, follow these steps:
 - Select `Import Project`
 - Select the build.gradle file inside the `android` folder
 - Gradle will now build your dependencies, once it's done, you can run the app.
+
+### Local Preview
+The app allows you to run against a local copy of preview. This is configure [here](https://github.com/mobify/platform-scaffold/blob/develop/native/app/config/baseConfig.js#L12). If you would like to run against the production configuration, make sure you set the `previewEnabled` flag to `false`.
