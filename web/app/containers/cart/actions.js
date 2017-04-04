@@ -15,6 +15,7 @@ import {makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils
 import {getUenc} from '../product-details/selectors'
 import {addNotification} from '../app/actions'
 import {getFormKey, getIsLoggedIn} from '../app/selectors'
+import {trigger} from '../../utils/astro-integration'
 
 export const receiveData = createAction('Receive Cart Data')
 export const setRemoveItemId = createAction('Set item id for removal', ['removeItemId'])
@@ -84,6 +85,11 @@ export const openRemoveItemModal = (itemId) => {
 
 export const removeItem = (itemID) => (dispatch) => {
     return dispatch(removeFromCart(itemID))
+        .then(() => {
+            // Tell Astro the cart has updated, so it can coordinate
+            // all active webviews to refresh if needed
+            trigger('cart:updated')
+        })
         .catch((error) => {
             dispatch(addNotification({
                 content: error.message,
