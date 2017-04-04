@@ -25,7 +25,7 @@ To run the app, follow these steps.
 To run the app for iOS, follow these steps:
 - Open the `scaffold.xcworkspace` file in the 
 - Make sure you have the `scaffold` target selected.
-- Build and run the app (`CMD+R`)
+- Build and run the app (<kbd>⌘**R**</kbd>)
 
 ### Android
 To run the app for Android, follow these steps:
