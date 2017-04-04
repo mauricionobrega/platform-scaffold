@@ -3,29 +3,7 @@ import {handleActions} from 'redux-actions'
 import {mergePayload} from '../../utils/reducer-utils'
 import {receiveLoginPageData} from '../../integration-manager/login/responses'
 
-const signinFields = [
-    {
-        label: 'Email',
-        name: 'login[username]',
-        type: 'email',
-        required: true,
-        tooltip: false,
-    },
-    {
-        label: 'Password',
-        name: 'login[password]',
-        type: 'password',
-        required: true,
-        tooltip: false,
-    },
-    {
-        label: 'Remember Me',
-        name: 'persistent_remember_me',
-        type: 'checkbox',
-        required: false,
-        tooltip: false,
-    },
-]
+const signinFields = [{}, {}, {}]
 
 const registerPersonalFields = [
     {

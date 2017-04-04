@@ -80,11 +80,11 @@ LoginFieldTooltip.propTypes = {
     tooltip: PropTypes.object
 }
 
-export const LoginFieldLabel = ({label, required, type, forgotPassword}) => (
+export const LoginFieldLabel = ({label, required, forgotPassword}) => (
     <span>
         {label} {required && <span>*</span>}
 
-        {type === 'password' && forgotPassword &&
+        {forgotPassword &&
             <Link className="u-float-end u-text-normal" href={forgotPassword.href}>
                 {forgotPassword.title}
             </Link>
@@ -99,14 +99,13 @@ LoginFieldLabel.propTypes = {
     }),
     label: PropTypes.string,
     required: PropTypes.bool,
-    type: PropTypes.string,
 }
 
 export const LoginField = ({label, required, type, forgotPassword, name, tooltip, modalInfo}) => (
     <FieldRow>
         <ReduxFormField
             name={name}
-            label={<LoginFieldLabel label={label} required={required} type={type} forgotPassword={forgotPassword} />}
+            label={<LoginFieldLabel label={label} required={required} forgotPassword={forgotPassword} />}
             component={Field}
             >
             <input type={type} />

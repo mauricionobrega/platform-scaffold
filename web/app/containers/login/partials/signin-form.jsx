@@ -63,9 +63,31 @@ class SignInForm extends React.Component {
                 }
 
                 <FieldSet className="t-login__signin-fieldset">
-                    {fields.map((field, idx) =>
-                        <LoginField {...field} key={idx} modalInfo={this.modalInfo} forgotPassword={forgotPassword} />
-                    )}
+                    <LoginField
+                        label="Email"
+                        name="login[username]"
+                        type="email"
+                        required={true}
+                        modalInfo={this.modalInfo}
+                        />
+
+                    <LoginField
+                        label="Password"
+                        name="login[password]"
+                        type="password"
+                        required={true}
+                        modalInfo={this.modalInfo}
+                        forgotPassword={forgotPassword}
+                        />
+
+                    <LoginField
+                        label="Remember Me"
+                        name="persistent_remember_me"
+                        type="checkbox"
+                        required={false}
+                        modalInfo={this.modalInfo}
+                        tooltip={fields[2].tooltip}
+                        />
 
                     <FieldRow>
                         <Button
