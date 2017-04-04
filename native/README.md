@@ -14,9 +14,16 @@ We recommend using [nvm](https://github.com/creationix/nvm#installation) to mana
 
 Before you get started, take some time to look through [the Getting Started Guide](http://astro.mobify.com/latest/guides/before-you-begin/). Once you're familiar with progressive apps, follow these steps to set up this project to start developing:
 
-- Clone this repository
-- Navigate to the `native` folder in your terminal
-- Run `npm run deps`
+```sh
+# Clone the repo
+$ git clone git@github.com:mobify/platform-scaffold.git
+# or git clone https://github.com/mobify/platform-scaffold.git
+
+$ cd platform-scaffold/native
+
+# Install dependencies
+$ npm run deps
+```
 
 ## Run
 
