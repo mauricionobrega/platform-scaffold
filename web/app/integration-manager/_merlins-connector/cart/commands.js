@@ -1,14 +1,16 @@
 import {makeRequest, makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
+import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 import {removeNotification} from '../../../containers/app/actions'
 import {receiveCartContents} from '../../cart/responses'
 import {receiveCheckoutData} from '../../checkout/responses'
-import {getFormKey} from '../selectors'
+import {getFormKey, getUenc} from '../selectors'
 import parseCart from './parser'
 import {parseLocations} from '../checkout/parsers'
 import {fetchShippingMethodsEstimate} from '../checkout/commands'
 import {fetchPageData} from '../app/commands'
 import {parseCheckoutEntityID, extractMagentoJson} from '../../../utils/magento-utils'
-import {ESTIMATE_FORM_NAME} from '../../../containers/cart/constants'
+import {ESTIMATE_FORM_NAME, ADD_TO_WISHLIST_URL} from '../../../containers/cart/constants'
 
 const LOAD_CART_SECTION_URL = '/customer/section/load/?sections=cart%2Cmessages&update_section_id=true'
 const REMOVE_CART_ITEM_URL = '/checkout/sidebar/removeItem/'
@@ -97,4 +99,26 @@ export const fetchCartPageData = (url) => (dispatch) => {
             }))
         })
         .then(() => dispatch(fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME)))
+}
+
+export const addToWishlist = (productId, productURL) => (dispatch, getState) => {
+    const currentState = getState()
+    const payload = {
+        product: productId,
+        // This won't always be defined, but add to wishlist will still work
+        // if it's missing
+        uenc: getUenc(urlToPathKey(productURL))(currentState),
+        formKey: getFormKey(currentState)
+    }
+
+    return makeFormEncodedRequest(ADD_TO_WISHLIST_URL, payload, {method: 'POST'})
+            .then(jqueryResponse)
+            .then((response) => {
+                const [$, $response] = response // eslint-disable-line no-unused-vars
+                // The response is the HTML of the wishlist page, so check for the item we added
+                if ($response.find(`.product-item-link[href="${productURL}"]`).length) {
+                    return
+                }
+                throw new Error('Add Request Failed')
+            })
 }
