@@ -5,14 +5,9 @@ import registrationParser from './register'
 
 describe('the Registration parser', () => {
     const $content = jquerifyHtmlFile(`${__dirname}/register-example.html`)
-    const form = registrationParser($, $content)
-
-    const headings = ['Personal Information', 'Sign-in Information']
+    const href = registrationParser($content)
 
     test('extracts forms from the page', () => {
-        expect(isURL(form.href)).toBe(true)
-        form.sections.forEach((section) => {
-            expect(headings.includes(section.heading)).toBe(true)
-        })
+        expect(isURL(href)).toBe(true)
     })
 })

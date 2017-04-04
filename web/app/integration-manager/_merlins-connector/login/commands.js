@@ -15,23 +15,16 @@ import registerParser from './parsers/register'
 export const fetchLoginData = (url, routeName) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then((res) => {
-            const [$, $response] = res
+            const $response = res[1]
             if (routeName === 'signin') {
-                const form = signinParser($, $response)
-                dispatch(receiveLoginHref(form.href))
+                dispatch(receiveLoginHref(signinParser($response)))
                 return dispatch(receiveLoginPageData({
-                    signinSection: {
-                        isFormLoaded: true
-                    }
+                    signinSection: {isFormLoaded: true}
                 }))
             } else if (routeName === 'register') {
-                const form = registerParser($, $response)
-                dispatch(receiveRegisterHref(form.href))
+                dispatch(receiveRegisterHref(registerParser($response)))
                 return dispatch(receiveLoginPageData({
-                    registerSection: {
-                        isFormLoaded: true,
-                        form
-                    }
+                    registerSection: {isFormLoaded: true}
                 }))
             }
             return dispatch(receiveLoginPageData())

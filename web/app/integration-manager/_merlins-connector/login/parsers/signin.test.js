@@ -5,9 +5,9 @@ import loginParser from './signin'
 
 describe('the Login parser', () => {
     const $content = jquerifyHtmlFile(`${__dirname}/signin-example.html`)
-    const form = loginParser($, $content)
+    const href = loginParser($content)
 
     test('extracts form info from the page', () => {
-        expect(isURL(form.href)).toBe(true)
+        expect(isURL(href)).toBe(true)
     })
 })
