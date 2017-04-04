@@ -7,7 +7,7 @@ export const getTextFrom = ($element, selector) => (
         .trim()
 )
 
-export const getTextArrayFrom = ($element, selector) => {
+export const getTextArrayFrom = ($, $element, selector) => {
     const textArray = []
     $element.find(selector).each((index, currentElement) => {
         const $currentElement = $(currentElement) // Don't use $(this)

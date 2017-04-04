@@ -21,13 +21,13 @@ const PrivacyPage = ({title, intro, text, cookieList}) => (
         }
         { cookieList
             ? <div>
-              <h2>All of the cookies</h2>
-              <ul>
-                {[...cookieList].map((cookie, index) =>
-                    <li key={index}>{cookie}</li>
-                )}
-              </ul>
-              </div>
+                <h2>All of the cookies</h2>
+                <ul>
+                    {[...cookieList].map((cookie, index) =>
+                        <li key={index}>{cookie}</li>
+                    )}
+                </ul>
+            </div>
             : <SkeletonText lines={10} type="li" width="1000px" />
         }
         {text.map((paragraph, idx) => <p key={idx}>{paragraph}</p>)}
@@ -38,7 +38,7 @@ PrivacyPage.propTypes = {
     cookieList: PropTypes.array,
     intro: PropTypes.string,
     text: PropTypes.arrayOf(PropTypes.string),
-    title: PropTypes.string
+    title: PropTypes.string,
 }
 
 const mapStateToProps = createPropsSelector({

@@ -1,10 +1,9 @@
-import {getTextFrom} from '../../utils/parser-utils'
-import {getTextArrayFrom} from '../../utils/parser-utils'
+import {getTextFrom, getTextArrayFrom} from '../../utils/parser-utils'
 
 export const privacyPageParser = ($, $html) => {
     return {
         title: getTextFrom($html, 'h1.page-title'),
         intro: getTextFrom($html, 'div.message.info'),
-        cookieList: getTextArrayFrom($html, 'th'),
+        cookieList: getTextArrayFrom($, $html, 'th'),
     }
 }
