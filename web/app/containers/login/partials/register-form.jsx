@@ -9,7 +9,6 @@ import {REGISTER_SECTION} from '../constants'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import FieldSet from 'progressive-web-sdk/dist/components/field-set'
-import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
 import {LoginField} from './common'
 
@@ -59,32 +58,85 @@ class RegisterForm extends React.Component {
                     </div>
                 }
 
-                {sections.map(({heading, fields}, idx) => {
-                    return (
-                        <FieldSet className="t-login__register-fieldset" key={idx}>
-                            <div className="u-margin-bottom">
-                                {heading ?
-                                    <h3 className="u-color-brand u-text-font-family u-text-normal">
-                                        {heading}
-                                    </h3>
-                                :
-                                    <SkeletonBlock height="24px" width="50%" />
-                                }
-                            </div>
+                <FieldSet className="t-login__register-fieldset">
+                    <div className="u-margin-bottom">
+                        <h3 className="u-color-brand u-text-font-family u-text-normal">
+                            Personal Information
+                        </h3>
+                    </div>
 
-                            {fields.map((field, idx) =>
-                                <LoginField {...field} key={idx} modalInfo={this.modalInfo} />
-                            )}
-                        </FieldSet>
-                    )
-                })}
+                    <LoginField
+                        label="First Name"
+                        name="firstname"
+                        type="text"
+                        required={true}
+                        modalInfo={this.modalInfo}
+                        />
+
+                    <LoginField
+                        label="Last Name"
+                        name="lastname"
+                        type="text"
+                        required={true}
+                        modalInfo={this.modalInfo}
+                        />
+
+                    <LoginField
+                        label="Email"
+                        name="email"
+                        type="email"
+                        required={true}
+                        modalInfo={this.modalInfo}
+                        />
+
+                    <LoginField
+                        label="Sign Up for Newsletter"
+                        name="is_subscribed"
+                        type="checkbox"
+                        required={false}
+                        modalInfo={this.modalInfo}
+                        />
+                </FieldSet>
+
+                <FieldSet className="t-login__register-fieldset">
+                    <div className="u-margin-bottom">
+                        <h3 className="u-color-brand u-text-font-family u-text-normal">
+                            Sign-in Information
+                        </h3>
+                    </div>
+
+                    <LoginField
+                        label="Password"
+                        name="password"
+                        type="password"
+                        required={true}
+                        modalInfo={this.modalInfo}
+                        />
+
+                    <LoginField
+                        label="Confirm Password"
+                        name="password_confirmation"
+                        type="password"
+                        required={true}
+                        modalInfo={this.modalInfo}
+                        />
+
+                    <LoginField
+                        label="Remember Me"
+                        name="persistent_remember_me"
+                        type="checkbox"
+                        required={false}
+                        modalInfo={this.modalInfo}
+                        tooltip={sections[1].fields[2].tooltip}
+                        />
+                </FieldSet>
 
                 <Button
                     className="c--primary u-width-full u-margin-top-lg"
                     type="submit"
                     disabled={submitting || !isFormLoaded}
                 >
-                    <span className="u-text-uppercase">'Create an Account'</span>
+                    <span className="u-text-uppercase">Create an Account</span>
                 </Button>
             </form>
         )
