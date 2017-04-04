@@ -84,17 +84,15 @@ const registerSigninFields = [
 
 const initialState = Immutable.fromJS({
     signinSection: {
-        href: '',
         form: {
+            href: '',
             fields: signinFields,
-            hiddenInputs: [],
             submitText: ''
         },
     },
     registerSection: {
-        href: '',
         form: {
-            hiddenInputs: [],
+            href: '',
             submitText: '',
             sections: [{
                 heading: '',

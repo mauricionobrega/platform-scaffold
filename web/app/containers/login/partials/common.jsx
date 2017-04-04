@@ -7,7 +7,6 @@ import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 import Icon from 'progressive-web-sdk/dist/components/icon'
 import Link from 'progressive-web-sdk/dist/components/link'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
-import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
 export const PanelHeading = ({heading}) => {
