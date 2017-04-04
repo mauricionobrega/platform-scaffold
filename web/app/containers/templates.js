@@ -1,7 +1,6 @@
 // The wrapping is implemented here to avoid a circular dependency
 // involving the containers and the app actions.
 
-import React from 'react'
 import Loadable from 'react-loadable'
 
 import template from '../template'
