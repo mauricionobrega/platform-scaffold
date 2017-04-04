@@ -5,8 +5,10 @@ import {receiveCheckoutData} from '../../checkout/responses'
 import {getFormKey} from '../selectors'
 import parseCart from './parser'
 import {parseLocations} from '../checkout/parsers'
+import {fetchShippingMethodsEstimate} from '../checkout/commands'
 import {fetchPageData} from '../app/commands'
 import {parseCheckoutEntityID, extractMagentoJson} from '../../../utils/magento-utils'
+import {ESTIMATE_FORM_NAME} from '../../../containers/cart/constants'
 
 const LOAD_CART_SECTION_URL = '/customer/section/load/?sections=cart%2Cmessages&update_section_id=true'
 const REMOVE_CART_ITEM_URL = '/checkout/sidebar/removeItem/'
@@ -94,7 +96,5 @@ export const fetchCartPageData = (url) => (dispatch) => {
                 ...locationsData
             }))
         })
-        .then(() => {
-            // TODO: fetch shipping estimate data
-        })
+        .then(() => dispatch(fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME)))
 }
