@@ -10,7 +10,6 @@ import Icon from 'progressive-web-sdk/dist/components/icon'
 // Merlins Potions Nearby Widget Config
 import merlinsPotionsNearbyConfig from '../../../config/merlins-potions-nearby-config.json'
 
-// Merlins Potions Nearby Widget ID selector
 const $merlinsPotionsNearbyWidgetSelector = 'js-merlins-potions-nearby-widget'
 
 /**
@@ -26,15 +25,17 @@ class ProductNearestStores extends React.Component {
             b.setAttribute('id', $merlinsPotionsNearbyWidgetSelector)
             b.type = 'text/javascript'
             b.src = 'https://dtopnrgu570sp.cloudfront.net/nearby-widget/nearby.min.js'
-            b.setAttribute('async', !0)
-            b.addEventListener ? b.addEventListener('load', (b) => { // eslint-disable-line no-unused-expressions
-                a(null, b)
-            }, !1) : b.onreadystatechange = function() {
-                b.readyState in { // eslint-disable-line no-unused-expressions
-                    loaded: 1,
-                    complete: 1
-                } && (b.onreadystatechange = null, a())
-            }
+            b.setAttribute('async', true)
+            b.addEventListener
+                ? b.addEventListener('load', (b) => { // eslint-disable-line no-unused-expressions
+                    a(null, b)
+                }, false)
+                : b.onreadystatechange = function() {
+                    b.readyState in { // eslint-disable-line no-unused-expressions
+                        loaded: 1,
+                        complete: 1
+                    } && (b.onreadystatechange = null, a())
+                }
             document.head.appendChild(b)
         }(() => {
             window.DondeNearby.load({...merlinsPotionsNearbyConfig})
@@ -47,8 +48,8 @@ class ProductNearestStores extends React.Component {
 
     componentWillUnmount() {
         // Remove nearby widget script if component unmount
-        const $merlinsPotionsNearbyWidgetScript = document.getElementById($merlinsPotionsNearbyWidgetSelector)
-        $merlinsPotionsNearbyWidgetScript.parentNode.removeChild($merlinsPotionsNearbyWidgetScript)
+        const $script = document.getElementById($merlinsPotionsNearbyWidgetSelector)
+        $script.parentNode.removeChild($script)
     }
 
     render() {
