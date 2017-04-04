@@ -1,3 +1,5 @@
+/* eslint-disable import/namespace */
+/* eslint-disable import/named */
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 
 import * as analyticConstants from 'progressive-web-sdk/dist/analytics/analytic-constants'

@@ -1,3 +1,5 @@
+/* eslint-disable import/namespace */
+/* eslint-disable import/named */
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
@@ -20,12 +22,6 @@ import NotificationManager from '../../components/notification-manager'
 
 import {requestIdleCallback} from '../../utils/utils'
 
-// Offline support
-import {Offline} from '../templates'
-import OfflineBanner from '../offline/partials/offline-banner'
-import OfflineModal from '../offline/partials/offline-modal'
-
-// Lazy load containers
 import {
     UnwrappedCart,
     UnwrappedCheckoutConfirmation,
@@ -33,8 +29,13 @@ import {
     UnwrappedCheckoutShipping,
     UnwrappedLogin,
     UnwrappedProductDetails,
-    UnwrappedProductList
+    UnwrappedProductList,
+    Offline
 } from '../templates'
+
+// Offline support
+import OfflineBanner from '../offline/partials/offline-banner'
+import OfflineModal from '../offline/partials/offline-modal'
 
 const hidePreloaderWhenCSSIsLoaded = () => {
     if (window.Progressive.stylesheetLoaded) {
