@@ -1,19 +1,22 @@
 import React, {PropTypes} from 'react'
-import {createPropsSelector} from 'reselect-immutable-helpers'
 import {connect} from 'react-redux'
-import * as selectors from '../selectors'
 import * as actions from '../actions'
 
 import RegisterForm from './register-form'
-import {PanelHeading, PanelDescription, PanelRequiredText} from './common'
+import {PanelHeading} from './common'
 
-const RegisterPanel = ({heading, description, requiredText, submitForm}) => (
+const registerDescription = 'Creating an account has many benefits: check out faster, keep more than one address, track orders, and more'
+const requiredText = '* Required Fields'
+
+const RegisterPanel = ({submitForm}) => (
     <div className="t-login__register-panel">
         <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
-            <PanelHeading heading={heading} />
-            <PanelDescription description={description} />
+            <PanelHeading heading="New Customers" />
+            <p>
+                {registerDescription}
+            </p>
             <div className="u-margin-top">
-                <PanelRequiredText requiredText={requiredText} />
+                {requiredText}
             </div>
         </div>
 
@@ -24,20 +27,11 @@ const RegisterPanel = ({heading, description, requiredText, submitForm}) => (
 )
 
 RegisterPanel.propTypes = {
-    description: PropTypes.string,
-    heading: PropTypes.string,
-    requiredText: PropTypes.string,
     submitForm: PropTypes.func
 }
-
-const mapStateToProps = createPropsSelector({
-    description: selectors.register.getDescription,
-    heading: selectors.register.getHeading,
-    requiredText: selectors.register.getRequiredText
-})
 
 const mapDispatchToProps = {
     submitForm: actions.submitRegisterForm
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterPanel)
+export default connect(null, mapDispatchToProps)(RegisterPanel)

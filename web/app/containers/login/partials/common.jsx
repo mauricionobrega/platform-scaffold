@@ -26,30 +26,6 @@ PanelHeading.propTypes = {
     heading: PropTypes.string
 }
 
-export const PanelDescription = ({description}) => {
-    if (description) {
-        return (<p>{description}</p>)
-    } else {
-        return (<SkeletonText lines={2} size="14px" width="100%" />)
-    }
-}
-
-PanelDescription.propTypes = {
-    description: PropTypes.string
-}
-
-export const PanelRequiredText = ({requiredText}) => {
-    if (requiredText) {
-        return (<span>{requiredText}</span>)
-    } else {
-        return (<SkeletonText lines={1} size="14px" width="33%" />)
-    }
-}
-
-PanelRequiredText.propTypes = {
-    requiredText: PropTypes.string
-}
-
 export const LoginSheetHeader = ({label, closeModal}) => (
     <div className="u-width-full u-bg-color-brand u-color-neutral-10 u-flexbox">
         <h1 className="u-flex u-padding-md u-h4 u-text-uppercase">

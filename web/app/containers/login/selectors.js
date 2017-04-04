@@ -11,9 +11,6 @@ export const getSigninSection = createGetSelector(getLogin, 'signinSection')
 export const getRegisterSection = createGetSelector(getLogin, 'registerSection')
 
 const sectionKeys = [
-    ['getDescription', 'description'],
-    ['getHeading', 'heading'],
-    ['getRequiredText', 'requiredText'],
     ['getFormInfo', 'form'],
     ['getIsFormLoaded', 'isFormLoaded']
 ]
