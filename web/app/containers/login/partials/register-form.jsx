@@ -12,6 +12,11 @@ import FieldSet from 'progressive-web-sdk/dist/components/field-set'
 
 import {LoginField} from './common'
 
+const tooltip = {
+    title: 'What\'s this?',
+    content: 'Check "Remember Me" to access your shopping cart on this computer even if you are not signed in.'
+}
+
 class RegisterForm extends React.Component {
     constructor(props) {
         super(props)
@@ -37,7 +42,6 @@ class RegisterForm extends React.Component {
             submitting,
             handleSubmit,
             // props from parent
-            sections,
             isFormLoaded,
             modalOpen
         } = this.props
@@ -127,7 +131,7 @@ class RegisterForm extends React.Component {
                         type="checkbox"
                         required={false}
                         modalInfo={this.modalInfo}
-                        tooltip={sections[1].fields[2].tooltip}
+                        tooltip={tooltip}
                         />
                 </FieldSet>
 
@@ -152,7 +156,6 @@ RegisterForm.propTypes = {
     isFormLoaded: PropTypes.bool,
     modalOpen: PropTypes.bool,
     openInfoModal: PropTypes.func,
-    sections: PropTypes.array,
     submitForm: PropTypes.func,
     submitting: PropTypes.bool,
 }
@@ -163,7 +166,6 @@ const ReduxRegisterForm = reduxForm({
 })(RegisterForm)
 
 const mapStateToProps = createPropsSelector({
-    sections: selectors.register.form.getSections,
     isFormLoaded: selectors.register.getIsFormLoaded,
     modalOpen: isModalOpen(REGISTER_SECTION),
 })

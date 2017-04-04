@@ -5,16 +5,7 @@ import {receiveLoginPageData} from '../../integration-manager/login/responses'
 
 const initialState = Immutable.fromJS({
     signinSection: {},
-    registerSection: {
-        form: {
-            href: '',
-            sections: [{
-                fields: [{}, {}, {}, {}],
-            }, {
-                fields: [{}, {}, {}],
-            }]
-        },
-    }
+    registerSection: {}
 })
 
 export default handleActions({
