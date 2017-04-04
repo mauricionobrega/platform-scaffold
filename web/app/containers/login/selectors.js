@@ -19,10 +19,9 @@ const makeSelectorsFrom = (selector, keys) => fromPairs(
 
 export const signin = makeSelectorsFrom(getSigninSection, sectionKeys)
 
-signin.form = makeSelectorsFrom(signin.getFormInfo, [
-    ['getFields', 'fields'],
-    ['getForgotPassword', 'forgotPassword']
-])
+signin.form = {
+    getFields: createGetSelector(signin.getFormInfo, 'fields')
+}
 
 export const register = makeSelectorsFrom(getRegisterSection, sectionKeys)
 

@@ -13,6 +13,8 @@ import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 
 import {LoginField} from './common'
 
+const FORGOT_PASSWORD_PATH = '/customer/account/forgotpassword'
+
 class SignInForm extends React.Component {
     constructor(props) {
         super(props)
@@ -41,7 +43,6 @@ class SignInForm extends React.Component {
             handleSubmit,
             // props from store
             fields,
-            forgotPassword,
             isFormLoaded,
             modalOpen
         } = this.props
@@ -77,7 +78,7 @@ class SignInForm extends React.Component {
                         type="password"
                         required={true}
                         modalInfo={this.modalInfo}
-                        forgotPassword={forgotPassword}
+                        forgotPassword={{href: FORGOT_PASSWORD_PATH}}
                         />
 
                     <LoginField
@@ -108,7 +109,6 @@ SignInForm.propTypes = {
     closeInfoModal: PropTypes.func,
     error: PropTypes.string,
     fields: PropTypes.array,
-    forgotPassword: PropTypes.object,
     handleSubmit: PropTypes.func,
     invalid: PropTypes.bool,
     isFormLoaded: PropTypes.bool,
@@ -127,7 +127,6 @@ const mapStateToProps = createPropsSelector({
     fields: selectors.signin.form.getFields,
     isFormLoaded: selectors.signin.getIsFormLoaded,
     modalOpen: isModalOpen(SIGN_IN_SECTION),
-    forgotPassword: selectors.signin.form.getForgotPassword
 })
 
 const mapDispatchToProps = {

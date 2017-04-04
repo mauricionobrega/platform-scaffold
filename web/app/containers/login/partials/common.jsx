@@ -86,7 +86,7 @@ export const LoginFieldLabel = ({label, required, forgotPassword}) => (
 
         {forgotPassword &&
             <Link className="u-float-end u-text-normal" href={forgotPassword.href}>
-                {forgotPassword.title}
+                Forgot Your Password?
             </Link>
         }
     </span>
