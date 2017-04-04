@@ -40,7 +40,6 @@ export const productDetailsUIParser = ($, $html) => {
 
     return {
         breadcrumbs: parseBreadcrumbs($, $breadcrumbs),
-
         itemQuantity: parseInt($form.find('#qty').val()),
         ctaText: $form.find('.tocart').text()
     }
