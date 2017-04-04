@@ -1,6 +1,6 @@
 # Progressive Mobile App SDK Scaffold
 
-This directory contains the Progressive Mobile App SDK (Astro) Scaffold. It is a fully functioning iOS and Android app demoing the Merlins Potions e-commerce store and is a part of the Mobify Platform. It is built and maintained by the Apps team. For questions and support, head on to `#progressive-app-astro`.
+This directory contains the Progressive Mobile App SDK (Astro) Scaffold. It is a fully functioning iOS and Android app demoing the Merlins Potions e-commerce store and is a part of the Mobify Platform.
 
 ## Requirements
 
@@ -18,13 +18,13 @@ Before you get started, take some time to look through [the Getting Started Guid
 
 ```sh
 # Clone the repo
-$ git clone git@github.com:mobify/platform-scaffold.git
+git clone git@github.com:mobify/platform-scaffold.git
 # or git clone https://github.com/mobify/platform-scaffold.git
 
-$ cd platform-scaffold/native
+cd platform-scaffold/native
 
 # Install dependencies
-$ npm run deps
+npm run deps
 ```
 
 ## Run
@@ -42,9 +42,6 @@ To run the app for Android, follow these steps:
 - Select the build.gradle file inside the `android` folder
 - Gradle will now build your dependencies, once it's done, you can run the app.
 
-### Local Preview
-The app allows you to run against a local copy of preview. This is configured [here](https://github.com/mobify/platform-scaffold/blob/develop/native/app/config/baseConfig.js#L12). If you would like to run against the production configuration, make sure you set the `previewEnabled` flag to `false`.
-
 ## Testing
 To run the tests for each project, follow these steps:
 
@@ -57,6 +54,15 @@ To run the tests for each project, follow these steps:
 ### Continuous Integration
 The Scaffold project uses Buddybuild [for iOS](https://dashboard.buddybuild.com/apps/58adef614b5a980100922518) and [for Android](https://dashboard.buddybuild.com/apps/58addc71d556a80100e89aa3).
 
-## Deploy
+## Development
+Development of progressive mobile apps occurs in two streams:
+
+- The content for the app is developed as part of the progressive mobile web, inside the [`web`](../web) folder
+- The structure of the app is developed inside this folder, `native`.
+
+To preview local changes made to the content, you must run a local preview server. You can do that by following [these instructions](../web#setup). Your computer will now serve a local bundle over `https` on port `8443`. Changes made to the `web` folder while running the development server appear on reload of the page. Changes made to the native structure of the app (inside this folder) require compiling and running the app.
+By default, the [configuration](../app/baseConfig.js) will show a preview window if the `previewEnabled` flag is `true`.
+
+## Deployment
 Deployment of the Scaffold is handled by Buddybuild. See [Buddybuild's deployment guide](http://docs.buddybuild.com/docs/deploy-manually) for more information.
 
