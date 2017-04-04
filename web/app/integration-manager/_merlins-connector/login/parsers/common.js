@@ -3,14 +3,8 @@ import {getTextFrom} from '../../../../utils/parser-utils'
 
 export const parseFields = ($, $fields) => {
     return $fields.map((_, field) => {
-        const $field = $(field)
-        const $tooltip = $field.find('.tooltip.wrapper')
-        const $input = $field.find('input')
+        const $tooltip = $(field).find('.tooltip.wrapper')
         return {
-            label: getTextFrom($field, 'label'),
-            name: $input.attr('name'),
-            type: $input.attr('type'),
-            required: $field.hasClass('required'),
             tooltip: $tooltip.length ? {
                 title: getTextFrom($tooltip, '.toggle'),
                 content: getTextFrom($tooltip, '.content')

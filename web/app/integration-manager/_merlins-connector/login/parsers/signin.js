@@ -1,4 +1,3 @@
-/* eslint-disable newline-per-chained-call */
 import {getTextFrom} from '../../../../utils/parser-utils'
 import {parseFields} from './common'
 

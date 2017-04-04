@@ -1,4 +1,3 @@
-/* eslint-disable newline-per-chained-call */
 import {parseFields} from './common'
 
 const parseFormSection = ($, $formSection) => {
