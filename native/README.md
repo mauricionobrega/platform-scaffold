@@ -7,6 +7,8 @@ This directory contains the Progressive Mobile App SDK (Astro) Scaffold. It is a
 * [Git](https://git-scm.com/)
 * node 6 LTS\*
 * npm 3
+* Xcode 8.3
+* Android Studio 2.3
 
 We recommend using [nvm](https://github.com/creationix/nvm#installation) to manage your node and npm versions. 
 
