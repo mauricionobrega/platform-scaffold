@@ -54,5 +54,8 @@ To run the tests for each project, follow these steps:
 ### Android
 - With the project open, run the tests by right-clicking the androidTest package and selecting "Run Tests in 'com.mobify...'"
 
+### Continuous Integration
+The Scaffold project uses Buddybuild [for iOS](https://dashboard.buddybuild.com/apps/58adef614b5a980100922518) and [for Android](https://dashboard.buddybuild.com/apps/58addc71d556a80100e89aa3).
+
 ## Deploy
 Deployment of the Scaffold is handled by Buddybuild. See [Buddybuild's deployment guide](http://docs.buddybuild.com/docs/deploy-manually) for more information.
