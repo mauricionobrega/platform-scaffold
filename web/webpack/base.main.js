@@ -63,7 +63,7 @@ const config = {
         rules: [
             {
                 test: /\.jsx?$/,
-                exclude: /node_modules/,
+                exclude: /node_modules(?!\/mobify-progressive-app-sdk)/,
                 use: {
                     loader: 'babel-loader',
                     options: {

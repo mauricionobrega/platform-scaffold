@@ -5,6 +5,11 @@ const path = require('path')
 const webpack = require('webpack')
 const baseCommon = require('./base.common')
 
+const readNativeAstroVersion = () => {
+    const nativePackageJson = require('../../native/package.json').dependencies['mobify-progressive-app-sdk']
+    return `'${nativePackageJson}'`
+}
+
 module.exports = {
     devtool: 'cheap-source-map',
     entry: './app/loader.js',
@@ -43,6 +48,9 @@ module.exports = {
             options: {
                 postcss: baseCommon.postcss
             }
+        }),
+        new webpack.DefinePlugin({
+            NATIVE_WEBPACK_ASTRO_VERSION: readNativeAstroVersion()
         })
     ]
 }
