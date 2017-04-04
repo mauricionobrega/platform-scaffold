@@ -12,6 +12,7 @@ import UnwrappedLogin from './login/container'
 import UnwrappedProductDetails from './product-details/container'
 import UnwrappedProductList from './product-list/container'
 import UnwrappedOffline from './offline/container'
+import UnwrappedPrivacyPage from './privacy-page/container'
 
 export const Cart = template(UnwrappedCart)
 export const CheckoutConfirmation = template(UnwrappedCheckoutConfirmation)
@@ -22,3 +23,4 @@ export const Login = template(UnwrappedLogin)
 export const ProductDetails = template(UnwrappedProductDetails)
 export const ProductList = template(UnwrappedProductList)
 export const Offline = template(UnwrappedOffline)
+export const PrivacyPage = template(UnwrappedPrivacyPage)
