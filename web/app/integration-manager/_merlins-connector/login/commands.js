@@ -21,8 +21,7 @@ export const fetchLoginData = (url, routeName) => (dispatch) => {
                 dispatch(receiveLoginHref(form.href))
                 return dispatch(receiveLoginPageData({
                     signinSection: {
-                        isFormLoaded: true,
-                        form
+                        isFormLoaded: true
                     }
                 }))
             } else if (routeName === 'register') {

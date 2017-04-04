@@ -13,17 +13,13 @@ const sectionKeys = [
     ['getIsFormLoaded', 'isFormLoaded']
 ]
 
-const makeSelectorsFrom = (selector, keys) => fromPairs(
-    keys.map(([funcName, key]) => [funcName, createGetSelector(selector, key)])
-)
-
-export const signin = makeSelectorsFrom(getSigninSection, sectionKeys)
-
-signin.form = {
-    getFields: createGetSelector(signin.getFormInfo, 'fields')
+export const signin = {
+    getIsFormLoaded: createGetSelector(getSigninSection, 'isFormLoaded')
 }
 
-export const register = makeSelectorsFrom(getRegisterSection, sectionKeys)
+export const register = fromPairs(
+    sectionKeys.map(([funcName, key]) => [funcName, createGetSelector(getRegisterSection, key)])
+)
 
 register.form = {
     getSections: createGetSelector(register.getFormInfo, 'sections')

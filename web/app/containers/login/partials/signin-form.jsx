@@ -15,6 +15,11 @@ import {LoginField} from './common'
 
 const FORGOT_PASSWORD_PATH = '/customer/account/forgotpassword'
 
+const tooltip = {
+    title: 'What\'s this?',
+    content: 'Check "Remember Me" to access your shopping cart on this computer even if you are not signed in.'
+}
+
 class SignInForm extends React.Component {
     constructor(props) {
         super(props)
@@ -42,7 +47,6 @@ class SignInForm extends React.Component {
             submitting,
             handleSubmit,
             // props from store
-            fields,
             isFormLoaded,
             modalOpen
         } = this.props
@@ -87,7 +91,7 @@ class SignInForm extends React.Component {
                         type="checkbox"
                         required={false}
                         modalInfo={this.modalInfo}
-                        tooltip={fields[2].tooltip}
+                        tooltip={tooltip}
                         />
 
                     <FieldRow>
@@ -108,7 +112,6 @@ class SignInForm extends React.Component {
 SignInForm.propTypes = {
     closeInfoModal: PropTypes.func,
     error: PropTypes.string,
-    fields: PropTypes.array,
     handleSubmit: PropTypes.func,
     invalid: PropTypes.bool,
     isFormLoaded: PropTypes.bool,
@@ -124,7 +127,6 @@ const ReduxSignInForm = reduxForm({
 })(SignInForm)
 
 const mapStateToProps = createPropsSelector({
-    fields: selectors.signin.form.getFields,
     isFormLoaded: selectors.signin.getIsFormLoaded,
     modalOpen: isModalOpen(SIGN_IN_SECTION),
 })

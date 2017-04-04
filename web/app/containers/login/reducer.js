@@ -4,12 +4,7 @@ import {mergePayload} from '../../utils/reducer-utils'
 import {receiveLoginPageData} from '../../integration-manager/login/responses'
 
 const initialState = Immutable.fromJS({
-    signinSection: {
-        form: {
-            href: '',
-            fields: [{}, {}, {}],
-        },
-    },
+    signinSection: {},
     registerSection: {
         form: {
             href: '',
