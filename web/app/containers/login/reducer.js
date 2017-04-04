@@ -83,12 +83,8 @@ const registerSigninFields = [
 ]
 
 const initialState = Immutable.fromJS({
-    title: 'Customer Login',
     signinSection: {
         href: '',
-        heading: '',
-        description: '',
-        requiredText: '',
         form: {
             href: '',
             fields: signinFields,
@@ -98,9 +94,6 @@ const initialState = Immutable.fromJS({
     },
     registerSection: {
         href: '',
-        heading: '',
-        description: '',
-        requiredText: '',
         form: {
             href: '',
             hiddenInputs: [],

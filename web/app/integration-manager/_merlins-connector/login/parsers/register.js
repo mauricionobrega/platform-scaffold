@@ -22,8 +22,6 @@ const parseForm = ($, $form, $infoSection, $accountSection) => {
 
 const registrationParser = ($, $html) => {
     return {
-        heading: getTextFrom($html, '.login-container .block-new-customer .block-title'),
-        description: getTextFrom($html, '.block-new-customer .block-content'),
         href: $html.find('.header.links a').last().attr('href'),
         form: parseForm(
             $,
@@ -31,7 +29,6 @@ const registrationParser = ($, $html) => {
             $html.find('.fieldset.create.info'),
             $html.find('.fieldset.create.account')
         ),
-        requiredText: $html.find('.fieldset.create.account').attr('data-hasrequired'),
     }
 }
 
