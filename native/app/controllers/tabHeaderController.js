@@ -6,7 +6,6 @@ import CartModalController from './cartModalController'
 import AppEvents from '../global/app-events'
 import baseConfig from '../config/baseConfig'
 import cartConfig from '../config/cartConfig'
-import {Events} from './tabController'
 
 const TabHeaderController = function(headerBar, counterBadgeController) {
     this.viewPlugin = headerBar
@@ -16,7 +15,7 @@ const TabHeaderController = function(headerBar, counterBadgeController) {
         this.showCartModal()
     })
 
-    AppEvents.on(Events.updateCart, (data) => {
+    AppEvents.on(AppEvents.updateCart, (data) => {
         this.updateCounter(data.count)
     })
 }
