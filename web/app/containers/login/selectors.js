@@ -21,13 +21,11 @@ export const signin = makeSelectorsFrom(getSigninSection, sectionKeys)
 
 signin.form = makeSelectorsFrom(signin.getFormInfo, [
     ['getFields', 'fields'],
-    ['getSubmitText', 'submitText'],
     ['getForgotPassword', 'forgotPassword']
 ])
 
 export const register = makeSelectorsFrom(getRegisterSection, sectionKeys)
 
-register.form = makeSelectorsFrom(register.getFormInfo, [
-    ['getSections', 'sections'],
-    ['getSubmitText', 'submitText']
-])
+register.form = {
+    getSections: createGetSelector(register.getFormInfo, 'sections')
+}

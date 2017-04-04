@@ -39,7 +39,6 @@ class RegisterForm extends React.Component {
             handleSubmit,
             // props from parent
             sections,
-            submitText,
             isFormLoaded,
             modalOpen
         } = this.props
@@ -85,7 +84,7 @@ class RegisterForm extends React.Component {
                     type="submit"
                     disabled={submitting || !isFormLoaded}
                 >
-                    <span className="u-text-uppercase">{submitText || 'Create an Account'}</span>
+                    <span className="u-text-uppercase">'Create an Account'</span>
                 </Button>
             </form>
         )
@@ -103,7 +102,6 @@ RegisterForm.propTypes = {
     openInfoModal: PropTypes.func,
     sections: PropTypes.array,
     submitForm: PropTypes.func,
-    submitText: PropTypes.string,
     submitting: PropTypes.bool,
 }
 
@@ -116,7 +114,6 @@ const mapStateToProps = createPropsSelector({
     sections: selectors.register.form.getSections,
     isFormLoaded: selectors.register.getIsFormLoaded,
     modalOpen: isModalOpen(REGISTER_SECTION),
-    submitText: selectors.register.form.getSubmitText
 })
 
 const mapDispatchToProps = {

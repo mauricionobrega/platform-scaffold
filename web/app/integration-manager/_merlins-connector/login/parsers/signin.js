@@ -9,8 +9,7 @@ const parseForm = ($, $form) => {
             href: $form.find('.action.remind').attr('href'),
             title: getTextFrom($form, '.action.remind')
         },
-        fields: $.makeArray(parseFields($, $form.find('.field:not(.note)'))),
-        submitText: getTextFrom($form, 'button[type="submit"]')
+        fields: $.makeArray(parseFields($, $form.find('.field:not(.note)')))
     }
 }
 

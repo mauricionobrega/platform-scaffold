@@ -12,7 +12,6 @@ const parseFormSection = ($, $formSection) => {
 const parseForm = ($, $form, $infoSection, $accountSection) => {
     return {
         href: $form.attr('action'),
-        submitText: getTextFrom($form, 'button[type="submit"]'),
         sections: [
             parseFormSection($, $infoSection),
             parseFormSection($, $accountSection)

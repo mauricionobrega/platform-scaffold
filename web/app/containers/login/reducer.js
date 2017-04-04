@@ -87,13 +87,11 @@ const initialState = Immutable.fromJS({
         form: {
             href: '',
             fields: signinFields,
-            submitText: ''
         },
     },
     registerSection: {
         form: {
             href: '',
-            submitText: '',
             sections: [{
                 heading: '',
                 fields: registerPersonalFields,

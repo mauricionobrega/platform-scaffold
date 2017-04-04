@@ -41,7 +41,6 @@ class SignInForm extends React.Component {
             handleSubmit,
             // props from store
             fields,
-            submitText,
             forgotPassword,
             isFormLoaded,
             modalOpen
@@ -74,7 +73,7 @@ class SignInForm extends React.Component {
                             type="submit"
                             disabled={submitting || !isFormLoaded}
                         >
-                            <span className="u-text-uppercase">{submitText || 'Login'}</span>
+                            <span className="u-text-uppercase">Login</span>
                         </Button>
                     </FieldRow>
                 </FieldSet>
@@ -94,7 +93,6 @@ SignInForm.propTypes = {
     modalOpen: PropTypes.bool,
     openInfoModal: PropTypes.func,
     submitForm: PropTypes.func,
-    submitText: PropTypes.string,
     submitting: PropTypes.bool,
 }
 
@@ -107,7 +105,6 @@ const mapStateToProps = createPropsSelector({
     fields: selectors.signin.form.getFields,
     isFormLoaded: selectors.signin.getIsFormLoaded,
     modalOpen: isModalOpen(SIGN_IN_SECTION),
-    submitText: selectors.signin.form.getSubmitText,
     forgotPassword: selectors.signin.form.getForgotPassword
 })
 
