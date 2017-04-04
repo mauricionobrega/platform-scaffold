@@ -5,7 +5,6 @@ import {createAction} from '../../utils/utils'
 import {
     UnwrappedCheckoutShipping
 } from '../templates'
-// import CheckoutShipping from './container'
 import checkoutShippingParser from './parsers/checkout-shipping'
 import {addNotification, fetchPage, removeAllNotifications, removeNotification} from '../app/actions'
 import {getCustomerEntityID} from '../../store/checkout/selectors'
