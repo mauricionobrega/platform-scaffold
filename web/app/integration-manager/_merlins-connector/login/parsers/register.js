@@ -1,5 +1,4 @@
 /* eslint-disable newline-per-chained-call */
-import {getTextFrom} from '../../../../utils/parser-utils'
 import {parseFields} from './common'
 
 const parseFormSection = ($, $formSection) => {
@@ -19,15 +18,11 @@ const parseForm = ($, $form, $infoSection, $accountSection) => {
     }
 }
 
-const registrationParser = ($, $html) => {
-    return {
-        form: parseForm(
-            $,
-            $html.find('form.form-create-account'),
-            $html.find('.fieldset.create.info'),
-            $html.find('.fieldset.create.account')
-        ),
-    }
-}
+const registrationParser = ($, $html) => parseForm(
+    $,
+    $html.find('form.form-create-account'),
+    $html.find('.fieldset.create.info'),
+    $html.find('.fieldset.create.account')
+)
 
 export default registrationParser

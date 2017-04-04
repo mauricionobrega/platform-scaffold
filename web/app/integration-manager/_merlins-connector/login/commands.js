@@ -17,21 +17,21 @@ export const fetchLoginData = (url, routeName) => (dispatch) => {
         .then((res) => {
             const [$, $response] = res
             if (routeName === 'signin') {
-                const signInData = signinParser($, $response)
-                dispatch(receiveLoginHref(signInData.form.href))
+                const form = signinParser($, $response)
+                dispatch(receiveLoginHref(form.href))
                 return dispatch(receiveLoginPageData({
                     signinSection: {
                         isFormLoaded: true,
-                        ...signInData
+                        form
                     }
                 }))
             } else if (routeName === 'register') {
-                const registerData = registerParser($, $response)
-                dispatch(receiveRegisterHref(registerData.form.href))
+                const form = registerParser($, $response)
+                dispatch(receiveRegisterHref(form.href))
                 return dispatch(receiveLoginPageData({
                     registerSection: {
                         isFormLoaded: true,
-                        ...registerData
+                        form
                     }
                 }))
             }

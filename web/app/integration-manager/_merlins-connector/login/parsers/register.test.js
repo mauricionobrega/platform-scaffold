@@ -10,7 +10,7 @@ describe('the Registration parser', () => {
     const headings = ['Personal Information', 'Sign-in Information']
 
     test('extracts forms from the page', () => {
-        const form = parsedContent.form
+        const form = parsedContent
         expect(isURL(form.href)).toBe(true)
         form.sections.forEach((section) => {
             expect(headings.includes(section.heading)).toBe(true)

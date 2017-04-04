@@ -13,10 +13,6 @@ const parseForm = ($, $form) => {
     }
 }
 
-const signinParser = ($, $html) => {
-    return {
-        form: parseForm($, $html.find('form.form-login'))
-    }
-}
+const signinParser = ($, $html) => parseForm($, $html.find('form.form-login'))
 
 export default signinParser
