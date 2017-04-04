@@ -93,7 +93,7 @@ export const fetchCartPageData = (url) => (dispatch) => {
             const magentoFieldData = extractMagentoJson($response).getIn(ESTIMATE_FIELD_PATH)
             const locationsData = parseLocations(magentoFieldData)
 
-            dispatch(receiveCheckoutData({
+            return dispatch(receiveCheckoutData({
                 customerEntityID,
                 ...locationsData
             }))
