@@ -44,3 +44,15 @@ To run the app for Android, follow these steps:
 
 ### Local Preview
 The app allows you to run against a local copy of preview. This is configure [here](https://github.com/mobify/platform-scaffold/blob/develop/native/app/config/baseConfig.js#L12). If you would like to run against the production configuration, make sure you set the `previewEnabled` flag to `false`.
+
+## Testing
+To run the tests for each project, follow these steps:
+
+### iOS
+- With the project open, run the tests with (<kbd>⌘**U**</kbd>)
+
+### Android
+- With the project open, run the tests by right-clicking the androidTest package and selecting "Run Tests in 'com.mobify...'"
+
+## Deploy
+Deployment of the Scaffold is handled by Buddybuild. See [Buddybuild's deployment guide](http://docs.buddybuild.com/docs/deploy-manually) for more information.
