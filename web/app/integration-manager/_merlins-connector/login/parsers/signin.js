@@ -16,7 +16,6 @@ const parseForm = ($, $form) => {
 
 const signinParser = ($, $html) => {
     return {
-        href: $html.find('.header.links .authorization-link a').first().attr('href'),
         form: parseForm($, $html.find('form.form-login'))
     }
 }

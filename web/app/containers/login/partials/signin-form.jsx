@@ -89,7 +89,6 @@ SignInForm.propTypes = {
     fields: PropTypes.array,
     forgotPassword: PropTypes.object,
     handleSubmit: PropTypes.func,
-    href: PropTypes.string,
     invalid: PropTypes.bool,
     isFormLoaded: PropTypes.bool,
     modalOpen: PropTypes.bool,
@@ -106,7 +105,6 @@ const ReduxSignInForm = reduxForm({
 
 const mapStateToProps = createPropsSelector({
     fields: selectors.signin.form.getFields,
-    href: selectors.signin.form.getHref,
     isFormLoaded: selectors.signin.getIsFormLoaded,
     modalOpen: isModalOpen(SIGN_IN_SECTION),
     submitText: selectors.signin.form.getSubmitText,

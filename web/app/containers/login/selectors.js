@@ -21,7 +21,6 @@ export const signin = makeSelectorsFrom(getSigninSection, sectionKeys)
 
 signin.form = makeSelectorsFrom(signin.getFormInfo, [
     ['getFields', 'fields'],
-    ['getHref', 'href'],
     ['getSubmitText', 'submitText'],
     ['getForgotPassword', 'forgotPassword']
 ])
@@ -30,6 +29,5 @@ export const register = makeSelectorsFrom(getRegisterSection, sectionKeys)
 
 register.form = makeSelectorsFrom(register.getFormInfo, [
     ['getSections', 'sections'],
-    ['getHref', 'href'],
     ['getSubmitText', 'submitText']
 ])

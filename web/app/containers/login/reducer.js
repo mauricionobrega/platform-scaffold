@@ -86,7 +86,6 @@ const initialState = Immutable.fromJS({
     signinSection: {
         href: '',
         form: {
-            href: '',
             fields: signinFields,
             hiddenInputs: [],
             submitText: ''
@@ -95,7 +94,6 @@ const initialState = Immutable.fromJS({
     registerSection: {
         href: '',
         form: {
-            href: '',
             hiddenInputs: [],
             submitText: '',
             sections: [{

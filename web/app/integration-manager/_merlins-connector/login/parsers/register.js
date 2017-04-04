@@ -22,7 +22,6 @@ const parseForm = ($, $form, $infoSection, $accountSection) => {
 
 const registrationParser = ($, $html) => {
     return {
-        href: $html.find('.header.links a').last().attr('href'),
         form: parseForm(
             $,
             $html.find('form.form-create-account'),
