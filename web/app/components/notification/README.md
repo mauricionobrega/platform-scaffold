@@ -7,4 +7,4 @@
 
 ## Import With
 
-`import Notification from 'components/notification'`
+`import Notification from '../components/notification'`
