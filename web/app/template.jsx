@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {onRouteChanged, fetchPage, removeAllNotifications} from './containers/app/actions'
-import Duncan from './utils/duncan'
 
 import {trigger as astroTrigger} from './utils/astro-integration'
 
@@ -23,8 +22,6 @@ const template = (WrappedComponent) => {
             const url = getURL(location)
 
             dispatch(onRouteChanged(url, route.routeName))
-
-            Duncan.pageView()
 
             if (!route.suppressFetch) {
                 dispatch(fetchPage(url, WrappedComponent, route.routeName, route.fetchUrl))
