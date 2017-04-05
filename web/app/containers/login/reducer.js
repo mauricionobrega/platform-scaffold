@@ -1,7 +1,6 @@
 import Immutable from 'immutable'
 import {handleActions} from 'redux-actions'
-import {mergePayload} from '../../utils/reducer-utils'
-import {receiveLoginPageData} from '../../integration-manager/login/responses'
+import {setSigninLoaded, setRegisterLoaded} from '../../integration-manager/login/responses'
 
 const initialState = Immutable.fromJS({
     signinSection: false,
@@ -9,5 +8,6 @@ const initialState = Immutable.fromJS({
 })
 
 export default handleActions({
-    [receiveLoginPageData]: mergePayload
+    [setSigninLoaded]: (state) => state.set('signinSection', true),
+    [setRegisterLoaded]: (state) => state.set('registerSection', true)
 }, initialState)
