@@ -7,14 +7,12 @@ import {getLoginHref, getFormKey, getRegisterHref} from '../selectors'
 import {fetchPageData} from '../app/commands'
 import {receiveLoginPageData} from '../../login/responses'
 
-import {isFormResponseInvalid} from './parsers/common'
-import signinParser from './parsers/signin'
-import registerParser from './parsers/register'
+import {isFormResponseInvalid, parseSigninHref, parseRegisterHref} from './parsers/parsers'
 
 export const fetchSigninData = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then((res) => {
-            dispatch(receiveLoginHref(signinParser(res[1])))
+            dispatch(receiveLoginHref(parseSigninHref(res[1])))
             dispatch(receiveLoginPageData({signinSection: {isFormLoaded: true}}))
         })
 }
@@ -22,7 +20,7 @@ export const fetchSigninData = (url) => (dispatch) => {
 export const fetchRegisterData = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then((res) => {
-            dispatch(receiveRegisterHref(registerParser(res[1])))
+            dispatch(receiveRegisterHref(parseRegisterHref(res[1])))
             dispatch(receiveLoginPageData({registerSection: {isFormLoaded: true}}))
         })
 }
