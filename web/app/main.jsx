@@ -8,7 +8,8 @@ if (!/\/$/.test(origin)) {
     origin += '/'
 }
 
-__webpack_public_path__ = origin
+// Set publicPath so bundle chunks will be loaded from the correct location
+__webpack_public_path__ = origin // eslint-disable-line camelcase, no-undef
 
 // React
 import React from 'react'
