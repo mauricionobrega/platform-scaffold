@@ -38,3 +38,7 @@ export const getCart = () => (dispatch) => {
                 })
         })
 }
+
+export const fetchCartPageData = () => (dispatch) => {
+    return dispatch(getCart())
+}
