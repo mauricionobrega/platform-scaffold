@@ -17,18 +17,14 @@ class RegisterForm extends React.Component {
     }
 
     onSubmit(values) {
-        return new Promise((resolve, reject) => {
-            this.props.submitForm(values, resolve, reject)
-        })
+        return this.props.submitForm(values)
     }
 
     render() {
         const {
-            // redux-form
             error,
             submitting,
             handleSubmit,
-            // props from parent
             isFormLoaded
         } = this.props
 
@@ -121,8 +117,6 @@ class RegisterForm extends React.Component {
 RegisterForm.propTypes = {
     error: PropTypes.string,
     handleSubmit: PropTypes.func,
-    href: PropTypes.string,
-    invalid: PropTypes.bool,
     isFormLoaded: PropTypes.bool,
     submitForm: PropTypes.func,
     submitting: PropTypes.bool,

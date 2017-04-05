@@ -88,28 +88,22 @@ const handleLoginSuccess = (href) => {
     }
 }
 
-export const submitSignInForm = (formValues, resolve, reject) => {
-    return (dispatch) => {
-        const errors = validateSignInForm(formValues)
-        if (errors._error || Object.keys(errors.login).length) {
-            return reject(new SubmissionError(errors))
-        }
-
-        return dispatch(login(formValues))
-            .then(handleLoginSuccess)
-            .catch((error) => reject(error))
+export const submitSignInForm = (formValues) => (dispatch) => {
+    const errors = validateSignInForm(formValues)
+    if (errors._error || Object.keys(errors.login).length) {
+        return Promise.reject(new SubmissionError(errors))
     }
+
+    return dispatch(login(formValues))
+        .then(handleLoginSuccess)
 }
 
-export const submitRegisterForm = (formValues, resolve, reject) => {
-    return (dispatch) => {
-        const errors = validateRegisterForm(formValues)
-        if (errors._error || Object.keys(errors).length) {
-            return reject(new SubmissionError(errors))
-        }
-
-        return dispatch(registerUser(formValues))
-            .then(handleLoginSuccess)
-            .catch((error) => reject(error))
+export const submitRegisterForm = (formValues) => (dispatch) => {
+    const errors = validateRegisterForm(formValues)
+    if (errors._error || Object.keys(errors).length) {
+        return Promise.reject(new SubmissionError(errors))
     }
+
+    return dispatch(registerUser(formValues))
+        .then(handleLoginSuccess)
 }

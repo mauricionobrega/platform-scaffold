@@ -20,18 +20,14 @@ class SignInForm extends React.Component {
     }
 
     onSubmit(values) {
-        return new Promise((resolve, reject) => {
-            this.props.submitForm(values, resolve, reject)
-        })
+        return this.props.submitForm(values)
     }
 
     render() {
         const {
-            // redux-form
             error,
             submitting,
             handleSubmit,
-            // props from store
             isFormLoaded
         } = this.props
 
@@ -85,7 +81,6 @@ class SignInForm extends React.Component {
 SignInForm.propTypes = {
     error: PropTypes.string,
     handleSubmit: PropTypes.func,
-    invalid: PropTypes.bool,
     isFormLoaded: PropTypes.bool,
     submitForm: PropTypes.func,
     submitting: PropTypes.bool,
