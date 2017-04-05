@@ -8,15 +8,11 @@
 import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 import parse from './parsers/parser'
 
-import {makeFormEncodedRequest, makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
-import {addNotification, removeNotification} from '../../containers/app/actions'
-import {getFormKey} from '../../containers/app/selectors'
+import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+import {removeNotification} from '../../containers/app/actions'
 
-import {trigger} from '../../utils/astro-integration'
 
 const LOAD_CART_SECTION_URL = '/customer/section/load/?sections=cart%2Cmessages&update_section_id=true'
-const REMOVE_CART_ITEM_URL = '/checkout/sidebar/removeItem/'
-const UPDATE_ITEM_URL = '/checkout/sidebar/updateItemQty/'
 const baseHeaders = {
     Accept: 'application/json',
 }
@@ -37,69 +33,4 @@ export const getCart = () => (dispatch) => {
     return makeRequest(`${LOAD_CART_SECTION_URL}&_=${currentTimeMs}`, opts)
         .then((response) => response.text())
         .then((responseText) => dispatch(receiveCartContents(parse(responseText))))
-}
-
-/**
- * Remove an item from the users cart
- *
- * Notes:
- *
- * - The `item_id` present in the data returned from getCart.
- * - Response is 200 with JSON: `{"success":true}` on success
- * - Response is 200 with JSON: `{"success":false,"error_message":"We can't find the quote item."}` if item not in cart
- * - Important: The cart contents rendered in the main HTML is *not* updated until `getCart()` has been called which
- *   busts a cache. You are expected to call `removeFromCart()` then `getCart()` every time.
- */
-export const removeFromCart = (itemId) => {
-    return (dispatch, getState) => {
-        return makeFormEncodedRequest(REMOVE_CART_ITEM_URL, {item_id: itemId, form_key: getFormKey(getState())}, {method: 'POST'})
-            .then((response) => response.json())
-            .then((responseJSON) => {
-                if (responseJSON.success) {
-                    dispatch(getCart())
-                    // Tell Astro the cart has updated, so it can coordinate
-                    // all active webviews to refresh if needed
-                    trigger('cart:updated')
-                } else {
-                    dispatch(addNotification({
-                        content: `Unable to remove item`,
-                        id: 'cartUpdateError',
-                        showRemoveButton: true
-                    }))
-                }
-            })
-    }
-}
-
-/**
- * Update the quantity of an item in the users cart
- *
- * Notes:
- *
- * - Response is 200 with JSON: `{"success":true}` on success
- * - Response is 200 with JSON: `{"success":false,"error_message":"We can't find the quote item."}` if item not in cart
- */
-export const updateItemQuantity = (itemId, itemQuantity) => {
-    return (dispatch) => {
-        const body = `item_id=${itemId}&item_qty=${itemQuantity}`
-        const headers = {
-            ...baseHeaders,
-            'Content-Type': 'application/x-www-form-urlencoded',
-        }
-
-        const opts = {headers, body, method: 'POST'}
-        return makeRequest(UPDATE_ITEM_URL, opts)
-            .then((response) => response.json())
-            .then((responseJSON) => {
-                if (responseJSON.success) {
-                    dispatch(getCart())
-                } else {
-                    dispatch(addNotification({
-                        content: `Unable to update Quantity`,
-                        id: 'cartUpdateError',
-                        showRemoveButton: true
-                    }))
-                }
-            })
-    }
 }

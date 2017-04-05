@@ -9,15 +9,10 @@ import {getCurrentUrl} from './selectors'
 
 import appParser from './app-parser'
 
-import {ESTIMATE_FORM_NAME} from '../cart/constants'
-
-import Cart from '../cart/container'
 import CheckoutPayment from '../checkout-payment/container'
 import CheckoutConfirmation from '../checkout-confirmation/container'
 import * as checkoutActions from '../../store/checkout/actions'
-// import * as checkoutShippingUIActions from '../checkout-shipping/actions'
 import * as checkoutConfirmationActions from '../checkout-confirmation/actions'
-import * as checkoutShippingActions from '../../store/checkout/shipping/actions'
 import * as cartActions from '../../store/cart/actions'
 import * as footerActions from '../footer/actions'
 import * as navigationActions from '../navigation/actions'
@@ -138,10 +133,7 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                 dispatch(receivedAction)
                 dispatch(process(receivedAction))
 
-                if (pageComponent === Cart) {
-                    dispatch(checkoutActions.processCartCheckoutData(receivedAction))
-                    dispatch(checkoutShippingActions.fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME))
-                } else if (pageComponent === CheckoutPayment) {
+                if (pageComponent === CheckoutPayment) {
                     dispatch(checkoutActions.processCheckoutData(receivedAction))
                 } else if (pageComponent === CheckoutConfirmation) {
                     dispatch(checkoutConfirmationActions.process(receivedAction))

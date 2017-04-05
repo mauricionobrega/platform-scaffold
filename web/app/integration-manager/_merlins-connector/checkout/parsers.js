@@ -39,6 +39,9 @@ const parseShippingInitialValues = (shippingFieldData) => {
 }
 
 export const parseLocations = (shippingStepData) => {
+    if (!shippingStepData) {
+        return {}
+    }
 
     return {
         locations: {

@@ -13,7 +13,7 @@ import Icon from 'progressive-web-sdk/dist/components/icon'
 import {Ledger, LedgerRow} from 'progressive-web-sdk/dist/components/ledger'
 import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/accordion'
 
-const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, shippingRate, onCalculateClick, checkoutURL}) => {
+const CartSummary = ({summaryCount, subtotalExclTax, subtotal, shippingRate, onCalculateClick, checkoutURL}) => {
     const calculateButton = (
         <Button innerClassName="u-padding-end-0 u-color-brand u-text-letter-spacing-normal" onClick={onCalculateClick}>
             Calculate <Icon name="chevron-right" />
@@ -60,7 +60,7 @@ const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, shippingRa
                     <LedgerRow
                         label="Total"
                         isTotal={true}
-                        value={subtotalInclTax}
+                        value={subtotal}
                     />
                 </Ledger>
 
@@ -81,8 +81,8 @@ const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, shippingRa
 CartSummary.propTypes = {
     checkoutURL: PropTypes.string,
     shippingRate: PropTypes.string,
+    subtotal: PropTypes.string,
     subtotalExclTax: PropTypes.string,
-    subtotalInclTax: PropTypes.string,
     summaryCount: PropTypes.number,
     onCalculateClick: PropTypes.func
 }
@@ -91,7 +91,7 @@ const mapStateToProps = createPropsSelector({
     checkoutURL: getCheckoutURL,
     shippingRate: getDefaultShippingRate,
     subtotalExclTax: cartSelectors.getSubtotalExcludingTax,
-    subtotalInclTax: cartSelectors.getSubtotalIncludingTax,
+    subtotal: cartSelectors.getSubtotal,
     summaryCount: cartSelectors.getCartSummaryCount,
 })
 

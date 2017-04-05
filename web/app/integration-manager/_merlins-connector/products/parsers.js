@@ -2,7 +2,7 @@ import {extractMagentoJson} from '../../../utils/magento-utils'
 import {getTextFrom, parseTextLink, parseImage} from '../../../utils/parser-utils'
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 
-const UENC_REGEX = /\/uenc\/([^/]+),\//
+const UENC_REGEX = /\/uenc\/([^/,]+),*\//
 
 const parseCarouselItems = (magentoObject) => {
     const carouselSetup = magentoObject
@@ -38,12 +38,8 @@ export const productDetailsUIParser = ($, $html) => {
 
     const $form = $html.find('.page-main #product_addtocart_form')
 
-    const uencMatch = UENC_REGEX.exec($form.attr('action'))
-    const uenc = uencMatch ? uencMatch[1] : ''
-
     return {
         breadcrumbs: parseBreadcrumbs($, $breadcrumbs),
-        uenc,
         itemQuantity: parseInt($form.find('#qty').val()),
         ctaText: $form.find('.tocart').text()
     }
@@ -57,10 +53,13 @@ export const pdpAddToCartFormParser = ($, $html) => {
         const $input = $(input)
         hiddenInputs[$input.attr('name')] = $input.val()
     })
+    const uencMatch = UENC_REGEX.exec($form.attr('action'))
+    const uenc = uencMatch ? uencMatch[1] : ''
 
     return {
         submitUrl: $form.attr('action'),
         method: $form.attr('method'),
+        uenc,
         hiddenInputs
     }
 }
