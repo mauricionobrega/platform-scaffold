@@ -43,7 +43,7 @@ export const saveToWishlist = (productId, itemId, productURL) => (dispatch, getS
     dispatch(setIsWishlistComplete(false))
     dispatch(openModal(CART_WISHLIST_MODAL))
     if (!getIsLoggedIn(getState())) {
-        return {}
+        return Promise.resolve()
     }
     const wishListErrorNotification = {
         content: 'Unable to add item to wishlist.',
