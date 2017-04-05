@@ -41,7 +41,7 @@ export const getCart = () => (dispatch) => {
  * - Response is 200 with JSON: `{"success":true}` on success
  * - Response is 200 with JSON: `{"success":false,"error_message":"We can't find the quote item."}` if item not in cart
  * - Important: The cart contents rendered in the main HTML is *not* updated until `getCart()` has been called which
- *   busts a cache. You are expected to call `removeFromCart()` then `getCart()` every time.
+ *   busts a cache. removeFromCart() will call getCart() once the request to remove the item has completed
  */
 export const removeFromCart = (itemId) => {
     return (dispatch, getState) => {
