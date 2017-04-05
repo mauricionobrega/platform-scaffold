@@ -8,4 +8,5 @@ export const REQUEST_HEADERS = {
     'x-dw-client-id': DW_CLIENT_ID
 }
 export const SIGN_IN_URL = `/on/demandware.store/${SITE_ID}/default/Account-Show`
-export const CHECKOUT_URL = `/on/demandware.store/${SITE_ID}/default/COShipping-Start`
+export const CHECKOUT_SHIPPING_URL = `/on/demandware.store/${SITE_ID}/default/COShipping-Start`
+export const CART_URL = `/on/demandware.store/${SITE_ID}/default/Cart-Show`

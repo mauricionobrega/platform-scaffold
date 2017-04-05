@@ -27,14 +27,14 @@ export const setItemQuantity = (quantity) => (dispatch, getStore) => {
 export const addToCartStarted = createAction('Add to cart started')
 export const addToCartComplete = createAction('Add to cart complete')
 
-export const goToCheckout = () => (dispatch) => {
+export const goToCheckout = () => (dispatch, getState) => {
     dispatch(closeModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL))
     if (isRunningInAstro) {
         // If we're running in Astro, we want to dismiss open the cart modal,
         // otherwise, navigating is taken care of by the button press
         Astro.trigger('open:cart-modal')
     } else {
-        browserHistory.push('/checkout/cart/')
+        browserHistory.push(appSelectors.getCartURL(getState()))
     }
 }
 

@@ -2,6 +2,8 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import classNames from 'classnames'
+import {getCartURL} from '../../app/selectors'
+
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import Image from 'progressive-web-sdk/dist/components/image'
@@ -32,10 +34,10 @@ const SUBTOTAL_CLASSES = classNames(
 
 /* eslint-disable camelcase */
 
-const MiniCartProductList = ({items, subtotal}) => {
+const MiniCartProductList = ({items, subtotal, cartURL}) => {
     return (
         <div className="u-padding-md">
-            <Button href="/checkout/cart/" className="c--tertiary u-width-full u-margin-bottom u-text-capitalize">
+            <Button href={cartURL} className="c--tertiary u-width-full u-margin-bottom u-text-capitalize">
                 View and edit cart
             </Button>
 
@@ -65,11 +67,13 @@ const MiniCartProductList = ({items, subtotal}) => {
 }
 
 MiniCartProductList.propTypes = {
+    cartURL: PropTypes.string,
     items: PropTypes.array,
     subtotal: PropTypes.string
 }
 
 const mapStateToProps = createPropsSelector({
+    cartURL: getCartURL,
     items: selectors.getCartItems,
     subtotal: selectors.getCartSubtotal
 })
