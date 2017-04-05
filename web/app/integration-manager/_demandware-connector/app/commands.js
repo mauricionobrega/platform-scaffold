@@ -1,9 +1,9 @@
 import * as utils from '../utils'
-import {receiveNavigationData, setLoggedIn, setCheckoutURL} from '../../responses'
+import {receiveNavigationData, setLoggedIn, setCheckoutURL, setCartURL} from '../../responses'
 import {getCart} from '../cart/commands'
 import {parseCategories} from '../parsers'
 
-import {API_END_POINT_URL, SIGN_IN_URL, CHECKOUT_URL} from '../constants'
+import {API_END_POINT_URL, SIGN_IN_URL, CHECKOUT_URL, CART_URL} from '../constants'
 
 export const fetchNavigationData = () => (dispatch) => {
     return utils.makeDemandwareUnAuthenticatedRequest(`${API_END_POINT_URL}/categories/root?levels=2`, {method: 'GET'})
@@ -33,6 +33,7 @@ export const initApp = () => (dispatch) => {
         .then(() => dispatch(fetchNavigationData()))
         .then(() => {
             dispatch(setCheckoutURL(CHECKOUT_URL))
+            dispatch(setCartURL(CART_URL))
             return dispatch(setLoggedIn(utils.isUserLoggedIn(utils.getAuthToken())))
         })
         .then(() => dispatch(getCart()))

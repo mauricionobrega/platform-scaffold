@@ -9,3 +9,4 @@ export const REQUEST_HEADERS = {
 }
 export const SIGN_IN_URL = `/on/demandware.store/${SITE_ID}/default/Account-Show`
 export const CHECKOUT_URL = `/on/demandware.store/${SITE_ID}/default/COShipping-Start`
+export const CART_URL = `/on/demandware.store/${SITE_ID}/default/Cart-Show`
