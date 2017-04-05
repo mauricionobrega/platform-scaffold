@@ -59,11 +59,23 @@ class App extends React.Component {
         // to prevent jank
         requestIdleCallback(() => {
             UnwrappedCart.preload()
+        }
+        requestIdleCallback(() => {
             UnwrappedCheckoutConfirmation.preload()
+        }
+        requestIdleCallback(() => {
             UnwrappedCheckoutPayment.preload()
+        }
+        requestIdleCallback(() => {
             UnwrappedCheckoutShipping.preload()
+        }
+        requestIdleCallback(() => {
             UnwrappedLogin.preload()
+        }
+        requestIdleCallback(() => {
             UnwrappedProductDetails.preload()
+        }
+        requestIdleCallback(() => {
             UnwrappedProductList.preload()
         })
     }
