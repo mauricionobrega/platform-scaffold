@@ -1,5 +1,9 @@
 import React, {PropTypes} from 'react'
+import {connect} from 'react-redux'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import {Field as ReduxFormField} from 'redux-form'
+import {openModal, closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
+import {isModalOpen} from 'progressive-web-sdk/dist/store/modals/selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
@@ -7,6 +11,8 @@ import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 import Icon from 'progressive-web-sdk/dist/components/icon'
 import Link from 'progressive-web-sdk/dist/components/link'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
+
+import {REMEMBER_ME_MODAL} from '../constants'
 
 export const PanelHeading = ({heading}) => {
     return (
@@ -38,10 +44,12 @@ LoginSheetHeader.propTypes = {
     label: PropTypes.string
 }
 
-export const LoginFieldTooltip = ({tooltip, openModal, label, closeModal, modalOpen}) => (
+const TOOLTIP_TITLE = 'What\'s this?'
+
+const RawLoginFieldTooltip = ({openModal, closeModal, modalOpen}) => (
     <div>
         <a href="#remember-me" onClick={openModal}>
-            {tooltip.title}
+            {TOOLTIP_TITLE}
         </a>
 
         <Sheet
@@ -49,10 +57,10 @@ export const LoginFieldTooltip = ({tooltip, openModal, label, closeModal, modalO
             open={modalOpen}
             onDismiss={closeModal}
             effect="slide-bottom"
-            headerContent={<LoginSheetHeader label={label} closeModal={closeModal} />}
+            headerContent={<LoginSheetHeader label="Remember Me" closeModal={closeModal} />}
         >
             <div id="remember-me" className="u-padding-md">
-                {tooltip.content}
+                Check "Remember Me" to access your shopping cart on this computer even if you are not signed in.
             </div>
 
             <div className="t-login__remember-me-button u-padding-md">
@@ -67,13 +75,18 @@ export const LoginFieldTooltip = ({tooltip, openModal, label, closeModal, modalO
     </div>
 )
 
-LoginFieldTooltip.propTypes = {
+RawLoginFieldTooltip.propTypes = {
     closeModal: PropTypes.func,
-    label: PropTypes.string,
     modalOpen: PropTypes.bool,
     openModal: PropTypes.func,
-    tooltip: PropTypes.object
 }
+
+export const LoginFieldTooltip = connect(createPropsSelector({
+    modalOpen: isModalOpen(REMEMBER_ME_MODAL)
+}), {
+    openModal: () => openModal(REMEMBER_ME_MODAL),
+    closeModal: () => closeModal(REMEMBER_ME_MODAL)
+})(RawLoginFieldTooltip)
 
 export const LoginFieldLabel = ({label, required, forgotPassword}) => (
     <span>
@@ -96,7 +109,7 @@ LoginFieldLabel.propTypes = {
     required: PropTypes.bool,
 }
 
-export const LoginField = ({label, required, type, forgotPassword, name, tooltip, modalInfo}) => (
+export const LoginField = ({label, required, type, forgotPassword, name, tooltip}) => (
     <FieldRow>
         <ReduxFormField
             name={name}

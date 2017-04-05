@@ -3,19 +3,11 @@ import {reduxForm} from 'redux-form'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import {connect} from 'react-redux'
 import * as selectors from '../selectors'
-import {isModalOpen} from 'progressive-web-sdk/dist/store/modals/selectors'
-import {openModal, closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
-import {REGISTER_SECTION} from '../constants'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import FieldSet from 'progressive-web-sdk/dist/components/field-set'
 
 import {LoginField, LoginFieldTooltip} from './common'
-
-const tooltip = {
-    title: 'What\'s this?',
-    content: 'Check "Remember Me" to access your shopping cart on this computer even if you are not signed in.'
-}
 
 class RegisterForm extends React.Component {
     constructor(props) {
@@ -37,10 +29,7 @@ class RegisterForm extends React.Component {
             submitting,
             handleSubmit,
             // props from parent
-            isFormLoaded,
-            modalOpen,
-            openInfoModal,
-            closeInfoModal
+            isFormLoaded
         } = this.props
 
         return (
@@ -113,7 +102,7 @@ class RegisterForm extends React.Component {
                         name="persistent_remember_me"
                         type="checkbox"
                         required={false}
-                        tooltip={<LoginFieldTooltip tooltip={tooltip} label="Remember Me" openModal={openInfoModal} closeModal={closeInfoModal} modalOpen={modalOpen} />}
+                        tooltip={<LoginFieldTooltip />}
                         />
                 </FieldSet>
 
@@ -130,14 +119,11 @@ class RegisterForm extends React.Component {
 }
 
 RegisterForm.propTypes = {
-    closeInfoModal: PropTypes.func,
     error: PropTypes.string,
     handleSubmit: PropTypes.func,
     href: PropTypes.string,
     invalid: PropTypes.bool,
     isFormLoaded: PropTypes.bool,
-    modalOpen: PropTypes.bool,
-    openInfoModal: PropTypes.func,
     submitForm: PropTypes.func,
     submitting: PropTypes.bool,
 }
@@ -148,13 +134,7 @@ const ReduxRegisterForm = reduxForm({
 })(RegisterForm)
 
 const mapStateToProps = createPropsSelector({
-    isFormLoaded: selectors.register.getIsFormLoaded,
-    modalOpen: isModalOpen(REGISTER_SECTION),
+    isFormLoaded: selectors.register.getIsFormLoaded
 })
 
-const mapDispatchToProps = {
-    closeInfoModal: () => closeModal(REGISTER_SECTION),
-    openInfoModal: () => openModal(REGISTER_SECTION)
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ReduxRegisterForm)
+export default connect(mapStateToProps)(ReduxRegisterForm)
