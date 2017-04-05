@@ -4,8 +4,8 @@ import {mergePayload} from '../../utils/reducer-utils'
 import {receiveLoginPageData} from '../../integration-manager/login/responses'
 
 const initialState = Immutable.fromJS({
-    signinSection: {},
-    registerSection: {}
+    signinSection: false,
+    registerSection: false
 })
 
 export default handleActions({

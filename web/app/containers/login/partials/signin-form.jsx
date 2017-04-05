@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react'
 import {reduxForm} from 'redux-form'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import {connect} from 'react-redux'
-import * as selectors from '../selectors'
+import {isSigninLoaded} from '../selectors'
 import {submitSignInForm} from '../actions'
 
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -93,7 +93,7 @@ const ReduxSignInForm = reduxForm({
 })(SignInForm)
 
 const mapStateToProps = createPropsSelector({
-    isFormLoaded: selectors.signin.getIsFormLoaded
+    isFormLoaded: isSigninLoaded
 })
 
 const mapDispatchToProps = {

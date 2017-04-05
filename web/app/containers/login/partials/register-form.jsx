@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react'
 import {reduxForm} from 'redux-form'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import {connect} from 'react-redux'
-import * as selectors from '../selectors'
+import {isRegisterLoaded} from '../selectors'
 import {submitRegisterForm} from '../actions'
 
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -129,7 +129,7 @@ const ReduxRegisterForm = reduxForm({
 })(RegisterForm)
 
 const mapStateToProps = createPropsSelector({
-    isFormLoaded: selectors.register.getIsFormLoaded
+    isFormLoaded: isRegisterLoaded
 })
 
 const mapDispatchToProps = {
