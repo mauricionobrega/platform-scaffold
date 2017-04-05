@@ -3,6 +3,7 @@ import {reduxForm} from 'redux-form'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import {connect} from 'react-redux'
 import * as selectors from '../selectors'
+import {submitRegisterForm} from '../actions'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import FieldSet from 'progressive-web-sdk/dist/components/field-set'
@@ -131,4 +132,8 @@ const mapStateToProps = createPropsSelector({
     isFormLoaded: selectors.register.getIsFormLoaded
 })
 
-export default connect(mapStateToProps)(ReduxRegisterForm)
+const mapDispatchToProps = {
+    submitForm: submitRegisterForm
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReduxRegisterForm)

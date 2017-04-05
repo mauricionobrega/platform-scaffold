@@ -3,6 +3,7 @@ import {reduxForm} from 'redux-form'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import {connect} from 'react-redux'
 import * as selectors from '../selectors'
+import {submitSignInForm} from '../actions'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import FieldSet from 'progressive-web-sdk/dist/components/field-set'
@@ -95,4 +96,8 @@ const mapStateToProps = createPropsSelector({
     isFormLoaded: selectors.signin.getIsFormLoaded
 })
 
-export default connect(mapStateToProps)(ReduxSignInForm)
+const mapDispatchToProps = {
+    submitForm: submitSignInForm
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReduxSignInForm)
