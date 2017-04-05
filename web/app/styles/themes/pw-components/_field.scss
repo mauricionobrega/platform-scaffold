@@ -110,6 +110,7 @@ $field__disabled-select-triangle: 'data:image/svg+xml;utf8,<svg xmlns="http://ww
 // 3. Position the hint button to sit directly on top of the field input
 // 4. Margin no longer needed, since we know there is no input below it (the
 //    input is the checkbox/radio on the side in this state)
+// 5. To aligin radio to top of the label
 
 .pw-field.pw--error {
     border-color: $error-color;
@@ -122,7 +123,6 @@ $field__disabled-select-triangle: 'data:image/svg+xml;utf8,<svg xmlns="http://ww
 
     .pw-field__inner {
         display: flex;
-        align-items: center;
     }
 
     .c-field__label,
@@ -130,6 +130,10 @@ $field__disabled-select-triangle: 'data:image/svg+xml;utf8,<svg xmlns="http://ww
         margin-bottom: 0; // 4
 
         font-weight: normal;
+    }
+
+    .pw-field__label-wrap {
+        margin-top: $sub-unit*1.5; // 5
     }
 }
 
