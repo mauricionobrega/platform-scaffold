@@ -9,18 +9,6 @@ import Link from 'progressive-web-sdk/dist/components/link'
 
 import {REMEMBER_ME_MODAL} from '../constants'
 
-export const PanelHeading = ({heading}) => {
-    return (
-        <h3 className="u-margin-bottom u-color-brand u-text-font-family u-text-normal">
-            {heading}
-        </h3>
-    )
-}
-
-PanelHeading.propTypes = {
-    heading: PropTypes.string.isRequired
-}
-
 export const LoginFieldLabel = ({label, required, forgotPassword}) => (
     <span>
         {label} {required && <span>*</span>}
