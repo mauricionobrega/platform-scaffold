@@ -9,7 +9,7 @@ const colors = {
     whiteColor: '#ffffff'
 }
 
-const previewEnabled = true
+const previewEnabled = false
 
 const baseConfig = {
     baseURL: 'https://www.merlinspotions.com',

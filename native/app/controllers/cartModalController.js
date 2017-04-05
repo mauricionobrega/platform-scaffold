@@ -107,17 +107,21 @@ CartModalController.init = async function() {
     return cartModalController
 }
 
-CartModalController.prototype.show = function() {
+CartModalController.prototype.show = async function() {
     if (this.isShowing) {
         return
     }
+    const webView = await this.navigationView.getTopPlugin()
+    webView.reload()
     this.isShowing = true
+    this.alertEnabled = false
     this.viewPlugin.show({animated: true})
 }
 
-CartModalController.prototype.hide = async function() {
-    await this.viewPlugin.hide({animated: true})
+CartModalController.prototype.hide = function() {
+    this.viewPlugin.hide({animated: true})
     this.isShowing = false
+    this.navigationView.popToRoot()
 }
 
 CartModalController.prototype.isActiveItem = function() {
