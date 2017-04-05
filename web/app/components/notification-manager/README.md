@@ -8,4 +8,4 @@
 
 ## Import With
 
-`import NotificationManager from 'components/notification-manager'`
+`import NotificationManager from '../components'/notification-manager'`
