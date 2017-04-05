@@ -35,7 +35,11 @@ const CartModalController = function(modalView, navigationView) {
 
     this.navigationView.on('checkout:completed', () => {
         this.alertEnabled = false
-        AppEvents.trigger(AppEvents.cartNeedsUpdate)
+        // The merlin's backend needs a little extra time to process checkout
+        // so we wait for a small timeout and then try to update all webviews
+        setTimeout(() => {
+            AppEvents.trigger(AppEvents.cartNeedsUpdate)
+        }, 2000)
     })
 
     this.navigationView.on('cart:updated', () => {
