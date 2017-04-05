@@ -37,6 +37,8 @@ const pageView = (force = false) => {
 }
 
 export default {
+    // Private member provided for flexibility's sake - but perhaps best to have
+    // this removed once we move to the SDK
     _core: DuncanEvents,
     pageView
 }
