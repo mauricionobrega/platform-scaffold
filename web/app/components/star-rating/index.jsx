@@ -4,7 +4,9 @@ import classNames from 'classnames'
 const componentClass = 'c-star-rating'
 
 /**
- * INSERT_DESCRIPTION_HERE
+ * StarRating displays a set of empty stars to represent the maximum possible rating for
+ * the product and displays a set of filled-in stars on top of the empty stars to represent
+ * the current rating for the product.
  */
 
 const StarRating = ({
@@ -17,19 +19,19 @@ const StarRating = ({
 
     return (
         <div className={classes}>
-            <span className={numStars === 5 ? `${componentClass}-star c--filled-in` : `${componentClass}-star`}>☆</span>
-            <span className={numStars >= 4 ? `${componentClass}-star c--filled-in` : `${componentClass}-star`}>☆</span>
-            <span className={numStars >= 3 ? `${componentClass}-star c--filled-in` : `${componentClass}-star`}>☆</span>
-            <span className={numStars >= 2 ? `${componentClass}-star c--filled-in` : `${componentClass}-star`}>☆</span>
-            <span className={numStars >= 1 ? `${componentClass}-star c--filled-in` : `${componentClass}-star`}>☆</span>
+            <span className={numStars === 5 ? `${componentClass}__star c--filled-in` : `${componentClass}__star`}>☆</span>
+            <span className={numStars >= 4 ? `${componentClass}__star c--filled-in` : `${componentClass}__star`}>☆</span>
+            <span className={numStars >= 3 ? `${componentClass}__star c--filled-in` : `${componentClass}__star`}>☆</span>
+            <span className={numStars >= 2 ? `${componentClass}__star c--filled-in` : `${componentClass}__star`}>☆</span>
+            <span className={numStars >= 1 ? `${componentClass}__star c--filled-in` : `${componentClass}__star`}>☆</span>
         </div>
     )
 }
 
 StarRating.propTypes = {
     /**
-     * PropTypes comments are REQUIRED for components to be included
-     * in the styleguide
+     * Determines the number of filled-in stars to display and should
+     * reflect the product's current rating.
      */
     numStars: PropTypes.number.isRequired,
 

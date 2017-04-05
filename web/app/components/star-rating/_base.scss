@@ -2,12 +2,11 @@
 // ===
 //
 // This component displays unfilled star characters and then displays another set of
-// filled in stars on top of the unfilled stars to show the current star rating. 
-// Partial star ratings are not yet supported. 
-// Could use something like this for a half star... clip-path: inset(0px 50% 0px 0px);
+// filled in stars on top of the unfilled stars to show the current star rating.
+//
 // This could be easily modified to support a hover state for an interactive version.
-// All of this is based on the work of Chris Coyier.
-// Original code snippet shared by Coyier here: https://css-tricks.com/star-ratings/
+// All of this is based on the work of Chris Coyier. Original code snippet shared
+// by Coyier here: https://css-tricks.com/star-ratings/
 
 
 // Variables
@@ -16,37 +15,47 @@
 
 // StarRating root
 // ---
+//
+// This root clas doesn't do much on its own; it depends on a subcomponent and a modifer to 
+// style the stars and add new filled in stars on top to show the current rating.
+// What it does do is some tricky text direction flipping to help out the modifier. 
+// In the modifier, we can't select the _preceding_ children we need, we can only select 
+// the _succeeding_ children. Therefore, we need to reverse the order of the the stars 
+// from how they appear in the JSX. In the JSX, the order is highest star to lowest star, 
+// but we want to display them from lowest star to highest star.
+//
+// Notes:
+//
+// 1. This allows us to use the direction property below
+// 2. rtl = right-to-left
 
 .c-star-rating {
-    // Root Class.
-    // We need to reverse the order of the child elements (the stars) as they appear in 
-    // the JSX (highest star to lowest star) because we can't use CSS to select 
-    // the _preceding_ children, we can only select the _succeeding_ children.
-    unicode-bidi: bidi-override; // Allows us to use the direction property below
-    direction: rtl; // Right-to-left
+    color: $brand-color;
+    unicode-bidi: bidi-override; // 1
+    direction: rtl; // 2
     text-align: left;
-}
-
-.c-star-rating-star {
-  display: inline-block;
-  position: relative;
-  width: 1.1em;
-}
-
-// Modifiers
-// ---
-//
-.c-star-rating-star.c--filled-in:before {
-  content: "\2605"; // The solid star character in Unicode
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 
 
 // Sub components
 // ---
+
+.c-star-rating__star {
+  display: inline-block;
+  position: relative;
+}
+
+
+// Modifiers
+// ---
 //
-// .c-star-rating__sub-component {
-//     ...
-// }
+// Notes:
+//
+// 1. The solid star character in Unicode
+
+.c-star-rating__star.c--filled-in:before {
+  content: "\2605"; // 1
+  position: absolute;
+  top: 0;
+  left: 0;
+}
