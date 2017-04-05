@@ -6,8 +6,8 @@ import {appParser} from './parser'
 import {parseFooter} from '../footer/parser'
 import {parseNavigation} from '../navigation/parser'
 import {receiveFormKey} from '../actions'
-import {receiveNavigationData, receiveAppData, receiveFooterData, setPageFetchError, setCheckoutURL, setCartURL} from '../../responses'
-import {CHECKOUT_URL, CART_URL} from '../constants'
+import {receiveNavigationData, receiveAppData, receiveFooterData, setPageFetchError, setCheckoutShippingURL, setCartURL} from '../../responses'
+import {CHECKOUT_SHIPPING_URL, CART_URL} from '../constants'
 
 export const fetchPageData = (url) => (dispatch) => {
     return makeRequest(url)
@@ -32,7 +32,7 @@ export const fetchPageData = (url) => (dispatch) => {
 }
 
 export const initApp = () => (dispatch) => {
-    dispatch(setCheckoutURL(CHECKOUT_URL))
+    dispatch(setCheckoutShippingURL(CHECKOUT_SHIPPING_URL))
     dispatch(setCartURL(CART_URL))
     return dispatch(getCart())
 }

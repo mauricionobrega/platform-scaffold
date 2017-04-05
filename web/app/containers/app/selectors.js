@@ -20,5 +20,5 @@ export const getIsLoggedIn = createGetSelector(getApp, 'isLoggedIn')
 export const getFormKey = createGetSelector(getApp, 'formKey')
 export const getSvgSprite = createGetSelector(getApp, 'sprite')
 
-export const getCheckoutURL = createGetSelector(getApp, 'checkoutURL')
+export const getCheckoutShippingURL = createGetSelector(getApp, 'checkoutShippingURL')
 export const getCartURL = createGetSelector(getApp, 'cartURL')

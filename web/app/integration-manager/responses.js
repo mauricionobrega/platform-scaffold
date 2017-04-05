@@ -8,5 +8,5 @@ export const setPageFetchError = createAction('Set page fetch error', ['fetchErr
 export const receiveAppData = createAction('Receive App Data')
 export const setLoggedIn = createAction('Set Logged in flag', ['isLoggedIn'])
 export const setNavigationAccountLink = createAction('Set Navigation Account Link Text')
-export const setCheckoutURL = createAction('Set Checkout URL', ['checkoutURL'])
+export const setCheckoutShippingURL = createAction('Set Checkout Shipping URL', ['checkoutShippingURL'])
 export const setCartURL = createAction('Set Cart URL', ['cartURL'])
