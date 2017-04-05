@@ -1,6 +1,14 @@
 import polyfill from 'progressive-web-sdk/dist/polyfill'
-import {initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
+import {initCacheManifest, getBuildOrigin} from 'progressive-web-sdk/dist/asset-utils'
 import cacheHashManifest from '../tmp/cache-hash-manifest.json'
+
+let origin = getBuildOrigin()
+
+if (!/\/$/.test(origin)) {
+    origin += '/'
+}
+
+__webpack_public_path__ = origin
 
 // React
 import React from 'react'
