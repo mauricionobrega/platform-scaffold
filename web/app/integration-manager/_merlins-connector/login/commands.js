@@ -5,7 +5,7 @@ import {SubmissionError} from 'redux-form'
 import {receiveLoginHref, receiveRegisterHref} from '../actions'
 import {getLoginHref, getFormKey, getRegisterHref} from '../selectors'
 import {fetchPageData} from '../app/commands'
-import {receiveLoginPageData} from '../../login/responses'
+import {setSigninLoaded, setRegisterLoaded} from '../../login/responses'
 
 import {isFormResponseInvalid, parseSigninHref, parseRegisterHref} from './parsers/parsers'
 
@@ -13,7 +13,7 @@ export const fetchSigninData = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then((res) => {
             dispatch(receiveLoginHref(parseSigninHref(res[1])))
-            dispatch(receiveLoginPageData({signinSection: {isFormLoaded: true}}))
+            dispatch(setSigninLoaded())
         })
 }
 
@@ -21,7 +21,7 @@ export const fetchRegisterData = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then((res) => {
             dispatch(receiveRegisterHref(parseRegisterHref(res[1])))
-            dispatch(receiveLoginPageData({registerSection: {isFormLoaded: true}}))
+            dispatch(setRegisterLoaded())
         })
 }
 
