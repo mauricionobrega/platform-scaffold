@@ -10,7 +10,7 @@ import {REGISTER_SECTION} from '../constants'
 import Button from 'progressive-web-sdk/dist/components/button'
 import FieldSet from 'progressive-web-sdk/dist/components/field-set'
 
-import {LoginField} from './common'
+import {LoginField, LoginFieldTooltip} from './common'
 
 const tooltip = {
     title: 'What\'s this?',
@@ -22,11 +22,6 @@ class RegisterForm extends React.Component {
         super(props)
 
         this.onSubmit = this.onSubmit.bind(this)
-
-        this.modalInfo = {
-            openModal: props.openInfoModal,
-            closeModal: props.closeInfoModal
-        }
     }
 
     onSubmit(values) {
@@ -43,16 +38,10 @@ class RegisterForm extends React.Component {
             handleSubmit,
             // props from parent
             isFormLoaded,
-            modalOpen
+            modalOpen,
+            openInfoModal,
+            closeInfoModal
         } = this.props
-
-        // Ensure that modalInfo changes if and only if modalOpen changes.
-        if (modalOpen !== this.modalInfo.modalOpen) {
-            this.modalInfo = {
-                ...this.modalInfo,
-                modalOpen
-            }
-        }
 
         return (
             <form noValidate={true} onSubmit={handleSubmit(this.onSubmit)}>
@@ -74,7 +63,6 @@ class RegisterForm extends React.Component {
                         name="firstname"
                         type="text"
                         required={true}
-                        modalInfo={this.modalInfo}
                         />
 
                     <LoginField
@@ -82,7 +70,6 @@ class RegisterForm extends React.Component {
                         name="lastname"
                         type="text"
                         required={true}
-                        modalInfo={this.modalInfo}
                         />
 
                     <LoginField
@@ -90,7 +77,6 @@ class RegisterForm extends React.Component {
                         name="email"
                         type="email"
                         required={true}
-                        modalInfo={this.modalInfo}
                         />
 
                     <LoginField
@@ -98,7 +84,6 @@ class RegisterForm extends React.Component {
                         name="is_subscribed"
                         type="checkbox"
                         required={false}
-                        modalInfo={this.modalInfo}
                         />
                 </FieldSet>
 
@@ -114,7 +99,6 @@ class RegisterForm extends React.Component {
                         name="password"
                         type="password"
                         required={true}
-                        modalInfo={this.modalInfo}
                         />
 
                     <LoginField
@@ -122,7 +106,6 @@ class RegisterForm extends React.Component {
                         name="password_confirmation"
                         type="password"
                         required={true}
-                        modalInfo={this.modalInfo}
                         />
 
                     <LoginField
@@ -130,8 +113,7 @@ class RegisterForm extends React.Component {
                         name="persistent_remember_me"
                         type="checkbox"
                         required={false}
-                        modalInfo={this.modalInfo}
-                        tooltip={tooltip}
+                        tooltip={<LoginFieldTooltip tooltip={tooltip} label="Remember Me" openModal={openInfoModal} closeModal={closeInfoModal} modalOpen={modalOpen} />}
                         />
                 </FieldSet>
 

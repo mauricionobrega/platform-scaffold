@@ -6,23 +6,18 @@ import Field from 'progressive-web-sdk/dist/components/field'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 import Icon from 'progressive-web-sdk/dist/components/icon'
 import Link from 'progressive-web-sdk/dist/components/link'
-import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
 export const PanelHeading = ({heading}) => {
-    if (heading) {
-        return (
-            <h3 className="u-margin-bottom u-color-brand u-text-font-family u-text-normal">
-                {heading}
-            </h3>
-        )
-    } else {
-        return (<SkeletonBlock height="24px" width="50%" className="u-margin-bottom" />)
-    }
+    return (
+        <h3 className="u-margin-bottom u-color-brand u-text-font-family u-text-normal">
+            {heading}
+        </h3>
+    )
 }
 
 PanelHeading.propTypes = {
-    heading: PropTypes.string
+    heading: PropTypes.string.isRequired
 }
 
 export const LoginSheetHeader = ({label, closeModal}) => (
@@ -111,19 +106,15 @@ export const LoginField = ({label, required, type, forgotPassword, name, tooltip
             <input type={type} />
         </ReduxFormField>
 
-        {tooltip && <LoginFieldTooltip tooltip={tooltip} label={label} {...modalInfo} />}
+        {tooltip}
     </FieldRow>
 )
 
 LoginField.propTypes = {
     label: PropTypes.string.isRequired,
-    modalInfo: PropTypes.object.isRequired,
     name: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
     forgotPassword: PropTypes.object,
     required: PropTypes.bool,
-    tooltip: PropTypes.oneOfType([
-        PropTypes.object,
-        PropTypes.bool
-    ])
+    tooltip: PropTypes.node
 }
