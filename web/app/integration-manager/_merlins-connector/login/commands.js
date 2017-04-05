@@ -11,23 +11,19 @@ import {isFormResponseInvalid} from './parsers/common'
 import signinParser from './parsers/signin'
 import registerParser from './parsers/register'
 
-
-export const fetchLoginData = (url, routeName) => (dispatch) => {
+export const fetchSigninData = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then((res) => {
-            const $response = res[1]
-            if (routeName === 'signin') {
-                dispatch(receiveLoginHref(signinParser($response)))
-                return dispatch(receiveLoginPageData({
-                    signinSection: {isFormLoaded: true}
-                }))
-            } else if (routeName === 'register') {
-                dispatch(receiveRegisterHref(registerParser($response)))
-                return dispatch(receiveLoginPageData({
-                    registerSection: {isFormLoaded: true}
-                }))
-            }
-            return dispatch(receiveLoginPageData())
+            dispatch(receiveLoginHref(signinParser(res[1])))
+            dispatch(receiveLoginPageData({signinSection: {isFormLoaded: true}}))
+        })
+}
+
+export const fetchRegisterData = (url) => (dispatch) => {
+    return dispatch(fetchPageData(url))
+        .then((res) => {
+            dispatch(receiveRegisterHref(registerParser(res[1])))
+            dispatch(receiveLoginPageData({registerSection: {isFormLoaded: true}}))
         })
 }
 

@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'progressive-web-sdk/dist/routing'
 
-import {fetchLoginData, navigateToSection} from '../../integration-manager/login/commands'
+import {fetchSigninData, fetchRegisterData, navigateToSection} from '../../integration-manager/login/commands'
 
 import SignInPanel from './partials/signin-panel'
 import RegisterPanel from './partials/register-panel'
@@ -39,7 +39,7 @@ class Login extends React.Component {
         const {
             route: {
                 routeName
-            },
+            }
         } = this.props
 
         if (!AstroIntegration.isRunningInAstro) {
@@ -83,7 +83,14 @@ class Login extends React.Component {
     }
 }
 
-Login.fetcher = (url, routeName, dispatch) => dispatch(fetchLoginData(url, routeName))
+Login.fetcher = (url, routeName, dispatch) => {
+    if (routeName === SIGN_IN_SECTION) {
+        return dispatch(fetchSigninData(url))
+    } else if (routeName === REGISTER_SECTION) {
+        return dispatch(fetchRegisterData(url))
+    }
+    throw new Error('Login route name unrecognized')
+}
 
 const mapDispatchToProps = {
     navigateToSection
