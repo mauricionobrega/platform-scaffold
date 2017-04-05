@@ -1,7 +1,15 @@
 
 import {SITE_ID} from './constants'
 
-const formatPrice = (price) => `$${price.toFixed(2)}`
+const formatPrice = (price) => {
+    if (!price) {
+        price = 0
+    }
+    return `$${price.toFixed(2)}`
+}
+
+
+
 
 const parseCarouselItems = (imageGroups) => {
     const largeImages = imageGroups.filter((imageGroup) => imageGroup.view_type === 'large')[0]
@@ -29,7 +37,7 @@ export const getCurrentProductID = () => {
     return productIDMatch ? productIDMatch[1] : ''
 }
 
-export const parseBasketContents = ({product_items, product_sub_total}) => {
+export const parseBasketContents = ({product_items, product_sub_total, product_total}) => {
     /* eslint-disable camelcase */
     const items = product_items ? product_items.map(({product_name, base_price, quantity}) => {
         return {
@@ -41,7 +49,8 @@ export const parseBasketContents = ({product_items, product_sub_total}) => {
     }) : []
     return {
         items,
-        subtotal: formatPrice(product_sub_total ? product_sub_total : 0),
+        subtotal: formatPrice(product_total),
+        subtotal_excl_tax: formatPrice(product_sub_total),
         summary_count: items && items.length
     }
     /* eslint-enable camelcase  */
