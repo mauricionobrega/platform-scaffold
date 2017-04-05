@@ -7,7 +7,7 @@ import * as selectors from '../selectors'
 import Button from 'progressive-web-sdk/dist/components/button'
 import FieldSet from 'progressive-web-sdk/dist/components/field-set'
 
-import {LoginField, LoginFieldTooltip} from './common'
+import {LoginField, RememberMeTooltip} from './common'
 
 class RegisterForm extends React.Component {
     constructor(props) {
@@ -102,7 +102,7 @@ class RegisterForm extends React.Component {
                         name="persistent_remember_me"
                         type="checkbox"
                         required={false}
-                        tooltip={<LoginFieldTooltip />}
+                        tooltip={<RememberMeTooltip />}
                         />
                 </FieldSet>
 

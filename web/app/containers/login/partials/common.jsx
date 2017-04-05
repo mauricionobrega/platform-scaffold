@@ -1,16 +1,11 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createPropsSelector} from 'reselect-immutable-helpers'
 import {Field as ReduxFormField} from 'redux-form'
-import {openModal, closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
-import {isModalOpen} from 'progressive-web-sdk/dist/store/modals/selectors'
+import {openModal} from 'progressive-web-sdk/dist/store/modals/actions'
 
-import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
-import Icon from 'progressive-web-sdk/dist/components/icon'
 import Link from 'progressive-web-sdk/dist/components/link'
-import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
 import {REMEMBER_ME_MODAL} from '../constants'
 
@@ -25,68 +20,6 @@ export const PanelHeading = ({heading}) => {
 PanelHeading.propTypes = {
     heading: PropTypes.string.isRequired
 }
-
-export const LoginSheetHeader = ({label, closeModal}) => (
-    <div className="u-width-full u-bg-color-brand u-color-neutral-10 u-flexbox">
-        <h1 className="u-flex u-padding-md u-h4 u-text-uppercase">
-            {label}
-        </h1>
-
-        <Button onClick={closeModal}>
-            <Icon name="close" />
-            <span className="u-visually-hidden">Close</span>
-        </Button>
-    </div>
-)
-
-LoginSheetHeader.propTypes = {
-    closeModal: PropTypes.func,
-    label: PropTypes.string
-}
-
-const TOOLTIP_TITLE = 'What\'s this?'
-
-const RawLoginFieldTooltip = ({openModal, closeModal, modalOpen}) => (
-    <div>
-        <a href="#remember-me" onClick={openModal}>
-            {TOOLTIP_TITLE}
-        </a>
-
-        <Sheet
-            className="t-login__remember-me-modal"
-            open={modalOpen}
-            onDismiss={closeModal}
-            effect="slide-bottom"
-            headerContent={<LoginSheetHeader label="Remember Me" closeModal={closeModal} />}
-        >
-            <div id="remember-me" className="u-padding-md">
-                Check "Remember Me" to access your shopping cart on this computer even if you are not signed in.
-            </div>
-
-            <div className="t-login__remember-me-button u-padding-md">
-                <Button
-                    className="c-button c--secondary u-text-uppercase u-margin-top-lg u-width-full"
-                    onClick={closeModal}
-                >
-                    Continue
-                </Button>
-            </div>
-        </Sheet>
-    </div>
-)
-
-RawLoginFieldTooltip.propTypes = {
-    closeModal: PropTypes.func,
-    modalOpen: PropTypes.bool,
-    openModal: PropTypes.func,
-}
-
-export const LoginFieldTooltip = connect(createPropsSelector({
-    modalOpen: isModalOpen(REMEMBER_ME_MODAL)
-}), {
-    openModal: () => openModal(REMEMBER_ME_MODAL),
-    closeModal: () => closeModal(REMEMBER_ME_MODAL)
-})(RawLoginFieldTooltip)
 
 export const LoginFieldLabel = ({label, required, forgotPassword}) => (
     <span>
@@ -131,3 +64,17 @@ LoginField.propTypes = {
     required: PropTypes.bool,
     tooltip: PropTypes.node
 }
+
+const RememberMeTooltipContent = ({openModal}) => (
+    <a href="#remember-me" onClick={openModal}>
+        {'What\'s this?'}
+    </a>
+)
+
+RememberMeTooltipContent.propTypes = {
+    openModal: PropTypes.func
+}
+
+export const RememberMeTooltip = connect(null, {
+    openModal: () => openModal(REMEMBER_ME_MODAL)
+})(RememberMeTooltipContent)

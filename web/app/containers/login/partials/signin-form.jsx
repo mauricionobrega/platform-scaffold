@@ -8,7 +8,7 @@ import Button from 'progressive-web-sdk/dist/components/button'
 import FieldSet from 'progressive-web-sdk/dist/components/field-set'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 
-import {LoginField, LoginFieldTooltip} from './common'
+import {LoginField, RememberMeTooltip} from './common'
 
 const FORGOT_PASSWORD_PATH = '/customer/account/forgotpassword'
 
@@ -64,7 +64,7 @@ class SignInForm extends React.Component {
                         name="persistent_remember_me"
                         type="checkbox"
                         required={false}
-                        tooltip={<LoginFieldTooltip />}
+                        tooltip={<RememberMeTooltip />}
                         />
 
                     <FieldRow>
