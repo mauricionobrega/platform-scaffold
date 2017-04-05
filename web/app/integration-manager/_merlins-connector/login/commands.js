@@ -5,37 +5,23 @@ import {SubmissionError} from 'redux-form'
 import {receiveLoginHref, receiveRegisterHref} from '../actions'
 import {getLoginHref, getFormKey, getRegisterHref} from '../selectors'
 import {fetchPageData} from '../app/commands'
-import {receiveLoginPageData} from '../../login/responses'
+import {setSigninLoaded, setRegisterLoaded} from '../../login/responses'
 
-import {isFormResponseInvalid} from './parsers/common'
-import signinParser from './parsers/signin'
-import registerParser from './parsers/register'
+import {isFormResponseInvalid, parseSigninHref, parseRegisterHref} from './parsers/parsers'
 
-
-export const fetchLoginData = (url, routeName) => (dispatch) => {
+export const fetchSigninData = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then((res) => {
-            const [$, $response] = res
-            if (routeName === 'signin') {
-                const signInData = signinParser($, $response)
-                dispatch(receiveLoginHref(signInData.form.href))
-                return dispatch(receiveLoginPageData({
-                    signinSection: {
-                        isFormLoaded: true,
-                        ...signInData
-                    }
-                }))
-            } else if (routeName === 'register') {
-                const registerData = registerParser($, $response)
-                dispatch(receiveRegisterHref(registerData.form.href))
-                return dispatch(receiveLoginPageData({
-                    registerSection: {
-                        isFormLoaded: true,
-                        ...registerData
-                    }
-                }))
-            }
-            return dispatch(receiveLoginPageData())
+            dispatch(receiveLoginHref(parseSigninHref(res[1])))
+            dispatch(setSigninLoaded())
+        })
+}
+
+export const fetchRegisterData = (url) => (dispatch) => {
+    return dispatch(fetchPageData(url))
+        .then((res) => {
+            dispatch(receiveRegisterHref(parseRegisterHref(res[1])))
+            dispatch(setRegisterLoaded())
         })
 }
 
