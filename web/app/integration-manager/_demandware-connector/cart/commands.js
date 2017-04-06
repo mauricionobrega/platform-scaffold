@@ -30,11 +30,13 @@ export const getProductImageFromState = (item, currentState) => {
     const productImage = getFirstProductImageByPathKey(getProductHref(item.product_id))(currentState)
 
     if (productImage) {
+        // If we already have images for the item in our state, then just use those
         return Promise.resolve({
             src: productImage,
             alt: item.product_name
         })
     } else {
+        // We have no images for the item in our state, fetch images using demandware's API
         return makeDemandwareRequest(`${API_END_POINT_URL}/products/${item.product_id}/images?view_type=large`, {method: 'GET'})
             .then((response) => response.json())
             .then(({image_groups}) => {
@@ -73,6 +75,24 @@ export const getCart = () => (dispatch, getState) => {
                 .then((responseJSON) => fetchBasketItemImages(responseJSON, getState()))
                 .then((basketData) => dispatch(receiveCartContents(basketData)))
         })
+}
+
+export const removeFromCart = (itemId) => (dispatch, getState) => {
+    return createBasket()
+        .then((basketID) => {
+            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/items/${itemId}`, {method: 'DELETE'})
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json()
+                    }
+                    throw new Error('Unable to remove item')
+                })
+                .then((responseJSON) => fetchBasketItemImages(responseJSON, getState()))
+                .then((basketData) => dispatch(receiveCartContents(basketData)))
+        })
+}
+
+export const updateItemQuantity = (itemId, itemQuantity) => (dispatch) => {
 }
 
 export const fetchCartPageData = () => (dispatch) => {
