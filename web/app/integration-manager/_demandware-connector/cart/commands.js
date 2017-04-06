@@ -27,7 +27,7 @@ export const createBasket = () => {
         /* eslint-enable camelcase */
 }
 
-export const getProductImageFromState = (item, currentState) => {
+export const getProductImage = (item, currentState) => {
     const productImage = getFirstProductImageByPathKey(getProductHref(item.product_id))(currentState)
 
     if (productImage) {
@@ -52,8 +52,7 @@ export const getProductImageFromState = (item, currentState) => {
 export const fetchBasketItemImages = (responseJSON, currentState) => {
     const basketData = parseBasketContents(responseJSON)
     if (basketData.items.length) {
-        // check products store for images
-        return Promise.all(basketData.items.map((item) => getProductImageFromState(item, currentState)))
+        return Promise.all(basketData.items.map((item) => getProductImage(item, currentState)))
             .then((itemImages) => {
                 return {
                     ...basketData,
