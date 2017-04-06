@@ -26,6 +26,7 @@ const template = (WrappedComponent) => {
             if (!route.suppressFetch) {
                 dispatch(fetchPage(url, WrappedComponent, route.routeName, route.fetchUrl))
             }
+            this.props.dispatch(removeAllNotifications())
         }
 
         componentWillMount() {
