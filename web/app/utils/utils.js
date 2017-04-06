@@ -143,6 +143,6 @@ export const requestIdleCallback = (fn) => {
     if ('requestIdleCallback' in window) {
         return window.requestIdleCallback(fn)
     } else {
-        return fn()
+        return setTimeout(() => fn(), 1)
     }
 }

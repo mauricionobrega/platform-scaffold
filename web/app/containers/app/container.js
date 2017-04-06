@@ -22,6 +22,8 @@ import NotificationManager from '../../components/notification-manager'
 
 import {requestIdleCallback} from '../../utils/utils'
 
+// These Unwrapped containers are loadable components. They'll only be
+// downloaded when we call upon them
 import {
     UnwrappedCart,
     UnwrappedCheckoutConfirmation,
