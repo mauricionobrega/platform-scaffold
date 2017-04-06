@@ -1,8 +1,8 @@
 const selectors = {
     productDetailsTemplateIdentifier: '.t-product-details',
     addItem: '.t-product-details__add-to-cart:not([disabled])',
-    itemAdded: '.t-pproduct-list__item-added-modal .u-h4 .u-text-uppercase',
-    goToCart: '.t-product-list__item-added-modal a[href*="cart"]'
+    itemAdded: '.t-product-details__item-added-modal .u-h4.u-text-uppercase',
+    goToCart: '.t-product-details__item-added-modal a[href*="cart"]'
 }
 
 const ProductDetails = function(browser) {
