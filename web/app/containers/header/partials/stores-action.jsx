@@ -6,7 +6,7 @@ import {HeaderBarActions} from 'progressive-web-sdk/dist/components/header-bar'
 
 const StoresAction = ({innerButtonClassName}) => (
     <HeaderBarActions>
-        <Button innerClassName={innerButtonClassName}>
+        <Button innerClassName={innerButtonClassName} className="t-header__link" href="//locations.merlinspotions.com">
             <IconLabel label="Stores" iconName="map" iconSize="medium" />
         </Button>
     </HeaderBarActions>
