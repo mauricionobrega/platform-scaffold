@@ -92,7 +92,26 @@ export const removeFromCart = (itemId) => (dispatch, getState) => {
         })
 }
 
-export const updateItemQuantity = (itemId, itemQuantity) => (dispatch) => {
+export const updateItemQuantity = (itemId, itemQuantity) => (dispatch, getState) => {
+
+    return createBasket()
+        .then((basketID) => {
+            const requestOptions = {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    quantity: itemQuantity
+                })
+            }
+            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/items/${itemId}`, requestOptions)
+            .then((response) => {
+                if (response.ok) {
+                    return response.json()
+                }
+                throw new Error('Unable to updates item')
+            })
+            .then((responseJSON) => fetchBasketItemImages(responseJSON, getState()))
+            .then((basketData) => dispatch(receiveCartContents(basketData)))
+        })
 }
 
 export const fetchCartPageData = () => (dispatch) => {

@@ -39,7 +39,9 @@ export const getCurrentProductID = () => {
 
 export const parseBasketContents = ({product_items, product_sub_total, product_total}) => {
     /* eslint-disable camelcase */
+    let summary_count = 0
     const items = product_items ? product_items.map(({item_id, product_name, product_id, base_price, quantity}) => {
+        summary_count += quantity
         return {
             product_name,
             product_price: `${formatPrice(base_price)}`,
@@ -58,7 +60,7 @@ export const parseBasketContents = ({product_items, product_sub_total, product_t
         items,
         subtotal: formatPrice(product_total),
         subtotal_excl_tax: formatPrice(product_sub_total),
-        summary_count: items && items.length
+        summary_count
     }
     /* eslint-enable camelcase  */
 }
