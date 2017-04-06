@@ -87,8 +87,7 @@ if (isReactRoute()) {
 
     // load the worker if available
     // if no worker is available, we have to assume that promises might not be either.
-    // Astro doesn't currently support service workers
-    (('serviceWorker' in navigator && !isRunningInAstro)
+    (('serviceWorker' in navigator)
      ? loadWorker()
      : {then: (fn) => setTimeout(fn)}
     ).then(() => {
