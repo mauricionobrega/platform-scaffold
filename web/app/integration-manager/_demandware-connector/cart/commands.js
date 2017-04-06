@@ -108,7 +108,7 @@ export const updateItemQuantity = (itemId, itemQuantity) => (dispatch, getState)
                 if (response.ok) {
                     return response.json()
                 }
-                throw new Error('Unable to updates item')
+                throw new Error('Unable to update item')
             })
             .then((responseJSON) => fetchBasketItemImages(responseJSON, getState()))
             .then((basketData) => dispatch(receiveCartContents(basketData)))
