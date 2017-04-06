@@ -1,3 +1,5 @@
+/* eslint-disable import/namespace */
+/* eslint-disable import/named */
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
@@ -18,8 +20,22 @@ import * as selectors from './selectors'
 
 import NotificationManager from '../../components/notification-manager'
 
+import {requestIdleCallback} from '../../utils/utils'
+
+// These Unwrapped containers are loadable components. They'll only be
+// downloaded when we call upon them
+import {
+    UnwrappedCart,
+    UnwrappedCheckoutConfirmation,
+    UnwrappedCheckoutPayment,
+    UnwrappedCheckoutShipping,
+    UnwrappedLogin,
+    UnwrappedProductDetails,
+    UnwrappedProductList,
+    Offline
+} from '../templates'
+
 // Offline support
-import {Offline} from '../templates'
 import OfflineBanner from '../offline/partials/offline-banner'
 import OfflineModal from '../offline/partials/offline-modal'
 
@@ -39,6 +55,30 @@ class App extends React.Component {
             google: {
                 families: ['Oswald:200,400']
             }
+        })
+
+        // Lazy load other containers when browser is at the end of frame
+        // to prevent jank
+        requestIdleCallback(() => {
+            UnwrappedCart.preload()
+        })
+        requestIdleCallback(() => {
+            UnwrappedCheckoutConfirmation.preload()
+        })
+        requestIdleCallback(() => {
+            UnwrappedCheckoutPayment.preload()
+        })
+        requestIdleCallback(() => {
+            UnwrappedCheckoutShipping.preload()
+        })
+        requestIdleCallback(() => {
+            UnwrappedLogin.preload()
+        })
+        requestIdleCallback(() => {
+            UnwrappedProductDetails.preload()
+        })
+        requestIdleCallback(() => {
+            UnwrappedProductList.preload()
         })
     }
 

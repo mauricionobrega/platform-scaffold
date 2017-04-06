@@ -14,7 +14,7 @@ const config = {
     devtool: 'cheap-source-map',
     entry: [
         'whatwg-fetch',
-        './app/main.jsx',
+        './app/main.jsx'
     ],
     output: {
         path: path.resolve(process.cwd(), 'build'),
@@ -64,11 +64,10 @@ const config = {
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules(?!\/mobify-progressive-app-sdk)/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        cacheDirectory: `${__dirname}/tmp`
-                    }
+                loader: 'babel-loader',
+                options: {
+                    cacheDirectory: `${__dirname}/tmp`,
+                    plugins: ['syntax-dynamic-import']
                 }
             },
             {
