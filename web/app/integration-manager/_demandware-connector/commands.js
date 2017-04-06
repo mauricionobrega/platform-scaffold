@@ -1,5 +1,5 @@
 import {receiveCartContents} from '../../store/cart/actions'
-import {parseBasketContents, getCurrentProductID} from './parsers'
+import {getCurrentProductID} from './parsers'
 
 import {API_END_POINT_URL} from './constants'
 import {makeDemandwareRequest} from './utils'
@@ -12,7 +12,7 @@ import * as appCommands from './app/commands'
 import * as checkoutCommands from './checkout/commands'
 import * as loginCommands from './login/commands'
 
-const addToCart = () => (dispatch) => {
+const addToCart = () => (dispatch, getState) => {
     return cartCommands.createBasket()
         .then((basketID) => {
             const options = {
@@ -29,7 +29,8 @@ const addToCart = () => (dispatch) => {
                     }
                     throw new Error('Unable to add item to cart')
                 })
-                .then((responseJSON) => dispatch(receiveCartContents(parseBasketContents(responseJSON))))
+                .then((responseJSON) => cartCommands.fetchBasketItemImages(responseJSON, getState()))
+                .then((basketData) => dispatch(receiveCartContents(basketData)))
         })
 }
 

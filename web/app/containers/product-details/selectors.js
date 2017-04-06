@@ -22,7 +22,7 @@ export const getSelectedProductDetails = createGetSelector(
     Immutable.Map()
 )
 
-export const getProductDetailsByPathKey = (pathKey) => createGetSelector(getProductDetails, pathKey, Immutable.Map())
+export const getProductDetailsByPathKey = (pathKey) => createGetSelector(getProducts, pathKey, Immutable.Map())
 
 
 export const getProductDetailsContentsLoaded = createHasSelector(
@@ -65,4 +65,7 @@ export const getFirstProductCarouselItem = createGetSelector(
 )
 export const getFirstProductImage = createGetSelector(getFirstProductCarouselItem, 'img')
 
-export const getUenc = (pathKey) => createGetSelector(getProductDetailsByPathKey(pathKey), 'uenc')
+// TODO: Fix these selectors
+export const getProductCarouselItemsByPathKey = (pathKey) => createGetSelector(getProductDetailsByPathKey(pathKey), 'carouselItems', Immutable.List())
+export const getFirstProductCarouselItemByPathKey = (pathKey) => createGetSelector(getProductCarouselItemsByPathKey(pathKey), 0, Immutable.Map())
+export const getFirstProductImageByPathKey = (pathKey) => createGetSelector(getFirstProductCarouselItemByPathKey(pathKey), 'img')

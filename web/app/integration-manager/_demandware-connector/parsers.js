@@ -39,12 +39,13 @@ export const getCurrentProductID = () => {
 
 export const parseBasketContents = ({product_items, product_sub_total, product_total}) => {
     /* eslint-disable camelcase */
-    const items = product_items ? product_items.map(({product_name, base_price, quantity}) => {
+    const items = product_items ? product_items.map(({product_name, product_id, base_price, quantity}) => {
         return {
             product_name,
             product_price: `${formatPrice(base_price)}`,
             product_image: {},
-            qty: quantity
+            qty: quantity,
+            product_id
         }
     }) : []
     return {

@@ -1,6 +1,8 @@
 import {makeDemandwareRequest, storeBasketID, getBasketID} from '../utils'
 import {receiveCartContents} from '../../cart/responses'
-import {parseBasketContents} from '../parsers'
+import {getFirstProductImageByPathKey} from '../../../containers/product-details/selectors'
+import {fetchPdpData} from '../products/commands'
+import {parseBasketContents, getProductHref} from '../parsers'
 import {API_END_POINT_URL} from '../constants'
 
 
@@ -24,8 +26,43 @@ export const createBasket = () => {
         /* eslint-enable camelcase */
 }
 
+export const getProductImageFromState = (item, currentState) => {
+    const productImage = getFirstProductImageByPathKey(getProductHref(item.product_id))(currentState)
 
-export const getCart = () => (dispatch) => {
+    if (productImage) {
+        return Promise.resolve({
+            src: productImage,
+            alt: item.product_name
+        })
+    } else {
+        return makeDemandwareRequest(`${API_END_POINT_URL}/products/${item.product_id}/images?view_type=large`, {method: 'GET'})
+            .then((response) => response.json())
+            .then(({image_groups}) => {
+                return Promise.resolve({
+                    src: image_groups[0].images[0].link,
+                    alt: item.product_name
+                })
+            })
+    }
+}
+
+export const fetchBasketItemImages = (responseJSON, currentState) => {
+    const basketData = parseBasketContents(responseJSON)
+    if (basketData.items.length) {
+        // check products store for images
+        return Promise.all(basketData.items.map((item) => getProductImageFromState(item, currentState)))
+            .then((itemImages) => {
+                return {
+                    ...basketData,
+                    items: basketData.items.map((item, i) => ({...item, product_image: itemImages[i]}))
+                }
+            })
+    }
+    return Promise.resolve(basketData)
+}
+
+
+export const getCart = () => (dispatch, getState) => {
     return createBasket()
         .then((basketID) => {
             const options = {
@@ -33,9 +70,8 @@ export const getCart = () => (dispatch) => {
             }
             return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}`, options)
                 .then((response) => response.json())
-                .then((responseJSON) => {
-                    dispatch(receiveCartContents(parseBasketContents(responseJSON)))
-                })
+                .then((responseJSON) => fetchBasketItemImages(responseJSON, getState()))
+                .then((basketData) => dispatch(receiveCartContents(basketData)))
         })
 }
 
