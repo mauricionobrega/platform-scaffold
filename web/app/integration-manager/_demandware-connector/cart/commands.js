@@ -1,9 +1,10 @@
 import {makeDemandwareRequest, storeBasketID, getBasketID} from '../utils'
 import {receiveCartContents} from '../../cart/responses'
 import {getFirstProductImageByPathKey} from '../../../containers/product-details/selectors'
-import {fetchPdpData} from '../products/commands'
+import {receiveCheckoutData} from '../../checkout/responses'
 import {parseBasketContents, getProductHref} from '../parsers'
 import {API_END_POINT_URL} from '../constants'
+import {STATES} from '../checkout/constants'
 
 
 export const createBasket = () => {
@@ -116,4 +117,12 @@ export const updateItemQuantity = (itemId, itemQuantity) => (dispatch, getState)
 
 export const fetchCartPageData = () => (dispatch) => {
     return dispatch(getCart())
+        .then(() => {
+            return dispatch(receiveCheckoutData({
+                locations: {
+                    countries: [{value: 'us', label: 'United States'}],
+                    regions: STATES
+                }
+            }))
+        })
 }
