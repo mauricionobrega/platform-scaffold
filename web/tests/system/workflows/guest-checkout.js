@@ -2,12 +2,14 @@ import process from 'process'
 import Home from '../page-objects/home'
 import ProductList from '../page-objects/product-list'
 import ProductDetails from '../page-objects/product-details'
+import Webpush from '../page-objects/webpush'
 // import Cart from '../page-objects/cart'
 // import Checkout from '../page-objects/checkout'
 
 let home
 let productList
 let productDetails
+let webpush
 // let cart
 // let checkout
 
@@ -21,6 +23,7 @@ export default {
         home = new Home(browser)
         productList = new ProductList(browser)
         productDetails = new ProductDetails(browser)
+        webpush = new Webpush(browser)
         // cart = new Cart(browser)
         // checkout = new Checkout(browser)
     },
@@ -34,6 +37,10 @@ export default {
             .preview()
             .waitForElementVisible(home.selectors.wrapper)
             .assert.visible(home.selectors.wrapper)
+
+        webpush
+            .setup()
+            .checkVisitCount(1)
     },
 
     'Checkout - Guest - Step 2 - Navigate from Home to ProductList': (browser) => {
@@ -41,6 +48,8 @@ export default {
         browser
             .waitForElementVisible(productList.selectors.productListTemplateIdentifier)
             .assert.visible(productList.selectors.productListTemplateIdentifier)
+
+        webpush.checkVisitCount(2)
     },
 
     'Checkout - Guest - Step 3 - Navigate from ProductList to ProductDetails': (browser) => {
@@ -48,6 +57,8 @@ export default {
         browser
             .waitForElementVisible(productDetails.selectors.productDetailsTemplateIdentifier)
             .assert.visible(productDetails.selectors.productDetailsTemplateIdentifier)
+
+        webpush.checkVisitCount(3)
     },
 
     'Checkout - Guest - Step 4 - Add item to Shopping Cart': (browser) => {
