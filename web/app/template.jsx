@@ -6,6 +6,12 @@ import {trigger as astroTrigger} from './utils/astro-integration'
 
 import {getURL, getPath} from './utils/utils'
 
+import {requestIdleCallback} from './utils/utils'
+
+// These Unwrapped containers are loadable components. They'll only be
+// downloaded when we call upon them
+import * as loadableContainers from './containers/templates'
+
 const getDisplayName = (WrappedComponent) => {
     return WrappedComponent.displayName || WrappedComponent.name || 'Component'
 }
@@ -38,6 +44,19 @@ const template = (WrappedComponent) => {
                 url: getURL(this.props.location),
                 source: 'componentDidMount'
             })
+
+            // Lazy load other containers when browser is at the end of frame
+            // to prevent jank
+            for (const container in loadableContainers) {
+                /* istanbul ignore else */
+                if (loadableContainers.hasOwnProperty(container)) {
+                    if (container.match(/^unwrapped/i)) {
+                        requestIdleCallback(() => {
+                            loadableContainers[container].preload()
+                        })
+                    }
+                }
+            }
         }
 
         componentWillReceiveProps(nextProps) {
