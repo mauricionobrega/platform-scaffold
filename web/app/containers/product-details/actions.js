@@ -6,7 +6,7 @@ import * as selectors from './selectors'
 import * as appSelectors from '../app/selectors'
 import {getFormValues} from '../../store/form/selectors'
 
-import {addToCart} from '../../integration-manager/commands'
+import {addToCart} from '../../integration-manager/cart/commands'
 import {getProductVariationData} from '../../integration-manager/products/commands'
 import {openModal, closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {addNotification} from '../app/actions'

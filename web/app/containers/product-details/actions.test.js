@@ -7,7 +7,7 @@ import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from './constants'
 import {addToCartStarted, submitCartForm} from './actions'
 
 jest.mock('../../integration-manager/commands')
-import {addToCart} from '../../integration-manager/commands'
+import {addToCart} from '../../integration-manager/cart/commands'
 
 /* eslint-disable import/namespace */
 

@@ -2,7 +2,7 @@ import {noop} from 'progressive-web-sdk/dist/utils/utils'
 import {receiveLoginPageData} from '../../login/responses'
 import {setLoggedIn} from '../../responses'
 import {initDemandwareSession, storeAuthToken, makeDemandwareRequest, deleteBasketID} from '../utils'
-import {getCart} from '../cart/commands'
+import {requestCartData, parseAndReceiveCartResponse, createBasket} from '../cart/utils'
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {SubmissionError} from 'redux-form'
 
@@ -49,7 +49,14 @@ export const login = ({login}) => (dispatch) => {
         }
     }
     let responseHeaders
-    return makeRequest(`${API_END_POINT_URL}/customers/auth`, requestOptions)
+    let basketContents
+    let customerID
+    return requestCartData()
+        .then((response) => response.json())
+        .then((basket) => {
+            basketContents = basket
+            return makeRequest(`${API_END_POINT_URL}/customers/auth`, requestOptions)
+        })
         .then((response) => {
             responseHeaders = response.headers
             return response.json()
@@ -59,18 +66,33 @@ export const login = ({login}) => (dispatch) => {
                 throw new SubmissionError({_error: 'Username or password is incorrect'})
             }
             const authorization = responseHeaders.get('Authorization')
+            customerID = responseJSON.customer_id
             storeAuthToken(authorization)
             dispatch(setLoggedIn(true))
+            deleteBasketID()
             return initDemandwareSession(authorization)
-                .then(() => {
-                    deleteBasketID()
-                    return dispatch(getCart())
-                })
-                .then(() => {
-                    // Navigate to the homepage, since we haven't made an account page yet
-                    // and demandware's account page is at the same URL as their login page
-                    return '/on/demandware.store/Sites-2017refresh-Site/default/Home-Show'
-                })
+        })
+        // Check if the user has a basket already
+        .then(() => makeDemandwareRequest(`${API_END_POINT_URL}/customers/${customerID}/baskets`), {method: 'GET'})
+        .then((response) => response.json())
+        .then(({baskets}) => {
+            if (baskets.length) {
+                // update basket with contents (product_items)
+                const requestOptions = {
+                    method: 'POST',
+                    body: JSON.stringify(basketContents.product_items)
+                }
+                return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${baskets[0].basket_id}/items`, requestOptions)
+                    .then((response) => response.json())
+            } else {
+                return createBasket(basketContents)
+            }
+        })
+        .then((responseJSON) => dispatch(parseAndReceiveCartResponse(responseJSON)))
+        .then(() => {
+            // Navigate to the homepage, since we haven't made an account page yet
+            // and demandware's account page is at the same URL as their login page
+            return '/on/demandware.store/Sites-2017refresh-Site/default/Home-Show'
         })
 }
 
