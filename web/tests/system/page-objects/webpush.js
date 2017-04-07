@@ -8,24 +8,22 @@ const Webpush = function(browser) {
 Webpush.prototype.setup = function() {
     this.browser
         .waitForElementPresent(loaderScript)
-            // eslint-disable prefer-arrow-callback
-            .executeAsync(function callback(done) {
+            .executeAsync((done) => {
+                // The Mobify Push Messaging client will load the necessary setup
+                // scripts after the window.load event
                 if (document.readyState === 'complete') {
                     done()
                 } else {
-                    window.addEventListener('load', function callback() {
-                        done()
-                    })
+                    window.addEventListener('load', done)
                 }
             })
-            // eslint-enable prefer-arrow-callback
 
     return this
 }
 
-Webpush.prototype.checkVisitCount = function(count) {
+Webpush.prototype.assertVisitCount = function(count) {
     this.browser
-        .getCookie(activeVisitCookie, function callback(result) {
+        .getCookie(activeVisitCookie, function(result) {
             this.assert.equal(result.value, count)
         })
 

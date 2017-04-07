@@ -40,7 +40,7 @@ export default {
 
         webpush
             .setup()
-            .checkVisitCount(1)
+            .assertVisitCount(1)
     },
 
     'Checkout - Guest - Step 2 - Navigate from Home to ProductList': (browser) => {
@@ -49,7 +49,7 @@ export default {
             .waitForElementVisible(productList.selectors.productListTemplateIdentifier)
             .assert.visible(productList.selectors.productListTemplateIdentifier)
 
-        webpush.checkVisitCount(2)
+        webpush.assertVisitCount(2)
     },
 
     'Checkout - Guest - Step 3 - Navigate from ProductList to ProductDetails': (browser) => {
@@ -58,7 +58,7 @@ export default {
             .waitForElementVisible(productDetails.selectors.productDetailsTemplateIdentifier)
             .assert.visible(productDetails.selectors.productDetailsTemplateIdentifier)
 
-        webpush.checkVisitCount(3)
+        webpush.assertVisitCount(3)
     },
 
     'Checkout - Guest - Step 4 - Add item to Shopping Cart': (browser) => {
