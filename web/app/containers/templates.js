@@ -9,7 +9,7 @@ import UnwrappedCheckoutPayment from './checkout-payment/container'
 import UnwrappedCheckoutShipping from './checkout-shipping/container'
 import UnwrappedHome from './home/container'
 import UnwrappedLogin from './login/container'
-import UnwrappedProductDetails from './product-details/container'
+import UnwrappedProductDeets from './product-deets/container'
 import UnwrappedProductList from './product-list/container'
 import UnwrappedOffline from './offline/container'
 
@@ -19,6 +19,6 @@ export const CheckoutPayment = template(UnwrappedCheckoutPayment)
 export const CheckoutShipping = template(UnwrappedCheckoutShipping)
 export const Home = template(UnwrappedHome)
 export const Login = template(UnwrappedLogin)
-export const ProductDetails = template(UnwrappedProductDetails)
+export const ProductDeets = template(UnwrappedProductDeets)
 export const ProductList = template(UnwrappedProductList)
 export const Offline = template(UnwrappedOffline)
