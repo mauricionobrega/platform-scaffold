@@ -18,21 +18,17 @@
 //
 // This root clas doesn't do much on its own; it depends on a subcomponent and a modifer to 
 // style the stars and add new filled in stars on top to show the current rating.
-// What it does do is some tricky text direction flipping to help out the modifier. 
+// What it *does* do is some tricky text direction flipping to help out the modifier. 
 // In the modifier, we can't select the _preceding_ children we need, we can only select 
 // the _succeeding_ children. Therefore, we need to reverse the order of the the stars 
 // from how they appear in the JSX. In the JSX, the order is highest star to lowest star, 
-// but we want to display them from lowest star to highest star.
-//
-// Notes:
-//
-// 1. This allows us to use the direction property below
-// 2. rtl = right-to-left
+// but we want to display them from lowest star to highest star. Therefore, we make sure the
+// text direction is right-to-left (rtl).
 
 .c-star-rating {
     color: $brand-color;
-    unicode-bidi: bidi-override; // 1
-    direction: rtl; // 2
+    unicode-bidi: bidi-override;
+    direction: rtl;
     text-align: left;
 }
 

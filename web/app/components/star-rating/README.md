@@ -9,4 +9,4 @@ import StarRating from 'components/star-rating'
 
 ## Example Usage
 
-    <StarRating numStars={3} />
+    <StarRating numStars={3} maxStars={5} />

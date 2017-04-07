@@ -15,7 +15,7 @@ const ProductDeetsHeading = ({title, price}) => (
         }
 
         {title ?
-            <StarRating numStars={3} />
+            <StarRating numStars={3} maxStars={5} />
         :
             <SkeletonBlock width="50%" height="32px" className="u-margin-bottom" />
         }

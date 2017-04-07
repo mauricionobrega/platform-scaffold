@@ -11,24 +11,25 @@ const componentClass = 'c-star-rating'
 
 const StarRating = ({
     numStars,
+    maxStars,
     className
 }) => {
-    const classes = classNames(componentClass, className, {
-        // 'c--modifier': bool ? true : false
-    })
-
+    const classes = classNames(componentClass, className)
     return (
         <div className={classes}>
-            <span className={numStars === 5 ? `${componentClass}__star c--filled-in` : `${componentClass}__star`}>☆</span>
-            <span className={numStars >= 4 ? `${componentClass}__star c--filled-in` : `${componentClass}__star`}>☆</span>
-            <span className={numStars >= 3 ? `${componentClass}__star c--filled-in` : `${componentClass}__star`}>☆</span>
-            <span className={numStars >= 2 ? `${componentClass}__star c--filled-in` : `${componentClass}__star`}>☆</span>
-            <span className={numStars >= 1 ? `${componentClass}__star c--filled-in` : `${componentClass}__star`}>☆</span>
+            {[...Array(maxStars).keys()].reverse().map((currentRating, index) =>
+                <span key={index} className={numStars >= currentRating + 1 ? `${componentClass}__star c--filled-in` : `${componentClass}__star`}>☆</span>
+            )}
         </div>
     )
 }
 
 StarRating.propTypes = {
+    /**
+     * Determines the maximum number of possible stars.
+     */
+    maxStars: PropTypes.number.isRequired,
+
     /**
      * Determines the number of filled-in stars to display and should
      * reflect the product's current rating.

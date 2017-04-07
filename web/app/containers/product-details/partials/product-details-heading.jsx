@@ -30,12 +30,6 @@ const ProductDetailsHeading = ({breadcrumbs, title, price, isInCheckout}) => (
             <SkeletonBlock width="50%" height="32px" className="u-margin-bottom" />
         }
 
-        {title ?
-            <StarRating numStars={3} />
-        :
-            <SkeletonBlock width="50%" height="32px" className="u-margin-bottom" />
-        }
-
         {price ?
             <span className="t-product-details-heading__price t-product-details__price u-color-accent u-text-normal u-text-header-font-family u-text-letter-spacing">{price}</span>
         :
