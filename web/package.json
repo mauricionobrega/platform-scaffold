@@ -120,7 +120,7 @@
     "test:pwa-ci": "./scripts/lighthouse-ci.sh",
     "test:pwa-local": "./scripts/lighthouse-local.sh",
     "test:watch": "npm test -- --watch",
-    "prod:build": "./scripts/build.sh",
+    "prod:build": "bash ./scripts/build.sh",
     "update-loader-routes": "sdk-get-routes"
   },
   "jest": {
