@@ -18,6 +18,7 @@ import Stylesheet from './stylesheet.scss' // eslint-disable-line no-unused-vars
 
 import {analyticManager} from 'progressive-web-sdk/dist/analytics/analytic-manager'
 import {clientAnalytics} from './utils/analytics/client-analytics'
+import {pushMessaging} from './utils/push-messaging/push-messaging-distributor'
 
 // import connector from './integration-manager/_merlins-connector'
 import connector from './integration-manager/_demandware-connector'
@@ -29,7 +30,7 @@ polyfill()
 analyticManager.init({
     projectSlug: AJS_SLUG,      // eslint-disable-line no-undef
     isDebug: false
-}, clientAnalytics)
+}, clientAnalytics, pushMessaging)
 initCacheManifest(cacheHashManifest)
 
 registerConnector(connector)

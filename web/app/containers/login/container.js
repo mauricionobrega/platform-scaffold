@@ -1,17 +1,15 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {createPropsSelector} from 'reselect-immutable-helpers'
 import {withRouter} from 'progressive-web-sdk/dist/routing'
 
-import {fetchLoginData, navigateToSection} from '../../integration-manager/login/commands'
+import {fetchSigninData, fetchRegisterData, navigateToSection} from '../../integration-manager/login/commands'
 
 import SignInPanel from './partials/signin-panel'
 import RegisterPanel from './partials/register-panel'
+import RememberMeModal from './partials/remember-me-modal'
 
-import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import {Tabs, TabsPanel} from 'progressive-web-sdk/dist/components/tabs'
 
-import * as selectors from './selectors'
 import {
     SIGN_IN_SECTION,
     REGISTER_SECTION,
@@ -21,26 +19,6 @@ import {
 } from './constants'
 
 import * as AstroIntegration from '../../utils/astro-integration'
-
-const LoginTitle = ({title}) => {
-    if (title) {
-        return (
-            <h1 className="u-text-uppercase u-text-normal">
-                {title}
-            </h1>
-        )
-    } else {
-        return (
-            <div className="u-padding-md">
-                <SkeletonBlock height="32px" width="50%" />
-            </div>
-        )
-    }
-}
-
-LoginTitle.propTypes = {
-    title: PropTypes.string
-}
 
 class Login extends React.Component {
     constructor(props) {
@@ -59,17 +37,18 @@ class Login extends React.Component {
 
     render() {
         const {
-            title,
             route: {
                 routeName
-            },
+            }
         } = this.props
 
         if (!AstroIntegration.isRunningInAstro) {
             return (
                 <div className="t-login">
                     <div className="u-bg-color-neutral-10 u-padding-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
-                        <LoginTitle title={title} />
+                        <h1 className="u-text-uppercase u-text-normal">
+                            Customer Login
+                        </h1>
                     </div>
 
                     <Tabs activeIndex={INDEX_FOR_SECTION[routeName]} className="t-login__navigation" onChange={this.navigateToSection}>
@@ -80,18 +59,21 @@ class Login extends React.Component {
                             <RegisterPanel />
                         </TabsPanel>
                     </Tabs>
+                    <RememberMeModal />
                 </div>
             )
         } else if (routeName === SIGN_IN_SECTION) {
             return (
                 <div className="t-login">
                     <SignInPanel />
+                    <RememberMeModal />
                 </div>
             )
         } else if (routeName === REGISTER_SECTION) {
             return (
                 <div className="t-login">
                     <RegisterPanel />
+                    <RememberMeModal />
                 </div>
             )
         } else {
@@ -101,11 +83,14 @@ class Login extends React.Component {
     }
 }
 
-Login.fetcher = (url, routeName, dispatch) => dispatch(fetchLoginData(url, routeName))
-
-const mapStateToProps = createPropsSelector({
-    title: selectors.getLoginTitle
-})
+Login.fetcher = (url, routeName, dispatch) => {
+    if (routeName === SIGN_IN_SECTION) {
+        return dispatch(fetchSigninData(url))
+    } else if (routeName === REGISTER_SECTION) {
+        return dispatch(fetchRegisterData(url))
+    }
+    throw new Error('Login route name unrecognized')
+}
 
 const mapDispatchToProps = {
     navigateToSection
@@ -115,11 +100,7 @@ Login.propTypes = {
     navigateToSection: PropTypes.func,
     route: PropTypes.object,
     router: PropTypes.object,
-    routes: PropTypes.array,
-    title: PropTypes.string
+    routes: PropTypes.array
 }
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(withRouter(Login))
+export default connect(null, mapDispatchToProps)(withRouter(Login))
