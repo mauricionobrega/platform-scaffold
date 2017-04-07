@@ -1,7 +1,7 @@
 import {noop} from 'progressive-web-sdk/dist/utils/utils'
 import {setRegisterLoaded, setSigninLoaded} from '../../login/responses'
 import {setLoggedIn} from '../../responses'
-import {initDemandwareSession, storeAuthToken, makeDemandwareRequest, deleteBasketID} from '../utils'
+import {initDemandwareSession, storeAuthToken, makeDemandwareRequest, deleteBasketID, storeBasketID} from '../utils'
 import {requestCartData, parseAndReceiveCartResponse, createBasket} from '../cart/utils'
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {SubmissionError} from 'redux-form'
@@ -64,7 +64,9 @@ export const login = ({login}) => (dispatch) => {
                     method: 'POST',
                     body: JSON.stringify(basketContents.product_items)
                 }
-                return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${baskets[0].basket_id}/items`, requestOptions)
+                const basketID = baskets[0].basket_id
+                storeBasketID(basketID)
+                return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, requestOptions)
                     .then((response) => response.json())
             } else {
                 return createBasket(basketContents)
