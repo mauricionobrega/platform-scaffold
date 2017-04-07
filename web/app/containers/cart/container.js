@@ -10,8 +10,7 @@ import {Grid, GridSpan} from 'progressive-web-sdk/dist/components/grid'
 import Icon from 'progressive-web-sdk/dist/components/icon'
 import Image from 'progressive-web-sdk/dist/components/image'
 
-import Astro from '../../vendor/astro-client'
-import {isRunningInAstro} from '../../utils/astro-integration'
+import {isRunningInAstro, trigger} from '../../utils/astro-integration'
 import {getCartContentsLoaded, getCartHasItems} from '../../store/cart/selectors'
 import EstimateShippingReduxForm from './partials/cart-estimate-shipping'
 
@@ -22,7 +21,7 @@ import {browserHistory} from 'progressive-web-sdk/dist/routing'
 
 export const openSignIn = () => {
     if (isRunningInAstro) {
-        Astro.trigger('sign-in:clicked')
+        trigger('sign-in:clicked')
     } else {
         browserHistory.push('/customer/account/login/')
     }
@@ -30,7 +29,7 @@ export const openSignIn = () => {
 
 export const continueShopping = () => {
     if (isRunningInAstro) {
-        Astro.trigger('continue:clicked')
+        trigger('continue:clicked')
     }
 }
 
@@ -76,7 +75,7 @@ EmptyCartContents.propTypes = {
 
 class Cart extends React.Component {
     componentDidMount() {
-        Astro.trigger('checkout:disable-alert')
+        trigger('checkout:disable-alert')
     }
 
     render() {

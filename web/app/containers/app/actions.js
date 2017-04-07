@@ -1,3 +1,5 @@
+/* eslint-disable import/namespace */
+/* eslint-disable import/named */
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 
 import * as analyticConstants from 'progressive-web-sdk/dist/analytics/analytic-constants'
@@ -9,8 +11,11 @@ import {getCurrentUrl} from './selectors'
 
 import appParser from './app-parser'
 
-import CheckoutPayment from '../checkout-payment/container'
-import CheckoutConfirmation from '../checkout-confirmation/container'
+import {
+    UnwrappedCheckoutConfirmation,
+    UnwrappedCheckoutPayment,
+} from '../templates'
+
 import * as checkoutActions from '../../store/checkout/actions'
 import * as checkoutConfirmationActions from '../checkout-confirmation/actions'
 import * as cartActions from '../../store/cart/actions'
@@ -133,9 +138,9 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                 dispatch(receivedAction)
                 dispatch(process(receivedAction))
 
-                if (pageComponent === CheckoutPayment) {
+                if (pageComponent === UnwrappedCheckoutPayment) {
                     dispatch(checkoutActions.processCheckoutData(receivedAction))
-                } else if (pageComponent === CheckoutConfirmation) {
+                } else if (pageComponent === UnwrappedCheckoutConfirmation) {
                     dispatch(checkoutConfirmationActions.process(receivedAction))
                     // Resets the cart count to 0
                     dispatch(cartActions.getCart())
