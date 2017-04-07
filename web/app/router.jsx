@@ -1,3 +1,5 @@
+/* eslint-disable import/namespace */
+/* eslint-disable import/named */
 import React, {PropTypes} from 'react'
 import {Router as SDKRouter, Route, IndexRoute} from 'progressive-web-sdk/dist/routing'
 import {Provider} from 'react-redux'
@@ -45,7 +47,7 @@ const Router = ({store}) => (
                 <Route component={ProductList} path="charms.html" routeName="productListPage" />
                 <Route component={ProductDetails} path="checkout/cart/configure/id/*/product_id/*/" routeName="cartEditPage" />
                 <Route component={ProductDetails} path="*.html" routeName="productDetailsPage" />
-                <Route component={CheckoutShipping} path="checkout/" routeName="checkingShipping" Header={CheckoutHeader} Footer={CheckoutFooter} />
+                <Route component={CheckoutShipping} path="checkout/" routeName="checkingShipping" Header={CheckoutHeader} Footer={CheckoutFooter} headerHasSignIn />
                 {/*
                     The URL for the payment page on desktop is /checkout/#payment,
                     but routing wasn't working properly when using this as the

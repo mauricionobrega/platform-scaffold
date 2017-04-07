@@ -8,12 +8,6 @@ import AlertViewPlugin from 'progressive-app-sdk/plugins/alertViewPlugin'
 import AppEvents from '../global/app-events'
 import CartHeaderController from './cartHeaderController'
 import CartConfig from '../config/cartConfig'
-import {Events as TabEvents} from './tabController'
-
-const Events = {
-    signInShow: 'sign-in:show',
-    shopShow: 'shop:show'
-}
 
 const CartModalController = function(modalView, navigationView) {
     this.isShowing = false
@@ -23,12 +17,12 @@ const CartModalController = function(modalView, navigationView) {
 
     this.navigationView.on('sign-in:clicked', () => {
         this.hide()
-        AppEvents.trigger(Events.signInShow)
+        AppEvents.trigger(AppEvents.signInShow)
     })
 
     this.navigationView.on('continue:clicked', () => {
         this.hide()
-        AppEvents.trigger(Events.shopShow)
+        AppEvents.trigger(AppEvents.shopShow)
     })
 
     this.navigationView.on('checkout:disable-alert', () => {
@@ -41,13 +35,19 @@ const CartModalController = function(modalView, navigationView) {
 
     this.navigationView.on('checkout:completed', () => {
         this.alertEnabled = false
-        AppEvents.trigger(TabEvents.updateCart, {
-            count: 0
-        })
+        // The merlin's backend needs a little extra time to process checkout
+        // so we wait for a small timeout and then try to update all webviews
+        setTimeout(() => {
+            AppEvents.trigger(AppEvents.cartNeedsUpdate)
+        }, 2000)
     })
 
-    this.navigationView.on('cart-updated', (data) => {
-        AppEvents.trigger(TabEvents.updateCart, data)
+    this.navigationView.on('cart:updated', () => {
+        AppEvents.trigger(AppEvents.cartNeedsUpdate)
+    })
+
+    this.navigationView.on('cart:count-updated', (data) => {
+        AppEvents.trigger(AppEvents.updateCart, data)
     })
 
     this.navigationView.on('close', () => {
@@ -115,19 +115,21 @@ CartModalController.prototype.show = async function() {
     if (this.isShowing) {
         return
     }
+    const webView = await this.navigationView.getTopPlugin()
+    webView.reload()
     this.isShowing = true
+    this.alertEnabled = false
     this.viewPlugin.show({animated: true})
 }
 
-CartModalController.prototype.hide = async function() {
-    await this.viewPlugin.hide({animated: true})
+CartModalController.prototype.hide = function() {
+    this.viewPlugin.hide({animated: true})
     this.isShowing = false
+    this.navigationView.popToRoot()
 }
 
 CartModalController.prototype.isActiveItem = function() {
     return this.isShowing
 }
-
-export {Events}
 
 export default CartModalController

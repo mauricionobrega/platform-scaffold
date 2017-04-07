@@ -1,5 +1,10 @@
 ## To be released
 
+## 0.16.1
+- Use "Mobify Development Server" certificate for HTTPS local development [#491](https://github.com/mobify/platform-scaffold/pull/461)
+- Dependency updates and code splitting [#465](https://github.com/mobify/platform-scaffold/pull/465)
+
+
 ## 0.16.0 (March 15, 2017)
 - Renamed repo from `progressive-web-scaffold` to `platform-scaffold`
 - More performance updates (i.e. defer font loading, lazy load images etc.)

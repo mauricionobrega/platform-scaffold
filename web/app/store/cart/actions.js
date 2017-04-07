@@ -12,6 +12,8 @@ import {makeFormEncodedRequest, makeRequest} from 'progressive-web-sdk/dist/util
 import {addNotification, removeNotification} from '../../containers/app/actions'
 import {getFormKey} from '../../containers/app/selectors'
 
+import {trigger} from '../../utils/astro-integration'
+
 const LOAD_CART_SECTION_URL = '/customer/section/load/?sections=cart%2Cmessages&update_section_id=true'
 const REMOVE_CART_ITEM_URL = '/checkout/sidebar/removeItem/'
 const UPDATE_ITEM_URL = '/checkout/sidebar/updateItemQty/'
@@ -53,6 +55,9 @@ export const removeFromCart = (itemId) => {
             .then((responseJSON) => {
                 if (responseJSON.success) {
                     dispatch(getCart())
+                    // Tell Astro the cart has updated, so it can coordinate
+                    // all active webviews to refresh if needed
+                    trigger('cart:updated')
                 } else {
                     dispatch(addNotification({
                         content: `Unable to remove item`,

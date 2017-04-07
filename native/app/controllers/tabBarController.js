@@ -5,8 +5,7 @@ import Application from 'progressive-app-sdk/application'
 import {tabBarConfig} from '../config/tabBarConfig'
 import baseConfig from '../config/baseConfig'
 
-import {Events} from './cartModalController'
-
+import CartModalController from './cartModalController'
 import TabController from './tabController'
 import AccountTabController from './accountTabController'
 import AppEvents from '../global/app-events'
@@ -24,30 +23,30 @@ const TabBarController = function(tabBar, layout, tabControllers) {
 
     this.tabBar.on('itemSelect', (data) => this._tabSelected(data.id))
 
-    AppEvents.on(Events.signInShow, () => this.showSignIn())
+    AppEvents.on(AppEvents.signInShow, () => this.showSignIn())
 
-    AppEvents.on(Events.shopShow, () => this.selectTab('shop'))
+    AppEvents.on(AppEvents.shopShow, () => this.selectTab('shop'))
 }
 
 TabBarController.init = async function() {
     const tabBar = await TabBarPlugin.init()
     await tabBar.setColor(baseConfig.colors.primaryColor)
     const layout = await AnchoredLayoutPlugin.init()
+    const cartModalController = await CartModalController.init()
 
     const tabControllers = {}
 
     const tabControllerPromises = tabBarConfig.items.map((item) => {
         if (item.type === 'custom') {
-            switch (item.id) {
-                case 'account':
-                    return AccountTabController.init().then((controller) => {
-                        tabControllers[item.id] = controller
-                    })
-                default:
-                    return null
+            if (item.id === 'account') {
+                return AccountTabController.init(cartModalController).then((controller) => {
+                    tabControllers[item.id] = controller
+                })
+            } else {
+                return null
             }
         } else {
-            return TabController.init(item).then((controller) => {
+            return TabController.init(item, cartModalController).then((controller) => {
                 tabControllers[item.id] = controller
             })
         }

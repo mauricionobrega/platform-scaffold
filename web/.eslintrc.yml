@@ -7,3 +7,6 @@ settings:
   import/extensions: ['.js', '.jsx']
 rules:
   react/react-in-jsx-scope: error
+globals:
+  process: false
+parser: "babel-eslint"

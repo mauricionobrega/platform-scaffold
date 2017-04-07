@@ -6,6 +6,7 @@ import Astro from 'progressive-app-sdk/astro-full'
 import TabHeaderController from './tabHeaderController'
 import accountConfig from '../config/accountConfig'
 
+import AppEvents from '../global/app-events'
 import AppRpc from '../global/app-rpc'
 
 const AccountTabController = function(viewPlugin, headerController, layout, segmentedView, signInView, registerView) {
@@ -15,9 +16,6 @@ const AccountTabController = function(viewPlugin, headerController, layout, segm
     this.segmentedView = segmentedView
     this.signInView = signInView
     this.registerView = registerView
-
-    this.isActive = false
-    this.isloaded = false
     this.isLoggedIn = false
 
     Astro.registerRpcMethod(AppRpc.names.loggedIn, [], () => {
@@ -28,6 +26,7 @@ const AccountTabController = function(viewPlugin, headerController, layout, segm
         this.layout.hideTopViews()
         this.isLoggedIn = true
         this.layout.setContentView(signInView)
+        AppEvents.trigger(AppEvents.didSignIn)
     })
 
     Astro.registerRpcMethod(AppRpc.names.guest, [], () => {
@@ -40,10 +39,10 @@ const AccountTabController = function(viewPlugin, headerController, layout, segm
     })
 }
 
-AccountTabController.init = async function() {
-    const viewPlugin = await AnchoredLayoutPlugin.init()                // has the header and the layout with the segmentedView
-    const headerController = await TabHeaderController.init()           // header
-    const layout = await AnchoredLayoutPlugin.init()                    // has  the segmented view and the web views
+AccountTabController.init = async function(cartModalController) {
+    const viewPlugin = await AnchoredLayoutPlugin.init()                            // has the header and the layout with the segmentedView
+    const headerController = await TabHeaderController.init(cartModalController)    // header
+    const layout = await AnchoredLayoutPlugin.init()                                // has  the segmented view and the web views
     const segmentedView = await SegmentedPlugin.init()
     const signInView = await WebViewPlugin.init()
     const registerView = await WebViewPlugin.init()
@@ -51,11 +50,11 @@ AccountTabController.init = async function() {
     await viewPlugin.addTopView(headerController.viewPlugin)
     await viewPlugin.setContentView(layout)
 
-    signInView.navigate(accountConfig.signIn.url)
-    registerView.navigate(accountConfig.register.url)
-
     await layout.setContentView(signInView)
     await layout.addTopView(segmentedView)
+
+    signInView.navigate(accountConfig.signIn.url)
+    registerView.navigate(accountConfig.register.url)
 
     await segmentedView.setItems([
         accountConfig.signIn,
@@ -86,23 +85,12 @@ AccountTabController.prototype.showSignIn = async function() {
     await this.segmentedView.selectItem(accountConfig.signIn.key)
 }
 
-AccountTabController.prototype.reload = async function() {
-    await this.signInView.navigate(accountConfig.signIn.url)
-    await this.registerView.navigate(accountConfig.register.url)
-    this.loaded = true
+AccountTabController.prototype.reload = function() {
+    this.signInView.navigate(accountConfig.signIn.url)
+    this.registerView.navigate(accountConfig.register.url)
 }
 
-AccountTabController.prototype.activate = function() {
-    if (!this.isActive) {
-        this.isActive = true
-        if (!this.loaded) {
-            this.reload()
-        }
-    }
-}
-
-AccountTabController.prototype.deactivate = function() {
-    this.isActive = false
-}
+AccountTabController.prototype.activate = () => {} // noop, there is no popping to root in the account tab
+AccountTabController.prototype.deactivate = () => {} // noop, there is no popping to root in the account tab
 
 export default AccountTabController

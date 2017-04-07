@@ -1,6 +1,15 @@
 import polyfill from 'progressive-web-sdk/dist/polyfill'
-import {initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
+import {initCacheManifest, getBuildOrigin} from 'progressive-web-sdk/dist/asset-utils'
 import cacheHashManifest from '../tmp/cache-hash-manifest.json'
+
+let origin = getBuildOrigin()
+
+if (!/\/$/.test(origin)) {
+    origin += '/'
+}
+
+// Set publicPath so bundle chunks will be loaded from the correct location
+__webpack_public_path__ = origin // eslint-disable-line camelcase, no-undef
 
 // React
 import React from 'react'
@@ -18,13 +27,14 @@ import Stylesheet from './stylesheet.scss' // eslint-disable-line no-unused-vars
 
 import {analyticManager} from 'progressive-web-sdk/dist/analytics/analytic-manager'
 import {clientAnalytics} from './utils/analytics/client-analytics'
+import {pushMessaging} from './utils/push-messaging/push-messaging-distributor'
 
 polyfill()
 
 analyticManager.init({
     projectSlug: AJS_SLUG,      // eslint-disable-line no-undef
     isDebug: false
-}, clientAnalytics)
+}, clientAnalytics, pushMessaging)
 initCacheManifest(cacheHashManifest)
 
 const store = configureStore()

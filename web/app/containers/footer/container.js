@@ -1,11 +1,12 @@
-import React, {PropTypes} from 'react'
+import React from 'react'
+import {isRunningInAstro} from '../../utils/astro-integration'
 
 import FooterNewsletterSubscription from './partials/footer-newsletter-subscription'
 import FooterSocialIcons from './partials/footer-social-icons'
 import FooterNavigation from './partials/footer-navigation'
 
-const Footer = (props) => {
-    if (props.isRunningInAstro) {
+const Footer = () => {
+    if (isRunningInAstro) {
         return null
     }
 
@@ -16,13 +17,6 @@ const Footer = (props) => {
             <FooterNavigation />
         </footer>
     )
-}
-
-Footer.propTypes = {
-    /**
-     * Defines whether we're being hosted in an Astro app
-     */
-    isRunningInAstro: PropTypes.bool,
 }
 
 export default Footer
