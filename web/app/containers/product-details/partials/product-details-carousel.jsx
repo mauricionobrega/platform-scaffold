@@ -14,7 +14,8 @@ const ProductDetailsCarousel = ({items, contentsLoaded}) => {
         previousIcon: 'chevron-left',
         nextIcon: 'chevron-right',
         iconSize: 'medium',
-        className: 'pw--frame pw--side-controls t-product-details__carousel u-padding-md u-bg-color-neutral-10'
+        className: 'pw--frame pw--side-controls t-product-details__carousel u-padding-md u-bg-color-neutral-10',
+        showControls: (items.length > 1) ? true : false
     }
 
     // So long as we have items, display the carousel as intended!
