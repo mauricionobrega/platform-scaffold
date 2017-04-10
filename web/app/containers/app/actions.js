@@ -211,7 +211,7 @@ export const fetchSvgSprite = () => {
 
 export const signOut = () => {
     return (dispatch) => {
-        return makeRequest('customer/account/logout/')
+        return makeRequest('/customer/account/logout/')
             .then()
             .then(() => {
                 // Desktop's message includes 'redirect to home page' message
