@@ -59,6 +59,10 @@ export const login = ({login}) => (dispatch) => {
         .then((response) => response.json())
         .then(({baskets}) => {
             if (baskets.length) {
+                if (!basketContents.product_items) {
+                    // There is no basket to merge, so return the existing one
+                    return Promise.resolve(baskets[0])
+                }
                 // update basket with contents (product_items)
                 const requestOptions = {
                     method: 'POST',
@@ -68,9 +72,9 @@ export const login = ({login}) => (dispatch) => {
                 storeBasketID(basketID)
                 return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, requestOptions)
                     .then((response) => response.json())
-            } else {
-                return createBasket(basketContents)
             }
+            return createBasket(basketContents)
+
         })
         .then((responseJSON) => dispatch(parseAndReceiveCartResponse(responseJSON)))
         .then(() => {
