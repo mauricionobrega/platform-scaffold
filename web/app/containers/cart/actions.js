@@ -51,19 +51,14 @@ export const saveToWishlist = (productId, itemId, productURL) => (dispatch, getS
         showRemoveButton: true
     }
 
-
     return dispatch(addToWishlist(productId, productURL))
         .then(() => {
             dispatch(removeItem(itemId))
             dispatch(setIsWishlistComplete(true))
         })
-        .catch((error) => {
-            if (/Failed to fetch|Add Request Failed/i.test(error.message)) {
-                dispatch(closeModal(CART_WISHLIST_MODAL))
-                dispatch(addNotification(wishListErrorNotification))
-            } else {
-                throw error
-            }
+        .catch(() => {
+            dispatch(closeModal(CART_WISHLIST_MODAL))
+            dispatch(addNotification(wishListErrorNotification))
         })
 }
 
