@@ -1,5 +1,8 @@
 /* eslint-disable react/self-closing-comp */
 import React, {PropTypes} from 'react'
+import {connect} from 'react-redux'
+import * as selectors from '../selectors'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import ListTile from 'progressive-web-sdk/dist/components/list-tile'
@@ -17,8 +20,20 @@ const $merlinsPotionsNearbyWidgetSelector = 'js-merlins-potions-nearby-widget'
  */
 
 class ProductNearestStores extends React.Component {
+    componentDidMount() {
+        // Find the current product title
+        const currentProductTitle = this.props.productTitle
 
-    componentWillMount() {
+        // Add Current Product Title to filters
+        for (let i = 0; i < merlinsPotionsNearbyConfig.configs.length; i++) {
+            const currentConfig = merlinsPotionsNearbyConfig.configs[i]
+
+            merlinsPotionsNearbyConfig.configs[i] = {
+                filters: {products: currentProductTitle},
+                ...currentConfig
+            }
+        }
+
         // Nearby widget async script
         const merlinsPotionsAsync = !function(a) { // eslint-disable-line wrap-iife
             const b = document.createElement('script')
@@ -114,6 +129,16 @@ ProductNearestStores.propTypes = {
      */
     className: PropTypes.string,
 
+    /**
+     *  Current Product Title of PDP
+     */
+    productTitle: PropTypes.string
 }
 
-export default ProductNearestStores
+const mapStateToProps = createPropsSelector({
+    productTitle: selectors.getProductTitle
+})
+
+export default connect(
+    mapStateToProps
+)(ProductNearestStores)
