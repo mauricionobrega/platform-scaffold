@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
+import template from '../../template'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import classNames from 'classnames'
@@ -117,4 +118,4 @@ const mapStateToProps = createPropsSelector({
     hasItems: getCartHasItems
 })
 
-export default connect(mapStateToProps)(Cart)
+export default template(connect(mapStateToProps)(Cart))

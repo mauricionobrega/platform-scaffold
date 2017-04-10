@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'progressive-web-sdk/dist/routing'
+import template from '../../template'
 
 import {fetchSigninData, fetchRegisterData, navigateToSection} from '../../integration-manager/login/commands'
 
@@ -103,4 +104,4 @@ Login.propTypes = {
     routes: PropTypes.array
 }
 
-export default connect(null, mapDispatchToProps)(withRouter(Login))
+export default template(connect(null, mapDispatchToProps)(withRouter(Login)))
