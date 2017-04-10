@@ -53,3 +53,18 @@
 
     fill: $neutral-30;
 }
+
+
+// Nearest Stores
+// ---
+
+.t-product-details__nearest-stores {
+    a {
+        color: $brand-color;
+
+        &:active,
+        &:focus {
+            color: $tertiary-brand-color;
+        }
+    }
+}

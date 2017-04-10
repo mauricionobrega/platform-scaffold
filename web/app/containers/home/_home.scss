@@ -74,18 +74,3 @@
         line-height: 25px;
     }
 }
-
-
-// Nearest Stores
-// ---
-
-.t-home__nearest-stores {
-    a {
-        color: $brand-color;
-
-        &:active,
-        &:focus {
-            color: $tertiary-brand-color;
-        }
-    }
-}
