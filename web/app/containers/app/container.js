@@ -24,16 +24,16 @@ import NotificationManager from '../../components/notification-manager'
 
 import {requestIdleCallback} from '../../utils/utils'
 
-// These Unwrapped containers are loadable components. They'll only be
+// These containers are loadable components. They'll only be
 // downloaded when we call upon them
 import {
-    UnwrappedCart,
-    UnwrappedCheckoutConfirmation,
-    UnwrappedCheckoutPayment,
-    UnwrappedCheckoutShipping,
-    UnwrappedLogin,
-    UnwrappedProductDetails,
-    UnwrappedProductList,
+    Cart,
+    CheckoutConfirmation,
+    CheckoutPayment,
+    CheckoutShipping,
+    Login,
+    ProductDetails,
+    ProductList,
     Offline
 } from '../templates'
 
@@ -63,25 +63,25 @@ class App extends React.Component {
         // Lazy load other containers when browser is at the end of frame
         // to prevent jank
         requestIdleCallback(() => {
-            UnwrappedCart.preload()
+            Cart.preload()
         })
         requestIdleCallback(() => {
-            UnwrappedCheckoutConfirmation.preload()
+            CheckoutConfirmation.preload()
         })
         requestIdleCallback(() => {
-            UnwrappedCheckoutPayment.preload()
+            CheckoutPayment.preload()
         })
         requestIdleCallback(() => {
-            UnwrappedCheckoutShipping.preload()
+            CheckoutShipping.preload()
         })
         requestIdleCallback(() => {
-            UnwrappedLogin.preload()
+            Login.preload()
         })
         requestIdleCallback(() => {
-            UnwrappedProductDetails.preload()
+            ProductDetails.preload()
         })
         requestIdleCallback(() => {
-            UnwrappedProductList.preload()
+            ProductList.preload()
         })
     }
 
