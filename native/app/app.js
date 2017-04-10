@@ -66,7 +66,7 @@ window.run = async function() {
             previewController.presentPreviewAlert()
         })
 
-        const previewEnabled = baseConfig.previewEnabled
+        const previewEnabled = await previewController.isPreviewEnabled()
         if (previewEnabled) {
             runAppPreview()
         } else {
