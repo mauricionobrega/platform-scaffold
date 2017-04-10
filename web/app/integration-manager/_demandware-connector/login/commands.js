@@ -45,7 +45,11 @@ export const login = ({login}) => (dispatch) => {
         })
         .then((responseJSON) => {
             if (responseJSON.fault) {
-                throw new SubmissionError({_error: 'Username or password is incorrect'})
+                let errorMessage = 'Username or password is incorrect'
+                if (/internal server/i.test(responseJSON.fault.message)) {
+                    errorMessage = 'There was a problem logging in. Please try again.'
+                }
+                throw new SubmissionError({_error: errorMessage})
             }
             const authorization = responseHeaders.get('Authorization')
             customerID = responseJSON.customer_id
