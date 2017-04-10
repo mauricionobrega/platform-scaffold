@@ -1,5 +1,5 @@
 import {SubmissionError} from 'redux-form'
-import {createBasket} from '../cart/commands'
+import {createBasket} from '../cart/utils'
 import {makeDemandwareRequest} from '../utils'
 import {API_END_POINT_URL} from '../constants'
 import {STATES} from './constants'
