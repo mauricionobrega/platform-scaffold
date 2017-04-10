@@ -2,7 +2,6 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 
-import ListTile from 'progressive-web-sdk/dist/components/list-tile'
 import Nav from 'progressive-web-sdk/dist/components/nav'
 import NavMenu from 'progressive-web-sdk/dist/components/nav-menu'
 import NavItem from 'progressive-web-sdk/dist/components/nav-item'
@@ -40,7 +39,6 @@ const Navigation = (props) => {
                 return (
                     <merlinsNavItem.NavItemWithOnClick
                         {...props}
-                        children={props.title}
                         onClick={() => {
                             logoutAction()
                             closeNavigation()
