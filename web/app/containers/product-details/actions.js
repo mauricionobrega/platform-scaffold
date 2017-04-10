@@ -10,8 +10,7 @@ import {openModal, closeModal} from '../../store/modals/actions'
 import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from './constants'
 import productDetailsParser from './parsers/product-details'
 
-import {isRunningInAstro} from '../../utils/astro-integration'
-import Astro from '../../vendor/astro-client'
+import {isRunningInAstro, trigger} from '../../utils/astro-integration'
 
 export const receiveNewItemQuantity = createAction('Set item quantity')
 export const setItemQuantity = (quantity) => (dispatch, getStore) => {
@@ -37,7 +36,7 @@ export const goToCheckout = () => (dispatch) => {
     if (isRunningInAstro) {
         // If we're running in Astro, we want to dismiss open the cart modal,
         // otherwise, navigating is taken care of by the button press
-        Astro.trigger('open:cart-modal')
+        trigger('open:cart-modal')
     } else {
         browserHistory.push('/checkout/cart/')
     }

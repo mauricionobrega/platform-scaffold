@@ -35,7 +35,11 @@ const CartModalController = function(modalView, navigationView) {
 
     this.navigationView.on('checkout:completed', () => {
         this.alertEnabled = false
-        AppEvents.trigger(AppEvents.cartNeedsUpdate)
+        // The merlin's backend needs a little extra time to process checkout
+        // so we wait for a small timeout and then try to update all webviews
+        setTimeout(() => {
+            AppEvents.trigger(AppEvents.cartNeedsUpdate)
+        }, 2000)
     })
 
     this.navigationView.on('cart:updated', () => {
@@ -107,17 +111,21 @@ CartModalController.init = async function() {
     return cartModalController
 }
 
-CartModalController.prototype.show = function() {
+CartModalController.prototype.show = async function() {
     if (this.isShowing) {
         return
     }
+    const webView = await this.navigationView.getTopPlugin()
+    webView.reload()
     this.isShowing = true
+    this.alertEnabled = false
     this.viewPlugin.show({animated: true})
 }
 
-CartModalController.prototype.hide = async function() {
-    await this.viewPlugin.hide({animated: true})
+CartModalController.prototype.hide = function() {
+    this.viewPlugin.hide({animated: true})
     this.isShowing = false
+    this.navigationView.popToRoot()
 }
 
 CartModalController.prototype.isActiveItem = function() {

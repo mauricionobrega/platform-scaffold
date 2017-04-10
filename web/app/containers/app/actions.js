@@ -1,3 +1,5 @@
+/* eslint-disable import/namespace */
+/* eslint-disable import/named */
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 
 import * as analyticConstants from 'progressive-web-sdk/dist/analytics/analytic-constants'
@@ -12,14 +14,18 @@ import appParser from './app-parser'
 import {ESTIMATE_FORM_NAME} from '../cart/constants'
 import {SHIPPING_FORM_NAME} from '../checkout-shipping/constants'
 
-import Cart from '../cart/container'
-import CheckoutShipping from '../checkout-shipping/container'
-import CheckoutPayment from '../checkout-payment/container'
-import CheckoutConfirmation from '../checkout-confirmation/container'
+import {
+    UnwrappedCart,
+    UnwrappedCheckoutConfirmation,
+    UnwrappedCheckoutPayment,
+    UnwrappedCheckoutShipping,
+    UnwrappedLogin,
+    UnwrappedProductDetails,
+    UnwrappedProductList
+} from '../templates'
+
 import Home from '../home/container'
-import Login from '../login/container'
-import ProductDetails from '../product-details/container'
-import ProductList from '../product-list/container'
+
 import * as checkoutActions from '../../store/checkout/actions'
 import * as checkoutConfirmationActions from '../checkout-confirmation/actions'
 import * as checkoutShippingUIActions from '../checkout-shipping/actions'
@@ -147,24 +153,24 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
 
                 if (pageComponent === Home) {
                     dispatch(homeActions.process(receivedAction))
-                } else if (pageComponent === Login) {
+                } else if (pageComponent === UnwrappedLogin) {
                     dispatch(loginActions.process(receivedAction))
-                } else if (pageComponent === ProductDetails) {
+                } else if (pageComponent === UnwrappedProductDetails) {
                     dispatch(productDetailsActions.process(receivedAction))
                     dispatch(productsActions.processProductDetails(receivedAction))
-                } else if (pageComponent === ProductList) {
+                } else if (pageComponent === UnwrappedProductList) {
                     dispatch(categoriesActions.process(receivedAction))
                     dispatch(productsActions.processProductList(receivedAction))
-                } else if (pageComponent === CheckoutShipping) {
+                } else if (pageComponent === UnwrappedCheckoutShipping) {
                     dispatch(checkoutShippingUIActions.process(receivedAction))
                     dispatch(checkoutActions.processCheckoutData(receivedAction))
                     dispatch(checkoutShippingActions.fetchShippingMethodsEstimate(SHIPPING_FORM_NAME))
-                } else if (pageComponent === Cart) {
+                } else if (pageComponent === UnwrappedCart) {
                     dispatch(checkoutActions.processCartCheckoutData(receivedAction))
                     dispatch(checkoutShippingActions.fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME))
-                } else if (pageComponent === CheckoutPayment) {
+                } else if (pageComponent === UnwrappedCheckoutPayment) {
                     dispatch(checkoutActions.processCheckoutData(receivedAction))
-                } else if (pageComponent === CheckoutConfirmation) {
+                } else if (pageComponent === UnwrappedCheckoutConfirmation) {
                     dispatch(checkoutConfirmationActions.process(receivedAction))
                     // Resets the cart count to 0
                     dispatch(cartActions.getCart())

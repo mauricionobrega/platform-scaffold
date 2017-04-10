@@ -39,10 +39,10 @@ const AccountTabController = function(viewPlugin, headerController, layout, segm
     })
 }
 
-AccountTabController.init = async function() {
-    const viewPlugin = await AnchoredLayoutPlugin.init()                // has the header and the layout with the segmentedView
-    const headerController = await TabHeaderController.init()           // header
-    const layout = await AnchoredLayoutPlugin.init()                    // has  the segmented view and the web views
+AccountTabController.init = async function(cartModalController) {
+    const viewPlugin = await AnchoredLayoutPlugin.init()                            // has the header and the layout with the segmentedView
+    const headerController = await TabHeaderController.init(cartModalController)    // header
+    const layout = await AnchoredLayoutPlugin.init()                                // has  the segmented view and the web views
     const segmentedView = await SegmentedPlugin.init()
     const signInView = await WebViewPlugin.init()
     const registerView = await WebViewPlugin.init()
