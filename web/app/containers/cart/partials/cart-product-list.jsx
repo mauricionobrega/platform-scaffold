@@ -100,7 +100,7 @@ class CartProductItem extends React.Component {
 
                     <Field>
                         <div className="u-text-align-end u-flex">
-                            <div className="u-h5 u-color-accent u-text-semi-bold">{product_price}</div>
+                            <div className="u-h5 u-color-accent u-text-bold">{product_price}</div>
                             <div className="u-text-quiet"><em>Was $29.99</em></div>
                         </div>
                     </Field>
