@@ -8,7 +8,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     devtool: 'cheap-source-map',
-    entry: './app/native/onboarding/onboarding.js',
+    entry: './app/native/onboarding/onboarding.jsx',
     output: {
         path: path.resolve(process.cwd(), 'build'),
         filename: 'onboarding.js'
@@ -19,7 +19,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.jsx$/,
                 exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',
