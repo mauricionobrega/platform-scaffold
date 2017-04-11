@@ -18,7 +18,9 @@ export const isUserLoggedIn = (authorization) => {
 }
 
 export const storeAuthToken = (authorization) => {
-    window.sessionStorage.setItem(AUTH_KEY_NAME, authorization)
+    if (authorization) {
+        window.sessionStorage.setItem(AUTH_KEY_NAME, authorization)
+    }
 }
 
 export const getAuthToken = () => {
