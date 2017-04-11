@@ -30,9 +30,9 @@ const Image = Runtypes.Record({
 }).And(Runtypes.Optional({
     zoomSrc: URL,
     thumbnailSrc: URL,
-    caption: Text,
+    caption: Nullable(Text),
     size: ImageSize,
-    isMain: Boolean
+    isMain: Runtypes.Boolean
 }))
 
 const Option = Runtypes.Record({
@@ -43,7 +43,7 @@ const Option = Runtypes.Record({
 const VariationCategory = Runtypes.Record({
     id: Identifier,
     label: Text,
-    values: Array(Option)
+    values: Runtypes.Array(Option)
 })
 
 const Variation = Runtypes.Record({
@@ -58,9 +58,9 @@ const Product = Runtypes.Record({
     description: Text,
     href: URL,
     thumbnail: Image,
-    images: Array(Image),
-    variationCategories: Array(VariationCategory),
-    variations: Array(Variation)
+    images: Runtypes.Array(Image),
+    variationCategories: Runtypes.Array(VariationCategory),
+    variations: Runtypes.Array(Variation)
 })
 
 export const Products = Runtypes.Dictionary(Product, Key)
