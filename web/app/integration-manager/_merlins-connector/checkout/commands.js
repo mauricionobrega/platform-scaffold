@@ -1,7 +1,7 @@
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {SubmissionError} from 'redux-form'
-import {checkoutShippingParser, parseCheckoutData, parseShippingMethods} from './parsers'
-import {parseCheckoutEntityID} from '../../../utils/magento-utils'
+import {checkoutShippingParser, parseCheckoutData, parseShippingMethods, parseLocations, parseShippingInitialValues} from './parsers'
+import {parseCheckoutEntityID, extractMagentoShippingStepData} from '../../../utils/magento-utils'
 import {receiveCheckoutShippingData, receiveCheckoutData, receiveShippingMethodInitialValues} from './../../checkout/responses'
 import {fetchPageData} from '../app/commands'
 import {getCustomerEntityID} from '../selectors'
@@ -47,6 +47,20 @@ export const fetchShippingMethodsEstimate = (formKey) => {
                 dispatch(receiveShippingMethodInitialValues({initialValues})) // set initial value for method
             })
     }
+}
+
+const processCheckoutData = ($response) => (dispatch) => {
+    const customerEntityID = parseCheckoutEntityID($response)
+    const magentoFieldData = extractMagentoShippingStepData($response).getIn(['children', 'shipping-address-fieldset', 'children'])
+    const initialValues = parseShippingInitialValues(magentoFieldData)
+    const locationsData = parseLocations(magentoFieldData)
+
+    dispatch(receiveCheckoutData({
+        // entity_id is used for API calls
+        customerEntityID,
+        ...locationsData,
+        shipping: {initialValues}
+    }))
 }
 
 export const fetchCheckoutShippingData = (url) => (dispatch) => {
@@ -160,4 +174,11 @@ export const checkoutSignIn = (formValues) => {
             })
         })
     }
+}
+
+export const fetchCheckoutPaymentData = (url, routeName) => (dispatch) => {
+    return dispatch(fetchPageData(url))
+        .then(([$, $response]) => {
+            return dispatch(processCheckoutData($response))
+        })
 }

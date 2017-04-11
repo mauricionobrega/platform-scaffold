@@ -133,9 +133,9 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                 dispatch(receivedAction)
                 dispatch(process(receivedAction))
 
-                if (pageComponent === CheckoutPayment) {
+                /* if (pageComponent === CheckoutPayment) {
                     dispatch(checkoutActions.processCheckoutData(receivedAction))
-                } else if (pageComponent === CheckoutConfirmation) {
+                } else*/ if (pageComponent === CheckoutConfirmation) {
                     dispatch(checkoutConfirmationActions.process(receivedAction))
                     // Resets the cart count to 0
                     dispatch(cartActions.getCart())

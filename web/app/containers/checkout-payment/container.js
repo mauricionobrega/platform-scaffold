@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
+import {fetchCheckoutPaymentData} from '../../integration-manager/checkout/commands'
 
 import {getCartURL, getCheckoutShippingURL} from '../app/selectors'
 
@@ -28,6 +29,10 @@ const CheckoutPayment = ({cartURL, checkoutShippingURL}) => {
         </div>
     )
 }
+
+CheckoutPayment.fetcher = (url, routeName, dispatch) =>
+    dispatch(fetchCheckoutPaymentData(url, routeName))
+
 
 CheckoutPayment.propTypes = {
     /**

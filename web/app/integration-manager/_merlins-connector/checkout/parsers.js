@@ -21,7 +21,7 @@ const getNameValue = (firstname, lastname) => {
     return name
 }
 
-const parseShippingInitialValues = (shippingFieldData) => {
+export const parseShippingInitialValues = (shippingFieldData) => {
     const fieldData = shippingFieldData.toJS()
     const streetFields = fieldData.street.children
     return {
