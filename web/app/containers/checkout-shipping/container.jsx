@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import template from '../../template'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import classNames from 'classnames'
 import {fetchCheckoutShippingData} from '../../integration-manager/checkout/commands'
@@ -50,4 +51,4 @@ const mapStateToProps = createPropsSelector({
     cartURL: getCartURL
 })
 
-export default connect(mapStateToProps)(CheckoutShipping)
+export default template(connect(mapStateToProps)(CheckoutShipping))

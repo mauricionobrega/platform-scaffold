@@ -1,4 +1,5 @@
 import React from 'react'
+import template from '../../template'
 
 import {fetchPdpData} from '../../integration-manager/products/commands'
 
@@ -33,4 +34,4 @@ ProductDetails.propTypes = {
     route: React.PropTypes.object,
 }
 
-export default ProductDetails
+export default template(ProductDetails)

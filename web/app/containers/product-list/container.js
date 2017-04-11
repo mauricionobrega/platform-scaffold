@@ -1,4 +1,5 @@
 import React from 'react'
+import template from '../../template'
 
 import {fetchProductListData} from '../../integration-manager/categories/commands'
 import {isRunningInAstro} from '../../utils/astro-integration'
@@ -19,4 +20,4 @@ const ProductList = () => {
 ProductList.fetcher = (url, routeName, dispatch) => dispatch(fetchProductListData(url, routeName))
 
 
-export default ProductList
+export default template(ProductList)
