@@ -4,9 +4,6 @@ import Loadable from 'react-loadable'
 
 import template from '../template'
 
-// Don't split the Home container out from the main app, so that we can have instant page transitions
-import Home from './home/container'
-import Offline from './offline/container'
 import ContainerPlaceholder from '../components/container-placeholder'
 
 export const Cart = Loadable({
@@ -47,5 +44,3 @@ export const ProductList = Loadable({
     loader: () => import('./product-list/container'),
     LoadingComponent: ContainerPlaceholder
 })
-
-export {Home, Offline}

@@ -6,7 +6,9 @@ import {Provider} from 'react-redux'
 
 // Containers
 import App from './containers/app/container'
-import {Cart, CheckoutConfirmation, CheckoutPayment, CheckoutShipping, Home, Login, ProductList, ProductDetails} from './containers/templates'
+import {Cart, CheckoutConfirmation, CheckoutPayment, CheckoutShipping, Login, ProductList, ProductDetails} from './containers/templates'
+// We build this into the app so we can load the home page right away
+import Home from './containers/home/container'
 import CheckoutHeader from './containers/checkout-header/container'
 import CheckoutFooter from './containers/checkout-footer/container'
 

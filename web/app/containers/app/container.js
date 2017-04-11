@@ -33,11 +33,11 @@ import {
     CheckoutShipping,
     Login,
     ProductDetails,
-    ProductList,
-    Offline
+    ProductList
 } from '../templates'
 
 // Offline support
+import Offline from '../offline/container'
 import OfflineBanner from '../offline/partials/offline-banner'
 import OfflineModal from '../offline/partials/offline-modal'
 
