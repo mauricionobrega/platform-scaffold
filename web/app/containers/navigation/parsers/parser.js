@@ -2,11 +2,20 @@
 export const parseNavigation = ($, $content) => {
     const root = {title: 'Root', path: '/', children: []}
     const $signIn = $content.find('.header.links li.authorization-link a').first()
-    root.children.push({
-        title: $signIn.text().trim(),
-        path: $signIn.attr('href'),
-        type: 'AccountNavItem',
-    })
+    const signInHref = $signIn.attr('href')
+
+    if (/logout/i.test(signInHref)) {
+        root.children.push({
+            title: $signIn.text().trim(),
+            type: 'AccountLogoutNavItem',
+        })
+    } else {
+        root.children.push({
+            title: $signIn.text().trim(),
+            path: $signIn.attr('href'),
+            type: 'AccountNavItem',
+        })
+    }
 
     const $navListItems = $content.find('#store\\.menu nav.navigation li')
     let path = root.path

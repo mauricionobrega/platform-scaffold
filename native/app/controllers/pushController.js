@@ -4,6 +4,8 @@ import PushPlugin from 'progressive-app-sdk/plugins/pushPlugin'
 import AlertViewPlugin from 'progressive-app-sdk/plugins/alertViewPlugin'
 import EngagementController from 'progressive-app-sdk/controllers/engagementController'
 
+import baseConfig from '../config/baseConfig'
+
 const PushController = function(pushPlugin) {
     this.plugin = pushPlugin
 
@@ -27,7 +29,7 @@ PushController.init = async function() {
     const pushSiteId = 'merlinspotions'
     const mobifySlugName = 'progressive-web-scaffold'
 
-    const engagementPromise = EngagementController.init(mobifySlugName)
+    const engagementPromise = EngagementController.init(mobifySlugName, baseConfig.baseURL)
     const pushPlugin = await PushPlugin.init(pushSiteId, engagementPromise)
 
     if (Astro.isRunningInAndroidApp()) {

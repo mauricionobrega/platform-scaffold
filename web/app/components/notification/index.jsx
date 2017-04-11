@@ -81,9 +81,9 @@ class Notification extends React.Component {
             'c--dismissing': this.state.dismissing
         })
 
-        const notificationStyle = this.state.notificationHeight && {
+        const notificationStyle = this.state.notificationHeight ? {
             height: this.state.notificationHeight
-        }
+        } : {}
 
         return (
             <div className={classes} onTransitionEnd={this.removeNotification} style={notificationStyle} ref={(el) => { this._notification = el }}>

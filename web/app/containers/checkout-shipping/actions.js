@@ -1,6 +1,10 @@
+/* eslint-disable import/namespace */
+/* eslint-disable import/named */
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {createAction} from '../../utils/utils'
-import CheckoutShipping from './container'
+import {
+    UnwrappedCheckoutShipping
+} from '../templates'
 import checkoutShippingParser from './parsers/checkout-shipping'
 import {addNotification, fetchPage, removeAllNotifications, removeNotification} from '../app/actions'
 import {getCustomerEntityID} from '../../store/checkout/selectors'
@@ -77,7 +81,7 @@ export const submitSignIn = () => {
                     }))
                 } else {
                     // Refetch the page now that the user is logged in
-                    dispatch(fetchPage(window.location.href, CheckoutShipping, 'checkingShipping'))
+                    dispatch(fetchPage(window.location.href, UnwrappedCheckoutShipping, 'checkingShipping'))
                 }
             }
         })
