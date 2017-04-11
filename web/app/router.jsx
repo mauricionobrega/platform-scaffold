@@ -6,6 +6,7 @@ import {Provider} from 'react-redux'
 
 // Containers
 import App from './containers/app/container'
+// These templates are code-split out of the main bundle.
 import {Cart, CheckoutConfirmation, CheckoutPayment, CheckoutShipping, Login, ProductList, ProductDetails} from './containers/templates'
 // We build this into the app so we can load the home page right away
 import Home from './containers/home/container'
