@@ -13,6 +13,7 @@ const analyzeBundle = process.env.MOBIFY_ANALYZE === 'true'
 const config = {
     devtool: 'cheap-source-map',
     entry: [
+        'babel-polyfill',
         'whatwg-fetch',
         './app/main.jsx'
     ],
