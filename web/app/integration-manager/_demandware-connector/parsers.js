@@ -63,26 +63,18 @@ export const getProductHref = (productID) => `/s/2017refresh/${productID}.html`
 export const parseProductHit = ({product_id, product_name, price, prices, image}) => {
     // Some products don't have _any_ pricing on them!
     const finalPrice = price || (prices && prices['usd-sale-prices']) || undefined
-    let formattedPrice = '$ N/A'
-    if (finalPrice) {
-        formattedPrice = `${formatPrice(finalPrice)}`
+    const thumbnail = {
+        alt: image.alt,
+        src: image.link
     }
 
     return {
+        id: product_id,
         title: product_name,
-        price: formattedPrice,
-        link: {
-            href: getProductHref(product_id),
-            text: product_name
-        },
-        image: {
-            alt: image.alt,
-            src: image.link
-        },
-        carouselItems: [{
-            img: image.link,
-            position: '1'
-        }]
+        price: finalPrice ? formatPrice(finalPrice) : '$ N/A',
+        href: getProductHref(product_id),
+        thumbnail,
+        images: [thumbnail]
     }
 }
 
