@@ -1,4 +1,6 @@
 ## To be released
+- Rename all files containing JSX to have a .jsx file extension [#525](https://github.com/mobify/platform-scaffold/pull/525)
+- Fix PLP to successfully display no results message if there are no products [#525](https://github.com/mobify/platform-scaffold/pull/525)
 
 ## 0.16.2
 - Update dependencies, including babel, jsdom, jest, and more.
