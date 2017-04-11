@@ -10,3 +10,4 @@ export const checkCustomerEmail = (...args) => connector.checkCustomerEmail(...a
 export const checkoutSignIn = (...args) => connector.checkoutSignIn(...args)
 export const fetchShippingMethodsEstimate = (...args) => connector.fetchShippingMethodsEstimate(...args)
 export const fetchCheckoutPaymentData = (...args) => connector.fetchCheckoutPaymentData(...args)
+export const submitPayment = (...args) => connector.submitPayment(...args)
