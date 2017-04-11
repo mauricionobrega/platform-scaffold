@@ -31,7 +31,9 @@ NavItemWithIcon.propTypes = NavItem.propTypes
  * Project-specific NavItem which displays an icon on the left.
  */
 export const NavItemWithOnClick = (props) => (
-    <ListTile {...props} children={props.title} className="c-nav-item c--with-icon" startAction={<NavItemIcon name="user" />} />
+    <ListTile {...props} className="c-nav-item c--with-icon" startAction={<NavItemIcon name="user" />}>
+        {props.title}
+    </ListTile>
 )
 
 NavItemWithOnClick.propTypes = NavItem.propTypes

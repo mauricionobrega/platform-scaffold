@@ -225,7 +225,7 @@ export const signOut = () => {
                 // Update navigation menu
                 // Need to request current location so when we are on Potions PLP
                 // the potions nav item will render as 'active'
-                makeRequest(window.location.href)
+                return makeRequest(window.location.href)
                     .then(jqueryResponse)
                     .then((res) => {
                         const [$, $response] = res
