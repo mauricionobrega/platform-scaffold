@@ -14,7 +14,10 @@ export const fetchPdpData = () => (dispatch) => {
     return makeDemandwareRequest(productURL, options)
         .then((response) => response.json())
         .then((responseJSON) => {
-            const productDetailsData = parseProductDetails(responseJSON)
+            const productDetailsData = {
+                ...parseProductDetails(responseJSON),
+                href: productPathKey
+            }
             const productDetailsMap = {
                 [productPathKey]: productDetailsData
             }
