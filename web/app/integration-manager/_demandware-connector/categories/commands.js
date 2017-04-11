@@ -15,34 +15,32 @@ export const fetchProductListData = (url) => (dispatch) => {
     }
 
     return makeDemandwareRequest(`${API_END_POINT_URL}/categories/${categoryID}`, requestOptions)
-            .then((response) => response.json())
-            .then((responseJSON) => {
-                dispatch(receiveCategory({
-                    [urlPathKey]: {title: responseJSON.name}
-                }))
-                if (responseJSON.parent_category_id !== 'root') {
-                    makeDemandwareRequest(`${API_END_POINT_URL}/categories/${responseJSON.parent_category_id}`, requestOptions)
-                        .then((response) => response.json())
-                        .then((responseJSON) => {
-                            dispatch(receiveCategory({
-                                [urlPathKey]: {parentName: responseJSON.name, parentHref: `/s/${SITE_ID}/${responseJSON.id}`}
-                            }))
-                        })
-                }
-            })
-            .then(() => {
-                makeDemandwareRequest(`${API_END_POINT_URL}/product_search?expand=images,prices&q=&refine_1=cgid=${categoryID}`, requestOptions)
-                    .then((response) => response.json())
-                    .then(({hits}) => {
-                        const productListData = parseProductListData(hits)
-                        const categoryData = {
-                            products: Object.keys(productListData)
-                        }
+        .then((response) => response.json())
+        .then((responseJSON) => {
+            dispatch(receiveCategory({
+                [urlPathKey]: {title: responseJSON.name}
+            }))
 
-                        dispatch(receiveProductListProductData(productListData))
+            if (responseJSON.parent_category_id !== 'root') {
+                makeDemandwareRequest(`${API_END_POINT_URL}/categories/${responseJSON.parent_category_id}`, requestOptions)
+                    .then((response) => response.json())
+                    .then((responseJSON) => {
                         dispatch(receiveCategory({
-                            [urlPathKey]: categoryData
+                            [urlPathKey]: {parentName: responseJSON.name, parentHref: `/s/${SITE_ID}/${responseJSON.id}`}
                         }))
                     })
-            })
+            }
+        })
+        .then(() => makeDemandwareRequest(`${API_END_POINT_URL}/product_search?expand=images,prices&q=&refine_1=cgid=${categoryID}`, requestOptions))
+        .then((response) => response.json())
+        .then(({hits}) => {
+            const productListData = parseProductListData(hits)
+
+            dispatch(receiveProductListProductData(productListData))
+            dispatch(receiveCategory({
+                [urlPathKey]: {
+                    products: Object.keys(productListData)
+                }
+            }))
+        })
 }
