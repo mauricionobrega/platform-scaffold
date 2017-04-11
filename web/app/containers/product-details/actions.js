@@ -1,10 +1,10 @@
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 import {SubmissionError} from 'redux-form'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 
 import * as selectors from './selectors'
 import * as appSelectors from '../app/selectors'
-import {getFormValues} from '../../store/form/selectors'
 
 import {addToCart} from '../../integration-manager/commands'
 import {getProductVariationData} from '../../integration-manager/products/commands'
@@ -42,7 +42,7 @@ export const submitCartForm = (formValues) => (dispatch, getStore) => {
     const currentState = getStore()
     const key = appSelectors.getCurrentPathKey(currentState)
     const qty = selectors.getItemQuantity(currentState)
-    const variations = selectors.getVariationOptions(currentState)
+    const variations = selectors.getProductVariationCategories(currentState)
     dispatch(addToCartStarted())
 
     return new Promise((resolve, reject) => {
@@ -73,10 +73,18 @@ export const submitCartForm = (formValues) => (dispatch, getStore) => {
 
 }
 
+const variationBlurSelector = createPropsSelector({
+    variationSelections: selectors.getAddToCartFormValues,
+    categoryIds: selectors.getProductVariationCategoryIds,
+    variations: selectors.getProductVariations
+})
+
 export const onVariationBlur = () => (dispatch, getStore) => {
-    const currentState = getStore()
-    const variationSelections = getFormValues('product-add-to-cart')(currentState)
-    const availableVariations = selectors.getProductVariations(currentState).toJS()
-    const variationOptions = selectors.getVariationOptions(currentState).toJS()
-    return dispatch(getProductVariationData(variationSelections, availableVariations, variationOptions))
+    const {
+        variationSelections,
+        categoryIds,
+        variations
+    } = variationBlurSelector(getStore())
+
+    return dispatch(getProductVariationData(variationSelections, variations, categoryIds))
 }

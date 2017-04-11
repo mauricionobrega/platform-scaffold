@@ -3,6 +3,7 @@ import Immutable from 'immutable'
 import {createGetSelector, createHasSelector} from 'reselect-immutable-helpers'
 import {getUi, getProducts} from '../../store/selectors'
 import * as appSelectors from '../app/selectors'
+import {getFormValues} from '../../store/form/selectors'
 
 const PLACEHOLDER_BREADCRUMBS = Immutable.fromJS([
     {
@@ -58,7 +59,13 @@ export const getProductImages = createGetSelector(getSelectedProduct, 'images', 
 export const getProductThumbnail = createGetSelector(getSelectedProduct, 'thumbnail', Immutable.Map())
 
 export const getProductVariationCategories = createGetSelector(getSelectedProduct, 'variationCategories', Immutable.List())
-export const getProductVariations = createGetSelector(getSelectedProduct, 'availableVariations')
+export const getProductVariationCategoryIds = createSelector(
+    getProductVariationCategories,
+    (categories) => categories.map((category) => category.get('id'))
+)
+export const getProductVariations = createGetSelector(getSelectedProduct, 'variations')
 export const getProductInitialValues = createGetSelector(getSelectedProduct, 'initialValues')
 
 export const getUenc = (pathKey) => createGetSelector(getProductDetailsByPathKey(pathKey), 'uenc')
+
+export const getAddToCartFormValues = getFormValues('product-add-to-cart')

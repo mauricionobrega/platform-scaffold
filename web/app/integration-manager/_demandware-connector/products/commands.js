@@ -29,22 +29,17 @@ export const fetchPdpData = () => (dispatch) => {
         })
 }
 
-export const getProductVariationData = (variationSelections, availableVariations, variationOptions) => (dispatch) => {
-    let isFullySelected = true
-    variationOptions.forEach(({id}) => {
-        if (!variationSelections[id]) {
-            isFullySelected = false
-        }
-    })
+export const getProductVariationData = (variationSelections, variations, categoryIds) => (dispatch) => {
+    if (categoryIds.some((id) => !variationSelections[id])) {
+        return
+    }
 
-    if (isFullySelected) {
-        const selectedVariationData = availableVariations.filter(({variationValues: {color, size}}) => {
-            return color === variationSelections.color && size === variationSelections.size
-        })[0]
-        if (selectedVariationData) {
+    for (const {variationValues, id} of variations) {
+        if (categoryIds.every((id) => variationSelections[id] === variationValues[id])) {
             browserHistory.push({
-                pathname: getProductHref(selectedVariationData.variationID)
+                pathname: getProductHref(id)
             })
+            return
         }
     }
 }
