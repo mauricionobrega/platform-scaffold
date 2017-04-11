@@ -1,5 +1,5 @@
 import * as Runtypes from 'runtypes'
-import {ProductUIData, ProductDetailsData, ProductDetailsListData} from './types'
+import {Products, ProductUIData} from './types'
 import {createTypedAction} from '../../utils/utils'
 
 export const receiveProductDetailsUIData = createTypedAction(
@@ -9,10 +9,10 @@ export const receiveProductDetailsUIData = createTypedAction(
 
 export const receiveProductDetailsProductData = createTypedAction(
     'Receive Product Details product data',
-    Runtypes.Dictionary(ProductDetailsData)
+    Products
 )
 
 export const receiveProductListProductData = createTypedAction(
     'Receive ProductList product data',
-    Runtypes.Dictionary(ProductDetailsListData)
+    Products
 )

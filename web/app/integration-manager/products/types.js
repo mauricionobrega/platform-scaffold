@@ -2,44 +2,71 @@ import * as Runtypes from 'runtypes'
 
 export const Nullable = (type) => Runtypes.Union(type, Runtypes.Null, Runtypes.Undefined)
 
-export const Link = Runtypes.Record({
-    href: Runtypes.String,
-    text: Runtypes.String,
-    title: Nullable(Runtypes.String)
+const URL = Runtypes.String
+const Key = Runtypes.String
+const Currency = Runtypes.String
+const Measure = Runtypes.String
+
+// Text for the user
+const Text = Runtypes.String
+// Identifiers for the program
+const Identifier = Runtypes.String
+
+const Link = Runtypes.Record({
+    href: URL,
+    text: Text
+}).And(Runtypes.Optional({
+    title: Text
+}))
+
+const ImageSize = Runtypes.Record({
+    height: Measure,
+    width: Measure
 })
 
-export const Image = Runtypes.Record({
-    alt: Runtypes.String,
-    src: Runtypes.String
+const Image = Runtypes.Record({
+    alt: Text,
+    src: URL
+}).And(Runtypes.Optional({
+    zoomSrc: URL,
+    thumbnailSrc: URL,
+    caption: Text,
+    size: ImageSize,
+    isMain: Boolean
+}))
+
+const Option = Runtypes.Record({
+    value: Identifier,
+    label: Text
 })
+
+const VariationCategory = Runtypes.Record({
+    id: Identifier,
+    label: Text,
+    values: Array(Option)
+})
+
+const Variation = Runtypes.Record({
+    id: Identifier,
+    variationValues: Runtypes.Dictionary(Identifier, Identifier)
+})
+
+const Product = Runtypes.Record({
+    id: Identifier,
+    title: Text,
+    price: Currency,
+    description: Text,
+    href: URL,
+    thumbnail: Image,
+    images: Array(Image),
+    variationCategories: Array(VariationCategory),
+    variations: Array(Variation)
+})
+
+export const Products = Runtypes.Dictionary(Product, Key)
 
 export const ProductUIData = Runtypes.Record({
     breadcrumbs: Runtypes.Array(Link),
-    uenc: Runtypes.String,
     itemQuantity: Runtypes.Number,
     ctaText: Runtypes.String
-})
-
-export const CarouselItem = Runtypes.Optional({
-    thumb: Nullable(Runtypes.String),
-    img: Runtypes.String,
-    full: Runtypes.String,
-    caption: Nullable(Runtypes.String),
-    position: Runtypes.String,
-    isMain: Runtypes.Boolean
-})
-
-export const ProductDetailsData = Runtypes.Record({
-    title: Runtypes.String,
-    price: Runtypes.String,
-    carouselItems: Runtypes.Array(CarouselItem),
-    description: Runtypes.String
-})
-
-export const ProductDetailsListData = Runtypes.Record({
-    title: Runtypes.String,
-    price: Runtypes.String,
-    carouselItems: Runtypes.Array(CarouselItem),
-    link: Link,
-    image: Image
 })
