@@ -3,17 +3,24 @@ import {SITE_ID} from './constants'
 
 const formatPrice = (price) => `$${price.toFixed(2)}`
 
-const parseCarouselItems = (imageGroups) => {
+const parseImages = (imageGroups) => {
     const largeImages = imageGroups.filter((imageGroup) => imageGroup.view_type === 'large')[0]
-    return largeImages.images.map(({alt, link}, idx) => ({alt, img: link, position: idx.toString()}))
+
+    return largeImages.images.map(({alt, link}) => ({
+        alt,
+        src: link
+    }))
 }
 
-export const parseProductDetails = ({name, price, long_description, image_groups, variants, variation_attributes}) => {
+export const parseProductDetails = ({id, name, price, long_description, image_groups, variants, variation_attributes}) => {
+    const images = parseImages(image_groups)
     return {
+        id,
         title: name,
         price: `${formatPrice(price)}`,
         description: long_description,
-        carouselItems: parseCarouselItems(image_groups),
+        thumbnail: images[0],
+        images,
         variationOptions: variation_attributes,
         availableVariations: variants.map(({product_id, variation_values}) => {
             return {
