@@ -11,6 +11,17 @@ const parseCarouselItems = (magentoObject) => {
     return carouselSetup.toJS()
 }
 
+const carouselItemsToImages = (carouselItems) => {
+    return carouselItems.map(({img, isMain, full, thumb, caption}) => ({
+        alt: '',
+        src: img,
+        isMain,
+        zoomSrc: full,
+        thumbnailSrc: thumb,
+        caption,
+    }))
+}
+
 const parseBreadcrumbs = ($, $breadcrumbsLinks) => {
     return $breadcrumbsLinks.get()
         .map((breadcrumbLink) => parseTextLink($(breadcrumbLink)))
@@ -19,11 +30,16 @@ const parseBreadcrumbs = ($, $breadcrumbsLinks) => {
 export const productDetailsParser = ($, $html) => {
     const $mainContent = $html.find('.page-main')
     const magentoObject = extractMagentoJson($html)
+    const carouselItems = parseCarouselItems(magentoObject)
+    const images = carouselItemsToImages(carouselItems)
+
     return {
+        id: $mainContent.find('#product_addtocart_form input[name="product"]').val(),
         title: getTextFrom($mainContent, '.page-title-wrapper.product .page-title > span'),
         price: getTextFrom($mainContent, '.product-info-price .price-wrapper .price'),
-        carouselItems: parseCarouselItems(magentoObject),
-        description: getTextFrom($mainContent, '.product.info.detailed .product.attibute.description p')
+        description: getTextFrom($mainContent, '.product.info.detailed .product.attibute.description p'),
+        images,
+        thumbnail: images[0]
     }
 }
 

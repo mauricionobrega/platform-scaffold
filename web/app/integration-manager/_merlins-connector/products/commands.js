@@ -14,7 +14,12 @@ export const fetchPdpData = (url) => (dispatch) => {
             const pathKey = urlToPathKey(url)
 
             dispatch(receiveProductDetailsUIData({[pathKey]: productDetailsUIParser($, $response)}))
-            dispatch(receiveProductDetailsProductData({[pathKey]: productDetailsParser($, $response)}))
+            dispatch(receiveProductDetailsProductData({[pathKey]: {
+                ...productDetailsParser($, $response),
+                href: url,
+                variationCategories: [],
+                variations: []
+            }}))
             dispatch(receiveFormInfo({[pathKey]: pdpAddToCartFormParser($, $response)}))
         })
         .catch((error) => { console.info(error.message) })
