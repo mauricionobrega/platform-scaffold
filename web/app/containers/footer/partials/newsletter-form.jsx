@@ -8,22 +8,24 @@ import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 const NewsletterForm = (props) => {
     const {handleSubmit, disabled, submitting} = props
     return (
-        <form onSubmit={handleSubmit} noValidate>
-            <FieldRow>
-                <ReduxForm.Field component={Field} name="email">
-                    <input type="email"
-                        placeholder="Enter your email..."
-                        noValidate />
-                </ReduxForm.Field>
-            </FieldRow>
+        <form onSubmit={handleSubmit} noValidate className="u-flexbox">
 
-            <FieldRow>
-                <Button type="submit"
-                    className="c--secondary u-width-full u-text-uppercase"
-                    disabled={submitting || disabled}>
-                    Submit
-                </Button>
-            </FieldRow>
+            <ReduxForm.Field component={Field} name="email">
+                <input
+                    type="email"
+                    placeholder="Enter your email..."
+                    noValidate
+                />
+            </ReduxForm.Field>
+
+            <Button
+                type="submit"
+                className="c--tertiary u-text-uppercase"
+                disabled={submitting || disabled}
+            >
+                Submit
+            </Button>
+
         </form>
     )
 }
