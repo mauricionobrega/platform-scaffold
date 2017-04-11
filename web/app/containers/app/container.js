@@ -22,19 +22,7 @@ import * as selectors from './selectors'
 
 import NotificationManager from '../../components/notification-manager'
 
-import {requestIdleCallback} from '../../utils/utils'
-
-// These containers are loadable components. They'll only be
-// downloaded when we call upon them
-import {
-    Cart,
-    CheckoutConfirmation,
-    CheckoutPayment,
-    CheckoutShipping,
-    Login,
-    ProductDetails,
-    ProductList
-} from '../templates'
+import {registerPreloadCallbacks} from '../templates'
 
 // Offline support
 import Offline from '../offline/container'
@@ -62,27 +50,7 @@ class App extends React.Component {
 
         // Lazy load other containers when browser is at the end of frame
         // to prevent jank
-        requestIdleCallback(() => {
-            Cart.preload()
-        })
-        requestIdleCallback(() => {
-            CheckoutConfirmation.preload()
-        })
-        requestIdleCallback(() => {
-            CheckoutPayment.preload()
-        })
-        requestIdleCallback(() => {
-            CheckoutShipping.preload()
-        })
-        requestIdleCallback(() => {
-            Login.preload()
-        })
-        requestIdleCallback(() => {
-            ProductDetails.preload()
-        })
-        requestIdleCallback(() => {
-            ProductList.preload()
-        })
+        registerPreloadCallbacks()
     }
 
     render() {

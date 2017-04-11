@@ -5,42 +5,39 @@ import Loadable from 'react-loadable'
 import template from '../template'
 
 import ContainerPlaceholder from '../components/container-placeholder'
+import {requestIdleCallback} from '../utils/utils'
 
-export const Cart = Loadable({
-    loader: () => import('./cart/container'),
-    LoadingComponent: ContainerPlaceholder
-})
+const loadableList = []
+const PWALoadable = (loader) => {
+    const loadable = Loadable({
+        loader,
+        LoadingComponent: ContainerPlaceholder
+    })
+    loadableList.push(loadable)
+    return loadable
+}
+
+export const registerPreloadCallbacks = () => {
+    loadableList.forEach((loadable) => {
+        requestIdleCallback(() => loadable.preload())
+    })
+}
+
 
 // These are on the old model and need to be wrapped here
-// rather than in container.js
-export const CheckoutConfirmation = Loadable({
-    loader: () => import('./checkout-confirmation/container')
-        .then((component) => template(component)),
-    LoadingComponent: ContainerPlaceholder
-})
+// rather than in container.js to avoid circular imports
+export const CheckoutConfirmation = PWALoadable(
+    () => import('./checkout-confirmation/container')
+        .then((component) => template(component))
+)
 
-export const CheckoutPayment = Loadable({
-    loader: () => import('./checkout-payment/container')
-        .then((component) => template(component)),
-    LoadingComponent: ContainerPlaceholder
-})
+export const CheckoutPayment = PWALoadable(
+    () => import('./checkout-payment/container')
+        .then((component) => template(component))
+)
 
-export const CheckoutShipping = Loadable({
-    loader: () => import('./checkout-shipping/container'),
-    LoadingComponent: ContainerPlaceholder
-})
-
-export const Login = Loadable({
-    loader: () => import('./login/container'),
-    LoadingComponent: ContainerPlaceholder
-})
-
-export const ProductDetails = Loadable({
-    loader: () => import('./product-details/container'),
-    LoadingComponent: ContainerPlaceholder
-})
-
-export const ProductList = Loadable({
-    loader: () => import('./product-list/container'),
-    LoadingComponent: ContainerPlaceholder
-})
+export const Cart = PWALoadable(() => import('./cart/container'))
+export const CheckoutShipping = PWALoadable(() => import('./checkout-shipping/container'))
+export const Login = PWALoadable(() => import('./login/container'))
+export const ProductDetails = PWALoadable(() => import('./product-details/container'))
+export const ProductList = PWALoadable(() => import('./product-list/container'))
