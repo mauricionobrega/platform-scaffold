@@ -27,7 +27,7 @@ export const createBasket = () => {
         /* eslint-enable camelcase */
 }
 
-export const getProductImage = (item, currentState) => {
+const getProductImage = (item, currentState) => {
     const productImage = getFirstProductImageByPathKey(getProductHref(item.product_id))(currentState)
 
     if (productImage) {
