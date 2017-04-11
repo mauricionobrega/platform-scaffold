@@ -86,18 +86,14 @@ export const productListParser = ($, $html) => {
     $products.each((_, product) => {
         const $product = $(product)
         const link = parseTextLink($product.find('.product-item-link'))
-        const image = parseImage($product.find('.product-image-photo'))
+        const thumbnail = parseImage($product.find('.product-image-photo'))
         productMap[urlToPathKey(link.href)] = {
+            id: $product.find('.price-box').attr('data-product-id'),
             title: link.text,
             price: getTextFrom($product, '.price'),
-            link,
-            image,
-            carouselItems: [
-                {
-                    img: image.src,
-                    position: '1'
-                }
-            ]
+            href: link.href,
+            thumbnail,
+            images: [thumbnail]
         }
     })
     return productMap

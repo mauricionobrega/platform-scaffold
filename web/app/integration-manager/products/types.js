@@ -55,13 +55,15 @@ const Product = Runtypes.Record({
     id: Identifier,
     title: Text,
     price: Currency,
-    description: Text,
     href: URL,
     thumbnail: Image,
-    images: Runtypes.Array(Image),
+    images: Runtypes.Array(Image)
+}).And(Runtypes.Optional({
+    description: Text,
     variationCategories: Runtypes.Array(VariationCategory),
     variations: Runtypes.Array(Variation)
-})
+}))
+
 
 export const Products = Runtypes.Dictionary(Product, Key)
 
