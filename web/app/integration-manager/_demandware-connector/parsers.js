@@ -38,7 +38,7 @@ export const parseProductDetails = ({id, name, price, long_description, image_gr
         variations: variants.map(({product_id, variation_values}) => {
             return {
                 id: product_id,
-                variationValues: variation_values
+                values: variation_values
             }
         })
     }

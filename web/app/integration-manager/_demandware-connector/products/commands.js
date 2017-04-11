@@ -29,13 +29,13 @@ export const fetchPdpData = () => (dispatch) => {
         })
 }
 
-export const getProductVariationData = (variationSelections, variations, categoryIds) => (dispatch) => {
-    if (categoryIds.some((id) => !variationSelections[id])) {
+export const getProductVariationData = (selections, variations, categoryIds) => (dispatch) => {
+    if (categoryIds.some((id) => !selections[id])) {
         return
     }
 
-    for (const {variationValues, id} of variations) {
-        if (categoryIds.every((id) => variationSelections[id] === variationValues[id])) {
+    for (const {values, id} of variations) {
+        if (categoryIds.every((id) => selections[id] === values[id])) {
             browserHistory.push({
                 pathname: getProductHref(id)
             })

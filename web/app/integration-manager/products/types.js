@@ -48,7 +48,7 @@ const VariationCategory = Runtypes.Record({
 
 const Variation = Runtypes.Record({
     id: Identifier,
-    variationValues: Runtypes.Dictionary(Identifier, Identifier)
+    values: Runtypes.Dictionary(Identifier, Identifier)
 })
 
 const Product = Runtypes.Record({
