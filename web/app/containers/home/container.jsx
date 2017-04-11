@@ -1,4 +1,5 @@
 import React from 'react'
+import template from '../../template'
 
 import {fetchHomeData} from '../../integration-manager/home/commands'
 
@@ -17,4 +18,4 @@ const Home = () => {
 
 Home.fetcher = (url, routeName, dispatch) => dispatch(fetchHomeData(url, routeName))
 
-export default Home
+export default template(Home)
