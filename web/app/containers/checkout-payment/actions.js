@@ -30,7 +30,7 @@ export const submitPayment = () => (dispatch, getState) => {
             ...billingValues,
             firstname,
             lastname,
-            email
+            username: email
         }
     }
 

@@ -198,7 +198,7 @@ export const submitPayment = (formValues) => (dispatch, getState) => {
         city,
         regionId,
         postcode,
-        email
+        username
     } = formValues
     const address = {
         firstname,
@@ -216,7 +216,7 @@ export const submitPayment = (formValues) => (dispatch, getState) => {
             ...address
         },
         cartId: entityID,
-        email,
+        email: username,
         paymentMethod: {
             additional_data: null,
             method: 'checkmo',
