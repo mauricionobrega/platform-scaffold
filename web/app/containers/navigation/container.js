@@ -10,27 +10,14 @@ import IconLabelButton from '../../components/icon-label-button'
 import * as merlinsNavItem from '../../components/nav-item'
 import * as selectors from './selectors'
 import {NAVIGATION_MODAL} from './constants'
+import {signOut} from '../app/actions'
 import {isModalOpen} from '../../store/selectors'
 import {closeModal} from '../../store/modals/actions'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 import {withRouter} from 'progressive-web-sdk/dist/routing'
 
-
-/**
- * Factory function to create project-specific NavItems
- */
-const itemFactory = (type, props) => {
-    switch (type) {
-        case 'AccountNavItem':
-            return <merlinsNavItem.AccountNavItem {...props} />
-        default:
-            return <NavItem {...props} />
-    }
-}
-
-
 const Navigation = (props) => {
-    const {path, isOpen, root, closeNavigation, router} = props
+    const {path, isOpen, root, closeNavigation, router, logoutAction} = props
 
     const onPathChange = (path) => {
         const url = new URL(path)
@@ -39,6 +26,28 @@ const Navigation = (props) => {
         const routerPath = url.pathname + url.search + url.hash
         router.push(routerPath)
         closeNavigation()
+    }
+
+    /**
+     * Factory function to create project-specific NavItems
+     */
+    const itemFactory = (type, props) => {
+        switch (type) {
+            case 'AccountNavItem':
+                return <merlinsNavItem.AccountNavItem {...props} />
+            case 'AccountLogoutNavItem':
+                return (
+                    <merlinsNavItem.NavItemWithOnClick
+                        {...props}
+                        onClick={() => {
+                            logoutAction()
+                            closeNavigation()
+                        }}
+                    />
+                )
+            default:
+                return <NavItem {...props} />
+        }
     }
 
     return (
@@ -70,6 +79,7 @@ Navigation.propTypes = {
     closeNavigation: PropTypes.func,
 
     isOpen: PropTypes.bool,
+    logoutAction: PropTypes.func,
     path: PropTypes.string,
     root: PropTypes.object,
     /**
@@ -86,7 +96,8 @@ const mapStateToProps = createPropsSelector({
 })
 
 const mapDispatchToProps = {
-    closeNavigation: () => closeModal(NAVIGATION_MODAL)
+    closeNavigation: () => closeModal(NAVIGATION_MODAL),
+    logoutAction: () => signOut()
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Navigation))

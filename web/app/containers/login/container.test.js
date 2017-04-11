@@ -3,13 +3,19 @@
 
 import {shallow} from 'enzyme'
 import React from 'react'
+import * as AstroIntegration from '../../utils/astro-integration'
 
 import ConnectedLogin from './container'
 const Login = ConnectedLogin.WrappedComponent
 
-import * as AstroIntegration from '../../utils/astro-integration'
-
 describe('The Login', () => {
+    const originalIsRunningInAstro = AstroIntegration.isRunningInAstro
+
+    afterEach(() => {
+        // Value of `isRunningInAstro` might have been overwritten in test
+        AstroIntegration.isRunningInAstro = originalIsRunningInAstro
+    })
+
     test('Should render tab if not running in Astro', () => {
         AstroIntegration.isRunningInAstro = false
         const route = {
