@@ -21,8 +21,8 @@ export const fetchPdpData = () => (dispatch) => {
             const productDetailsMap = {
                 [productPathKey]: productDetailsData
             }
-            productDetailsData.availableVariations.forEach(({variationID}) => {
-                productDetailsMap[getProductHref(variationID)] = productDetailsData
+            productDetailsData.variations.forEach(({id}) => {
+                productDetailsMap[getProductHref(id)] = productDetailsData
             })
             dispatch(receiveProductDetailsProductData(productDetailsMap))
             dispatch(receiveProductDetailsUIData({[productPathKey]: {itemQuantity: responseJSON.step_quantity, ctaText: 'Add To Cart'}}))

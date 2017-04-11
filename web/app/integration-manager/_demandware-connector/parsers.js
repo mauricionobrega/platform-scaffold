@@ -12,6 +12,19 @@ const parseImages = (imageGroups) => {
     }))
 }
 
+/* eslint-disable camelcase */
+const parseVariationCategories = (variation_attributes) => {
+    return variation_attributes.map(({id, name, values}) => ({
+        id,
+        label: name,
+        values: values.map(({name, value}) => ({
+            label: name,
+            value
+        }))
+    }))
+}
+/* eslint-enable camelcase */
+
 export const parseProductDetails = ({id, name, price, long_description, image_groups, variants, variation_attributes}) => {
     const images = parseImages(image_groups)
     return {
@@ -21,10 +34,10 @@ export const parseProductDetails = ({id, name, price, long_description, image_gr
         description: long_description,
         thumbnail: images[0],
         images,
-        variationOptions: variation_attributes,
-        availableVariations: variants.map(({product_id, variation_values}) => {
+        variationCategories: parseVariationCategories(variation_attributes),
+        variations: variants.map(({product_id, variation_values}) => {
             return {
-                variationID: product_id,
+                id: product_id,
                 variationValues: variation_values
             }
         })
