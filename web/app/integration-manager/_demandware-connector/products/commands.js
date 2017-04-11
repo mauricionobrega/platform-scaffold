@@ -15,10 +15,13 @@ export const fetchPdpData = () => (dispatch) => {
         .then((response) => response.json())
         .then((responseJSON) => {
             const productDetailsData = parseProductDetails(responseJSON)
+            const productDetailsMap = {
+                [productPathKey]: productDetailsData
+            }
             productDetailsData.availableVariations.forEach(({variationID}) => {
-                dispatch(receiveProductDetailsProductData({[getProductHref(variationID)]: productDetailsData}))
+                productDetailsMap[getProductHref(variationID)] = productDetailsData
             })
-            dispatch(receiveProductDetailsProductData({[productPathKey]: productDetailsData}))
+            dispatch(receiveProductDetailsProductData(productDetailsMap))
             dispatch(receiveProductDetailsUIData({[productPathKey]: {itemQuantity: responseJSON.step_quantity, ctaText: 'Add To Cart'}}))
         })
 }
