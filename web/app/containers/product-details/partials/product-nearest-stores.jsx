@@ -74,7 +74,7 @@ class ProductNearestStores extends React.Component {
         const closestLocations = merlinsPotionsNearbyConfig.configs
 
         return (
-            <div className="t-home__nearest-stores">
+            <div className="t-product-details__nearest-stores">
                 <div className="u-card u-padding-md u-padding-top-lg u-padding-bottom-lg">
                     {title &&
                         <div className="u-flexbox u-align-center u-padding-bottom-md u-border-light-bottom">
