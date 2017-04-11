@@ -14,7 +14,6 @@ dependencies:
         #    pwd: native
 test:
     override:
-        - echo hello
         # - npm run lint:
         #     pwd: web
         # - npm test -- --runInBand:
@@ -22,9 +21,9 @@ test:
         # # Calculate the Lighthouse score 
         # - npm run test:pwa-ci:
         #     pwd: web
-        ## Enable smoke-test when automated workflow tests have been implemented.
-        # - npm run smoke-test:
-        #    pwd: web
+        # Enable smoke-test when automated workflow tests have been implemented.
+        - npm run smoke-test:
+           pwd: web
     # post:
     #    - cp -R lighthouse/* $CIRCLE_ARTIFACTS:
     #        pwd: web
