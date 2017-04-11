@@ -115,10 +115,12 @@ export const updateItemQuantity = (itemId, itemQuantity) => (dispatch, getState)
 }
 
 export const fetchCartPageData = () => (dispatch) => {
-    return dispatch(receiveCheckoutData({
-        locations: {
-            countries: [{value: 'us', label: 'United States'}],
-            regions: STATES
-        }
-    }))
+    return new Promise(() => {
+        dispatch(receiveCheckoutData({
+            locations: {
+                countries: [{value: 'us', label: 'United States'}],
+                regions: STATES
+            }
+        }))
+    })
 }
