@@ -105,9 +105,9 @@ LoginFieldTooltip.propTypes = {
     tooltip: PropTypes.object
 }
 
-export const LoginFieldLabel = ({label, required, type, forgotPassword}) => (
+export const LoginFieldLabel = ({label, type, forgotPassword}) => (
     <span>
-        {label} {required && <span>*</span>}
+        {label}
 
         {type === 'password' && forgotPassword &&
             <Link className="u-float-end u-text-normal" href={forgotPassword.href}>
@@ -123,7 +123,6 @@ LoginFieldLabel.propTypes = {
         title: PropTypes.string
     }),
     label: PropTypes.string,
-    required: PropTypes.bool,
     type: PropTypes.string,
 }
 
