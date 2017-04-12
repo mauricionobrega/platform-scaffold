@@ -13,14 +13,14 @@ export const getCart = () => (dispatch) => {
 
 }
 
-export const addToCart = () => (dispatch) => {
+export const addToCart = (productID, qty) => (dispatch) => {
     return createBasket()
         .then((basketID) => {
             const options = {
                 method: 'POST',
                 body: JSON.stringify([{
                     product_id: getCurrentProductID().toString(),
-                    quantity: 1.00
+                    quantity: qty
                 }])
             }
             return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, options)
