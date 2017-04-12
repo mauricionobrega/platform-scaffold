@@ -11,6 +11,8 @@ const Measure = Runtypes.String
 const Text = Runtypes.String
 // Identifiers for the program
 const Identifier = Runtypes.String
+const ProductID = Identifier
+const VariationCategoryID = Identifier
 
 const Link = Runtypes.Record({
     href: URL,
@@ -41,18 +43,18 @@ const Option = Runtypes.Record({
 })
 
 const VariationCategory = Runtypes.Record({
-    id: Identifier,
+    id: VariationCategoryID,
     label: Text,
     values: Runtypes.Array(Option)
 })
 
 const Variation = Runtypes.Record({
-    id: Identifier,
-    values: Runtypes.Dictionary(Identifier, Identifier)
+    id: ProductID,
+    values: Runtypes.Dictionary(VariationCategoryID, Identifier)
 })
 
 const Product = Runtypes.Record({
-    id: Identifier,
+    id: ProductID,
     title: Text,
     price: Currency,
     href: URL,
@@ -65,7 +67,7 @@ const Product = Runtypes.Record({
 }))
 
 
-export const Products = Runtypes.Dictionary(Product, Key)
+export const Products = Runtypes.Dictionary(Product, ProductID)
 
 export const ProductUIData = Runtypes.Record({
     breadcrumbs: Runtypes.Array(Link),
