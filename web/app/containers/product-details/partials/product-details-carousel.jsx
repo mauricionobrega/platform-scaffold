@@ -32,7 +32,7 @@ const ProductDetailsCarousel = ({images, contentsLoaded}) => {
         nextIcon: 'chevron-right',
         iconSize: 'medium',
         className: 'pw--frame pw--side-controls t-product-details__carousel u-padding-md u-bg-color-neutral-10',
-        showControls: items.length > 1 && true
+        showControls: images.length > 1
     }
 
     const imgProps = {

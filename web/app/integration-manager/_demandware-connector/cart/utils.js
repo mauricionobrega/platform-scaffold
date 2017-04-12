@@ -1,6 +1,6 @@
 import {makeDemandwareRequest, getBasketID, storeBasketID} from '../utils'
 import {receiveCartContents} from '../../cart/responses'
-import {getFirstProductImageByPathKey} from '../../../containers/product-details/selectors'
+import {getProductThumbnailSrcByPathKey} from '../../../containers/product-details/selectors'
 import {parseBasketContents, getProductHref} from '../parsers'
 import {API_END_POINT_URL} from '../constants'
 
@@ -29,7 +29,7 @@ export const createBasket = (basketContents) => {
 }
 
 export const getProductImage = (item, currentState) => {
-    const productImage = getFirstProductImageByPathKey(getProductHref(item.product_id))(currentState)
+    const productImage = getProductThumbnailSrcByPathKey(getProductHref(item.product_id))(currentState)
 
     if (productImage) {
         // If we already have images for the item in our state, then just use those
