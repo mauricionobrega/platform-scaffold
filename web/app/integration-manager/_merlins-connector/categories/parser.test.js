@@ -8,9 +8,6 @@ describe('the product list parser', () => {
 
     it('should extract the product list content from the rendered HTML', () => {
         const expected = {
-            hasProducts: true,
-            contentsLoaded: true,
-            noResultsText: '',
             itemCount: '7',
             title: 'Potions',
             productUrls: [

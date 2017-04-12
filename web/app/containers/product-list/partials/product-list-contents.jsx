@@ -10,6 +10,8 @@ import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
 import ProductTile from './product-tile'
 
+const noResultsText = 'We can\'t find products matching the selection'
+
 const ResultList = ({products}) => (
     <List className="c--borderless">
         {products.map((product, idx) => <ProductTile key={idx} {...product} />)}
@@ -20,7 +22,7 @@ ResultList.propTypes = {
     products: PropTypes.array
 }
 
-const NoResultsList = ({bodyText}) => (
+const NoResultsList = () => (
     <div className="u-flexbox u-direction-column u-align-center">
         <Image
             className="u-flex-none"
@@ -30,7 +32,7 @@ const NoResultsList = ({bodyText}) => (
             src={getAssetUrl('static/img/global/no-results.png')} />
 
         <div className="t-product-list__no-results-text u-text-align-center">
-            {bodyText}
+            {noResultsText}
         </div>
     </div>
 )
@@ -39,7 +41,7 @@ NoResultsList.propTypes = {
     bodyText: PropTypes.string
 }
 
-const ProductListContents = ({contentsLoaded, numItems, products, hasProducts, noResultsText}) => (
+const ProductListContents = ({contentsLoaded, numItems, products, hasProducts}) => (
     <div className="t-product-list__container u-padding-end u-padding-bottom-lg u-padding-start">
         <div className="t-product-list__num-results u-padding-md">
             {contentsLoaded ?
@@ -49,7 +51,7 @@ const ProductListContents = ({contentsLoaded, numItems, products, hasProducts, n
             }
         </div>
 
-        {(hasProducts || !contentsLoaded) ? <ResultList products={products} /> : <NoResultsList bodyText={noResultsText} />}
+        {(hasProducts || !contentsLoaded) ? <ResultList products={products} /> : <NoResultsList />}
     </div>
 )
 
@@ -57,14 +59,12 @@ ProductListContents.propTypes = {
     products: PropTypes.array.isRequired,
     contentsLoaded: PropTypes.bool,
     hasProducts: PropTypes.bool,
-    noResultsText: PropTypes.string,
     numItems: PropTypes.string
 }
 
 const mapStateToProps = createPropsSelector({
     hasProducts: selectors.getHasProducts,
     contentsLoaded: selectors.getProductListContentsLoaded,
-    noResultsText: selectors.getNoResultsText,
     numItems: selectors.getNumItems,
     products: selectors.getProductListProducts
 })

@@ -12,7 +12,6 @@ const categoryProductsParser = ($, $html) => {
           .map(urlToPathKey)
 
     return {
-        noResultsText: getTextFrom($html, '.message.empty'),
         itemCount: $numItems.length > 0 ? $numItems.text() : '0',
         products,
         title: getTextFrom($html, '.page-title')

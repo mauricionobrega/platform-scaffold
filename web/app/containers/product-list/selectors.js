@@ -21,17 +21,15 @@ export const getProductListContentsLoaded = createHasSelector(
 )
 
 export const getProductPaths = createGetSelector(getSelectedCategory, 'products', PLACEHOLDER_URLS)
-
+export const getNumItems = createGetSelector(getSelectedCategory, 'itemCount')
 export const getHasProducts = createSelector(
-    getProductPaths,
-    (paths) => paths.size > 0
+    getNumItems,
+    (count) => count > 0
 )
 
-export const getNumItems = createGetSelector(getSelectedCategory, 'itemCount')
 export const getProductListTitle = createGetSelector(getSelectedCategory, 'title')
 export const getProductListParentHref = createGetSelector(getSelectedCategory, 'parentHref', '/')
 export const getProductListParentName = createGetSelector(getSelectedCategory, 'parentName', 'Home')
-export const getNoResultsText = createGetSelector(getSelectedCategory, 'noResultsText')
 
 export const getProductListProducts = createSelector(
     getProducts,

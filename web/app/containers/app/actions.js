@@ -1,3 +1,5 @@
+/* eslint-disable import/namespace */
+/* eslint-disable import/named */
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 
 import * as analyticConstants from 'progressive-web-sdk/dist/analytics/analytic-constants'
@@ -9,7 +11,9 @@ import {getCurrentUrl} from './selectors'
 
 import appParser from './app-parser'
 
-import CheckoutConfirmation from '../checkout-confirmation/container'
+import {
+    UnwrappedCheckoutConfirmation,
+} from '../templates'
 import * as checkoutConfirmationActions from '../checkout-confirmation/actions'
 import * as cartActions from '../../store/cart/actions'
 import * as footerActions from '../footer/actions'
@@ -131,7 +135,8 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                 dispatch(receivedAction)
                 dispatch(process(receivedAction))
 
-                if (pageComponent === CheckoutConfirmation) {
+                if (pageComponent === UnwrappedCheckoutConfirmation) {
+
                     dispatch(checkoutConfirmationActions.process(receivedAction))
                     // Resets the cart count to 0
                     dispatch(cartActions.getCart())
@@ -167,5 +172,31 @@ export const fetchSvgSprite = () => {
         return makeRequest(spriteUrl)
             .then((response) => response.text())
             .then((text) => dispatch(updateSvgSprite(text)))
+    }
+}
+
+
+export const signOut = () => {
+    return (dispatch) => {
+        return makeRequest('/customer/account/logout/')
+            .then(() => {
+                // Desktop's message includes 'redirect to home page' message
+                // so we'll just hardcode a message instead
+                dispatch(addNotification({
+                    content: 'You are now signed out',
+                    id: 'signedOutNotification'
+                }))
+                dispatch(cartActions.getCart())
+
+                // Update navigation menu
+                // Need to request current location so when we are on Potions PLP
+                // the potions nav item will render as 'active'
+                return makeRequest(window.location.href)
+                    .then(jqueryResponse)
+                    .then((res) => {
+                        const [$, $response] = res
+                        dispatch(navigationActions.process({payload: {$, $response}}))
+                    })
+            })
     }
 }

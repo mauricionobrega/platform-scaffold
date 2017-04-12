@@ -5,6 +5,7 @@ import Application from 'progressive-app-sdk/application'
 import {tabBarConfig} from '../config/tabBarConfig'
 import baseConfig from '../config/baseConfig'
 
+import CartModalController from './cartModalController'
 import TabController from './tabController'
 import AccountTabController from './accountTabController'
 import AppEvents from '../global/app-events'
@@ -31,20 +32,21 @@ TabBarController.init = async function() {
     const tabBar = await TabBarPlugin.init()
     await tabBar.setColor(baseConfig.colors.primaryColor)
     const layout = await AnchoredLayoutPlugin.init()
+    const cartModalController = await CartModalController.init()
 
     const tabControllers = {}
 
     const tabControllerPromises = tabBarConfig.items.map((item) => {
         if (item.type === 'custom') {
             if (item.id === 'account') {
-                return AccountTabController.init().then((controller) => {
+                return AccountTabController.init(cartModalController).then((controller) => {
                     tabControllers[item.id] = controller
                 })
             } else {
                 return null
             }
         } else {
-            return TabController.init(item).then((controller) => {
+            return TabController.init(item, cartModalController).then((controller) => {
                 tabControllers[item.id] = controller
             })
         }

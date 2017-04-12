@@ -227,7 +227,7 @@ Note: This should make it's way into the Tutorial eventually, but this is here f
 
 ### Running against Merlins:
 
-1. Open `router.jsx`.
+1. Open `app/main.jsx`.
 2. Import the Merlin's connector:
 
 ```
@@ -241,7 +241,7 @@ https://preview.mobify.com/?url=https%3A%2F%2Fwww.merlinspotions.com%2F&site_fol
 
 ### Running against Demandware:
 
-1. Open `router.jsx`.
+1. Open `app/main.jsx`.
 2. Import the Demandware connector:
 
 ```

@@ -1,6 +1,6 @@
 ```js
 // JS, importing the local component
-import LazyLoadContent from 'components/lazy-load-content'
+import LazyLoadContent from '../components/lazy-load-content'
 ```
 
 

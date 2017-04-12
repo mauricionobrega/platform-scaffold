@@ -17,7 +17,7 @@ const TabController = function(tabItem, layout, navigationView, headerController
     this.navigationView.navigateToUrl(tabItem.rootUrl)
 }
 
-TabController.init = async function(tabItem) {
+TabController.init = async function(tabItem, cartModalController) {
     const [
         layout,
         navigationView,
@@ -25,7 +25,7 @@ TabController.init = async function(tabItem) {
     ] = await Promise.all([
         AnchoredLayoutPlugin.init(),
         NavigationPlugin.init(),
-        TabHeaderController.init()
+        TabHeaderController.init(cartModalController)
     ])
 
     await layout.addTopView(headerController.viewPlugin)
@@ -48,7 +48,7 @@ TabController.init = async function(tabItem) {
         headerController.showCartModal()
     })
 
-    AppEvents.on(AppEvents.cartNeedsUpdate, async () => {
+    AppEvents.on(AppEvents.cartNeedsUpdate, () => {
         navigationView.trigger('cart:needs-update')
     })
 

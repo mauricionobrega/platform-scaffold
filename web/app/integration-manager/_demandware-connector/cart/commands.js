@@ -27,7 +27,7 @@ export const createBasket = () => {
         /* eslint-enable camelcase */
 }
 
-export const getProductImage = (item, currentState) => {
+const getProductImage = (item, currentState) => {
     const productImage = getFirstProductImageByPathKey(getProductHref(item.product_id))(currentState)
 
     if (productImage) {
@@ -115,10 +115,12 @@ export const updateItemQuantity = (itemId, itemQuantity) => (dispatch, getState)
 }
 
 export const fetchCartPageData = () => (dispatch) => {
-    return dispatch(receiveCheckoutData({
-        locations: {
-            countries: [{value: 'us', label: 'United States'}],
-            regions: STATES
-        }
-    }))
+    return new Promise(() => {
+        dispatch(receiveCheckoutData({
+            locations: {
+                countries: [{value: 'us', label: 'United States'}],
+                regions: STATES
+            }
+        }))
+    })
 }

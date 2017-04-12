@@ -1,7 +1,13 @@
+/* global NATIVE_WEBPACK_ASTRO_VERSION */
 import {getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
 import cacheHashManifest from '../tmp/loader-cache-hash-manifest.json'
 import {isRunningInAstro} from './utils/astro-integration'
+
+window.Progressive = {
+    AstroPromise: Promise.resolve({})
+}
+
 import ReactRegexes from './loader-routes'
 
 const isReactRoute = () => {
@@ -14,8 +20,10 @@ initCacheManifest(cacheHashManifest)
 
 // This isn't accurate but does describe the case where the PR currently works
 const IS_PREVIEW = /mobify-path=true/.test(document.cookie)
+const ASTRO_VERSION = NATIVE_WEBPACK_ASTRO_VERSION // replaced at build time
 
 const CAPTURING_CDN = '//cdn.mobify.com/capturejs/capture-latest.min.js'
+const ASTRO_CLIENT_CDN = `//assets.mobify.com/astro/astro-client-${ASTRO_VERSION}.min.js`
 const SW_LOADER_PATH = `/service-worker-loader.js?preview=${IS_PREVIEW}&b=${cacheHashManifest.buildDate}`
 
 import preloadHTML from 'raw-loader!./preloader/preload.html'
@@ -87,8 +95,7 @@ if (isReactRoute()) {
 
     // load the worker if available
     // if no worker is available, we have to assume that promises might not be either.
-    // Astro doesn't currently support service workers
-    (('serviceWorker' in navigator && !isRunningInAstro)
+    (('serviceWorker' in navigator)
      ? loadWorker()
      : {then: (fn) => setTimeout(fn)}
     ).then(() => {
@@ -123,6 +130,19 @@ if (isReactRoute()) {
                 onerror: resolve
             })
         })
+
+        if (isRunningInAstro) {
+            window.Progressive.AstroPromise = new Promise((resolve) => {
+                loadScript({
+                    id: 'progressive-web-app',
+                    src: ASTRO_CLIENT_CDN,
+                    onload: () => {
+                        resolve(window.Astro)
+                    },
+                    onerror: resolve
+                })
+            })
+        }
 
         loadScript({
             id: 'progressive-web-jquery',

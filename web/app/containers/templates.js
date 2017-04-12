@@ -1,24 +1,43 @@
 // The wrapping is implemented here to avoid a circular dependency
 // involving the containers and the app actions.
+import Loadable from 'react-loadable'
 
 import template from '../template'
 
-import UnwrappedCart from './cart/container'
-import UnwrappedCheckoutConfirmation from './checkout-confirmation/container'
-import UnwrappedCheckoutPayment from './checkout-payment/container'
-import UnwrappedCheckoutShipping from './checkout-shipping/container'
-import UnwrappedHome from './home/container'
-import UnwrappedLogin from './login/container'
-import UnwrappedProductDetails from './product-details/container'
-import UnwrappedProductList from './product-list/container'
-import UnwrappedOffline from './offline/container'
+import ContainerPlaceholder from '../components/container-placeholder'
+import {requestIdleCallback} from '../utils/utils'
 
-export const Cart = template(UnwrappedCart)
-export const CheckoutConfirmation = template(UnwrappedCheckoutConfirmation)
-export const CheckoutPayment = template(UnwrappedCheckoutPayment)
-export const CheckoutShipping = template(UnwrappedCheckoutShipping)
-export const Home = template(UnwrappedHome)
-export const Login = template(UnwrappedLogin)
-export const ProductDetails = template(UnwrappedProductDetails)
-export const ProductList = template(UnwrappedProductList)
-export const Offline = template(UnwrappedOffline)
+const loadableList = []
+const PWALoadable = (loader) => {
+    const loadable = Loadable({
+        loader,
+        LoadingComponent: ContainerPlaceholder
+    })
+    loadableList.push(loadable)
+    return loadable
+}
+
+export const registerPreloadCallbacks = () => {
+    loadableList.forEach((loadable) => {
+        requestIdleCallback(() => loadable.preload())
+    })
+}
+
+
+// These are on the old model and need to be wrapped here
+// rather than in container.js to avoid circular imports
+export const CheckoutConfirmation = PWALoadable(
+    () => import('./checkout-confirmation/container')
+        .then((component) => template(component))
+)
+
+export const CheckoutPayment = PWALoadable(
+    () => import('./checkout-payment/container')
+        .then((component) => template(component))
+)
+
+export const Cart = PWALoadable(() => import('./cart/container'))
+export const CheckoutShipping = PWALoadable(() => import('./checkout-shipping/container'))
+export const Login = PWALoadable(() => import('./login/container'))
+export const ProductDetails = PWALoadable(() => import('./product-details/container'))
+export const ProductList = PWALoadable(() => import('./product-list/container'))

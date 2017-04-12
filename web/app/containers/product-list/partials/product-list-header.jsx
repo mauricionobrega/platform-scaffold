@@ -20,7 +20,7 @@ const ProductListHeader = ({title, contentsLoaded, parentName, parentHref}) => (
             }
             <div className="u-margin-top-md">
                 {contentsLoaded ?
-                    <h1 className="u-text-extra-lighter u-text-uppercase">{title}</h1>
+                    <h1 className="u-text-uppercase">{title}</h1>
                 :
                     <SkeletonText lines={1} type="h1" width="100px" />
                 }

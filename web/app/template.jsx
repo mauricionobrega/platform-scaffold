@@ -30,6 +30,7 @@ const template = (WrappedComponent) => {
             } else if (!route.suppressFetch) {
                 dispatch(fetchPage(url, WrappedComponent, route.routeName, route.fetchUrl))
             }
+            dispatch(removeAllNotifications())
         }
 
         componentWillMount() {

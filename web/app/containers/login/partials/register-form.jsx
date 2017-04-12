@@ -2,55 +2,32 @@ import React, {PropTypes} from 'react'
 import {reduxForm} from 'redux-form'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import {connect} from 'react-redux'
-import * as selectors from '../selectors'
-import {isModalOpen} from 'progressive-web-sdk/dist/store/modals/selectors'
-import {openModal, closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
-import {REGISTER_SECTION} from '../constants'
+import {isRegisterLoaded} from '../selectors'
+import {submitRegisterForm} from '../actions'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import FieldSet from 'progressive-web-sdk/dist/components/field-set'
-import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
-import {LoginField} from './common'
+import {LoginField, RememberMeTooltip} from './common'
 
 class RegisterForm extends React.Component {
     constructor(props) {
         super(props)
 
         this.onSubmit = this.onSubmit.bind(this)
-
-        this.modalInfo = {
-            openModal: props.openInfoModal,
-            closeModal: props.closeInfoModal
-        }
     }
 
     onSubmit(values) {
-        return new Promise((resolve, reject) => {
-            this.props.submitForm(values, resolve, reject)
-        })
+        return this.props.submitForm(values)
     }
 
     render() {
         const {
-            // redux-form
             error,
             submitting,
             handleSubmit,
-            // props from parent
-            sections,
-            submitText,
-            isFormLoaded,
-            modalOpen
+            isFormLoaded
         } = this.props
-
-        // Ensure that modalInfo changes if and only if modalOpen changes.
-        if (modalOpen !== this.modalInfo.modalOpen) {
-            this.modalInfo = {
-                ...this.modalInfo,
-                modalOpen
-            }
-        }
 
         return (
             <form noValidate={true} onSubmit={handleSubmit(this.onSubmit)}>
@@ -60,32 +37,59 @@ class RegisterForm extends React.Component {
                     </div>
                 }
 
-                {sections.map(({heading, fields}, idx) => {
-                    return (
-                        <FieldSet className="t-login__register-fieldset" key={idx}>
-                            <div className="u-margin-bottom">
-                                {heading ?
-                                    <h3 className="u-color-brand u-text-font-family u-text-normal">
-                                        {heading}
-                                    </h3>
-                                :
-                                    <SkeletonBlock height="24px" width="50%" />
-                                }
-                            </div>
+                <FieldSet className="t-login__register-fieldset">
+                    <LoginField
+                        label="First Name"
+                        name="firstname"
+                        type="text"
+                        />
 
-                            {fields.map((field, idx) =>
-                                <LoginField {...field} key={idx} modalInfo={this.modalInfo} />
-                            )}
-                        </FieldSet>
-                    )
-                })}
+                    <LoginField
+                        label="Last Name"
+                        name="lastname"
+                        type="text"
+                        />
+
+                    <LoginField
+                        label="Email"
+                        name="email"
+                        type="email"
+                        />
+
+                    <LoginField
+                        label="Sign Up for Newsletter"
+                        name="is_subscribed"
+                        type="checkbox"
+                        />
+                </FieldSet>
+
+                <FieldSet className="t-login__register-fieldset">
+                    <LoginField
+                        label="Password"
+                        name="password"
+                        type="password"
+                        />
+
+                    <LoginField
+                        label="Confirm Password"
+                        name="password_confirmation"
+                        type="password"
+                        />
+
+                    <LoginField
+                        label="Remember Me"
+                        name="persistent_remember_me"
+                        type="checkbox"
+                        tooltip={<RememberMeTooltip />}
+                        />
+                </FieldSet>
 
                 <Button
                     className="c--primary u-width-full u-margin-top-lg"
                     type="submit"
                     disabled={submitting || !isFormLoaded}
                 >
-                    <span className="u-text-uppercase">{submitText || 'Create an Account'}</span>
+                    <span className="u-text-uppercase">Create an Account</span>
                 </Button>
             </form>
         )
@@ -93,17 +97,10 @@ class RegisterForm extends React.Component {
 }
 
 RegisterForm.propTypes = {
-    closeInfoModal: PropTypes.func,
     error: PropTypes.string,
     handleSubmit: PropTypes.func,
-    href: PropTypes.string,
-    invalid: PropTypes.bool,
     isFormLoaded: PropTypes.bool,
-    modalOpen: PropTypes.bool,
-    openInfoModal: PropTypes.func,
-    sections: PropTypes.array,
     submitForm: PropTypes.func,
-    submitText: PropTypes.string,
     submitting: PropTypes.bool,
 }
 
@@ -113,15 +110,11 @@ const ReduxRegisterForm = reduxForm({
 })(RegisterForm)
 
 const mapStateToProps = createPropsSelector({
-    sections: selectors.register.form.getSections,
-    isFormLoaded: selectors.register.getIsFormLoaded,
-    modalOpen: isModalOpen(REGISTER_SECTION),
-    submitText: selectors.register.form.getSubmitText
+    isFormLoaded: isRegisterLoaded
 })
 
 const mapDispatchToProps = {
-    closeInfoModal: () => closeModal(REGISTER_SECTION),
-    openInfoModal: () => openModal(REGISTER_SECTION)
+    submitForm: submitRegisterForm
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReduxRegisterForm)
