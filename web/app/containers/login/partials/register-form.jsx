@@ -38,67 +38,48 @@ class RegisterForm extends React.Component {
                 }
 
                 <FieldSet className="t-login__register-fieldset">
-                    <div className="u-margin-bottom">
-                        <h3 className="u-color-brand u-text-font-family u-text-normal">
-                            Personal Information
-                        </h3>
-                    </div>
-
                     <LoginField
                         label="First Name"
                         name="firstname"
                         type="text"
-                        required={true}
                         />
 
                     <LoginField
                         label="Last Name"
                         name="lastname"
                         type="text"
-                        required={true}
                         />
 
                     <LoginField
                         label="Email"
                         name="email"
                         type="email"
-                        required={true}
                         />
 
                     <LoginField
                         label="Sign Up for Newsletter"
                         name="is_subscribed"
                         type="checkbox"
-                        required={false}
                         />
                 </FieldSet>
 
                 <FieldSet className="t-login__register-fieldset">
-                    <div className="u-margin-bottom">
-                        <h3 className="u-color-brand u-text-font-family u-text-normal">
-                            Sign-in Information
-                        </h3>
-                    </div>
-
                     <LoginField
                         label="Password"
                         name="password"
                         type="password"
-                        required={true}
                         />
 
                     <LoginField
                         label="Confirm Password"
                         name="password_confirmation"
                         type="password"
-                        required={true}
                         />
 
                     <LoginField
                         label="Remember Me"
                         name="persistent_remember_me"
                         type="checkbox"
-                        required={false}
                         tooltip={<RememberMeTooltip />}
                         />
                 </FieldSet>

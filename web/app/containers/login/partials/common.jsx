@@ -9,9 +9,9 @@ import Link from 'progressive-web-sdk/dist/components/link'
 
 import {REMEMBER_ME_MODAL} from '../constants'
 
-export const LoginFieldLabel = ({label, required, forgotPassword}) => (
+export const LoginFieldLabel = ({label, forgotPassword}) => (
     <span>
-        {label} {required && <span>*</span>}
+        {label}
 
         {forgotPassword &&
             <Link className="u-float-end u-text-normal" href={forgotPassword.href}>
@@ -26,15 +26,14 @@ LoginFieldLabel.propTypes = {
         href: PropTypes.string,
         title: PropTypes.string
     }),
-    label: PropTypes.string,
-    required: PropTypes.bool,
+    label: PropTypes.string
 }
 
-export const LoginField = ({label, required, type, forgotPassword, name, tooltip}) => (
+export const LoginField = ({label, type, forgotPassword, name, tooltip}) => (
     <FieldRow>
         <ReduxFormField
             name={name}
-            label={<LoginFieldLabel label={label} required={required} forgotPassword={forgotPassword} />}
+            label={<LoginFieldLabel label={label} forgotPassword={forgotPassword} />}
             component={Field}
             >
             <input type={type} />
@@ -49,7 +48,6 @@ LoginField.propTypes = {
     name: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
     forgotPassword: PropTypes.object,
-    required: PropTypes.bool,
     tooltip: PropTypes.node
 }
 

@@ -45,14 +45,12 @@ class SignInForm extends React.Component {
                         label="Email"
                         name="login[username]"
                         type="email"
-                        required={true}
                         />
 
                     <LoginField
                         label="Password"
                         name="login[password]"
                         type="password"
-                        required={true}
                         forgotPassword={{href: FORGOT_PASSWORD_PATH}}
                         />
 
@@ -60,7 +58,6 @@ class SignInForm extends React.Component {
                         label="Remember Me"
                         name="persistent_remember_me"
                         type="checkbox"
-                        required={false}
                         tooltip={<RememberMeTooltip />}
                         />
 
