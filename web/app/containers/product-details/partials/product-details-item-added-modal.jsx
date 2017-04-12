@@ -4,6 +4,7 @@ import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as selectors from '../selectors'
 import {stripEvent} from '../../../utils/utils'
 import {isModalOpen} from 'progressive-web-sdk/dist/store/modals/selectors'
+import {getProductThumbnail, getProductTitle, getProductPrice} from '../../../store/products/selectors'
 import * as productDetailsActions from '../actions'
 import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from '../constants'
 import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
@@ -74,11 +75,11 @@ ProductDetailsItemAddedModal.propTypes = {
 }
 
 const mapStateToProps = createPropsSelector({
-    thumbnail: selectors.getProductThumbnail,
+    thumbnail: getProductThumbnail,
     open: isModalOpen(PRODUCT_DETAILS_ITEM_ADDED_MODAL),
     quantity: selectors.getItemQuantity,
-    title: selectors.getProductTitle,
-    price: selectors.getProductPrice
+    title: getProductTitle,
+    price: getProductPrice
 })
 
 const mapDispatchToProps = {

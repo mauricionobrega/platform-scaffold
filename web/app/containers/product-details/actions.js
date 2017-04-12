@@ -5,6 +5,7 @@ import {createPropsSelector} from 'reselect-immutable-helpers'
 
 import * as selectors from './selectors'
 import * as appSelectors from '../app/selectors'
+import {getProductVariants, getProductVariationCategories, getProductVariationCategoryIds} from '../../store/products/selectors'
 
 import {addToCart} from '../../integration-manager/cart/commands'
 import {getProductVariantData} from '../../integration-manager/products/commands'
@@ -40,7 +41,7 @@ export const goToCheckout = () => (dispatch, getState) => {
 const submitCartFormSelector = createPropsSelector({
     key: appSelectors.getCurrentPathKey,
     qty: selectors.getItemQuantity,
-    variations: selectors.getProductVariationCategories
+    variations: getProductVariationCategories
 })
 
 export const submitCartForm = (formValues) => (dispatch, getStore) => {
@@ -74,8 +75,8 @@ export const submitCartForm = (formValues) => (dispatch, getStore) => {
 
 const variationBlurSelector = createPropsSelector({
     variationSelections: selectors.getAddToCartFormValues,
-    categoryIds: selectors.getProductVariationCategoryIds,
-    variants: selectors.getProductVariants
+    categoryIds: getProductVariationCategoryIds,
+    variants: getProductVariants
 })
 
 export const onVariationBlur = () => (dispatch, getStore) => {

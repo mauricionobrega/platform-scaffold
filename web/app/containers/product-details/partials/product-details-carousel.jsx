@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as selectors from '../selectors'
+import {getProductImages} from '../../../store/products/selectors'
 import classNames from 'classnames'
 
 import Carousel from 'progressive-web-sdk/dist/components/carousel'
@@ -68,7 +69,7 @@ ProductDetailsCarousel.propTypes = {
 
 const mapStateToProps = createPropsSelector({
     contentsLoaded: selectors.getProductDetailsContentsLoaded,
-    images: selectors.getProductImages
+    images: getProductImages
 })
 
 export default connect(mapStateToProps)(ProductDetailsCarousel)
