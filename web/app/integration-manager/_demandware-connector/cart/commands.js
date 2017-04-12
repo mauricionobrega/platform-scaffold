@@ -88,20 +88,21 @@ export const addToWishlist = (productId) => (dispatch) => {
     return makeDemandwareRequest(`${API_END_POINT_URL}/customers/${customerID}/product_lists`, {method: 'GET'})
         .then((response) => response.json())
         .then(({count, data}) => {
-            if (!count) {
-                // create a list
-                const requestOptions = {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        type: 'wish_list',
-                        name: 'Saved for Later'
-                    })
-                }
-                return makeDemandwareRequest(`${API_END_POINT_URL}/customers/${customerID}/product_lists`, requestOptions)
-                    .then((response) => response.json())
+            if (count) {
+                return Promise.resolve(data[0])
             }
+            // create a list
+            const requestOptions = {
+                method: 'POST',
+                body: JSON.stringify({
+                    type: 'wish_list',
+                    name: 'Saved for Later'
+                })
+            }
+            return makeDemandwareRequest(`${API_END_POINT_URL}/customers/${customerID}/product_lists`, requestOptions)
+                .then((response) => response.json())
 
-            return Promise.resolve(data[0])
+
         })
         .then(({id}) => {
             const requestOptions = {
