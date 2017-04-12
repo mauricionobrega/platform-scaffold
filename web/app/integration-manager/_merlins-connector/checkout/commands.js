@@ -1,7 +1,7 @@
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {SubmissionError} from 'redux-form'
-import {checkoutShippingParser, parseCheckoutData, parseShippingMethods, parseLocations, parseShippingInitialValues} from './parsers'
-import {parseCheckoutEntityID, extractMagentoShippingStepData} from '../../../utils/magento-utils'
+import {checkoutShippingParser, parseCheckoutData, parseShippingMethods} from './parsers'
+import {parseCheckoutEntityID} from '../../../utils/magento-utils'
 import {receiveCheckoutShippingData, receiveCheckoutData, receiveShippingMethodInitialValues} from './../../checkout/responses'
 import {fetchPageData} from '../app/commands'
 import {getCustomerEntityID} from '../selectors'
@@ -51,26 +51,15 @@ export const fetchShippingMethodsEstimate = (formKey) => {
 
 const processCheckoutData = ($response) => (dispatch) => {
     const customerEntityID = parseCheckoutEntityID($response)
-    const magentoFieldData = extractMagentoShippingStepData($response).getIn(['children', 'shipping-address-fieldset', 'children'])
-    const initialValues = parseShippingInitialValues(magentoFieldData)
-    const locationsData = parseLocations(magentoFieldData)
-
-    dispatch(receiveCheckoutData({
-        // entity_id is used for API calls
-        customerEntityID,
-        ...locationsData,
-        shipping: {initialValues}
-    }))
+    dispatch(receiveEntityID(customerEntityID))
+    dispatch(receiveCheckoutData(parseCheckoutData($response)))
 }
 
 export const fetchCheckoutShippingData = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
-        .then(([$, $response]) => {
-            // entity_id is used for API calls
-            const customerEntityID = parseCheckoutEntityID($response)
-            dispatch(receiveEntityID(customerEntityID))
+        .then(([$, $response]) => { // eslint-disable-line no-unused-vars
             dispatch(receiveCheckoutShippingData(checkoutShippingParser($, $response)))
-            return dispatch(receiveCheckoutData(parseCheckoutData($response)))
+            return dispatch(processCheckoutData($response))
         })
         .then(() => {
             // fetch shipping estimate
