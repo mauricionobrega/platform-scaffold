@@ -43,7 +43,7 @@ export const parseProductDetails = ({id, name, price, long_description, image_gr
         thumbnail: images[0],
         images,
         variationCategories: parseVariationCategories(variation_attributes),
-        variations: variants.map(({product_id, variation_values}) => {
+        variants: variants.map(({product_id, variation_values}) => {
             return {
                 id: product_id,
                 values: variation_values

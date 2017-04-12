@@ -21,7 +21,7 @@ export const fetchPdpData = () => (dispatch) => {
             const productDetailsMap = {
                 [productPathKey]: productDetailsData
             }
-            productDetailsData.variations.forEach(({id}) => {
+            productDetailsData.variants.forEach(({id}) => {
                 productDetailsMap[getProductHref(id)] = productDetailsData
             })
             dispatch(receiveProductDetailsProductData(productDetailsMap))
@@ -29,12 +29,12 @@ export const fetchPdpData = () => (dispatch) => {
         })
 }
 
-export const getProductVariationData = (selections, variations, categoryIds) => (dispatch) => {
+export const getProductVariantData = (selections, variants, categoryIds) => (dispatch) => {
     if (categoryIds.some((id) => !selections[id])) {
         return
     }
 
-    for (const {values, id} of variations) {
+    for (const {values, id} of variants) {
         if (categoryIds.every((id) => selections[id] === values[id])) {
             browserHistory.push({
                 pathname: getProductHref(id)

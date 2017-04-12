@@ -47,7 +47,7 @@ const VariationCategory = Runtypes.Record({
     values: Runtypes.Array(Option)
 })
 
-const Variation = Runtypes.Record({
+const Variant = Runtypes.Record({
     id: ProductID,
     values: Runtypes.Dictionary(VariationCategoryID, Identifier)
 })
@@ -62,7 +62,7 @@ const Product = Runtypes.Record({
 }).And(Runtypes.Optional({
     description: Text,
     variationCategories: Runtypes.Array(VariationCategory),
-    variations: Runtypes.Array(Variation)
+    variants: Runtypes.Array(Variant)
 }))
 
 

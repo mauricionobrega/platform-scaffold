@@ -60,7 +60,7 @@ export const getProductVariationCategoryIds = createSelector(
     getProductVariationCategories,
     (categories) => categories.map((category) => category.get('id'))
 )
-export const getProductVariations = createGetSelector(getSelectedProduct, 'variations')
+export const getProductVariants = createGetSelector(getSelectedProduct, 'variants')
 export const getProductInitialValues = createGetSelector(getSelectedProduct, 'initialValues')
 
 export const getAddToCartFormValues = getFormValues('product-add-to-cart')

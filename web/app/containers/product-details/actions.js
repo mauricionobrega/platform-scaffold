@@ -7,7 +7,7 @@ import * as selectors from './selectors'
 import * as appSelectors from '../app/selectors'
 
 import {addToCart} from '../../integration-manager/cart/commands'
-import {getProductVariationData} from '../../integration-manager/products/commands'
+import {getProductVariantData} from '../../integration-manager/products/commands'
 import {openModal, closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {addNotification} from '../app/actions'
 import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from './constants'
@@ -75,15 +75,15 @@ export const submitCartForm = (formValues) => (dispatch, getStore) => {
 const variationBlurSelector = createPropsSelector({
     variationSelections: selectors.getAddToCartFormValues,
     categoryIds: selectors.getProductVariationCategoryIds,
-    variations: selectors.getProductVariations
+    variants: selectors.getProductVariants
 })
 
 export const onVariationBlur = () => (dispatch, getStore) => {
     const {
         variationSelections,
         categoryIds,
-        variations
+        variants
     } = variationBlurSelector(getStore())
 
-    return dispatch(getProductVariationData(variationSelections, variations, categoryIds))
+    return dispatch(getProductVariantData(variationSelections, variants, categoryIds))
 }

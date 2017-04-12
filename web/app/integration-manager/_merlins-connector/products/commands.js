@@ -18,7 +18,7 @@ export const fetchPdpData = (url) => (dispatch) => {
                 ...productDetailsParser($, $response),
                 href: url,
                 variationCategories: [],
-                variations: []
+                variants: []
             }}))
             dispatch(receiveFormInfo({[pathKey]: pdpAddToCartFormParser($, $response)}))
         })
