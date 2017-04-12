@@ -3,7 +3,6 @@ import * as Runtypes from 'runtypes'
 export const Nullable = (type) => Runtypes.Union(type, Runtypes.Null, Runtypes.Undefined)
 
 const URL = Runtypes.String
-const Key = Runtypes.String
 const Currency = Runtypes.String
 const Measure = Runtypes.String
 
