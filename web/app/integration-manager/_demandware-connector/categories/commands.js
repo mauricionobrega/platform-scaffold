@@ -33,10 +33,11 @@ export const fetchProductListData = (url) => (dispatch) => {
             .then(() => {
                 makeDemandwareRequest(`${API_END_POINT_URL}/product_search?expand=images,prices&q=&refine_1=cgid=${categoryID}`, requestOptions)
                     .then((response) => response.json())
-                    .then(({hits}) => {
+                    .then(({hits, count}) => {
                         const productListData = parseProductListData(hits)
                         const categoryData = {
-                            products: Object.keys(productListData)
+                            products: Object.keys(productListData),
+                            itemCount: count
                         }
 
                         dispatch(receiveProductListProductData(productListData))
