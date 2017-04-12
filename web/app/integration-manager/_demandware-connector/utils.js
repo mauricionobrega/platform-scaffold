@@ -4,19 +4,6 @@ import {API_END_POINT_URL, REQUEST_HEADERS} from './constants'
 const AUTH_KEY_NAME = 'mob-auth'
 const BASKET_KEY_NAME = 'mob-basket'
 
-const getAuthTokenPayload = (authToken) => {
-    // The token consists of 3 parts: header, payload and signature
-    // separated by a '.', each part is encoded
-    // we only need the payload
-    return JSON.parse(window.atob(authToken.split('.')[1]))
-}
-
-export const isUserLoggedIn = (authorization) => {
-    const {sub} = getAuthTokenPayload(authorization)
-    const subData = JSON.parse(sub)
-    return !subData.customer_info.guest
-}
-
 export const storeAuthToken = (authorization) => {
     if (authorization) {
         window.sessionStorage.setItem(AUTH_KEY_NAME, authorization)
@@ -37,6 +24,22 @@ export const getBasketID = () => {
 
 export const storeBasketID = (basketID) => {
     window.sessionStorage.setItem(BASKET_KEY_NAME, basketID)
+}
+
+export const getAuthTokenPayload = (authToken) => {
+    if (!authToken) {
+        authToken = getAuthToken().replace('Bearer ', '')
+    }
+    // The token consists of 3 parts: header, payload and signature
+    // separated by a '.', each part is encoded
+    // we only need the payload
+    return JSON.parse(window.atob(authToken.split('.')[1]))
+}
+
+export const isUserLoggedIn = (authorization) => {
+    const {sub} = getAuthTokenPayload(authorization)
+    const subData = JSON.parse(sub)
+    return !subData.customer_info.guest
 }
 
 export const initDemandwareSession = (authorization) => {
