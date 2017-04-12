@@ -20,17 +20,43 @@ const $merlinsPotionsNearbyWidgetSelector = 'js-merlins-potions-nearby-widget'
  */
 
 class ProductNearestStores extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.appendScript = this.appendScript.bind(this)
+    }
+
     componentDidMount() {
-        // Find the current product title
-        const currentProductTitle = this.props.productTitle
+        this.appendScript()
+    }
+
+    componentDidUpdate(nextProps) {
+        // If product title changed, append the script
+        if (this.props.productTitle !== nextProps.productTitle) {
+            this.appendScript()
+        }
+    }
+
+    componentWillUnmount() {
+        // Remove nearby widget script if component unmount
+        const $script = document.getElementById($merlinsPotionsNearbyWidgetSelector)
+        $script.parentNode.removeChild($script)
+    }
+
+    appendScript() {
+        const productTitle = this.props.productTitle
+
+        if (!productTitle) {
+            return
+        }
 
         // Add Current Product Title to filters
         for (let i = 0; i < merlinsPotionsNearbyConfig.configs.length; i++) {
             const currentConfig = merlinsPotionsNearbyConfig.configs[i]
 
             merlinsPotionsNearbyConfig.configs[i] = {
-                filters: {products: currentProductTitle},
-                ...currentConfig
+                ...currentConfig,
+                filters: {products: productTitle}
             }
         }
 
@@ -57,12 +83,6 @@ class ProductNearestStores extends React.Component {
         const merlinsPotionsScript = document.createElement('script')
         merlinsPotionsScript.append(merlinsPotionsAsync)
         document.body.appendChild(merlinsPotionsScript)
-    }
-
-    componentWillUnmount() {
-        // Remove nearby widget script if component unmount
-        const $script = document.getElementById($merlinsPotionsNearbyWidgetSelector)
-        $script.parentNode.removeChild($script)
     }
 
     render() {
