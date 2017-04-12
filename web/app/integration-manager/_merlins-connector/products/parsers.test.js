@@ -21,7 +21,7 @@ describe('the ProductDetails product parser', () => {
         const images = parsedContent.images
         expect(images.length).toBe(3)
 
-        images.forEach((item, idx) => {
+        images.forEach((item) => {
             ['src', 'thumbnailSrc', 'zoomSrc'].forEach((prop) => {
                 expect(isURL(item[prop])).toBe(true)
                 expect(item[prop]).toMatch(/\.png$/)
