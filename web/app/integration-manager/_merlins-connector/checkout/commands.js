@@ -52,7 +52,7 @@ export const fetchShippingMethodsEstimate = (formKey) => {
 const processCheckoutData = ($response) => (dispatch) => {
     const customerEntityID = parseCheckoutEntityID($response)
     dispatch(receiveEntityID(customerEntityID))
-    dispatch(receiveCheckoutData(parseCheckoutData($response)))
+    return dispatch(receiveCheckoutData(parseCheckoutData($response)))
 }
 
 export const fetchCheckoutShippingData = (url) => (dispatch) => {
