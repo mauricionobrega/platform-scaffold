@@ -1,15 +1,14 @@
 import HeaderBarPlugin from 'progressive-app-sdk/plugins/headerBarPlugin'
 import CounterBadgeController from 'progressive-app-sdk/controllers/counterBadgeController'
 
-import CartModalController from './cartModalController'
-
 import AppEvents from '../global/app-events'
 import baseConfig from '../config/baseConfig'
 import cartConfig from '../config/cartConfig'
 
-const TabHeaderController = function(headerBar, counterBadgeController) {
+const TabHeaderController = function(headerBar, counterBadgeController, cartModalController) {
     this.viewPlugin = headerBar
     this.counterBadgeController = counterBadgeController
+    this.cartModalController = cartModalController
 
     headerBar.on(`click:${cartConfig.cartIcon.id}`, async () => {
         this.showCartModal()
@@ -20,7 +19,7 @@ const TabHeaderController = function(headerBar, counterBadgeController) {
     })
 }
 
-TabHeaderController.init = async function() {
+TabHeaderController.init = async function(cartModalController) {
     const headerBar = await HeaderBarPlugin.init()
     const counterBadgeController = await CounterBadgeController.init(cartConfig.cartIcon.imageUrl, 'headerId', {})
     const counterBadgePlugin = await counterBadgeController.generatePlugin()
@@ -31,16 +30,15 @@ TabHeaderController.init = async function() {
     await headerBar.setBackgroundColor(baseConfig.colors.primaryColor)
     await headerBar.setOpaque()
 
-    return new TabHeaderController(headerBar, counterBadgeController)
+    return new TabHeaderController(headerBar, counterBadgeController, cartModalController)
 }
 
 TabHeaderController.prototype.updateCounter = function(count) {
     this.counterBadgeController.updateCounterValue(count)
 }
 
-TabHeaderController.prototype.showCartModal = async () => {
-    const cartModalController = await CartModalController.init()
-    cartModalController.show()
+TabHeaderController.prototype.showCartModal = function() {
+    this.cartModalController.show()
 }
 
 export default TabHeaderController

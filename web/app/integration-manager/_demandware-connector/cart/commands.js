@@ -10,6 +10,7 @@ export const getCart = () => (dispatch) => {
     return requestCartData()
         .then((response) => response.json())
         .then((responseJSON) => dispatch(parseAndReceiveCartResponse(responseJSON)))
+
 }
 
 export const addToCart = () => (dispatch) => {

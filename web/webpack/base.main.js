@@ -14,14 +14,29 @@ const config = {
     devtool: 'cheap-source-map',
     entry: [
         'whatwg-fetch',
-        './app/main.jsx',
+        './app/main.jsx'
     ],
     output: {
         path: path.resolve(process.cwd(), 'build'),
         filename: '[name].js'
     },
     resolve: {
-        extensions: ['.js', '.jsx', '.json']
+        extensions: ['.js', '.jsx', '.json'],
+        alias: {
+            'babel-runtime': path.resolve(process.cwd(), 'node_modules', 'babel-runtime'),
+            lodash: path.resolve(process.cwd(), 'node_modules', 'lodash'),
+            'lodash._basefor': path.resolve(process.cwd(), 'node_modules', 'lodash', '_baseFor'),
+            'lodash.escaperegexp': path.resolve(process.cwd(), 'node_modules', 'lodash', 'escapeRegExp'),
+            'lodash.frompairs': path.resolve(process.cwd(), 'node_modules', 'lodash', 'fromPairs'),
+            'lodash.isarray': path.resolve(process.cwd(), 'node_modules', 'lodash', 'isArray'),
+            'lodash.isarguments': path.resolve(process.cwd(), 'node_modules', 'lodash', 'isArguments'),
+            'lodash.intersection': path.resolve(process.cwd(), 'node_modules', 'lodash', 'intersection'),
+            'lodash.isplainobject': path.resolve(process.cwd(), 'node_modules', 'lodash', 'isPlainObject'),
+            'lodash.keys': path.resolve(process.cwd(), 'node_modules', 'lodash', 'keys'),
+            'lodash.keysin': path.resolve(process.cwd(), 'node_modules', 'lodash', 'keysIn'),
+            'lodash.mapvalues': path.resolve(process.cwd(), 'node_modules', 'lodash', 'mapValues'),
+            'lodash.throttle': path.resolve(process.cwd(), 'node_modules', 'lodash', 'throttle'),
+        }
     },
     plugins: [
         new webpack.optimize.CommonsChunkPlugin({
@@ -48,12 +63,11 @@ const config = {
         rules: [
             {
                 test: /\.jsx?$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        cacheDirectory: `${__dirname}/tmp`
-                    }
+                exclude: /node_modules(?!\/mobify-progressive-app-sdk)/,
+                loader: 'babel-loader',
+                options: {
+                    cacheDirectory: `${__dirname}/tmp`,
+                    plugins: ['syntax-dynamic-import']
                 }
             },
             {

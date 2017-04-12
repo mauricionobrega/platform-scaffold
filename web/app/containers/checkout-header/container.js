@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
+import {isRunningInAstro} from '../../utils/astro-integration'
 
 import {getIsLoggedIn} from '../app/selectors'
 
@@ -8,7 +9,7 @@ import Button from 'progressive-web-sdk/dist/components/button'
 import {HeaderBar, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 import Icon from 'progressive-web-sdk/dist/components/icon'
 
-const CheckoutHeader = function({headerHasSignIn, isLoggedIn, isRunningInAstro}) {
+const CheckoutHeader = function({headerHasSignIn, isLoggedIn}) {
     if (isRunningInAstro) {
         return null
     }
@@ -50,10 +51,6 @@ CheckoutHeader.propTypes = {
     * Is the user logged in or not
     */
     isLoggedIn: React.PropTypes.bool,
-    /**
-     * Whether the app is running inside an Astro container
-     */
-    isRunningInAstro: React.PropTypes.bool
 }
 
 const mapStateToProps = createPropsSelector({

@@ -1,3 +1,5 @@
+/* eslint-disable import/namespace */
+/* eslint-disable import/named */
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 import {splitFullName} from '../../utils/utils'

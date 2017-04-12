@@ -1,18 +1,22 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import template from '../../template'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import classNames from 'classnames'
 import {fetchCheckoutShippingData} from '../../integration-manager/checkout/commands'
 import {getCartURL} from '../app/selectors'
 
 
-import Astro from '../../vendor/astro-client'
+import {isRunningInAstro, trigger} from '../../utils/astro-integration'
 import CheckoutShippingReduxForm from './partials/checkout-shipping-form'
 import {ProgressSteps, ProgressStepsItem} from 'progressive-web-sdk/dist/components/progress-steps'
 
 
 const CheckoutShipping = ({cartURL}) => {
-    Astro.trigger('checkout:enable-alert')
+    if (isRunningInAstro) {
+        trigger('checkout:enable-alert')
+    }
+
     const templateClassnames = classNames('t-checkout-shipping u-bg-color-neutral-10 t--loaded')
 
     return (
@@ -47,4 +51,4 @@ const mapStateToProps = createPropsSelector({
     cartURL: getCartURL
 })
 
-export default connect(mapStateToProps)(CheckoutShipping)
+export default template(connect(mapStateToProps)(CheckoutShipping))

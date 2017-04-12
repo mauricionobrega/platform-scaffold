@@ -45,3 +45,18 @@ export const splitFullName = (fullname) => {
         lastname: names.slice(-1).join(' ')
     }
 }
+
+
+/**
+ * Currently requestIdleCallback is only supported in Chrome,
+ * we'll have to provide a fallback for iOS Safari
+ * https://developers.google.com/web/updates/2015/08/using-requestidlecallback
+ * http://caniuse.com/#feat=requestidlecallback
+ */
+export const requestIdleCallback = (fn) => {
+    if ('requestIdleCallback' in window) {
+        return window.requestIdleCallback(fn)
+    } else {
+        return setTimeout(() => fn(), 1)
+    }
+}

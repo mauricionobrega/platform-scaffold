@@ -1,9 +1,11 @@
+/* eslint-disable import/namespace */
+/* eslint-disable import/named */
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
-import {isRunningInAstro} from '../../utils/astro-integration'
 import classNames from 'classnames'
 import WebFont from 'webfontloader'
+import {isRunningInAstro} from '../../utils/astro-integration'
 
 import {initApp} from '../../integration-manager/app/commands'
 
@@ -20,8 +22,10 @@ import * as selectors from './selectors'
 
 import NotificationManager from '../../components/notification-manager'
 
+import {registerPreloadCallbacks} from '../templates'
+
 // Offline support
-import {Offline} from '../templates'
+import Offline from '../offline/container'
 import OfflineBanner from '../offline/partials/offline-banner'
 import OfflineModal from '../offline/partials/offline-modal'
 
@@ -43,6 +47,10 @@ class App extends React.Component {
                 families: ['Oswald:200,400']
             }
         })
+
+        // Lazy load other containers when browser is at the end of frame
+        // to prevent jank
+        registerPreloadCallbacks()
     }
 
     render() {
@@ -86,18 +94,22 @@ class App extends React.Component {
                 <DangerousHTML html={sprite}>
                     {(htmlObj) => <div hidden dangerouslySetInnerHTML={htmlObj} />}
                 </DangerousHTML>
+
                 <SkipLinks items={skipLinksItems} />
 
                 <div id="app-wrap" className="t-app__wrapper u-flexbox u-direction-column">
                     {isRunningInAstro &&
                         <NativeConnector />
                     }
+
                     <div id="app-header" className="u-flex-none" role="banner">
-                        <CurrentHeader headerHasSignIn={routeProps.headerHasSignIn} isRunningInAstro={isRunningInAstro} />
+                        <CurrentHeader headerHasSignIn={routeProps.headerHasSignIn} />
+
                         {
                             // Only display banner when we are offline and have content to show
                             fetchError && hasFetchedCurrentPath && <OfflineBanner />
                         }
+
                         <OfflineModal reload={reload} />
 
                         {notifications &&
@@ -108,6 +120,7 @@ class App extends React.Component {
                         }
 
                         <Navigation history={history} />
+
                         <MiniCart />
                     </div>
 
@@ -121,7 +134,7 @@ class App extends React.Component {
                                 </main>
 
                                 <div id="app-footer" className="u-flex-none">
-                                    <CurrentFooter isRunningInAstro={isRunningInAstro} />
+                                    <CurrentFooter />
                                 </div>
                             </div>
                         :

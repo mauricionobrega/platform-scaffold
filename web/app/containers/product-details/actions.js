@@ -12,8 +12,7 @@ import {openModal, closeModal} from 'progressive-web-sdk/dist/store/modals/actio
 import {addNotification} from '../app/actions'
 import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from './constants'
 
-import {isRunningInAstro} from '../../utils/astro-integration'
-import Astro from '../../vendor/astro-client'
+import {isRunningInAstro, trigger} from '../../utils/astro-integration'
 
 export const receiveNewItemQuantity = createAction('Set item quantity')
 export const setItemQuantity = (quantity) => (dispatch, getStore) => {
@@ -32,7 +31,7 @@ export const goToCheckout = () => (dispatch, getState) => {
     if (isRunningInAstro) {
         // If we're running in Astro, we want to dismiss open the cart modal,
         // otherwise, navigating is taken care of by the button press
-        Astro.trigger('open:cart-modal')
+        trigger('open:cart-modal')
     } else {
         browserHistory.push(appSelectors.getCartURL(getState()))
     }
