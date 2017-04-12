@@ -21,7 +21,7 @@ fi
 if [ "$CURRENT_BRANCH" != "master" ]; then
     echo "Running tests against local build"
     # Kill background processes when this script exits.
-    trap 'kill $(jobs -p)' EXIT
+    trap 'kill $(jobs -p)' EXIT > /dev/null 2>&1
     export ACTIVE_PROFILE=local
     npm run prod:build
     http-server --ssl --cors --p=8443 \
