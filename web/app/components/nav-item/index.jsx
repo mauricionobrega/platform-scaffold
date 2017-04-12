@@ -1,4 +1,5 @@
 import React from 'react'
+import ListTile from 'progressive-web-sdk/dist/components/list-tile'
 import NavItem from 'progressive-web-sdk/dist/components/nav-item'
 import Icon from 'progressive-web-sdk/dist/components/icon'
 
@@ -24,6 +25,18 @@ export const NavItemWithIcon = (props) => (
 )
 
 NavItemWithIcon.propTypes = NavItem.propTypes
+
+
+/**
+ * Project-specific NavItem which displays an icon on the left.
+ */
+export const NavItemWithOnClick = (props) => (
+    <ListTile {...props} className="c-nav-item c--with-icon" startAction={<NavItemIcon name="user" />}>
+        {props.title}
+    </ListTile>
+)
+
+NavItemWithOnClick.propTypes = NavItem.propTypes
 
 
 /**

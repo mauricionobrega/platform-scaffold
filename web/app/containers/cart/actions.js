@@ -1,6 +1,6 @@
 import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 import {closeModal, openModal} from 'progressive-web-sdk/dist/store/modals/actions'
-import {fetchShippingMethodsEstimate} from '../../store/checkout/shipping/actions'
+import {fetchShippingMethodsEstimate} from '../../integration-manager/checkout/commands'
 import {
     CART_ESTIMATE_SHIPPING_MODAL,
     ESTIMATE_FORM_NAME,

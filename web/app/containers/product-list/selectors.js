@@ -21,7 +21,6 @@ export const getProductListContentsLoaded = createHasSelector(
 )
 
 export const getProductPaths = createGetSelector(getSelectedCategory, 'products', PLACEHOLDER_URLS)
-
 export const getNumItems = createGetSelector(getSelectedCategory, 'itemCount')
 export const getProductListTitle = createGetSelector(getSelectedCategory, 'title')
 export const getProductListParentHref = createGetSelector(getSelectedCategory, 'parentHref', '/')

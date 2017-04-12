@@ -23,9 +23,6 @@ export const getSelectedProductDetails = createGetSelector(
     Immutable.Map()
 )
 
-export const getProductDetailsByPathKey = (pathKey) => createGetSelector(getProductDetails, pathKey, Immutable.Map())
-
-
 export const getProductDetailsContentsLoaded = createHasSelector(
     getProductDetails,
     appSelectors.getCurrentPathKey
@@ -66,6 +63,9 @@ export const getProductVariationCategoryIds = createSelector(
 export const getProductVariations = createGetSelector(getSelectedProduct, 'variations')
 export const getProductInitialValues = createGetSelector(getSelectedProduct, 'initialValues')
 
-export const getUenc = (pathKey) => createGetSelector(getProductDetailsByPathKey(pathKey), 'uenc')
-
 export const getAddToCartFormValues = getFormValues('product-add-to-cart')
+// NOTE: These get-something-ByPathKey selectors should only be used within actions/commands
+// Using them within a component will break the performance optimizations selectors normally give us
+export const getProductDetailsByPathKey = (pathKey) => createGetSelector(getProducts, pathKey, Immutable.Map())
+export const getProductThumbnailByPathKey = (pathKey) => createGetSelector(getProductDetailsByPathKey(pathKey), 'thumbnail', Immutable.Map())
+export const getProductThumbnailSrcByPathKey = (pathKey) => createGetSelector(getProductThumbnailByPathKey(pathKey), 'img')

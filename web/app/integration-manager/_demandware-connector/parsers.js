@@ -1,7 +1,15 @@
 
 import {SITE_ID} from './constants'
 
-const formatPrice = (price) => `$${price.toFixed(2)}`
+const formatPrice = (price) => {
+    if (!price) {
+        price = 0
+    }
+    return `$${price.toFixed(2)}`
+}
+
+
+
 
 const parseImages = (imageGroups) => {
     const largeImages = imageGroups.filter((imageGroup) => imageGroup.view_type === 'large')[0]
@@ -49,20 +57,30 @@ export const getCurrentProductID = () => {
     return productIDMatch ? productIDMatch[1] : ''
 }
 
-export const parseBasketContents = ({product_items, product_sub_total}) => {
+export const parseBasketContents = ({product_items, product_sub_total, product_total}) => {
     /* eslint-disable camelcase */
-    const items = product_items ? product_items.map(({product_name, base_price, quantity}) => {
+    let summary_count = 0
+    const items = product_items ? product_items.map(({item_id, product_name, product_id, base_price, quantity}) => {
+        summary_count += quantity
         return {
             product_name,
             product_price: `${formatPrice(base_price)}`,
             product_image: {},
-            qty: quantity
+            qty: quantity,
+            // item_id is different from product_id
+            // it is used when updating the item in the cart
+            // (delete item, update item qty etc)
+            item_id,
+            // product_id is used to describe which product the item is
+            // (used to fetch product images, or build the product URL etc)
+            product_id
         }
     }) : []
     return {
         items,
-        subtotal: formatPrice(product_sub_total ? product_sub_total : 0),
-        summary_count: items && items.length
+        subtotal: formatPrice(product_total),
+        subtotal_excl_tax: formatPrice(product_sub_total),
+        summary_count
     }
     /* eslint-enable camelcase  */
 }

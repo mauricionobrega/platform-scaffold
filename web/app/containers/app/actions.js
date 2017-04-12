@@ -178,3 +178,29 @@ export const fetchSvgSprite = () => {
             .then((text) => dispatch(updateSvgSprite(text)))
     }
 }
+
+
+export const signOut = () => {
+    return (dispatch) => {
+        return makeRequest('/customer/account/logout/')
+            .then(() => {
+                // Desktop's message includes 'redirect to home page' message
+                // so we'll just hardcode a message instead
+                dispatch(addNotification({
+                    content: 'You are now signed out',
+                    id: 'signedOutNotification'
+                }))
+                dispatch(cartActions.getCart())
+
+                // Update navigation menu
+                // Need to request current location so when we are on Potions PLP
+                // the potions nav item will render as 'active'
+                return makeRequest(window.location.href)
+                    .then(jqueryResponse)
+                    .then((res) => {
+                        const [$, $response] = res
+                        dispatch(navigationActions.process({payload: {$, $response}}))
+                    })
+            })
+    }
+}
