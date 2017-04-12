@@ -1,8 +1,8 @@
 import {noop} from 'progressive-web-sdk/dist/utils/utils'
 import {setRegisterLoaded, setSigninLoaded} from '../../login/responses'
 import {setLoggedIn} from '../../responses'
-import {initDemandwareSession, storeAuthToken, makeDemandwareRequest, deleteBasketID} from '../utils'
-import {getCart} from '../cart/commands'
+import {initDemandwareSession, storeAuthToken, makeDemandwareRequest, deleteBasketID, storeBasketID} from '../utils'
+import {requestCartData, parseAndReceiveCartResponse, createBasket} from '../cart/utils'
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {SubmissionError} from 'redux-form'
 
@@ -31,28 +31,60 @@ export const login = ({login}) => (dispatch) => {
         }
     }
     let responseHeaders
-    return makeRequest(`${API_END_POINT_URL}/customers/auth`, requestOptions)
+    let basketContents
+    let customerID
+    return requestCartData()
+        .then((response) => response.json())
+        .then((basket) => {
+            basketContents = basket
+            return makeRequest(`${API_END_POINT_URL}/customers/auth`, requestOptions)
+        })
         .then((response) => {
             responseHeaders = response.headers
             return response.json()
         })
         .then((responseJSON) => {
             if (responseJSON.fault) {
-                throw new SubmissionError({_error: 'Username or password is incorrect'})
+                let errorMessage = 'Username or password is incorrect'
+                if (/internal server/i.test(responseJSON.fault.message)) {
+                    errorMessage = 'There was a problem logging in. Please try again.'
+                }
+                throw new SubmissionError({_error: errorMessage})
             }
             const authorization = responseHeaders.get('Authorization')
+            customerID = responseJSON.customer_id
             storeAuthToken(authorization)
             dispatch(setLoggedIn(true))
+            deleteBasketID()
             return initDemandwareSession(authorization)
-                .then(() => {
-                    deleteBasketID()
-                    return dispatch(getCart())
-                })
-                .then(() => {
-                    // Navigate to the homepage, since we haven't made an account page yet
-                    // and demandware's account page is at the same URL as their login page
-                    return '/on/demandware.store/Sites-2017refresh-Site/default/Home-Show'
-                })
+        })
+        // Check if the user has a basket already
+        .then(() => makeDemandwareRequest(`${API_END_POINT_URL}/customers/${customerID}/baskets`), {method: 'GET'})
+        .then((response) => response.json())
+        .then(({baskets}) => {
+            if (baskets.length) {
+                if (!basketContents.product_items) {
+                    // There is no basket to merge, so return the existing one
+                    return Promise.resolve(baskets[0])
+                }
+                // update basket with contents (product_items)
+                const requestOptions = {
+                    method: 'POST',
+                    body: JSON.stringify(basketContents.product_items)
+                }
+                const basketID = baskets[0].basket_id
+                storeBasketID(basketID)
+                return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, requestOptions)
+                    .then((response) => response.json())
+            }
+            return createBasket(basketContents)
+
+        })
+        .then((responseJSON) => dispatch(parseAndReceiveCartResponse(responseJSON)))
+        .then(() => {
+            // Navigate to the homepage, since we haven't made an account page yet
+            // and demandware's account page is at the same URL as their login page
+            return '/on/demandware.store/Sites-2017refresh-Site/default/Home-Show'
         })
 }
 

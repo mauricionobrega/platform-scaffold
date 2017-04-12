@@ -61,7 +61,7 @@ class CartProductItem extends React.Component {
     }
 
     saveForLater() {
-        this.props.onSaveLater(this.props.productId, this.props.item_id, this.props.product_url)
+        this.props.onSaveLater(this.props.product_id, this.props.item_id, this.props.product_url)
     }
 
     render() {
@@ -143,7 +143,7 @@ CartProductItem.propTypes = {
     configure_url: PropTypes.string,
     item_id: PropTypes.string,
     openRemoveItemModal: PropTypes.func,
-    productId: PropTypes.string,
+    product_id: PropTypes.string,
     product_image: PropTypes.object,
     product_name: PropTypes.string,
     product_price: PropTypes.string,

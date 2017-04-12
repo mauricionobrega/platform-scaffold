@@ -19,6 +19,4 @@ export const register = (commands) => {
     registerLogin(commands.login)
 }
 
-export const addToCart = (...args) => connector.addToCart(...args)
-
 export const submitNewsletter = (...args) => connector.submitNewsletter(...args)

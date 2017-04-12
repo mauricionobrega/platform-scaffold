@@ -18,6 +18,7 @@ const UPDATE_ITEM_URL = '/checkout/sidebar/updateItemQty/'
 const BASE_HEADERS = {
     Accept: 'application/json',
 }
+
 /**
  * Get the contents of the users cart
  */
@@ -30,6 +31,18 @@ export const getCart = () => (dispatch) => {
     return makeRequest(`${LOAD_CART_SECTION_URL}&_=${currentTimeMs}`, opts)
         .then((response) => response.text())
         .then((responseText) => dispatch(receiveCartContents(parseCart(responseText))))
+}
+
+export const addToCart = (key, qty) => (dispatch, getStore) => {
+    const formInfo = getStore().integrationManager.get(key)
+    const formValues = {
+        ...formInfo.get('hiddenInputs').toJS(),
+        qty
+    }
+    return makeFormEncodedRequest(formInfo.get('submitUrl'), formValues, {method: formInfo.get('method')})
+        .then(() => {
+            return dispatch(getCart())
+        })
 }
 
 /**
