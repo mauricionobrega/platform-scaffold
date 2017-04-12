@@ -12,7 +12,7 @@ test('submitPayment calls submitPayment command', () => {
     const mockDispatch = jest.fn()
     mockDispatch.mockImplementation((...args) => args[0])
     const mockGetState = () => ({
-        checkout: Immutable.fromJS({
+        checkout: Immutable.Map({
             email: 'test@email.com'
         }),
         form: {
