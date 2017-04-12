@@ -18,10 +18,8 @@ Home.prototype.navigateToProductList = function(PRODUCT_LIST_INDEX) {
     // Navigate from Home to ProductList
     this.browser
         .log('Navigating to ProductList')
-        .waitForAjaxCompleted()
         .waitForElementVisible(selectors.productListItem(PRODUCT_LIST_INDEX))
         .click(selectors.productListItem(PRODUCT_LIST_INDEX))
-        .waitUntilMobified()
     return this
 }
 
