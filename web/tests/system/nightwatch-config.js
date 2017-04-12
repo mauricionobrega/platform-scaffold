@@ -38,6 +38,7 @@ module.exports = {
                 'chromeOptions': {
                     'mobileEmulation': { 'deviceName' : 'Apple iPhone 6'},
                     'args': [
+                        'window-size=320,850',
                         '--allow-running-insecure-content',
                         '--test-type'
                     ]
