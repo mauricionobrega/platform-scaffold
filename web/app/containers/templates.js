@@ -31,12 +31,9 @@ export const CheckoutConfirmation = PWALoadable(
         .then((component) => template(component))
 )
 
-export const CheckoutPayment = PWALoadable(
-    () => import('./checkout-payment/container')
-        .then((component) => template(component))
-)
 
 export const Cart = PWALoadable(() => import('./cart/container'))
+export const CheckoutPayment = PWALoadable(() => import('./checkout-payment/container'))
 export const CheckoutShipping = PWALoadable(() => import('./checkout-shipping/container'))
 export const Login = PWALoadable(() => import('./login/container'))
 export const ProductDetails = PWALoadable(() => import('./product-details/container'))

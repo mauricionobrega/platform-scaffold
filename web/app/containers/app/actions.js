@@ -13,10 +13,7 @@ import appParser from './app-parser'
 
 import {
     UnwrappedCheckoutConfirmation,
-    UnwrappedCheckoutPayment,
 } from '../templates'
-
-import * as checkoutActions from '../../store/checkout/actions'
 import * as checkoutConfirmationActions from '../checkout-confirmation/actions'
 import * as cartActions from '../../store/cart/actions'
 import * as footerActions from '../footer/actions'
@@ -138,9 +135,8 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                 dispatch(receivedAction)
                 dispatch(process(receivedAction))
 
-                if (pageComponent === UnwrappedCheckoutPayment) {
-                    dispatch(checkoutActions.processCheckoutData(receivedAction))
-                } else if (pageComponent === UnwrappedCheckoutConfirmation) {
+                if (pageComponent === UnwrappedCheckoutConfirmation) {
+
                     dispatch(checkoutConfirmationActions.process(receivedAction))
                     // Resets the cart count to 0
                     dispatch(cartActions.getCart())
