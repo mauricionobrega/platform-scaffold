@@ -8,6 +8,7 @@ import {getCustomerEntityID} from '../selectors'
 import {getIsLoggedIn} from '../../../containers/app/selectors'
 import {getShippingFormValues, getFormValues, getFormRegisteredFields} from '../../../store/form/selectors'
 import {receiveEntityID} from '../actions'
+import {PAYMENT_URL} from '../constants'
 import {removeAllNotifications} from '../../../containers/app/actions'
 import {SHIPPING_FORM_NAME} from '../../../containers/checkout-shipping/constants'
 
@@ -119,6 +120,7 @@ export const submitShipping = (formValues) => {
                 if (!responseJSON.payment_methods) {
                     throw new SubmissionError({_error: 'Unable to save shipping address'})
                 }
+                return PAYMENT_URL
             })
     }
 }

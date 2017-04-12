@@ -54,9 +54,9 @@ export const submitShipping = () => (dispatch, getState) => {
     }
     dispatch(receiveCheckoutData({shipping: {address}, emailAddress: formValues.username}))
     return dispatch(submitShippingCommand(address))
-        .then(() => {
+        .then((paymentURL) => {
             browserHistory.push({
-                pathname: '/checkout/payment/'
+                pathname: paymentURL
             })
         })
 }

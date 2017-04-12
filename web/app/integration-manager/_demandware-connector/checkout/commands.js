@@ -1,7 +1,7 @@
 import {SubmissionError} from 'redux-form'
 import {createBasket} from '../cart/utils'
 import {makeDemandwareRequest} from '../utils'
-import {API_END_POINT_URL} from '../constants'
+import {API_END_POINT_URL, PAYMENT_URL} from '../constants'
 import {STATES} from './constants'
 import {receiveCheckoutData, receiveShippingMethodInitialValues} from './../../checkout/responses'
 
@@ -73,6 +73,15 @@ export const fetchCheckoutShippingData = () => (dispatch) => {
         })
 }
 
+export const fetchCheckoutPaymentData = (url, routeName) => (dispatch) => {
+    // populate locations <--- TODO: Move this into a util? since we do it in multiple locations in the checkout???
+    // fetch payment methods
+    // fetch current billing address etc
+    // fetch current payment instrument???
+
+    return Promise.resolve()
+}
+
 export const submitShipping = (formValues) => (dispatch) => {
     const {
         name,
@@ -129,6 +138,7 @@ export const submitShipping = (formValues) => (dispatch) => {
                     if (responseJSON.fault) {
                         throw new SubmissionError({_error: 'Unable to save shipping data'})
                     }
+                    return PAYMENT_URL
                 })
         })
 }
