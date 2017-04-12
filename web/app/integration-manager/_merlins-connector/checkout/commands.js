@@ -49,14 +49,17 @@ export const fetchShippingMethodsEstimate = (formKey) => {
     }
 }
 
+const processCheckoutData = ($response) => (dispatch) => {
+    const customerEntityID = parseCheckoutEntityID($response)
+    dispatch(receiveEntityID(customerEntityID))
+    return dispatch(receiveCheckoutData(parseCheckoutData($response)))
+}
+
 export const fetchCheckoutShippingData = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
-        .then(([$, $response]) => {
-            // entity_id is used for API calls
-            const customerEntityID = parseCheckoutEntityID($response)
-            dispatch(receiveEntityID(customerEntityID))
+        .then(([$, $response]) => { // eslint-disable-line no-unused-vars
             dispatch(receiveCheckoutShippingData(checkoutShippingParser($, $response)))
-            return dispatch(receiveCheckoutData(parseCheckoutData($response)))
+            return dispatch(processCheckoutData($response))
         })
         .then(() => {
             // fetch shipping estimate
@@ -160,4 +163,67 @@ export const checkoutSignIn = (formValues) => {
             })
         })
     }
+}
+
+export const fetchCheckoutPaymentData = (url) => (dispatch) => {
+    return dispatch(fetchPageData(url))
+        .then((res) => {
+            const [$, $response] = res // eslint-disable-line no-unused-vars
+            return dispatch(processCheckoutData($response))
+        })
+}
+
+export const submitPayment = (formValues) => (dispatch, getState) => {
+    const currentState = getState()
+    const entityID = getCustomerEntityID(currentState)
+    const isLoggedIn = getIsLoggedIn(currentState)
+    const {
+        firstname,
+        lastname,
+        company,
+        addressLine1,
+        addressLine2,
+        countryId,
+        city,
+        regionId,
+        postcode,
+        username
+    } = formValues
+    const address = {
+        firstname,
+        lastname,
+        company: company || '',
+        postcode,
+        city,
+        street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1],
+        regionId,
+        countryId,
+        saveInAddressBook: false
+    }
+    const paymentInformation = {
+        billingAddress: {
+            ...address
+        },
+        cartId: entityID,
+        email: username,
+        paymentMethod: {
+            additional_data: null,
+            method: 'checkmo',
+            po_number: null
+        }
+    }
+
+    const persistPaymentURL = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/payment-information`
+    // Save payment address for confirmation
+    dispatch(receiveCheckoutData({payment: {address}}))
+    return makeJsonEncodedRequest(persistPaymentURL, paymentInformation, {method: 'POST'})
+        .then((response) => response.json())
+        .then((responseJSON) => {
+            // Looks like when it is successful, the responseJSON is a number
+            if (/^\d+$/.test(responseJSON)) {
+                return '/checkout/onepage/success/'
+            } else {
+                throw new Error(responseJSON.message)
+            }
+        })
 }
