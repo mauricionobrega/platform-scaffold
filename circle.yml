@@ -6,11 +6,6 @@ dependencies:
         - "web/node_modules"
         - "native/node_modules"
     pre:
-        - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-        - sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-        - sudo apt-get update
-        - sudo apt-get --only-upgrade install google-chrome-stable
-    override:
         - ./web/scripts/install-google-chrome-stable.sh
         - npm install:
             pwd: web
@@ -26,10 +21,9 @@ test:
         # Calculate the Lighthouse score 
         - npm run test:pwa-ci:
             pwd: web
-        ## Enable smoke-test when automated workflow tests have been implemented.
-        # - npm run smoke-test:
-        #    parallel: true
-        #    pwd: web
+        # Run end-to-end tests
+        - npm run smoke-test:
+           pwd: web
     post:
        - cp -R lighthouse/* $CIRCLE_ARTIFACTS:
            pwd: web

@@ -73,7 +73,11 @@ test('updateHeight updates the notificationHeight', () => {
     const wrapper = mount(<Notification content="Test" />)
 
     expect(wrapper.state('notificationHeight')).not.toBe(200)
-    wrapper.instance()._notification.clientHeight = 200
+    Object.defineProperty(
+        wrapper.instance()._notification,
+        'clientHeight',
+        {get: () => 200}
+    )
 
     wrapper.instance().updateHeight()
     expect(wrapper.state('notificationHeight')).toBe(200)
