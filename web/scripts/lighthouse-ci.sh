@@ -28,8 +28,7 @@ certutil -d $HOME/.pki/nssdb -N --empty-password
 certutil -d sql:$HOME/.pki/nssdb -A -t "P,," -n lighthouse/server.pem -i lighthouse/server.pem
 
 npm run prod:build
-http-server --ssl --cors --p=8443 \
-	--key lighthouse/server.pem --cert lighthouse/server.pem build &
+npm run test:server &
 
 sleep 5
 lighthouse \
