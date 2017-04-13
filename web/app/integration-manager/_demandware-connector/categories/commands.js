@@ -1,6 +1,6 @@
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 import {makeDemandwareRequest} from '../utils'
-import {receiveCategory} from '../../categories/responses'
+import {receiveCategory, receiveCategoryInformation} from '../../categories/responses'
 import {receiveProductListProductData} from '../../products/responses'
 import {parseProductListData} from '../parsers'
 
@@ -12,7 +12,7 @@ const makeCategoryURL = (id) => `${API_END_POINT_URL}/categories/${id}`
 const processCategory = (dispatch) => ({parent_category_id, id, name}) => {
     const parentId = parent_category_id !== 'root' ? parent_category_id : null
     const path = `/s/${SITE_ID}/${id}`
-    dispatch(receiveCategory({
+    dispatch(receiveCategoryInformation({
         [path]: {
             id,
             title: name,
