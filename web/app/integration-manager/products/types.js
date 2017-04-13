@@ -3,7 +3,8 @@ import * as Runtypes from 'runtypes'
 export const Nullable = (type) => Runtypes.Union(type, Runtypes.Null, Runtypes.Undefined)
 
 const URL = Runtypes.String
-const Currency = Runtypes.String
+// A monetary value, notionally with an amount and a currency.
+const Money = Runtypes.String
 const Measure = Runtypes.String
 
 // Text for the user
@@ -55,7 +56,7 @@ const Variant = Runtypes.Record({
 const Product = Runtypes.Record({
     id: ProductID,
     title: Text,
-    price: Currency,
+    price: Money,
     href: URL,
     thumbnail: Image,
     images: Runtypes.Array(Image)
