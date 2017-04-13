@@ -62,7 +62,7 @@ export const submitCartForm = (formValues) => (dispatch, getStore) => {
     return dispatch(addToCart(key, qty))
         .then(() => dispatch(openModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL)))
         .catch((error) => {
-            console.error(`Error adding to cart: ${error}`)
+            console.error('Error adding to cart', error)
             return dispatch(addNotification({
                 content: 'Unable to add item to the cart.',
                 id: 'addToCartError',
