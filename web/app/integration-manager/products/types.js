@@ -1,17 +1,9 @@
 import * as Runtypes from 'runtypes'
+import {Text, ProductID, Identifier, URL, Image} from '../types'
 
-export const Nullable = (type) => Runtypes.Union(type, Runtypes.Null, Runtypes.Undefined)
-
-const URL = Runtypes.String
 // A monetary value, notionally with an amount and a currency.
 const Money = Runtypes.String
-const Measure = Runtypes.String
 
-// Text for the user
-const Text = Runtypes.String
-// Identifiers for the program
-const Identifier = Runtypes.String
-const ProductID = Identifier
 const VariationCategoryID = Identifier
 
 const Link = Runtypes.Record({
@@ -19,22 +11,6 @@ const Link = Runtypes.Record({
     text: Text
 }).And(Runtypes.Optional({
     title: Text
-}))
-
-const ImageSize = Runtypes.Record({
-    height: Measure,
-    width: Measure
-})
-
-const Image = Runtypes.Record({
-    alt: Text,
-    src: URL
-}).And(Runtypes.Optional({
-    zoomSrc: URL,
-    thumbnailSrc: URL,
-    caption: Nullable(Text),
-    size: ImageSize,
-    isMain: Runtypes.Boolean
 }))
 
 const Option = Runtypes.Record({
