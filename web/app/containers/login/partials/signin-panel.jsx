@@ -5,23 +5,15 @@ import * as selectors from '../selectors'
 import * as actions from '../actions'
 
 import SignInForm from './signin-form'
-import {PanelHeading, PanelDescription, PanelRequiredText} from './common'
+import {PanelDescription} from './common'
 
-const SignInPanel = ({description, heading, requiredText, submitForm}) => (
+const SignInPanel = ({description, submitForm}) => (
     <div className="t-login__signin-panel">
         <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
-            <div className="u-margin-bottom">
-                <PanelHeading heading={heading} />
-            </div>
-
             <PanelDescription description={description} />
-
-            <div className="u-margin-top">
-                <PanelRequiredText requiredText={requiredText} />
-            </div>
         </div>
 
-        <div className="u-bg-color-neutral-10 u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
+        <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
             <SignInForm submitForm={submitForm} />
         </div>
     </div>
@@ -29,15 +21,11 @@ const SignInPanel = ({description, heading, requiredText, submitForm}) => (
 
 SignInPanel.propTypes = {
     description: PropTypes.string,
-    heading: PropTypes.string,
-    requiredText: PropTypes.string,
     submitForm: PropTypes.func
 }
 
 const mapStateToProps = createPropsSelector({
     description: selectors.signin.getDescription,
-    heading: selectors.signin.getHeading,
-    requiredText: selectors.signin.getRequiredText
 })
 
 const mapDispatchToProps = {
