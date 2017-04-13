@@ -5,9 +5,6 @@ import * as selectors from '../selectors'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 
 import Button from 'progressive-web-sdk/dist/components/button'
-import ListTile from 'progressive-web-sdk/dist/components/list-tile'
-import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
-import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import Icon from 'progressive-web-sdk/dist/components/icon'
 
 // Merlins Potions Nearby Widget Config
@@ -44,7 +41,11 @@ class ProductNearestStores extends React.Component {
     }
 
     appendScript() {
-        const productTitle = this.props.productTitle
+        let productTitle = this.props.productTitle
+
+        // remove empty space
+        productTitle = productTitle.trim()
+        console.log('LENGTH 1', productTitle.length)
 
         if (!productTitle) {
             return
@@ -108,18 +109,7 @@ class ProductNearestStores extends React.Component {
                             selectorString = selectorString.slice(1, selectorString.length)
 
                             return (
-                                <div id={selectorString} key={idx}>
-                                    <ListTile
-                                        className="u-border-light-bottom"
-                                        startAction={<SkeletonBlock height="20px" width="20px" />}
-                                        endAction={<SkeletonBlock height="20px" width="20px" />}
-                                    >
-                                        <SkeletonText
-                                            style={{height: '25px', lineHeight: '20px'}}
-                                            width="100px"
-                                        />
-                                    </ListTile>
-                                </div>
+                                <div id={selectorString} key={idx}></div>
                             )
                         })}
                     </div>
