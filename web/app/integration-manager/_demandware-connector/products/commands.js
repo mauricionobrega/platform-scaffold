@@ -14,31 +14,32 @@ export const fetchPdpData = () => (dispatch) => {
     return makeDemandwareRequest(productURL, options)
         .then((response) => response.json())
         .then((responseJSON) => {
-            const productDetailsData = parseProductDetails(responseJSON)
-            productDetailsData.availableVariations.forEach(({variationID}) => {
-                dispatch(receiveProductDetailsProductData({[getProductHref(variationID)]: productDetailsData}))
+            const productDetailsData = {
+                ...parseProductDetails(responseJSON),
+                href: productPathKey
+            }
+            const productDetailsMap = {
+                [productPathKey]: productDetailsData
+            }
+            productDetailsData.variants.forEach(({id}) => {
+                productDetailsMap[getProductHref(id)] = productDetailsData
             })
-            dispatch(receiveProductDetailsProductData({[productPathKey]: productDetailsData}))
+            dispatch(receiveProductDetailsProductData(productDetailsMap))
             dispatch(receiveProductDetailsUIData({[productPathKey]: {itemQuantity: responseJSON.step_quantity, ctaText: 'Add To Cart'}}))
         })
 }
 
-export const getProductVariationData = (variationSelections, availableVariations, variationOptions) => (dispatch) => {
-    let isFullySelected = true
-    variationOptions.forEach(({id}) => {
-        if (!variationSelections[id]) {
-            isFullySelected = false
-        }
-    })
+export const getProductVariantData = (selections, variants, categoryIds) => (dispatch) => {
+    if (categoryIds.some((id) => !selections[id])) {
+        return
+    }
 
-    if (isFullySelected) {
-        const selectedVariationData = availableVariations.filter(({variationValues: {color, size}}) => {
-            return color === variationSelections.color && size === variationSelections.size
-        })[0]
-        if (selectedVariationData) {
+    for (const {values, id} of variants) {
+        if (categoryIds.every((id) => selections[id] === values[id])) {
             browserHistory.push({
-                pathname: getProductHref(selectedVariationData.variationID)
+                pathname: getProductHref(id)
             })
+            return
         }
     }
 }

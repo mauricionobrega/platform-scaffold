@@ -5,7 +5,9 @@ const AUTH_KEY_NAME = 'mob-auth'
 const BASKET_KEY_NAME = 'mob-basket'
 
 export const storeAuthToken = (authorization) => {
-    window.sessionStorage.setItem(AUTH_KEY_NAME, authorization)
+    if (authorization) {
+        window.sessionStorage.setItem(AUTH_KEY_NAME, authorization)
+    }
 }
 
 export const getAuthToken = () => {

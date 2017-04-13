@@ -46,7 +46,6 @@ const template = (WrappedComponent) => {
 
         componentWillReceiveProps(nextProps) {
             if (getPath(this.props.location) !== getPath(nextProps.location)) {
-                console.log('changing', Template.displayName)
                 this.dispatchRouteChange(nextProps)
                 this.props.dispatch(removeAllNotifications())
             }

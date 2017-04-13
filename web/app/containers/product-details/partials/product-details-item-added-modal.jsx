@@ -13,7 +13,7 @@ import Icon from 'progressive-web-sdk/dist/components/icon'
 import ProductItem from '../../../components/product-item'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
-const ProductDetailsItemAddedModal = ({open, onDismiss, quantity, title, price, productImage, onGoToCheckout}) => (
+const ProductDetailsItemAddedModal = ({open, onDismiss, quantity, title, price, thumbnail, onGoToCheckout}) => (
     <Sheet open={open} onDismiss={onDismiss} effect="slide-bottom" className="t-product-details__item-added-modal" coverage="50%" shrinkToContent>
         {/* Modal header */}
         <div className="u-flex-none u-border-bottom">
@@ -35,7 +35,7 @@ const ProductDetailsItemAddedModal = ({open, onDismiss, quantity, title, price, 
             <div className="u-flex u-margin-bottom-md">
                 <ProductItem customWidth="20%"
                     title={<h2 className="u-h5 u-text-font-family u-text-semi-bold">{title}</h2>}
-                    image={<img role="presentation" src={productImage} alt="" width="60px" />}
+                    image={<img role="presentation" src={thumbnail.src} alt={thumbnail.alt} width="60px" />}
                 >
                     <div className="u-flexbox u-justify-between u-padding-top-sm">
                         <p>Qty: {quantity}</p>
@@ -63,15 +63,18 @@ const ProductDetailsItemAddedModal = ({open, onDismiss, quantity, title, price, 
 ProductDetailsItemAddedModal.propTypes = {
     open: PropTypes.bool,
     price: PropTypes.string,
-    productImage: PropTypes.string,
     quantity: PropTypes.number,
+    thumbnail: PropTypes.shape({
+        src: PropTypes.string,
+        alt: PropTypes.string
+    }),
     title: PropTypes.string,
     onDismiss: PropTypes.func,
     onGoToCheckout: PropTypes.func,
 }
 
 const mapStateToProps = createPropsSelector({
-    productImage: selectors.getFirstProductImage,
+    thumbnail: selectors.getProductThumbnail,
     open: isModalOpen(PRODUCT_DETAILS_ITEM_ADDED_MODAL),
     quantity: selectors.getItemQuantity,
     title: selectors.getProductTitle,

@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import * as ReduxForm from 'redux-form'
 import {createPropsSelector} from 'reselect-immutable-helpers'
-import * as selectors from '../selectors'
+import {getProductVariationCategories} from '../selectors'
 import {onVariationBlur} from '../actions'
 
 import Field from 'progressive-web-sdk/dist/components/field'
@@ -10,28 +10,24 @@ import Field from 'progressive-web-sdk/dist/components/field'
 const ProductDetailsVariations = ({variations, onVariationBlur}) => {
     return (
         <div>
-            {variations &&
-                variations.map(({id, name, values}) => {
-                    return (
-                        <ReduxForm.Field
-                            label={name}
-                            name={id}
-                            component={Field}
-                            key={id}
-                            className="u-margin-bottom-lg u-margin-top"
-                            customEventHandlers={{
-                                onBlur: onVariationBlur
-                            }}
-                        >
-                            <select name={id}>
-                                {/* Include an empty option to show by default */}
-                                <option />
-                                {values && values.map(({name, value}) => <option value={value} key={value}>{name}</option>)}
-                            </select>
-                        </ReduxForm.Field>
-                    )
-                })
-            }
+            {variations.map(({id, label, values = []}) => (
+                <ReduxForm.Field
+                    label={label}
+                    name={id}
+                    component={Field}
+                    key={id}
+                    className="u-margin-bottom-lg u-margin-top"
+                    customEventHandlers={{
+                        onBlur: onVariationBlur
+                    }}
+                >
+                    <select name={id}>
+                        {/* Include an empty option to show by default */}
+                        <option />
+                        {values.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
+                    </select>
+                </ReduxForm.Field>
+            ))}
         </div>
     )
 }
@@ -39,9 +35,9 @@ const ProductDetailsVariations = ({variations, onVariationBlur}) => {
 ProductDetailsVariations.propTypes = {
     variations: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.string,
-        name: PropTypes.string,
+        label: PropTypes.string,
         values: PropTypes.arrayOf(PropTypes.shape({
-            name: PropTypes.string,
+            label: PropTypes.string,
             value: PropTypes.string
         }))
     })),
@@ -49,12 +45,11 @@ ProductDetailsVariations.propTypes = {
 }
 
 const mapStateToProps = createPropsSelector({
-    variations: selectors.getVariationOptions
+    variations: getProductVariationCategories
 })
 
 const mapDispatchToProps = {
     onVariationBlur
-
 }
 
 export default connect(

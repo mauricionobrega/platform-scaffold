@@ -1,7 +1,18 @@
-import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
+import * as Runtypes from 'runtypes'
+import {Products, ProductUIData} from './types'
+import {createTypedAction} from '../../utils/utils'
 
-export const receiveProductDetailsUIData = createAction('Receive Product Details UI data')
+export const receiveProductDetailsUIData = createTypedAction(
+    'Receive Product Details UI data',
+    Runtypes.Dictionary(ProductUIData)
+)
 
-export const receiveProductDetailsProductData = createAction('Receive Product Details product data')
+export const receiveProductDetailsProductData = createTypedAction(
+    'Receive Product Details product data',
+    Products
+)
 
-export const receiveProductListProductData = createAction('Receive ProductList product data')
+export const receiveProductListProductData = createTypedAction(
+    'Receive ProductList product data',
+    Products
+)

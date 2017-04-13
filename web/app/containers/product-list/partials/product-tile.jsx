@@ -14,28 +14,35 @@ const titleClassName = classNames(
     'u-color-neutral-60'
 )
 
-const ProductTile = ({className, image, link, price}) => {
-    const productImage = (
-        <Image
-            {...image}
-            alt={image && image.alt}
-            height="150px"
-            width="120px" />
-    )
+const ProductImage = ({src, alt}) => (
+    <Image
+        src={src}
+        alt={alt}
+        height="150px"
+        width="120px"
+        />
+)
 
-    const title = link
-        ? <h2 className={titleClassName}>{link.text}</h2>
+ProductImage.propTypes = {
+    alt: PropTypes.string,
+    src: PropTypes.string
+}
+
+const ProductTile = ({className, thumbnail, href, price, title}) => {
+    const productImage = (<ProductImage {...thumbnail} />)
+
+    const titleElement = title
+        ? <h2 className={titleClassName}>{title}</h2>
         : <SkeletonBlock height="34px" />
     const priceElement = price
         ? <span className="u-text-bold u-color-error">{price}</span>
         : <SkeletonBlock height="22px" width="50px" />
 
     return (
-        <ListTile className="t-product-list__product-tile u-card" {...link}>
+        <ListTile className="t-product-list__product-tile u-card" href={href}>
             <ProductItem customWidth="45%"
-                {...image}
                 className={classNames('u-align-center', className)}
-                title={title}
+                title={titleElement}
                 price={priceElement}
                 image={productImage} />
         </ListTile>
@@ -47,16 +54,13 @@ ProductTile.propTypes = {
      * Optional className for the product tile
      */
     className: PropTypes.string,
-    image: PropTypes.shape({
+    href: PropTypes.string,
+    price: PropTypes.string,
+    thumbnail: PropTypes.shape({
         alt: PropTypes.string.isRequired,
         src: PropTypes.string.isRequired,
     }),
-    link: PropTypes.shape({
-        href: PropTypes.string.isRequired,
-        text: PropTypes.string.isRequired,
-        title: PropTypes.string
-    }),
-    price: PropTypes.string,
+    title: PropTypes.string
 }
 
 export default ProductTile

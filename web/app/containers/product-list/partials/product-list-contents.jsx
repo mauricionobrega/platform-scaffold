@@ -41,7 +41,7 @@ NoResultsList.propTypes = {
     bodyText: PropTypes.string
 }
 
-const ProductListContents = ({contentsLoaded, numItems, products, hasProducts}) => (
+const ProductListContents = ({contentsLoaded, numItems, products}) => (
     <div className="t-product-list__container u-padding-end u-padding-bottom-lg u-padding-start">
         <div className="t-product-list__num-results u-padding-md">
             {contentsLoaded ?
@@ -51,19 +51,17 @@ const ProductListContents = ({contentsLoaded, numItems, products, hasProducts}) 
             }
         </div>
 
-        {(hasProducts || !contentsLoaded) ? <ResultList products={products} /> : <NoResultsList />}
+        {(products.length > 0 || !contentsLoaded) ? <ResultList products={products} /> : <NoResultsList />}
     </div>
 )
 
 ProductListContents.propTypes = {
     products: PropTypes.array.isRequired,
     contentsLoaded: PropTypes.bool,
-    hasProducts: PropTypes.bool,
     numItems: PropTypes.string
 }
 
 const mapStateToProps = createPropsSelector({
-    hasProducts: selectors.getHasProducts,
     contentsLoaded: selectors.getProductListContentsLoaded,
     numItems: selectors.getNumItems,
     products: selectors.getProductListProducts

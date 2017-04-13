@@ -3,6 +3,7 @@ import Immutable from 'immutable'
 import {createGetSelector, createHasSelector} from 'reselect-immutable-helpers'
 import {getUi, getProducts} from '../../store/selectors'
 import * as appSelectors from '../app/selectors'
+import {getFormValues} from '../../store/form/selectors'
 
 const PLACEHOLDER_BREADCRUMBS = Immutable.fromJS([
     {
@@ -50,21 +51,21 @@ export const getProductDetailsBreadcrumbs = createGetSelector(
 )
 export const getProductTitle = createGetSelector(getSelectedProduct, 'title')
 export const getProductPrice = createGetSelector(getSelectedProduct, 'price')
-export const getVariationOptions = createGetSelector(getSelectedProduct, 'variationOptions')
-export const getProductVariations = createGetSelector(getSelectedProduct, 'availableVariations')
-export const getProductInitialValues = createGetSelector(getSelectedProduct, 'initialValues')
 export const getProductDescription = createGetSelector(getSelectedProduct, 'description')
-export const getProductCarouselItems = createGetSelector(getSelectedProduct, 'carouselItems', Immutable.List())
-export const getFirstProductCarouselItem = createGetSelector(
-    getProductCarouselItems,
-    0,
-    Immutable.Map()
-)
-export const getFirstProductImage = createGetSelector(getFirstProductCarouselItem, 'img')
+export const getProductImages = createGetSelector(getSelectedProduct, 'images', Immutable.List())
+export const getProductThumbnail = createGetSelector(getSelectedProduct, 'thumbnail', Immutable.Map())
 
+export const getProductVariationCategories = createGetSelector(getSelectedProduct, 'variationCategories', Immutable.List())
+export const getProductVariationCategoryIds = createSelector(
+    getProductVariationCategories,
+    (categories) => categories.map((category) => category.get('id'))
+)
+export const getProductVariants = createGetSelector(getSelectedProduct, 'variants')
+export const getProductInitialValues = createGetSelector(getSelectedProduct, 'initialValues')
+
+export const getAddToCartFormValues = getFormValues('product-add-to-cart')
 // NOTE: These get-something-ByPathKey selectors should only be used within actions/commands
 // Using them within a component will break the performance optimizations selectors normally give us
 export const getProductDetailsByPathKey = (pathKey) => createGetSelector(getProducts, pathKey, Immutable.Map())
-export const getProductCarouselItemsByPathKey = (pathKey) => createGetSelector(getProductDetailsByPathKey(pathKey), 'carouselItems', Immutable.List())
-export const getFirstProductCarouselItemByPathKey = (pathKey) => createGetSelector(getProductCarouselItemsByPathKey(pathKey), 0, Immutable.Map())
-export const getFirstProductImageByPathKey = (pathKey) => createGetSelector(getFirstProductCarouselItemByPathKey(pathKey), 'img')
+export const getProductThumbnailByPathKey = (pathKey) => createGetSelector(getProductDetailsByPathKey(pathKey), 'thumbnail', Immutable.Map())
+export const getProductThumbnailSrcByPathKey = (pathKey) => createGetSelector(getProductThumbnailByPathKey(pathKey), 'img')
