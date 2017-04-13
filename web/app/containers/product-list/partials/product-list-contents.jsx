@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as selectors from '../selectors'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
+import {byFilterTokens} from '../../../utils/filter-utils'
 
 import List from 'progressive-web-sdk/dist/components/list'
 import Image from 'progressive-web-sdk/dist/components/image'
@@ -10,13 +11,16 @@ import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
 import ProductTile from './product-tile'
 
-const ResultList = ({products}) => (
+const ResultList = ({products, activeFilters}) => (
     <List className="c--borderless">
-        {products.map((product, idx) => <ProductTile key={idx} {...product} />)}
+        {products.filter(byFilterTokens(activeFilters)).map((product, idx) =>
+            <ProductTile key={idx} {...product} />)
+        }
     </List>
 )
 
 ResultList.propTypes = {
+    activeFilters: PropTypes.array,
     products: PropTypes.array
 }
 
@@ -27,7 +31,8 @@ const NoResultsList = ({bodyText}) => (
             alt="Crystal Ball"
             width="122px"
             height="110px"
-            src={getAssetUrl('static/img/global/no-results.png')} />
+            src={getAssetUrl('static/img/global/no-results.png')}
+        />
 
         <div className="t-product-list__no-results-text u-text-align-center">
             {bodyText}
@@ -39,7 +44,14 @@ NoResultsList.propTypes = {
     bodyText: PropTypes.string
 }
 
-const ProductListContents = ({contentsLoaded, numItems, products, hasProducts, noResultsText}) => (
+const ProductListContents = ({
+    activeFilters,
+    contentsLoaded,
+    numItems,
+    products,
+    hasProducts,
+    noResultsText
+}) => (
     <div className="t-product-list__container u-padding-end u-padding-bottom-lg u-padding-start">
         <div className="t-product-list__num-results u-padding-md">
             {contentsLoaded ?
@@ -49,12 +61,17 @@ const ProductListContents = ({contentsLoaded, numItems, products, hasProducts, n
             }
         </div>
 
-        {(hasProducts || !contentsLoaded) ? <ResultList products={products} /> : <NoResultsList bodyText={noResultsText} />}
+        {(hasProducts || !contentsLoaded) ?
+            <ResultList products={products} activeFilters={activeFilters} />
+        :
+            <NoResultsList bodyText={noResultsText} />
+        }
     </div>
 )
 
 ProductListContents.propTypes = {
     products: PropTypes.array.isRequired,
+    activeFilters: PropTypes.array,
     contentsLoaded: PropTypes.bool,
     hasProducts: PropTypes.bool,
     noResultsText: PropTypes.string,
@@ -63,6 +80,7 @@ ProductListContents.propTypes = {
 
 const mapStateToProps = createPropsSelector({
     hasProducts: selectors.getHasProducts,
+    activeFilters: selectors.getActiveFilters,
     contentsLoaded: selectors.getProductListContentsLoaded,
     noResultsText: selectors.getNoResultsText,
     numItems: selectors.getNumItems,

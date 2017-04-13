@@ -4,6 +4,7 @@ import {createGetSelector, createHasSelector} from 'reselect-immutable-helpers'
 import {getUi, getCategories, getProducts} from '../../store/selectors'
 import * as appSelectors from '../app/selectors'
 import {PLACEHOLDER} from '../app/constants'
+import {makeActiveFilterList} from '../../utils/filter-utils'
 
 const PLACEHOLDER_URLS = Immutable.List(new Array(5).fill(PLACEHOLDER))
 
@@ -21,7 +22,6 @@ export const getProductListContentsLoaded = createHasSelector(
 )
 
 export const getProductPaths = createGetSelector(getSelectedCategory, 'products', PLACEHOLDER_URLS)
-
 export const getHasProducts = createSelector(
     getProductPaths,
     (paths) => paths.size > 0
@@ -30,6 +30,11 @@ export const getHasProducts = createSelector(
 export const getNumItems = createGetSelector(getSelectedCategory, 'itemCount')
 export const getProductListTitle = createGetSelector(getSelectedCategory, 'title')
 export const getNoResultsText = createGetSelector(getSelectedCategory, 'noResultsText')
+
+export const getFilters = createGetSelector(getSelectedCategory, 'filters', Immutable.List())
+export const getActiveFilters = createSelector(getFilters, (filtersMap) =>
+    makeActiveFilterList(filtersMap.toJS())
+)
 
 export const getProductListProducts = createSelector(
     getProducts,
