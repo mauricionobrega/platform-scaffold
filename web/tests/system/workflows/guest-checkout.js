@@ -2,16 +2,18 @@ import process from 'process'
 import Home from '../page-objects/home'
 import ProductList from '../page-objects/product-list'
 import ProductDetails from '../page-objects/product-details'
+import Cart from '../page-objects/cart'
+import Checkout from '../page-objects/checkout'
+
 import Webpush from '../page-objects/webpush'
-// import Cart from '../page-objects/cart'
-// import Checkout from '../page-objects/checkout'
 
 let home
 let productList
 let productDetails
+let cart
+let checkout
+
 let webpush
-// let cart
-// let checkout
 
 const PRODUCT_LIST_INDEX = process.env.PRODUCT_LIST_INDEX || 2
 const PRODUCT_INDEX = process.env.PRODUCT_INDEX || 1
@@ -23,16 +25,19 @@ export default {
         home = new Home(browser)
         productList = new ProductList(browser)
         productDetails = new ProductDetails(browser)
+        cart = new Cart(browser)
+        checkout = new Checkout(browser)
+
         webpush = new Webpush(browser)
-        // cart = new Cart(browser)
-        // checkout = new Checkout(browser)
     },
 
     after: (browser) => {
         browser.end()
     },
 
-    'Checkout - Guest - Step 1 - Navigate to Home': (browser) => {
+    // The following tests are conducted in sequence within the same session.
+
+    'Checkout - Guest - Navigate to Home': (browser) => {
         browser
             .preview()
             .waitForElementVisible(home.selectors.wrapper)
@@ -43,7 +48,7 @@ export default {
             .assertVisitCount(1)
     },
 
-    'Checkout - Guest - Step 2 - Navigate from Home to ProductList': (browser) => {
+    'Checkout - Guest - Navigate from Home to ProductList': (browser) => {
         home.navigateToProductList(PRODUCT_LIST_INDEX)
         browser
             .waitForElementVisible(productList.selectors.productListTemplateIdentifier)
@@ -52,7 +57,7 @@ export default {
         webpush.assertVisitCount(2)
     },
 
-    'Checkout - Guest - Step 3 - Navigate from ProductList to ProductDetails': (browser) => {
+    'Checkout - Guest - Navigate from ProductList to ProductDetails': (browser) => {
         productList.navigateToProductDetails(PRODUCT_INDEX)
         browser
             .waitForElementVisible(productDetails.selectors.productDetailsTemplateIdentifier)
@@ -61,54 +66,40 @@ export default {
         webpush.assertVisitCount(3)
     },
 
-    'Checkout - Guest - Step 4 - Add item to Shopping Cart': (browser) => {
+    'Checkout - Guest - Add item to Shopping Cart': (browser) => {
         productDetails.addItemToCart()
         browser
             .waitForElementVisible(productDetails.selectors.itemAdded)
             .assert.visible(productDetails.selectors.itemAdded)
     },
 
-/* TODO: Uncomment the following once the Progressive Web build for Merlin's Potions has been completed.
 
-    'Checkout - Guest - Step 5 - Navigate from ProductDetails to Shopping Cart': (browser) => {
+    'Checkout - Guest - Navigate from ProductDetails to Cart': (browser) => {
         productDetails.navigateToCart()
         browser
             .waitForElementVisible(cart.selectors.cartTemplateIdentifier)
             .assert.visible(cart.selectors.cartTemplateIdentifier)
     },
 
-    'Checkout - Guest - Step 6 - Navigate from Shopping Cart to Checkout Sign In or Continue as Guest page': (browser) => {
+    'Checkout - Guest - Navigate from Cart to Checkout': (browser) => {
         cart.navigateToCheckout()
-        browser
-            .waitForElementVisible(checkout.selectors.checkoutAccountTemplateIdentifier)
-            .assert.visible(checkout.selectors.checkoutAccountTemplateIdentifier)
-    },
-
-    'Checkout - Guest - Step 7 - Continue to Guest Checkout': (browser) => {
-        checkout.continueAsGuest()
         browser
             .waitForElementVisible(checkout.selectors.checkoutTemplateIdentifier)
             .assert.visible(checkout.selectors.checkoutTemplateIdentifier)
     },
 
-    'Checkout - Guest - Step 8 - Fill out Guest Checkout Shipping Info form': (browser) => {
+    'Checkout - Guest - Fill out Guest Checkout Shipping Info form': (browser) => {
         checkout.fillShippingInfo()
-        browser
-            .waitForElementVisible(checkout.selectors.lastShippingInfo)
-            .assert.containsValue(checkout.selectors.lastShippingInfo, checkout.userData.lastShippingInfo)
+        browser.waitForElementVisible(checkout.selectors.lastShippingInfo)
     },
 
-    'Checkout - Guest - Step 9 - Fill out Guest Checkout Payment Details form': (browser) => {
-        checkout.fillPaymentDetails()
-        browser
-            .waitForElementVisible(checkout.selectors.lastPaymentDetail)
-            .assert.containsValue(checkout.selectors.lastPaymentDetail, checkout.userData.lastPaymentDetail)
+    'Checkout - Guest - Fill out Guest Checkout Payment Details form': () => {
+        checkout.continueToPayment()
     },
 
-    'Checkout - Guest - Step 10 - Verify Submit Order button is visible': (browser) => {
+    'Checkout - Guest - Verify Submit Order button is visible': (browser) => {
         browser
             .waitForElementVisible(checkout.selectors.submitOrder)
             .assert.visible(checkout.selectors.submitOrder)
     }
-*/
 }
