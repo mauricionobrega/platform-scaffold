@@ -1,6 +1,6 @@
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 import {makeDemandwareRequest} from '../utils'
-import {receiveCategory, receiveCategoryInformation} from '../../categories/responses'
+import {receiveCategoryContents, receiveCategoryInformation} from '../../categories/responses'
 import {receiveProductListProductData} from '../../products/responses'
 import {parseProductListData} from '../parsers'
 
@@ -52,7 +52,7 @@ export const fetchProductListData = (url) => (dispatch) => {
             const products = Object.keys(productListData)
 
             dispatch(receiveProductListProductData(productListData))
-            dispatch(receiveCategory({
+            dispatch(receiveCategoryContents({
                 [urlPathKey]: {
                     products,
                     itemCount: total
