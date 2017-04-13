@@ -1,6 +1,6 @@
 import * as Runtypes from 'runtypes'
 
-import {Text, CategoryID, ProductID, URL, Image, Identifier, Integer} from '../types'
+import {Text, CategoryID, ProductID, URL, Image, Identifier, Integer, Nullable} from '../types'
 
 const IconID = Identifier
 
@@ -9,7 +9,8 @@ export const Category = Runtypes.Record({
     href: URL,
     title: Text,
     itemCount: Integer,
-    parentId: CategoryID,
+    // Top-level categories have parentId = null
+    parentId: Nullable(CategoryID),
     products: Runtypes.Array(ProductID)
 }).And(Runtypes.Optional({
     icon: Runtypes.Union(IconID, Image)

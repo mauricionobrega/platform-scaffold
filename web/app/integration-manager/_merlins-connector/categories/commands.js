@@ -9,10 +9,17 @@ export const fetchProductListData = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then((res) => {
             const [$, $response] = res
+            const pathKey = urlToPathKey(url)
             // Receive page contents
             dispatch(receiveProductListProductData(productListParser($, $response)))
             dispatch(receiveCategory({
-                [urlToPathKey(url)]: categoryProductsParser($, $response)
+                [pathKey]: {
+                    ...categoryProductsParser($, $response),
+                    // I can't really find a categoryId in the Merlin's HTML
+                    id: pathKey,
+                    href: pathKey,
+                    parentId: null
+                }
             }))
         })
 }
