@@ -52,19 +52,19 @@ export const toTokens = (list, currentFilter) => {
 
 
 /**
- * fromRulesets - An array filter callback to shrink down a list of items
+ * byTokens - An array filter callback to shrink down a list of items
  * based on the provided filter tokens. Example usage:
  *
  *    const items = [{}, {}, ...]
  *    const tokens = [max20dollarsToken, colorBlueToken, ...]
- *    items.filter(fromRulesets(tokens)) => items matching token criteria
+ *    items.filter(byTokens(tokens)) => items matching token criteria
  *
  * @param  {array} tokenList - list of filter tokens (see tokenize function
            above). It's param `currentItem` is likely an object that will
            eventually be consumed by a React component.
  * @returns {function} - a callback function, intended for filter methods
  */
-export const fromRulesets = (tokenList) => (currentItem) => {
+export const byTokens = (tokenList) => (currentItem) => {
     if (tokenList.length === 0 || !currentItem) {
         return true
     }
