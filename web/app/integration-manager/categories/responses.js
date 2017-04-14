@@ -1,16 +1,21 @@
-import {Dictionary} from 'runtypes'
+import {createAction} from 'redux-actions'
 
-import {createTypedAction} from '../../utils/utils'
+import {typecheck, createTypedAction} from '../../utils/utils'
+import {CategoryID} from '../types'
 import {CategoryInfo, CategoryContents, Categories} from './types'
 
-export const receiveCategoryInformation = createTypedAction(
+export const receiveCategoryInformation = createAction(
     'Receive Category Information',
-    Dictionary(CategoryInfo)
+    (id, info) => ({
+        [typecheck(CategoryID, id)]: typecheck(CategoryInfo, info)
+    })
 )
 
-export const receiveCategoryContents = createTypedAction(
-    'Receive Category Contents',
-    Dictionary(CategoryContents)
+export const receiveCategoryContents = createAction(
+    'Receive Category Information',
+    (id, contents) => ({
+        [typecheck(CategoryID, id)]: typecheck(CategoryContents, contents)
+    })
 )
 
 export const receiveCategory = createTypedAction(
