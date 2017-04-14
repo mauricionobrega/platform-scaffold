@@ -1,67 +1,78 @@
 const NON_NUMERIC_REGEX = /\D/
-const FILTER_TYPES = {
+
+const RULESETS = {
     price: (item, range) => {
         const price = parseInt(item.price.replace(NON_NUMERIC_REGEX, ''))
         return price >= range.floor && price <= range.ceiling
-    },
-    color: () => false
-}
-
-// Filter token
-const tokenize = (id, value) => ({
-    filterId: id,
-    filterValue: value
-})
-
-
-/**
- * makeActiveFilterList - Generates a list of filter tokens, such as those
- * typically available in product lists (price, color, etc.)
- *
- * @param {array} - list of filter objects with keys for `id`, `kinds`, `label`
- * @returns {array} - list of filter tokens, with inactive filters omitted
- */
-export const makeActiveFilterList = (filters) => {
-    if (filters.length <= 0) {
-        return []
     }
-
-    // returns a list of filter tokens for each "kind" of active filter
-    const tokenList = filters.reduce((list, current) => {
-        current.kinds.forEach((kind) => {
-            if (kind.active) {
-                list.push(tokenize(current.id, kind.value))
-            }
-        })
-
-        return list
-    }, [])
-
-    return tokenList
+    // insert more rules when applicable
 }
 
 
 /**
- * Returns a callback function for use in an array filter method. Example usage:
+ * evaluate - Used to verify whether an object meets the criteria of a ruleset.
+ * In simple terms, for example, whether an object has a color prop of a certain
+ * value. A more specific example:
  *
- *    [].filter(byFilterTokens(myFilterTokenList))
+ *     evaluate({ color: 'red' }, 'color', 'blue') // => false
+ *     evaluate({ color: 'red' }, 'color', 'red') // => true
  *
- * @param  {array} - list of filter tokens
- * @returns {function} - a callback function, intended for filter methods
- *
+ * @param {object} item - The identifer with which the RULESETS can apply the
+ * @param {string} ruleset - The condition or filtering parameter with
+ * @param {string|object} criteria - The condition or filtering parameter with.
+          The exact value passed depends on the ruleset being used.
+ * @returns {boolean} - Whether or not the item meets the ruleset's criteria
  */
-export const byFilterTokens = (tokenList) => (currentItem) => {
+const evaluate = (item, ruleset, criteria) => RULESETS[ruleset](item, criteria)
 
-    // Either 1) no filters are active, thus all items are valid, or 2) the
-    // current item is itself invalid and won't render anything anyway.
+
+/**
+ * toTokens - A reduce function callback that takes a list of filters and
+ * reduces them down into a list of tokenized filters. The tokens can be used to
+ * determine whether an object meets that filter's criteria. See evaluate above.
+ *
+ * @param {array} list - the list that has only active tokens appended to it.
+ * @param {object} currentFilter - the current filter object
+ * @returns {array} - The final list of filter tokens in the format of {ruleset, criteria}
+ */
+export const toTokens = (list, currentFilter) => {
+    currentFilter.kinds.forEach((kind) => {
+        if (kind.active) {
+            const token = {
+                ruleset: currentFilter.ruleset,
+                criteria: kind.criteria
+            }
+
+            list.push(token)
+        }
+    })
+
+    return list
+}
+
+
+/**
+ * fromRulesets - An array filter callback to shrink down a list of items
+ * based on the provided filter tokens. Example usage:
+ *
+ *    const items = [{}, {}, ...]
+ *    const tokens = [max20dollarsToken, colorBlueToken, ...]
+ *    items.filter(fromRulesets(tokens)) => items matching token criteria
+ *
+ * @param  {array} tokenList - list of filter tokens (see tokenize function
+           above). It's param `currentItem` is likely an object that will
+           eventually be consumed by a React component.
+ * @returns {function} - a callback function, intended for filter methods
+ */
+export const fromRulesets = (tokenList) => (currentItem) => {
     if (tokenList.length === 0 || !currentItem) {
         return true
     }
 
     let valid = false
 
-    tokenList.forEach((token) => {
-        const isValid = FILTER_TYPES[token.filterId](currentItem, token.filterValue)
+    tokenList.forEach(({ruleset, criteria}) => {
+        const isValid = evaluate(currentItem, ruleset, criteria)
 
         if (isValid) {
             valid = true

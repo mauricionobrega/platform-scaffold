@@ -4,7 +4,7 @@ import {createGetSelector, createHasSelector} from 'reselect-immutable-helpers'
 import {getUi, getCategories, getProducts} from '../../store/selectors'
 import * as appSelectors from '../app/selectors'
 import {PLACEHOLDER} from '../app/constants'
-import {makeActiveFilterList} from '../../utils/filter-utils'
+import {fromRulesets, toTokens} from '../../utils/filter-utils'
 
 const PLACEHOLDER_URLS = Immutable.List(new Array(5).fill(PLACEHOLDER))
 
@@ -32,12 +32,18 @@ export const getProductListTitle = createGetSelector(getSelectedCategory, 'title
 export const getNoResultsText = createGetSelector(getSelectedCategory, 'noResultsText')
 
 export const getFilters = createGetSelector(getSelectedCategory, 'filters', Immutable.List())
-export const getActiveFilters = createSelector(getFilters, (filtersMap) =>
-    makeActiveFilterList(filtersMap.toJS())
-)
 
 export const getProductListProducts = createSelector(
     getProducts,
     getProductPaths,
     (products, productUrls) => productUrls.map((path) => products.get(path))
+)
+
+export const getFilteredProductListProducts = createSelector(
+    getProductListProducts,
+    getFilters,
+    (products, filters) => {
+        const filterList = filters.toJS().reduce(toTokens, [])
+        return products.toJS().filter(fromRulesets(filterList))
+    }
 )

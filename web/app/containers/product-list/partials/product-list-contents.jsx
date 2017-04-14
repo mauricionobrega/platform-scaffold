@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as selectors from '../selectors'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
-import {byFilterTokens} from '../../../utils/filter-utils'
 
 import List from 'progressive-web-sdk/dist/components/list'
 import Image from 'progressive-web-sdk/dist/components/image'
@@ -11,16 +10,15 @@ import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
 import ProductTile from './product-tile'
 
-const ResultList = ({products, activeFilters}) => (
+const ResultList = ({products}) => (
     <List className="c--borderless">
-        {products.filter(byFilterTokens(activeFilters)).map((product, idx) =>
+        {products.map((product, idx) =>
             <ProductTile key={idx} {...product} />)
         }
     </List>
 )
 
 ResultList.propTypes = {
-    activeFilters: PropTypes.array,
     products: PropTypes.array
 }
 
@@ -45,24 +43,22 @@ NoResultsList.propTypes = {
 }
 
 const ProductListContents = ({
-    activeFilters,
     contentsLoaded,
-    numItems,
-    products,
     hasProducts,
-    noResultsText
+    noResultsText,
+    products
 }) => (
     <div className="t-product-list__container u-padding-end u-padding-bottom-lg u-padding-start">
         <div className="t-product-list__num-results u-padding-md">
             {contentsLoaded ?
-                <span className="u-text-semi-bold">{numItems} Results</span>
-                    :
+                <span className="u-text-semi-bold">{products.length} Results</span>
+            :
                 <SkeletonBlock height="20px" />
             }
         </div>
 
         {(hasProducts || !contentsLoaded) ?
-            <ResultList products={products} activeFilters={activeFilters} />
+            <ResultList products={products} />
         :
             <NoResultsList bodyText={noResultsText} />
         }
@@ -71,8 +67,8 @@ const ProductListContents = ({
 
 ProductListContents.propTypes = {
     products: PropTypes.array.isRequired,
-    activeFilters: PropTypes.array,
     contentsLoaded: PropTypes.bool,
+    filters: PropTypes.array,
     hasProducts: PropTypes.bool,
     noResultsText: PropTypes.string,
     numItems: PropTypes.string
@@ -80,11 +76,11 @@ ProductListContents.propTypes = {
 
 const mapStateToProps = createPropsSelector({
     hasProducts: selectors.getHasProducts,
-    activeFilters: selectors.getActiveFilters,
     contentsLoaded: selectors.getProductListContentsLoaded,
+    filters: selectors.getFilters,
     noResultsText: selectors.getNoResultsText,
     numItems: selectors.getNumItems,
-    products: selectors.getProductListProducts
+    products: selectors.getFilteredProductListProducts
 })
 
 
