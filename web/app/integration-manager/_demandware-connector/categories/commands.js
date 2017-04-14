@@ -12,13 +12,11 @@ const makeCategoryURL = (id) => `${API_END_POINT_URL}/categories/${id}`
 const processCategory = (dispatch) => ({parent_category_id, id, name}) => {
     const parentId = parent_category_id !== 'root' ? parent_category_id : null
     const path = `/s/${SITE_ID}/${id}`
-    dispatch(receiveCategoryInformation({
-        [path]: {
-            id,
-            title: name,
-            href: path,
-            parentId
-        }
+    dispatch(receiveCategoryInformation(path, {
+        id,
+        title: name,
+        href: path,
+        parentId
     }))
 
     if (parentId) {
@@ -52,11 +50,9 @@ export const fetchProductListData = (url) => (dispatch) => {
             const products = Object.keys(productListData)
 
             dispatch(receiveProductListProductData(productListData))
-            dispatch(receiveCategoryContents({
-                [urlPathKey]: {
-                    products,
-                    itemCount: total
-                }
+            dispatch(receiveCategoryContents(urlPathKey, {
+                products,
+                itemCount: total
             }))
         })
 }
