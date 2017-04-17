@@ -1,10 +1,10 @@
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
-import {createAction, urlToPathKey} from '../../utils/utils'
+import {createAction, urlToPathKey, getLocationData} from '../../utils/utils'
 import {closeModal, openModal} from '../../store/modals/actions'
 import {fetchShippingMethodsEstimate} from '../../store/checkout/shipping/actions'
 import {getDefaultShippingMethod} from '../../store/checkout/shipping/selectors'
 import {getFormValues, getFormRegisteredFields} from '../../store/form/selectors'
-import {receiveCartContents} from '../../store/cart/actions'
+import {receiveCartContents, removeFromCart} from '../../store/cart/actions'
 import {
     CART_ESTIMATE_SHIPPING_MODAL,
     ESTIMATE_FORM_NAME,
@@ -12,7 +12,6 @@ import {
     CART_WISHLIST_MODAL,
     ADD_TO_WISHLIST_URL
 } from './constants'
-import {removeFromCart} from '../../store/cart/actions'
 import {makeFormEncodedRequest, makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {getUenc} from '../product-details/selectors'
 import {addNotification} from '../app/actions'
@@ -30,23 +29,8 @@ export const fetchTaxEstimate = () => (dispatch, getState) => {
     const formValues = getFormValues(ESTIMATE_FORM_NAME)(currentState)
     const entityID = getCustomerEntityID(currentState)
     const registeredFieldNames = getFormRegisteredFields(ESTIMATE_FORM_NAME)(currentState).map(({name}) => name)
-    // Default values to use if none have been selected
-    const address = {country_id: 'US', region_id: '0', postcode: null}
+    const address = getLocationData(formValues, registeredFieldNames)
 
-    if (formValues) {
-        // Only return the field value if the field is registered
-        const getRegisteredFieldValue = (fieldName) => {
-            return registeredFieldNames.includes(fieldName) ? formValues[fieldName] : undefined
-        }
-        address.country_id = getRegisteredFieldValue('country_id')
-        address.region_id = getRegisteredFieldValue('region_id')
-        address.postcode = getRegisteredFieldValue('postcode')
-        if (formValues.region) {
-            address.region = getRegisteredFieldValue('region')
-            // Remove the region_id in case we have an old value
-            delete address.region_id
-        }
-    }
     const getTotalsURL = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/totals-information`
     const shippingMethod = getDefaultShippingMethod(currentState).toJS().value.split('_')
 
@@ -59,7 +43,7 @@ export const fetchTaxEstimate = () => (dispatch, getState) => {
     }
     return makeJsonEncodedRequest(getTotalsURL, requestData, {method: 'POST'})
         .then((response) => response.json())
-        .then((responseJSON)=> {
+        .then((responseJSON) => {
             const cartTotals = {
                 subtotal: `$${responseJSON.subtotal.toFixed(2)}`,
                 subtotal_incl_tax: `$${responseJSON.subtotal_incl_tax.toFixed(2)}`,
@@ -73,7 +57,7 @@ export const submitEstimateShipping = () => {
     return (dispatch) => {
         dispatch(closeModal(CART_ESTIMATE_SHIPPING_MODAL))
         dispatch(fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME))
-            .then(()=> {
+            .then(() => {
                 dispatch(fetchTaxEstimate())
             })
     }

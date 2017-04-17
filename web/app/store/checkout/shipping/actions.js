@@ -1,5 +1,6 @@
 
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+import {getLocationData} from '../../../utils/utils'
 import {getCustomerEntityID} from '../selectors'
 import {getIsLoggedIn} from '../../../containers/app/selectors'
 import {getFormValues, getFormRegisteredFields} from '../../form/selectors'
@@ -15,23 +16,8 @@ export const fetchShippingMethodsEstimate = (formKey) => {
         const formValues = getFormValues(formKey)(currentState)
         const entityID = getCustomerEntityID(currentState)
         const registeredFieldNames = getFormRegisteredFields(formKey)(currentState).map(({name}) => name)
-        // Default values to use if none have been selected
-        const address = {country_id: 'US', region_id: '0', postcode: null}
+        const address = getLocationData(formValues, registeredFieldNames)
 
-        if (formValues) {
-            // Only return the field value if the field is registered
-            const getRegisteredFieldValue = (fieldName) => {
-                return registeredFieldNames.includes(fieldName) ? formValues[fieldName] : undefined
-            }
-            address.country_id = getRegisteredFieldValue('country_id')
-            address.region_id = getRegisteredFieldValue('region_id')
-            address.postcode = getRegisteredFieldValue('postcode')
-            if (formValues.region) {
-                address.region = getRegisteredFieldValue('region')
-                // Remove the region_id in case we have an old value
-                delete address.region_id
-            }
-        }
         const getEstimateURL = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/estimate-shipping-methods`
         return makeJsonEncodedRequest(getEstimateURL, {address}, {method: 'POST'})
             .then((response) => response.json())
