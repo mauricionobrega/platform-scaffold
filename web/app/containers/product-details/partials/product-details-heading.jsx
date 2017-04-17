@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import * as selectors from '../selectors'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import {getCartURL} from '../../app/selectors'
+import {getProductTitle, getProductPrice} from '../../../store/products/selectors'
 
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import Breadcrumbs from 'progressive-web-sdk/dist/components/breadcrumbs'
@@ -42,8 +43,8 @@ ProductDetailsHeading.propTypes = {
 const mapStateToProps = createPropsSelector({
     breadcrumbs: selectors.getProductDetailsBreadcrumbs,
     cartURL: getCartURL,
-    title: selectors.getProductTitle,
-    price: selectors.getProductPrice
+    title: getProductTitle,
+    price: getProductPrice
 })
 
 export default connect(mapStateToProps)(ProductDetailsHeading)
