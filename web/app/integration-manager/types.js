@@ -5,6 +5,8 @@ export const Integer = Runtypes.Number.withConstraint((n) => Number.isInteger(n)
 
 export const URL = Runtypes.String
 export const Measure = Runtypes.String
+// A monetary value, notionally with an amount and a currency.
+export const Money = Runtypes.String
 
 // Text for the user
 export const Text = Runtypes.String

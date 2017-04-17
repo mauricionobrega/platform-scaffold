@@ -1,8 +1,5 @@
 import * as Runtypes from 'runtypes'
-import {Text, ProductID, Identifier, URL, Image} from '../types'
-
-// A monetary value, notionally with an amount and a currency.
-const Money = Runtypes.String
+import {Text, ProductID, Identifier, URL, Image, Money} from '../types'
 
 const VariationCategoryID = Identifier
 
