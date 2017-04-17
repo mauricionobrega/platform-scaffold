@@ -78,7 +78,7 @@ class CreditCardForm extends React.Component {
         const creditCardForm = (
             <div onChange={this.handleCVV}>
                 <FieldRow>
-                    <ReduxForm.Field component={Field} name="name" label="Cardholder Name">
+                    <ReduxForm.Field component={Field} name="ccname" label="Cardholder Name">
                         <input type="text" noValidate />
                     </ReduxForm.Field>
                 </FieldRow>

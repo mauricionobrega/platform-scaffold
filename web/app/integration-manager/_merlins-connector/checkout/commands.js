@@ -2,7 +2,7 @@ import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils
 import {SubmissionError} from 'redux-form'
 import {checkoutShippingParser, parseCheckoutData, parseShippingMethods} from './parsers'
 import {parseCheckoutEntityID} from '../../../utils/magento-utils'
-import {receiveCheckoutShippingData, receiveCheckoutData, receiveShippingMethodInitialValues} from './../../checkout/responses'
+import {receiveCheckoutShippingData, receiveCheckoutData, receiveShippingMethodInitialValues, receiveHasExistingCard} from './../../checkout/responses'
 import {fetchPageData} from '../app/commands'
 import {getCustomerEntityID} from '../selectors'
 import {getIsLoggedIn} from '../../../containers/app/selectors'
@@ -171,6 +171,7 @@ export const fetchCheckoutPaymentData = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then((res) => {
             const [$, $response] = res // eslint-disable-line no-unused-vars
+            dispatch(receiveHasExistingCard(true))
             return dispatch(processCheckoutData($response))
         })
 }

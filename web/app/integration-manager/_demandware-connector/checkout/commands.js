@@ -1,9 +1,11 @@
 import {SubmissionError} from 'redux-form'
 import {createBasket} from '../cart/utils'
 import {makeDemandwareRequest} from '../utils'
+import {populateLocationsData} from './utils'
+import {parseShippingAddressFromBasket} from './parsers'
 import {API_END_POINT_URL, PAYMENT_URL} from '../constants'
-import {STATES} from './constants'
-import {receiveCheckoutData, receiveShippingMethodInitialValues} from './../../checkout/responses'
+import {receiveCheckoutData, receiveShippingInitialValues, receiveBillingInitialValues} from './../../checkout/responses'
+import {getCardData} from 'progressive-web-sdk/dist/card-utils'
 
 export const fetchShippingMethodsEstimate = () => (dispatch) => {
     return createBasket()
@@ -24,62 +26,34 @@ export const fetchShippingMethodsEstimate = () => (dispatch) => {
         })
 }
 
+
+
 export const fetchCheckoutShippingData = () => (dispatch) => {
     return createBasket()
         .then((basketID) => {
             return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}`, {method: 'GET'})
                 .then((response) => response.json())
                 .then((responseJSON) => {
-                    const {
-                        customer_info: {
-                            email
-                        },
-                        shipments: [{
-                            shipping_address,
-                            shipping_method
-                        }]
-                    } = responseJSON
-                    let initialValues
-                    /* eslint-disable camelcase */
-                    if (shipping_address) {
-                        initialValues = {
-                            username: email,
-                            name: shipping_address.full_name,
-                            company: shipping_address.company_name,
-                            addressLine1: shipping_address.address1,
-                            addressLine2: shipping_address.address2,
-                            countryId: shipping_address.country_code,
-                            city: shipping_address.city,
-                            regionId: shipping_address.state_code,
-                            postcode: shipping_address.postal_code,
-                            telephone: shipping_address.phone,
-                            shipping_method: shipping_method ? shipping_method.id : undefined
-                        }
-                    } else {
-                        initialValues = {
-                            countryId: 'us'
-                        }
-                    }
-                    dispatch(receiveShippingMethodInitialValues({initialValues}))
-                    /* eslint-enable camelcase */
-                    return dispatch(receiveCheckoutData({
-                        locations: {
-                            countries: [{value: 'us', label: 'United States'}],
-                            regions: STATES
-                        }
-                    }))
+                    dispatch(receiveShippingInitialValues({initialValues: parseShippingAddressFromBasket(responseJSON)}))
+                    return dispatch(populateLocationsData())
                 })
                 .then(() => dispatch(fetchShippingMethodsEstimate()))
         })
 }
 
-export const fetchCheckoutPaymentData = (url, routeName) => (dispatch) => {
-    // populate locations <--- TODO: Move this into a util? since we do it in multiple locations in the checkout???
-    // fetch payment methods
-    // fetch current billing address etc
-    // fetch current payment instrument???
+export const fetchCheckoutPaymentData = () => (dispatch) => {
+    dispatch(populateLocationsData())
+    return createBasket()
+        .then((basketID) => {
+            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}`, {method: 'GET'})
+                .then((response) => response.json())
+                .then((responseJSON) => {
+                    const addressData = parseShippingAddressFromBasket(responseJSON)
 
-    return Promise.resolve()
+                    dispatch(receiveShippingInitialValues({initialValues: addressData}))
+                    dispatch(receiveBillingInitialValues({initialValues: {...addressData, billing_same_as_shipping: true}}))
+                })
+        })
 }
 
 export const submitShipping = (formValues) => (dispatch) => {
@@ -112,35 +86,92 @@ export const submitShipping = (formValues) => (dispatch) => {
         })
         .then((basketID) => {
             const requestOptions = {
-                method: 'PATCH',
+                method: 'PUT',
                 body: JSON.stringify({
-                    shipping_address: {
-                        address1: addressLine1,
-                        address2: addressLine2,
-                        city,
-                        country_code: countryId,
-                        first_name: firstname,
-                        last_name: lastname,
-                        full_name: name,
-                        phone: telephone,
-                        postal_code: postcode,
-                        state_code: regionId,
-                        company_name: company
-                    },
-                    shipping_method: {
-                        id: shipping_method
-                    }
+                    address1: addressLine1,
+                    address2: addressLine2,
+                    city,
+                    country_code: countryId,
+                    first_name: firstname,
+                    last_name: lastname,
+                    full_name: name,
+                    phone: telephone,
+                    postal_code: postcode,
+                    state_code: regionId,
+                    company_name: company
                 })
+
+
             }
-            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/shipments/me`, requestOptions)
+            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/shipments/me/shipping_address?use_as_billing=true`, requestOptions)
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     if (responseJSON.fault) {
                         throw new SubmissionError({_error: 'Unable to save shipping data'})
                     }
-                    return PAYMENT_URL
+                })
+                .then(() => {
+                    const shippingMethodRequestOptions = {
+                        method: 'PUT',
+                        body: JSON.stringify({id: shipping_method})
+                    }
+                    return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/shipments/me/shipping_method`, shippingMethodRequestOptions)
+                        .then((response) => response.json())
+                        .then((responseJSON) => {
+                            if (responseJSON.fault) {
+                                throw new SubmissionError({_error: 'Unable to save shipping data'})
+                            }
+
+                            return PAYMENT_URL
+                        })
                 })
         })
+}
+
+export const submitPayment = (formValues) => (dispatch) => {
+    let basket
+    debugger
+    return createBasket()
+        .then((basketID) => {
+            basket = basketID
+            return basket
+        })
+        .then((basketID) => {
+            debugger
+            // set payment method
+            const type = getCardData(formValues.ccnumber).cardType
+            const expiryMonth = /^\d\d/.exec(formValues.ccexpiry)[0]
+            const expiryYear = /\d\d$/.exec(formValues.ccexpiry)[0]
+            const requestOptions = {
+                method: 'POST',
+                body: JSON.stringify({
+                    payment_card: {
+                        card_type: type,
+                        expiration_month: expiryMonth,
+                        expiration_year: expiryYear,
+                        holder: formValues.ccname,
+                        number: formValues.ccnumber,
+                        security_code: formValues.cvv
+                    }
+                })
+            }
+            return makeDemandwareRequest(`/baskets/${basketID}/payment_instruments`, requestOptions)
+                .then((response) => response.json())
+                .then((responseJSON) => {
+                    debugger
+                })
+        })
+        // .then(() => {
+        //     if (!formValues.billing_same_as_shipping) {
+        //         // set billing address
+        //     }
+        // })
+        // .then(() => {
+        //     // place order
+        // })
+
+
+
 }
 
 // We're not currently checking the customer's email on the demandware site

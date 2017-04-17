@@ -20,20 +20,25 @@ export const submitPayment = () => (dispatch, getState) => {
     const email = getEmailAddress(currentState)
     const sameAddress = billingValues.billing_same_as_shipping
 
-    let address = {}
+    let address = {
+        ...billingValues
+    }
 
     if (sameAddress) {
-        address = getShippingAddress(currentState).toJS()
+        address = {
+            ...address,
+            ...getShippingAddress(currentState).toJS()
+        }
+
     } else {
         const {firstname, lastname} = splitFullName(billingValues.name)
         address = {
-            ...billingValues,
+            ...address,
             firstname,
             lastname,
             username: email
         }
     }
-
     return dispatch(submitPaymentCommand(address))
         .then((url) => {
             browserHistory.push({

@@ -1,9 +1,9 @@
 import {makeDemandwareRequest, getAuthTokenPayload} from '../utils'
+import {populateLocationsData} from '../checkout/utils'
 import {receiveCheckoutData} from '../../checkout/responses'
 import {parseAndReceiveCartResponse, requestCartData, createBasket} from './utils'
 import {getCurrentProductID} from '../parsers'
 import {API_END_POINT_URL} from '../constants'
-import {STATES} from '../checkout/constants'
 
 
 export const getCart = () => (dispatch) => {
@@ -49,7 +49,6 @@ export const removeFromCart = (itemId) => (dispatch) => {
 }
 
 export const updateItemQuantity = (itemId, itemQuantity) => (dispatch) => {
-
     return createBasket()
         .then((basketID) => {
             const requestOptions = {
@@ -71,12 +70,7 @@ export const updateItemQuantity = (itemId, itemQuantity) => (dispatch) => {
 
 export const fetchCartPageData = () => (dispatch) => {
     return new Promise(() => {
-        dispatch(receiveCheckoutData({
-            locations: {
-                countries: [{value: 'us', label: 'United States'}],
-                regions: STATES
-            }
-        }))
+        dispatch(populateLocationsData())
     })
 }
 

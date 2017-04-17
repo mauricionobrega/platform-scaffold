@@ -40,10 +40,10 @@ class BillingAddressForm extends React.Component {
             countries,
             isCompanyOrAptShown,
             name,
-            newShippingAddressIsEnabled,
             postcode,
             regions,
-            street
+            street,
+            newShippingAddressIsEnabled
         } = this.props
 
         const shippingAddress = (
@@ -78,10 +78,14 @@ class BillingAddressForm extends React.Component {
                             <ReduxForm.Field
                                 component={Field}
                                 name="billing_same_as_shipping"
+                                type="checkbox"
                                 label={<strong className="u-text-semi-bold">Same as shipping address</strong>}
                                 caption={shippingAddress}
+                                customEventHandlers={{
+                                    onChange: this.handleSavedAddress
+                                }}
                             >
-                                <input type="checkbox" defaultChecked={!newShippingAddressIsEnabled} onChange={this.handleSavedAddress} noValidate />
+                                <input type="checkbox" noValidate />
                             </ReduxForm.Field>
                         </FieldRow>
                     }
@@ -190,9 +194,6 @@ BillingAddressForm.propTypes = {
     */
     name: PropTypes.string,
 
-    /**
-     * Whether the new address fields display
-     */
     newShippingAddressIsEnabled: PropTypes.bool,
 
     /**
