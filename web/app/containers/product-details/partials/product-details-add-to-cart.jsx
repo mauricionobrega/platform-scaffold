@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import * as ReduxForm from 'redux-form'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as selectors from '../selectors'
+import {getProductInitialValues} from '../../../store/products/selectors'
 import * as actions from '../actions'
 
 import ProductDetailsVariations from './product-details-variations'
@@ -65,7 +66,7 @@ const mapStateToProps = createPropsSelector({
     ctaText: selectors.getCTAText,
     quantity: selectors.getItemQuantity,
     disabled: selectors.getAddToCartDisabled,
-    initialValues: selectors.getProductInitialValues
+    initialValues: getProductInitialValues
 })
 
 const mapDispatchToProps = {
