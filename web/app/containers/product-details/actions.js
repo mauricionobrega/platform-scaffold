@@ -3,8 +3,8 @@ import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 import {SubmissionError} from 'redux-form'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 
-import * as selectors from './selectors'
-import * as appSelectors from '../app/selectors'
+import {getItemQuantity, getAddToCartFormValues} from './selectors'
+import {getCurrentPathKey, getCartURL} from '../app/selectors'
 import {getProductVariants, getProductVariationCategories, getProductVariationCategoryIds} from '../../store/products/selectors'
 
 import {addToCart} from '../../integration-manager/cart/commands'
@@ -18,7 +18,7 @@ import {isRunningInAstro, trigger} from '../../utils/astro-integration'
 export const receiveNewItemQuantity = createAction('Set item quantity')
 export const setItemQuantity = (quantity) => (dispatch, getStore) => {
     dispatch(receiveNewItemQuantity({
-        [appSelectors.getCurrentPathKey(getStore())]: {
+        [getCurrentPathKey(getStore())]: {
             itemQuantity: quantity
         }
     }))
@@ -34,13 +34,13 @@ export const goToCheckout = () => (dispatch, getState) => {
         // otherwise, navigating is taken care of by the button press
         trigger('open:cart-modal')
     } else {
-        browserHistory.push(appSelectors.getCartURL(getState()))
+        browserHistory.push(getCartURL(getState()))
     }
 }
 
 const submitCartFormSelector = createPropsSelector({
-    key: appSelectors.getCurrentPathKey,
-    qty: selectors.getItemQuantity,
+    key: getCurrentPathKey,
+    qty: getItemQuantity,
     variations: getProductVariationCategories
 })
 
@@ -74,7 +74,7 @@ export const submitCartForm = (formValues) => (dispatch, getStore) => {
 }
 
 const variationBlurSelector = createPropsSelector({
-    variationSelections: selectors.getAddToCartFormValues,
+    variationSelections: getAddToCartFormValues,
     categoryIds: getProductVariationCategoryIds,
     variants: getProductVariants
 })
