@@ -75,7 +75,7 @@ MiniCartProductList.propTypes = {
 const mapStateToProps = createPropsSelector({
     cartURL: getCartURL,
     items: selectors.getCartItems,
-    subtotal: selectors.getCartSubtotal
+    subtotal: selectors.getSubtotalWithTax
 })
 
 export default connect(mapStateToProps)(MiniCartProductList)

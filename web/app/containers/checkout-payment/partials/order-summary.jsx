@@ -59,7 +59,7 @@ class OrderSummary extends React.Component {
             cartItems,
             isFixedPlaceOrderShown,
             summaryCount,
-            subtotalExclTax,
+            subtotalWithoutTax,
             subtotal
         } = this.props
 
@@ -82,7 +82,7 @@ class OrderSummary extends React.Component {
                     <Ledger className="u-border-light-top">
                         <LedgerRow
                             label={`Subtotal (${summaryCount} items)`}
-                            value={subtotalExclTax}
+                            value={subtotalWithoutTax}
                         />
 
                         {cart.shipping_rate &&
@@ -182,7 +182,7 @@ OrderSummary.propTypes = {
     /**
      * Subtotal excluding tax
      */
-    subtotalExclTax: PropTypes.string,
+    subtotalWithoutTax: PropTypes.string,
 
 
     /**
@@ -198,8 +198,8 @@ OrderSummary.propTypes = {
 
 const mapStateToProps = createPropsSelector({
     cartItems: cartSelectors.getCartItems,
-    subtotalExclTax: cartSelectors.getSubtotalExcludingTax,
-    subtotal: cartSelectors.getSubtotal,
+    subtotalWithoutTax: cartSelectors.getSubtotalWithoutTax,
+    subtotal: cartSelectors.getSubtotalWithTax,
     summaryCount: cartSelectors.getCartSummaryCount,
     isFixedPlaceOrderShown: selectors.getIsFixedPlaceOrderShown
 })
