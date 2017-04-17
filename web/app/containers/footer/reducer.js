@@ -5,11 +5,9 @@ import * as constants from './constants'
 import {receiveFooterData} from '../../integration-manager/responses'
 
 import {mergePayload} from '../../utils/reducer-utils'
-import {TextLink} from '../../utils/parser-utils'
 
 export const initialState = Immutable.fromJS({
     newsletter: null,
-    navigation: new Array(5).fill(TextLink()),
     signupStatus: constants.SIGNUP_NOT_ATTEMPTED
 })
 

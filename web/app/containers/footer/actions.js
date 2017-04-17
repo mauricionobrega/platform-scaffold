@@ -5,9 +5,8 @@ import * as commands from '../../integration-manager/commands'
 
 export const receiveData = createAction('Receive footer data')
 
-export const process = ({payload: {$, $response}}) => receiveData({
-    newsletter: parser.parseNewsLetter($response),
-    navigation: parser.parseNavigation($, $response)
+export const process = ({payload: {$response}}) => receiveData({
+    newsletter: parser.parseNewsLetter($response)
 })
 
 export const newsletterSignupComplete = createAction('Newsletter signup complete', ['signupStatus'])
