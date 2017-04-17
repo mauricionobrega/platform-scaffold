@@ -1,4 +1,4 @@
-import {makeDemandwareRequest, getBasketID, storeBasketID} from '../utils'
+import {makeDemandwareRequest, getBasketID, storeBasketID, deleteBasketID} from '../utils'
 import {receiveCartContents} from '../../cart/responses'
 import {getProductThumbnailSrcByPathKey} from '../../../containers/product-details/selectors'
 import {parseBasketContents, getProductHref} from '../parsers'
@@ -71,10 +71,13 @@ export const parseAndReceiveCartResponse = (responseJSON) => (dispatch, getState
 
 export const requestCartData = () => {
     return createBasket()
-        .then((basketID) => {
-            const options = {
-                method: 'GET'
+        .then((basketID) => makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}`, {method: 'GET'}))
+        .then((response) => {
+            if (!response.ok) {
+                // Our basket has expired, clear and start over
+                deleteBasketID()
+                return requestCartData()
             }
-            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}`, options)
+            return response
         })
 }
