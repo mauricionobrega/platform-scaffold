@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import * as ReduxForm from 'redux-form'
 import {createPropsSelector} from 'reselect-immutable-helpers'
-import {getProductVariationCategories} from '../selectors'
+import {getProductVariationCategories} from '../../../store/products/selectors'
 import {onVariationBlur} from '../actions'
 
 import Field from 'progressive-web-sdk/dist/components/field'
