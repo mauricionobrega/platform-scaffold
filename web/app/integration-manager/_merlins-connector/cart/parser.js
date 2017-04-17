@@ -22,10 +22,6 @@ const productIdFromUrl = (url) => {
 
 export const cartReviver = (k, v) => {
     switch (k) {
-        case 'subtotal':
-        case 'subtotal_excl_tax':
-        case 'subtotal_incl_tax':
-            return textFromFragment(v)
         case 'items':
             return v.map((item) => {
                 for (const k of Object.keys(item)) {
@@ -40,7 +36,19 @@ export const cartReviver = (k, v) => {
 }
 
 export const parse = (responseText) => {
-    return JSON.parse(responseText, cartReviver).cart
+    const {cart} = JSON.parse(responseText, cartReviver)
+    return {
+        ...cart,
+        contents: cart.items.map(({item_id, product_id, product_url, qty}) => ({
+            id: item_id,
+            productId: product_id,
+            href: product_url,
+            quantity: qty
+        })),
+        subtotalWithTax: textFromFragment(cart.subtotal),
+        subtotalWithoutTax: textFromFragment(cart.subtotal_excl_tax),
+        taxes: []
+    }
 }
 
 export default parse
