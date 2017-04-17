@@ -24,8 +24,7 @@ if [ "$CURRENT_BRANCH" != "master" ]; then
     trap 'kill $(jobs -p)' EXIT > /dev/null 2>&1
     export ACTIVE_PROFILE=local
     npm run prod:build
-    http-server --ssl --cors --p=8443 \
-      --key lighthouse/server.pem --cert lighthouse/server.pem build > /dev/null 2>&1 &
+    npm run test:server > /dev/null 2>&1 &
 else
     echo "Running tests against production"
     export ACTIVE_PROFILE=production
