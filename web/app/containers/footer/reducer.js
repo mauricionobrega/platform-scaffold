@@ -2,19 +2,15 @@ import Immutable from 'immutable'
 import {handleActions} from 'redux-actions'
 import * as footerActions from './actions'
 import * as constants from './constants'
-import {receiveFooterData} from '../../integration-manager/responses'
 
 import {mergePayload} from '../../utils/reducer-utils'
 
 export const initialState = Immutable.fromJS({
-    newsletter: null,
     signupStatus: constants.SIGNUP_NOT_ATTEMPTED
 })
 
 const footer = handleActions({
-    [footerActions.receiveData]: mergePayload,
-    [footerActions.newsletterSignupComplete]: mergePayload,
-    [receiveFooterData]: mergePayload
+    [footerActions.newsletterSignupComplete]: mergePayload
 }, initialState)
 
 
