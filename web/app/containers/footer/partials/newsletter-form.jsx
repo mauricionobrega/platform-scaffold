@@ -1,5 +1,6 @@
 import React from 'react'
 import * as ReduxForm from 'redux-form'
+import isEmail from 'validator/lib/isEmail'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
@@ -48,7 +49,7 @@ NewsletterForm.propTypes = {
 
 const validate = (values) => {
     const errors = {}
-    if (values.email && !values.email.match('@')) {  // Obviously not for real
+    if (values.email && !isEmail(values.email)) {
         errors.email = 'Enter a valid email address'
     }
     return errors
