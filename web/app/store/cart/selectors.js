@@ -10,6 +10,10 @@ export const getCartHasItems = createSelector(
     getCartItems,
     (items) => items.size > 0
 )
-export const getCartSummaryCount = createGetSelector(getCart, 'summary_count')
+export const getCartSummaryCount = createSelector(
+    getCartItems,
+    (items) => items.size
+)
+
 export const getSubtotalWithTax = createGetSelector(getCart, 'subtotalWithTax')
 export const getSubtotalWithoutTax = createGetSelector(getCart, 'subtotalWithoutTax')

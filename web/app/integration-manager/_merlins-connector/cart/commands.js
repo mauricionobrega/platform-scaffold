@@ -5,10 +5,10 @@ import {removeNotification} from '../../../containers/app/actions'
 import {receiveCartContents} from '../../cart/responses'
 import {receiveCheckoutData} from '../../checkout/responses'
 import {getFormKey, getUenc} from '../selectors'
-import parseCart from './parser'
 import {parseLocations} from '../checkout/parsers'
 import {fetchShippingMethodsEstimate} from '../checkout/commands'
 import {fetchPageData} from '../app/commands'
+import {parseCart} from './parser'
 import {parseCheckoutEntityID, extractMagentoJson} from '../../../utils/magento-utils'
 import {ESTIMATE_FORM_NAME, ADD_TO_WISHLIST_URL} from '../../../containers/cart/constants'
 
@@ -17,6 +17,12 @@ const REMOVE_CART_ITEM_URL = '/checkout/sidebar/removeItem/'
 const UPDATE_ITEM_URL = '/checkout/sidebar/updateItemQty/'
 const BASE_HEADERS = {
     Accept: 'application/json',
+}
+
+export const textFromFragment = (fragment) => {
+    const e = document.createElement('div')
+    e.innerHTML = fragment
+    return e.textContent.trim()
 }
 
 /**
@@ -30,7 +36,15 @@ export const getCart = () => (dispatch) => {
     const currentTimeMs = new Date().getTime()
     return makeRequest(`${LOAD_CART_SECTION_URL}&_=${currentTimeMs}`, opts)
         .then((response) => response.text())
-        .then((responseText) => dispatch(receiveCartContents(parseCart(responseText))))
+        .then((responseText) => {
+            const {cart} = JSON.parse(responseText)
+            const items = cart.items.map((item) => {
+                item.product_price = textFromFragment(item.product_price)
+                return item
+            })
+
+            dispatch(receiveCartContents({...parseCart(cart), items}))
+        })
 }
 
 export const addToCart = (key, qty) => (dispatch, getStore) => {
