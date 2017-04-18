@@ -2,7 +2,7 @@ import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import {createAction, urlToPathKey, getLocationData} from '../../utils/utils'
 import {closeModal, openModal} from '../../store/modals/actions'
 import {fetchShippingMethodsEstimate} from '../../store/checkout/shipping/actions'
-import {getDefaultShippingMethod} from '../../store/checkout/shipping/selectors'
+import {getSelectedShippingMethod} from '../../store/checkout/shipping/selectors'
 import {getFormValues, getFormRegisteredFields} from '../../store/form/selectors'
 import {receiveCartContents, removeFromCart} from '../../store/cart/actions'
 import {
@@ -32,7 +32,7 @@ export const fetchTaxEstimate = () => (dispatch, getState) => {
     const address = getLocationData(formValues, registeredFieldNames)
 
     const getTotalsURL = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/totals-information`
-    const shippingMethod = getDefaultShippingMethod(currentState).toJS().value.split('_')
+    const shippingMethod = getSelectedShippingMethod(currentState).toJS().value.split('_')
 
     const requestData = {
         addressInformation: {
