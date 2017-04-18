@@ -1,5 +1,6 @@
 import {SubmissionError} from 'redux-form'
 import {createBasket} from '../cart/utils'
+import {getSubtotal} from '../../store/cart/selectors'
 import {makeDemandwareRequest} from '../utils'
 import {populateLocationsData} from './utils'
 import {parseShippingAddressFromBasket} from './parsers'
@@ -128,17 +129,16 @@ export const submitShipping = (formValues) => (dispatch) => {
         })
 }
 
-export const submitPayment = (formValues) => (dispatch) => {
+export const submitPayment = (formValues) => (dispatch, getState) => {
     let basket
-    debugger
     return createBasket()
         .then((basketID) => {
             basket = basketID
             return basket
         })
         .then((basketID) => {
-            debugger
             // set payment method
+            const orderTotal = getSubtotal(getState())
             const type = getCardData(formValues.ccnumber).cardType
             const expiryMonth = /^\d\d/.exec(formValues.ccexpiry)[0]
             const expiryYear = /\d\d$/.exec(formValues.ccexpiry)[0]
@@ -146,19 +146,23 @@ export const submitPayment = (formValues) => (dispatch) => {
                 method: 'POST',
                 body: JSON.stringify({
                     payment_card: {
+                        amount: orderTotal,
                         card_type: type,
-                        expiration_month: expiryMonth,
-                        expiration_year: expiryYear,
+                        expiration_month: parseInt(expiryMonth),
+                        expiration_year: parseInt(expiryYear),
                         holder: formValues.ccname,
                         number: formValues.ccnumber,
                         security_code: formValues.cvv
-                    }
+                    },
+                    payment_method_id: 'CREDIT_CARD'
                 })
             }
-            return makeDemandwareRequest(`/baskets/${basketID}/payment_instruments`, requestOptions)
+            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/payment_instruments`, requestOptions)
                 .then((response) => response.json())
                 .then((responseJSON) => {
-                    debugger
+                    if (responseJSON.fault) {
+                        throw new Error(responseJSON.fault)
+                    }
                 })
         })
         // .then(() => {
