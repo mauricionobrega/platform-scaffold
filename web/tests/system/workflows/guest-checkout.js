@@ -73,7 +73,6 @@ export default {
             .assert.visible(productDetails.selectors.itemAdded)
     },
 
-
     'Checkout - Guest - Navigate from ProductDetails to Cart': (browser) => {
         productDetails.navigateToCart()
         browser

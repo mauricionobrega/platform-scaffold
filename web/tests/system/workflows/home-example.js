@@ -38,5 +38,11 @@ export default {
             .assert.attributeContains(home.selectors.skipToMain, 'href', skipLinkTargets.main)
             .assert.attributeContains(home.selectors.skipToNav, 'href', skipLinkTargets.nav)
             .assert.attributeContains(home.selectors.skipToFooter, 'href', skipLinkTargets.footer)
-    }
+    },
+
+    'Email field has email input type': (browser) => {
+        browser
+            .waitForElementVisible(home.selectors.email)
+            .assert.visible(home.selectors.email)
+    },
 }
