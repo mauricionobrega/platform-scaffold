@@ -5,11 +5,15 @@ import ProductDetails from '../page-objects/product-details'
 import Cart from '../page-objects/cart'
 import Checkout from '../page-objects/checkout'
 
+import Webpush from '../page-objects/webpush'
+
 let home
 let productList
 let productDetails
 let cart
 let checkout
+
+let webpush
 
 const PRODUCT_LIST_INDEX = process.env.PRODUCT_LIST_INDEX || 2
 const PRODUCT_INDEX = process.env.PRODUCT_INDEX || 1
@@ -23,6 +27,8 @@ export default {
         productDetails = new ProductDetails(browser)
         cart = new Cart(browser)
         checkout = new Checkout(browser)
+
+        webpush = new Webpush(browser)
     },
 
     after: (browser) => {
@@ -37,6 +43,8 @@ export default {
             .preview()
             .waitForElementVisible(home.selectors.wrapper)
             .assert.visible(home.selectors.wrapper)
+
+        webpush.setup()
     },
 
     'Checkout - Registered - Navigate from Home to ProductList': (browser) => {
