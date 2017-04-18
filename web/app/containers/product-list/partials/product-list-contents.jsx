@@ -58,7 +58,8 @@ ProductListContents.propTypes = {
     contentsLoaded: PropTypes.bool,
     hasProducts: PropTypes.bool,
     noResultsText: PropTypes.string,
-    numItems: PropTypes.string
+    numItems: PropTypes.string,
+    sort: PropTypes.array
 }
 
 const mapStateToProps = createPropsSelector({
@@ -66,7 +67,8 @@ const mapStateToProps = createPropsSelector({
     contentsLoaded: selectors.getProductListContentsLoaded,
     noResultsText: selectors.getNoResultsText,
     numItems: selectors.getNumItems,
-    products: selectors.getProductListProducts
+    products: selectors.getSortedListProducts,
+    sort: selectors.getSort
 })
 
 
