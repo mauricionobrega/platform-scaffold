@@ -11,8 +11,8 @@ const RULESETS = {
 
 /**
  * evaluate - Used to verify whether an object meets the criteria of a ruleset.
- * In simple terms, for example, whether an object has a color prop of a certain
- * value. A more specific example:
+ * For example, whether an object has a color prop of a certain alue. A more
+ * specific example:
  *
  *     evaluate({ color: 'red' }, 'color', 'blue') // => false
  *     evaluate({ color: 'red' }, 'color', 'red') // => true
@@ -29,7 +29,16 @@ const evaluate = (item, ruleset, criteria) => RULESETS[ruleset](item, criteria)
 /**
  * toTokens - A reduce function callback that takes a list of filters and
  * reduces them down into a list of tokenized filters. The tokens can be used to
- * determine whether an object meets that filter's criteria. See evaluate above.
+ * generate a function callback (see byTokens below) for use in a filter method.
+ * Example usage:
+ *
+ *    const filters = getFilters.toJS()
+ *    // => [{ruleset: 'price', kinds: [{active: true, criteria: 'blue', ...}]}, ...]
+ *    //    list of standardized filters from the store
+ *
+ *    const tokens = filters.reduce(toTokens, [])
+ *    // => [{ruleset: 'price', criteria: 'blue'}, ...]
+ *    //    list of tokenized filters
  *
  * @param {array} list - the list that has only active tokens appended to it.
  * @param {object} currentFilter - the current filter object
@@ -56,10 +65,10 @@ export const toTokens = (list, currentFilter) => {
  * based on the provided filter tokens. Example usage:
  *
  *    const items = [{}, {}, ...]
- *    const tokens = [max20dollarsToken, colorBlueToken, ...]
+ *    const tokens = getFilters.toJS().reduce(toTokens, [])
  *    items.filter(byTokens(tokens)) => items matching token criteria
  *
- * @param  {array} tokenList - list of filter tokens (see tokenize function
+ * @param  {array} tokenList - list of filter tokens (see toToken function
            above). It's param `currentItem` is likely an object that will
            eventually be consumed by a React component.
  * @returns {function} - a callback function, intended for filter methods
