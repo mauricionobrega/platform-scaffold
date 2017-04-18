@@ -69,11 +69,14 @@ export const parseAndReceiveCartResponse = (responseJSON) => (dispatch, getState
         .then((basketData) => dispatch(receiveCartContents(basketData)))
 }
 
-export const requestCartData = () => {
+export const requestCartData = (noRetry) => {
     return createBasket()
         .then((basketID) => makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}`, {method: 'GET'}))
         .then((response) => {
-            if (!response.ok) {
+            if (response.status === 404) {
+                if (noRetry) {
+                    throw new Error('Cart not found')
+                }
                 // Our basket has expired, clear and start over
                 deleteBasketID()
                 return requestCartData()
