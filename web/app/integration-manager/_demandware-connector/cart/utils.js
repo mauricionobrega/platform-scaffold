@@ -1,4 +1,4 @@
-import {makeDemandwareRequest, getBasketID, storeBasketID} from '../utils'
+import {makeDemandwareRequest, getBasketID, storeBasketID, deleteBasketID} from '../utils'
 import {receiveCartContents} from '../../cart/responses'
 import {getProductThumbnailSrcByPathKey} from '../../../store/products/selectors'
 import {parseBasketContents, getProductHref} from '../parsers'
@@ -69,12 +69,18 @@ export const parseAndReceiveCartResponse = (responseJSON) => (dispatch, getState
         .then((basketData) => dispatch(receiveCartContents(basketData)))
 }
 
-export const requestCartData = () => {
+export const requestCartData = (noRetry) => {
     return createBasket()
-        .then((basketID) => {
-            const options = {
-                method: 'GET'
+        .then((basketID) => makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}`, {method: 'GET'}))
+        .then((response) => {
+            if (response.status === 404) {
+                if (noRetry) {
+                    throw new Error('Cart not found')
+                }
+                // Our basket has expired, clear and start over
+                deleteBasketID()
+                return requestCartData(true)
             }
-            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}`, options)
+            return response
         })
 }

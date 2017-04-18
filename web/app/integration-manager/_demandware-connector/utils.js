@@ -14,6 +14,10 @@ export const getAuthToken = () => {
     return window.sessionStorage.getItem(AUTH_KEY_NAME)
 }
 
+export const deleteAuthToken = () => {
+    window.sessionStorage.removeItem(AUTH_KEY_NAME)
+}
+
 export const deleteBasketID = () => {
     window.sessionStorage.removeItem(BASKET_KEY_NAME)
 }
@@ -82,6 +86,12 @@ export const initDemandWareAuthAndSession = () => {
         }
         return makeRequest(`${API_END_POINT_URL}/customers/auth`, requestOptions)
             .then((response) => {
+                if (response.status === 401) {
+                    // The server did not accept the token, start from scratch
+                    deleteAuthToken()
+                    return initDemandWareAuthAndSession()
+                }
+
                 const authorizationToken = response.headers.get('Authorization')
                 storeAuthToken(authorizationToken)
                 return {
