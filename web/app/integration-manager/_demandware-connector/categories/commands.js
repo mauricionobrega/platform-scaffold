@@ -7,6 +7,7 @@ import {parseProductListData} from '../parsers'
 import {API_END_POINT_URL, SITE_ID} from '../constants'
 
 const makeCategoryURL = (id) => `${API_END_POINT_URL}/categories/${id}`
+const makeCategorySearchURL = (id) => `${API_END_POINT_URL}/product_search?expand=images,prices&q=&refine_1=cgid=${id}`
 
 /* eslint-disable camelcase, no-use-before-define */
 const processCategory = (dispatch) => ({parent_category_id, id, name}) => {
@@ -20,13 +21,13 @@ const processCategory = (dispatch) => ({parent_category_id, id, name}) => {
     }))
 
     if (parentId) {
-        dispatch(fetchParentCategoryData(parentId))
+        dispatch(fetchCategoryInfo(parentId))
     }
 }
 /* eslint-enable camelcase, no-use-before-define */
 
-const fetchParentCategoryData = (id) => (dispatch) => {
-    makeDemandwareRequest(makeCategoryURL(id), {method: 'GET'})
+const fetchCategoryInfo = (id) => (dispatch) => {
+    return makeDemandwareRequest(makeCategoryURL(id), {method: 'GET'})
         .then((response) => response.json())
         .then(processCategory(dispatch))
 }
@@ -34,23 +35,16 @@ const fetchParentCategoryData = (id) => (dispatch) => {
 export const fetchProductListData = (url) => (dispatch) => {
     const categoryIDMatch = /\/([^/]+)$/.exec(url)
     const categoryID = categoryIDMatch ? categoryIDMatch[1] : ''
-    const urlPathKey = urlToPathKey(url)
-    const requestOptions = {
-        method: 'GET'
-    }
 
-    return makeDemandwareRequest(makeCategoryURL(categoryID), requestOptions)
-        .then((response) => response.json())
-        .then(processCategory(dispatch))
-
-        .then(() => makeDemandwareRequest(`${API_END_POINT_URL}/product_search?expand=images,prices&q=&refine_1=cgid=${categoryID}`, requestOptions))
+    return dispatch(fetchCategoryInfo(categoryID))
+        .then(() => makeDemandwareRequest(makeCategorySearchURL(categoryID), {method: 'GET'}))
         .then((response) => response.json())
         .then(({hits, total}) => {
             const productListData = parseProductListData(hits)
             const products = Object.keys(productListData)
 
             dispatch(receiveProductListProductData(productListData))
-            dispatch(receiveCategoryContents(urlPathKey, {
+            dispatch(receiveCategoryContents(urlToPathKey(url), {
                 products,
                 itemCount: total
             }))
