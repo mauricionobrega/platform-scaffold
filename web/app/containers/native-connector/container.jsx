@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 
 import {onAstroEvent, disableAstroEvent} from '../../utils/astro-integration'
 
-import {getCart} from '../../store/cart/actions'
+import {getCart} from '../../integration-manager/cart/commands'
 
 const needsUpdateEvent = 'cart:needs-update'
 
