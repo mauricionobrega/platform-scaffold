@@ -19,5 +19,6 @@ export default {
     categories: categoriesCommands,
     cart: cartCommands,
     app: appCommands,
-    login: loginCommands
+    login: loginCommands,
+    submitNewsletter
 }
