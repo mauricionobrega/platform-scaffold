@@ -7,7 +7,7 @@ const selectors = {
     productListItem(index) {
         return `.t-home__category .t-home__category-section:nth-child(${index}) .pw--is-loaded`
     },
-    email: '.pw-field__input input[type="email"]'
+    email: '.pw-field__input'
 }
 
 const Home = function(browser) {

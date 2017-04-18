@@ -42,7 +42,7 @@ export default {
 
     'Email field has email input type': (browser) => {
         browser
-            .waitForElementVisible(home.selectors.email)
-            .assert.visible(home.selectors.email)
+            .waitForElementVisible(`${home.selectors.email} [type="email"]`)
+            .assert.visible(`${home.selectors.email} [type="email"]`)
     },
 }
