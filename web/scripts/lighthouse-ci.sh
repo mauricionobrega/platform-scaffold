@@ -25,11 +25,10 @@ mkdir -p $HOME/.pki/nssdb
 # Pass in a password 
 certutil -d $HOME/.pki/nssdb -N --empty-password
 # Add self-signed SSL certificate
-certutil -d sql:$HOME/.pki/nssdb -A -t "P,," -n lighthouse/server.pem -i lighthouse/server.pem
+certutil -d sql:$HOME/.pki/nssdb -A -t "P,," -n dev-server/localhost.pem -i dev-server/localhost.pem
 
 npm run prod:build
-http-server --ssl --cors --p=8443 \
-	--key lighthouse/server.pem --cert lighthouse/server.pem build &
+npm run test:server &
 
 sleep 5
 lighthouse \

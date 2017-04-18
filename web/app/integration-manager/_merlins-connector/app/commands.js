@@ -3,10 +3,9 @@ import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 
 import {getCart} from '../cart/commands'
 import {appParser} from './parser'
-import {parseFooter} from '../footer/parser'
 import {parseNavigation} from '../navigation/parser'
 import {receiveFormKey} from '../actions'
-import {receiveNavigationData, receiveAppData, receiveFooterData, setPageFetchError, setCheckoutShippingURL, setCartURL} from '../../responses'
+import {receiveNavigationData, receiveAppData, setPageFetchError, setCheckoutShippingURL, setCartURL} from '../../responses'
 import {CHECKOUT_SHIPPING_URL, CART_URL} from '../constants'
 
 export const fetchPageData = (url) => (dispatch) => {
@@ -18,7 +17,6 @@ export const fetchPageData = (url) => (dispatch) => {
             dispatch(receiveFormKey(appData.formKey))
             dispatch(receiveAppData({...appData}))
             dispatch(receiveNavigationData(parseNavigation($, $response)))
-            dispatch(receiveFooterData(parseFooter($, $response)))
             return res
         })
         .catch((error) => {

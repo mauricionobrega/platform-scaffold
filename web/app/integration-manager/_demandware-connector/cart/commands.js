@@ -10,7 +10,7 @@ export const getCart = () => (dispatch) => {
     return requestCartData()
         .then((response) => response.json())
         .then((responseJSON) => dispatch(parseAndReceiveCartResponse(responseJSON)))
-
+        .catch((err) => console.error('Cart request failed', err))
 }
 
 export const addToCart = (productID, qty) => (dispatch) => {
