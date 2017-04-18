@@ -3,6 +3,12 @@ import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 
 /* eslint-disable newline-per-chained-call */
 
+export const parseCategoryId = ($, $html) => {
+    const className = $html.find('li[class*="category"]').attr('class')
+    const classMatch = /category(\d+)/.exec(className)
+    return classMatch[1]
+}
+
 export const parseCategoryTitle = ($, $html) => getTextFrom($html, '.page-title')
 
 const categoryProductsParser = ($, $html) => {
