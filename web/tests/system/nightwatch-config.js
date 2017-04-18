@@ -36,12 +36,21 @@ module.exports = {
             'desiredCapabilities': {
                 'browserName': 'chrome',
                 'chromeOptions': {
-                    'mobileEmulation': { 'deviceName' : 'Apple iPhone 6'},
                     'args': [
+                        /**
+                         * To facilitate testing of Push notifications, we need
+                         * a user agent that is supported. Unfortunately, Selenium
+                         * doesn't seem to have any emulated mobile devices that
+                         * we support.
+                         */
+                        '--user-agent="Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Mobile Safari/537.36"',
                         'window-size=320,850',
                         '--allow-running-insecure-content',
                         '--test-type'
-                    ]
+                    ],
+                    prefs: {
+                        'profile.default_content_setting_values.notifications': 1
+                    }
                 },
                 'javascriptEnabled': true,
                 'acceptSslCerts': true
