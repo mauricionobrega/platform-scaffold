@@ -12,7 +12,7 @@ export const receiveCategoryInformation = createAction(
 )
 
 export const receiveCategoryContents = createAction(
-    'Receive Category Information',
+    'Receive Category Contents',
     (id, contents) => ({
         [typecheck(CategoryID, id)]: typecheck(CategoryContents, contents)
     })
