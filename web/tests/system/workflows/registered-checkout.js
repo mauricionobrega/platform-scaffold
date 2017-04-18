@@ -81,7 +81,7 @@ export default {
             .waitForElementVisible(checkout.selectors.checkoutTemplateIdentifier)
             .assert.visible(checkout.selectors.checkoutTemplateIdentifier)
             // Email field should have email input type
-            .waitForElementVisible(checkout.selectors.registeredEmail + '[type="email"]')
+            .waitForElementVisible(`${checkout.selectors.registeredEmail} + [type="email"]`)
     },
 
     'Checkout - Registered - Continue to Registered Checkout': (browser) => {
@@ -95,7 +95,7 @@ export default {
         checkout.fillShippingInfo()
         browser
             // Phone field should have numeric input type
-            .waitForElementVisible(checkout.selectors.phone + '[type="tel"]')
+            .waitForElementVisible(`${checkout.selectors.phone} + [type="tel"]`)
             .waitForElementVisible(checkout.selectors.lastShippingInfo)
     },
 
