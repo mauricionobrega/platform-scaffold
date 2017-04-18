@@ -79,7 +79,7 @@ export const requestCartData = (noRetry) => {
                 }
                 // Our basket has expired, clear and start over
                 deleteBasketID()
-                return requestCartData()
+                return requestCartData(true)
             }
             return response
         })
