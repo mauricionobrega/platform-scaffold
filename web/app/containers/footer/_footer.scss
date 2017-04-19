@@ -26,11 +26,19 @@
     background-color: $brand-color;
 
     color: #fff;
-
-    a {
-        color: #fff;
-    }
 }
+
+
+.t-footer__navigation-link {
+    display: inline-block;
+    margin-right: $unit;
+    margin-left: $unit;
+    padding-bottom: $unit;
+
+    color: #fff;
+    font-size: $small-font-size;
+}
+
 
 
 // Panel Newsletter
@@ -60,6 +68,6 @@
     margin: 0;
 
     color: #fff;
-    font-size: 12px;
+    font-size: $small-font-size;
     line-height: $font-size;
 }
