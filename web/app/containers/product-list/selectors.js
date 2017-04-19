@@ -42,10 +42,12 @@ export const getProductListProducts = createSelector(
 export const getSortedListProducts = createSelector(
     getProductListProducts,
     getSort,
-    (products, sortOptions, activeSort) => {
+    (products, sort, activeSort) => {
         const arrayOfProducts = products.toJS()
-        sortOptions.toJS().forEach((option) => {
-            if (option.active === true) {
+        const options = sort.toJS().options
+
+        options.forEach((option) => {
+            if (option.selected === true) {
                 activeSort = option.value
             }
             return activeSort
