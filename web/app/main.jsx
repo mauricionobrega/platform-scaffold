@@ -16,9 +16,6 @@ __webpack_public_path__ = origin // eslint-disable-line camelcase, no-undef
 import React from 'react'
 import {render} from 'react-dom'
 
-// Redux
-import configureStore from './store'
-
 // Router
 import Router from './router'
 
@@ -30,16 +27,24 @@ import {analyticManager} from 'progressive-web-sdk/dist/analytics/analytic-manag
 import {clientAnalytics} from './utils/analytics/client-analytics'
 import {pushMessaging} from './utils/push-messaging/push-messaging-distributor'
 
-analyticManager.init({
-    projectSlug: AJS_SLUG,      // eslint-disable-line no-undef
-    isDebug: false
-}, clientAnalytics, pushMessaging)
-initCacheManifest(cacheHashManifest)
+loadPolyfills(() => {
+    // Redux
+    // When we import the store, we also create all of the initialStates
+    // These will sometimes contain code that needs to be polyfilled, such as Array.prototype.fill
+    import('./store')
+        .then((storeImport) => {
+            const configureStore = storeImport.default
 
-const store = configureStore()
+            analyticManager.init({
+                projectSlug: AJS_SLUG,      // eslint-disable-line no-undef
+                isDebug: false
+            }, clientAnalytics, pushMessaging)
+            initCacheManifest(cacheHashManifest)
 
-const rootEl = document.getElementsByClassName('react-target')[0]
+            const store = configureStore()
 
-const renderCallback = () => render(<Router store={store} />, rootEl)
+            const rootEl = document.getElementsByClassName('react-target')[0]
 
-loadPolyfills(renderCallback)
+            render(<Router store={store} />, rootEl)
+        })
+})
