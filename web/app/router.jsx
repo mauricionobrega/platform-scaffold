@@ -72,6 +72,8 @@ const Router = ({store}) => (
                 <Route component={CheckoutPayment} path="*/COBilling-Start*" routeName="checkout-payment" Header={CheckoutHeader} Footer={CheckoutFooter} />
                 <Route component={Login} path="*/Account-Show*" routeName="signin" />
                 <Route component={Cart} path="*/Cart-Show*" routeName="cart" />
+                <Route component={CheckoutConfirmation} path="*/COSummary-Submit*" routeName="checkout-confirmation" Header={CheckoutHeader} Footer={CheckoutFooter} />
+
 
             </Route>
         </SDKRouter>

@@ -4,7 +4,7 @@ import {getOrderTotal} from '../../../store/cart/selectors'
 import {makeDemandwareRequest, getAuthTokenPayload, getAuthToken} from '../utils'
 import {populateLocationsData, createOrderAddressObject} from './utils'
 import {parseShippingAddressFromBasket} from './parsers'
-import {API_END_POINT_URL, PAYMENT_URL} from '../constants'
+import {API_END_POINT_URL, PAYMENT_URL, SITE_ID} from '../constants'
 import {receiveCheckoutData, receiveShippingInitialValues, receiveBillingInitialValues} from './../../checkout/responses'
 import {receiveOrderConfirmationContents} from '../../responses'
 import {getCardData} from 'progressive-web-sdk/dist/card-utils'
@@ -72,7 +72,7 @@ export const submitShipping = (formValues) => (dispatch) => {
             const requestOptions = {
                 method: 'PUT',
                 body: JSON.stringify({
-                    email: 'jennifer@mobify.com',//username,
+                    email: username,
                     customer_name: name,
                     customer_id: customerID
                 })
@@ -177,17 +177,12 @@ export const submitPayment = (formValues) => (dispatch, getState) => {
                         throw new Error(responseJSON.fault.message)
                     }
 
-                    return makeDemandwareRequest(`${API_END_POINT_URL}/orders/${responseJSON.order_no}`, {method: 'PATCH', body: JSON.stringify({status: 'new'})})
-                        .then(() => {
-                            // Clear out the basket?
-                            dispatch(receiveOrderConfirmationContents({
-                                orderNumber: responseJSON.order_no
-                            }))
-                            return '/checkout/onepage/success/'
-                        })
+                    dispatch(receiveOrderConfirmationContents({
+                        orderNumber: responseJSON.order_no
+                    }))
+                    return `/on/demandware.store/${SITE_ID}/default/COSummary-Submit`
                 })
         })
-        .catch((error) => { debugger })
 
 
 
