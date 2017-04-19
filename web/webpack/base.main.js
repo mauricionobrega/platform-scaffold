@@ -42,6 +42,17 @@ const config = {
             name: 'vendor',
             minChunks: (module) => /node_modules/.test(module.resource)
         }),
+        new webpack.optimize.CommonsChunkPlugin({
+            // These dependencies are shared between several of the route chunks
+            async: 'common-dependencies',
+            minChunks: (module) => {
+                const context = module.context
+                const targets = [/progressive-web-sdk/]
+                return context &&
+                    context.indexOf('node_modules') >= 0 &&
+                    targets.find((target) => target.test(context))
+            }
+        }),
         new ExtractTextPlugin({
             filename: '[name].css'
         }),
