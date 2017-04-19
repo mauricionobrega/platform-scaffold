@@ -1,10 +1,14 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
+import {connect} from 'react-redux'
+import * as selectors from '../selectors'
+import {createPropsSelector} from 'reselect-immutable-helpers'
+
 import Field from 'progressive-web-sdk/dist/components/field'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 import Stepper from 'progressive-web-sdk/dist/components/stepper'
 import Button from 'progressive-web-sdk/dist/components/button'
 
-const ProductDeetsForm = () => (
+const ProductDeetsForm = ({ctaText}) => (
     <div className="t-product-deets-form u-padding-md u-box-shadow u-position-relative u-z-index-1">
         <form>
             <FieldRow>
@@ -27,16 +31,16 @@ const ProductDeetsForm = () => (
             </FieldRow>
             <FieldRow>
                 <Field label="3. Select Quantity:">
-                    <Stepper incrementIcon="plus" decrementIcon="minus" initialValue={1} />
+                    <Stepper className="u-width-full u-text-align-center" incrementIcon="plus" decrementIcon="minus" initialValue={1} />
                 </Field>
             </FieldRow>
             <FieldRow>
-                <Button className="c--secondary">
-                    <span>Add to Cart</span>
+                <Button className="c--primary u-width-full">
+                    <span>{ctaText}</span>
                 </Button>
             </FieldRow>
             <FieldRow>
-                <Button className="c--tertiary">
+                <Button className="c--tertiary u-width-full">
                     <span>+Wish List / Registry</span>
                 </Button>
             </FieldRow>
@@ -44,4 +48,12 @@ const ProductDeetsForm = () => (
     </div>
 )
 
-export default ProductDeetsForm
+ProductDeetsForm.propTypes = {
+    ctaText: PropTypes.string
+}
+
+const mapStateToProps = createPropsSelector({
+    ctaText: selectors.getCTAText
+})
+
+export default connect(mapStateToProps)(ProductDeetsForm)

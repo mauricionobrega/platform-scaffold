@@ -82,7 +82,6 @@ ProductDeetsGallery.propTypes = {
     items: PropTypes.arrayOf(PropTypes.shape({
         position: PropTypes.string.isRequired,
         img: PropTypes.string.isRequired,
-        full: PropTypes.string.isRequired,
     }))
 }
 

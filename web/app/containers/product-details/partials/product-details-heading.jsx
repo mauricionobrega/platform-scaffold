@@ -5,8 +5,6 @@ import {createPropsSelector} from 'reselect-immutable-helpers'
 
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import Breadcrumbs from 'progressive-web-sdk/dist/components/breadcrumbs'
-import StarRating from '../../../components/star-rating'
-
 import {isRunningInAstro} from '../../../utils/astro-integration'
 
 const checkoutBreadcrumb = [
