@@ -4,6 +4,7 @@ import {createGetSelector, createHasSelector} from 'reselect-immutable-helpers'
 import {getUi, getCategories, getProducts} from '../../store/selectors'
 import * as appSelectors from '../app/selectors'
 import {PLACEHOLDER} from '../app/constants'
+import {sortLib} from '../../utils/sort-utils'
 
 const PLACEHOLDER_URLS = Immutable.List(new Array(5).fill(PLACEHOLDER))
 
@@ -38,37 +39,14 @@ export const getProductListProducts = createSelector(
     (products, productUrls) => productUrls.map((path) => products.get(path))
 )
 
-const sortLib = {
-    name: (a, b) => {
-        const nameA = a.title
-        const nameB = b.title
-
-        if (nameA < nameB) {
-            return -1
-        }
-        if (nameA > nameB) {
-            return 1
-        }
-        return 0
-    },
-    price: (a, b) => {
-        const priceA = (a.price.replace(/\W+/g, ''))
-        const priceB = (b.price.replace(/\W+/g, ''))
-
-        return priceA - priceB
-    },
-    position: () => { return 0 }
-}
-
 export const getSortedListProducts = createSelector(
     getProductListProducts,
     getSort,
-    (products, sort, activeSort) => {
+    (products, sortOptions, activeSort) => {
         const arrayOfProducts = products.toJS()
-
-        sort.toJS().forEach((object) => {
-            if (object.active === true) {
-                activeSort = object.value
+        sortOptions.toJS().forEach((option) => {
+            if (option.active === true) {
+                activeSort = option.value
             }
             return activeSort
         })
