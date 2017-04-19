@@ -9,7 +9,7 @@
   "siteUrl": "https://www.merlinspotions.com/",
   "license": "See license in LICENSE",
   "private": true,
-  "version": "0.13.1",
+  "version": "0.16.2",
   "dependencies": {
     "babel-plugin-dynamic-import-node": "1.0.1",
     "babel-runtime": "6.23.0",
@@ -123,6 +123,7 @@
     "test:pwa-prod": "./scripts/lighthouse-prod.sh",
     "test:pwa-ci": "./scripts/lighthouse-ci.sh",
     "test:pwa-local": "./scripts/lighthouse-local.sh",
+    "test:server": "./scripts/test-server.sh",
     "test:watch": "npm test -- --watch",
     "prod:build": "bash ./scripts/build.sh",
     "update-loader-routes": "sdk-get-routes"

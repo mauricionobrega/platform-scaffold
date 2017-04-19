@@ -9,7 +9,6 @@ import {REGISTER_SECTION} from '../constants'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import FieldSet from 'progressive-web-sdk/dist/components/field-set'
-import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
 import {LoginField} from './common'
 
@@ -63,16 +62,6 @@ class RegisterForm extends React.Component {
                 {sections.map(({heading, fields}, idx) => {
                     return (
                         <FieldSet className="t-login__register-fieldset" key={idx}>
-                            <div className="u-margin-bottom">
-                                {heading ?
-                                    <h3 className="u-color-brand u-text-font-family u-text-normal">
-                                        {heading}
-                                    </h3>
-                                :
-                                    <SkeletonBlock height="24px" width="50%" />
-                                }
-                            </div>
-
                             {fields.map((field, idx) =>
                                 <LoginField {...field} key={idx} modalInfo={this.modalInfo} />
                             )}

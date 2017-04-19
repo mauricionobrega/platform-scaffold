@@ -12,8 +12,8 @@ const ProductDetails = ({route: {routeName}}) => {
         <div className="t-product-details">
             <ProductDetailsHeading isInCheckout={routeName === 'cartEditPage'} />
             <ProductDetailsCarousel />
-            <ProductDetailsDescription />
             <ProductDetailsAddToCart />
+            <ProductDetailsDescription />
             <ProductDetailsItemAddedModal />
             <div className="u-padding-md u-bg-color-neutral-10">
                 <ProductNearestStores title="The Product is sold in the store" viewAllStoresText="Check all stores" class="u-margin-all" />
