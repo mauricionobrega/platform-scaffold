@@ -4,11 +4,12 @@ import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 import {removeNotification} from '../../../containers/app/actions'
 import {receiveCartContents} from '../../cart/responses'
 import {receiveCheckoutData} from '../../checkout/responses'
+import {receiveCartProductData} from '../../products/responses'
 import {getFormKey, getUenc} from '../selectors'
 import {parseLocations} from '../checkout/parsers'
 import {fetchShippingMethodsEstimate} from '../checkout/commands'
 import {fetchPageData} from '../app/commands'
-import {parseCart} from './parser'
+import {parseCart, parseCartProducts} from './parser'
 import {parseCheckoutEntityID, extractMagentoJson} from '../../../utils/magento-utils'
 import {ESTIMATE_FORM_NAME, ADD_TO_WISHLIST_URL} from '../../../containers/cart/constants'
 
@@ -42,6 +43,10 @@ export const getCart = () => (dispatch) => {
                 item.product_price = textFromFragment(item.product_price)
                 return item
             })
+
+            if (items.length > 0) {
+                dispatch(receiveCartProductData(parseCartProducts(cart)))
+            }
 
             dispatch(receiveCartContents({...parseCart(cart), items}))
         })
