@@ -5,7 +5,8 @@ const availablePolyfills = [
         test: () => !global.fetch,
         load: () => import('whatwg-fetch')
     }, {
-        test: () => true,
+        // Choose an arbitrary feature that we know is missing on older browsers
+        test: () => !String.prototype.startsWith,
         load: () => import('core-js/shim')
     }
 ]
