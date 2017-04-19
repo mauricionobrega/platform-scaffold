@@ -7,7 +7,7 @@ import {API_END_POINT_URL} from '../constants'
 export const createBasket = (basketContents) => {
     const basketID = getBasketID()
     if (basketID && !basketContents) {
-        return Promise.resolve(basketID)
+        return Promise.resolve({basket_id: basketID})
     }
     const options = {
         method: 'POST'
@@ -20,11 +20,7 @@ export const createBasket = (basketContents) => {
         .then((response) => response.json())
         .then((basket) => {
             storeBasketID(basket.basket_id)
-            if (basketContents) {
-                return basket
-            }
-
-            return basket.basket_id
+            return basket
         })
 }
 
@@ -71,10 +67,10 @@ export const parseAndReceiveCartResponse = (responseJSON) => (dispatch, getState
 
 export const requestCartData = () => {
     return createBasket()
-        .then((basketID) => {
+        .then((basket) => {
             const options = {
                 method: 'GET'
             }
-            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}`, options)
+            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}`, options)
         })
 }

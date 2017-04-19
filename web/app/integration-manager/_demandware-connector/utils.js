@@ -90,7 +90,7 @@ export const initDemandWareAuthAndSession = () => {
     }
     const options = {
         method: 'POST',
-        body: '{ type : "session" }',
+        body: '{ type : "guest" }',
         headers: REQUEST_HEADERS
     }
     let authorization

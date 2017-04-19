@@ -34,7 +34,7 @@ export const getCurrentProductID = () => {
     return productIDMatch ? productIDMatch[1] : ''
 }
 
-export const parseBasketContents = ({product_items, product_sub_total, product_total}) => {
+export const parseBasketContents = ({product_items, product_sub_total, product_total, order_total}) => {
     /* eslint-disable camelcase */
     let summary_count = 0
     const items = product_items ? product_items.map(({item_id, product_name, product_id, base_price, quantity}) => {
@@ -57,7 +57,8 @@ export const parseBasketContents = ({product_items, product_sub_total, product_t
         items,
         subtotal: formatPrice(product_total),
         subtotal_excl_tax: formatPrice(product_sub_total),
-        summary_count
+        summary_count,
+        orderTotal: order_total
     }
     /* eslint-enable camelcase  */
 }

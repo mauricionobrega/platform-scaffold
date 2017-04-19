@@ -1,17 +1,18 @@
 import {SubmissionError} from 'redux-form'
-import {createBasket} from '../cart/utils'
-import {getSubtotal} from '../../store/cart/selectors'
-import {makeDemandwareRequest} from '../utils'
-import {populateLocationsData} from './utils'
+import {createBasket, parseAndReceiveCartResponse} from '../cart/utils'
+import {getOrderTotal} from '../../../store/cart/selectors'
+import {makeDemandwareRequest, getAuthTokenPayload, getAuthToken} from '../utils'
+import {populateLocationsData, createOrderAddressObject} from './utils'
 import {parseShippingAddressFromBasket} from './parsers'
 import {API_END_POINT_URL, PAYMENT_URL} from '../constants'
 import {receiveCheckoutData, receiveShippingInitialValues, receiveBillingInitialValues} from './../../checkout/responses'
+import {receiveOrderConfirmationContents} from '../../responses'
 import {getCardData} from 'progressive-web-sdk/dist/card-utils'
 
 export const fetchShippingMethodsEstimate = () => (dispatch) => {
     return createBasket()
-        .then((basketID) => {
-            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/shipments/me/shipping_methods`, {method: 'GET'})
+        .then((basket) => {
+            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}/shipments/me/shipping_methods`, {method: 'GET'})
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     const shippingMethods = responseJSON.applicable_shipping_methods.map(({name, description, price, id}) => {
@@ -31,8 +32,8 @@ export const fetchShippingMethodsEstimate = () => (dispatch) => {
 
 export const fetchCheckoutShippingData = () => (dispatch) => {
     return createBasket()
-        .then((basketID) => {
-            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}`, {method: 'GET'})
+        .then((basket) => {
+            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}`, {method: 'GET'})
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     dispatch(receiveShippingInitialValues({initialValues: parseShippingAddressFromBasket(responseJSON)}))
@@ -45,8 +46,8 @@ export const fetchCheckoutShippingData = () => (dispatch) => {
 export const fetchCheckoutPaymentData = () => (dispatch) => {
     dispatch(populateLocationsData())
     return createBasket()
-        .then((basketID) => {
-            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}`, {method: 'GET'})
+        .then((basket) => {
+            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}`, {method: 'GET'})
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     const addressData = parseShippingAddressFromBasket(responseJSON)
@@ -60,49 +61,30 @@ export const fetchCheckoutPaymentData = () => (dispatch) => {
 export const submitShipping = (formValues) => (dispatch) => {
     const {
         name,
-        firstname,
-        lastname,
         username,
-        company,
-        addressLine1,
-        addressLine2,
-        countryId,
-        city,
-        regionId,
-        postcode,
-        telephone,
         shipping_method
     } = formValues
+    const orderAddress = createOrderAddressObject(formValues)
     return createBasket()
-        .then((basketID) => {
+        .then((basket) => {
+            const authToken = getAuthTokenPayload(getAuthToken())
+            const customerID = JSON.parse(authToken.sub).customer_info.customer_id
             const requestOptions = {
                 method: 'PUT',
                 body: JSON.stringify({
-                    email: username,
-                    customer_name: name
+                    email: 'jennifer@mobify.com',//username,
+                    customer_name: name,
+                    customer_id: customerID
                 })
             }
-            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/customer`, requestOptions)
-                .then(() => basketID)
+            // debugger
+            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}/customer`, requestOptions)
+                .then(() => basket.basket_id)
         })
         .then((basketID) => {
             const requestOptions = {
                 method: 'PUT',
-                body: JSON.stringify({
-                    address1: addressLine1,
-                    address2: addressLine2,
-                    city,
-                    country_code: countryId,
-                    first_name: firstname,
-                    last_name: lastname,
-                    full_name: name,
-                    phone: telephone,
-                    postal_code: postcode,
-                    state_code: regionId,
-                    company_name: company
-                })
-
-
+                body: JSON.stringify(orderAddress)
             }
             return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/shipments/me/shipping_address?use_as_billing=true`, requestOptions)
                 .then((response) => response.json())
@@ -122,6 +104,7 @@ export const submitShipping = (formValues) => (dispatch) => {
                             if (responseJSON.fault) {
                                 throw new SubmissionError({_error: 'Unable to save shipping data'})
                             }
+                            dispatch(parseAndReceiveCartResponse(responseJSON))
 
                             return PAYMENT_URL
                         })
@@ -130,23 +113,19 @@ export const submitShipping = (formValues) => (dispatch) => {
 }
 
 export const submitPayment = (formValues) => (dispatch, getState) => {
-    let basket
+    // debugger
     return createBasket()
-        .then((basketID) => {
-            basket = basketID
-            return basket
-        })
-        .then((basketID) => {
+        .then((basket) => {
             // set payment method
-            const orderTotal = getSubtotal(getState())
+            const orderTotal = getOrderTotal(getState())
             const type = getCardData(formValues.ccnumber).cardType
             const expiryMonth = /^\d\d/.exec(formValues.ccexpiry)[0]
             const expiryYear = /\d\d$/.exec(formValues.ccexpiry)[0]
             const requestOptions = {
                 method: 'POST',
                 body: JSON.stringify({
+                    amount: orderTotal,
                     payment_card: {
-                        amount: orderTotal,
                         card_type: type,
                         expiration_month: parseInt(expiryMonth),
                         expiration_year: parseInt(expiryYear),
@@ -157,22 +136,58 @@ export const submitPayment = (formValues) => (dispatch, getState) => {
                     payment_method_id: 'CREDIT_CARD'
                 })
             }
-            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/payment_instruments`, requestOptions)
+            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}/payment_instruments`, requestOptions)
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     if (responseJSON.fault) {
-                        throw new Error(responseJSON.fault)
+                        throw new Error(responseJSON.fault.message)
                     }
+                    return responseJSON
                 })
         })
-        // .then(() => {
-        //     if (!formValues.billing_same_as_shipping) {
-        //         // set billing address
-        //     }
-        // })
-        // .then(() => {
-        //     // place order
-        // })
+        .then((basket) => {
+            if (!formValues.billing_same_as_shipping) {
+                // set billing address
+                const billingAddress = createOrderAddressObject(formValues)
+                const requestOptions = {
+                    method: 'PUT',
+                    body: JSON.stringify(billingAddress)
+                }
+                return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}/billing_address?use_as_shipping=false`, requestOptions)
+                    .then((response) => response.json())
+                    .then((responseJSON) => {
+                        if (responseJSON.fault) {
+                            throw new Error(responseJSON.fault.message)
+                        }
+                        return responseJSON
+                    })
+            }
+            return basket
+        })
+        .then((basket) => {
+            // place order
+            const requestOptions = {
+                method: 'POST',
+                body: JSON.stringify(basket)
+            }
+            return makeDemandwareRequest(`${API_END_POINT_URL}/orders`, requestOptions)
+                .then((response) => response.json())
+                .then((responseJSON) => {
+                    if (responseJSON.fault) {
+                        throw new Error(responseJSON.fault.message)
+                    }
+
+                    return makeDemandwareRequest(`${API_END_POINT_URL}/orders/${responseJSON.order_no}`, {method: 'PATCH', body: JSON.stringify({status: 'new'})})
+                        .then(() => {
+                            // Clear out the basket?
+                            dispatch(receiveOrderConfirmationContents({
+                                orderNumber: responseJSON.order_no
+                            }))
+                            return '/checkout/onepage/success/'
+                        })
+                })
+        })
+        .catch((error) => { debugger })
 
 
 
