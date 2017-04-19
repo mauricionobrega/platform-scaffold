@@ -1,6 +1,7 @@
-import polyfill from 'progressive-web-sdk/dist/polyfill'
 import {initCacheManifest, getBuildOrigin} from 'progressive-web-sdk/dist/asset-utils'
 import cacheHashManifest from '../tmp/cache-hash-manifest.json'
+
+import {loadPolyfills} from './polyfills'
 
 let origin = getBuildOrigin()
 
@@ -29,8 +30,6 @@ import {analyticManager} from 'progressive-web-sdk/dist/analytics/analytic-manag
 import {clientAnalytics} from './utils/analytics/client-analytics'
 import {pushMessaging} from './utils/push-messaging/push-messaging-distributor'
 
-polyfill()
-
 analyticManager.init({
     projectSlug: AJS_SLUG,      // eslint-disable-line no-undef
     isDebug: false
@@ -41,4 +40,6 @@ const store = configureStore()
 
 const rootEl = document.getElementsByClassName('react-target')[0]
 
-render(<Router store={store} />, rootEl)
+const renderCallback = () => render(<Router store={store} />, rootEl)
+
+loadPolyfills(renderCallback)
