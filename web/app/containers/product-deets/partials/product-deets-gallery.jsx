@@ -26,7 +26,7 @@ const ProductDeetsGallery = ({items, contentsLoaded}) => {
                 <div>
                     <Image {...imgProps} />
                 </div>
-                <div className="t-product-deets-gallery u-padding-md u-box-shadow u-position-relative u-z-index-1">
+                <div className="t-product-deets__gallery u-padding-md u-box-shadow u-position-relative u-z-index-1">
                     <Swatch>
                         <SwatchItem value="color1">
                             <Image

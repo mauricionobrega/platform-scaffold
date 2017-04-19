@@ -9,7 +9,7 @@ import Stepper from 'progressive-web-sdk/dist/components/stepper'
 import Button from 'progressive-web-sdk/dist/components/button'
 
 const ProductDeetsForm = ({ctaText}) => (
-    <div className="t-product-deets-form u-padding-md u-box-shadow u-position-relative u-z-index-1">
+    <div className="t-product-deets__form u-padding-md u-box-shadow u-position-relative u-z-index-1">
         <form>
             <FieldRow>
                 <Field label="1. Choose Size:">

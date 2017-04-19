@@ -7,9 +7,9 @@ import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import StarRating from '../../../components/star-rating'
 
 const ProductDeetsHeading = ({title, price}) => (
-    <div className="t-product-deets-heading u-padding-md u-box-shadow u-position-relative u-z-index-1">
+    <div className="t-product-deets__heading u-padding-md u-box-shadow u-position-relative u-z-index-1">
         {title ?
-            <h1 className="t-product-deets-heading__title u-text-uppercase u-margin-bottom u-justify-center u-flexbox">{title}</h1>
+            <h1 className="u-text-uppercase u-margin-bottom u-justify-center u-flexbox">{title}</h1>
         :
             <SkeletonBlock width="50%" height="32px" className="u-margin-bottom u-justify-center u-flexbox" />
         }
@@ -21,7 +21,7 @@ const ProductDeetsHeading = ({title, price}) => (
         }
 
         {price ?
-            <span className="t-product-deets-heading__price t-product-deets__price u-color-accent u-text-normal u-text-header-font-family u-text-letter-spacing u-justify-center u-flexbox">
+            <span className="u-color-accent u-text-normal u-text-header-font-family u-text-letter-spacing u-justify-center u-flexbox">
                 {price}
             </span>
         :
