@@ -3,7 +3,7 @@ import {createSelector} from 'reselect'
 import {createGetSelector, createHasSelector} from 'reselect-immutable-helpers'
 import {getCart} from '../selectors'
 
-export const getCartContentsLoaded = createHasSelector(getCart, 'items')
+export const getCartContentsLoaded = createHasSelector(getCart, 'contents')
 
 export const getCartItems = createGetSelector(getCart, 'items', Immutable.List())
 export const getCartHasItems = createSelector(
