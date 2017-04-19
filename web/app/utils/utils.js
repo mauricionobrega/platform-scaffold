@@ -62,7 +62,7 @@ export const requestIdleCallback = (fn) => {
     }
 }
 
-const typecheck = (type, value) => {
+export const typecheck = (type, value) => {
     try {
         type.check(value)
     } catch (e) {

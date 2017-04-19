@@ -58,7 +58,7 @@ const ProductListContents = ({contentsLoaded, numItems, products}) => (
 ProductListContents.propTypes = {
     products: PropTypes.array.isRequired,
     contentsLoaded: PropTypes.bool,
-    numItems: PropTypes.string
+    numItems: PropTypes.number
 }
 
 const mapStateToProps = createPropsSelector({
