@@ -8,8 +8,9 @@ import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
 const titleClassName = classNames(
     't-product-list__product-name',
-    'u-h1',
-    'u-heading-family',
+    'u-h4',
+    'u-text-font-family',
+    'u-text-semi-bold',
     'u-color-neutral-60'
 )
 
@@ -26,7 +27,7 @@ const ProductTile = ({className, image, link, price}) => {
         ? <h2 className={titleClassName}>{link.text}</h2>
         : <SkeletonBlock height="34px" />
     const priceElement = price
-        ? <span className="u-text-semi-bold u-color-error">{price}</span>
+        ? <span className="u-text-bold u-color-error">{price}</span>
         : <SkeletonBlock height="22px" width="50px" />
 
     return (

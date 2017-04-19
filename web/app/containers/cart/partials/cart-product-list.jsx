@@ -6,6 +6,8 @@ import {createPropsSelector} from 'reselect-immutable-helpers'
 import {updateItemQuantity} from '../../../store/cart/actions'
 import {openRemoveItemModal, saveToWishlist} from '../actions'
 import {getCartItems, getCartSummaryCount} from '../../../store/cart/selectors'
+import {getIsLoggedIn} from '../../app/selectors'
+
 import {noop} from 'progressive-web-sdk/dist/utils/utils'
 
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -98,7 +100,7 @@ class CartProductItem extends React.Component {
 
                     <Field>
                         <div className="u-text-align-end u-flex">
-                            <div className="u-h5 u-color-accent u-text-semi-bold">{product_price}</div>
+                            <div className="u-h5 u-color-accent u-text-bold">{product_price}</div>
                             <div className="u-text-quiet"><em>Was $29.99</em></div>
                         </div>
                     </Field>
@@ -152,7 +154,7 @@ CartProductItem.propTypes = {
     onSaveLater: PropTypes.func
 }
 
-const CartProductList = ({items, summaryCount, onSaveLater, onUpdateItemQuantity, openRemoveItemModal, onOpenSignIn}) => {
+const CartProductList = ({items, isLoggedIn, summaryCount, onSaveLater, onUpdateItemQuantity, openRemoveItemModal, onOpenSignIn}) => {
     const isCartEmpty = items.length === 0
 
     return (
@@ -162,10 +164,12 @@ const CartProductList = ({items, summaryCount, onSaveLater, onUpdateItemQuantity
                     <h1 className="u-flex u-text-uppercase">
                         Cart {summaryCount > 0 && <span className="u-text-lighter">({summaryCount} Items)</span>}
                     </h1>
-                    <Button className="u-flex-none u-color-brand u-text-letter-spacing-normal" onClick={onOpenSignIn}>
-                        <Icon name="user" />
-                        Sign in
-                    </Button>
+                    {!isLoggedIn &&
+                        <Button className="u-flex-none u-color-brand u-text-letter-spacing-normal" onClick={onOpenSignIn}>
+                            <Icon name="user" />
+                            Sign in
+                        </Button>
+                    }
                 </div>
             </div>
 
@@ -178,6 +182,7 @@ const CartProductList = ({items, summaryCount, onSaveLater, onUpdateItemQuantity
 }
 
 CartProductList.propTypes = {
+    isLoggedIn: PropTypes.bool,
     items: PropTypes.array,
     openRemoveItemModal: PropTypes.func,
     summaryCount: PropTypes.number,
@@ -188,7 +193,8 @@ CartProductList.propTypes = {
 
 const mapStateToProps = createPropsSelector({
     items: getCartItems,
-    summaryCount: getCartSummaryCount
+    summaryCount: getCartSummaryCount,
+    isLoggedIn: getIsLoggedIn
 })
 
 const mapDispatchToProps = {

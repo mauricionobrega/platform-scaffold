@@ -20,7 +20,7 @@ const ShippingMethod = ({shippingMethods}) => {
             </div>
 
             <div className="u-padding-md u-border-light-top u-border-light-bottom u-bg-color-neutral-00">
-                {shippingMethods && shippingMethods.map(({label, cost, value}, idx) => {
+                {shippingMethods && shippingMethods.map(({label, info, cost, value}, idx) => {
                     return (
                         <FieldRow key={idx}>
                             <ReduxForm.Field
@@ -28,7 +28,7 @@ const ShippingMethod = ({shippingMethods}) => {
                                 name="shipping_method"
                                 type="radio"
                                 value={value}
-                                label={<ShippingMethodLabel label={label} cost={cost} />}
+                                label={<ShippingMethodLabel label={label} info={info} cost={cost} />}
                             >
                                 <input type="radio" noValidate />
                             </ReduxForm.Field>
@@ -37,7 +37,7 @@ const ShippingMethod = ({shippingMethods}) => {
                 })}
 
                 <FieldRow className="u-margin-top-lg">
-                    <Button type="submit" className="c--primary u-width-full u-text-uppercase">
+                    <Button type="submit" className="c--primary u-width-full u-text-uppercase qa-checkout__continue-to-payment">
                         Continue to Payment
                     </Button>
                 </FieldRow>
@@ -56,6 +56,7 @@ ShippingMethod.propTypes = {
     */
     shippingMethods: PropTypes.arrayOf(PropTypes.shape({
         cost: PropTypes.string,
+        info: PropTypes.string,
         label: PropTypes.string,
         value: PropTypes.string
     })),
