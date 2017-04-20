@@ -30,7 +30,7 @@ _start() {
   printf '                              `.:/+:`          \n'
   printf '\n'
   printf '\n'
-  printf '             Welcome to the Mobify Platform!    \n'
+  printf '             Welcome to the Mobify platform!    \n'
   printf '\n'
   printf '\n'
 
@@ -62,14 +62,14 @@ _todo() {
 
 _usage() {
   printf "Usage: $0 [command...]\n"
-  printf "\nYou can pass in one of the following commands:\n"
-  printf "  start          start Mobify Platform project\n"
-  printf "  deploy         prepare a bundle and deploy it\n"
-  printf "  push           send a test Push message\n"
-  printf "  sdk            run Mobify Progressive SDK commands\n"
-  printf "  test           run unit tests\n"
-  printf "  perf-test      run performance tests (Lighthouse, WPT)\n"
-  printf "  help           this page\n"
+  printf "\nSupported commands:\n"
+  printf "  start          Start the local Mobify development environment\n"
+  printf "  deploy         Prepare a project bundle and deploy to the Mobify cloud\n"
+  printf "  push           Send a test Push Notification\n"
+  printf "  sdk            Run Mobify Progressive SDK commands\n"
+  printf "  test           Run all unit tests\n"
+  printf "  perf-test      Run all performance tests (Lighthouse, WPT)\n"
+  printf "  help           This page\n"
 }
 
 opt="$1"
