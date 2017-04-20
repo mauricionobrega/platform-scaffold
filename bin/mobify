@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o pipefail
+
+_start() {
+  if ! type docker >/dev/null 2>&1; then
+    printf "Docker is required! Get Docker for Mac (https://docs.docker.com/docker-for-mac/) or Docker for Windows (https://docs.docker.com/docker-for-windows/).\n"
+    exit 1
+  fi
+
+  printf '                        `:-.          \n'
+  printf '                       -yyyyys+:`          \n'
+  printf '                      /yyyyyyyyy`  +o+/:-.          \n'
+  printf '                    `oyyyyyyyyy-  :hhhhhhhs          \n'
+  printf '                   `syyyyyyyyy+   yhhhhhhhy          \n'
+  printf '               `-/oyyyyyyyyyyo   :hhhhhhhhs          \n'
+  printf '            -/oyyyyyyyyyyyyyo`   shhhhhhhhs          \n'
+  printf '          +yyyyyyyyyyyyyyyy+    `hhhhhhhhho          \n'
+  printf '          +yyyyyyyyyyyyyy+.     .hhhhhhhhho          \n'
+  printf '          `yyyyyyyyys+/.         yhhhhhhhhhs`          \n'
+  printf '           -yso+/-.`             .yhhhhhhhhhy.          \n'
+  printf '                   ```.....`      `shhhhhhhhhy.          \n'
+  printf '             -://++++++++++++/-`    /yhhhhhhhhy.          \n'
+  printf '             /++++++++++++++++++/.   `ohhhhhhy+`          \n'
+  printf '             :++++++++++++++++++++/-`  -shhs:`          \n'
+  printf '             `+++++++++++++++++++++++-`  -`          \n'
+  printf '              `......-...-/+++++++++++/`          \n'
+  printf '                           `-/+++++++:`          \n'
+  printf '                              `.:/+:`          \n'
+  printf '\n'
+  printf '\n'
+  printf '             Welcome to the Mobify Platform!    \n'
+  printf '\n'
+  printf '\n'
+
+  docker pull mobify/platform-runner
+  docker run -p 8443:8443 -v `pwd`:/app mobify/platform-runner
+}
+
+_deploy() {
+  printf "Deploy!\n"
+}
+
+_usage() {
+  printf "Usage: $0 [command...]\n"
+  printf "\nYou can pass in one of the following commands:\n"
+  printf "  start          start Mobify Platform project\n"
+  printf "  deploy         prepare a bundle and deploy it\n"
+  printf "  help           this page\n"
+}
+
+opt="$1"
+[[ -z "$opt" ]] && {
+  _usage
+  exit 0
+}
+
+case "$opt" in
+  start)
+    _start
+    ;;
+  deploy)
+    _deploy
+    ;;
+  help)
+    _usage
+    ;;
+  *)
+    _usage
+    ;;
+esac
