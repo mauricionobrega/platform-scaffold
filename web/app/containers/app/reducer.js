@@ -17,6 +17,7 @@ export const initialState = fromJS({
 })
 
 export default handleActions({
+    [appActions.receiveData]: mergePayload,
     [appActions.setPageFetchError]: mergePayload,
     [receiveAppData]: mergePayload,
     [setPageFetchError]: mergePayload,
