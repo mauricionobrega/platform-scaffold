@@ -41,8 +41,6 @@ export const addToCart = (key, qty) => (dispatch, getState) => {
         qty
     }
 
-    formValues.form_key = getFormKey(getState())
-
     return submitForm(formInfo.get('submitUrl'), formValues, {method: formInfo.get('method')})
         .then(() => dispatch(getCart()))
 }
@@ -80,11 +78,10 @@ export const removeFromCart = (itemId) => {
  * - Response is 200 with JSON: `{"success":false,"error_message":"We can't find the quote item."}` if item not in cart
  */
 export const updateItemQuantity = (itemId, itemQuantity) => {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         const requestData = {
             item_id: itemId,
-            item_qty: itemQuantity,
-            form_key: getFormKey(getState())
+            item_qty: itemQuantity
         }
 
         return submitForm(UPDATE_ITEM_URL, requestData, {method: 'POST'})
