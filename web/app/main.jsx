@@ -1,8 +1,6 @@
 import {initCacheManifest, getBuildOrigin} from 'progressive-web-sdk/dist/asset-utils'
 import cacheHashManifest from '../tmp/cache-hash-manifest.json'
 
-import {loadPolyfills} from './polyfills'
-
 let origin = getBuildOrigin()
 
 if (!/\/$/.test(origin)) {
@@ -19,6 +17,9 @@ import {render} from 'react-dom'
 // Router
 import Router from './router'
 
+// Redux
+import configureStore from './store'
+
 // Stylesheet: importing it here compiles the SCSS into CSS. The CSS is actually
 // added to the markup in `loader.js`
 import Stylesheet from './stylesheet.scss' // eslint-disable-line no-unused-vars
@@ -27,24 +28,14 @@ import {analyticManager} from 'progressive-web-sdk/dist/analytics/analytic-manag
 import {clientAnalytics} from './utils/analytics/client-analytics'
 import {pushMessaging} from './utils/push-messaging/push-messaging-distributor'
 
-loadPolyfills(() => {
-    // Redux
-    // When we import the store, we also create all of the initialStates
-    // These will sometimes contain code that needs to be polyfilled, such as Array.prototype.fill
-    import('./store')
-        .then((storeImport) => {
-            const configureStore = storeImport.default
+analyticManager.init({
+    projectSlug: AJS_SLUG, // eslint-disable-line no-undef
+    isDebug: false
+}, clientAnalytics, pushMessaging)
+initCacheManifest(cacheHashManifest)
 
-            analyticManager.init({
-                projectSlug: AJS_SLUG,      // eslint-disable-line no-undef
-                isDebug: false
-            }, clientAnalytics, pushMessaging)
-            initCacheManifest(cacheHashManifest)
+const store = configureStore()
 
-            const store = configureStore()
+const rootEl = document.getElementsByClassName('react-target')[0]
 
-            const rootEl = document.getElementsByClassName('react-target')[0]
-
-            render(<Router store={store} />, rootEl)
-        })
-})
+render(<Router store={store} />, rootEl)
