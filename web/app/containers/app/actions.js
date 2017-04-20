@@ -7,23 +7,15 @@ import * as analyticConstants from 'progressive-web-sdk/dist/analytics/analytic-
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import {createAction, createActionWithAnalytics} from 'progressive-web-sdk/dist/utils/action-creation'
-import {getCurrentUrl} from './selectors'
 
 import appParser from './app-parser'
 
-import {
-    UnwrappedCheckoutConfirmation,
-} from '../templates'
-import * as checkoutConfirmationActions from '../checkout-confirmation/actions'
-import * as cartActions from '../../store/cart/actions'
-import * as footerActions from '../footer/actions'
 import * as navigationActions from '../navigation/actions'
+import {getCart} from '../../integration-manager/cart/commands'
 
 import {OFFLINE_ASSET_URL} from './constants'
 import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {OFFLINE_MODAL} from '../offline/constants'
-
-let isInitialEntryToSite = true
 
 export const addNotification = createAction('Add Notification')
 export const removeNotification = createAction('Remove Notification')
@@ -100,7 +92,6 @@ export const checkIfOffline = () => {
     }
 }
 
-
 /**
  * Until the day that the `use` element's cross-domain issues are fixed, we are
  * forced to fetch the SVG Sprite's XML as a string and manually inject it into
@@ -127,7 +118,7 @@ export const signOut = () => {
                     content: 'You are now signed out',
                     id: 'signedOutNotification'
                 }))
-                dispatch(cartActions.getCart())
+                dispatch(getCart())
 
                 // Update navigation menu
                 // Need to request current location so when we are on Potions PLP
