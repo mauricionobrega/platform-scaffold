@@ -2,8 +2,6 @@
 // involving the containers and the app actions.
 import Loadable from 'react-loadable'
 
-import template from '../template'
-
 import ContainerPlaceholder from '../components/container-placeholder'
 import {requestIdleCallback} from '../utils/utils'
 
@@ -26,13 +24,8 @@ export const registerPreloadCallbacks = () => {
 
 // These are on the old model and need to be wrapped here
 // rather than in container.js to avoid circular imports
-export const CheckoutConfirmation = PWALoadable(
-    () => import('./checkout-confirmation/container')
-        .then((component) => template(component))
-)
-
-
 export const Cart = PWALoadable(() => import('./cart/container'))
+export const CheckoutConfirmation = PWALoadable(() => import('./checkout-confirmation/container'))
 export const CheckoutPayment = PWALoadable(() => import('./checkout-payment/container'))
 export const CheckoutShipping = PWALoadable(() => import('./checkout-shipping/container'))
 export const Login = PWALoadable(() => import('./login/container'))
