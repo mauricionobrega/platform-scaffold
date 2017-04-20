@@ -49,16 +49,19 @@ const ProductListContents = ({contentsLoaded, numItems, sort, sortChange, produc
                     <span className="u-text-semi-bold">{numItems} Results</span>
                     <div>
                         {sort &&
-                            <div className="t-product-list__sort">
-                                <select
-                                    className="t-product-list__sort-select"
-                                    onChange={(e) => { sortChange(e.target.value) }}
-                                    onBlur={(e) => { sortChange(e.target.value) }}
-                                >
-                                    {sort.options.map((option) => <option value={option.value} key={option.value}>{option.text}</option>)}
-                                </select>
-                                <div className="t-product-list__sort-icon">
-                                    <Icon name="caret-down" />
+                            <div>
+                                <label for="sort">Sort by</label>
+                                <div className="u-position-relative">
+                                    <select
+                                        className="t-product-list__sort-select"
+                                        onChange={(e) => { sortChange(e.target.value) }}
+                                        onBlur={(e) => { sortChange(e.target.value) }}
+                                    >
+                                        {sort.options.map((option) => <option value={option.value} key={option.value}>{option.text}</option>)}
+                                    </select>
+                                    <div className="t-product-list__sort-icon">
+                                        <Icon name="caret-down" />
+                                    </div>
                                 </div>
                             </div>
                         }

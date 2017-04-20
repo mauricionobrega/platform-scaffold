@@ -64,11 +64,7 @@
 // Sort Filter
 // ---
 //
-// 1. Positioned relative to the parent `t-product-list__sort`
-
-.t-product-list__sort {
-    position: relative;
-}
+// 1. Positioned relative to the parent `.u-position-relative` container
 
 .t-product-list__sort-select {
     color: $font-color;
