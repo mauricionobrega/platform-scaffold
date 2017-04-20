@@ -8,7 +8,6 @@ export const submitForm = (url, data, options) => {
     // a form_key cookie, that trumps all!
     const formKey = getCookieValue('form_key')
     if (formKey) {
-        console.warn('Overriding form_key with cookie value:', formKey)
         data.form_key = formKey
     }
 
