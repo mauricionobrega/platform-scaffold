@@ -1,8 +1,9 @@
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {SubmissionError} from 'redux-form'
-import {checkoutShippingParser, parseCheckoutData, parseShippingMethods} from './parsers'
+import {checkoutShippingParser, parseCheckoutData, parseShippingMethods, checkoutConfirmationParser} from './parsers'
 import {parseCheckoutEntityID} from '../../../utils/magento-utils'
-import {receiveCheckoutShippingData, receiveCheckoutData, receiveShippingMethodInitialValues} from './../../checkout/responses'
+import {getCart} from '../cart/commands'
+import {receiveCheckoutShippingData, receiveCheckoutData, receiveShippingMethodInitialValues, receiveCheckoutConfirmationData} from './../../checkout/responses'
 import {fetchPageData} from '../app/commands'
 import {getCustomerEntityID} from '../selectors'
 import {getIsLoggedIn} from '../../../containers/app/selectors'
@@ -66,6 +67,14 @@ export const fetchCheckoutShippingData = (url) => (dispatch) => {
             return dispatch(fetchShippingMethodsEstimate(SHIPPING_FORM_NAME))
         })
         .catch((error) => { console.info(error.message) })
+}
+
+export const fetchCheckoutConfirmationData = (url) => (dispatch) => {
+    return dispatch(fetchPageData(url))
+        .then(([$, $response]) => {
+            dispatch(receiveCheckoutConfirmationData(checkoutConfirmationParser($, $response)))
+            dispatch(getCart())
+        })
 }
 
 export const submitShipping = (formValues) => {
@@ -225,5 +234,8 @@ export const submitPayment = (formValues) => (dispatch, getState) => {
             } else {
                 throw new Error(responseJSON.message)
             }
+        })
+        .catch((error) => {
+            debugger
         })
 }

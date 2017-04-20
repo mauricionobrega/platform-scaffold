@@ -1,5 +1,4 @@
 import {makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
-import checkoutConfirmationParser from './parsers/checkout-confirmation'
 import {CHECKOUT_CONFIRMATION_MODAL, CHECKOUT_CONFIRMATION_REGISTRATION_FAILED} from './constants'
 import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 import {addNotification, removeAllNotifications} from '../app/actions'
@@ -12,13 +11,10 @@ import {getFormKey} from '../app/selectors'
 // @TODO: blocked until the desktop's Address Book actualy works correctly
 // import * as paymentSelectors from '../../store/checkout/payment/selectors'
 
-export const receiveData = createAction('Received Checkout Confirmation Data')
 export const showSuccessModal = createAction('Showing Success modal')
 export const showFailNotification = createAction('Showing fail notification')
 export const hideModal = createAction('Hiding modal')
 export const hideRegistrationForm = createAction('Hiding Registration Form (Save Your Address Details)')
-
-export const process = ({payload: {$, $response}}) => receiveData(checkoutConfirmationParser($, $response))
 
 const buildFormData = (formCredentials) => {
     const formData = new FormData()
