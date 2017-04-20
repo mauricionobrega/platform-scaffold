@@ -39,7 +39,25 @@ _start() {
 }
 
 _deploy() {
-  printf "Deploy!\n"
+  printf "Preparing a bundle...\n"
+
+  sleep 3
+
+  printf "Bundle is ready, deploying...\n"
+
+  count=0
+  until [ $count -eq 10 ]
+  do
+    printf "###"
+    sleep 1
+    count=`expr $count + 1`
+  done
+
+  printf "\nDone!\n"
+}
+
+_todo() {
+  printf "Not yet implemented...\n"
 }
 
 _usage() {
@@ -47,6 +65,10 @@ _usage() {
   printf "\nYou can pass in one of the following commands:\n"
   printf "  start          start Mobify Platform project\n"
   printf "  deploy         prepare a bundle and deploy it\n"
+  printf "  push           send a test Push message\n"
+  printf "  sdk            run Mobify Progressive SDK commands\n"
+  printf "  test           run unit tests\n"
+  printf "  perf-test      run performance tests (Lighthouse, WPT)\n"
   printf "  help           this page\n"
 }
 
@@ -67,6 +89,6 @@ case "$opt" in
     _usage
     ;;
   *)
-    _usage
+    _todo
     ;;
 esac
