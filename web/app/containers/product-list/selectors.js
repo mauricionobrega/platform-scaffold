@@ -54,8 +54,6 @@ export const getSortedListProducts = createSelector(
                 return activeSort
             })
         }
-
-
         return arrayOfProducts.sort(sortLib[activeSort])
     }
 )
