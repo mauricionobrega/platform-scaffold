@@ -1,10 +1,11 @@
-import {makeRequest, makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 import {removeNotification} from '../../../containers/app/actions'
 import {receiveCartContents} from '../../cart/responses'
 import {receiveCheckoutData} from '../../checkout/responses'
 import {getFormKey, getUenc} from '../selectors'
+import {submitForm} from '../utils'
 import parseCart from './parser'
 import {parseLocations} from '../checkout/parsers'
 import {fetchShippingMethodsEstimate} from '../checkout/commands'
@@ -33,16 +34,17 @@ export const getCart = () => (dispatch) => {
         .then((responseText) => dispatch(receiveCartContents(parseCart(responseText))))
 }
 
-export const addToCart = (key, qty) => (dispatch, getStore) => {
-    const formInfo = getStore().integrationManager.get(key)
+export const addToCart = (key, qty) => (dispatch, getState) => {
+    const formInfo = getState().integrationManager.get(key)
     const formValues = {
         ...formInfo.get('hiddenInputs').toJS(),
         qty
     }
-    return makeFormEncodedRequest(formInfo.get('submitUrl'), formValues, {method: formInfo.get('method')})
-        .then(() => {
-            return dispatch(getCart())
-        })
+
+    formValues.form_key = getFormKey(getState())
+
+    return submitForm(formInfo.get('submitUrl'), formValues, {method: formInfo.get('method')})
+        .then(() => dispatch(getCart()))
 }
 
 /**
@@ -57,8 +59,8 @@ export const addToCart = (key, qty) => (dispatch, getStore) => {
  *   busts a cache. removeFromCart() will call getCart() once the request to remove the item has completed
  */
 export const removeFromCart = (itemId) => {
-    return (dispatch, getState) => {
-        return makeFormEncodedRequest(REMOVE_CART_ITEM_URL, {item_id: itemId, form_key: getFormKey(getState())}, {method: 'POST'})
+    return (dispatch) => {
+        return submitForm(REMOVE_CART_ITEM_URL, {item_id: itemId}, {method: 'POST'})
             .then((response) => response.json())
             .then((responseJSON) => {
                 if (responseJSON.success) {
@@ -85,7 +87,7 @@ export const updateItemQuantity = (itemId, itemQuantity) => {
             form_key: getFormKey(getState())
         }
 
-        return makeFormEncodedRequest(UPDATE_ITEM_URL, requestData, {method: 'POST'})
+        return submitForm(UPDATE_ITEM_URL, requestData, {method: 'POST'})
             .then((response) => response.json())
             .then((responseJSON) => {
                 if (responseJSON.success) {
@@ -120,11 +122,10 @@ export const addToWishlist = (productId, productURL) => (dispatch, getState) => 
         product: productId,
         // This won't always be defined, but add to wishlist will still work
         // if it's missing
-        uenc: getUenc(urlToPathKey(productURL))(currentState),
-        formKey: getFormKey(currentState)
+        uenc: getUenc(urlToPathKey(productURL))(currentState)
     }
 
-    return makeFormEncodedRequest(ADD_TO_WISHLIST_URL, payload, {method: 'POST'})
+    return submitForm(ADD_TO_WISHLIST_URL, payload, {method: 'POST'})
             .then(jqueryResponse)
             .then((response) => {
                 const [$, $response] = response // eslint-disable-line no-unused-vars
