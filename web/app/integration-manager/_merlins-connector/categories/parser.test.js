@@ -8,7 +8,7 @@ describe('the product list parser', () => {
 
     it('should extract the product list content from the rendered HTML', () => {
         const expected = {
-            itemCount: '7',
+            itemCount: 7,
             title: 'Potions',
             productUrls: [
                 'http://www.merlinspotions.com/eye-of-newt.html',

@@ -136,7 +136,6 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                 dispatch(process(receivedAction))
 
                 if (pageComponent === UnwrappedCheckoutConfirmation) {
-
                     dispatch(checkoutConfirmationActions.process(receivedAction))
                     // Resets the cart count to 0
                     dispatch(getCart())
