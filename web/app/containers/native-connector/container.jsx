@@ -6,7 +6,7 @@ import {onAstroEvent, disableAstroEvent, jsRpcMethod} from '../../utils/astro-in
 
 import {getIsLoggedIn} from '../../containers/app/selectors'
 
-import {getCart} from '../../store/cart/actions'
+import {getCart} from '../../integration-manager/cart/commands'
 
 const needsUpdateEvent = 'cart:needs-update'
 

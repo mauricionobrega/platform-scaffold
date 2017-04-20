@@ -15,9 +15,9 @@ import {
     UnwrappedCheckoutConfirmation,
 } from '../templates'
 import * as checkoutConfirmationActions from '../checkout-confirmation/actions'
-import * as cartActions from '../../store/cart/actions'
 import * as footerActions from '../footer/actions'
 import * as navigationActions from '../navigation/actions'
+import {getCart} from '../../integration-manager/cart/commands'
 
 import {OFFLINE_ASSET_URL} from './constants'
 import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
@@ -138,7 +138,7 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                 if (pageComponent === UnwrappedCheckoutConfirmation) {
                     dispatch(checkoutConfirmationActions.process(receivedAction))
                     // Resets the cart count to 0
-                    dispatch(cartActions.getCart())
+                    dispatch(getCart())
                 }
 
                 dispatch(footerActions.process(receivedAction))
@@ -185,7 +185,7 @@ export const signOut = () => {
                     content: 'You are now signed out',
                     id: 'signedOutNotification'
                 }))
-                dispatch(cartActions.getCart())
+                dispatch(getCart())
 
                 // Update navigation menu
                 // Need to request current location so when we are on Potions PLP
