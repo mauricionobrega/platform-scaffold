@@ -39,8 +39,11 @@ const logger = {
         )
 
         console.log(
-            chalk.bold('Preview URL: ') + // eslint-disable-line prefer-template
-            chalk.magenta(`https://preview.mobify.com/?url=${encodedUrl}&site_folder=${encodedSiteFolder}&disabled=0&domain=&scope=0`) + '\n' +
+            chalk.bold('Local Preview URL: ') + // eslint-disable-line prefer-template
+            chalk.magenta(`https://goo.gl/uDe5UQ`) + '\n' +
+            chalk.bold('Device Preview URL (this is your local app running online): ') + // eslint-disable-line prefer-template
+            chalk.magenta(`https://goo.gl/OMjnCw`) + '\n' +
+            chalk.bold(`Please open https://mobify.ngrok.io on your device and accept SSL certificate first!`) + '\n' +
             divider + '\n' +
             chalk.blue(`Press ${chalk.italic('CTRL-C')} to stop`) + '\n'
         )
