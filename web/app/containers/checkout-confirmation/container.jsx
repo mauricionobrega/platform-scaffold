@@ -1,5 +1,7 @@
 import React from 'react'
 
+import template from '../../template'
+
 import CheckoutConfirmationSplash from './partials/checkout-confirmation-splash'
 import CheckoutConfirmationDetails from './partials/checkout-confirmation-details'
 import CheckoutConfirmationModal from './partials/checkout-confirmation-modal'
@@ -24,4 +26,4 @@ class CheckoutConfirmation extends React.Component {
     }
 }
 
-export default CheckoutConfirmation
+export default template(CheckoutConfirmation)

@@ -7,7 +7,7 @@ import {openModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import * as shippingSelectors from '../../store/checkout/shipping/selectors'
 import * as formSelectors from '../../store/form/selectors'
 import {getEmailAddress} from '../../store/checkout/selectors'
-import {getFormKey} from '../app/selectors'
+import {getFormKey} from '../../integration-manager/_merlins-connector/selectors'
 
 // @TODO: blocked until the desktop's Address Book actualy works correctly
 // import * as paymentSelectors from '../../store/checkout/payment/selectors'
