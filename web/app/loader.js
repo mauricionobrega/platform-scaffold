@@ -158,11 +158,11 @@ if (isReactRoute()) {
         }
 
         if (!global.fetch) {
-             loadScript({
+            loadScript({
                 id: 'progressive-web-core-polyfill',
                 src: getAssetUrl('fetch-polyfill.js'),
                 async: false
-            })   
+            })
         }
 
         loadScript({
