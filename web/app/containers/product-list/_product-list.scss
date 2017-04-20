@@ -59,3 +59,11 @@
 .t-product-list__num-results {
     font-size: $font-size + 1;
 }
+
+
+// Filter Modal
+// ---
+
+.t-product-list__filter-modal {
+    min-height: calc(100vh - #{$unit * 6.5});
+}

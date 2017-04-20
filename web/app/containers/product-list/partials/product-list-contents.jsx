@@ -3,7 +3,10 @@ import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as selectors from '../selectors'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
+import {PRODUCT_LIST_FILTER_MODAL} from '../constants'
+import {openModal} from '../../../store/modals/actions'
 
+import Button from 'progressive-web-sdk/dist/components/button'
 import List from 'progressive-web-sdk/dist/components/list'
 import Image from 'progressive-web-sdk/dist/components/image'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
@@ -46,12 +49,24 @@ const ProductListContents = ({
     contentsLoaded,
     hasProducts,
     noResultsText,
-    products
+    products,
+    openModal
 }) => (
     <div className="t-product-list__container u-padding-end u-padding-bottom-lg u-padding-start">
         <div className="t-product-list__num-results u-padding-md">
             {contentsLoaded ?
-                <span className="u-text-semi-bold">{products.length} Results</span>
+                <div className="u-flexbox">
+                    <div className="t-product-list__filter u-flex">
+                        <div className="u-text-semi-bold">{products.length} Results</div>
+
+                        <Button
+                            className="c--tertiary u-width-full u-text-uppercase"
+                            onClick={openModal}
+                        >
+                            Filters
+                        </Button>
+                    </div>
+                </div>
             :
                 <SkeletonBlock height="20px" />
             }
@@ -71,7 +86,8 @@ ProductListContents.propTypes = {
     filters: PropTypes.array,
     hasProducts: PropTypes.bool,
     noResultsText: PropTypes.string,
-    numItems: PropTypes.string
+    numItems: PropTypes.string,
+    openModal: PropTypes.func
 }
 
 const mapStateToProps = createPropsSelector({
@@ -83,5 +99,11 @@ const mapStateToProps = createPropsSelector({
     products: selectors.getFilteredProductListProducts
 })
 
+const mapDispatchToProps = {
+    openModal: () => openModal(PRODUCT_LIST_FILTER_MODAL)
+}
 
-export default connect(mapStateToProps)(ProductListContents)
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ProductListContents)
