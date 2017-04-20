@@ -9,8 +9,6 @@ import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import {createAction, createActionWithAnalytics} from 'progressive-web-sdk/dist/utils/action-creation'
 import {getCurrentUrl} from './selectors'
 
-import appParser from './app-parser'
-
 import {
     UnwrappedCheckoutConfirmation,
 } from '../templates'
@@ -61,11 +59,6 @@ export const onPageReceived = createAction('On page received', [
 ])
 
 export const setFetchedPage = createAction('Set fetched page', ['url'])
-
-export const receiveData = createAction('Receive App Data')
-export const process = ({payload: {$response}}) => {
-    return receiveData(appParser($response))
-}
 
 export const setPageFetchError = createAction('Set page fetch error', ['fetchError'])
 export const clearPageFetchError = createAction('Clear page fetch error')
@@ -136,7 +129,6 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                 dispatch(process(receivedAction))
 
                 if (pageComponent === UnwrappedCheckoutConfirmation) {
-
                     dispatch(checkoutConfirmationActions.process(receivedAction))
                     // Resets the cart count to 0
                     dispatch(cartActions.getCart())
