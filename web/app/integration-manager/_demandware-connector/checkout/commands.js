@@ -128,7 +128,7 @@ export const submitPayment = (formValues) => (dispatch, getState) => {
                     payment_card: {
                         card_type: type,
                         expiration_month: parseInt(expiryMonth),
-                        expiration_year: parseInt(expiryYear),
+                        expiration_year: 2000 + parseInt(expiryYear),
                         holder: formValues.ccname,
                         number: formValues.ccnumber,
                         security_code: formValues.cvv
