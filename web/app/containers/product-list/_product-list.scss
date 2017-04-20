@@ -59,3 +59,29 @@
 .t-product-list__num-results {
     font-size: $font-size + 1;
 }
+
+
+// Sort Filter
+// ---
+//
+// 1. Positioned relative to the parent `t-product-list__sort`
+
+.t-product-list__sort {
+    position: relative;
+}
+
+.t-product-list__sort-select {
+    color: $font-color;
+}
+
+.t-product-list__sort-icon {
+    position: absolute; // 1
+    top: 50%;
+    right: 0;
+
+    color: $brand-color;
+
+    transform: translate(-50%, -40%);
+
+    pointer-events: none;
+}

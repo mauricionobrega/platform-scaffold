@@ -3,9 +3,11 @@ import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as selectors from '../selectors'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
+import {changeSortIn} from '../../../store/categories/actions'
 
 import List from 'progressive-web-sdk/dist/components/list'
 import Image from 'progressive-web-sdk/dist/components/image'
+import Icon from 'progressive-web-sdk/dist/components/icon'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
 import ProductTile from './product-tile'
@@ -39,11 +41,29 @@ NoResultsList.propTypes = {
     bodyText: PropTypes.string
 }
 
-const ProductListContents = ({contentsLoaded, numItems, products, hasProducts, noResultsText}) => (
+const ProductListContents = ({contentsLoaded, numItems, sort, sortChange, products, hasProducts, noResultsText}) => (
     <div className="t-product-list__container u-padding-end u-padding-bottom-lg u-padding-start">
         <div className="t-product-list__num-results u-padding-md">
             {contentsLoaded ?
-                <span className="u-text-semi-bold">{numItems} Results</span>
+                <div>
+                    <span className="u-text-semi-bold">{numItems} Results</span>
+                    <div>
+                        {sort &&
+                            <div className="t-product-list__sort">
+                                <select
+                                    className="t-product-list__sort-select"
+                                    onChange={(e) => { sortChange(e.target.value) }}
+                                    onBlur={(e) => { sortChange(e.target.value) }}
+                                >
+                                    {sort.options.map((option) => <option value={option.value} key={option.value}>{option.text}</option>)}
+                                </select>
+                                <div className="t-product-list__sort-icon">
+                                    <Icon name="caret-down" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
                     :
                 <SkeletonBlock height="20px" />
             }
@@ -59,7 +79,8 @@ ProductListContents.propTypes = {
     hasProducts: PropTypes.bool,
     noResultsText: PropTypes.string,
     numItems: PropTypes.string,
-    sort: PropTypes.array
+    sort: PropTypes.object,
+    sortChange: PropTypes.func
 }
 
 const mapStateToProps = createPropsSelector({
@@ -71,5 +92,9 @@ const mapStateToProps = createPropsSelector({
     sort: selectors.getSort
 })
 
+const mapDispatchToProps = {
+    sortChange: changeSortIn
+}
 
-export default connect(mapStateToProps)(ProductListContents)
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductListContents)
