@@ -83,7 +83,6 @@ const ProductListContents = ({
 ProductListContents.propTypes = {
     products: PropTypes.array.isRequired,
     contentsLoaded: PropTypes.bool,
-    filters: PropTypes.array,
     hasProducts: PropTypes.bool,
     noResultsText: PropTypes.string,
     numItems: PropTypes.string,
@@ -93,7 +92,6 @@ ProductListContents.propTypes = {
 const mapStateToProps = createPropsSelector({
     hasProducts: selectors.getHasProducts,
     contentsLoaded: selectors.getProductListContentsLoaded,
-    filters: selectors.getFilters,
     noResultsText: selectors.getNoResultsText,
     numItems: selectors.getNumItems,
     products: selectors.getFilteredProductListProducts
