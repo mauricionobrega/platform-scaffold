@@ -50,7 +50,7 @@ const ProductListContents = ({contentsLoaded, numItems, sort, sortChange, produc
                     <div>
                         {sort &&
                             <div>
-                                <label for="sort">Sort by</label>
+                                <label htmlFor="sort">Sort by</label>
                                 <div className="u-position-relative">
                                     <select
                                         className="t-product-list__sort-select"
