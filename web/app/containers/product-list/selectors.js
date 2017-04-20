@@ -31,7 +31,7 @@ export const getHasProducts = createSelector(
 export const getProductListTitle = createGetSelector(getSelectedCategory, 'title')
 export const getNoResultsText = createGetSelector(getSelectedCategory, 'noResultsText')
 
-export const getSort = createGetSelector(getSelectedCategory, 'sort', Immutable.List())
+export const getSort = createGetSelector(getSelectedCategory, 'sort', Immutable.Map())
 
 export const getProductListProducts = createSelector(
     getProducts,
