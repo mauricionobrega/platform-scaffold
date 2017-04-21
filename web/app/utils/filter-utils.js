@@ -74,7 +74,11 @@ export const toTokens = (list, currentFilter) => {
  * @returns {function} - a callback function, intended for filter methods
  */
 export const byTokens = (tokenList) => (currentItem) => {
-    if (tokenList.length === 0 || !currentItem) {
+    if (!currentItem) {
+        return false
+    }
+
+    if (tokenList.length === 0) {
         return true
     }
 

@@ -17,9 +17,9 @@ import ProductTile from './product-tile'
 
 const ResultList = ({products}) => (
     <List className="c--borderless">
-        {products.map((product, idx) =>
-            <ProductTile key={idx} {...product} />)
-        }
+        {products.map((product) => {
+            return <ProductTile key={product.title} {...product} />
+        })}
     </List>
 )
 
@@ -53,7 +53,6 @@ const ProductListContents = ({
     contentsLoaded,
     hasProducts,
     noResultsText,
-    numItems,
     products,
     openModal,
     sort,
@@ -148,7 +147,6 @@ ProductListContents.propTypes = {
     contentsLoaded: PropTypes.bool,
     hasProducts: PropTypes.bool,
     noResultsText: PropTypes.string,
-    numItems: PropTypes.string,
     openModal: PropTypes.func,
     sort: PropTypes.object,
     sortChange: PropTypes.func
@@ -159,7 +157,6 @@ const mapStateToProps = createPropsSelector({
     hasProducts: selectors.getHasProducts,
     contentsLoaded: selectors.getProductListContentsLoaded,
     noResultsText: selectors.getNoResultsText,
-    numItems: selectors.getNumItems,
     products: selectors.getFilteredAndSortedListProducts,
     sort: selectors.getSort
 })
