@@ -59,6 +59,7 @@ _deploy() {
     count=`expr $count + 1`
   done
 
+  curl -X PUT http://start.mobify.com/progress/deploy/enable
   printf "\nDone!\n"
 }
 
