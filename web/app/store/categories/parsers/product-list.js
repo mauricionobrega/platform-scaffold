@@ -1,6 +1,7 @@
 import {parseTextLink, getTextFrom} from '../../../utils/parser-utils'
 import {urlToPathKey} from '../../../utils/utils'
 
+const REGEX_NON_NUM = /\D/g
 const REGEX_NON_ALPHA_NUM = /\W/g
 const REGEX_DASH = /-/g
 
@@ -26,8 +27,7 @@ const priceFilterParser = ($, $html) => {
             query = query.replace(REGEX_DASH, 'to').replace(REGEX_NON_ALPHA_NUM, '')
 
             return {
-                // active: $kind.find(''), // false
-                count: $count.text(), // 2
+                count: $count.text().replace(REGEX_NON_NUM, ''), // 2
                 criteria: priceParser(price), // priceParser('10-20')
                 label: $kind.text(), // '$10.00 - $19.99'
                 query // 'price10to20'

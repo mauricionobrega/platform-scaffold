@@ -32,6 +32,24 @@ export const getProductListTitle = createGetSelector(getSelectedCategory, 'title
 export const getNoResultsText = createGetSelector(getSelectedCategory, 'noResultsText')
 
 export const getFilters = createGetSelector(getSelectedCategory, 'filters', Immutable.List())
+export const getActiveFilters = createSelector(
+    getFilters,
+    (filters) => {
+        let activeFilters = Immutable.List()
+
+        filters.map((filter) => filter.get('kinds').map((kind) => {
+            if (kind.get('active')) {
+                activeFilters = activeFilters.push(kind)
+                return true
+            }
+            return false
+        }))
+
+        console.log(activeFilters.toJS())
+
+        return activeFilters
+    }
+)
 
 export const getProductListProducts = createSelector(
     getProducts,

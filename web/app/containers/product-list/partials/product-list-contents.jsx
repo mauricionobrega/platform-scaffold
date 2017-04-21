@@ -5,6 +5,7 @@ import * as selectors from '../selectors'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import {PRODUCT_LIST_FILTER_MODAL} from '../constants'
 import {openModal} from '../../../store/modals/actions'
+import {changeFilterTo} from '../../../store/categories/actions'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import List from 'progressive-web-sdk/dist/components/list'
@@ -46,42 +47,73 @@ NoResultsList.propTypes = {
 }
 
 const ProductListContents = ({
+    activeFilters,
+    clearFilters,
     contentsLoaded,
     hasProducts,
     noResultsText,
     products,
     openModal
 }) => (
-    <div className="t-product-list__container u-padding-end u-padding-bottom-lg u-padding-start">
-        <div className="t-product-list__num-results u-padding-md">
-            {contentsLoaded ?
-                <div className="u-flexbox">
-                    <div className="t-product-list__filter u-flex">
-                        <div className="u-text-semi-bold">{products.length} Results</div>
-
-                        <Button
-                            className="c--tertiary u-width-full u-text-uppercase"
-                            onClick={openModal}
-                        >
-                            Filters
-                        </Button>
-                    </div>
+    <div>
+        {contentsLoaded && activeFilters.length > 0 && (
+            <div className="u-flexbox u-align-center u-border-light-top">
+                <div className="u-flex u-padding-start-md">
+                    {activeFilters.map(({label, query}) =>
+                        <div key={query}>
+                            <strong>Price</strong>: {label}
+                        </div>
+                    )}
                 </div>
+
+                <div className="u-flex-none">
+                    <Button
+                        className="u-color-brand"
+                        icon="close"
+                        onClick={clearFilters}
+                    >
+                        Clear
+                    </Button>
+                </div>
+            </div>
+        )}
+
+        <div className="t-product-list__container u-padding-end u-padding-bottom-lg u-padding-start">
+            <div className="t-product-list__num-results u-padding-md u-padding-start-sm u-padding-end-sm">
+                {contentsLoaded ?
+                    <div className="u-flexbox">
+                        <div className="t-product-list__filter u-flex">
+                            <div className="u-text-semi-bold u-margin-bottom">
+                                {products.length} Items
+                            </div>
+
+                            <Button
+                                className="c--tertiary u-width-full u-text-uppercase"
+                                onClick={openModal}
+                                disabled={activeFilters.length > 0}
+                            >
+                                Filter
+                            </Button>
+                        </div>
+                    </div>
+                :
+                    <SkeletonBlock height="20px" />
+                }
+            </div>
+
+            {(hasProducts || !contentsLoaded) ?
+                <ResultList products={products} />
             :
-                <SkeletonBlock height="20px" />
+                <NoResultsList bodyText={noResultsText} />
             }
         </div>
-
-        {(hasProducts || !contentsLoaded) ?
-            <ResultList products={products} />
-        :
-            <NoResultsList bodyText={noResultsText} />
-        }
     </div>
 )
 
 ProductListContents.propTypes = {
     products: PropTypes.array.isRequired,
+    activeFilters: PropTypes.array,
+    clearFilters: PropTypes.func,
     contentsLoaded: PropTypes.bool,
     hasProducts: PropTypes.bool,
     noResultsText: PropTypes.string,
@@ -90,6 +122,7 @@ ProductListContents.propTypes = {
 }
 
 const mapStateToProps = createPropsSelector({
+    activeFilters: selectors.getActiveFilters,
     hasProducts: selectors.getHasProducts,
     contentsLoaded: selectors.getProductListContentsLoaded,
     noResultsText: selectors.getNoResultsText,
@@ -98,6 +131,7 @@ const mapStateToProps = createPropsSelector({
 })
 
 const mapDispatchToProps = {
+    clearFilters: () => changeFilterTo(null),
     openModal: () => openModal(PRODUCT_LIST_FILTER_MODAL)
 }
 

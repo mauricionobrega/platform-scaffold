@@ -45,7 +45,14 @@ const ProductListFilterModal = ({closeModal, filters, isOpen, changeFilter}) => 
                         jsx-a11y/onclick-has-focus,
                         jsx-a11y/onclick-has-role,
                         jsx-a11y/no-static-element-interactions */}
-                    <div onClick={changeFilter} role="presentation">
+                    <div
+                        className="t-product-list__filter-modal-items"
+                        role="presentation"
+                        onClick={(e) => {
+                            changeFilter(e)
+                            closeModal()
+                        }}
+                    >
                         {kinds.map(({count, label, query}) =>
                             <Button
                                 key={query}
