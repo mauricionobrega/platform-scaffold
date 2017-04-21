@@ -5,11 +5,12 @@ import * as selectors from '../selectors'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import {PRODUCT_LIST_FILTER_MODAL} from '../constants'
 import {openModal} from '../../../store/modals/actions'
-import {changeFilterTo} from '../../../store/categories/actions'
+import {changeFilterTo, changeSort} from '../../../store/categories/actions'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import List from 'progressive-web-sdk/dist/components/list'
 import Image from 'progressive-web-sdk/dist/components/image'
+import Icon from 'progressive-web-sdk/dist/components/icon'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
 import ProductTile from './product-tile'
@@ -52,8 +53,11 @@ const ProductListContents = ({
     contentsLoaded,
     hasProducts,
     noResultsText,
+    numItems,
     products,
-    openModal
+    openModal,
+    sort,
+    sortChange
 }) => (
     <div>
         {contentsLoaded && activeFilters.length > 0 && (
@@ -95,6 +99,30 @@ const ProductListContents = ({
                                 Filter
                             </Button>
                         </div>
+
+                        <div className="t-product-list__sort">
+                            <span className="u-text-semi-bold">{numItems} Results</span>
+
+                            {sort &&
+                                <div>
+                                    <label htmlFor="sort">Sort by</label>
+
+                                    <div className="u-position-relative">
+                                        <select
+                                            className="t-product-list__sort-select"
+                                            onChange={(e) => { sortChange(e.target.value) }}
+                                            onBlur={(e) => { sortChange(e.target.value) }}
+                                        >
+                                            {sort.options.map((option) => <option value={option.value} key={option.value}>{option.text}</option>)}
+                                        </select>
+
+                                        <div className="t-product-list__sort-icon">
+                                            <Icon name="caret-down" />
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
                     </div>
                 :
                     <SkeletonBlock height="20px" />
@@ -110,6 +138,7 @@ const ProductListContents = ({
     </div>
 )
 
+
 ProductListContents.propTypes = {
     products: PropTypes.array.isRequired,
     activeFilters: PropTypes.array,
@@ -118,7 +147,9 @@ ProductListContents.propTypes = {
     hasProducts: PropTypes.bool,
     noResultsText: PropTypes.string,
     numItems: PropTypes.string,
-    openModal: PropTypes.func
+    openModal: PropTypes.func,
+    sort: PropTypes.object,
+    sortChange: PropTypes.func
 }
 
 const mapStateToProps = createPropsSelector({
@@ -127,13 +158,16 @@ const mapStateToProps = createPropsSelector({
     contentsLoaded: selectors.getProductListContentsLoaded,
     noResultsText: selectors.getNoResultsText,
     numItems: selectors.getNumItems,
-    products: selectors.getFilteredProductListProducts
+    products: selectors.getFilteredAndSortedListProducts,
+    sort: selectors.getSort
 })
 
 const mapDispatchToProps = {
     clearFilters: () => changeFilterTo(null),
-    openModal: () => openModal(PRODUCT_LIST_FILTER_MODAL)
+    openModal: () => openModal(PRODUCT_LIST_FILTER_MODAL),
+    sortChange: changeSort,
 }
+
 
 export default connect(
     mapStateToProps,
