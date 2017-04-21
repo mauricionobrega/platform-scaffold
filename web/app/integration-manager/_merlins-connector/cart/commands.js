@@ -9,7 +9,7 @@ import {submitForm} from '../utils'
 import {parseLocations} from '../checkout/parsers'
 import {fetchShippingMethodsEstimate} from '../checkout/commands'
 import {fetchPageData} from '../app/commands'
-import {parseCart, parseCartProducts} from './parser'
+import {parseCart, parseCartProducts, textFromFragment} from './parser'
 import {parseCheckoutEntityID, extractMagentoJson} from '../../../utils/magento-utils'
 import {ESTIMATE_FORM_NAME, ADD_TO_WISHLIST_URL} from '../../../containers/cart/constants'
 
@@ -18,12 +18,6 @@ const REMOVE_CART_ITEM_URL = '/checkout/sidebar/removeItem/'
 const UPDATE_ITEM_URL = '/checkout/sidebar/updateItemQty/'
 const BASE_HEADERS = {
     Accept: 'application/json',
-}
-
-export const textFromFragment = (fragment) => {
-    const e = document.createElement('div')
-    e.innerHTML = fragment
-    return e.textContent.trim()
 }
 
 /**

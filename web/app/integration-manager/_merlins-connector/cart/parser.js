@@ -41,5 +41,3 @@ export const parseCart = ({items, subtotal, subtotal_excl_tax}) => {
         taxes: []
     }
 }
-
-export default parseCart
