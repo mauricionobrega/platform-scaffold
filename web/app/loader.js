@@ -60,7 +60,7 @@ if (isReactRoute()) {
     reactTarget.className = 'react-target'
     body.appendChild(reactTarget)
 
-    const loadScript = ({id, src, onload, async = true}) => {
+    const loadScript = ({id, src, onload, isAsync = true}) => {
         const script = document.createElement('script')
 
         // Setting UTF-8 as our encoding ensures that certain strings (i.e.
@@ -68,9 +68,7 @@ if (isReactRoute()) {
         // do this on the vendor scripts also just in case any libs we
         // import have localized strings in them.
         script.charset = 'utf-8'
-        if (async) {
-            script.async = true
-        }
+        script.async = isAsync
         script.id = id
         script.src = src
         script.onload = typeof onload === typeof function() {}
@@ -153,7 +151,7 @@ if (isReactRoute()) {
             loadScript({
                 id: 'progressive-web-core-polyfill',
                 src: getAssetUrl('core-polyfill.js'),
-                async: false
+                isAsync: false
             })
         }
 
@@ -161,7 +159,7 @@ if (isReactRoute()) {
             loadScript({
                 id: 'progressive-web-core-polyfill',
                 src: getAssetUrl('fetch-polyfill.js'),
-                async: false
+                isAsync: false
             })
         }
 
