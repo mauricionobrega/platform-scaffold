@@ -11,7 +11,6 @@ import {getCurrentUrl} from './selectors'
 
 import appParser from './app-parser'
 
-import {ESTIMATE_FORM_NAME} from '../cart/constants'
 import {SHIPPING_FORM_NAME} from '../checkout-shipping/constants'
 
 import {
@@ -167,7 +166,6 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                     dispatch(checkoutShippingActions.fetchShippingMethodsEstimate(SHIPPING_FORM_NAME))
                 } else if (pageComponent === UnwrappedCart) {
                     dispatch(checkoutActions.processCartCheckoutData(receivedAction))
-                    dispatch(checkoutShippingActions.fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME))
                 } else if (pageComponent === UnwrappedCheckoutPayment) {
                     dispatch(checkoutActions.processCheckoutData(receivedAction))
                 } else if (pageComponent === UnwrappedCheckoutConfirmation) {

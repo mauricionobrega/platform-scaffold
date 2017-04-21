@@ -5,15 +5,26 @@ import {getCheckout} from '../../selectors'
 
 export const getShipping = createGetSelector(getCheckout, 'shipping', Immutable.Map())
 
-export const getShippingInitialValues = createGetSelector(getShipping, 'initialValues')
-
 export const getShippingMethods = createGetSelector(getShipping, 'shippingMethods', Immutable.List())
 
-export const getDefaultShippingMethod = createGetSelector(getShippingMethods, 0, Immutable.Map())
-
-export const getDefaultShippingRate = createGetSelector(getDefaultShippingMethod, 'cost')
-
 export const getShippingAddress = createGetSelector(getShipping, 'address', Immutable.Map())
+
+export const getSelectedShippingMethodValue = createGetSelector(getShippingAddress, 'shipping_method', '')
+
+export const getSelectedShippingMethod = createSelector(
+    getShippingMethods,
+    getSelectedShippingMethodValue,
+    (shippingMethods, selectedMethodValue) => {
+        if (!shippingMethods.size) {
+            return Immutable.Map()
+        }
+        const selectedValue = shippingMethods.filter((method) => method.get('value') === selectedMethodValue)
+        return selectedValue.size ? selectedValue.get(0) : shippingMethods.get(0)
+    })
+
+export const getSelectedShippingRate = createGetSelector(getSelectedShippingMethod, 'cost', '')
+
+export const getSelectedShippingLabel = createGetSelector(getSelectedShippingMethod, 'label', '')
 
 export const getShippingFirstName = createGetSelector(getShippingAddress, 'firstname', '')
 
