@@ -13,6 +13,8 @@ const priceParser = (value) => {
     // Sometimes you get values like `0-10` and `10-20`. The ceiling of one
     // price should not overlap with the floor of another.
     ceiling = ceiling - 0.01
+    // We're choosing to subtract from the ceiling because a value of `0-10` is
+    // otherwise labelled `$0 - $9.99` elsewhere. This aligns the values to match.
 
     return {floor, ceiling}
 }
