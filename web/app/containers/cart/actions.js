@@ -1,5 +1,5 @@
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
-import {createAction, urlToPathKey, getLocationData} from '../../utils/utils'
+import {createAction, urlToPathKey, parseLocationData} from '../../utils/utils'
 import {closeModal, openModal} from '../../store/modals/actions'
 import {fetchShippingMethodsEstimate} from '../../store/checkout/shipping/actions'
 import {getSelectedShippingMethod} from '../../store/checkout/shipping/selectors'
@@ -29,7 +29,7 @@ export const fetchTaxEstimate = () => (dispatch, getState) => {
     const formValues = getFormValues(ESTIMATE_FORM_NAME)(currentState)
     const entityID = getCustomerEntityID(currentState)
     const registeredFieldNames = getFormRegisteredFields(ESTIMATE_FORM_NAME)(currentState).map(({name}) => name)
-    const address = getLocationData(formValues, registeredFieldNames)
+    const address = parseLocationData(formValues, registeredFieldNames)
 
     const getTotalsURL = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/totals-information`
     const shippingMethod = getSelectedShippingMethod(currentState).toJS().value.split('_')

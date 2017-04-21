@@ -148,7 +148,7 @@ export const requestIdleCallback = (fn) => {
 }
 
 
-export const getLocationData = (formValues, registeredFieldNames) => {
+export const parseLocationData = (formValues, registeredFieldNames) => {
     // Default values to use if none have been selected
     const address = {country_id: 'US', region_id: '0', postcode: null}
 
@@ -158,12 +158,13 @@ export const getLocationData = (formValues, registeredFieldNames) => {
             return registeredFieldNames.includes(fieldName) ? formValues[fieldName] : undefined
         }
         address.country_id = getRegisteredFieldValue('country_id')
-        address.region_id = getRegisteredFieldValue('region_id')
         address.postcode = getRegisteredFieldValue('postcode')
         if (formValues.region) {
             address.region = getRegisteredFieldValue('region')
             // Remove the region_id in case we have an old value
             delete address.region_id
+        } else {
+            address.region_id = getRegisteredFieldValue('region_id')
         }
     }
     return address

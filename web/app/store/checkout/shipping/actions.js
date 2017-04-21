@@ -1,6 +1,6 @@
 
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
-import {getLocationData} from '../../../utils/utils'
+import {parseLocationData} from '../../../utils/utils'
 import {getCustomerEntityID} from '../selectors'
 import {getIsLoggedIn} from '../../../containers/app/selectors'
 import {getFormValues, getFormRegisteredFields} from '../../form/selectors'
@@ -16,7 +16,7 @@ export const fetchShippingMethodsEstimate = (formKey) => {
         const formValues = getFormValues(formKey)(currentState)
         const entityID = getCustomerEntityID(currentState)
         const registeredFieldNames = getFormRegisteredFields(formKey)(currentState).map(({name}) => name)
-        const address = getLocationData(formValues, registeredFieldNames)
+        const address = parseLocationData(formValues, registeredFieldNames)
 
         const getEstimateURL = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/estimate-shipping-methods`
         return makeJsonEncodedRequest(getEstimateURL, {address}, {method: 'POST'})
