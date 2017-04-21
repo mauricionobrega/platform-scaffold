@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as selectors from '../selectors'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
-import {changeSortIn} from '../../../store/categories/actions'
+import {changeSort} from '../../../store/categories/actions'
 
 import List from 'progressive-web-sdk/dist/components/list'
 import Image from 'progressive-web-sdk/dist/components/image'
@@ -96,7 +96,7 @@ const mapStateToProps = createPropsSelector({
 })
 
 const mapDispatchToProps = {
-    sortChange: changeSortIn
+    sortChange: changeSort
 }
 
 

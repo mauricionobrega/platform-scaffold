@@ -4,16 +4,16 @@ import {getCurrentPathKey} from '../../containers/app/selectors'
 import {getSelectedCategory} from '../../containers/product-list/selectors'
 
 export const receiveCategory = createAction('Receive Category Data')
-export const changeSort = createAction('Change Sort Option')
+export const changeSortOption = createAction('Change Sort Option')
 
-export const changeSortIn = (sortValue) => (dispatch, getStore) => {
+export const changeSort = (sortValue) => (dispatch, getStore) => {
     const currentState = getStore()
     const categoryData = getSelectedCategory(currentState).toJS()
     categoryData.sort.options.forEach((option) => {
         option.selected = option.value === sortValue
     })
     const currentCategory = {[getCurrentPathKey(currentState)]: categoryData}
-    dispatch(changeSort(currentCategory))
+    dispatch(changeSortOption(currentCategory))
 }
 
 export const process = ({payload}) => {
