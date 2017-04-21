@@ -38,6 +38,10 @@ _start() {
   docker run -p 8443:8443 -v `pwd`:/app mobify/platform-runner
 }
 
+_stop() {
+  docker ps -q --filter ancestor="mobify/platform-runner" | xargs docker stop || true
+}
+
 _deploy() {
   printf "Preparing a bundle...\n"
 
@@ -64,6 +68,7 @@ _usage() {
   printf "Usage: $0 [command...]\n"
   printf "\nSupported commands:\n"
   printf "  start          Start the local Mobify development environment\n"
+  printf "  stop           Stop the local Mobify development environment\n"
   printf "  deploy         Prepare a project bundle and deploy to the Mobify cloud\n"
   printf "  push           Send a test Push Notification\n"
   printf "  sdk            Run Mobify Progressive SDK commands\n"
@@ -81,6 +86,9 @@ opt="$1"
 case "$opt" in
   start)
     _start
+    ;;
+  stop)
+    _stop
     ;;
   deploy)
     _deploy
