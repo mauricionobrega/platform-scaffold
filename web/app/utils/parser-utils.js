@@ -46,7 +46,7 @@ export const parseOption = ($option) => {
         key: value,
         value,
         selected: !!$option.attr('selected'),
-        text: $option.text()
+        text: $option.text().trim()
     }
 }
 
