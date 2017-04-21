@@ -61,6 +61,14 @@
 }
 
 
+// Filter
+// ---
+
+.t-product-list__filter {
+    width: 50%;
+}
+
+
 // Active Filter
 // ---
 
@@ -85,6 +93,10 @@
 // ---
 //
 // 1. Positioned relative to the parent `.u-position-relative` container
+
+.t-product-list__sort {
+    width: 50%;
+}
 
 .t-product-list__sort-select {
     color: $font-color;

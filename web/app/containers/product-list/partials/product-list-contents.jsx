@@ -86,7 +86,7 @@ const ProductListContents = ({
             <div className="t-product-list__num-results u-padding-md u-padding-start-sm u-padding-end-sm">
                 {contentsLoaded ?
                     <div className="u-flexbox">
-                        <div className="t-product-list__filter u-flex">
+                        <div className="t-product-list__filter u-flex u-margin-end-md">
                             <div className="u-text-semi-bold u-margin-bottom">
                                 {products.length} Items
                             </div>
@@ -100,28 +100,30 @@ const ProductListContents = ({
                             </Button>
                         </div>
 
-                        <div className="t-product-list__sort">
-                            <span className="u-text-semi-bold">{numItems} Results</span>
+                        <div className="t-product-list__sort u-flex">
+                            <label htmlFor="sort" className="u-text-semi-bold u-margin-bottom">
+                                Sort by
+                            </label>
 
-                            {sort &&
-                                <div>
-                                    <label htmlFor="sort">Sort by</label>
+                            <div>
+                                <div className="u-position-relative u-width-full">
+                                    <select
+                                        className="t-product-list__sort-select"
+                                        onChange={(e) => { sortChange(e.target.value) }}
+                                        onBlur={(e) => { sortChange(e.target.value) }}
+                                    >
+                                        {sort.options.map((option) =>
+                                            <option value={option.value} key={option.value}>
+                                                {option.text}
+                                            </option>)
+                                        }
+                                    </select>
 
-                                    <div className="u-position-relative">
-                                        <select
-                                            className="t-product-list__sort-select"
-                                            onChange={(e) => { sortChange(e.target.value) }}
-                                            onBlur={(e) => { sortChange(e.target.value) }}
-                                        >
-                                            {sort.options.map((option) => <option value={option.value} key={option.value}>{option.text}</option>)}
-                                        </select>
-
-                                        <div className="t-product-list__sort-icon">
-                                            <Icon name="caret-down" />
-                                        </div>
+                                    <div className="t-product-list__sort-icon">
+                                        <Icon name="caret-down" />
                                     </div>
                                 </div>
-                            }
+                            </div>
                         </div>
                     </div>
                 :
