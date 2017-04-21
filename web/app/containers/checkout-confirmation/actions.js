@@ -1,4 +1,3 @@
-import {makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {CHECKOUT_CONFIRMATION_MODAL, CHECKOUT_CONFIRMATION_REGISTRATION_FAILED} from './constants'
 import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 import {addNotification, removeAllNotifications} from '../app/actions'
@@ -7,6 +6,7 @@ import * as shippingSelectors from '../../store/checkout/shipping/selectors'
 import * as formSelectors from '../../store/form/selectors'
 import {getEmailAddress} from '../../store/checkout/selectors'
 import {getFormKey} from '../../integration-manager/_merlins-connector/selectors'
+import {checkoutRegister} from '../../integration-manager/checkout/commands'
 
 // @TODO: blocked until the desktop's Address Book actualy works correctly
 // import * as paymentSelectors from '../../store/checkout/payment/selectors'
@@ -128,17 +128,19 @@ export const submitRegisterForm = () => {
             ...formSelectors.getConfirmationFormValues(getState())
         }
 
-        const postCreateAccountURL = '/customer/account/createpost/'
-        makeFormEncodedRequest(postCreateAccountURL, userCredentials, {method: 'POST'})
-            .then((response) => {
-                const responseUrlHas = (chunk) => response.url.search(chunk) >= 0
-                const redirectUrlIsNotToCreate = responseUrlHas('/account/') && !responseUrlHas('/create/')
-                const registrationIsSuccess = response.redirected && redirectUrlIsNotToCreate
-
-                if (registrationIsSuccess) {
-                    dispatch(openModal(CHECKOUT_CONFIRMATION_MODAL))
-                    dispatch(updatingShippingAndBilling())
-                    dispatch(hideRegistrationForm())
+        return checkoutRegister(userCredentials)
+            .then(() => {
+                dispatch(openModal(CHECKOUT_CONFIRMATION_MODAL))
+                dispatch(updatingShippingAndBilling())
+                dispatch(hideRegistrationForm())
+            })
+            .catch((error) => {
+                if (error.name !== 'SubmissionError') {
+                    dispatch(addNotification({
+                        content: `Sorry, registration Failed. Contact us for assistance. ${error}`,
+                        id: CHECKOUT_CONFIRMATION_REGISTRATION_FAILED,
+                        showRemoveButton: true
+                    }))
                 } else {
                     dispatch(addNotification({
                         content: `Could not complete registration. The email you provided may already be in use.`,
@@ -146,13 +148,6 @@ export const submitRegisterForm = () => {
                         showRemoveButton: true
                     }))
                 }
-            })
-            .catch((error) => {
-                dispatch(addNotification({
-                    content: `Sorry, registration Failed. Contact us for assistance. ${error}`,
-                    id: CHECKOUT_CONFIRMATION_REGISTRATION_FAILED,
-                    showRemoveButton: true
-                }))
             })
     }
 }

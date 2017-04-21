@@ -2,6 +2,7 @@ import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils
 import {SubmissionError} from 'redux-form'
 import {checkoutShippingParser, parseCheckoutData, parseShippingMethods, checkoutConfirmationParser} from './parsers'
 import {parseCheckoutEntityID} from '../../../utils/magento-utils'
+import {submitForm} from '../utils'
 import {getCart} from '../cart/commands'
 import {receiveCheckoutShippingData, receiveCheckoutData, receiveShippingMethodInitialValues, receiveCheckoutConfirmationData} from './../../checkout/responses'
 import {fetchPageData} from '../app/commands'
@@ -174,6 +175,22 @@ export const checkoutSignIn = (formValues) => {
     }
 }
 
+export const checkoutRegister = (userCredentials) => {
+    const postCreateAccountURL = '/customer/account/createpost/'
+    return submitForm(postCreateAccountURL, userCredentials, {method: 'POST'})
+        .then((response) => {
+            const responseUrlHas = (chunk) => response.url.search(chunk) >= 0
+            const redirectUrlIsNotToCreate = responseUrlHas('/account/') && !responseUrlHas('/create/')
+            const registrationIsSuccess = response.redirected && redirectUrlIsNotToCreate
+
+            if (!registrationIsSuccess) {
+                throw new SubmissionError('Could not complete registration. The email you provided may already be in use.')
+            }
+
+            return Promise.resolve()
+        })
+}
+
 export const fetchCheckoutPaymentData = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then((res) => {
@@ -234,8 +251,5 @@ export const submitPayment = (formValues) => (dispatch, getState) => {
             } else {
                 throw new Error(responseJSON.message)
             }
-        })
-        .catch((error) => {
-            debugger
         })
 }
