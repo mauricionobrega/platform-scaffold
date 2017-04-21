@@ -8,7 +8,12 @@ const REGEX_DASH = /-/g
 const priceParser = (value) => {
     const values = value.split('-')
     const floor = parseInt(values[0]) || 0
-    const ceiling = parseInt(values[1]) || Infinity
+    let ceiling = parseInt(values[1]) || Infinity
+
+    // Sometimes you get values like `0-10` and `10-20`. The ceiling of one
+    // price should not overlap with the floor of another.
+    ceiling = ceiling - 0.01
+
     return {floor, ceiling}
 }
 
