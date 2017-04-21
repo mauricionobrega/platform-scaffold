@@ -27,14 +27,17 @@ export const receiveCartContents = utils.createAction('Received Cart Contents')
  * Get the contents of the users cart
  */
 export const getCart = () => (dispatch) => {
-    const opts = {
-        headers: baseHeaders
-    }
     dispatch(removeNotification('cartUpdateError'))
     const currentTimeMs = new Date().getTime()
-    return makeRequest(`${LOAD_CART_SECTION_URL}&_=${currentTimeMs}`, opts)
-        .then((response) => response.text())
-        .then((responseText) => dispatch(receiveCartContents(parse(responseText))))
+    return new Promise((resolve) => {
+        window.Progressive.$.ajax({
+            url: `${LOAD_CART_SECTION_URL}&_=${currentTimeMs}`,
+            method: 'POST',
+            success: (response) => {
+                return resolve(dispatch(receiveCartContents(parse(response))))
+            }
+        })
+    })
 }
 
 /**
