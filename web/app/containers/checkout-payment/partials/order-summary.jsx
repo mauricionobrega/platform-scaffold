@@ -7,6 +7,7 @@ import throttle from 'lodash.throttle'
 // Selectors
 import * as selectors from '../selectors'
 import * as cartSelectors from '../../../store/cart/selectors'
+import {getSelectedShippingRate, getSelectedShippingLabel} from '../../../store/checkout/shipping/selectors'
 
 // Actions
 import * as checkoutPaymentActions from '../actions'
@@ -60,7 +61,10 @@ class OrderSummary extends React.Component {
             isFixedPlaceOrderShown,
             summaryCount,
             subtotalExclTax,
-            subtotalInclTax
+            subtotalInclTax,
+            shippingRate,
+            shippingLabel,
+            taxAmount
         } = this.props
 
         const cart = {
@@ -83,6 +87,17 @@ class OrderSummary extends React.Component {
                         <LedgerRow
                             label={`Subtotal (${summaryCount} items)`}
                             value={subtotalExclTax}
+                        />
+
+                        <LedgerRow
+                            label={`Shipping (${shippingLabel})`}
+                            value={shippingRate}
+                        />
+
+                        <LedgerRow
+                            className="u-flex-none u-border-0"
+                            label="Taxes"
+                            value={taxAmount}
                         />
 
                         {cart.shipping_rate &&
@@ -176,6 +191,16 @@ OrderSummary.propTypes = {
     isFixedPlaceOrderShown: PropTypes.bool,
 
     /**
+     * Shipping rate label
+     */
+    shippingLabel: PropTypes.string,
+
+    /**
+     * Shipping rate amount
+     */
+    shippingRate: PropTypes.string,
+
+    /**
      * Subtotal excluding tax
      */
     subtotalExclTax: PropTypes.string,
@@ -191,6 +216,11 @@ OrderSummary.propTypes = {
     summaryCount: PropTypes.number,
 
     /**
+     * Tax amount
+     */
+    taxAmount: PropTypes.string,
+
+    /**
      * Handle scroll to toggle fixed 'Place Order' container
      */
     toggleFixedPlaceOrder: PropTypes.func
@@ -200,6 +230,9 @@ const mapStateToProps = createPropsSelector({
     cartItems: cartSelectors.getCartItems,
     subtotalExclTax: cartSelectors.getSubtotalExcludingTax,
     subtotalInclTax: cartSelectors.getSubtotalIncludingTax,
+    shippingRate: getSelectedShippingRate,
+    shippingLabel: getSelectedShippingLabel,
+    taxAmount: cartSelectors.getTaxAmount,
     summaryCount: cartSelectors.getCartSummaryCount,
     isFixedPlaceOrderShown: selectors.getIsFixedPlaceOrderShown
 })
