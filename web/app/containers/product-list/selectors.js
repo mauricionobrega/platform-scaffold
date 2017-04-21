@@ -37,15 +37,11 @@ export const getActiveFilters = createSelector(
     (filters) => {
         let activeFilters = Immutable.List()
 
-        filters.map((filter) => filter.get('kinds').map((kind) => {
+        filters.map((filter) => filter.get('kinds').forEach((kind) => {
             if (kind.get('active')) {
                 activeFilters = activeFilters.push(kind)
-                return true
             }
-            return false
         }))
-
-        console.log(activeFilters.toJS())
 
         return activeFilters
     }

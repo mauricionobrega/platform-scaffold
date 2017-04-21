@@ -60,7 +60,7 @@ const ProductListContents = ({
             <div className="u-flexbox u-align-center u-border-light-top">
                 <div className="u-flex u-padding-start-md">
                     {activeFilters.map(({label, query}) =>
-                        <div key={query}>
+                        <div className="t-product-list__active-filter" key={query}>
                             <strong>Price</strong>: {label}
                         </div>
                     )}
