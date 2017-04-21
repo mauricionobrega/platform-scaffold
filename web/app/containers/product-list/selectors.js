@@ -34,15 +34,6 @@ export const getProductListProducts = createSelector(
 )
 
 export const getFilters = createGetSelector(getSelectedCategory, 'filters', Immutable.List())
-export const getFilteredProductListProducts = createSelector(
-    getProductListProducts,
-    getFilters,
-    (products, filters) => {
-        const filterTokens = filters.toJS().reduce(toTokens, [])
-        return Immutable.List(products.toJS().filter(byTokens(filterTokens)))
-    }
-)
-
 export const getActiveFilters = createSelector(
     getFilters,
     (filters) => {
@@ -55,6 +46,14 @@ export const getActiveFilters = createSelector(
         }))
 
         return activeFilters
+    }
+)
+export const getFilteredProductListProducts = createSelector(
+    getProductListProducts,
+    getActiveFilters,
+    (products, filters) => {
+        const filterTokens = filters.toJS().reduce(toTokens, [])
+        return Immutable.List(products.toJS().filter(byTokens(filterTokens)))
     }
 )
 

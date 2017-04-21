@@ -37,6 +37,7 @@ const priceFilterParser = ($, $html) => {
                 count: $count.text().replace(REGEX_NON_NUM, ''), // 2
                 criteria: priceParser(price), // priceParser('10-20')
                 label: $kind.text(), // '$10.00 - $19.99'
+                ruleset: 'price', // we only have one ruleset at the moment
                 query // 'price10to20'
             }
         }).toArray()

@@ -28,9 +28,8 @@ const evaluate = (item, ruleset, criteria) => RULESETS[ruleset](item, criteria)
 
 /**
  * toTokens - A reduce function callback that takes a list of filters and
- * reduces them down into a list of tokenized filters. The tokens can be used to
- * generate a function callback (see byTokens below) for use in a filter method.
- * Example usage:
+ * reduces them down into a list of tokenized filters. The tokens is be used to
+ * generate a function callback for use in a filter method. Example usage:
  *
  *    const filters = getFilters.toJS()
  *    // => [{ruleset: 'price', kinds: [{active: true, criteria: 'blue', ...}]}, ...]
@@ -40,21 +39,17 @@ const evaluate = (item, ruleset, criteria) => RULESETS[ruleset](item, criteria)
  *    // => [{ruleset: 'price', criteria: 'blue'}, ...]
  *    //    list of tokenized filters
  *
- * @param {array} list - the list that has only active tokens appended to it.
+ * @param {array} list - the list that collects each token together
  * @param {object} currentFilter - the current filter object
  * @returns {array} - The final list of filter tokens in the format of {ruleset, criteria}
  */
 export const toTokens = (list, currentFilter) => {
-    currentFilter.kinds.forEach((kind) => {
-        if (kind.active) {
-            const token = {
-                ruleset: currentFilter.ruleset,
-                criteria: kind.criteria
-            }
+    const token = {
+        ruleset: currentFilter.ruleset,
+        criteria: currentFilter.criteria
+    }
 
-            list.push(token)
-        }
-    })
+    list.push(token)
 
     return list
 }
