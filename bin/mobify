@@ -9,6 +9,8 @@ _start() {
     exit 1
   fi
 
+curl -X PUT http://start.mobify.com/progress/clone/enable
+
   printf '                        `:-.          \n'
   printf '                       -yyyyys+:`          \n'
   printf '                      /yyyyyyyyy`  +o+/:-.          \n'
