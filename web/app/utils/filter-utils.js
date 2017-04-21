@@ -2,7 +2,7 @@ const NON_FLOAT_REGEX = /[^\d.]/g
 
 const RULESETS = {
     price: (item, range) => {
-        const price = parseInt(item.price.replace(NON_FLOAT_REGEX, ''))
+        const price = parseFloat(item.price.replace(NON_FLOAT_REGEX, ''))
         return price >= range.floor && price <= range.ceiling
     },
     // insert more rules when applicable
