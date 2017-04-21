@@ -2,7 +2,7 @@ const selectors = {
     checkoutTemplateIdentifier: '.t-checkout-shipping.t--loaded',
 
     registeredEmail: 'input[name="username"]',
-    registeredPassword: 'input[name="password"]',
+    registeredPassword: 'input[name="password"][type="password"]',
     signIn: '.qa-checkout__sign-in',
 
     // Shipping info
