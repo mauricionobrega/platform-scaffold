@@ -13,10 +13,13 @@ describe('Parsing the cart', () => {
 })
 
 describe('Parsing the cart products', () => {
-    const data = require('./cart-contents-example.json')
-    const expected = require('./cart-contents-parse-cart-products-expected.json')
+    test('should map cart product information to Product type', () => {
+        const data = require('./cart-contents-example.json')
+        const expected = require('./cart-contents-parse-cart-products-expected.json')
 
-    const cartProducts = parseCartProducts(data.cart)
+        const cartProducts = parseCartProducts(data.cart)
 
-    expect(cartProducts).toEqual(expected)
+        expect(cartProducts).toEqual(expected)
+    })
 })
+
