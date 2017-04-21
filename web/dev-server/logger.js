@@ -39,11 +39,13 @@ const logger = {
         )
 
         console.log(
+            chalk.underline('Previewing on your desktop (mobile emulation)') + '\n' + // eslint-disable-line prefer-template
             chalk.bold('Local Preview URL: ') + // eslint-disable-line prefer-template
-            chalk.magenta(`https://goo.gl/uDe5UQ`) + '\n' +
+            chalk.magenta(`https://goo.gl/uDe5UQ`) + '\n' + '\n' +
+            chalk.underline('Previewing on your mobile device') + '\n' +// eslint-disable-line prefer-template
+            chalk.bold(`Open https://mobify.ngrok.io on your device and accept the SSL certificate`) + '\n' +
             chalk.bold('Device Preview URL (this is your local app running online): ') + // eslint-disable-line prefer-template
             chalk.magenta(`https://goo.gl/OMjnCw`) + '\n' +
-            chalk.bold(`Please open https://mobify.ngrok.io on your device and accept SSL certificate first!`) + '\n' +
             divider + '\n' +
             chalk.blue(`Press ${chalk.italic('CTRL-C')} to stop`) + '\n'
         )
