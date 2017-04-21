@@ -68,7 +68,7 @@ class ProductListFilterModal extends React.Component {
                                 {kinds.map(({count, label, query}) =>
                                     <Button
                                         key={query}
-                                        className="c--link u-width-full"
+                                        className="c--link u-width-full u-text-letter-spacing-normal"
                                         innerClassName="u-justify-start"
                                         id={query}
                                     >
