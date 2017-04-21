@@ -1,0 +1,19 @@
+{
+    "contents": [
+        {
+            "href": "https://www.merlinspotions.com/sleeping-draught.html",
+            "id": "1659",
+            "productId": "7",
+            "quantity": 1
+        },
+        {
+            "href": "https://www.merlinspotions.com/eye-of-newt.html",
+            "id": "1658",
+            "productId": "1",
+            "quantity": 2
+        }
+    ],
+    "subtotalWithoutTax": "$48.00",
+    "subtotalWithTax": "$50.40",
+    "taxes": []
+}
