@@ -94,11 +94,13 @@ class OrderSummary extends React.Component {
                             value={shippingRate}
                         />
 
-                        <LedgerRow
-                            className="u-flex-none u-border-0"
-                            label="Taxes"
-                            value={taxAmount}
-                        />
+                        {taxAmount &&
+                            <LedgerRow
+                                className="u-flex-none u-border-0"
+                                label="Taxes"
+                                value={taxAmount}
+                            />
+                        }
 
                         {cart.shipping_rate &&
                             <LedgerRow
