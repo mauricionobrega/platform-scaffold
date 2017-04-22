@@ -30,13 +30,14 @@ const priceFilterParser = ($, $html) => {
             let query = $kind.find('a')[0].search
             const price = query.split('=')[1]
             const $count = $kind.find('.count').remove()
+            const count = $count.text().trim()
 
             query = query.replace(REGEX_DASH, 'to').replace(REGEX_NON_ALPHA_NUM, '')
 
             return {
-                count: $count.text().replace(REGEX_NON_NUM, ''), // 2
+                count: count.replace(REGEX_NON_NUM, ''), // 2
                 criteria: priceParser(price), // priceParser('10-20')
-                label: $kind.text(), // '$10.00 - $19.99'
+                label: $kind.text().trim(), // '$10.00 - $19.99'
                 ruleset: 'price', // we only have one ruleset at the moment
                 query // 'price10to20'
             }
