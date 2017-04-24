@@ -2,7 +2,6 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import throttle from 'lodash.throttle'
-// import debounce from 'lodash.debounce'
 import classnames from 'classnames'
 
 import * as headerActions from './actions'
@@ -34,7 +33,6 @@ class Header extends React.Component {
         this.headerHeight = Number.MAX_VALUE
 
         this.onChangeSearchQuery = this.onChangeSearchQuery.bind(this)
-        // this.debouncedSearchQueryChanged = debounce(props.searchQueryChanged, 200)
     }
 
     componentDidMount() {
