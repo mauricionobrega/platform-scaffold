@@ -71,7 +71,7 @@ export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateP
                             </Button>
                         :
                             <Button className="c--secondary u-width-full">
-                                <InlineLoader title="Estimating" />
+                                <InlineLoader className="pw--white" title="Estimating" />
                             </Button>
                         }
                     </FieldRow>

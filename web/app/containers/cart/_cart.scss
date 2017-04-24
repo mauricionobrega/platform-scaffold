@@ -117,18 +117,6 @@ $cart__custom-ease-out: cubic-bezier(0.35, 0.35, 0.32, 1);
 }
 
 
-// Estimate Shipping Modal
-// ---
-
-.t-cart__estimate-shipping-modal {
-    .pw-inline-loader__loading-dot {
-        &::after {
-            background-color: $neutral-00;
-        }
-    }
-}
-
-
 // Mobile Styles
 // ---
 
