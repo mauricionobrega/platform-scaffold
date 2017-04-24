@@ -6,3 +6,4 @@ export const getHeader = createSelector(getUi, ({header}) => header)
 
 export const getIsCollapsed = createGetSelector(getHeader, 'isCollapsed')
 export const getSearchIsOpen = createGetSelector(getHeader, 'searchIsOpen')
+export const getSearchSuggestions = createGetSelector(getHeader, 'searchSuggestions')

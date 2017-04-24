@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import throttle from 'lodash.throttle'
+// import debounce from 'lodash.debounce'
 import classnames from 'classnames'
 
 import * as headerActions from './actions'
@@ -31,6 +32,9 @@ class Header extends React.Component {
         this.handleScroll = throttle(this.handleScroll.bind(this), SCROLL_CHECK_INTERVAL)
         // Start off uncollapsed
         this.headerHeight = Number.MAX_VALUE
+
+        this.onChangeSearchQuery = this.onChangeSearchQuery.bind(this)
+        // this.debouncedSearchQueryChanged = debounce(props.searchQueryChanged, 200)
     }
 
     componentDidMount() {
@@ -39,6 +43,11 @@ class Header extends React.Component {
 
     componentWillUnmount() {
         window.removeEventListener('scroll', this.handleScroll)
+    }
+
+    onChangeSearchQuery(e) {
+        const {value} = e.target
+        this.props.searchQueryChanged(value)
     }
 
     handleScroll() {
@@ -52,7 +61,16 @@ class Header extends React.Component {
     }
 
     render() {
-        const {onMenuClick, onMiniCartClick, onSearchOpenClick, onSearchCloseClick, isCollapsed, itemCount, searchIsOpen} = this.props
+        const {
+            onMenuClick,
+            onMiniCartClick,
+            onSearchOpenClick,
+            onSearchCloseClick,
+            isCollapsed,
+            itemCount,
+            searchIsOpen,
+            searchSuggestions
+        } = this.props
 
         if (isRunningInAstro) {
             trigger('cart:count-updated', {
@@ -76,7 +94,13 @@ class Header extends React.Component {
                         <CartAction innerButtonClassName={innerButtonClassName} onClick={onMiniCartClick} />
                     </HeaderBar>
                 </div>
-                <Search isOverlay isOpen={searchIsOpen} onClose={onSearchCloseClick} />
+                <Search
+                    isOverlay
+                    isOpen={searchIsOpen}
+                    onChange={this.onChangeSearchQuery}
+                    onClose={onSearchCloseClick}
+                    termSuggestions={searchSuggestions}
+                />
             </header>
         )
     }
@@ -86,17 +110,20 @@ Header.propTypes = {
     isCollapsed: PropTypes.bool,
     itemCount: PropTypes.number,
     searchIsOpen: PropTypes.bool,
+    searchQueryChanged: PropTypes.func,
+    searchSuggestions: PropTypes.array,
     toggleHeader: PropTypes.func,
     onMenuClick: PropTypes.func,
     onMiniCartClick: PropTypes.func,
-    onSearchOpenClick: PropTypes.func,
-    onSearchCloseClick: PropTypes.func
+    onSearchCloseClick: PropTypes.func,
+    onSearchOpenClick: PropTypes.func
 }
 
 const mapStateToProps = createPropsSelector({
     isCollapsed: selectors.getIsCollapsed,
     itemCount: getCartSummaryCount,
-    searchIsOpen: selectors.getSearchIsOpen
+    searchIsOpen: selectors.getSearchIsOpen,
+    searchSuggestions: selectors.getSearchSuggestions
 })
 
 const mapDispatchToProps = {
@@ -104,7 +131,8 @@ const mapDispatchToProps = {
     onMiniCartClick: miniCartActions.requestOpenMiniCart,
     onSearchOpenClick: headerActions.openSearch,
     onSearchCloseClick: headerActions.closeSearch,
-    toggleHeader: headerActions.toggleHeader
+    toggleHeader: headerActions.toggleHeader,
+    searchQueryChanged: headerActions.searchQueryChanged
 }
 
 export default connect(
