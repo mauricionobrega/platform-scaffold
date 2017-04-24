@@ -71,7 +71,6 @@ class Header extends React.Component {
             onMiniCartClick,
             onSearchOpenClick,
             onSearchCloseClick,
-            onSearchSubmit,
             isCollapsed,
             itemCount,
             searchIsOpen,
