@@ -1,0 +1,8 @@
+// Search Theme
+// ===
+//
+// 1. Ensure search bar is above site's fixed header
+
+.pw-search__inner {
+    z-index: $z2-depth + 1; // 1
+}

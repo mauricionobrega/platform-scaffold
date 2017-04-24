@@ -12,11 +12,13 @@ import * as selectors from './selectors'
 import {getCartSummaryCount} from '../../store/cart/selectors'
 
 import {HeaderBar} from 'progressive-web-sdk/dist/components/header-bar'
+import Search from 'progressive-web-sdk/dist/components/search'
 
 import NavigationAction from './partials/navigation-action'
 import HeaderTitle from './partials/header-title'
 import StoresAction from './partials/stores-action'
 import CartAction from './partials/cart-action'
+import SearchAction from './partials/search-action'
 
 import {isRunningInAstro, trigger} from '../../utils/astro-integration'
 
@@ -50,7 +52,7 @@ class Header extends React.Component {
     }
 
     render() {
-        const {onMenuClick, onMiniCartClick, isCollapsed, itemCount} = this.props
+        const {onMenuClick, onMiniCartClick, onSearchOpenClick, onSearchCloseClick, isCollapsed, itemCount, searchIsOpen} = this.props
 
         if (isRunningInAstro) {
             trigger('cart:count-updated', {
@@ -68,12 +70,13 @@ class Header extends React.Component {
                 <div className="t-header__bar">
                     <HeaderBar>
                         <NavigationAction innerButtonClassName={innerButtonClassName} onClick={onMenuClick} />
-                        <div className="t-header__placeholder" />
+                        <SearchAction innerButtonClassName={innerButtonClassName} onClick={onSearchOpenClick} />
                         <HeaderTitle isCollapsed={isCollapsed} />
                         <StoresAction innerButtonClassName={innerButtonClassName} />
                         <CartAction innerButtonClassName={innerButtonClassName} onClick={onMiniCartClick} />
                     </HeaderBar>
                 </div>
+                <Search isOverlay isOpen={searchIsOpen} onClose={onSearchCloseClick} />
             </header>
         )
     }
@@ -82,19 +85,25 @@ class Header extends React.Component {
 Header.propTypes = {
     isCollapsed: PropTypes.bool,
     itemCount: PropTypes.number,
+    searchIsOpen: PropTypes.bool,
     toggleHeader: PropTypes.func,
     onMenuClick: PropTypes.func,
-    onMiniCartClick: PropTypes.func
+    onMiniCartClick: PropTypes.func,
+    onSearchOpenClick: PropTypes.func,
+    onSearchCloseClick: PropTypes.func
 }
 
 const mapStateToProps = createPropsSelector({
     isCollapsed: selectors.getIsCollapsed,
-    itemCount: getCartSummaryCount
+    itemCount: getCartSummaryCount,
+    searchIsOpen: selectors.getSearchIsOpen
 })
 
 const mapDispatchToProps = {
     onMenuClick: () => openModal(NAVIGATION_MODAL),
     onMiniCartClick: miniCartActions.requestOpenMiniCart,
+    onSearchOpenClick: headerActions.openSearch,
+    onSearchCloseClick: headerActions.closeSearch,
     toggleHeader: headerActions.toggleHeader
 }
 
