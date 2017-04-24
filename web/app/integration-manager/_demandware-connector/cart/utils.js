@@ -1,4 +1,4 @@
-import {makeDemandwareRequest, getBasketID, storeBasketID, deleteBasketID} from '../utils'
+import {makeDemandwareRequest, getBasketID, storeBasketID, deleteBasketID, formatPrice} from '../utils'
 import {receiveCartContents} from '../../cart/responses'
 import {getProductThumbnailSrcByPathKey} from '../../../store/products/selectors'
 import {parseBasketContents, getProductHref} from '../parsers'
