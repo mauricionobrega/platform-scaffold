@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {withRouter} from 'progressive-web-sdk/dist/routing'
 import template from '../../template'
 
-import {fetchSigninData, fetchRegisterData, navigateToSection} from '../../integration-manager/login/commands'
+import {navigateToSection} from '../../integration-manager/login/commands'
 
 import SignInPanel from './partials/signin-panel'
 import RegisterPanel from './partials/register-panel'
@@ -82,15 +82,6 @@ class Login extends React.Component {
             return null
         }
     }
-}
-
-Login.fetcher = (url, routeName, dispatch) => {
-    if (routeName === SIGN_IN_SECTION) {
-        return dispatch(fetchSigninData(url))
-    } else if (routeName === REGISTER_SECTION) {
-        return dispatch(fetchRegisterData(url))
-    }
-    throw new Error('Login route name unrecognized')
 }
 
 const mapDispatchToProps = {

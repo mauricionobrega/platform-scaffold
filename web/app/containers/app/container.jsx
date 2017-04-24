@@ -58,6 +58,7 @@ class App extends React.Component {
             children,
             history,
             fetchError,
+            fetchPage,
             hasFetchedCurrentPath,
             notifications,
             removeNotification,
@@ -68,8 +69,7 @@ class App extends React.Component {
         const CurrentHeader = routeProps.Header || Header
         const CurrentFooter = routeProps.Footer || Footer
 
-        const dispatch = () => { console.log('Test!') }
-        const reload = () => routeProps.component.WrappedComponent.fetcher(window.location.href, routeProps.routeName, dispatch)
+        const reload = () => fetchPage(routeProps.fetcher, window.location.href, routeProps.routeName)
 
         const skipLinksItems = [
             // Customize your list of SkipLinks here. These are necessary to
@@ -152,6 +152,7 @@ App.propTypes = {
      * The react-router history object
      */
     fetchError: PropTypes.string,
+    fetchPage: PropTypes.func,
     fetchSvgSprite: PropTypes.func,
     hasFetchedCurrentPath: PropTypes.bool,
     history: PropTypes.object,
@@ -177,6 +178,7 @@ const mapStateToProps = createPropsSelector({
 const mapDispatchToProps = {
     removeNotification: appActions.removeNotification,
     fetchSvgSprite: () => appActions.fetchSvgSprite(),
+    fetchPage: (fetcher, url, routeName) => fetcher(url, routeName),
     initApp
 }
 
