@@ -71,6 +71,7 @@ export const submitEstimateShipping = () => {
             })
             .then(() => {
                 dispatch(closeModal(CART_ESTIMATE_SHIPPING_MODAL))
+                dispatch(setTaxRequestInitiation(false))
             })
     }
 }
