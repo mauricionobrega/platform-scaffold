@@ -33,6 +33,7 @@ class Header extends React.Component {
         this.headerHeight = Number.MAX_VALUE
 
         this.onChangeSearchQuery = this.onChangeSearchQuery.bind(this)
+        this.onSearchSubmit = this.onSearchSubmit.bind(this)
     }
 
     componentDidMount() {
@@ -46,6 +47,12 @@ class Header extends React.Component {
     onChangeSearchQuery(e) {
         const {value} = e.target
         this.props.searchQueryChanged(value)
+    }
+
+    onSearchSubmit(e) {
+        const value = e.target.querySelector('input').value
+        e.preventDefault()
+        this.props.searchSubmit(value)
     }
 
     handleScroll() {
@@ -64,6 +71,7 @@ class Header extends React.Component {
             onMiniCartClick,
             onSearchOpenClick,
             onSearchCloseClick,
+            onSearchSubmit,
             isCollapsed,
             itemCount,
             searchIsOpen,
@@ -97,6 +105,7 @@ class Header extends React.Component {
                     isOpen={searchIsOpen}
                     onChange={this.onChangeSearchQuery}
                     onClose={onSearchCloseClick}
+                    onSubmit={this.onSearchSubmit}
                     termSuggestions={searchSuggestions}
                 />
             </header>
@@ -109,12 +118,13 @@ Header.propTypes = {
     itemCount: PropTypes.number,
     searchIsOpen: PropTypes.bool,
     searchQueryChanged: PropTypes.func,
+    searchSubmit: PropTypes.func,
     searchSuggestions: PropTypes.array,
     toggleHeader: PropTypes.func,
     onMenuClick: PropTypes.func,
     onMiniCartClick: PropTypes.func,
     onSearchCloseClick: PropTypes.func,
-    onSearchOpenClick: PropTypes.func
+    onSearchOpenClick: PropTypes.func,
 }
 
 const mapStateToProps = createPropsSelector({
@@ -129,8 +139,9 @@ const mapDispatchToProps = {
     onMiniCartClick: miniCartActions.requestOpenMiniCart,
     onSearchOpenClick: headerActions.openSearch,
     onSearchCloseClick: headerActions.closeSearch,
+    searchSubmit: headerActions.searchSubmit,
     toggleHeader: headerActions.toggleHeader,
-    searchQueryChanged: headerActions.searchQueryChanged
+    searchQueryChanged: headerActions.searchQueryChanged,
 }
 
 export default connect(

@@ -1,4 +1,4 @@
-import {QUERY_URL} from './constants'
+import {QUERY_URL, SUGGESTION_URL} from './constants'
 import * as utils from '../../utils/utils'
 import parseSearchSuggestions from './parsers/search-suggestions'
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
@@ -22,5 +22,13 @@ export const searchQueryChanged = (query) => {
                 .then((response) => response.json())
                 .then((responseJSON) => dispatch(receiveSearchSuggestions(parseSearchSuggestions(responseJSON))))
         }
+    }
+}
+
+export const searchSubmit = (query) => {
+    return (dispatch) => {
+        const queryString = query.replace(' ', '+')
+        const searchURL = `${SUGGESTION_URL}${queryString}`
+        window.location.href = `${window.location.origin}${searchURL}`
     }
 }
