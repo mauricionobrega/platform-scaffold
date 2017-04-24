@@ -58,9 +58,9 @@ class OrderSummary extends React.Component {
             // cart,
             cartItems,
             isFixedPlaceOrderShown,
-            summaryCount,
-            subtotalWithoutTax,
-            subtotal
+            orderTotal,
+            subtotal,
+            summaryCount
         } = this.props
 
         const cart = {
@@ -82,7 +82,7 @@ class OrderSummary extends React.Component {
                     <Ledger className="u-border-light-top">
                         <LedgerRow
                             label={`Subtotal (${summaryCount} items)`}
-                            value={subtotalWithoutTax}
+                            value={subtotal}
                         />
 
                         {cart.shipping_rate &&
@@ -118,7 +118,7 @@ class OrderSummary extends React.Component {
                         <LedgerRow
                             label="Total"
                             isTotal={true}
-                            value={subtotal}
+                            value={orderTotal}
                         />
                     </Ledger>
 
@@ -143,7 +143,7 @@ class OrderSummary extends React.Component {
                             </Button>
 
                             <p className="u-margin-top-md">
-                                Total: <strong>{subtotal}</strong>
+                                Total: <strong>{orderTotal}</strong>
                             </p>
                         </div>
                     </div>
@@ -176,14 +176,14 @@ OrderSummary.propTypes = {
     isFixedPlaceOrderShown: PropTypes.bool,
 
     /**
-     * Subtotal including tax
+     * The total cost of the order
+     */
+    orderTotal: PropTypes.string,
+
+    /**
+     * Total of all cart items (excluding shipping and taxes)
      */
     subtotal: PropTypes.string,
-    /**
-     * Subtotal excluding tax
-     */
-    subtotalWithoutTax: PropTypes.string,
-
 
     /**
      * Total item count in cart
@@ -198,8 +198,8 @@ OrderSummary.propTypes = {
 
 const mapStateToProps = createPropsSelector({
     cartItems: cartSelectors.getCartItems,
-    subtotalWithoutTax: cartSelectors.getSubtotalWithoutTax,
-    subtotal: cartSelectors.getSubtotalWithTax,
+    subtotal: cartSelectors.getSubtotal,
+    orderTotal: cartSelectors.getOrderTotal,
     summaryCount: cartSelectors.getCartSummaryCount,
     isFixedPlaceOrderShown: selectors.getIsFixedPlaceOrderShown
 })

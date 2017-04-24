@@ -1,4 +1,6 @@
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
+import {getCheckoutConfigObject} from '../../../utils/magento-utils'
+import {formatMerlinsMoney} from '../utils'
 
 export const textFromFragment = (fragment) => {
     const e = document.createElement('div')
@@ -36,8 +38,29 @@ export const parseCart = ({items, subtotal, subtotal_excl_tax}) => {
             href: product_url,
             quantity: qty
         })),
-        subtotalWithTax: textFromFragment(subtotal),
-        subtotalWithoutTax: textFromFragment(subtotal_excl_tax),
-        taxes: []
+        subtotal: textFromFragment(subtotal_excl_tax),
+        taxes: [],
+        orderTotal: textFromFragment(subtotal)
+    }
+}
+
+export const parseCartHtml = ($, $html) => {
+    const js = getCheckoutConfigObject($html)
+
+    return {
+        contents: js.quoteItemData.map((item) => {
+            return {
+                id: item.item_id,
+                productId: item.product_id,
+                href: `/${item.product.request_path}`,
+                quantity: item.qty
+            }
+        }),
+        subtotal: formatMerlinsMoney(js.quoteData.subtotal),
+        taxes: [{
+            label: 'Tax',
+            amount: formatMerlinsMoney(js.totalsData.tax_amount)
+        }],
+        orderTotal: formatMerlinsMoney(js.quoteData.grand_total)
     }
 }

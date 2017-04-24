@@ -13,7 +13,7 @@ import Icon from 'progressive-web-sdk/dist/components/icon'
 import {Ledger, LedgerRow} from 'progressive-web-sdk/dist/components/ledger'
 import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/accordion'
 
-const CartSummary = ({summaryCount, subtotalWithoutTax, subtotal, shippingRate, onCalculateClick, checkoutShippingURL}) => {
+const CartSummary = ({summaryCount, subtotal, orderTotal, shippingRate, onCalculateClick, checkoutShippingURL}) => {
     const calculateButton = (
         <Button innerClassName="u-padding-end-0 u-color-brand u-text-letter-spacing-normal" onClick={onCalculateClick}>
             Calculate <Icon name="chevron-right" />
@@ -37,7 +37,7 @@ const CartSummary = ({summaryCount, subtotalWithoutTax, subtotal, shippingRate, 
                 <Ledger className="u-border-light-top">
                     <LedgerRow
                         label={`Subtotal (${summaryCount} items)`}
-                        value={subtotalWithoutTax}
+                        value={subtotal}
                     />
 
                     <LedgerRow
@@ -60,7 +60,7 @@ const CartSummary = ({summaryCount, subtotalWithoutTax, subtotal, shippingRate, 
                     <LedgerRow
                         label="Total"
                         isTotal={true}
-                        value={subtotal}
+                        value={orderTotal}
                     />
                 </Ledger>
 
@@ -80,9 +80,9 @@ const CartSummary = ({summaryCount, subtotalWithoutTax, subtotal, shippingRate, 
 
 CartSummary.propTypes = {
     checkoutShippingURL: PropTypes.string,
+    orderTotal: PropTypes.string,
     shippingRate: PropTypes.string,
     subtotal: PropTypes.string,
-    subtotalWithoutTax: PropTypes.string,
     summaryCount: PropTypes.number,
     onCalculateClick: PropTypes.func
 }
@@ -90,8 +90,8 @@ CartSummary.propTypes = {
 const mapStateToProps = createPropsSelector({
     checkoutShippingURL: getCheckoutShippingURL,
     shippingRate: getDefaultShippingRate,
-    subtotalWithoutTax: cartSelectors.getSubtotalWithoutTax,
-    subtotal: cartSelectors.getSubtotalWithTax,
+    subtotal: cartSelectors.getSubtotal,
+    orderTotal: cartSelectors.getOrderTotal,
     summaryCount: cartSelectors.getCartSummaryCount,
 })
 

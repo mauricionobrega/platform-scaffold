@@ -12,6 +12,7 @@ export const createBasket = (basketContents) => {
     const options = {
         method: 'POST'
     }
+
     if (basketContents) {
         options.body = JSON.stringify(basketContents)
     }

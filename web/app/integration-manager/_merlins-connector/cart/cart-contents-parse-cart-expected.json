@@ -13,7 +13,7 @@
             "quantity": 2
         }
     ],
-    "subtotalWithoutTax": "$48.00",
-    "subtotalWithTax": "$50.40",
-    "taxes": []
+    "subtotal": "$48.00",
+    "taxes": [],
+    "orderTotal": "$50.40"
 }

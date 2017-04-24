@@ -5,7 +5,6 @@ import {getCurrentProductID} from '../parsers'
 import {API_END_POINT_URL} from '../constants'
 import {STATES} from '../checkout/constants'
 
-
 export const getCart = () => (dispatch) => {
     return requestCartData()
         .then((response) => response.json())

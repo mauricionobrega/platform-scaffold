@@ -34,7 +34,7 @@ const SUBTOTAL_CLASSES = classNames(
 
 /* eslint-disable camelcase */
 
-const MiniCartProductList = ({items, subtotal, cartURL}) => {
+const MiniCartProductList = ({items, orderTotal, cartURL}) => {
     return (
         <div className="u-padding-md">
             <Button href={cartURL} className="c--tertiary u-width-full u-margin-bottom u-text-capitalize">
@@ -60,7 +60,7 @@ const MiniCartProductList = ({items, subtotal, cartURL}) => {
 
             <div className={SUBTOTAL_CLASSES}>
                 <div className="u-flex u-text-uppercase">Subtotal:</div>
-                <div className="u-flex-none">{subtotal}</div>
+                <div className="u-flex-none">{orderTotal}</div>
             </div>
         </div>
     )
@@ -69,13 +69,13 @@ const MiniCartProductList = ({items, subtotal, cartURL}) => {
 MiniCartProductList.propTypes = {
     cartURL: PropTypes.string,
     items: PropTypes.array,
-    subtotal: PropTypes.string
+    orderTotal: PropTypes.string
 }
 
 const mapStateToProps = createPropsSelector({
     cartURL: getCartURL,
     items: selectors.getCartItems,
-    subtotal: selectors.getSubtotalWithTax
+    orderTotal: selectors.getOrderTotal
 })
 
 export default connect(mapStateToProps)(MiniCartProductList)
