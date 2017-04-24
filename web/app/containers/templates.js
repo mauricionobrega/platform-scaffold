@@ -44,6 +44,11 @@ export const UnwrappedProductList = Loadable({
     LoadingComponent: ContainerPlaceholder
 })
 
+export const UnwrappedSearchResult = Loadable({
+    loader: () => import('./search-result/container'),
+    LoadingComponent: ContainerPlaceholder
+})
+
 export const Cart = template(UnwrappedCart)
 export const CheckoutConfirmation = template(UnwrappedCheckoutConfirmation)
 export const CheckoutPayment = template(UnwrappedCheckoutPayment)
@@ -52,4 +57,5 @@ export const Home = template(UnwrappedHome)
 export const Login = template(UnwrappedLogin)
 export const ProductDetails = template(UnwrappedProductDetails)
 export const ProductList = template(UnwrappedProductList)
+export const SearchResult = template(UnwrappedSearchResult)
 export const Offline = template(UnwrappedOffline)
