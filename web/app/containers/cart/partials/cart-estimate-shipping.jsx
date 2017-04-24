@@ -70,7 +70,7 @@ export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateP
                                 Get Estimate
                             </Button>
                         :
-                            <Button className="c--secondary u-width-full" type="submit">
+                            <Button className="c--secondary u-width-full">
                                 <InlineLoader title="Estimating" />
                             </Button>
                         }
