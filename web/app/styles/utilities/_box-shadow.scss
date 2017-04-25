@@ -2,9 +2,25 @@
 // ===
 
 .u-box-shadow {
-    box-shadow: $box-shadow; // @TODO: add to spline
+    @include box-shadow(true, false, $box-shadow);
 }
 
 .u-box-shadow-inset {
-    box-shadow: $inset-box-shadow; // @TODO: add to spline
+    @include box-shadow(true, true, $inset-box-shadow);
+}
+
+.u-box-shadow-lg {
+    @include box-shadow(true, false, $large-box-shadow);
+}
+
+.u-box-shadow-input {
+    @include box-shadow(true, true, $input-box-shadow);
+}
+
+.u-box-shadow-brand {
+    @include box-shadow(true, false, $box-shadow: null, $horizontal: 2px, $vertical: 2px, $blur: 5px, $distance: 5px, $color: $brand-color);
+}
+
+.u-box-shadow-accent-inset {
+    @include box-shadow(true, true, $box-shadow: null, $inset-box-shadow: null, $horizontal: 2px, $vertical: 2px, $blur: 5px, $distance: 5px, $color: $accent-color);
 }
