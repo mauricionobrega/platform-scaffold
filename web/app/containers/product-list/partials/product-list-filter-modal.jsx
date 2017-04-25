@@ -60,10 +60,6 @@ class ProductListFilterModal extends React.Component {
                             <div
                                 className="t-product-list__filter-modal-items"
                                 role="presentation"
-                                onClick={(e) => {
-                                    changeFilter(e)
-                                    closeModal()
-                                }}
                             >
                                 {kinds.map(({count, label, query}) =>
                                     <Button
@@ -71,6 +67,10 @@ class ProductListFilterModal extends React.Component {
                                         className="c--link u-width-full u-text-letter-spacing-normal"
                                         innerClassName="u-justify-start"
                                         id={query}
+                                        onClick={() => {
+                                            changeFilter(query)
+                                            closeModal()
+                                        }}
                                     >
                                         <div>
                                             <span className="u-color-brand">{label}</span> <span className="u-color-neutral-40">({count})</span>
@@ -119,7 +119,7 @@ const mapStateToProps = createPropsSelector({
 })
 
 const mapDispatchToProps = {
-    changeFilter: (e) => changeFilterTo(e.target.closest('[id]').id),
+    changeFilter: (id) => changeFilterTo(id),
     closeModal: () => closeModal(PRODUCT_LIST_FILTER_MODAL),
     openModal: () => openModal(PRODUCT_LIST_FILTER_MODAL)
 }
