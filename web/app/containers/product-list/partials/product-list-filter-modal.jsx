@@ -73,8 +73,7 @@ class ProductListFilterModal extends React.Component {
                                         id={query}
                                     >
                                         <div>
-                                            <span className="u-color-brand">{label}</span>
-                                            <span className="u-color-neutral-40">({count})</span>
+                                            <span className="u-color-brand">{label}</span> <span className="u-color-neutral-40">({count})</span>
                                         </div>
                                     </Button>
                                 )}
