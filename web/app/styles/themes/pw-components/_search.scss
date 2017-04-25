@@ -8,12 +8,36 @@
 }
 
 
+// Search Icon
+// ---
+
+.pw-search__icon {
+    display: none;
+}
+
+
 // Search Form
 // ---
 
 .pw-search__form {
     position: relative;
     z-index: $z1-depth + 1;
+
+    border-bottom: $border;
+
+    .pw-button {
+        min-height: 52px;
+    }
+}
+
+
+// Search Input Field
+// ---
+
+.pw-search__input {
+    min-height: 52px;
+    padding: $unit*1.5;
+    border: 0;
 }
 
 
@@ -26,4 +50,26 @@
     &:not(.pw--is-empty) {
         animation: slide-up 0.3s ease-in 1 reverse, fadeIn 0.3s ease-out 1 forwards;
     }
+
+    .pw-list-tile__action {
+        padding: $unit*1.5;
+
+        color: $neutral-40;
+    }
+}
+
+
+// Search Suggestion Heading
+// ---
+
+.pw-search__suggestion-heading {
+    @include visually-hidden(true);
+}
+
+
+// Search Suggestion
+// ---
+
+.pw-search__suggestion + .pw-search__suggestion {
+    border-top: $border;
 }

@@ -16,7 +16,7 @@ export const searchQueryChanged = (query) => {
         if (query.length < 2) {
             return dispatch(receiveSearchSuggestions(null))
         } else {
-            const queryString = query.replace(' ', '+')
+            const queryString = utils.buildQueryString(query)
             const queryURL = `${QUERY_URL}${queryString}&_=${Date.now()}`
             return makeRequest(queryURL)
                 .then((response) => response.json())
@@ -27,7 +27,7 @@ export const searchQueryChanged = (query) => {
 
 export const searchSubmit = (query) => {
     return (dispatch) => {
-        const queryString = query.replace(' ', '+')
+        const queryString = utils.buildQueryString(query)
         const searchURL = `${SUGGESTION_URL}${queryString}`
         window.location.href = `${window.location.origin}${searchURL}`
     }
