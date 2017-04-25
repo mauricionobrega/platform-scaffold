@@ -52,7 +52,7 @@ class Header extends React.Component {
     onSearchSubmit(e) {
         e.preventDefault()
 
-        const value = e.target.querySelector('input').value
+        const value = e.target.query.value
         this.props.searchSubmit(value)
     }
 
@@ -108,7 +108,9 @@ class Header extends React.Component {
                     onSubmit={this.onSearchSubmit}
                     termSuggestions={searchSuggestions}
                     inputProps={{
-                        placeholder: 'Search the entire store'}}
+                        placeholder: 'Search the entire store',
+                        name: 'query'
+                    }}
                     closeButtonProps={{
                         className: 'u-color-brand',
                         icon: 'close',
