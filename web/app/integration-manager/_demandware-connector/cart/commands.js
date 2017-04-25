@@ -1,13 +1,15 @@
 import {makeDemandwareRequest, getAuthTokenPayload} from '../utils'
+import {receiveCartContents} from '../../cart/responses'
 import {receiveCheckoutData} from '../../checkout/responses'
 import {parseAndReceiveCartResponse, requestCartData, createBasket} from './utils'
+import {parseCartContents} from '../parsers'
 import {API_END_POINT_URL} from '../constants'
 import {STATES} from '../checkout/constants'
 
 export const getCart = () => (dispatch) => {
     return requestCartData()
         .then((response) => response.json())
-        .then((responseJSON) => dispatch(parseAndReceiveCartResponse(responseJSON)))
+        .then((responseJSON) => receiveCartContents(parseCartContents(responseJSON)))
         .catch((err) => console.error('Cart request failed', err))
 }
 

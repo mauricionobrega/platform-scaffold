@@ -23,6 +23,8 @@ const parseVariationCategories = (variation_attributes) => {
 }
 /* eslint-enable camelcase */
 
+export const getProductHref = (productID) => `/s/2017refresh/${productID}.html`
+
 export const parseProductDetails = ({id, name, price, long_description, image_groups, variants, variation_attributes}) => {
     const images = parseImages(image_groups)
     return {
@@ -45,6 +47,32 @@ export const parseProductDetails = ({id, name, price, long_description, image_gr
 export const getCurrentProductID = () => {
     const productIDMatch = /(\d+).html/.exec(window.location.href)
     return productIDMatch ? productIDMatch[1] : ''
+}
+
+export const parseCartContents = ({product_items, product_sub_total, merchandize_total_tax, order_total}) => /* Cart */ {
+    /* eslint-disable camelcase */
+    const contents = (product_items || []).map(({item_id, product_id, price_after_order_discount, quantity}) => ({
+        id: item_id,
+        productId: product_id,
+        quantity,
+        href: getProductHref(product_id),
+        itemPrice: `${formatPrice(price_after_order_discount / quantity)}`,
+        linePrice: `${formatPrice(price_after_order_discount)}`
+    }))
+
+    return {
+        contents,
+        subtotal: formatPrice(product_sub_total),
+        taxes: {
+            label: 'Tax',
+            amount: formatPrice(merchandize_total_tax)
+        },
+        /* TODO: shipping: undefined, */
+        // order_total isn't provided by SFCC until many details have
+        // been provided so we fall back to product_sub_total when its missing
+        orderTotal: formatPrice(order_total || product_sub_total)
+    }
+    /* eslint-enable camelcase */
 }
 
 export const parseBasketContents = ({product_items, product_sub_total, product_total}) => {
@@ -85,8 +113,6 @@ export const parseCategories = (categories) => {
         }
     })
 }
-
-export const getProductHref = (productID) => `/s/2017refresh/${productID}.html`
 
 export const parseProductHit = ({product_id, product_name, price, prices, image}) => {
     // Some products don't have _any_ pricing on them!
