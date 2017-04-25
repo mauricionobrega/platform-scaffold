@@ -39,11 +39,11 @@ export const getActiveFilters = createSelector(
     (filters) => {
         let activeFilters = Immutable.List()
 
-        filters.map((filter) => filter.get('kinds').forEach((kind) => {
-            if (kind.get('active')) {
-                activeFilters = activeFilters.push(kind)
-            }
-        }))
+        filters.forEach((filter) => {
+            activeFilters = activeFilters.concat(
+                filter.get('kinds').filter((kind) => kind.get('active'))
+            )
+        })
 
         return activeFilters
     }
