@@ -3,18 +3,24 @@ import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as selectors from '../selectors'
 
-import Link from 'progressive-web-sdk/dist/components/link'
+import Breadcrumbs from 'progressive-web-sdk/dist/components/breadcrumbs'
+
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 
 import {isRunningInAstro} from '../../../utils/astro-integration'
+
+const items = [
+    {
+        text: 'Home',
+        href: '/'
+    }
+]
 
 const SearchResultHeader = ({title}) => (
     <div className="u-flexbox u-align-bottom">
         <div className="u-flex u-padding-top-lg u-padding-bottom-lg u-padding-start-md">
             {!isRunningInAstro &&
-                <div className="t-search-result__breadcrumb">
-                    <Link href="/" className="u-text-small">Home</Link>
-                </div>
+                <Breadcrumbs items={items} />
             }
             <div className="u-margin-top-md">
                 {title ?
