@@ -1,11 +1,11 @@
-import {handleActions} from 'redux-actions'
 import Immutable from 'immutable'
-import {mergePayload} from '../../utils/reducer-utils'
-import * as searchResultActions from './actions'
+import {handleActions} from 'redux-actions'
+import {onRouteChanged} from '../app/actions'
 
 const initialState = Immutable.Map()
 
-export default handleActions({
-    [searchResultActions.receiveData]: mergePayload,
-    [searchResultActions.changeTitle]: mergePayload
+const searchResultReducer = handleActions({
+    [onRouteChanged]: /* istanbul ignore next */(state) => state
 }, initialState)
+
+export default searchResultReducer
