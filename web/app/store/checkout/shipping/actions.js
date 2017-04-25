@@ -1,13 +1,10 @@
-
-import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+import {makeJsonEncodedRequest, makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {parseLocationData} from '../../../utils/utils'
 import {getCustomerEntityID} from '../selectors'
 import {getIsLoggedIn} from '../../../containers/app/selectors'
 import {getFormValues, getFormRegisteredFields} from '../../form/selectors'
 import {parseShippingMethods} from './parser'
-import {receiveShippingMethodInitialValues, receiveCheckoutData} from '../actions'
-
-
+import {receiveShippingMethodInitialValues, receiveSavedShippingAddresses, receiveCheckoutData} from '../actions'
 
 export const fetchShippingMethodsEstimate = (formKey) => {
     return (dispatch, getState) => {
@@ -29,6 +26,24 @@ export const fetchShippingMethodsEstimate = (formKey) => {
                 }
                 dispatch(receiveCheckoutData({shipping: {shippingMethods}}))
                 dispatch(receiveShippingMethodInitialValues({address: initialValues})) // set initial value for method
+            })
+    }
+}
+
+export const fetchSavedShippingAddresses = () => {
+    return (dispatch, getState) => {
+        const currentState = getState()
+        const isNotLoggedIn = !getIsLoggedIn(currentState)
+
+        if (isNotLoggedIn) {
+            return false
+        }
+
+        const fetchURL = `/rest/default/V1/carts/mine`
+        return makeRequest(fetchURL, {method: 'GET'})
+            .then((response) => response.json())
+            .then(({customer}) => {
+                dispatch(receiveSavedShippingAddresses(customer.addresses))
             })
     }
 }

@@ -15,6 +15,7 @@ import {receiveCheckoutData} from '../../store/checkout/actions'
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 
 export const showCompanyAndApt = createAction('Showing the "Company" and "Apt #" fields')
+export const setShowAddNewAddress = createAction('Setting the "Add New Address" fields', 'showAddNewAddress')
 
 export const receiveData = createAction('Receive Checkout Shipping Data')
 export const process = ({payload: {$, $response}}) => {

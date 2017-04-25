@@ -11,3 +11,5 @@ export const getIsCompanyOrAptShown = createGetSelector(getCheckoutShipping, 'is
 export const getCustomerEmailRecognized = createGetSelector(getCheckoutShipping, 'customerEmailRecognized')
 
 export const getEmailError = createGetSelector(getCheckoutShipping, 'emailError')
+
+export const getShowAddNewAddress = createGetSelector(getCheckoutShipping, 'showAddNewAddress')
