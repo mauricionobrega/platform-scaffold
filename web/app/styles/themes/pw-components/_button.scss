@@ -87,14 +87,18 @@
         color: $tertiary-brand-color;
     }
 
-    &[disabled] {
-        border-color: $neutral-15;
-
-        color: $neutral-30;
-    }
-
     .pw-button__inner {
         border: 1px solid $brand-color;
+    }
+
+    &[disabled] {
+        background-color: $neutral-15;
+
+        color: $neutral-30;
+
+        .pw-button__inner {
+            border-color: transparent;
+        }
     }
 }
 
