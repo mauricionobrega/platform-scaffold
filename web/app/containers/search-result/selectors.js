@@ -30,3 +30,5 @@ export const getHasProducts = createSelector(
     getProductPaths,
     (paths) => paths.size > 0
 )
+
+export const getNumItems = createGetSelector(getSelectedCategory, 'itemCount')

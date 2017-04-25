@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
-import {getHasProducts, getSearchResultProducts} from '../selectors'
+import {getHasProducts, getSearchResultProducts, getNumItems} from '../selectors'
 
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import List from 'progressive-web-sdk/dist/components/list'
@@ -37,24 +37,28 @@ NoResultsList.propTypes = {
     bodyText: PropTypes.string
 }
 
-const SearchResultContent = ({hasProducts, products}) => (
-    <div>
+const SearchResultContent = ({hasProducts, products, numItems}) => (
+    <div className="t-search-result__container u-padding-end u-padding-bottom-lg u-padding-start">
+        {numItems > 0 &&
+            <div className="u-text-semi-bold">{numItems} Items</div>
+        }
         {hasProducts ?
             <ResultList products={products} />
         :
             <NoResultsList />
         }
     </div>
-
 )
 
 SearchResultContent.propTypes = {
     hasProducts: PropTypes.bool,
+    numItems: PropTypes.string,
     products: PropTypes.array
 }
 
 const mapStateToProps = createPropsSelector({
     hasProducts: getHasProducts,
+    numItems: getNumItems,
     products: getSearchResultProducts
 })
 
