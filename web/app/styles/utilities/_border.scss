@@ -33,24 +33,24 @@
 // ---
 
 .u-border-light {
-    border: 1px solid $neutral-15; // @TODO: Add to Spline
+    @include border(true, $neutral-15);
 }
 
 .u-border-light-top {
-    border-top: 1px solid $neutral-15; // @TODO: Add to Spline
+    @include border-top(true, $neutral-15);
 }
 
-// .u-border-light-start {
-//     @include border-start(true);
-// }
+.u-border-light-start {
+    @include border-start(true, $neutral-15);
+}
 
 .u-border-light-bottom {
-    border-bottom: 1px solid $neutral-15; // @TODO: Add to Spline
+    @include border-bottom(true, $neutral-15);
 }
 
-// .u-border-light-end {
-//     @include border-end(true);
-// }
+.u-border-light-end {
+    @include border-end(true, $neutral-15);
+}
 
 
 // Border (Other)
