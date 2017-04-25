@@ -1,5 +1,8 @@
-import {makeDemandwareRequest, getBasketID, storeBasketID, deleteBasketID, formatPrice} from '../utils'
+import {makeDemandwareRequest, getBasketID, storeBasketID, deleteBasketID} from '../utils'
 import {receiveCartContents} from '../../cart/responses'
+import {getCartContents} from '../../../store/cart/selectors'
+import {receiveCartProductData} from '../../products/responses'
+
 import {getProductThumbnailSrcByPathKey} from '../../../store/products/selectors'
 import {parseBasketContents, getProductHref} from '../parsers'
 import {API_END_POINT_URL} from '../constants'
@@ -49,6 +52,40 @@ export const getProductImage = (item, currentState) => {
                 })
             })
     }
+}
+
+/**
+ * Fetches thumbnail images for products that are in the cart and don't already
+ * have a thumbnail.
+ */
+export const fetchCartItemThumbnails = () => (dispatch, getState) => {
+    const currentState = getState()
+    const contents = getCartContents(currentState)
+    const updatedProducts = {}
+
+    return Promise.all(contents.filter(({cartItem}) => cartItem.thumbnail)
+        .map(({productId}) => {
+            // We don't have a thumbnail for this product, fetch using SFCC's API
+            const viewType = 'medium' // view_type: https://documentation.demandware.com/DOC2/index.jsp?topic=%2Fcom.demandware.dochelp%2FImageManagement%2FUnderstandingViewtypes.html
+            return makeDemandwareRequest(`${API_END_POINT_URL}/products/${[productId]}/images?view_type=${viewType}`, {method: 'GET'})
+                .then((response) => response.json())
+                .then(({image_groups, short_description}) => {
+                    updatedProducts[getProductHref(productId)] = {
+                        /* Product */
+                        id: productId,
+                        thumbnail: {
+                            /* Image */
+                            src: image_groups[0].images[0].link,
+                            alt: short_description,
+                            caption: image_groups[0].images[0].title
+                        }
+                    }
+                })
+        })
+    )
+    .then(() => {
+        dispatch(receiveCartProductData(updatedProducts))
+    })
 }
 
 export const fetchBasketItemImages = (responseJSON, currentState) => {

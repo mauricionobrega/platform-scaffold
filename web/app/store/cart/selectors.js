@@ -5,6 +5,8 @@ import {getCart} from '../selectors'
 
 export const getCartContentsLoaded = createHasSelector(getCart, 'contents')
 
+export const getCartContents = createGetSelector(getCart, 'contents', Immutable.List())
+
 export const getCartItems = createGetSelector(getCart, 'items', Immutable.List())
 export const getCartHasItems = createSelector(
     getCartItems,
