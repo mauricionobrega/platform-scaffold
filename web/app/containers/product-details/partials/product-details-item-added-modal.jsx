@@ -30,7 +30,7 @@ const ProductDetailsItemAddedModal = ({open, onDismiss, quantity, title, price, 
             </div>
         </div>
 
-        <div className="u-flexbox u-column u-flex u-padding-md">
+        <div className="u-flexbox u-direction-column u-flex u-padding-md">
             {/* Modal product information */}
             <div className="u-flex u-margin-bottom-md">
                 <ProductItem customWidth="20%"
