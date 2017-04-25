@@ -135,6 +135,13 @@ $field__disabled-select-triangle: 'data:image/svg+xml;utf8,<svg xmlns="http://ww
     .pw-field__label-wrap {
         margin-top: $sub-unit*1.5; // 5
     }
+
+    &.pw--checked {
+        .c-field__label,
+        .pw-field__label {
+            font-weight: 600;
+        }
+    }
 }
 
 .pw-field.pw--overlayed-hint {
