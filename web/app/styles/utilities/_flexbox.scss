@@ -35,7 +35,7 @@
 // Neither grow nor shrink!
 
 .u-flex-none {
-    flex: 0 0 auto !important; // @TODO: Add to spline
+    @include flex-none(true);
 }
 
 
@@ -65,19 +65,19 @@
 // ---
 
 .u-direction-column {
-    flex-direction: column !important; // @TODO: Add to Spline
+    @include direction-column(true)
 }
 
 .u-direction-column-reverse {
-    flex-direction: column-reverse !important; // @TODO: Add to Spline
+    @include direction-column-reverse(true)
 }
 
 .u-direction-row {
-    flex-direction: row !important; // @TODO: Add to Spline
+    @include direction-row(true);
 }
 
 .u-direction-row-reverse {
-    flex-direction: row-reverse !important; // @TODO: Add to Spline
+    @include direction-row-reverse(true);
 }
 
 
@@ -118,26 +118,6 @@
 
 .u-justify-around {
     @include justify-around(true);
-}
-
-
-// Flex Direction
-// ---
-
-.u-row-reverse {
-    @include row-reverse(true);
-}
-
-.u-row {
-    flex-direction: row !important; // @TODO: Add to spline
-}
-
-.u-column {
-    flex-direction: column !important; // @TODO: Add to spline
-}
-
-.u-column-reverse {
-    flex-direction: column-reverse !important; // @TODO: Add to spline
 }
 
 
