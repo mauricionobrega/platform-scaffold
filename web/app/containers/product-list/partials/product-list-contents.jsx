@@ -72,7 +72,7 @@ const ProductListContents = ({
                 <div className="u-flex-none">
                     <Button
                         className="u-color-brand"
-                        icon="close"
+                        icon="trash"
                         onClick={clearFilters}
                     >
                         Clear
