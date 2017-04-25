@@ -32,6 +32,10 @@ const priceFilterParser = ($, $html) => {
             const $count = $kind.find('.count').remove()
             const count = $count.text().replace(REGEX_NON_NUM, '')
 
+            // Replace `-` with `to` to prevent the replacement of non alpha-num
+            // characters from obfuscating the meaning of the query. For
+            // example, prevent `price10-20` from becoming `price1020`, because
+            // what would that mean: 10-20, 0-1020 or 1020-Infinity?
             query = query.replace(REGEX_DASH, 'to').replace(REGEX_NON_ALPHA_NUM, '')
 
             return {
