@@ -4,8 +4,24 @@
 // Neutral Colors
 // ---
 
+.u-color-neutral-00 {
+    @include color-neutral-00(true);
+}
+
 .u-color-neutral-10 {
     @include color-neutral-10(true);
+}
+
+.u-color-neutral-15 {
+    @include color-neutral-15(true);
+}
+
+.u-color-neutral-20 {
+    @include color-neutral-20(true);
+}
+
+.u-color-neutral-30 {
+    @include color-neutral-30(true);
 }
 
 .u-color-neutral-40 {
@@ -36,6 +52,14 @@
     @include color-accent(true);
 }
 
+.u-primary-action {
+    @include color-primary-action(true);
+}
+
+.u-secondary-action {
+    @include color-secondary-action(true);
+}
+
 .u-color-success {
     @include color-success(true);
 }
@@ -44,34 +68,78 @@
     @include color-error(true);
 }
 
+.u-color-sale {
+    @include color-sale(true);
+}
+
 
 // Background Colors
 // ---
 
 .u-bg-color-neutral-00 {
-    background-color: $neutral-00 !important; // @TODO: Add to spline
+    @include bg-color-neutral-00(true);
 }
 
 .u-bg-color-neutral-10 {
-    background-color: $neutral-10 !important; // @TODO: Add to spline
+    @include bg-color-neutral-10(true);
+}
+
+.u-bg-color-neutral-15 {
+    @include bg-color-neutral-15(true);
 }
 
 .u-bg-color-neutral-20 {
-    @include bg-color-neutral-20(true); // @TODO: Add to spline (it's a local mixin atm)
+    @include bg-color-neutral-20(true);
 }
 
 .u-bg-color-neutral-30 {
     @include bg-color-neutral-30(true);
 }
 
+.u-bg-color-neutral-40 {
+    @include bg-color-neutral-40(true);
+}
+
+.u-bg-color-neutral-50 {
+    @include bg-color-neutral-50(true);
+}
+
+.u-bg-color-neutral-60 {
+    @include bg-color-neutral-60(true);
+}
+
+.u-bg-color-neutral-70 {
+    @include bg-color-neutral-70(true);
+}
+
+
+// Other Background Colors
+// ---
+
 .u-bg-color-brand {
     @include bg-color-brand(true);
+}
+
+.u-bg-color-accent {
+    @include bg-color-accent(true);
+}
+
+.u-bg-color-primary-action {
+    @include bg-color-primary-action(true);
+}
+
+.u-bg-color-secondary-action {
+    @include bg-color-secondary-action(true);
+}
+
+.u-bg-color-success {
+    @include bg-color-success(true);
 }
 
 .u-bg-color-error {
     @include bg-color-error(true);
 }
 
-.u-bg-color-light-error {
-    @include bg-color-light-error(true);
+.u-bg-color-sale {
+    @include bg-color-sale(true);
 }
