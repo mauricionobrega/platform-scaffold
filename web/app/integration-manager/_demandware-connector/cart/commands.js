@@ -1,7 +1,6 @@
 import {makeDemandwareRequest, getAuthTokenPayload} from '../utils'
 import {receiveCheckoutData} from '../../checkout/responses'
 import {parseAndReceiveCartResponse, requestCartData, createBasket} from './utils'
-import {getCurrentProductID} from '../parsers'
 import {API_END_POINT_URL} from '../constants'
 import {STATES} from '../checkout/constants'
 
@@ -18,7 +17,7 @@ export const addToCart = (productID, qty) => (dispatch) => {
             const options = {
                 method: 'POST',
                 body: JSON.stringify([{
-                    product_id: getCurrentProductID().toString(),
+                    product_id: productID,
                     quantity: qty
                 }])
             }
