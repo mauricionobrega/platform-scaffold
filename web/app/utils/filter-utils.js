@@ -30,15 +30,14 @@ const evaluate = (item, ruleset, criteria) => RULESETS[ruleset](item, criteria)
 
 /**
  * byFilters - An array filter callback to shrink down a list of items
- * based on the provided filter tokens. Example usage:
+ * based on the provided filters. Example usage:
  *
  *    const items = [{}, {}, ...]
- *    const tokens = getFilters.toJS().reduce(toTokens, [])
- *    items.filter(byFilters(tokens)) => items matching token criteria
+ *    const filters = getFilters.toJS()
+ *    items.filter(byFilters(filters)) => items matching filters criteria
  *
- * @param  {array} filterList - list of filter tokens (see toToken function
-           above). It's param `currentItem` is likely an object that will
-           eventually be consumed by a React component.
+ * @param  {array} filterList - list of filters. It's param `currentItem` is
+ *         likely an object that will eventually be consumed by a React component.
  * @returns {function} - a callback function, intended for filter methods
  */
 export const byFilters = (filterList) => (currentItem) => {

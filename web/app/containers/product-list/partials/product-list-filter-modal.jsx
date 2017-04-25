@@ -119,7 +119,7 @@ const mapStateToProps = createPropsSelector({
 })
 
 const mapDispatchToProps = {
-    changeFilter: (id) => changeFilterTo(id),
+    changeFilter: changeFilterTo,
     closeModal: () => closeModal(PRODUCT_LIST_FILTER_MODAL),
     openModal: () => openModal(PRODUCT_LIST_FILTER_MODAL)
 }
