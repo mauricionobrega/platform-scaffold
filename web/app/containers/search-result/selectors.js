@@ -16,6 +16,8 @@ export const getSearchResultTitle = createGetSelector(getSelectedCategory, 'titl
 
 export const getProductPaths = createGetSelector(getSelectedCategory, 'products', PLACEHOLDER_URLS)
 
+export const getNoResultsText = createGetSelector(getSelectedCategory, 'noResultsText')
+
 export const getSearchResultProducts = createSelector(
     getProducts,
     getProductPaths,
