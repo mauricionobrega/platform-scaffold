@@ -10,7 +10,7 @@ import Image from 'progressive-web-sdk/dist/components/image'
 import Icon from 'progressive-web-sdk/dist/components/icon'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
-import ProductTile from './product-tile'
+import ProductTile from '../../../components/product-tile'
 
 const ResultList = ({products}) => (
     <List className="c--borderless">

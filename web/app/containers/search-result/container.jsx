@@ -8,9 +8,10 @@ import {getSearchResultTitle, getHasProducts, getSearchResultProducts} from './s
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
-import ProductTile from '../product-list/partials/product-tile'
 import List from 'progressive-web-sdk/dist/components/list'
 import Link from 'progressive-web-sdk/dist/components/link'
+
+import ProductTile from '../../components/product-tile'
 
 
 import {isRunningInAstro} from '../../utils/astro-integration'
