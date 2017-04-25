@@ -21,10 +21,10 @@ fi
 if [ "$CURRENT_BRANCH" != "master" ]; then
     echo "Running tests against local build"
     # Kill background processes when this script exits.
-    trap 'kill $(jobs -p)' EXIT
+    trap 'kill $(jobs -p)' EXIT > /dev/null 2>&1
     export ACTIVE_PROFILE=local
-    npm run dev &
-    while ! echo exit | nc localhost 8443; do sleep 20; done
+    npm run prod:build
+    npm run test:server > /dev/null 2>&1 &
 else
     echo "Running tests against production"
     export ACTIVE_PROFILE=production
@@ -46,3 +46,4 @@ else
       npm run test:e2e --tests $testfiles
   fi
 fi
+

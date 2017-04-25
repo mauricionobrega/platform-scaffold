@@ -1,7 +1,8 @@
 const selectors = {
-    cartTemplateIdentifier: '.cart-container',
-    cartCheckout: 'button.checkout',
+    cartTemplateIdentifier: '.t-cart.t--loaded',
+    cartCheckout: '.qa-cart__checkout',
     removeItem: '.qa-cart__remove-item',
+    confirmRemove: '.t-cart__remove-item-confirmation-modal .c--secondary',
     emptyCart: '.t-cart__empty'
 }
 
@@ -22,15 +23,20 @@ Cart.prototype.navigateToCheckout = function() {
 
 Cart.prototype.removeItems = function() {
     // Remove all items from the cart
+    const self = this
     this.browser
         .log('Removing item')
+        .url('https://www.merlinspotions.com/checkout/cart/')
+        .waitForElementVisible(selectors.cartTemplateIdentifier)
         .element('css selector', selectors.removeItem, (result) => {
             if (result.value && result.value.ELEMENT) {
                 self.browser
                     .log('Removing item from cart')
                     .click(selectors.removeItem)
+                    .waitForElementVisible(selectors.confirmRemove)
+                    .click(selectors.confirmRemove)
                     .waitUntilMobified()
-                self.cleanUp()
+                self.removeItems()
             }
         })
         .waitForElementVisible(selectors.emptyCart)
