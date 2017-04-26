@@ -12,7 +12,7 @@ export const getCartItems = createSelector(
     getProducts,
     (items, products) => items.map((item) => {
         const productId = item.get('productId')
-        return item.set('product', products.find((item) => productId === item.get('id')))
+        return item.set('product', products.find((product) => productId === product.get('id')))
     })
 )
 
