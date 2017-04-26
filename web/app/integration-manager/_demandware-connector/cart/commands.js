@@ -1,16 +1,13 @@
 import {makeDemandwareRequest, getAuthTokenPayload} from '../utils'
-import {receiveCartContents} from '../../cart/responses'
 import {receiveCheckoutData} from '../../checkout/responses'
-import {requestCartData, createBasket, fetchCartItemThumbnails} from './utils'
-import {parseCartContents} from './parsers'
+import {requestCartData, createBasket, handleCartData} from './utils'
 import {API_END_POINT_URL} from '../constants'
 import {STATES} from '../checkout/constants'
 
 export const getCart = () => (dispatch) => {
     return requestCartData()
         .then((response) => response.json())
-        .then((responseJSON) => dispatch(receiveCartContents(parseCartContents(responseJSON))))
-        .then(() => dispatch(fetchCartItemThumbnails()))
+        .then((responseJSON) => dispatch(handleCartData(responseJSON)))
 }
 
 export const addToCart = (productID, qty) => (dispatch) => {
@@ -30,7 +27,7 @@ export const addToCart = (productID, qty) => (dispatch) => {
                     }
                     throw new Error('Unable to add item to cart')
                 })
-                .then((responseJSON) => dispatch(receiveCartContents(parseCartContents(responseJSON))))
+                .then((responseJSON) => dispatch(handleCartData(responseJSON)))
         })
 }
 
@@ -44,7 +41,7 @@ export const removeFromCart = (itemId) => (dispatch) => {
                     }
                     throw new Error('Unable to remove item')
                 })
-                .then((responseJSON) => dispatch(receiveCartContents(parseCartContents(responseJSON))))
+                .then((responseJSON) => dispatch(handleCartData(responseJSON)))
         })
 }
 
@@ -64,7 +61,7 @@ export const updateItemQuantity = (itemId, itemQuantity) => (dispatch) => {
                     }
                     throw new Error('Unable to update item')
                 })
-                .then((responseJSON) => dispatch(receiveCartContents(parseCartContents(responseJSON))))
+                .then((responseJSON) => dispatch(handleCartData(responseJSON)))
         })
 }
 

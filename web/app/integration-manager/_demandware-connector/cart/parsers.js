@@ -26,3 +26,21 @@ export const parseCartContents = ({product_items, product_sub_total, merchandize
     }
     /* eslint-enable camelcase */
 }
+
+export const parseCartProducts = ({product_items}) => /* Products */ {
+    /* eslint-disable camelcase */
+    const productMap = {};
+
+    (product_items || []).forEach(({product_id, product_name, price, item_text}) => {
+        productMap[getProductHref(product_id)] = {
+            id: product_id,
+            title: product_name,
+            price: formatPrice(price),
+            href: getProductHref(product_id),
+            description: item_text
+        }
+    })
+    /* eslint-enable camelcase */
+
+    return productMap
+}

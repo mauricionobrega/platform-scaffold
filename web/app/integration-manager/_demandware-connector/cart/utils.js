@@ -1,10 +1,12 @@
 import {makeDemandwareRequest, getBasketID, storeBasketID, deleteBasketID} from '../utils'
 import {getCartItems} from '../../../store/cart/selectors'
 import {receiveCartProductData} from '../../products/responses'
+import {receiveCartContents} from '../../cart/responses'
 
 import {getProductThumbnailSrcByPathKey, getProductThumbnailByPathKey} from '../../../store/products/selectors'
 import {getProductHref} from '../parsers'
 import {API_END_POINT_URL} from '../constants'
+import {parseCartProducts, parseCartContents} from './parsers'
 
 export const createBasket = (basketContents) => {
     const basketID = getBasketID()
@@ -53,36 +55,55 @@ export const getProductImage = (item, currentState) => {
     }
 }
 
+const imageFromJson = (imageJson, name, description) => ({
+    /* Image */
+    src: imageJson.link,
+    alt: `${name} - ${description}`,
+    caption: imageJson.title
+})
+
 /**
- * Fetches thumbnail images for products that are in the cart and don't already
- * have a thumbnail.
+ * Fetches product images for items that are in the cart and don't already
+ * have them.
  */
-export const fetchCartItemThumbnails = () => (dispatch, getState) => {
+export const fetchCartItemImages = () => (dispatch, getState) => {
+
+    /* TODO: The `view_type` is configurable per instance. This is something that
+    *       might have to be configurable in the connector to say what `view_type`
+    *       is a thumbnail and which one is the large image type. */
+    const thumbnailViewType = 'medium'
+    const largeViewType = 'large'
+
     const currentState = getState()
     const items = getCartItems(currentState)
     const updatedProducts = {}
 
-    return Promise.all(items.filter((cartItem) => getProductThumbnailByPathKey(getProductHref(cartItem.get('productId')))(currentState).size === 0)
-        .map((cartItem) => {
-            const productId = cartItem.get('productId')
+    // We use the .thumbnail as an indicator of whether the product has images already
+    return Promise.all(
+        items.filter((cartItem) => getProductThumbnailByPathKey(getProductHref(cartItem.get('productId')))(currentState).size === 0)
+            .map((cartItem) => {
+                const productId = cartItem.get('productId')
 
-            // We don't have a thumbnail for this product, fetch using SFCC's API
-            const viewType = 'medium' // view_type: https://documentation.demandware.com/DOC2/index.jsp?topic=%2Fcom.demandware.dochelp%2FImageManagement%2FUnderstandingViewtypes.html
-            return makeDemandwareRequest(`${API_END_POINT_URL}/products/${[productId]}/images?view_type=${viewType}`, {method: 'GET'})
-                .then((response) => response.json())
-                .then(({image_groups, short_description}) => {
-                    updatedProducts[getProductHref(productId)] = {
-                        /* Product */
-                        id: productId,
-                        thumbnail: {
-                            /* Image */
-                            src: image_groups[0].images[0].link,
-                            alt: short_description,
-                            caption: image_groups[0].images[0].title
+                return makeDemandwareRequest(`${API_END_POINT_URL}/products/${[productId]}/images?all_images=false&view_type=${largeViewType},${thumbnailViewType}`, {method: 'GET'})
+                    .then((response) => response.json())
+                    .then(({image_groups, name, short_description}) => {
+                        const product /* Product */ = {
+                            id: productId
                         }
-                    }
-                })
-        })
+
+                        const thumbnail = image_groups.find((group) => group.view_type === thumbnailViewType)
+                        if (thumbnail) {
+                            product.thumbnail = imageFromJson(thumbnail.images[0], name, short_description)
+                        }
+
+                        const largeGroup = image_groups.find((group) => group.view_type === largeViewType)
+                        if (largeGroup) {
+                            product.images = largeGroup.images.map((image) => imageFromJson(image, name, short_description))
+                        }
+
+                        updatedProducts[getProductHref(productId)] = product
+                    })
+            })
     )
     .then(() => {
         dispatch(receiveCartProductData(updatedProducts))
@@ -103,4 +124,14 @@ export const requestCartData = (noRetry) => {
             }
             return response
         })
+}
+
+export const handleCartData = (responseJSON) => (dispatch) => {
+    // Note: These need to be dispatched in this order, otherwise there's
+    //       a chance we could try to render cart items and not have product
+    //       data in the store for it.
+    dispatch(receiveCartProductData(parseCartProducts(responseJSON)))
+    dispatch(receiveCartContents(parseCartContents(responseJSON)))
+
+    return dispatch(fetchCartItemImages())
 }
