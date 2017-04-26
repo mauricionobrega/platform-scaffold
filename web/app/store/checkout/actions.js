@@ -13,14 +13,14 @@ export const processCheckoutData = ({payload: {$response}}) => {
     return (dispatch) => {
         const customerEntityID = parseCheckoutEntityID($response)
         const magentoFieldData = extractMagentoShippingStepData($response).getIn(['children', 'shipping-address-fieldset', 'children'])
-        const initialValues = parseShippingInitialValues(magentoFieldData)
+        const address = parseShippingInitialValues(magentoFieldData)
         const locationsData = parseLocations(magentoFieldData)
 
         dispatch(receiveCheckoutData({
             // entity_id is used for API calls
             customerEntityID,
             ...locationsData,
-            shipping: {initialValues}
+            shipping: {address}
         }))
     }
 }

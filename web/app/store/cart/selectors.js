@@ -14,3 +14,4 @@ export const getCartHasItems = createSelector(
 export const getCartSummaryCount = createGetSelector(getCart, 'summary_count')
 export const getSubtotalExcludingTax = createGetSelector(getCart, 'subtotal_excl_tax')
 export const getSubtotal = createGetSelector(getCart, 'subtotal')
+export const getTaxAmount = createGetSelector(getCart, 'tax_amount')
