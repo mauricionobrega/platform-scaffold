@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 import {createSelector} from 'reselect'
 import {createGetSelector, createHasSelector} from 'reselect-immutable-helpers'
 import {getUi, getCategories, getProducts} from '../../store/selectors'
-import * as appSelectors from '../app/selectors'
+import {getCurrentPathKey} from '../app/selectors'
 import {PLACEHOLDER} from '../app/constants'
 import {byFilters} from '../../utils/filter-utils'
 import {sortLib} from '../../utils/sort-utils'
@@ -11,15 +11,23 @@ const PLACEHOLDER_URLS = Immutable.List(new Array(5).fill(PLACEHOLDER))
 
 export const getProductList = createSelector(getUi, ({productList}) => productList)
 
+export const getCurrentProductList = createGetSelector(
+    getProductList,
+    getCurrentPathKey,
+    Immutable.Map()
+)
+
+export const getCurrentSort = createGetSelector(getCurrentProductList, 'sort')
+
 export const getSelectedCategory = createGetSelector(
     getCategories,
-    appSelectors.getCurrentPathKey,
+    getCurrentPathKey,
     Immutable.Map()
 )
 
 export const getProductListContentsLoaded = createHasSelector(
     getCategories,
-    appSelectors.getCurrentPathKey
+    getCurrentPathKey
 )
 
 export const getProductPaths = createGetSelector(getSelectedCategory, 'products', PLACEHOLDER_URLS)
@@ -62,15 +70,8 @@ export const getFilteredProductListProducts = createSelector(
 
 export const getFilteredAndSortedListProducts = createSelector(
     getFilteredProductListProducts,
-    getSort,
+    getCurrentSort,
     (products, sort) => {
-        const arrayOfProducts = products.toJS()
-        const options = sort.get('options')
-
-        if (!options) {
-            return arrayOfProducts
-        }
-        const activeSort = options.find((option) => option.get('selected'))
-        return arrayOfProducts.sort(sortLib[activeSort.get('value')])
+        return sort ? products.sort(sortLib[sort]) : products
     }
 )

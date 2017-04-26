@@ -5,7 +5,8 @@ import * as selectors from '../selectors'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import {PRODUCT_LIST_FILTER_MODAL} from '../constants'
 import {openModal} from 'progressive-web-sdk/dist/store/modals/actions'
-import {changeFilterTo, changeSort} from '../../../store/categories/actions'
+import {changeFilterTo} from '../../../store/categories/actions'
+import {changeSort} from '../actions'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import List from 'progressive-web-sdk/dist/components/list'
@@ -45,17 +46,12 @@ const NoResultsList = () => (
     </div>
 )
 
-NoResultsList.propTypes = {
-    bodyText: PropTypes.string
-}
-
 const ProductListContents = ({
     activeFilters,
     clearFilters,
     contentsLoaded,
     products,
     openModal,
-    sort,
     sortChange
 }) => (
     <div>
@@ -111,11 +107,9 @@ const ProductListContents = ({
                                         onChange={(e) => { sortChange(e.target.value) }}
                                         onBlur={(e) => { sortChange(e.target.value) }}
                                     >
-                                        {sort.options.map((option) =>
-                                            <option value={option.value} key={option.value}>
-                                                {option.text}
-                                            </option>)
-                                        }
+                                        <option value="position">Position</option>
+                                        <option value="name">Name</option>
+                                        <option value="price">Price</option>
                                     </select>
 
                                     <div className="t-product-list__sort-icon">

@@ -26,5 +26,5 @@ export const sortLib = {
     },
 
     // sort by postition (default)
-    position: () => { return 0 }
+    position: () => 0
 }
