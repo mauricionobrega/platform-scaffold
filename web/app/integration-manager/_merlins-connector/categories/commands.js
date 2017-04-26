@@ -1,4 +1,4 @@
-import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
+import {urlToPathKey, parseSelect} from 'progressive-web-sdk/dist/utils/utils'
 import {receiveCategoryContents, receiveCategoryInformation} from '../../categories/responses'
 import {receiveProductListProductData} from '../../products/responses'
 import categoryProductsParser, {parseCategoryTitle, parseCategoryId} from './parser'
@@ -16,7 +16,8 @@ export const fetchProductListData = (url) => (dispatch) => {
                 id: parseCategoryId($, $response) || pathKey,
                 href: pathKey,
                 parentId: null,
-                title: parseCategoryTitle($, $response)
+                title: parseCategoryTitle($, $response),
+                sort: parseSelect($, $response.find('.sorter-options').first)
             }))
             dispatch(receiveCategoryContents(pathKey, categoryProductsParser($, $response)))
         })
