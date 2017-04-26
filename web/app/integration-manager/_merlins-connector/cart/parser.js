@@ -1,11 +1,11 @@
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 import {getCheckoutConfigObject} from '../../../utils/magento-utils'
-import {formatMerlinsMoney} from '../utils'
+import {formatMerlinsMoney, textFromFragment, parsePriceToCents} from '../utils'
 
-export const textFromFragment = (fragment) => {
-    const e = document.createElement('div')
-    e.innerHTML = fragment
-    return e.textContent.trim()
+const calculateSubtotal = (priceFragment, quantity) => {
+    const price = textFromFragment(priceFragment)
+    const subtotal = (parsePriceToCents(price) * quantity) / 100
+    return formatMerlinsMoney(subtotal)
 }
 
 export const parseCartProducts = ({items}) => {
