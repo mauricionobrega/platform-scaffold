@@ -1,69 +1,39 @@
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 import {closeModal, openModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {fetchShippingMethodsEstimate} from '../../integration-manager/checkout/commands'
-import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
-import {urlToPathKey, parseLocationData} from '../../utils/utils'
-import {getSelectedShippingMethod} from '../../store/checkout/shipping/selectors'
-import {getFormValues, getFormRegisteredFields} from '../../store/form/selectors'
-import {receiveCartContents} from '../../store/cart/actions'
-
 import {
     CART_ESTIMATE_SHIPPING_MODAL,
     ESTIMATE_FORM_NAME,
     CART_REMOVE_ITEM_MODAL,
     CART_WISHLIST_MODAL
 } from './constants'
-
-import {removeFromCart, updateItemQuantity, addToWishlist} from '../../integration-manager/cart/commands'
+import {removeFromCart, updateItemQuantity, addToWishlist, fetchTaxEstimate} from '../../integration-manager/cart/commands'
 import {addNotification} from '../app/actions'
-import {getFormKey, getIsLoggedIn} from '../app/selectors'
+import {getIsLoggedIn} from '../app/selectors'
 import {trigger} from '../../utils/astro-integration'
-import {makeFormEncodedRequest, makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
-import {getUenc} from '../product-details/selectors'
-import {getCustomerEntityID} from '../../store/checkout/selectors'
+import {getFormValues, getFormRegisteredFields} from '../../store/form/selectors'
+import {getSelectedShippingMethod} from '../../store/checkout/shipping/selectors'
+import {parseLocationData} from '../../utils/utils'
 
 export const receiveData = createAction('Receive Cart Data')
 export const setRemoveItemId = createAction('Set item id for removal', ['removeItemId'])
 export const setIsWishlistComplete = createAction('Set wishlist add complete', ['isWishlistAddComplete'])
 
-export const fetchTaxEstimate = () => (dispatch, getState) => {
+const shippingFormSelector = createPropsSelector({
+    formValues: getFormValues(ESTIMATE_FORM_NAME),
+    registeredFields: getFormRegisteredFields(ESTIMATE_FORM_NAME),
+    shippingMethod: getSelectedShippingMethod
+})
+
+export const submitEstimateShipping = () => (dispatch, getState) => {
     const currentState = getState()
-    const isLoggedIn = getIsLoggedIn(currentState)
-    const formValues = getFormValues(ESTIMATE_FORM_NAME)(currentState)
-    const entityID = getCustomerEntityID(currentState)
-    const registeredFieldNames = getFormRegisteredFields(ESTIMATE_FORM_NAME)(currentState).map(({name}) => name)
-    const address = parseLocationData(formValues, registeredFieldNames)
+    const {formValues, registeredFields, shippingMethod} = shippingFormSelector(currentState)
+    const address = parseLocationData(formValues, registeredFields.map(({name}) => name))
 
-    const getTotalsURL = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/totals-information`
-    const shippingMethod = getSelectedShippingMethod(currentState).toJS().value.split('_')
-
-    const requestData = {
-        addressInformation: {
-            address,
-            shipping_carrier_code: shippingMethod[0],
-            shipping_method_code: shippingMethod[1]
-        }
-    }
-    return makeJsonEncodedRequest(getTotalsURL, requestData, {method: 'POST'})
-        .then((response) => response.json())
-        .then((responseJSON) => {
-            const cartTotals = {
-                subtotal: `$${responseJSON.subtotal.toFixed(2)}`,
-                subtotal_incl_tax: `$${responseJSON.subtotal_incl_tax.toFixed(2)}`,
-                tax_amount: `$${responseJSON.tax_amount.toFixed(2)}`,
-            }
-            dispatch(receiveCartContents(cartTotals))
-        })
-}
-
-export const submitEstimateShipping = () => {
-    return (dispatch) => {
-        dispatch(closeModal(CART_ESTIMATE_SHIPPING_MODAL))
-        dispatch(fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME))
-            .then(() => {
-                dispatch(fetchTaxEstimate())
-            })
-    }
+    dispatch(fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME))
+        .then(() => dispatch(fetchTaxEstimate(address, shippingMethod.value)))
+    dispatch(closeModal(CART_ESTIMATE_SHIPPING_MODAL))
 }
 
 export const removeItem = (itemID) => (dispatch) => {
