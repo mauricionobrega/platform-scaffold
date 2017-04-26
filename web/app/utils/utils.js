@@ -66,8 +66,7 @@ export const typecheck = (type, value) => {
     try {
         type.check(value)
     } catch (e) {
-        console.info(e)
-        console.log(value)
+        console.error('Type check failed: ', e, '\n\nValue: ', value)
     }
     return value
 }
