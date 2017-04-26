@@ -8,7 +8,7 @@ const calculateSubtotal = (priceFragment, quantity) => {
     return formatMerlinsMoney(subtotal)
 }
 
-export const parseCartProducts = ({items}) => {
+export const parseCartProducts = ({items}) => /* Products */ {
     const products = items.map(({product_id, product_name, product_url, product_price, product_image}) => ({
         id: product_id,
         title: product_name,
@@ -17,8 +17,10 @@ export const parseCartProducts = ({items}) => {
         thumbnail: {
             src: product_image.src,
             alt: product_image.alt,
-            width: `${product_image.width}px`,
-            height: `${product_image.height}px`
+            size: {
+                width: `${product_image.width}px`,
+                height: `${product_image.height}px`
+            }
         }
     }))
 
@@ -30,16 +32,17 @@ export const parseCartProducts = ({items}) => {
     return productMap
 }
 
-export const parseCart = ({items, subtotal, subtotal_excl_tax}) => {
+export const parseCart = ({items, subtotal, subtotal_excl_tax}) => /* Cart */ {
     return {
-        contents: items.map(({item_id, product_id, product_url, qty}) => ({
+        items: items.map(({item_id, product_id, product_url, qty, product_price}) => ({
             id: item_id,
             productId: product_id,
             href: product_url,
-            quantity: qty
+            quantity: qty,
+            itemPrice: textFromFragment(product_price),
+            linePrice: calculateSubtotal(product_price, qty)
         })),
         subtotal: textFromFragment(subtotal_excl_tax),
-        taxes: [],
         orderTotal: textFromFragment(subtotal)
     }
 }

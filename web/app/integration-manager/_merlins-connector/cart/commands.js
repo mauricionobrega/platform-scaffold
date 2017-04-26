@@ -13,6 +13,7 @@ import {fetchPageData} from '../app/commands'
 import {parseCart, parseCartProducts} from './parser'
 import {parseCheckoutEntityID, extractMagentoJson} from '../../../utils/magento-utils'
 import {ESTIMATE_FORM_NAME, ADD_TO_WISHLIST_URL} from '../../../containers/cart/constants'
+import {getProductById} from '../../../store/products/selectors'
 
 const LOAD_CART_SECTION_URL = '/customer/section/load/?sections=cart%2Cmessages&update_section_id=true'
 const REMOVE_CART_ITEM_URL = '/checkout/sidebar/removeItem/'
@@ -47,15 +48,16 @@ export const getCart = () => (dispatch) => {
         })
 }
 
-export const addToCart = (key, qty) => (dispatch, getState) => {
-    const formInfo = getState().integrationManager.get(key)
+export const addToCart = (productId, quantity) => (dispatch, getState) => {
+    const product = getProductById(productId)(getState())
+    const formInfo = getState().integrationManager.get(urlToPathKey(product.get('href')))
     const formValues = {
         ...formInfo.get('hiddenInputs').toJS(),
-        qty
+        quantity
     }
 
     return submitForm(formInfo.get('submitUrl'), formValues, {method: formInfo.get('method')})
-        .then(() => dispatch(getCart()))
+        .then(dispatch(getCart()))
 }
 
 /**
