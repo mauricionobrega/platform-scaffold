@@ -1,20 +1,29 @@
 import Immutable from 'immutable'
 import {createSelector} from 'reselect'
 import {createGetSelector, createHasSelector} from 'reselect-immutable-helpers'
-import {getCart} from '../selectors'
+import {getCart, getProducts} from '../selectors'
 
-export const getCartContentsLoaded = createHasSelector(getCart, 'contents')
+export const getCartLoaded = createHasSelector(getCart, 'items')
 
-export const getCartContents = createGetSelector(getCart, 'contents', Immutable.List())
+const getCartItemsPrivate = createGetSelector(getCart, 'items', Immutable.List())
 
-export const getCartItems = createGetSelector(getCart, 'items', Immutable.List())
+export const getCartItems = createSelector(
+    getCartItemsPrivate,
+    getProducts,
+    (items, products) => items.map((item) => {
+        const productId = item.get('productId')
+        return item.set('product', products.find((item) => productId === item.get('id')))
+    })
+)
+
 export const getCartHasItems = createSelector(
     getCartItems,
     (items) => items.size > 0
 )
+
 export const getCartSummaryCount = createSelector(
     getCartItems,
-    (items) => items.size
+    (items) => items.reduce((quantity, cartItem) => quantity + cartItem.get('quantity'), 0)
 )
 
 export const getSubtotal = createGetSelector(getCart, 'subtotal')

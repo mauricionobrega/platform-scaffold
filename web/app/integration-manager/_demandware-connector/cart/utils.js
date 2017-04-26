@@ -1,6 +1,6 @@
 import {makeDemandwareRequest, getBasketID, storeBasketID, deleteBasketID} from '../utils'
 import {receiveCartContents} from '../../cart/responses'
-import {getCartContents} from '../../../store/cart/selectors'
+import {getCartItems} from '../../../store/cart/selectors'
 import {receiveCartProductData} from '../../products/responses'
 
 import {getProductThumbnailSrcByPathKey} from '../../../store/products/selectors'
@@ -60,11 +60,13 @@ export const getProductImage = (item, currentState) => {
  */
 export const fetchCartItemThumbnails = () => (dispatch, getState) => {
     const currentState = getState()
-    const contents = getCartContents(currentState)
+    const items = getCartItems(currentState)
     const updatedProducts = {}
 
-    return Promise.all(contents.filter(({cartItem}) => cartItem.thumbnail)
-        .map(({productId}) => {
+    return Promise.all(items.filter((cartItem) => getProductThumbnailByPathKey(getProductHref(cartItem.get('productId')))(currentState).size === 0)
+        .map((cartItem) => {
+            const productId = cartItem.get('productId')
+
             // We don't have a thumbnail for this product, fetch using SFCC's API
             const viewType = 'medium' // view_type: https://documentation.demandware.com/DOC2/index.jsp?topic=%2Fcom.demandware.dochelp%2FImageManagement%2FUnderstandingViewtypes.html
             return makeDemandwareRequest(`${API_END_POINT_URL}/products/${[productId]}/images?view_type=${viewType}`, {method: 'GET'})
