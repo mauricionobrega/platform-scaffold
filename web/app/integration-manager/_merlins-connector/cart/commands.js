@@ -44,7 +44,7 @@ export const getCart = () => (dispatch) => {
                 dispatch(receiveCartProductData(parseCartProducts(cart)))
             }
 
-            dispatch(receiveCartContents({...parseCart(cart), items}))
+            dispatch(receiveCartContents(parseCart(cart)))
         })
 }
 
