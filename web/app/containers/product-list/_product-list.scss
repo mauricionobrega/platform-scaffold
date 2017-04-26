@@ -56,8 +56,32 @@
     padding: ($unit * 3) ($unit * 6) ($unit * 2);
 }
 
-.t-product-list__num-results {
-    font-size: $font-size + 1;
+
+// Filter
+// ---
+
+.t-product-list__filter {
+    width: 50%;
+}
+
+
+// Active Filter
+// ---
+
+.t-product-list__active-filter {
+    font-size: 15px;
+}
+
+
+// Filter Modal
+// ---
+
+.t-product-list__filter-modal {
+    min-height: calc(100vh - #{$unit * 6.5});
+}
+
+.t-product-list__filter-modal-items {
+    margin: -$unit * 1.5;
 }
 
 
@@ -65,6 +89,10 @@
 // ---
 //
 // 1. Positioned relative to the parent `.u-position-relative` container
+
+.t-product-list__sort {
+    width: 50%;
+}
 
 .t-product-list__sort-select {
     color: $font-color;

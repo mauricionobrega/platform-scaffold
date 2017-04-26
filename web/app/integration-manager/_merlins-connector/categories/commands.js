@@ -2,7 +2,7 @@ import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 import {parseSelect} from '../../../utils/parser-utils'
 import {receiveCategoryContents, receiveCategoryInformation} from '../../categories/responses'
 import {receiveProductListProductData} from '../../products/responses'
-import categoryProductsParser, {parseCategoryTitle, parseCategoryId} from './parser'
+import categoryProductsParser, {parseCategoryTitle, parseCategoryId, priceFilterParser} from './parser'
 import {productListParser} from '../products/parsers'
 import {fetchPageData} from '../app/commands'
 
@@ -17,6 +17,7 @@ export const fetchProductListData = (url) => (dispatch) => {
                 id: parseCategoryId($, $response) || pathKey,
                 href: pathKey,
                 parentId: null,
+                filters: priceFilterParser($, $response),
                 title: parseCategoryTitle($, $response),
                 sort: parseSelect($, $response.find('.sorter-options').first())
             }))
