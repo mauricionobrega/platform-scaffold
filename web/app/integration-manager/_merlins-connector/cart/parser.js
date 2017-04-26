@@ -20,20 +20,27 @@ const productIdFromUrl = (url) => {
     return PRODUCT_ID_REGEX.exec(url)[1] || undefined
 }
 
-export const parse = ({cart}) => {
-    return {
-        ...cart,
-        subtotal: textFromFragment(cart.subtotal),
-        subtotal_excl_tax: textFromFragment(cart.subtotal_excl_tax),
-        subtotal_incl_tax: textFromFragment(cart.subtotal_incl_tax),
-        items: cart.items.map((item) => {
-            for (const k of Object.keys(item)) {
-                item[k] = quoteItemReviver(k, item[k])
-            }
-            item.productId = productIdFromUrl(item.configure_url)
-            return item
-        })
+export const cartReviver = (k, v) => {
+    switch (k) {
+        case 'subtotal':
+        case 'subtotal_excl_tax':
+        case 'subtotal_incl_tax':
+            return textFromFragment(v)
+        case 'items':
+            return v.map((item) => {
+                for (const k of Object.keys(item)) {
+                    item[k] = quoteItemReviver(k, item[k])
+                }
+                item.productId = productIdFromUrl(item.configure_url)
+                return item
+            })
+        default:
+            return v
     }
+}
+
+export const parse = (responseText) => {
+    return JSON.parse(responseText, cartReviver).cart
 }
 
 export default parse
