@@ -1,8 +1,8 @@
 import {makeDemandwareRequest, getAuthTokenPayload} from '../utils'
 import {receiveCartContents} from '../../cart/responses'
 import {receiveCheckoutData} from '../../checkout/responses'
-import {parseAndReceiveCartResponse, requestCartData, createBasket, fetchCartItemThumbnails} from './utils'
-import {parseCartContents} from '../parsers'
+import {requestCartData, createBasket, fetchCartItemThumbnails} from './utils'
+import {parseCartContents} from './parsers'
 import {API_END_POINT_URL} from '../constants'
 import {STATES} from '../checkout/constants'
 
@@ -11,7 +11,6 @@ export const getCart = () => (dispatch) => {
         .then((response) => response.json())
         .then((responseJSON) => dispatch(receiveCartContents(parseCartContents(responseJSON))))
         .then(() => dispatch(fetchCartItemThumbnails()))
-        .catch((err) => console.error('Cart request failed', err))
 }
 
 export const addToCart = (productID, qty) => (dispatch) => {
@@ -31,7 +30,7 @@ export const addToCart = (productID, qty) => (dispatch) => {
                     }
                     throw new Error('Unable to add item to cart')
                 })
-                .then((responseJSON) => dispatch(parseAndReceiveCartResponse(responseJSON)))
+                .then((responseJSON) => dispatch(receiveCartContents(parseCartContents(responseJSON))))
         })
 }
 
@@ -45,12 +44,11 @@ export const removeFromCart = (itemId) => (dispatch) => {
                     }
                     throw new Error('Unable to remove item')
                 })
-                .then((responseJSON) => dispatch(parseAndReceiveCartResponse(responseJSON)))
+                .then((responseJSON) => dispatch(receiveCartContents(parseCartContents(responseJSON))))
         })
 }
 
 export const updateItemQuantity = (itemId, itemQuantity) => (dispatch) => {
-
     return createBasket()
         .then((basketID) => {
             const requestOptions = {
@@ -66,7 +64,7 @@ export const updateItemQuantity = (itemId, itemQuantity) => (dispatch) => {
                     }
                     throw new Error('Unable to update item')
                 })
-                .then((responseJSON) => dispatch(parseAndReceiveCartResponse(responseJSON)))
+                .then((responseJSON) => dispatch(receiveCartContents(parseCartContents(responseJSON))))
         })
 }
 
@@ -80,7 +78,6 @@ export const fetchCartPageData = () => (dispatch) => {
         }))
     })
 }
-
 
 export const addToWishlist = (productId) => (dispatch) => {
     const {sub} = getAuthTokenPayload()

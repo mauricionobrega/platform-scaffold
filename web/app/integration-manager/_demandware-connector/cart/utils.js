@@ -1,10 +1,9 @@
 import {makeDemandwareRequest, getBasketID, storeBasketID, deleteBasketID} from '../utils'
-import {receiveCartContents} from '../../cart/responses'
 import {getCartItems} from '../../../store/cart/selectors'
 import {receiveCartProductData} from '../../products/responses'
 
-import {getProductThumbnailSrcByPathKey} from '../../../store/products/selectors'
-import {parseBasketContents, getProductHref} from '../parsers'
+import {getProductThumbnailSrcByPathKey, getProductThumbnailByPathKey} from '../../../store/products/selectors'
+import {getProductHref} from '../parsers'
 import {API_END_POINT_URL} from '../constants'
 
 export const createBasket = (basketContents) => {
@@ -88,25 +87,6 @@ export const fetchCartItemThumbnails = () => (dispatch, getState) => {
     .then(() => {
         dispatch(receiveCartProductData(updatedProducts))
     })
-}
-
-export const fetchBasketItemImages = (responseJSON, currentState) => {
-    const basketData = parseBasketContents(responseJSON)
-    if (basketData.items.length) {
-        return Promise.all(basketData.items.map((item) => getProductImage(item, currentState)))
-            .then((itemImages) => {
-                return {
-                    ...basketData,
-                    items: basketData.items.map((item, i) => ({...item, product_image: itemImages[i]}))
-                }
-            })
-    }
-    return Promise.resolve(basketData)
-}
-
-export const parseAndReceiveCartResponse = (responseJSON) => (dispatch, getState) => {
-    return fetchBasketItemImages(responseJSON, getState())
-        .then((basketData) => dispatch(receiveCartContents(basketData)))
 }
 
 export const requestCartData = (noRetry) => {

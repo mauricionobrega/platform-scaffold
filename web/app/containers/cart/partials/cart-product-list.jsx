@@ -174,7 +174,7 @@ const CartProductList = ({items, isLoggedIn, summaryCount, onSaveLater, onUpdate
 
             <List className="u-bg-color-neutral-00 u-border-light-top u-border-light-bottom">
                 {isCartEmpty && <ProductSkeleton />}
-                {items.map((item) => (<CartProductItem {...item} key={item.item_id} onQtyChange={onUpdateItemQuantity} onSaveLater={onSaveLater} openRemoveItemModal={openRemoveItemModal} />))}
+                {items.map((item) => (<CartProductItem {...item} key={item.id} onQtyChange={onUpdateItemQuantity} onSaveLater={onSaveLater} openRemoveItemModal={openRemoveItemModal} />))}
             </List>
         </div>
     )
