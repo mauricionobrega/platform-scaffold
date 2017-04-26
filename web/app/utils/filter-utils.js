@@ -33,10 +33,9 @@ const evaluate = (item, ruleset, criteria) => RULESETS[ruleset](item, criteria)
  * based on the provided filters. Example usage:
  *
  *    const items = [{}, {}, ...]
- *    const filters = getFilters.toJS()
  *    items.filter(byFilters(filters)) => items matching filters criteria
  *
- * @param  {array} filterList - list of filters. It's param `currentItem` is
+ * @param  {array|Immutable.List} filterList - list of filters. It's param `currentItem` is
  *         likely an object that will eventually be consumed by a React component.
  * @returns {function} - a callback function, intended for filter methods
  */
@@ -45,19 +44,6 @@ export const byFilters = (filterList) => (currentItem) => {
         return false
     }
 
-    if (filterList.length === 0) {
-        return true
-    }
-
-    let valid = false
-
-    filterList.forEach(({ruleset, criteria}) => {
-        const isValid = evaluate(currentItem, ruleset, criteria)
-
-        if (isValid) {
-            valid = true
-        }
-    })
-
-    return valid
+    // [].every(fn) is always true!
+    return filterList.every(({ruleset, criteria}) => evaluate(currentItem, ruleset, criteria))
 }

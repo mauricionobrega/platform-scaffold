@@ -62,10 +62,7 @@ export const getActiveFilters = createSelector(
 export const getFilteredProductListProducts = createSelector(
     getProductListProducts,
     getActiveFilters,
-    (products, filters) => {
-        const filteredProducts = products.toJS().filter(byFilters(filters.toJS()))
-        return Immutable.List(filteredProducts)
-    }
+    (products, filters) => products.filter(byFilters(filters))
 )
 
 export const getFilteredAndSortedListProducts = createSelector(
