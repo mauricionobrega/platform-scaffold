@@ -1,45 +1,145 @@
 // Text utils
 // ===
 
-// All Caps
+
+// Font-Family
 // ---
-//
-// Set text uppercase, letterspaced for legibility.
 
-.u-text-all-caps {
-    @include text-all-caps(true);
+.u-text-font-family {
+    @include text-font-family(true);
+}
 
-    letter-spacing: initial !important; // @TODO: maybe remove letter-spacing from text-all-caps() method in Spline
+.u-text-header-font-family {
+    @include text-header-font-family(true);
+
+    // Added with webfontloader. See loadFonts() in app/container.js
+    .wf-active & {
+        font-family: $loaded-header-font-family !important; // TODO: Remove !important
+    }
+}
+
+.u-text-loaded-header-font-family {
+    @include text-loaded-header-font-family(true);
 }
 
 
-// Capitalize Text
+// Weights & Style
 // ---
-//
-// Capitalize first letter of string.
 
-.u-text-capitalize {
-    @include text-capitalize(true);
+.u-text-thin {
+    @include text-thin(true);
+}
+
+.u-text-extra-light {
+    @include text-extra-light(true);
+}
+
+.u-text-light {
+    @include text-light(true);
+}
+
+.u-text-regular {
+    @include text-regular(true);
+}
+
+.u-text-medium {
+    @include text-medium(true);
+}
+
+.u-text-semi-bold {
+    @include text-semi-bold(true);
+}
+
+.u-text-bold {
+    @include text-bold(true);
+}
+
+.u-text-normal {
+    @include text-normal(true);
+}
+
+.u-text-italic {
+    @include text-italic(true);
+}
+
+.u-text-quiet {
+    @include text-quiet(true);
 }
 
 
-// Lowercase Text
+// Size
 // ---
-//
-// Lowercase all text in string.
 
-.u-text-uppercase {
-    text-transform: uppercase !important; // @TODO: add to Spline
+.u-text-size-smaller {
+    @include text-size-smaller(true);
+}
+
+.u-text-size-small {
+    @include text-size-small(true);
+}
+
+.u-text-size-normal {
+    @include text-size-normal(true);
+}
+
+.u-text-size-big {
+    @include text-size-big(true);
+}
+
+.u-text-size-bigger {
+    @include text-size-bigger(true);
+}
+
+.u-text-size-huge {
+    @include text-size-huge(true);
 }
 
 
-// Lowercase Text
+// Line Height
 // ---
-//
-// Lowercase all text in string.
 
-.u-text-lowercase {
-    @include text-lowercase(true);
+.u-text-line-height-0 {
+    @include line-height(true, 0)
+}
+
+.u-text-line-height-tiny {
+    @include line-height(true, $tiny-line-height) // $tiny-line-height: 8px;
+}
+
+.u-text-line-height-smaller {
+    @include line-height(true, $smaller-line-height) // $smaller-line-height: 12px;
+}
+
+.u-text-line-height-small {
+    @include line-height(true, $small-line-height) // $small-line-height: 16px;
+}
+
+.u-text-line-height {
+    @include line-height(true, $line-height); // $line-height: 20px;
+}
+
+.u-text-line-height-big {
+    @include line-height(true, $big-line-height); // $big-line-height: 24px;
+}
+
+.u-text-line-height-bigger {
+    @include line-height(true, $bigger-line-height); // $bigger-line-height: 28px;
+}
+
+.u-text-line-height-huge {
+    @include line-height(true, $huge-line-height); // $huge-line-height: 32px;
+}
+
+
+// Letter Spacing
+// ---
+
+.u-text-letter-spacing {
+    @include letter-spacing(true, 1px);
+}
+
+.u-text-letter-spacing-normal {
+    @include letter-spacing(true, initial);
 }
 
 
@@ -62,6 +162,36 @@
 }
 
 
+// All Caps
+// ---
+//
+// Set text uppercase, letterspaced for legibility.
+
+.u-text-uppercase {
+    @include text-uppercase(true);
+}
+
+
+// Capitalize Text
+// ---
+//
+// Capitalize first letter of string.
+
+.u-text-capitalize {
+    @include text-capitalize(true);
+}
+
+
+// Lowercase Text
+// ---
+//
+// Lowercase all text in string.
+
+.u-text-lowercase {
+    @include text-lowercase(true);
+}
+
+
 // Vertical Alignment
 // ---
 //
@@ -73,86 +203,4 @@
 
 .u-align-baseline {
     @include align-baseline(true);
-}
-
-
-// Weights & Style
-// ---
-
-.u-text-normal {
-    @include text-normal(true);
-}
-
-.u-text-bold {
-    @include text-bold(true);
-}
-
-.u-text-italic {
-    @include text-italic(true);
-}
-
-.u-text-quiet {
-    @include text-quiet(true); // @TODO: Tweak to use a $font-size-small var
-
-    font-size: 12px !important; // @TODO: Remove this line after above todo is done
-}
-
-.u-text-extra-lighter {
-    font-weight: 200 !important; // @TODO: Add to Spline
-}
-
-.u-text-lighter {
-    font-weight: 300 !important; // @TODO: Add to Spline
-}
-
-.u-text-semi-bold {
-    font-weight: 500 !important; // @TODO: Add to Spline
-}
-
-// Size
-// ---
-
-.u-text-small {
-    font-size: 12px !important; // @TODO: Add to spline and assign a variable
-}
-
-
-// Font-Family
-// ---
-
-.u-text-header-font-family {
-    font-family: $header-font-family !important;
-
-    // Added with webfontloader. See loadFonts() in app/container.js
-    .wf-active & {
-        font-family: $loaded-header-font-family !important;
-    }
-}
-
-
-// Letter Spacing
-// ---
-
-.u-text-letter-spacing {
-    letter-spacing: 1px !important; // @TODO: Add to spline
-}
-
-.u-text-letter-spacing-normal {
-    letter-spacing: initial !important; // @TODO: Add to spline
-}
-
-
-// Line Height
-// ---
-
-.u-text-line-height-0 {
-    line-height: 0 !important; // @TODO: Add to spline
-}
-
-
-// Font Family
-// ---
-
-.u-text-font-family {
-    font-family: $font-family !important; // @TODO: Add to spline
 }
