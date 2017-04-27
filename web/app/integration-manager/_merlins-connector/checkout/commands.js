@@ -183,10 +183,10 @@ export const checkoutRegister = (userCredentials) => {
     return submitForm(CREATE_ACCOUNT_POST_URL, userCredentials, {method: 'POST'})
         .then((response) => {
             const responseUrlHas = (chunk) => response.url.search(chunk) >= 0
-            const redirectUrlIsNotToCreate = responseUrlHas('/account/') && !responseUrlHas('/create/')
-            const registrationIsSuccess = response.redirected && redirectUrlIsNotToCreate
+            const redirectURLIsToCreate = !responseUrlHas('/account/') && responseUrlHas('/create/')
 
-            if (!registrationIsSuccess) {
+            if (redirectURLIsToCreate) {
+                // The account hasn't been created, throw an error
                 throw new SubmissionError('Could not complete registration. The email you provided may already be in use.')
             }
 
