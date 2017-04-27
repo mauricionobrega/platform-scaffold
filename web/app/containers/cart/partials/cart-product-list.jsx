@@ -139,6 +139,7 @@ CartProductItem.defaultProps = {
 
 CartProductItem.propTypes = {
     cartItemId: PropTypes.string, /* CartItem.id */
+    configure_url: PropTypes.string,
     href: PropTypes.string,
     itemPrice: PropTypes.string,
     linePrice: PropTypes.string,

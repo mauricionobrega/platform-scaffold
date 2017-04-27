@@ -7,8 +7,10 @@
         "thumbnail": {
             "src": "https://www.merlinspotions.com/media/catalog/product/cache/1/thumbnail/75x75/beff4985b56e3afdbeabfc89641a4582/s/l/sleeping-draught-1.jpg",
             "alt": "Sleeping Draught",
-            "width": "75px",
-            "height": "75px"
+            "size": {
+                "width": "75px",
+                "height": "75px"
+            }
         }
     },
     "/eye-of-newt.html": {
@@ -19,8 +21,10 @@
         "thumbnail": {
             "src": "https://www.merlinspotions.com/media/catalog/product/cache/1/thumbnail/75x75/beff4985b56e3afdbeabfc89641a4582/e/y/eye-of-newt-1.jpg",
             "alt": "Eye Of Newt",
-            "width": "75px",
-            "height": "75px"
+            "size": {
+                "width": "75px",
+                "height": "75px"
+            }
         }
     }
 }

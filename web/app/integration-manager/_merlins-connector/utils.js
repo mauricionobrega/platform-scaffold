@@ -13,16 +13,18 @@ export const formatMerlinsMoney = (price) => {
 }
 
 /**
- * Parses the given price and returns it as cents
- * @param {String} price The price formatted as a string with a currency symbol. Eg '$23.99'
+ * Multiplies the given price by quantity
+ * @param {string} price
+ * @param {number} quantity
  * @example
- * // Returns 1523
- * parsePriceToCents('$15.23')
+ * // Returns $95.96
+ * productSubtotal('$23.99', 4)
  */
-export const parsePriceToCents = (price) => {
+export const productSubtotal = (price, quantity) => {
     // Note: this is naive to non-dollar currencies!
     const priceInCents = price.replace(/[$,. ]/g, '')
-    return parseInt(priceInCents)
+    const subtotal = (parseInt(priceInCents) * quantity) / 100
+    return formatMerlinsMoney(subtotal)
 }
 
 /**
