@@ -34,6 +34,11 @@ export const UnwrappedLogin = Loadable({
     LoadingComponent: ContainerPlaceholder
 })
 
+export const UnwrappedStartersKit = Loadable({
+    loader: () => import('./starters-kit/container'),
+    LoadingComponent: ContainerPlaceholder
+})
+
 export const UnwrappedProductDeets = Loadable({
     loader: () => import('./product-deets/container'),
     LoadingComponent: ContainerPlaceholder
@@ -55,6 +60,7 @@ export const CheckoutPayment = template(UnwrappedCheckoutPayment)
 export const CheckoutShipping = template(UnwrappedCheckoutShipping)
 export const Home = template(UnwrappedHome)
 export const Login = template(UnwrappedLogin)
+export const StartersKit = template(UnwrappedStartersKit)
 export const ProductDeets = template(UnwrappedProductDeets)
 export const ProductList = template(UnwrappedProductList)
 export const Offline = template(UnwrappedOffline)

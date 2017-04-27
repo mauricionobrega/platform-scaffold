@@ -20,6 +20,7 @@ import {
     UnwrappedCheckoutPayment,
     UnwrappedCheckoutShipping,
     UnwrappedLogin,
+    UnwrappedStartersKit,
     UnwrappedProductDeets,
     UnwrappedProductDetails,
     UnwrappedProductList
@@ -34,6 +35,7 @@ import * as checkoutShippingActions from '../../store/checkout/shipping/actions'
 import * as cartActions from '../../store/cart/actions'
 import * as homeActions from '../home/actions'
 import * as loginActions from '../login/actions'
+import * as startersKitActions from '../starters-kit/actions'
 import * as productDeetsActions from '../product-deets/actions'
 import * as productDetailsActions from '../product-details/actions'
 import * as footerActions from '../footer/actions'
@@ -157,6 +159,10 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                     dispatch(homeActions.process(receivedAction))
                 } else if (pageComponent === UnwrappedLogin) {
                     dispatch(loginActions.process(receivedAction))
+                } else if (pageComponent === UnwrappedStartersKit) {
+                    dispatch(categoriesActions.process(receivedAction))
+                    dispatch(productsActions.processProductList(receivedAction))
+                    dispatch(startersKitActions.process(receivedAction))
                 } else if (pageComponent === UnwrappedProductDeets) {
                     dispatch(productDeetsActions.process(receivedAction))
                     dispatch(productsActions.processProductDetails(receivedAction))

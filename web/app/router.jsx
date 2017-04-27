@@ -6,7 +6,7 @@ import {Provider} from 'react-redux'
 
 // Containers
 import App from './containers/app/container'
-import {Cart, CheckoutConfirmation, CheckoutPayment, CheckoutShipping, Home, Login, ProductList, ProductDeets} from './containers/templates'
+import {Cart, CheckoutConfirmation, CheckoutPayment, CheckoutShipping, Home, Login, ProductList, StartersKit, ProductDeets} from './containers/templates'
 import CheckoutHeader from './containers/checkout-header/container'
 import CheckoutFooter from './containers/checkout-footer/container'
 
@@ -45,6 +45,7 @@ const Router = ({store}) => (
                 <Route component={ProductList} path="supplies.html" routeName="productListPage" />
                 <Route component={ProductList} path="new-arrivals.html" routeName="productListPage" />
                 <Route component={ProductList} path="charms.html" routeName="productListPage" />
+                <Route component={StartersKit} path="starters-kit" routeName="startersKit" />
                 <Route component={ProductDeets} path="checkout/cart/configure/id/*/product_id/*/" routeName="cartEditPage" />
                 <Route component={ProductDeets} path="*.html" routeName="productDeetsPage" />
                 <Route component={CheckoutShipping} path="checkout/" routeName="checkingShipping" Header={CheckoutHeader} Footer={CheckoutFooter} headerHasSignIn />
