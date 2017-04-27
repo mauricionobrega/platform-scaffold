@@ -45,19 +45,27 @@ const Router = ({store}) => (
         <SDKRouter>
             <Route path="/" component={App} onChange={OnChange}>
 
-                <IndexRoute component={Home} routeName="home" fetcher={fetchHomeData} />
-                <Route component={Cart} path="checkout/cart/" routeName="cart" fetcher={fetchCartPageData} />
-                <Route component={Login} path="customer/account/login/" routeName="signin" fetcher={fetchSigninData} />
-                <Route component={Login} path="customer/account/create/" routeName="register" fetcher={fetchRegisterData} />
-                <Route component={ProductList} path="potions.html" routeName="productListPage" fetcher={fetchProductListData} />
-                <Route component={ProductList} path="books.html" routeName="productListPage" fetcher={fetchProductListData} />
-                <Route component={ProductList} path="ingredients.html" routeName="productListPage" fetcher={fetchProductListData} />
-                <Route component={ProductList} path="supplies.html" routeName="productListPage" fetcher={fetchProductListData} />
-                <Route component={ProductList} path="new-arrivals.html" routeName="productListPage" fetcher={fetchProductListData} />
-                <Route component={ProductList} path="charms.html" routeName="productListPage" fetcher={fetchProductListData} />
-                <Route component={ProductDetails} path="checkout/cart/configure/id/*/product_id/*/" routeName="cartEditPage" fetcher={fetchPdpData} />
-                <Route component={ProductDetails} path="*.html" routeName="productDetailsPage" fetcher={fetchPdpData} />
-                <Route component={CheckoutShipping} path="checkout/" routeName="checkingShipping" Header={CheckoutHeader} Footer={CheckoutFooter} headerHasSignIn fetcher={fetchCheckoutShippingData} />
+                <IndexRoute component={Home} routeName="home" fetchAction={fetchHomeData} />
+                <Route component={Cart} path="checkout/cart/" routeName="cart" fetchAction={fetchCartPageData} />
+                <Route component={Login} path="customer/account/login/" routeName="signin" fetchAction={fetchSigninData} />
+                <Route component={Login} path="customer/account/create/" routeName="register" fetchAction={fetchRegisterData} />
+                <Route component={ProductList} path="potions.html" routeName="productListPage" fetchAction={fetchProductListData} />
+                <Route component={ProductList} path="books.html" routeName="productListPage" fetchAction={fetchProductListData} />
+                <Route component={ProductList} path="ingredients.html" routeName="productListPage" fetchAction={fetchProductListData} />
+                <Route component={ProductList} path="supplies.html" routeName="productListPage" fetchAction={fetchProductListData} />
+                <Route component={ProductList} path="new-arrivals.html" routeName="productListPage" fetchAction={fetchProductListData} />
+                <Route component={ProductList} path="charms.html" routeName="productListPage" fetchAction={fetchProductListData} />
+                <Route component={ProductDetails} path="checkout/cart/configure/id/*/product_id/*/" routeName="cartEditPage" fetchAction={fetchPdpData} />
+                <Route component={ProductDetails} path="*.html" routeName="productDetailsPage" fetchAction={fetchPdpData} />
+                <Route
+                    component={CheckoutShipping}
+                    path="checkout/"
+                    routeName="checkingShipping"
+                    Header={CheckoutHeader}
+                    Footer={CheckoutFooter}
+                    headerHasSignIn
+                    fetchAction={fetchCheckoutShippingData}
+                />
                 {/*
                     The URL for the payment page on desktop is /checkout/#payment,
                     but routing wasn't working properly when using this as the
@@ -71,7 +79,7 @@ const Router = ({store}) => (
                     routeName="checkout-payment"
                     Header={CheckoutHeader}
                     Footer={CheckoutFooter}
-                    fetcher={fetchCheckoutPaymentData}
+                    fetchAction={fetchCheckoutPaymentData}
                 />
                 <Route
                     component={CheckoutConfirmation}
@@ -79,16 +87,16 @@ const Router = ({store}) => (
                     routeName="checkout-confirmation"
                     Header={CheckoutHeader}
                     Footer={CheckoutFooter}
-                    fetcher={fetchCheckoutConfirmationData}
+                    fetchAction={fetchCheckoutConfirmationData}
                 />
 
 
-                <Route component={Home} path="*/Home-Show*" routeName="home" fetcher={fetchHomeData} />
-                <Route component={ProductList} path="*/womens*" routeName="productListPage" fetcher={fetchProductListData} />
-                <Route component={ProductList} path="*/mens*" routeName="productListPage" fetcher={fetchProductListData} />
-                <Route component={ProductList} path="*/newarrivals*" routeName="productListPage" fetcher={fetchProductListData} />
-                <Route component={ProductList} path="*/electronics*" routeName="productListPage" fetcher={fetchProductListData} />
-                <Route component={ProductList} path="*/Search-Show?*" routeName="productListPage" fetcher={fetchProductListData} />
+                <Route component={Home} path="*/Home-Show*" routeName="home" fetchAction={fetchHomeData} />
+                <Route component={ProductList} path="*/womens*" routeName="productListPage" fetchAction={fetchProductListData} />
+                <Route component={ProductList} path="*/mens*" routeName="productListPage" fetchAction={fetchProductListData} />
+                <Route component={ProductList} path="*/newarrivals*" routeName="productListPage" fetchAction={fetchProductListData} />
+                <Route component={ProductList} path="*/electronics*" routeName="productListPage" fetchAction={fetchProductListData} />
+                <Route component={ProductList} path="*/Search-Show?*" routeName="productListPage" fetchAction={fetchProductListData} />
                 <Route
                     component={CheckoutShipping}
                     path="*/COShipping-Start*"
@@ -96,10 +104,10 @@ const Router = ({store}) => (
                     Header={CheckoutHeader}
                     Footer={CheckoutFooter}
                     headerHasSignIn
-                    fetcher={fetchCheckoutShippingData}
+                    fetchAction={fetchCheckoutShippingData}
                 />
-                <Route component={Login} path="*/Account-Show*" routeName="signin" fetcher={fetchSigninData} />
-                <Route component={Cart} path="*/Cart-Show*" routeName="cart" fetcher={fetchCartPageData} />
+                <Route component={Login} path="*/Account-Show*" routeName="signin" fetchAction={fetchSigninData} />
+                <Route component={Cart} path="*/Cart-Show*" routeName="cart" fetchAction={fetchCartPageData} />
 
             </Route>
         </SDKRouter>
