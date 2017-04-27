@@ -14,4 +14,4 @@ install:
   - pushd web && npm install && popd web
 
 test_script:
-  - echo hello world
+  - pushd web && npm run smoke-test && popd web
