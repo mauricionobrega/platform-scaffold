@@ -2,5 +2,17 @@
 // ===
 
 .u-z-index-1 {
-    z-index: $z1-depth !important; // @TODO Add to Spline!
+    @include z-index(true, $z1-depth);
+}
+
+.u-z-index-2 {
+    @include z-index(true, $z2-depth);
+}
+
+.u-z-index-3 {
+    @include z-index(true, $z3-depth);
+}
+
+.u-z-index-4 {
+    @include z-index(true, $z4-depth);
 }
