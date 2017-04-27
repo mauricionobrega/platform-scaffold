@@ -26,13 +26,77 @@
 }
 
 
-// Positioning context
+// Positioning relative
 // ---
 //
 // Create a new positioning context.
 
-.u-position-context {
-    @include position-context(true);
+.u-position-relative {
+    @include position-relative(true);
+}
+
+
+// Positioning absolute
+// ---
+//
+// Create a new positioning context.
+
+.u-position-absolute {
+    @include position-absolute(true);
+}
+
+
+// Positioning fixed
+// ---
+//
+// Create a new positioning context.
+
+.u-position-fixed {
+    @include position-fixed(true);
+}
+
+
+// Positioning coordinate
+// ---
+
+.u-position-top {
+    @include position-top(true);
+}
+
+.u-position-right {
+    @include position-right(true);
+}
+
+.u-position-bottom {
+    @include position-bottom(true);
+}
+
+.u-position-left {
+    @include position-left(true);
+}
+
+.u-position-full {
+    @include position-full(true);
+}
+
+
+// Bleed
+// ---
+
+.u-bleed-top {
+    @include base-bleed(true, $unit, 'top');
+}
+
+.u-bleed-end {
+    @include base-bleed(true, $unit, 'end');
+}
+
+.u-bleed-bottom {
+    @include base-bleed(true, $unit, 'bottom');
+}
+
+.u-bleed-start {
+    @include base-bleed(true, $unit, 'start');
 }
 
 
