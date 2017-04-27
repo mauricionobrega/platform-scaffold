@@ -6,7 +6,11 @@ cache:
   - web/node_modules
   - native/node_modules
 
+# Install scripts. (runs after repo cloning)
 install:
+  # Get the latest stable version of Node.js or io.js
+  - ps: Install-Product node $env:nodejs_version
+  # install modules
   - pushd web && npm install && popd web
 
 test_script:
