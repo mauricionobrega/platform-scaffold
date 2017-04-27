@@ -260,7 +260,7 @@ export const submitPayment = (formValues) => (dispatch, getState) => {
 const buildFormData = (formCredentials) => {
     const formData = new FormData()
 
-    for (const key in formCredentials) {
+    Object.keys(formCredentials).forEach((key) => {
         if (Object.prototype.hasOwnProperty.call(formCredentials, key)) {
             const item = formCredentials[key]
             if (key === 'street') {
@@ -275,10 +275,7 @@ const buildFormData = (formCredentials) => {
                 formData.append(key, item)
             }
         }
-
-
-
-    }
+    })
 
     return formData
 }
