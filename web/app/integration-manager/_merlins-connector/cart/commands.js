@@ -1,10 +1,12 @@
-import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+import {makeRequest, makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 import {removeNotification} from '../../../containers/app/actions'
+import {getIsLoggedIn} from '../../../containers/app/selectors'
+import {getUenc} from '../selectors'
+import {getCustomerEntityID} from '../../../store/checkout/selectors'
 import {receiveCartContents} from '../../cart/responses'
 import {receiveCartProductData} from '../../products/responses'
-import {getUenc} from '../selectors'
 import {submitForm, textFromFragment} from '../utils'
 import {parseLocations} from '../checkout/parsers'
 import {receiveCheckoutData} from '../../checkout/responses'
@@ -53,11 +55,15 @@ export const addToCart = (productId, quantity) => (dispatch, getState) => {
     const formInfo = getState().integrationManager.get(urlToPathKey(product.get('href')))
     const formValues = {
         ...formInfo.get('hiddenInputs').toJS(),
-        quantity
+        qty: quantity
     }
 
-    return submitForm(formInfo.get('submitUrl'), formValues, {method: formInfo.get('method')})
-        .then(dispatch(getCart()))
+    return submitForm(
+            formInfo.get('submitUrl'),
+            formValues,
+            {method: formInfo.get('method')}
+        )
+        .then(() => dispatch(getCart()))
 }
 
 /**
@@ -147,4 +153,31 @@ export const addToWishlist = (productId, productURL) => (dispatch, getState) => 
                 }
                 throw new Error('Add Request Failed')
             })
+}
+
+export const fetchTaxEstimate = (address, shippingMethod) => (dispatch, getState) => {
+    const currentState = getState()
+    const isLoggedIn = getIsLoggedIn(currentState)
+    const entityID = getCustomerEntityID(currentState)
+
+    const getTotalsURL = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/totals-information`
+    const shippingMethodParts = shippingMethod.split('_')
+
+    const requestData = {
+        addressInformation: {
+            address,
+            shipping_carrier_code: shippingMethodParts[0],
+            shipping_method_code: shippingMethodParts[1]
+        }
+    }
+
+    return makeJsonEncodedRequest(getTotalsURL, requestData, {method: 'POST'})
+        .then((response) => response.json())
+        .then((responseJSON) => {
+            dispatch(receiveCartContents({
+                subtotal: `$${responseJSON.subtotal.toFixed(2)}`,
+                subtotal_incl_tax: `$${responseJSON.subtotal_incl_tax.toFixed(2)}`,
+                tax_amount: `$${responseJSON.tax_amount.toFixed(2)}`
+            }))
+        })
 }

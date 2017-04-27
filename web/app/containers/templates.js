@@ -21,7 +21,6 @@ export const registerPreloadCallbacks = () => {
     })
 }
 
-
 // These are on the old model and need to be wrapped here
 // rather than in container.js to avoid circular imports
 export const Cart = PWALoadable(() => import('./cart/container'))

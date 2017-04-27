@@ -6,7 +6,6 @@ import {getCart, getProducts} from '../selectors'
 export const getCartLoaded = createHasSelector(getCart, 'items')
 
 const getCartItemsPrivate = createGetSelector(getCart, 'items', Immutable.List())
-
 export const getCartItems = createSelector(
     getCartItemsPrivate,
     getProducts,
@@ -28,3 +27,4 @@ export const getCartSummaryCount = createSelector(
 
 export const getSubtotal = createGetSelector(getCart, 'subtotal')
 export const getOrderTotal = createGetSelector(getCart, 'orderTotal')
+export const getTaxAmount = createGetSelector(getCart, 'taxes')

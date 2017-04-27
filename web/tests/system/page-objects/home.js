@@ -6,7 +6,8 @@ const selectors = {
     skipToFooter: '.pw-skip-links__anchor:last-of-type',
     productListItem(index) {
         return `.t-home__category .t-home__category-section:nth-child(${index}) .pw--is-loaded`
-    }
+    },
+    email: '.pw-field__input'
 }
 
 const Home = function(browser) {

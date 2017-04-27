@@ -4,7 +4,7 @@ import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as cartSelectors from '../../../store/cart/selectors'
 import {CART_ESTIMATE_SHIPPING_MODAL} from '../constants'
 import {openModal} from 'progressive-web-sdk/dist/store/modals/actions'
-import {getDefaultShippingRate} from '../../../store/checkout/shipping/selectors'
+import {getSelectedShippingRate, getSelectedShippingLabel, getPostcode} from '../../../store/checkout/shipping/selectors'
 import {getCheckoutShippingURL} from '../../app/selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -13,11 +13,19 @@ import Icon from 'progressive-web-sdk/dist/components/icon'
 import {Ledger, LedgerRow} from 'progressive-web-sdk/dist/components/ledger'
 import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/accordion'
 
-const CartSummary = ({summaryCount, subtotal, orderTotal, shippingRate, onCalculateClick, checkoutShippingURL}) => {
+const CartSummary = ({summaryCount, subtotal, orderTotal, shippingRate, shippingLabel, onCalculateClick, zipCode, taxAmount, checkoutShippingURL}) => {
     const calculateButton = (
         <Button innerClassName="u-padding-end-0 u-color-brand u-text-letter-spacing-normal" onClick={onCalculateClick}>
             Calculate <Icon name="chevron-right" />
         </Button>
+    )
+
+    const editButton = (
+        <span>Based on delivery to
+            <Button innerClassName="u-padding-start-sm u-color-brand u-text-letter-spacing-normal" onClick={onCalculateClick}>
+                {zipCode}
+            </Button>
+        </span>
     )
 
     return (
@@ -40,22 +48,33 @@ const CartSummary = ({summaryCount, subtotal, orderTotal, shippingRate, onCalcul
                         value={subtotal}
                     />
 
-                    <LedgerRow
-                        label="Shipping (Flat - Fixed Rate)"
-                        value={shippingRate}
-                    />
-
                     {/* <LedgerRow
                         label="Discount: FREESHIP"
                         valueAction={<span className="u-color-accent">-$10.00</span>}
                     />*/}
 
-                    <LedgerRow
-                        className="u-flex-none"
-                        label="Taxes"
-                        labelAction="Rates based on shipping location"
-                        valueAction={calculateButton}
-                    />
+                    {taxAmount &&
+                        <LedgerRow
+                            label={`Shipping (${shippingLabel})`}
+                            value={shippingRate}
+                        />
+                    }
+
+                    {!taxAmount ?
+                        <LedgerRow
+                            className="u-flex-none"
+                            label="Taxes"
+                            labelAction="Rates based on shipping location"
+                            valueAction={calculateButton}
+                        />
+                    :
+                        <LedgerRow
+                            className="u-flex-none u-border-0"
+                            label="Taxes"
+                            labelAction={editButton}
+                            value={taxAmount}
+                        />
+                    }
 
                     <LedgerRow
                         label="Total"
@@ -81,17 +100,23 @@ const CartSummary = ({summaryCount, subtotal, orderTotal, shippingRate, onCalcul
 CartSummary.propTypes = {
     checkoutShippingURL: PropTypes.string,
     orderTotal: PropTypes.string,
+    shippingLabel: PropTypes.string,
     shippingRate: PropTypes.string,
     subtotal: PropTypes.string,
     summaryCount: PropTypes.number,
+    taxAmount: PropTypes.string,
+    zipCode: PropTypes.string,
     onCalculateClick: PropTypes.func
 }
 
 const mapStateToProps = createPropsSelector({
     checkoutShippingURL: getCheckoutShippingURL,
-    shippingRate: getDefaultShippingRate,
     subtotal: cartSelectors.getSubtotal,
     orderTotal: cartSelectors.getOrderTotal,
+    shippingRate: getSelectedShippingRate,
+    shippingLabel: getSelectedShippingLabel,
+    zipCode: getPostcode,
+    taxAmount: cartSelectors.getTaxAmount,
     summaryCount: cartSelectors.getCartSummaryCount,
 })
 
