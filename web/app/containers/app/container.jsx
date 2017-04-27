@@ -69,7 +69,7 @@ class App extends React.Component {
         const CurrentHeader = routeProps.Header || Header
         const CurrentFooter = routeProps.Footer || Footer
 
-        const reload = () => fetchPage(routeProps.fetcher, window.location.href, routeProps.routeName)
+        const reload = () => fetchPage(routeProps.fetchAction, window.location.href, routeProps.routeName)
 
         const skipLinksItems = [
             // Customize your list of SkipLinks here. These are necessary to
@@ -178,7 +178,7 @@ const mapStateToProps = createPropsSelector({
 const mapDispatchToProps = {
     removeNotification: appActions.removeNotification,
     fetchSvgSprite: () => appActions.fetchSvgSprite(),
-    fetchPage: (fetcher, url, routeName) => fetcher(url, routeName),
+    fetchPage: (fetchAction, url, routeName) => fetchAction(url, routeName),
     initApp
 }
 
