@@ -134,7 +134,13 @@ export const submitShipping = () => {
             }
         }
         const persistShippingURL = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/shipping-information`
-        dispatch(receiveCheckoutData({shipping: {address}, emailAddress: username}))
+        const shipping = {
+            address: {
+                ...address,
+                shipping_method,
+            }
+        }
+        dispatch(receiveCheckoutData({shipping, emailAddress: username}))
         makeJsonEncodedRequest(persistShippingURL, addressInformation, {method: 'POST'})
             .then((response) => response.json())
             .then((responseJSON) => {
