@@ -157,7 +157,7 @@ if (isReactRoute()) {
 
         if (!global.fetch) {
             loadScript({
-                id: 'progressive-web-core-polyfill',
+                id: 'progressive-web-fetch-polyfill',
                 src: getAssetUrl('fetch-polyfill.js'),
                 isAsync: false
             })
