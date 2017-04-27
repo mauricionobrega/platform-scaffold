@@ -15,6 +15,7 @@ import {removeAllNotifications} from '../../../containers/app/actions'
 import {SHIPPING_FORM_NAME} from '../../../containers/checkout-shipping/constants'
 import * as paymentSelectors from '../../../store/checkout/payment/selectors'
 import * as shippingSelectors from '../../../store/checkout/shipping/selectors'
+import {CREATE_ACCOUNT_POST_URL} from '../constants'
 
 export const fetchShippingMethodsEstimate = (formKey) => {
     return (dispatch, getState) => {
@@ -179,8 +180,7 @@ export const checkoutSignIn = (formValues) => {
 }
 
 export const checkoutRegister = (userCredentials) => {
-    const postCreateAccountURL = '/customer/account/createpost/'
-    return submitForm(postCreateAccountURL, userCredentials, {method: 'POST'})
+    return submitForm(CREATE_ACCOUNT_POST_URL, userCredentials, {method: 'POST'})
         .then((response) => {
             const responseUrlHas = (chunk) => response.url.search(chunk) >= 0
             const redirectUrlIsNotToCreate = responseUrlHas('/account/') && !responseUrlHas('/create/')
