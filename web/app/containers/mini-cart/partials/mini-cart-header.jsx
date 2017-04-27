@@ -6,8 +6,8 @@ import IconLabelButton from '../../../components/icon-label-button'
 const MiniCartHeader = ({closeMiniCart}) => (
     <HeaderBar>
         <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
-            <h2 className="t-mini-cart__title u-heading-family u-text-uppercase">
-                <span className="u-text-extra-lighter">Shopping</span> Cart
+            <h2 className="t-mini-cart__title u-text-header-font-family u-text-uppercase">
+                <span className="u-text-extra-light">Shopping</span> Cart
             </h2>
         </HeaderBarTitle>
 

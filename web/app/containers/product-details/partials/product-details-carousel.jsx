@@ -24,7 +24,7 @@ const ProductDetailsCarousel = ({items, contentsLoaded}) => {
             <Carousel {...carouselProps}>
                 {items.map(({img}, idx) => {
                     const imgProps = {
-                        className: contentsLoaded ? 'u-block' : 'u-block c--is-transitioning', // Carousel hasn't received the final images yet
+                        className: contentsLoaded ? 'u-display-block' : 'u-display-block c--is-transitioning', // Carousel hasn't received the final images yet
                         alt: '', // no alt text available :(
                         src: img,
                         hidePlaceholder: true,

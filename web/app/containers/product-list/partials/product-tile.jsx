@@ -10,7 +10,7 @@ const titleClassName = classNames(
     't-product-list__product-name',
     'u-h4',
     'u-text-font-family',
-    'u-text-semi-bold',
+    'u-text-medium',
     'u-color-neutral-60'
 )
 

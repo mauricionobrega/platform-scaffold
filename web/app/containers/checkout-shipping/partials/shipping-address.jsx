@@ -31,7 +31,7 @@ const ShippingAddressForm = ({
             innerClassName="c--no-min-height u-padding-0"
             onClick={handleShowCompanyAndApt}
             >
-            <span className="u-color-brand u-text-letter-spacing-normal u-text-small">
+            <span className="u-color-brand u-text-letter-spacing-normal u-text-size-small">
                 Add company or apt #
             </span>
             <Icon name="chevron-down" className="u-margin-start-sm u-color-brand" />
@@ -50,7 +50,7 @@ const ShippingAddressForm = ({
                     <ReduxForm.Field
                         component={Field}
                         name="shipping-address"
-                        label={<strong className="u-text-semi-bold">725 West Georgia</strong>}
+                        label={<strong className="u-text-medium">725 West Georgia</strong>}
                         caption={shippingAddress}
                     >
                         <input type="radio" noValidate />
@@ -62,7 +62,7 @@ const ShippingAddressForm = ({
                         <ReduxForm.Field
                             component={Field}
                             name="address"
-                            label={<strong className="u-text-semi-bold">Add a new address</strong>}
+                            label={<strong className="u-text-medium">Add a new address</strong>}
                         >
                             <input type="radio" checked noValidate />
                         </ReduxForm.Field>

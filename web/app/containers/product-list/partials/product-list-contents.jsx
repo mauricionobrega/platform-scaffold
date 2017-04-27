@@ -86,7 +86,7 @@ const ProductListContents = ({
                 {contentsLoaded ?
                     <div className="u-flexbox">
                         <div className="t-product-list__filter u-flex u-margin-end-md">
-                            <div className="u-text-semi-bold u-margin-bottom-sm">
+                            <div className="u-text-medium u-margin-bottom-sm">
                                 {products.length} Items
                             </div>
 
@@ -100,7 +100,7 @@ const ProductListContents = ({
                         </div>
 
                         <div className="t-product-list__sort u-flex">
-                            <label htmlFor="sort" className="u-text-semi-bold u-margin-bottom-sm">
+                            <label htmlFor="sort" className="u-text-medium u-margin-bottom-sm">
                                 Sort by
                             </label>
 

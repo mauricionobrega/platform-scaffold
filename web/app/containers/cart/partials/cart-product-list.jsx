@@ -79,7 +79,7 @@ class CartProductItem extends React.Component {
         return (
             <ProductItem customWidth="40%"
                 className={productItemClassNames}
-                title={<h2 className="u-h5 u-text-font-family u-text-semi-bold">{product_name}</h2>}
+                title={<h2 className="u-h5 u-text-font-family u-text-medium">{product_name}</h2>}
                 image={<ProductImage {...product_image} src={imageSrc} />}
                 >
                 <p className="u-color-neutral-50">Color: Maroon</p>
@@ -108,7 +108,7 @@ class CartProductItem extends React.Component {
 
                 <div className="u-flexbox">
                     <Button
-                        className="u-text-small u-color-brand u-flex-none u-text-letter-spacing-normal"
+                        className="u-text-size-small u-color-brand u-flex-none u-text-letter-spacing-normal"
                         innerClassName="c--no-min-width u-padding-start-0 u-padding-bottom-0"
                         href={configure_url}
                         >
@@ -116,7 +116,7 @@ class CartProductItem extends React.Component {
                     </Button>
 
                     <Button
-                        className="u-text-small u-color-brand u-padding-start-0 u-padding-end-0 u-text-letter-spacing-normal"
+                        className="u-text-size-small u-color-brand u-padding-start-0 u-padding-end-0 u-text-letter-spacing-normal"
                         innerClassName="u-padding-bottom-0 u-padding-start-0"
                         onClick={this.saveForLater}
                         >
@@ -124,7 +124,7 @@ class CartProductItem extends React.Component {
                     </Button>
 
                     <Button
-                        className="u-text-small u-color-brand u-text-letter-spacing-normal qa-cart__remove-item"
+                        className="u-text-size-small u-color-brand u-text-letter-spacing-normal qa-cart__remove-item"
                         innerClassName="u-padding-end-0 u-padding-bottom-0 u-padding-start-0"
                         onClick={this.removeItem}
                         >

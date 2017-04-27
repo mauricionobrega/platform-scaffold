@@ -12,7 +12,7 @@ const OnboardingScreen = ({imageURL, imageAlt, title, subtitle, primaryButton, l
                     <div>
                         <img src={imageURL} className="carousel-item-image" alt={imageAlt} />
                         {title &&
-                            <h2 className="item-title u-color-neutral-60 u-text-font-family u-text-semi-bold">{title}</h2>
+                            <h2 className="item-title u-color-neutral-60 u-text-font-family u-text-medium">{title}</h2>
                         }
                         <p className="item-subtitle u-text-font-family">{subtitle}</p>
                     </div>

@@ -15,7 +15,7 @@ const ProductListHeader = ({title, contentsLoaded}) => (
         <div className="u-flex u-padding-top-lg u-padding-bottom-lg u-padding-start-md">
             {!isRunningInAstro &&
                 <div className="t-product-list__breadcrumb">
-                    <Link href="/" className="u-text-small">Home</Link>
+                    <Link href="/" className="u-text-size-small">Home</Link>
                 </div>
             }
             <div className="u-margin-top-md">

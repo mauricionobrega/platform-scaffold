@@ -20,8 +20,8 @@ export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateP
         <Sheet className="t-cart__estimate-shipping-modal" open={isOpen} onDismiss={closeModal} maskOpacity={0.7} effect="slide-right" coverage="85%">
             <HeaderBar>
                 <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
-                    <h1 className="u-h4 u-heading-family u-text-uppercase">
-                        <span className="u-text-extra-lighter">Estimate Shipping</span>
+                    <h1 className="u-h4 u-text-header-font-family u-text-uppercase">
+                        <span className="u-text-extra-light">Estimate Shipping</span>
                     </h1>
                 </HeaderBarTitle>
 
