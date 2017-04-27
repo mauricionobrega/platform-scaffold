@@ -5,7 +5,7 @@ import {getCheckout} from '../../selectors'
 
 export const getShipping = createGetSelector(getCheckout, 'shipping', Immutable.Map())
 
-export const getSavedAddresses = createGetSelector(getCheckout, 'savedAddresses')
+export const getSavedAddresses = createGetSelector(getCheckout, 'savedAddresses', Immutable.List())
 
 export const getShippingMethods = createGetSelector(getShipping, 'shippingMethods', Immutable.List())
 

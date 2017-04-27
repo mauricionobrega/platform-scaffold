@@ -23,7 +23,8 @@ export const parseShippingInitialValues = (shippingFieldData) => {
         region_id: fieldData.region_id.value,
         postcode: fieldData.postcode.value,
         telephone: fieldData.telephone.value,
-        billing_same_as_shipping: true
+        billing_same_as_shipping: true,
+        saved_address: undefined
     }
 }
 

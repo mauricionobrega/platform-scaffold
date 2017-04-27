@@ -11,7 +11,7 @@ import {fetchSavedShippingAddresses} from '../../../store/checkout/shipping/acti
 import {SHIPPING_FORM_NAME} from '../constants'
 
 import {Grid, GridSpan} from 'progressive-web-sdk/dist/components/grid'
-import ShippingAddressForm from './shipping-address'
+import ShippingAddress from './shipping-address'
 import ShippingEmail from './shipping-email'
 import ShippingMethod from './shipping-method'
 
@@ -27,6 +27,12 @@ const validate = (values) => {
         'postcode',
         'telephone'
     ]
+    const isSavedAddressSelected = values.saved_address !== undefined
+
+    if (isSavedAddressSelected) {
+        return errors
+    }
+
     if (values.username && !/^[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.username)) {
         errors.username = 'Enter a valid email address'
     }
@@ -72,7 +78,7 @@ class CheckoutShippingForm extends React.Component {
                 <Grid className="u-center-piece">
                     <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 7}}>
                         {!isLoggedIn && <ShippingEmail />}
-                        <ShippingAddressForm />
+                        <ShippingAddress />
                     </GridSpan>
 
                     <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 5}}>
