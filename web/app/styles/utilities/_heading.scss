@@ -1,15 +1,6 @@
 // Heading
 // ===
 
-.u-heading-family {
-    font-family: $header-font-family !important;
-
-    // Added with webfontloader. See loadFonts() in app/container.js
-    .wf-active & {
-        font-family: $loaded-header-font-family !important;
-    }
-}
-
 .u-h1 {
     @include heading-level-1(true); // 28px/32px
 }
