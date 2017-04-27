@@ -32,3 +32,15 @@
         margin-left: $unit;
     }
 }
+
+
+// Modifier: white
+// ---
+
+.pw-inline-loader.pw--white {
+    .pw-inline-loader__loading-dot {
+        &::after {
+            background-color: $neutral-00;
+        }
+    }
+}

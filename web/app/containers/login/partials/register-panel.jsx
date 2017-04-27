@@ -9,11 +9,11 @@ import {PanelDescription} from './common'
 
 const RegisterPanel = ({description, submitForm}) => (
     <div className="t-login__register-panel">
-        <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow">
+        <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg">
             <PanelDescription description={description} />
         </div>
 
-        <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
+        <div className="u-padding-start-md u-padding-end-md u-padding-bottom-lg">
             <RegisterForm submitForm={submitForm} />
         </div>
     </div>

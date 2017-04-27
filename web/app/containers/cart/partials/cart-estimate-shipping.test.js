@@ -18,10 +18,13 @@ const store = {
             locations: {
                 countries,
                 regions
-            }
+            },
         }),
         form: {
             estimateShipping: {}
+        },
+        ui: {
+            cart: Immutable.fromJS({})
         }
     })
 }
@@ -29,14 +32,16 @@ const testProps = {
     countries,
     stateProvinces: regions,
     onSubmit: noop,
-    handleSubmit: noop
+    handleSubmit: noop,
+    cart: {}
 }
 
 test('renders without errors', () => {
     const wrapper = mount(
         <Provider store={store}>
             <ConnectedEstimateShippingReduxForm onSubmit={noop} />
-        </Provider>)
+        </Provider>
+    )
 
     expect(wrapper.length).toBe(1)
 })
