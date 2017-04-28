@@ -3,6 +3,7 @@ import {mount, shallow} from 'enzyme'
 import React from 'react'
 
 import ProductTile from './index.jsx'
+import ProductItem from '../product-item/index.jsx'
 
 test('ProductTile renders without errors', () => {
     const wrapper = mount(<ProductTile />)
@@ -28,7 +29,6 @@ test('renders the contents of the className prop if present', () => {
         'test another'
     ].forEach((name) => {
         const wrapper = shallow(<ProductTile className={name} />)
-        console.log(wrapper.debug())
-        expect(wrapper.hasClass(name)).toBe(true)
+        expect(wrapper.find(ProductItem).hasClass(name)).toBe(true)
     })
 })
