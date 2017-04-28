@@ -70,7 +70,7 @@
     "json-loader": "0.5.4",
     "lighthouse": "1.6.0",
     "minimist": "1.2.0",
-    "mobify-code-style": "git+ssh://git@github.com:mobify/mobify-code-style.git#amp-code-style",
+    "mobify-code-style": "2.7.4",
     "nightwatch": "0.9.8",
     "nightwatch-commands": "2.0.0",
     "node-sass": "4.5.2",
