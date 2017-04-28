@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
-import {getHasProducts, getSearchResultContentsLoaded, getFilteredAndSortedListProducts} from '../selectors'
+import {getHasProducts, getFilteredAndSortedListProducts} from '../selectors'
 
 import {changeFilterTo} from '../../../store/categories/actions'
 
@@ -42,10 +42,10 @@ NoResultsList.propTypes = {
     bodyText: PropTypes.string
 }
 
-const SearchResultContent = ({hasProducts, products, contentsLoaded}) => {
+const SearchResultContent = ({hasProducts, products}) => {
     return (
         <div className="t-search-result__container u-padding-end u-padding-bottom-lg u-padding-top-lg u-padding-start">
-            {(hasProducts || !contentsLoaded) ?
+            {hasProducts ?
                 <div>
                     <div className="t-product-list__filter u-flex u-margin-end-md">
                         <div className="u-text-semi-bold u-margin-bottom-sm">
@@ -63,7 +63,6 @@ const SearchResultContent = ({hasProducts, products, contentsLoaded}) => {
 }
 
 SearchResultContent.propTypes = {
-    contentsLoaded: PropTypes.bool,
     hasProducts: PropTypes.bool,
     products: PropTypes.array,
 }
@@ -71,8 +70,6 @@ SearchResultContent.propTypes = {
 const mapStateToProps = createPropsSelector({
     hasProducts: getHasProducts,
     products: getFilteredAndSortedListProducts,
-    contentsLoaded: getSearchResultContentsLoaded,
-
 })
 
 const mapDispatchToProps = {

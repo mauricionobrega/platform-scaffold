@@ -13,13 +13,16 @@ const items = [
     }
 ]
 
-const SearchResultHeader = ({title}) => (
+const SearchResultHeader = ({searchTerm}) => (
     <div className="u-flexbox u-align-bottom">
         <div className="u-flex u-padding-top-lg u-padding-bottom-lg u-padding-start-md">
             <Breadcrumbs items={items} />
             <div className="u-margin-top-md">
-                {title ?
-                    <h1 className="u-text-uppercase">{title}</h1>
+                {searchTerm ?
+                    <h1 className="u-text-uppercase">
+                        <span>Result For </span>
+                        <span className="u-text-lighter">'{searchTerm}'</span>
+                    </h1>
                 :
                     <SkeletonText lines={1} type="h1" width="100px" />
                 }
@@ -29,11 +32,11 @@ const SearchResultHeader = ({title}) => (
 )
 
 SearchResultHeader.propTypes = {
-    title: PropTypes.string
+    searchTerm: PropTypes.string
 }
 
 const mapStateToProps = createPropsSelector({
-    title: selectors.getSearchResultTerm
+    searchTerm: selectors.getSearchResultTerm
 })
 
 export default connect(mapStateToProps)(SearchResultHeader)

@@ -1,17 +1,12 @@
 import Immutable from 'immutable'
 import {createSelector} from 'reselect'
-import {createGetSelector, createHasSelector} from 'reselect-immutable-helpers'
+import {createGetSelector} from 'reselect-immutable-helpers'
 import {getSearchResult, getProducts} from '../../store/selectors'
-import * as appSelectors from '../app/selectors'
 // import {byFilters} from '../../utils/filter-utils'
 import {PLACEHOLDER} from '../app/constants'
 
 const PLACEHOLDER_URLS = Immutable.List(new Array(5).fill(PLACEHOLDER))
 
-export const getSearchResultContentsLoaded = createHasSelector(
-    getSearchResult,
-    appSelectors.getCurrentPathKey
-)
 
 // PAGE INFORMATION
 export const getSearchResultTerm = createGetSelector(getSearchResult, 'searchTerm')
