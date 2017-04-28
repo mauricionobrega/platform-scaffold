@@ -11,22 +11,20 @@ import {addNotification, removeNotification} from '../app/actions'
 export const showCompanyAndApt = createAction('Showing the "Company" and "Apt #" fields')
 export const setCustomerEmailRecognized = createAction('Set Customer email Recognized', ['customerEmailRecognized'])
 
-const onShippingEmailRecognized = () => {
-    return (dispatch) => {
-        dispatch(setCustomerEmailRecognized(true))
-        dispatch(addNotification({
-            content: `Welcome back! Sign in for a faster checkout or continue as a guest.`,
-            id: 'shippingWelcomeBackMessage',
-            showRemoveButton: true
-        }))
-    }
+const welcomeBackNotification = {
+    content: `Welcome back! Sign in for a faster checkout or continue as a guest.`,
+    id: 'shippingWelcomeBackMessage',
+    showRemoveButton: true
 }
 
-const onShippingEmailAvailable = () => {
-    return (dispatch) => {
-        dispatch(removeNotification('shippingWelcomeBackMessage'))
-        return dispatch(setCustomerEmailRecognized(false))
-    }
+const onShippingEmailRecognized = () => (dispatch) => {
+    dispatch(setCustomerEmailRecognized(true))
+    dispatch(addNotification(welcomeBackNotification))
+}
+
+const onShippingEmailAvailable = () => (dispatch) => {
+    dispatch(removeNotification(welcomeBackNotification.id))
+    return dispatch(setCustomerEmailRecognized(false))
 }
 
 export const onShippingLoginError = (errorMessage) =>
