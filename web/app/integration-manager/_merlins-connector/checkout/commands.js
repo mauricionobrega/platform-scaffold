@@ -260,19 +260,17 @@ const buildFormData = (formCredentials) => {
     const formData = new FormData()
 
     Object.keys(formCredentials).forEach((key) => {
-        if (Object.prototype.hasOwnProperty.call(formCredentials, key)) {
-            const item = formCredentials[key]
-            if (key === 'street') {
-                // Street must be converted away from an array, and into a
-                // series of `street[]` keys-value pairs. This is what the
-                // Magento backend uses to fill out multiple street
-                // address fields
-                for (let i = 0; i < item.length; i++) {
-                    formData.append('street[]', item[i])
-                }
-            } else {
-                formData.append(key, item)
+        const item = formCredentials[key]
+        if (key === 'street') {
+            // Street must be converted away from an array, and into a
+            // series of `street[]` keys-value pairs. This is what the
+            // Magento backend uses to fill out multiple street
+            // address fields
+            for (let i = 0; i < item.length; i++) {
+                formData.append('street[]', item[i])
             }
+        } else {
+            formData.append(key, item)
         }
     })
 
@@ -298,7 +296,7 @@ const createAddressRequestObject = (formValues) => {
         firstname,
         lastname,
         company: company || '',
-        telephone: telephone ? telephone.replace(/\(\) /g, '') : '',
+        telephone: telephone ? telephone.replace(/[()\- ]/g, '') : '',
         postcode,
         city,
         street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1, ''],
