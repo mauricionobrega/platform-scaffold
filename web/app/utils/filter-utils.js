@@ -35,7 +35,7 @@ const evaluate = (item, ruleset, criteria) => RULESETS[ruleset](item, criteria)
  *    const items = [{}, {}, ...]
  *    items.filter(byFilters(filters)) => items matching filters criteria
  *
- * @param  {array|Immutable.List} filterList - list of filters. It's param `currentItem` is
+ * @param  {array} filterList - list of filters. It's param `currentItem` is
  *         likely an object that will eventually be consumed by a React component.
  * @returns {function} - a callback function, intended for filter methods
  */

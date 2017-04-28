@@ -62,7 +62,7 @@ export const getActiveFilters = createSelector(
 export const getFilteredProductListProducts = createSelector(
     getProductListProducts,
     getActiveFilters,
-    (products, filters) => products.filter(byFilters(filters))
+    (products, filters) => products.filter(byFilters(filters.toJS()))
 )
 
 export const getFilteredAndSortedListProducts = createSelector(
