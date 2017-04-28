@@ -28,7 +28,7 @@ test('renders the contents of the className prop if present', () => {
         'test another'
     ].forEach((name) => {
         const wrapper = shallow(<ProductTile className={name} />)
-
+        console.log(wrapper.debug())
         expect(wrapper.hasClass(name)).toBe(true)
     })
 })

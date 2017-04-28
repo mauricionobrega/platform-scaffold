@@ -30,8 +30,7 @@ const uiReducer = combineReducers({
     navigation,
     productDetails,
     productList,
-    searchResult,
-
+    searchResult
 })
 
 export default uiReducer

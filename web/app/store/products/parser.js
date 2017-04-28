@@ -42,3 +42,26 @@ export const productDetailsParser = ($, $html) => {
         description: getTextFrom($mainContent, '.product.info.detailed .product.attibute.description p')
     }
 }
+
+export const searchResultParser = ($, $html) => {
+    const $products = $html.find('.item.product-item')
+    const productMap = {}
+    $products.each((_, product) => {
+        const $product = $(product)
+        const link = parseTextLink($product.find('.product-item-link'))
+        const image = parseImage($product.find('.product-image-photo'))
+        productMap[urlToPathKey(link.href)] = {
+            title: link.text.trim(),
+            price: getTextFrom($product, '.price'),
+            link,
+            image,
+            carouselItems: [
+                {
+                    img: image.src,
+                    position: '1'
+                }
+            ]
+        }
+    })
+    return productMap
+}
