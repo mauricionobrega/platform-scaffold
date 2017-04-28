@@ -5,6 +5,8 @@ import {getSearchResult, getProducts} from '../../store/selectors'
 // import {byFilters} from '../../utils/filter-utils'
 import {PLACEHOLDER} from '../app/constants'
 
+import {sortLib} from '../../utils/sort-utils'
+
 const PLACEHOLDER_URLS = Immutable.List(new Array(5).fill(PLACEHOLDER))
 
 
@@ -24,6 +26,8 @@ export const getSearchResultProducts = createSelector(
         })
     }
 )
+
+export const getSort = createGetSelector(getSearchResult, 'sort', Immutable.Map())
 
 
 // FILTERING
@@ -54,23 +58,22 @@ export const getFilteredSearchResultProducts = createSelector(
     }
 )
 
+
 // SORTING
 // ---
-// export const getSort = createGetSelector(getSelectedCategory, 'sort', Immutable.Map())
 
-export const getFilteredAndSortedListProducts = createSelector(
+export const getFilteredAndSortedSearchResultListProducts = createSelector(
     getFilteredSearchResultProducts,
-    // getSort,
-    (products) => {
-        // const arrayOfProducts = products.toJS()
-        // const options = sort.get('options')
-        //
-        // if (!options) {
-        //     return arrayOfProducts
-        // }
-        // const activeSort = options.find((option) => option.get('selected'))
-        // return arrayOfProducts.sort(sortLib[activeSort.get('value')])
+    getSort,
+    (products, sort) => {
+        const arrayOfProducts = products.toJS()
+        const options = sort.get('options')
 
-        return products
+        if (!options) {
+            return arrayOfProducts
+        }
+
+        const activeSort = options.find((option) => option.get('selected'))
+        return arrayOfProducts.sort(sortLib[activeSort.get('value')])
     }
 )

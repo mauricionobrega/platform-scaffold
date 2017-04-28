@@ -1,9 +1,9 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
-import {getHasProducts, getFilteredAndSortedListProducts} from '../selectors'
+import {getHasProducts, getFilteredAndSortedSearchResultListProducts, getSort} from '../selectors'
 
-// import {changeSort} from '../../../store/search-result/actions'
+import {changeSort} from '../../../store/search-result/actions'
 
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import List from 'progressive-web-sdk/dist/components/list'
@@ -46,7 +46,8 @@ NoResultsList.propTypes = {
 
 const SearchResultContent = ({
     hasProducts,
-    products
+    products,
+    sortChange
 }) => (
     <div className="t-search-result__container u-padding-end u-padding-bottom-lg u-padding-top-lg u-padding-start">
         {hasProducts ?
@@ -69,8 +70,14 @@ const SearchResultContent = ({
 
                         <div>
                             <div className="u-position-relative u-width-full">
-                                <select className="t-search-result__sort-select">
-                                    <option>test</option>
+                                <select
+                                    className="t-search-result__sort-select"
+                                    onChange={(e) => { sortChange(e.target.value) }}
+                                    onBlur={(e) => { sortChange(e.target.value) }}
+                                >
+                                    <option value="name">Name</option>
+                                    <option value="price">Price</option>
+                                    <option value="relevance">Relevance</option>
                                 </select>
 
                                 <div className="t-search-result__sort-icon">
@@ -92,16 +99,18 @@ const SearchResultContent = ({
 SearchResultContent.propTypes = {
     hasProducts: PropTypes.bool,
     products: PropTypes.array,
+    sortChange: PropTypes.func
 }
 
 const mapStateToProps = createPropsSelector({
     hasProducts: getHasProducts,
-    products: getFilteredAndSortedListProducts,
+    products: getFilteredAndSortedSearchResultListProducts,
+    sort: getSort
 })
 
 const mapDispatchToProps = {
     // clearFilters: () => changeFilterTo(null),
-    // sortChange: changeSort,
+    sortChange: changeSort
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchResultContent)
