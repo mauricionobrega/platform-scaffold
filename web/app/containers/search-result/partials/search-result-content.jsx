@@ -52,36 +52,38 @@ const SearchResultContent = ({
     <div className="t-search-result__container u-padding-end u-padding-bottom-lg u-padding-top-lg u-padding-start">
         {hasProducts ?
             <div>
-                <div className="u-flexbox">
-                    <div className="u-flex u-margin-end-md">
-                        <div className="u-text-semi-bold u-margin-bottom-sm">
-                            {products.length} Items
+                <div className="u-padding-bottom-md u-padding-start-sm u-padding-end-sm">
+                    <div className="u-flexbox">
+                        <div className="u-flex u-margin-end-md">
+                            <div className="u-text-semi-bold u-margin-bottom-sm">
+                                {products.length} Items
+                            </div>
+                            <Button disabled
+                                className="c--tertiary u-width-full u-text-uppercase"
+                            >
+                                Filter
+                            </Button>
                         </div>
-                        <Button
-                            className="c--tertiary u-width-full u-text-uppercase"
-                        >
-                            Filter
-                        </Button>
-                    </div>
-                    <div className="t-search-result__sort u-flex">
-                        <label htmlFor="sort" className="u-text-semi-bold u-margin-bottom-sm">
-                            Sort by
-                        </label>
+                        <div className="t-search-result__sort u-flex">
+                            <label htmlFor="sort" className="u-text-semi-bold u-margin-bottom-sm">
+                                Sort by
+                            </label>
 
-                        <div>
-                            <div className="u-position-relative u-width-full">
-                                <select
-                                    className="t-search-result__sort-select"
-                                    onChange={(e) => { sortChange(e.target.value) }}
-                                    onBlur={(e) => { sortChange(e.target.value) }}
-                                >
-                                    <option value="name">Name</option>
-                                    <option value="price">Price</option>
-                                    <option value="relevance">Relevance</option>
-                                </select>
+                            <div>
+                                <div className="u-position-relative u-width-full">
+                                    <select
+                                        className="t-search-result__sort-select"
+                                        onChange={(e) => { sortChange(e.target.value) }}
+                                        onBlur={(e) => { sortChange(e.target.value) }}
+                                    >
+                                        <option value="name">Name</option>
+                                        <option value="price">Price</option>
+                                        <option value="relevance">Relevance</option>
+                                    </select>
 
-                                <div className="t-search-result__sort-icon">
-                                    <Icon name="caret-down" />
+                                    <div className="t-search-result__sort-icon">
+                                        <Icon name="caret-down" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -109,7 +111,6 @@ const mapStateToProps = createPropsSelector({
 })
 
 const mapDispatchToProps = {
-    // clearFilters: () => changeFilterTo(null),
     sortChange: changeSort
 }
 

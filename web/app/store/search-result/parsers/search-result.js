@@ -18,8 +18,3 @@ export const searchResultsParser = ($, $html) => {
         sort: parseSelect($, $sortSelect)
     }
 }
-
-export const searchFilterParser = () => {
-    // comment
-    return []
-}

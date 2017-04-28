@@ -28,46 +28,16 @@ export const getSearchResultProducts = createSelector(
 )
 
 export const getSort = createGetSelector(getSearchResult, 'sort', Immutable.Map())
-
-
-// FILTERING
-// ---
-// export const getFilters = createGetSelector(getSelectedCategory, 'filters', Immutable.List())
-// export const getActiveFilters = createSelector(
-//     getFilters,
-//     (filters) => {
-//         let activeFilters = Immutable.List()
-//
-//         filters.forEach((filter) => {
-//             activeFilters = activeFilters.concat(
-//                 filter.get('kinds').filter((kind) => kind.get('active'))
-//             )
-//         })
-//
-//         return activeFilters
-//     }
-// )
-
-export const getFilteredSearchResultProducts = createSelector(
-    getSearchResultProducts,
-    // getActiveFilters,
-    (products) => {
-        // const filteredProducts = products.toJS().filter(byFilters(filters.toJS()))
-        // return Immutable.List(filteredProducts)
-        return products
-    }
-)
-
-
-// SORTING
-// ---
-
 export const getFilteredAndSortedSearchResultListProducts = createSelector(
-    getFilteredSearchResultProducts,
+    getSearchResultProducts,
     getSort,
     (products, sort) => {
         const arrayOfProducts = products.toJS()
         const options = sort.get('options')
+
+        if (arrayOfProducts < 1) {
+            return []
+        }
 
         if (!options) {
             return arrayOfProducts

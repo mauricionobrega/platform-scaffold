@@ -11,10 +11,7 @@ export const receiveSearchResultFilters = createAction('Receive Search Results F
 export const processSearchResultData = ({payload: {$, $response}}) => {
     return (dispatch) => {
         const searchResultData = searchResultsParser($, $response)
-        const filterData = searchFilterParser()
-
         dispatch(receiveSearchResult({
-            filterData,
             ...searchResultData
         }))
     }
