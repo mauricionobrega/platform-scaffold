@@ -175,8 +175,6 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                     // Resets the cart count to 0
                     dispatch(cartActions.getCart())
                 } else if (pageComponent === UnwrappedSearchResult) {
-                    console.log('test')
-                    // dispatch(categoriesActions.process(receivedAction))
                     dispatch(searchResultActions.processSearchResultData(receivedAction))
                     dispatch(productsActions.processSearchResult(receivedAction))
                 }

@@ -13,7 +13,6 @@ import Image from 'progressive-web-sdk/dist/components/image'
 import ProductTile from '../../../components/product-tile'
 
 const ResultList = ({products}) => {
-    console.log('products', products)
     return (
         <List className="c--borderless">
             {products.map((product, idx) => (<ProductTile key={idx} {...product} />))}
