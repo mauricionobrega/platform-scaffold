@@ -29,7 +29,7 @@ export const submitRegisterForm = () => {
             .catch((error) => {
                 if (error.name !== 'SubmissionError') {
                     dispatch(addNotification({
-                        content: `Sorry, registration Failed. Contact us for assistance. ${error.message}`,
+                        content: `Sorry, registration failed. Contact us for assistance. ${error.message}`,
                         id: CHECKOUT_CONFIRMATION_REGISTRATION_FAILED,
                         showRemoveButton: true
                     }))
@@ -41,7 +41,7 @@ export const submitRegisterForm = () => {
                     }))
                 } else {
                     dispatch(addNotification({
-                        content: `Could not complete registration. The email you provided may already be in use.`,
+                        content: 'Could not complete registration. The email you provided may already be in use.',
                         id: CHECKOUT_CONFIRMATION_REGISTRATION_FAILED,
                         showRemoveButton: true
                     }))
