@@ -53,13 +53,6 @@ const CartSummary = ({summaryCount, subtotalExclTax, subtotal, shippingRate, shi
                         valueAction={<span className="u-color-accent">-$10.00</span>}
                     />*/}
 
-                    {taxAmount &&
-                        <LedgerRow
-                            label={`Shipping (${shippingLabel})`}
-                            value={shippingRate}
-                        />
-                    }
-
                     {!taxAmount ?
                         <LedgerRow
                             className="u-flex-none"
@@ -68,12 +61,20 @@ const CartSummary = ({summaryCount, subtotalExclTax, subtotal, shippingRate, shi
                             valueAction={calculateButton}
                         />
                     :
+                    [
+                        <LedgerRow
+                            label={`Shipping (${shippingLabel})`}
+                            value={shippingRate}
+                            key={`Shipping (${shippingLabel})`}
+                        />,
                         <LedgerRow
                             className="u-flex-none u-border-0"
                             label="Taxes"
                             labelAction={editButton}
                             value={taxAmount}
+                            key="Taxes"
                         />
+                    ]
                     }
 
                     <LedgerRow

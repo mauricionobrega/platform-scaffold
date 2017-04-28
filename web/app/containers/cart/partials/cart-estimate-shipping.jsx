@@ -7,6 +7,7 @@ import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {isModalOpen} from 'progressive-web-sdk/dist/store/modals/selectors'
 import {getCountries, getAvailableRegions} from '../../../store/checkout/locations/selectors'
 import {submitEstimateShipping} from '../actions'
+import {getTaxInitiation} from '../selectors'
 
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -14,8 +15,9 @@ import Field from 'progressive-web-sdk/dist/components/field'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 import IconLabelButton from '../../../components/icon-label-button'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
+import InlineLoader from 'progressive-web-sdk/dist/components/inline-loader'
 
-export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateProvinces, submitEstimateShipping, handleSubmit}) => {
+export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateProvinces, submitEstimateShipping, isTaxRequested, handleSubmit}) => {
     return (
         <Sheet className="t-cart__estimate-shipping-modal" open={isOpen} onDismiss={closeModal} maskOpacity={0.7} effect="slide-right" coverage="85%">
             <HeaderBar>
@@ -63,9 +65,15 @@ export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateP
                     </FieldRow>
 
                     <FieldRow>
-                        <Button className="c--secondary u-width-full u-text-uppercase" type="submit">
-                            Get Estimate
-                        </Button>
+                        {!isTaxRequested ?
+                            <Button className="c--secondary u-width-full u-text-uppercase" type="submit">
+                                Get Estimate
+                            </Button>
+                        :
+                            <Button className="c--secondary u-width-full">
+                                <InlineLoader className="pw--white" title="Estimating" />
+                            </Button>
+                        }
                     </FieldRow>
                 </form>
             </div>
@@ -90,6 +98,8 @@ CartEstimateShippingModal.propTypes = {
      */
     isOpen: React.PropTypes.bool,
 
+    isTaxRequested: React.PropTypes.bool,
+
     stateProvinces: React.PropTypes.array,
     /**
     * fetches the shipping estimate
@@ -99,6 +109,7 @@ CartEstimateShippingModal.propTypes = {
 
 const mapStateToProps = createPropsSelector({
     countries: getCountries,
+    isTaxRequested: getTaxInitiation,
     isOpen: isModalOpen(CART_ESTIMATE_SHIPPING_MODAL),
     stateProvinces: getAvailableRegions(ESTIMATE_FORM_NAME)
 })
