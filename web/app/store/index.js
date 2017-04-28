@@ -11,10 +11,16 @@ import {reducer as imReducer} from '../integration-manager/reducer'
 import {reducer as formReducer} from 'redux-form'
 
 import analytics from 'redux-analytics'
-import {analyticManager} from 'progressive-web-sdk/dist/analytics/analytic-manager'
+
+// TO-DO - remember to revert this change
+import {analyticManager} from '../../../../progressive-web-sdk/src/analytics/analytic-manager'
 
 const noop = (f) => f
 
+analyticManager.init({
+    projectSlug: AJS_SLUG,      // eslint-disable-line no-undef
+    isDebug: false
+})
 
 const configureStore = (initialState) => {
     const middlewares = [
