@@ -1,11 +1,11 @@
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {SubmissionError} from 'redux-form'
-import {checkoutShippingParser, parseCheckoutData, parseShippingMethods, checkoutConfirmationParser} from './parsers'
+import {parseCheckoutData, parseShippingMethods, checkoutConfirmationParser} from './parsers'
 import {parseCheckoutEntityID} from '../../../utils/magento-utils'
 import {getCookieValue} from '../../../utils/utils'
 import {submitForm} from '../utils'
 import {getCart} from '../cart/commands'
-import {receiveCheckoutShippingData, receiveCheckoutData, receiveShippingMethodInitialValues, receiveCheckoutConfirmationData} from './../../checkout/responses'
+import {receiveCheckoutShippingData, receiveShippingMethodInitialValues, receiveCheckoutConfirmationData} from './../../checkout/responses'
 import {fetchPageData} from '../app/commands'
 import {getCustomerEntityID} from '../selectors'
 import {getIsLoggedIn} from '../../../containers/app/selectors'
@@ -63,14 +63,8 @@ const processCheckoutData = ($response) => (dispatch) => {
 
 export const fetchCheckoutShippingData = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
-        .then(([$, $response]) => { // eslint-disable-line no-unused-vars
-            dispatch(receiveCheckoutShippingData(checkoutShippingParser($, $response)))
-            return dispatch(processCheckoutData($response))
-        })
-        .then(() => {
-            // fetch shipping estimate
-            return dispatch(fetchShippingMethodsEstimate(SHIPPING_FORM_NAME))
-        })
+        .then(([$, $response]) => dispatch(processCheckoutData($response)))  // eslint-disable-line no-unused-vars
+        .then(() => dispatch(fetchShippingMethodsEstimate(SHIPPING_FORM_NAME)))
         .catch((error) => { console.info(error.message) })
 }
 

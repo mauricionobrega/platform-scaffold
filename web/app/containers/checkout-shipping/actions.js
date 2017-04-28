@@ -9,7 +9,6 @@ import {getShippingFormValues} from '../../store/form/selectors'
 import {addNotification, removeNotification} from '../app/actions'
 
 export const showCompanyAndApt = createAction('Showing the "Company" and "Apt #" fields')
-export const receiveCheckoutShippingData = createAction('Receive Checkout Shipping Data')
 export const setCustomerEmailRecognized = createAction('Set Customer email Recognized', ['customerEmailRecognized'])
 
 const onShippingEmailRecognized = () => {

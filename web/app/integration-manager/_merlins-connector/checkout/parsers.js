@@ -1,25 +1,7 @@
 import {extractMagentoShippingStepData} from '../../../utils/magento-utils'
 
-
-export const checkoutShippingParser = ($, $html) => {
-    const shippingStepData = extractMagentoShippingStepData($html)
-
-    return {
-        formTitle: shippingStepData.getIn(['config', 'popUpForm', 'options', 'title'])
-    }
-}
-
-const getNameValue = (firstname, lastname) => {
-    let name
-    if (firstname.value) {
-        name = `${firstname.value} `
-    }
-    if (lastname.value) {
-        name += lastname.value
-    }
-
-    return name
-}
+const getNameValue = (firstname, lastname) =>
+      [firstname, lastname].filter((item) => item).join(' ')
 
 const parseShippingInitialValues = (shippingFieldData) => {
     const fieldData = shippingFieldData.toJS()
