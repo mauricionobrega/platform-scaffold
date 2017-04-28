@@ -148,13 +148,13 @@ class App extends React.Component {
 
 App.propTypes = {
     children: PropTypes.element.isRequired,
-    /**
-     * The react-router history object
-     */
     fetchError: PropTypes.string,
     fetchPage: PropTypes.func,
     fetchSvgSprite: PropTypes.func,
     hasFetchedCurrentPath: PropTypes.bool,
+    /**
+     * The react-router history object
+     */
     history: PropTypes.object,
     /**
     * Calls a command in the integration manager that initializes some app data
