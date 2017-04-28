@@ -3,10 +3,12 @@ import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import {getHasProducts, getFilteredAndSortedListProducts} from '../selectors'
 
-import {changeFilterTo} from '../../../store/categories/actions'
+// import {changeSort} from '../../../store/search-result/actions'
 
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import List from 'progressive-web-sdk/dist/components/list'
+import Button from 'progressive-web-sdk/dist/components/button'
+import Icon from 'progressive-web-sdk/dist/components/icon'
 import Image from 'progressive-web-sdk/dist/components/image'
 import ProductTile from '../../../components/product-tile'
 
@@ -42,25 +44,50 @@ NoResultsList.propTypes = {
     bodyText: PropTypes.string
 }
 
-const SearchResultContent = ({hasProducts, products}) => {
-    return (
-        <div className="t-search-result__container u-padding-end u-padding-bottom-lg u-padding-top-lg u-padding-start">
-            {hasProducts ?
-                <div>
-                    <div className="t-product-list__filter u-flex u-margin-end-md">
+const SearchResultContent = ({
+    hasProducts,
+    products
+}) => (
+    <div className="t-search-result__container u-padding-end u-padding-bottom-lg u-padding-top-lg u-padding-start">
+        {hasProducts ?
+            <div>
+                <div className="u-flexbox">
+                    <div className="u-flex u-margin-end-md">
                         <div className="u-text-semi-bold u-margin-bottom-sm">
                             {products.length} Items
                         </div>
+                        <Button
+                            className="c--tertiary u-width-full u-text-uppercase"
+                        >
+                            Filter
+                        </Button>
                     </div>
+                    <div className="t-search-result__sort u-flex">
+                        <label htmlFor="sort" className="u-text-semi-bold u-margin-bottom-sm">
+                            Sort by
+                        </label>
 
-                    <ResultList products={products} />
+                        <div>
+                            <div className="u-position-relative u-width-full">
+                                <select className="t-search-result__sort-select">
+                                    <option>test</option>
+                                </select>
+
+                                <div className="t-search-result__sort-icon">
+                                    <Icon name="caret-down" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            :
-                <NoResultsList />
-            }
-        </div>
-    )
-}
+
+                <ResultList products={products} />
+            </div>
+        :
+            <NoResultsList />
+        }
+    </div>
+)
 
 SearchResultContent.propTypes = {
     hasProducts: PropTypes.bool,
@@ -73,7 +100,8 @@ const mapStateToProps = createPropsSelector({
 })
 
 const mapDispatchToProps = {
-    clearFilters: () => changeFilterTo(null),
+    // clearFilters: () => changeFilterTo(null),
+    // sortChange: changeSort,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchResultContent)

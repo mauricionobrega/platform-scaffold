@@ -18,3 +18,29 @@
 .t-search-result__no-results-text {
     padding: ($unit * 3) ($unit * 6) ($unit * 2);
 }
+
+
+// Sort Filter
+// ---
+//
+// 1. Positioned relative to the parent `.u-position-relative` container
+
+.t-search-result__sort {
+    width: 50%;
+}
+
+.t-search-result__sort-select {
+    color: $font-color;
+}
+
+.t-search-result__sort-icon {
+    position: absolute; // 1
+    top: 50%;
+    right: 0;
+
+    color: $brand-color;
+
+    transform: translate(-50%, -40%);
+
+    pointer-events: none;
+}
