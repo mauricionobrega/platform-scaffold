@@ -193,11 +193,6 @@ OrderSummary.propTypes = {
     isFixedPlaceOrderShown: PropTypes.bool,
 
     /**
-     * Subtotal including tax
-     */
-    subtotal: PropTypes.string,
-
-    /**
      * Shipping rate label
      */
     shippingLabel: PropTypes.string,
@@ -206,6 +201,11 @@ OrderSummary.propTypes = {
      * Shipping rate amount
      */
     shippingRate: PropTypes.string,
+
+    /**
+     * Subtotal including tax
+     */
+    subtotal: PropTypes.string,
 
     /**
      * Subtotal excluding tax
