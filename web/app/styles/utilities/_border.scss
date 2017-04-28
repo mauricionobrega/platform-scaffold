@@ -33,23 +33,23 @@
 // ---
 
 .u-border-light {
-    @include border(true, $border-light-color);
+    @include border(true, $light-border);
 }
 
 .u-border-light-top {
-    @include border-top(true, $border-light-color);
+    @include border-top(true, $light-border);
 }
 
 .u-border-light-start {
-    @include border-start(true, $border-light-color);
+    @include border-start(true, $light-border);
 }
 
 .u-border-light-bottom {
-    @include border-bottom(true, $border-light-color);
+    @include border-bottom(true, $light-border);
 }
 
 .u-border-light-end {
-    @include border-end(true, $border-light-color);
+    @include border-end(true, $light-border);
 }
 
 
