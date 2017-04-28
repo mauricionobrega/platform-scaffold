@@ -1,10 +1,12 @@
-/* eslint-disable import/namespace */
-/* eslint-disable import/named */
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 import {splitFullName} from '../../utils/utils'
 import {receiveCheckoutData} from '../../store/checkout/actions'
-import {submitShipping as submitShippingCommand, checkCustomerEmail as checkCustomerEmailCommand, checkoutSignIn} from '../../integration-manager/checkout/commands'
+import {
+    submitShipping as submitShippingCommand,
+    checkCustomerEmail as checkCustomerEmailCommand,
+    checkoutSignIn
+} from '../../integration-manager/checkout/commands'
 import {getShippingFormValues} from '../../store/form/selectors'
 import {addNotification, removeNotification} from '../app/actions'
 
