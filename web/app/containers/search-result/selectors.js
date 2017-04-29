@@ -2,7 +2,6 @@ import Immutable from 'immutable'
 import {createSelector} from 'reselect'
 import {createGetSelector} from 'reselect-immutable-helpers'
 import {getSearchResult, getProducts} from '../../store/selectors'
-// import {byFilters} from '../../utils/filter-utils'
 import {PLACEHOLDER} from '../app/constants'
 
 import {sortLib} from '../../utils/sort-utils'
