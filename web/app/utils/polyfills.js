@@ -1,5 +1,5 @@
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
-import {loadScript} from './utils'
+import {loadScript} from './loader-utils'
 
 export const availablePolyfills = [
     {

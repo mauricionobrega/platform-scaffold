@@ -3,7 +3,7 @@ import {getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dis
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
 import cacheHashManifest from '../tmp/loader-cache-hash-manifest.json'
 import {isRunningInAstro} from './utils/astro-integration'
-import {loadScript} from './utils/utils'
+import {loadScript} from './utils/loader-utils'
 import {getNeededPolyfills} from './utils/polyfills'
 import ReactRegexes from './loader-routes'
 
