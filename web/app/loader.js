@@ -3,6 +3,8 @@ import {getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dis
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
 import cacheHashManifest from '../tmp/loader-cache-hash-manifest.json'
 import {isRunningInAstro} from './utils/astro-integration'
+import {loadScript} from './utils/utils'
+import {getNeededPolyfills} from './utils/polyfills'
 
 window.Progressive = {
     AstroPromise: Promise.resolve({})
@@ -55,52 +57,6 @@ const asyncInitApp = () => {
 
         runJsonpAsync()
     }
-}
-
-const loadScript = ({id, src, onload, isAsync = true}) => {
-    const script = document.createElement('script')
-
-    // Setting UTF-8 as our encoding ensures that certain strings (i.e.
-    // Japanese text) are not improperly converted to something else. We
-    // do this on the vendor scripts also just in case any libs we
-    // import have localized strings in them.
-    script.charset = 'utf-8'
-    script.async = isAsync
-    script.id = id
-    script.src = src
-    script.onload = typeof onload === typeof function() {}
-        ? onload
-        : () => {}
-
-    document.getElementsByTagName('body')[0].appendChild(script)
-}
-
-const availablePolyfills = [
-    {
-        test: () => !Array.prototype.fill || !window.Promise,
-        load: (callback) => {
-            loadScript({
-                id: 'progressive-web-core-polyfill',
-                src: getAssetUrl('core-polyfill.js'),
-                onload: callback,
-                onerror: callback
-            })
-        }
-    }, {
-        test: () => !global.fetch,
-        load: (callback) => {
-            loadScript({
-                id: 'progressive-web-fetch-polyfill',
-                src: getAssetUrl('fetch-polyfill.js'),
-                onload: callback,
-                onerror: callback
-            })
-        }
-    }
-]
-
-const getNeededPolyfills = () => {
-    return availablePolyfills.filter((polyfill) => polyfill.test())
 }
 
 const attemptToInitializeApp = () => {
