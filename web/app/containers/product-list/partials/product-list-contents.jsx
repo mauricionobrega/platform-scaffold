@@ -107,6 +107,7 @@ const ProductListContents = ({
                                         onChange={(e) => { sortChange(e.target.value) }}
                                         onBlur={(e) => { sortChange(e.target.value) }}
                                     >
+                                        {/* This list of options corresponds to the functions in app/utils/sort-utils.js */}
                                         <option value="position">Position</option>
                                         <option value="name">Name</option>
                                         <option value="price">Price</option>
