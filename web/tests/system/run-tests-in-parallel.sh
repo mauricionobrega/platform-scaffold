@@ -33,8 +33,6 @@ else
     echo 'Running Lint'
     # ESLint
     npm run lint
-    echo 'Running Visual Test'
-    npm run test:visual
   fi
 
   #If the node total is greater than 1 assign the first node to lint. Divy up the remaining tests.
