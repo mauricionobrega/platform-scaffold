@@ -2,7 +2,7 @@ import {handleActions} from 'redux-actions'
 import Immutable from 'immutable'
 import {mergePayload} from '../../utils/reducer-utils'
 import {showCompanyAndApt, setCustomerEmailRecognized} from './actions'
-import {receiveCheckoutShippingData} from '../../integration-manager/checkout/responses'
+import {receiveCheckoutShippingData} from '../../integration-manager/checkout/results'
 
 export default handleActions({
     [receiveCheckoutShippingData]: mergePayload,
