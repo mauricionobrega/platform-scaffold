@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import template from '../../template'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import classNames from 'classnames'
-import {fetchCheckoutShippingData} from '../../integration-manager/checkout/commands'
 import {getCartURL} from '../app/selectors'
 
 
@@ -36,9 +35,6 @@ const CheckoutShipping = ({cartURL}) => {
         </div>
     )
 }
-
-CheckoutShipping.fetcher = (url, routeName, dispatch) =>
-    dispatch(fetchCheckoutShippingData(url, routeName))
 
 CheckoutShipping.propTypes = {
     /**

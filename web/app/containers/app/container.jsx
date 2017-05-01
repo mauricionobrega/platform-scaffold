@@ -57,8 +57,8 @@ class App extends React.Component {
         const {
             children,
             history,
-            fetchPage,
             fetchError,
+            fetchPage,
             hasFetchedCurrentPath,
             notifications,
             removeNotification,
@@ -69,7 +69,7 @@ class App extends React.Component {
         const CurrentHeader = routeProps.Header || Header
         const CurrentFooter = routeProps.Footer || Footer
 
-        const reload = () => fetchPage(window.location.href, routeProps.component.WrappedComponent, routeProps.routeName)
+        const reload = () => fetchPage(routeProps.fetchAction, window.location.href, routeProps.routeName)
 
         const skipLinksItems = [
             // Customize your list of SkipLinks here. These are necessary to
@@ -148,13 +148,13 @@ class App extends React.Component {
 
 App.propTypes = {
     children: PropTypes.element.isRequired,
-    fetchPage: PropTypes.func.isRequired,
+    fetchError: PropTypes.string,
+    fetchPage: PropTypes.func,
+    fetchSvgSprite: PropTypes.func,
+    hasFetchedCurrentPath: PropTypes.bool,
     /**
      * The react-router history object
      */
-    fetchError: PropTypes.string,
-    fetchSvgSprite: PropTypes.func,
-    hasFetchedCurrentPath: PropTypes.bool,
     history: PropTypes.object,
     /**
     * Calls a command in the integration manager that initializes some app data
@@ -177,8 +177,8 @@ const mapStateToProps = createPropsSelector({
 
 const mapDispatchToProps = {
     removeNotification: appActions.removeNotification,
-    fetchPage: appActions.fetchPage,
     fetchSvgSprite: () => appActions.fetchSvgSprite(),
+    fetchPage: (fetchAction, url, routeName) => fetchAction(url, routeName),
     initApp
 }
 
