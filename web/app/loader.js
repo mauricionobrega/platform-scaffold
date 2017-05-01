@@ -5,16 +5,11 @@ import cacheHashManifest from '../tmp/loader-cache-hash-manifest.json'
 import {isRunningInAstro} from './utils/astro-integration'
 import {loadScript} from './utils/utils'
 import {getNeededPolyfills} from './utils/polyfills'
+import ReactRegexes from './loader-routes'
 
 import preloadHTML from 'raw-loader!./preloader/preload.html'
 import preloadCSS from 'css-loader?minimize!./preloader/preload.css'
 import preloadJS from 'raw-loader!./preloader/preload.js' // eslint-disable-line import/default
-
-window.Progressive = {
-    AstroPromise: Promise.resolve({})
-}
-
-import ReactRegexes from './loader-routes'
 
 const isReactRoute = () => {
     return ReactRegexes.some((regex) => regex.test(window.location.pathname))
@@ -28,6 +23,11 @@ const attemptToInitializeApp = () => {
     if (getNeededPolyfills().length || hasInitialized) {
         return
     }
+
+    window.Progressive = {
+        AstroPromise: Promise.resolve({})
+    }
+
 
     // This isn't accurate but does describe the case where the PR currently works
     const IS_PREVIEW = /mobify-path=true/.test(document.cookie)
