@@ -85,7 +85,7 @@ const attemptToInitializeApp = () => {
         // if no worker is available, we have to assume that promises might not be either.
         (('serviceWorker' in navigator)
          ? loadWorker()
-         : {then: (fn) => setTimeout(fn)}
+         : Promise.resolve()
         ).then(() => {
             loadAsset('link', {
                 href: getAssetUrl('main.css'),
@@ -168,10 +168,6 @@ const attemptToInitializeApp = () => {
 }
 
 // Apply polyfills
-const neededPolyfills = getNeededPolyfills()
+getNeededPolyfills().forEach((polyfill) => polyfill.load(attemptToInitializeApp))
 
-if (neededPolyfills.length) {
-    neededPolyfills.forEach((polyfill) => polyfill.load(attemptToInitializeApp))
-} else {
-    attemptToInitializeApp()
-}
+attemptToInitializeApp()
