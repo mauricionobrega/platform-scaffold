@@ -22,8 +22,9 @@ test:
         - npm run test:pwa-ci:
             pwd: web
         # Run end-to-end tests
-        - npm run smoke-test:
-           pwd: web
+        # - npm run smoke-test:
+        #    pwd: web
+        - npm run ./tests/system/smoke-test.sh
     post:
        - cp -R lighthouse/* $CIRCLE_ARTIFACTS:
            pwd: web
