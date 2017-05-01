@@ -17,10 +17,8 @@ const isReactRoute = () => {
 
 initCacheManifest(cacheHashManifest)
 
-let hasInitialized = false
-
 const attemptToInitializeApp = () => {
-    if (getNeededPolyfills().length || hasInitialized) {
+    if (getNeededPolyfills().length) {
         return
     }
 
@@ -163,8 +161,6 @@ const attemptToInitializeApp = () => {
             }
         }, 150)
     }
-
-    hasInitialized = true
 }
 
 // Apply polyfills
