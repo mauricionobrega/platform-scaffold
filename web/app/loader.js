@@ -37,15 +37,75 @@ const loadWorker = () => (
 // webpackJsonpAsync is a custom async webpack code splitting chunk wrapper
 // webpackJsonp is a webpack code splitting vendor wrapper
 // webpackJsonpAsync should wait and call webpackJsonp with payload when all dependencies are loaded
+let allAsyncDependenciesReady = false
+const asyncRunApp = () => {
+    allAsyncDependenciesReady = true
+}
+
 const asyncInitApp = () => {
     window.webpackJsonpAsync = (module, exports, webpackRequire) => {
-        const runJsonpAsync = function() {
-            return (window.webpackJsonp)
-                ? window.webpackJsonp(module, exports, webpackRequire)
-                : setTimeout(runJsonpAsync, 50)
+        const runJsonpAsync = () => {
+            if (allAsyncDependenciesReady && window.webpackJsonp) {
+                // Run app
+                window.webpackJsonp(module, exports, webpackRequire)
+            } else {
+                setTimeout(runJsonpAsync, 50)
+            }
         }
 
         runJsonpAsync()
+    }
+}
+
+const loadScript = ({id, src, onload, isAsync = true}) => {
+    const script = document.createElement('script')
+
+    // Setting UTF-8 as our encoding ensures that certain strings (i.e.
+    // Japanese text) are not improperly converted to something else. We
+    // do this on the vendor scripts also just in case any libs we
+    // import have localized strings in them.
+    script.charset = 'utf-8'
+    script.async = isAsync
+    script.id = id
+    script.src = src
+    script.onload = typeof onload === typeof function() {}
+        ? onload
+        : () => {}
+
+    document.getElementsByTagName('body')[0].appendChild(script)
+}
+
+const availablePolyfills = [
+    {
+        test: () => !Array.prototype.fill || !window.Promise,
+        load: (callback) => {
+            loadScript({
+                id: 'progressive-web-core-polyfill',
+                src: getAssetUrl('core-polyfill.js'),
+                onload: callback,
+                onerror: callback
+            })
+        }
+    }, {
+        test: () => !global.fetch,
+        load: (callback) => {
+            loadScript({
+                id: 'progressive-web-fetch-polyfill',
+                src: getAssetUrl('fetch-polyfill.js'),
+                onload: callback,
+                onerror: callback
+            })
+        }
+    }
+]
+
+const getNeededPolyfills = () => {
+    return availablePolyfills.filter((polyfill) => polyfill.test())
+}
+
+const attemptToInitializeApp = () => {
+    if (!getNeededPolyfills().length) {
+        asyncRunApp()
     }
 }
 
@@ -59,24 +119,6 @@ if (isReactRoute()) {
     const reactTarget = document.createElement('div')
     reactTarget.className = 'react-target'
     body.appendChild(reactTarget)
-
-    const loadScript = ({id, src, onload, isAsync = true}) => {
-        const script = document.createElement('script')
-
-        // Setting UTF-8 as our encoding ensures that certain strings (i.e.
-        // Japanese text) are not improperly converted to something else. We
-        // do this on the vendor scripts also just in case any libs we
-        // import have localized strings in them.
-        script.charset = 'utf-8'
-        script.async = isAsync
-        script.id = id
-        script.src = src
-        script.onload = typeof onload === typeof function() {}
-            ? onload
-            : () => {}
-
-        body.appendChild(script)
-    }
 
     /* eslint-disable max-len */
     loadAsset('meta', {
@@ -146,23 +188,6 @@ if (isReactRoute()) {
             src: getAssetUrl('static/js/jquery.min.js')
         })
 
-        // Apply polyfills
-        if (!Array.prototype.fill || !window.Promise) {
-            loadScript({
-                id: 'progressive-web-core-polyfill',
-                src: getAssetUrl('core-polyfill.js'),
-                isAsync: false
-            })
-        }
-
-        if (!global.fetch) {
-            loadScript({
-                id: 'progressive-web-fetch-polyfill',
-                src: getAssetUrl('fetch-polyfill.js'),
-                isAsync: false
-            })
-        }
-
         loadScript({
             id: 'progressive-web-main',
             src: getAssetUrl('main.js')
@@ -172,6 +197,15 @@ if (isReactRoute()) {
             id: 'progressive-web-vendor',
             src: getAssetUrl('vendor.js')
         })
+
+        // Apply polyfills
+        const neededPolyfills = getNeededPolyfills()
+
+        if (neededPolyfills.length) {
+            neededPolyfills.forEach((polyfill) => polyfill.load(attemptToInitializeApp))
+        }
+
+        attemptToInitializeApp()
     })
 } else {
     const capturing = document.createElement('script')
