@@ -1,6 +1,6 @@
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
-import {receiveCategoryContents, receiveCategoryInformation} from '../../categories/responses'
-import {receiveProductListProductData} from '../../products/responses'
+import {receiveCategoryContents, receiveCategoryInformation} from '../../categories/results'
+import {receiveProductListProductData} from '../../products/results'
 import categoryProductsParser, {parseCategoryTitle, parseCategoryId, priceFilterParser} from './parser'
 import {productListParser} from '../products/parsers'
 import {fetchPageData} from '../app/commands'

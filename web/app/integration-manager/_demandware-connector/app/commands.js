@@ -1,5 +1,5 @@
 import * as utils from '../utils'
-import {receiveNavigationData, setLoggedIn, setCheckoutShippingURL, setCartURL} from '../../responses'
+import {receiveNavigationData, setLoggedIn, setCheckoutShippingURL, setCartURL} from '../../results'
 import {getCart} from '../cart/commands'
 import {parseCategories} from '../parsers'
 
