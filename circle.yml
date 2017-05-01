@@ -14,17 +14,19 @@ dependencies:
         #    pwd: native
 test:
     override:
-        - npm run lint:
-            pwd: web
-        - npm test -- --runInBand:
-            pwd: web
-        # Calculate the Lighthouse score 
-        - npm run test:pwa-ci:
-            pwd: web
+        # - npm run lint:
+        #     pwd: web
+        # - npm test -- --runInBand:
+        #     pwd: web
+        # # Calculate the Lighthouse score 
+        # - npm run test:pwa-ci:
+        #     pwd: web
         # Run end-to-end tests
         # - npm run smoke-test:
         #    pwd: web
-        - npm run ./tests/system/smoke-test.sh
+        - npm run ./tests/system/run-tests-in-parallel.sh
+            pwd: web
+            parallel: true
     post:
        - cp -R lighthouse/* $CIRCLE_ARTIFACTS:
            pwd: web
