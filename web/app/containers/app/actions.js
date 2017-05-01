@@ -7,23 +7,15 @@ import * as analyticConstants from 'progressive-web-sdk/dist/analytics/analytic-
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import {createAction, createActionWithAnalytics} from 'progressive-web-sdk/dist/utils/action-creation'
-import {getCurrentUrl} from './selectors'
 
 import appParser from './app-parser'
 
-import {
-    UnwrappedCheckoutConfirmation,
-} from '../templates'
-import * as checkoutConfirmationActions from '../checkout-confirmation/actions'
-import * as footerActions from '../footer/actions'
 import * as navigationActions from '../navigation/actions'
 import {getCart} from '../../integration-manager/cart/commands'
 
 import {OFFLINE_ASSET_URL} from './constants'
 import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {OFFLINE_MODAL} from '../offline/constants'
-
-let isInitialEntryToSite = true
 
 export const addNotification = createAction('Add Notification')
 export const removeNotification = createAction('Remove Notification')
@@ -96,65 +88,6 @@ export const checkIfOffline = () => {
                 // In cases where we don't have the worker installed, this means
                 // we indeed have a network failure, so switch on offline
                 dispatch(setPageFetchError(error.message))
-            })
-    }
-}
-
-const requestCapturedDoc = () => {
-    return window.Progressive.capturedDocHTMLPromise.then((initialCapturedDocHTML) => {
-        const body = new Blob([initialCapturedDocHTML], {type: 'text/html'})
-        const capturedDocResponse = new Response(body, {
-            status: 200,
-            statusText: 'OK'
-        })
-
-        return Promise.resolve(capturedDocResponse)
-    })
-}
-
-/**
- * Fetch the content for a 'global' page render. This should be driven
- * by react-router, ideally.
- */
-export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
-    return (dispatch, getState) => {
-        const isNotTestingEnvironment = !!window.Progressive
-        const request = isInitialEntryToSite && isNotTestingEnvironment
-            ? requestCapturedDoc()
-            : makeRequest(fetchUrl || url)
-        isInitialEntryToSite = false
-
-        return request
-            .then(jqueryResponse)
-            .then((res) => {
-                const [$, $response] = res
-                const currentURL = getCurrentUrl(getState())
-                const receivedAction = onPageReceived($, $response, url, currentURL, routeName)
-
-                // Let app-level reducers know about receiving the page
-                dispatch(receivedAction)
-                dispatch(process(receivedAction))
-
-                if (pageComponent === UnwrappedCheckoutConfirmation) {
-                    dispatch(checkoutConfirmationActions.process(receivedAction))
-                    // Resets the cart count to 0
-                    dispatch(getCart())
-                }
-
-                dispatch(footerActions.process(receivedAction))
-                dispatch(navigationActions.process(receivedAction))
-
-                // Finally, let's check if we received a cached response from the
-                // worker, but are in fact 'offline'
-                dispatch(checkIfOffline())
-            })
-            .catch((error) => {
-                console.info(error.message)
-                if (error.name !== 'FetchError') {
-                    throw error
-                } else {
-                    dispatch(setPageFetchError(error.message))
-                }
             })
     }
 }

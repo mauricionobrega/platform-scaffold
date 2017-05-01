@@ -16,9 +16,9 @@ import {getFormValues, getFormRegisteredFields} from '../../store/form/selectors
 import {getSelectedShippingMethod} from '../../store/checkout/shipping/selectors'
 import {parseLocationData} from '../../utils/utils'
 
-export const receiveData = createAction('Receive Cart Data')
 export const setRemoveItemId = createAction('Set item id for removal', ['removeItemId'])
 export const setIsWishlistComplete = createAction('Set wishlist add complete', ['isWishlistAddComplete'])
+export const setTaxRequestPending = createAction('Set tax request pending', ['taxRequestPending'])
 
 const shippingFormSelector = createPropsSelector({
     formValues: getFormValues(ESTIMATE_FORM_NAME),
@@ -26,14 +26,27 @@ const shippingFormSelector = createPropsSelector({
     shippingMethod: getSelectedShippingMethod
 })
 
+const taxErrorNotification = {
+    content: 'Unable to calculate tax.',
+    id: 'taxError',
+    showRemoveButton: true
+}
+
 export const submitEstimateShipping = () => (dispatch, getState) => {
     const currentState = getState()
     const {formValues, registeredFields, shippingMethod} = shippingFormSelector(currentState)
     const address = parseLocationData(formValues, registeredFields.map(({name}) => name))
 
+    dispatch(setTaxRequestPending(true))
     dispatch(fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME))
-        .then(() => dispatch(fetchTaxEstimate(address, shippingMethod.value)))
-    dispatch(closeModal(CART_ESTIMATE_SHIPPING_MODAL))
+        .then(() => {
+            return dispatch(fetchTaxEstimate(address, shippingMethod.value))
+                .catch(() => dispatch(addNotification(taxErrorNotification)))
+        })
+        .then(() => {
+            dispatch(closeModal(CART_ESTIMATE_SHIPPING_MODAL))
+            dispatch(setTaxRequestPending(false))
+        })
 }
 
 export const removeItem = (itemID) => (dispatch) => {

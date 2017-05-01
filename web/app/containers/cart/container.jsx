@@ -4,7 +4,6 @@ import template from '../../template'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import classNames from 'classnames'
-import {fetchCartPageData} from '../../integration-manager/cart/commands'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import {Grid, GridSpan} from 'progressive-web-sdk/dist/components/grid'
@@ -104,8 +103,6 @@ class Cart extends React.Component {
         )
     }
 }
-
-Cart.fetcher = (url, routeName, dispatch) => dispatch(fetchCartPageData(url, routeName))
 
 Cart.propTypes = {
     cartLoaded: PropTypes.bool,
