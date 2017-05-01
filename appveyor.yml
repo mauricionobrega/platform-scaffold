@@ -14,4 +14,4 @@ install:
   - pushd web && npm install && popd web
 
 test_script:
-  - pushd web && npm run smoke-test && popd web
+  - pushd web && npm run test:pwa-ci && popd web
