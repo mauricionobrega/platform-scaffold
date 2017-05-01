@@ -168,6 +168,10 @@ const attemptToInitializeApp = () => {
 }
 
 // Apply polyfills
-getNeededPolyfills().forEach((polyfill) => polyfill.load(attemptToInitializeApp))
+const neededPolyfills = getNeededPolyfills()
 
-attemptToInitializeApp()
+if (neededPolyfills.length) {
+    neededPolyfills.forEach((polyfill) => polyfill.load(attemptToInitializeApp))
+} else {
+    attemptToInitializeApp()
+}
