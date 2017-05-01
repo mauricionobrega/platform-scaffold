@@ -47,17 +47,11 @@ export const getProductListProducts = createSelector(
 export const getFilters = createGetSelector(getSelectedCategory, 'filters', Immutable.List())
 export const getActiveFilters = createSelector(
     getFilters,
-    (filters) => {
-        let activeFilters = Immutable.List()
-
-        filters.forEach((filter) => {
-            activeFilters = activeFilters.concat(
-                filter.get('kinds').filter((kind) => kind.get('active'))
-            )
-        })
-
-        return activeFilters
-    }
+    (filters) => (
+        filters.reduce((activeFilters, filter) => activeFilters.concat(
+            filter.get('kinds').filter((kind) => kind.get('active'))
+        ), Immutable.List())
+    )
 )
 export const getFilteredProductListProducts = createSelector(
     getProductListProducts,
