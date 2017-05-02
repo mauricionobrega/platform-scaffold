@@ -27,7 +27,7 @@ else
   if [ $CIRCLE_NODE_TOTAL -gt 1 ]; then
     echo $CIRCLE_NODE_TOTAL 'Circle CI nodes. Running tests in parallel.'
     echo 'This is Circle CI node' $CIRCLE_NODE_INDEX'.'
-    sh ./start-test-server.sh
+    ./tests/system/start-test-server.sh
 
 
     # The other cirlce_node_index workbers should divide up the tests
