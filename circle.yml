@@ -13,7 +13,8 @@ dependencies:
             pwd: web
             background: true
             parallel: true
-        - ./web/tests/system/start-test-server.sh &> $CIRCLE_ARTIFACTS/startTestServer.log:
+        - ./tests/system/start-test-server.sh &> $CIRCLE_ARTIFACTS/startTestServer.log:
+            pwd: web
             background: true
             parallel: true
         # Disabling native `npm install` for now as we aren't set up to `npm install` a git dep yet
@@ -26,7 +27,6 @@ test:
             pwd: web
     post:
        - cp -R lighthouse/* $CIRCLE_ARTIFACTS:
-           background: true
            pwd: web
 experimental:
     notify:
