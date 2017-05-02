@@ -20,14 +20,15 @@ else
 
 
     if [ $CIRCLE_NODE_INDEX -eq 0 ]; then
-		echo 'Running Lint'
-	  	npm run lint
 	    echo 'Running Lighthouse Test'
 	    npm run test:pwa-ci
   	fi
 
     # The other cirlce_node_index workbers should divide up the tests
     if [ $CIRCLE_NODE_INDEX -gt 0 ]; then
+    	echo 'Running Lint'
+	  	npm run lint
+		
 		echo 'Running Unit Tests'
 		npm test -- --runInBand
 
