@@ -14,13 +14,13 @@ set -o nounset
 # if [ "$CURRENT_BRANCH" != "master" ]; then
 #     echo "Running tests against local build"
 #     # Kill background processes when this script exits.
-#     trap 'kill $(jobs -p)' EXIT > /dev/null 2>&1
+#     trap 'kill $(jobs -p)' EXIT
 #     export ACTIVE_PROFILE=local
-#     npm run prod:build
-#     npm run test:server > /dev/null 2>&1 &
+#     npm run dev &
+#     while ! echo exit | nc localhost 8443; do sleep 20; done
 # else
-#     echo "Running tests against production"
-#     export ACTIVE_PROFILE=production
+#   echo "Running tests against production"
+#   export ACTIVE_PROFILE=production
 # fi
 
 if [ $CIRCLE_NODE_TOTAL -eq 1 ]; then
@@ -29,14 +29,12 @@ if [ $CIRCLE_NODE_TOTAL -eq 1 ]; then
   npm run lint
   npm run test:e2e --test tests/system/workflows/
 else
-  if [ $CIRCLE_NODE_INDEX -eq 0 ]; the
+  if [ $CIRCLE_NODE_INDEX -eq 0 ]; then
     echo 'Running Lint'
     # ESLint
     npm run lint
-    npm run -- --runInBand
-    npm run test:pwa-ci
   fi
-  
+
   #If the node total is greater than 1 assign the first node to lint. Divy up the remaining tests.
   if [ $CIRCLE_NODE_TOTAL -gt 1 ]; then
     echo $CIRCLE_NODE_TOTAL 'Circle CI nodes. Running tests in parallel.'
