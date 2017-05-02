@@ -36,12 +36,11 @@ export const getCart = () => (dispatch) => {
     return makeRequest(`${LOAD_CART_SECTION_URL}&_=${currentTimeMs}`, opts)
         .then((response) => response.json())
         .then(({cart}) => {
-            const items = cart.items.map((item) => {
+            cart.items.forEach((item) => {
                 item.product_price = textFromFragment(item.product_price)
-                return item
             })
 
-            if (items.length > 0) {
+            if (cart.items.length > 0) {
                 dispatch(receiveCartProductData(parseCartProducts(cart)))
             }
 
