@@ -38,7 +38,7 @@ const MiniCartProductList = ({items, orderTotal, cartURL}) => {
                         className="u-padding-top-lg u-padding-bottom-lg u-padding-start u-padding-end"
                         title={<h2 className="u-h3">{product.name}</h2>}
                         price={itemPrice}
-                        key={product.href}
+                        key={product.id}
                         image={<Image src={product.thumbnail.src} alt={product.thumbnail.alt} width="64px" height="64px" />}
                         >
                         <div>
