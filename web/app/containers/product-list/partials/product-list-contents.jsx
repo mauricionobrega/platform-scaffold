@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
+import {getCategoryItemCount} from '../../../store/categories/selectors'
 import * as selectors from '../selectors'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import {PRODUCT_LIST_FILTER_MODAL} from '../constants'
@@ -142,16 +143,14 @@ ProductListContents.propTypes = {
     contentsLoaded: PropTypes.bool,
     numItems: PropTypes.number,
     openModal: PropTypes.func,
-    sort: PropTypes.object,
     sortChange: PropTypes.func
 }
 
 const mapStateToProps = createPropsSelector({
     contentsLoaded: selectors.getProductListContentsLoaded,
-    numItems: selectors.getNumItems,
+    numItems: getCategoryItemCount,
     activeFilters: selectors.getActiveFilters,
-    products: selectors.getFilteredAndSortedListProducts,
-    sort: selectors.getSort
+    products: selectors.getFilteredAndSortedListProducts
 })
 
 const mapDispatchToProps = {

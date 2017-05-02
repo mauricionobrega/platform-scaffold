@@ -1,6 +1,6 @@
 import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 import {getCurrentPathKey} from '../../containers/app/selectors'
-import {getSelectedCategory} from '../../containers/product-list/selectors'
+import {getSelectedCategory} from './selectors'
 
 export const changeFilter = createAction('Change Filter')
 
