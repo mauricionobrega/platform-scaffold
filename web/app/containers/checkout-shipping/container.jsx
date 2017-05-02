@@ -5,7 +5,6 @@ import {createPropsSelector} from 'reselect-immutable-helpers'
 import classNames from 'classnames'
 import {getCartURL} from '../app/selectors'
 
-
 import {isRunningInAstro, trigger} from '../../utils/astro-integration'
 import CheckoutShippingReduxForm from './partials/checkout-shipping-form'
 import {ProgressSteps, ProgressStepsItem} from 'progressive-web-sdk/dist/components/progress-steps'
