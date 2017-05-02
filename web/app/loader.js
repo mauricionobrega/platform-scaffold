@@ -3,7 +3,7 @@ import {getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dis
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
 import cacheHashManifest from '../tmp/loader-cache-hash-manifest.json'
 import {isRunningInAstro} from './utils/astro-integration'
-import {loadScript} from './utils/loader-utils'
+import {loadScriptAsPromise, isLocalStorageAvailable} from './utils/loader-utils'
 import {getNeededPolyfills} from './utils/polyfills'
 import ReactRegexes from './loader-routes'
 
@@ -35,9 +35,85 @@ const attemptToInitializeApp = () => {
     const ASTRO_CLIENT_CDN = `//assets.mobify.com/astro/astro-client-${ASTRO_VERSION}.min.js`
     const SW_LOADER_PATH = `/service-worker-loader.js?preview=${IS_PREVIEW}&b=${cacheHashManifest.buildDate}`
 
+    const MESSAGING_PWA_SW_VERSION_PATH = 'https://webpush-cdn.mobify.net/pwa-serviceworker-version.json'
+    const MESSAGING_PWA_CLIENT_PATH = 'https://webpush-cdn.mobify.net/pwa-messaging-client.js'
+
+    // An array of functions that will be called when all the scripts
+    // loaded by this function are done. They are only executed if all
+    // the key scripts load and initialize successfully.
+    const deferredUntilLoadComplete = []
+
+    /**
+     * Get the URL that should be used to load the service worker.
+     * This is based on the SW_LOADER_PATH but may have additional
+     * query parameters added that act as cachebreakers for the
+     * Messaging part of the worker.
+     * @returns String
+     */
+    const getServiceWorkerURL = () => {
+        // In order to load the worker, we need to get the current Messaging
+        // PWA service-worker version so that we can include it in the URL
+        // (meaning that we will register a 'new' worker when that version
+        // number changes).
+        // The implementation here is designed to avoid adding an extra fetch
+        // and slowing down the *first* run of the app. On the first run, we
+        // will find nothing in localStorage, and return the URL without
+        // any Messaging-worker parameters, but we'll do an asynchronous
+        // fetch to update the parameters, which will then be used on the
+        // next run.
+
+        // We expect supported browsers to have local storage. If the browser
+        // does not, then we may assume we're running in some situation
+        // like incognito mode, in which case there is no point getting
+        // Messaging worker version data, we can just use the base URL.
+        if (!isLocalStorageAvailable()) {
+            return SW_LOADER_PATH
+        }
+
+        const workerPathElements = [SW_LOADER_PATH]
+        const messagingSWVersionKey = 'messagingServiceWorkerVersion'
+        const versionData = localStorage.getItem(messagingSWVersionKey)
+
+        const version = versionData.SERVICE_WORKER_CURRENT_VERSION
+        if (version) {
+            workerPathElements.push(`msg_sw_version=${version}`)
+        }
+
+        const hash = versionData.SERVICE_WORKER_CURRENT_HASH
+        if (hash) {
+            workerPathElements.push(`msg_sw_hash=${hash}`)
+        }
+
+        // Add a deferred function that will asynchronously update the Messaging
+        // version data.
+        deferredUntilLoadComplete.push(
+            () => {
+                fetch(MESSAGING_PWA_SW_VERSION_PATH)
+                    .then((response) => response.json())
+                    .then((versionData) => {
+                        // Persist the result in localStorage
+                        if (isLocalStorageAvailable()) {
+                            localStorage.setItem(messagingSWVersionKey, versionData)
+                        }
+                        return versionData
+                    })
+                    // If the fetch or JSON-decode fails, just log.
+                    .catch((error) => { console.log(error) })
+            }
+        )
+
+        // Return the service worker path
+        return workerPathElements.join('&')
+    }
+
+    /**
+     * Load the service worker
+     * @returns Promise.<Boolean> true when the worker is loaded and ready
+     */
     const loadWorker = () => (
-        navigator.serviceWorker.register(SW_LOADER_PATH)
+        navigator.serviceWorker.register(getServiceWorkerURL())
             .then(() => navigator.serviceWorker.ready)
+            .then(() => true)
             .catch(() => {})
     )
 
@@ -54,6 +130,36 @@ const attemptToInitializeApp = () => {
 
             runJsonpAsync()
         }
+    }
+
+    /**
+     * Start the asynchronous loading and intialization of the Messaging client,
+     * storing a Promise in window.Progressive.MessagingClientInitPromise that
+     * is resolved when the load and initialization is complete. If either load
+     * or init fails, the Promise is rejected.
+     */
+    const loadAndInitMessagingClient = () => {
+        window.Progressive.MessagingClientInitPromise = loadScriptAsPromise({
+            id: 'progressive-web-messaging-client',
+            src: MESSAGING_PWA_CLIENT_PATH,
+            rejectOnError: true
+        })
+            .then(
+                () => {
+                    // We assume window.Progressive will
+                    // exist at this point.
+                    const messagingClient = window.Progressive.MessagingClient || {}
+                    // If init is not a function, this will
+                    // throw, and the catch below will
+                    // cause the promise to reject with
+                    // the error.
+                    return messagingClient.init()
+                }
+            )
+            .catch(
+                // Catch the error to silence logging
+                (error) => Promise.reject(error)
+            )
     }
 
     if (isReactRoute()) {
@@ -79,12 +185,12 @@ const attemptToInitializeApp = () => {
             content: '#4e439b'
         });
 
-        // load the worker if available
-        // if no worker is available, we have to assume that promises might not be either.
+        // Attempt to load the worker.
         (('serviceWorker' in navigator)
          ? loadWorker()
-         : Promise.resolve()
-        ).then(() => {
+         : Promise.resolve(false)
+        ).then((serviceWorkerSupported) => {
+
             loadAsset('link', {
                 href: getAssetUrl('main.css'),
                 rel: 'stylesheet',
@@ -101,49 +207,69 @@ const attemptToInitializeApp = () => {
 
             asyncInitApp()
 
-            window.Progressive.capturedDocHTMLPromise = new Promise((resolve) => {
-                loadScript({
+            // loadingPromises is an Array of Promises that are created when
+            // we load scripts asynchronously.
+            const loadingPromises = [
+                window.Progressive.capturedDocHTMLPromise = loadScriptAsPromise({
                     id: 'progressive-web-capture',
                     src: CAPTURING_CDN,
-                    onload: () => {
-                        window.Capture.init((capture) => {
-                            // NOTE: by this time, the captured doc has changed a little
-                            // bit from original desktop. It now has some of our own
-                            // assets (e.g. main.css) but they can be safely ignored.
-                            resolve(capture.enabledHTMLString())
-                        })
-                    },
-                    onerror: resolve
+                    rejectOnError: false
                 })
-            })
+                    // do the init in a then() so that the Promise can resolve
+                    // to the enabledHTMLString
+                    .then(
+                        () => {
+                            window.Capture.init(
+                                (capture) => {
+                                    // NOTE: by this time, the captured doc has changed a little
+                                    // bit from original desktop. It now has some of our own
+                                    // assets (e.g. main.css) but they can be safely ignored.
+                                    return capture.enabledHTMLString()
+                                }
+                            )
+                        }
+                    ),
+
+                loadScriptAsPromise({
+                    id: 'progressive-web-jquery',
+                    src: getAssetUrl('static/js/jquery.min.js')
+                }),
+
+                loadScriptAsPromise({
+                    id: 'progressive-web-main',
+                    src: getAssetUrl('main.js')
+                }),
+
+                loadScriptAsPromise({
+                    id: 'progressive-web-vendor',
+                    src: getAssetUrl('vendor.js')
+                })
+            ]
 
             if (isRunningInAstro) {
-                window.Progressive.AstroPromise = new Promise((resolve) => {
-                    loadScript({
+                loadingPromises.push(
+                    window.Progressive.AstroPromise = loadScriptAsPromise({
                         id: 'progressive-web-app',
                         src: ASTRO_CLIENT_CDN,
-                        onload: () => {
-                            resolve(window.Astro)
-                        },
-                        onerror: resolve
+                        rejectOnError: false
                     })
-                })
+                        .then(() => window.Astro)
+                )
+
+            } else {
+                // If we're not running in Astro and the service worker is
+                // supported and loaded, then add a deferred function to
+                // load and initialize the Messaging client.
+                if (serviceWorkerSupported) {
+                    deferredUntilLoadComplete.push(loadAndInitMessagingClient)
+                }
             }
 
-            loadScript({
-                id: 'progressive-web-jquery',
-                src: getAssetUrl('static/js/jquery.min.js')
-            })
-
-            loadScript({
-                id: 'progressive-web-main',
-                src: getAssetUrl('main.js')
-            })
-
-            loadScript({
-                id: 'progressive-web-vendor',
-                src: getAssetUrl('vendor.js')
-            })
+            Promise.all(loadingPromises)
+                .then(
+                    // Execute any deferred functions
+                    deferredUntilLoadComplete.forEach((def) => { def() })
+                )
         })
     } else {
         const capturing = document.createElement('script')
