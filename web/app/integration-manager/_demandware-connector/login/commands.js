@@ -6,7 +6,7 @@ import {requestCartData, createBasket, handleCartData} from '../cart/utils'
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {SubmissionError} from 'redux-form'
 
-import {API_END_POINT_URL, REQUEST_HEADERS} from '../constants'
+import {HOME_URL, API_END_POINT_URL, REQUEST_HEADERS} from '../constants'
 
 const fetchLoginData = () => (dispatch) => {
     dispatch(setSigninLoaded())
@@ -84,7 +84,7 @@ export const login = ({login}) => (dispatch) => {
         .then(() => {
             // Navigate to the homepage, since we haven't made an account page yet
             // and demandware's account page is at the same URL as their login page
-            return '/on/demandware.store/Sites-2017refresh-Site/default/Home-Show'
+            return HOME_URL
         })
 }
 

@@ -28,8 +28,8 @@ import {analyticManager} from 'progressive-web-sdk/dist/analytics/analytic-manag
 import {clientAnalytics} from './utils/analytics/client-analytics'
 import {pushMessaging} from './utils/push-messaging/push-messaging-distributor'
 
-// import connector from './integration-manager/_merlins-connector'
-import connector from './integration-manager/_demandware-connector'
+// import Connector from './integration-manager/_merlins-connector'
+import Connector from './integration-manager/_demandware-connector'
 
 import {registerConnector} from './integration-manager'
 
@@ -39,7 +39,11 @@ analyticManager.init({
 }, clientAnalytics, pushMessaging)
 initCacheManifest(cacheHashManifest)
 
-registerConnector(connector)
+registerConnector(new Connector({
+    /* SFCC Configuration */
+    siteID: '2017refresh',
+    clientID: '5640cc6b-f5e9-466e-9134-9853e9f9db93'
+}))
 
 const store = configureStore()
 

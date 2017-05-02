@@ -43,7 +43,7 @@ export const splitFullName = (fullname) => {
 
 /**
  * Currently requestIdleCallback is only supported in Chrome,
- * we'll have to provide a fallback for iOS Safari
+ * TODO: We'll have to provide a fallback for iOS Safari
  * https://developers.google.com/web/updates/2015/08/using-requestidlecallback
  * http://caniuse.com/#feat=requestidlecallback
  */

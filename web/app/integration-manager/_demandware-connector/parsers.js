@@ -1,3 +1,4 @@
+import {config} from './index'
 import {SITE_ID} from './constants'
 import {formatPrice} from './utils'
 
@@ -23,7 +24,7 @@ const parseVariationCategories = (variation_attributes) => {
 }
 /* eslint-enable camelcase */
 
-export const getProductHref = (productID) => `/s/2017refresh/${productID}.html`
+export const getProductHref = (productID) => `/s/${config.siteID}/${productID}.html`
 
 export const parseProductDetails = ({id, name, price, long_description, image_groups, variants, variation_attributes}) => {
     const images = parseImages(image_groups)

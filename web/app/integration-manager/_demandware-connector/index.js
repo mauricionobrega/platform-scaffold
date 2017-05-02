@@ -1,6 +1,22 @@
+import assign from 'lodash.assign'
+
 import commands from './commands'
 import reducer from './reducer'
 
-const connector = {commands, reducer}
+const defaultConfig = {
+    /* ID of the site to be used */
+    siteID: '2017refresh',
+    /* Client ID identifying requests from this app to SFCC */
+    /* https://documentation.demandware.com/DOC2/index.jsp?topic=%2Fcom.demandware.dochelp%2FOCAPI%2F17.4%2Fusage%2FClientApplicationIdentification.html&cp=0_11_2_2 */
+    clientId: ''
+}
 
-export default connector
+export const config = {
+}
+
+const Connector = (cfg) => {
+    assign(config, defaultConfig, cfg)
+    return {commands, reducer}
+}
+
+export default Connector
