@@ -7,7 +7,7 @@ dependencies:
         - "native/node_modules"
     pre:
         - mkdir $CIRCLE_ARTIFACTS/logs
-        - ./web/scripts/install-google-chrome-stable.sh 2>&1 $CIRCLE_ARTIFACTS/logs/installChrome.log:
+        - ./web/scripts/install-google-chrome-stable.sh $> $CIRCLE_ARTIFACTS/logs/installChrome.log:
             background: true
             parallel: true
         - npm install &> $CIRCLE_ARTIFACTS/logs/npmInstall.log:
@@ -21,14 +21,14 @@ dependencies:
         # Disabling native `npm install` for now as we aren't set up to `npm install` a git dep yet
         #- npm install:
         #    pwd: native
-# test:
-#     override:
-#         - ./tests/system/run-tests-in-parallel.sh:
-#             pwd: web
-#             parallel: true
-#     post:
-#        - cp -R lighthouse/* $CIRCLE_ARTIFACTS:
-#            pwd: web
+test:
+    override:
+        - ./tests/system/run-all-tests.sh:
+            pwd: web
+            parallel: true
+    post:
+       - cp -R lighthouse/* $CIRCLE_ARTIFACTS:
+           pwd: web
 experimental:
     notify:
         branches:

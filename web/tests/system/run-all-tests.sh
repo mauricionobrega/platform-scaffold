@@ -7,9 +7,11 @@ set -o nounset
 if [ $CIRCLE_NODE_TOTAL -eq 1 ]; then
   echo 'Running Lint'
   npm run lint
+  echo 'Running Running Unit Tests'
   npm test -- --runInBand
+  echo 'Running Lighthouse Test'
   npm run test:pwa-ci
-  ./tests/system/start-test-server.sh
+  echo 'Running End to End Tests"
   npm run test:e2e
 
 else
@@ -24,7 +26,7 @@ else
 	    npm run test:pwa-ci
   	fi
 
-    # The other cirlce_node_index workbers should divide up the tests
+    # The other cirlce_node_index workers should divide up the tests
     if [ $CIRCLE_NODE_INDEX -gt 0 ]; then
     	echo 'Running Lint'
 	  	npm run lint
@@ -32,8 +34,6 @@ else
 		echo 'Running Unit Tests'
 		npm test -- --runInBand
 
-		# echo 'start-test-server'
-		# ./tests/system/start-test-server.sh
 		i=0
 		for testfile in $(find ./tests/system/workflows/ -name '*.js'| sort); do
 			if [ $(expr $i % $(expr $CIRCLE_NODE_TOTAL - 1)) -eq $(expr $CIRCLE_NODE_INDEX - 1) ]; then
