@@ -6,7 +6,7 @@ dependencies:
         - "web/node_modules"
         - "native/node_modules"
     pre:
-        - ./web/scripts/install-google-chrome-stable.sh
+        - ./web/scripts/install-google-chrome-stable.sh:
             background: true
             parallel: true
         - npm install:
