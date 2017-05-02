@@ -34,9 +34,8 @@ export const getCart = () => (dispatch) => {
     dispatch(removeNotification('cartUpdateError'))
     const currentTimeMs = new Date().getTime()
     return makeRequest(`${LOAD_CART_SECTION_URL}&_=${currentTimeMs}`, opts)
-        .then((response) => response.text())
-        .then((responseText) => {
-            const {cart} = JSON.parse(responseText)
+        .then((response) => response.json())
+        .then(({cart}) => {
             const items = cart.items.map((item) => {
                 item.product_price = textFromFragment(item.product_price)
                 return item
