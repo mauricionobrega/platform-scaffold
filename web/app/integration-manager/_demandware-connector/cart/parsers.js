@@ -1,9 +1,9 @@
 import {getProductHref} from '../parsers'
 import {formatPrice} from '../utils'
 
-export const parseCartContents = ({product_items, product_sub_total, merchandize_total_tax, order_total}) => /* Cart */ {
-    /* eslint-disable camelcase */
-    const items = (product_items || []).map(({item_id, product_id, price_after_order_discount, quantity}) => ({
+/* eslint-disable camelcase */
+export const parseCartContents = ({product_items = [], product_sub_total, merchandize_total_tax, order_total}) => /* Cart */ {
+    const items = product_items.map(({item_id, product_id, price_after_order_discount, quantity}) => ({
         id: item_id,
         productId: product_id,
         quantity,
@@ -24,14 +24,14 @@ export const parseCartContents = ({product_items, product_sub_total, merchandize
         // been provided so we fall back to product_sub_total when its missing
         orderTotal: formatPrice(order_total || product_sub_total)
     }
-    /* eslint-enable camelcase */
 }
+/* eslint-enable camelcase */
 
-export const parseCartProducts = ({product_items}) => /* Products */ {
-    /* eslint-disable camelcase */
-    const productMap = {};
+/* eslint-disable camelcase */
+export const parseCartProducts = ({product_items = []}) => /* Products */ {
+    const productMap = {}
 
-    (product_items || []).forEach(({product_id, product_name, price, item_text}) => {
+    product_items.forEach(({product_id, product_name, price, item_text}) => {
         productMap[getProductHref(product_id)] = {
             id: product_id,
             title: product_name,
@@ -40,7 +40,7 @@ export const parseCartProducts = ({product_items}) => /* Products */ {
             description: item_text
         }
     })
-    /* eslint-enable camelcase */
 
     return productMap
 }
+/* eslint-enable camelcase */
