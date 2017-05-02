@@ -24,7 +24,7 @@ test:
         # Run end-to-end tests
         # - npm run smoke-test:
         #    pwd: web
-        - ./web/tests/system/run-tests-in-parallel.sh:
+        - ./tests/system/run-tests-in-parallel.sh:
             parallel: true
             pwd: web
     post:
