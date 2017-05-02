@@ -1,5 +1,5 @@
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
-import {textFromFragment, productSubtotal} from '../utils'
+import {textFromFragment, productSubtotal, getHighResImage} from '../utils'
 
 export const parseCartProducts = ({items}) => /* Products */ {
     const products = items.map(({product_id, product_name, product_url, product_price, product_image}) => ({
@@ -8,11 +8,11 @@ export const parseCartProducts = ({items}) => /* Products */ {
         href: product_url,
         price: textFromFragment(product_price),
         thumbnail: {
-            src: product_image.src,
+            src: getHighResImage(product_image.src),
             alt: product_image.alt,
-            size: {
-                width: `${product_image.width}px`,
-                height: `${product_image.height}px`
+            size: { /* See getHighResImage which has size hard-coded */
+                width: '240px',
+                height: '300px'
             }
         }
     }))
