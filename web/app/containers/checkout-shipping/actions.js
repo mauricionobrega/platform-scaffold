@@ -2,9 +2,7 @@
 /* eslint-disable import/named */
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {createAction} from '../../utils/utils'
-import {
-    UnwrappedCheckoutShipping
-} from '../templates'
+import {UnwrappedCheckoutShipping} from '../templates'
 import checkoutShippingParser from './parsers/checkout-shipping'
 import {addNotification, fetchPage, removeAllNotifications, removeNotification} from '../app/actions'
 import {getCustomerEntityID} from '../../store/checkout/selectors'
@@ -12,17 +10,17 @@ import {getIsLoggedIn} from '../app/selectors'
 import {getShippingFormValues} from '../../store/form/selectors'
 import {getSavedAddresses} from '../../store/checkout/shipping/selectors'
 import {receiveCheckoutData} from '../../store/checkout/actions'
+import {ADD_NEW_ADDRESS_FIELD} from './constants'
 
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 
 export const showCompanyAndApt = createAction('Showing the "Company" and "Apt #" fields')
-export const setShowAddNewAddress = createAction('Setting the "Add New Address" fields', 'showAddNewAddress')
-
+export const setShowAddNewAddress = createAction('Setting the "Saved/New Address" field', 'showAddNewAddress')
 export const receiveData = createAction('Receive Checkout Shipping Data')
+
 export const process = ({payload: {$, $response}}) => {
     return receiveData(checkoutShippingParser($, $response))
 }
-
 
 export const onShippingEmailRecognized = () => {
     return (dispatch) => {
@@ -93,65 +91,64 @@ export const submitSignIn = () => {
 export const submitShipping = () => {
     return (dispatch, getState) => {
         const currentState = getState()
-        const {
-            name,
-            username,
-            shipping_method,
-            saved_address
-        } = getShippingFormValues(currentState)
+        const submittingWithNewAddress = getShippingFormValues(currentState).saved_address === ADD_NEW_ADDRESS_FIELD
+        let address
 
-        const entityID = getCustomerEntityID(currentState)
-        const isLoggedIn = getIsLoggedIn(currentState)
-        const names = name.split(' ')
-        const shippingSelections = shipping_method.split('_')
-        const persistShippingURL = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/shipping-information`
-        const savedAddress = getSavedAddresses(currentState).toJS()
-            .filter((address) => address.id === parseInt(saved_address))[0] || {}
+        if (submittingWithNewAddress) {
+            const {name} = getShippingFormValues(currentState)
+            const names = name.split(' ')
+            const newAddress = getShippingFormValues(currentState)
 
-        let {
-            company,
-            country_id,
-            city,
-            addressLine1,
-            addressLine2,
-            region_id,
-            region,
-            postcode,
-            telephone,
-        } = getShippingFormValues(currentState)
+            address = {
+                firstname: names.slice(0, -1).join(' '),
+                lastname: names.slice(-1).join(' '),
+                company: newAddress.company || '',
+                telephone: newAddress.telephone,
+                postcode: newAddress.postcode,
+                city: newAddress.city,
+                street: newAddress.addressLine2
+                    ? [newAddress.addressLine1, newAddress.addressLine2]
+                    : [newAddress.addressLine1],
+                regionId: newAddress.region_id,
+                region: newAddress.region,
+                countryId: newAddress.country_id,
+                save_in_address_book: true
+            }
+        } else {
+            const {saved_address} = getShippingFormValues(currentState)
+            const savedAddress = getSavedAddresses(currentState).toJS()
+                .filter((address) => address.id === parseInt(saved_address))[0] || {}
 
-        /* eslint-disable camelcase */
-        const firstname = savedAddress.firstname || names.slice(0, -1).join(' ')
-        const lastname = savedAddress.lastname || names.slice(-1).join(' ')
-        company = savedAddress.company || company || ''
-        telephone = savedAddress.telephone || telephone
-        postcode = savedAddress.postcode || postcode
-        city = savedAddress.city || city
-        addressLine1 = savedAddress.street[0] || addressLine1
-        addressLine2 = savedAddress.street[1] || addressLine2
-        const street = addressLine2 ? [addressLine1, addressLine2] : [addressLine1]
-        country_id = savedAddress.country_id || country_id
-        region_id = savedAddress.region_id || region_id
-        region = savedAddress.region.region || region
-        /* eslint-enable camelcase */
-
-        const address = {
-            firstname,
-            lastname,
-            company,
-            telephone,
-            postcode,
-            city,
-            street,
-            regionId: region_id,
-            region,
-            countryId: country_id,
-            save_in_address_book: !!savedAddress
+            address = {
+                firstname: savedAddress.firstname,
+                lastname: savedAddress.lastname,
+                company: savedAddress.company,
+                telephone: savedAddress.telephone,
+                postcode: savedAddress.postcode,
+                city: savedAddress.city,
+                street: savedAddress.street[1]
+                    ? [savedAddress.street[0], savedAddress.street[1]]
+                    : [savedAddress.street[0]],
+                regionId: savedAddress.country_id,
+                region: savedAddress.region.region,
+                countryId: savedAddress.country_id,
+                save_in_address_book: false
+            }
         }
 
-        console.log('address', address)
+        // Prepare to update the store with the information submitted so far
+        const {username, shipping_method} = getShippingFormValues(currentState)
+        const shipping = {
+            address: {
+                ...address,
+                shipping_method,
+            }
+        }
+        dispatch(receiveCheckoutData({shipping, emailAddress: username}))
 
-        const addressInformation = {
+        // Prepare and then run Shipping Information request
+        const shippingSelections = shipping_method.split('_')
+        const addressData = {
             addressInformation: {
                 shippingAddress: address,
                 billingAddress: {
@@ -162,16 +159,10 @@ export const submitShipping = () => {
                 shipping_method_code: shippingSelections[1]
             }
         }
-
-        const shipping = {
-            address: {
-                ...address,
-                shipping_method,
-            }
-        }
-
-        dispatch(receiveCheckoutData({shipping, emailAddress: username}))
-        makeJsonEncodedRequest(persistShippingURL, addressInformation, {method: 'POST'})
+        const entityID = getCustomerEntityID(currentState)
+        const isLoggedIn = getIsLoggedIn(currentState)
+        const persistShippingURL = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/shipping-information`
+        makeJsonEncodedRequest(persistShippingURL, addressData, {method: 'POST'})
             .then((response) => response.json())
             .then((responseJSON) => {
                 if (responseJSON.payment_methods) {
