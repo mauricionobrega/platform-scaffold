@@ -84,7 +84,7 @@ export const fetchCartItemImages = () => (dispatch, getState) => {
             .map((cartItem) => {
                 const productId = cartItem.get('productId')
 
-                return makeDemandwareRequest(`${API_END_POINT_URL}/products/${[productId]}/images?all_images=false&view_type=${largeViewType},${thumbnailViewType}`, {method: 'GET'})
+                return makeDemandwareRequest(`${API_END_POINT_URL}/products/${productId}/images?all_images=false&view_type=${largeViewType},${thumbnailViewType}`, {method: 'GET'})
                     .then((response) => response.json())
                     .then(({image_groups, name, short_description}) => {
                         const product /* Product */ = {
