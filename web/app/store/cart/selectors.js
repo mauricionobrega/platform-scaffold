@@ -27,4 +27,7 @@ export const getCartSummaryCount = createSelector(
 
 export const getSubtotal = createGetSelector(getCart, 'subtotal')
 export const getOrderTotal = createGetSelector(getCart, 'orderTotal')
-export const getTaxAmount = createGetSelector(getCart, 'taxes')
+
+export const getTaxes = createGetSelector(getCart, 'taxes', Immutable.Map())
+export const getTaxAmount = createGetSelector(getTaxes, 'amount')
+export const getTaxLabel = createGetSelector(getTaxes, 'label')
