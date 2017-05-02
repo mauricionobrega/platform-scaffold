@@ -12,10 +12,14 @@ const readNativeAstroVersion = () => {
 
 module.exports = {
     devtool: 'cheap-source-map',
-    entry: './app/loader.js',
+    entry: {
+        loader: './app/loader.js',
+        'core-polyfill': 'core-js',
+        'fetch-polyfill': 'whatwg-fetch'
+    },
     output: {
         path: path.resolve(process.cwd(), 'build'),
-        filename: 'loader.js'
+        filename: '[name].js'
     },
     resolve: {
         extensions: ['.js', '.jsx', '.json']
