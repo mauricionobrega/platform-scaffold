@@ -5,10 +5,13 @@ set -o nounset
 
 
 if [ $CIRCLE_NODE_TOTAL -eq 1 ]; then
-  echo 'Running Lint'
+  echo 'Running lint'
   npm run lint
+  echo 'Running Unit Tests'
   npm test -- --runInBand
+  echo 'Running Lighthouse Tests'
   npm run test:pwa-ci
+  echo 'Running End to End Tests'
   ./tests/system/start-test-server.sh
   npm run test:e2e
 

@@ -12,7 +12,6 @@ dependencies:
             parallel: true
         - npm install &> $CIRCLE_ARTIFACTS/logs/npmInstall.log:
             pwd: web
-            background: true
             parallel: true
         - ./tests/system/start-test-server.sh &> $CIRCLE_ARTIFACTS/logs/startTestServer.log:
             pwd: web
