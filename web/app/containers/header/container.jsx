@@ -12,6 +12,7 @@ import * as selectors from './selectors'
 import {getCartSummaryCount} from '../../store/cart/selectors'
 
 import {HeaderBar} from 'progressive-web-sdk/dist/components/header-bar'
+import Icon from 'progressive-web-sdk/dist/components/icon'
 import Search from 'progressive-web-sdk/dist/components/search'
 
 import NavigationAction from './partials/navigation-action'
@@ -89,6 +90,9 @@ class Header extends React.Component {
             't--hide-label': isCollapsed
         })
 
+        const searchIcon = <Icon name="search" title="Submit search" />
+        const clearIcon = <Icon name="close" title="Clear search field" />
+
         return (
             <header className="t-header" ref={(el) => { this.headerHeight = el ? el.scrollHeight : Number.MAX_VALUE }}>
                 <div className="t-header__bar">
@@ -100,6 +104,7 @@ class Header extends React.Component {
                         <CartAction innerButtonClassName={innerButtonClassName} onClick={onMiniCartClick} />
                     </HeaderBar>
                 </div>
+
                 <Search
                     isOverlay
                     isOpen={searchIsOpen}
@@ -107,14 +112,20 @@ class Header extends React.Component {
                     onClose={onSearchCloseClick}
                     onSubmit={this.onSearchSubmit}
                     termSuggestions={searchSuggestions}
+                    submitButtonProps={{
+                        className: 'c--secondary t-header__search-submit-button',
+                        children: searchIcon
+                    }}
                     inputProps={{
                         placeholder: 'Search the entire store',
                         name: 'query'
                     }}
                     closeButtonProps={{
+                        className: 'u-visually-hidden'
+                    }}
+                    clearButtonProps={{
                         className: 'u-color-brand',
-                        icon: 'close',
-                        title: 'Dismiss search'
+                        children: clearIcon
                     }}
                 />
             </header>

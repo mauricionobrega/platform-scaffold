@@ -106,3 +106,14 @@
     top: 0;
     right: 0;
 }
+
+
+// Search Submit Button
+// ---
+//
+// 1. Add this border to simulating having padding without have to effect the
+//    button's height (like padding would)
+
+.t-header__search-submit-button {
+    border: 4px solid white; // 1
+}

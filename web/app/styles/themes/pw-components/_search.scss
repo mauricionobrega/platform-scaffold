@@ -51,6 +51,18 @@
     min-height: $header-height;
     padding: $unit*1.5;
     border: 0;
+
+    &[type] {
+        box-shadow: none;
+    }
+}
+
+
+// Submit
+// ---
+
+.pw-search__button-submit {
+    order: 2;
 }
 
 
