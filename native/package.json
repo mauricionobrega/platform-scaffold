@@ -2,7 +2,7 @@
   "dependencies": {
     "babel-runtime": "6.11.6",
     "bluebird": "^2.9.34",
-    "mobify-progressive-app-sdk": "1.0.0-beta4",
+    "mobify-progressive-app-sdk": "1.0.0-rc1",
     "webpack": "^2.2.0-rc.3"
   },
   "devDependencies": {
