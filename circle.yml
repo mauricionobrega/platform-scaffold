@@ -13,8 +13,7 @@ dependencies:
             pwd: web
             background: true
             parallel: true
-        - ./tests/system/start-test-server.sh:
-            pwd: web
+        - ./web/tests/system/start-test-server.sh &> $CIRCLE_ARTIFACTS/startTestServer.log:
             background: true
             parallel: true
         # Disabling native `npm install` for now as we aren't set up to `npm install` a git dep yet

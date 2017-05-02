@@ -32,8 +32,8 @@ else
 		echo 'Running Unit Tests'
 		npm test -- --runInBand
 
-		echo 'start-test-server'
-		./tests/system/start-test-server.sh
+		# echo 'start-test-server'
+		# ./tests/system/start-test-server.sh
 		i=0
 		for testfile in $(find ./tests/system/workflows/ -name '*.js'| sort); do
 			if [ $(expr $i % $(expr $CIRCLE_NODE_TOTAL - 1)) -eq $(expr $CIRCLE_NODE_INDEX - 1) ]; then
