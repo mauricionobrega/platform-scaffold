@@ -6,14 +6,14 @@ dependencies:
         - "web/node_modules"
         - "native/node_modules"
     pre:
-        - ./web/scripts/install-google-chrome-stable.sh </dev/null &>/dev/null &> $CIRCLE_ARTIFACTS/installChrome.log:
+        - ./web/scripts/install-google-chrome-stable.sh &> $CIRCLE_ARTIFACTS/logs/installChrome.log:
             background: true
             parallel: true
-        - npm install </dev/null >/dev/null 2>&1 &> $CIRCLE_ARTIFACTS/npmInstall.log:
+        - npm install &> $CIRCLE_ARTIFACTS/logs/npmInstall.log:
             pwd: web
             background: true
             parallel: true
-        - ./tests/system/start-test-server.sh &> $CIRCLE_ARTIFACTS/startTestServer.log:
+        - ./tests/system/start-test-server.sh &> $CIRCLE_ARTIFACTS/logs/startTestServer.log:
             pwd: web
             background: true
             parallel: true
