@@ -22,6 +22,7 @@ import {getCustomerEntityID} from '../../store/checkout/selectors'
 export const receiveData = createAction('Receive Cart Data')
 export const setRemoveItemId = createAction('Set item id for removal', 'removeItemId')
 export const setIsWishlistComplete = createAction('Set wishlist add complete', 'isWishlistAddComplete')
+export const setTaxRequestInitiation = createAction('Initiate tax request', 'initiateTaxRequest')
 
 export const fetchTaxEstimate = () => (dispatch, getState) => {
     const currentState = getState()
@@ -41,6 +42,11 @@ export const fetchTaxEstimate = () => (dispatch, getState) => {
             shipping_method_code: shippingMethod[1]
         }
     }
+    const taxErrorNotification = {
+        content: 'Unable to calculate tax.',
+        id: 'taxError',
+        showRemoveButton: true
+    }
     return makeJsonEncodedRequest(getTotalsURL, requestData, {method: 'POST'})
         .then((response) => response.json())
         .then((responseJSON) => {
@@ -51,14 +57,21 @@ export const fetchTaxEstimate = () => (dispatch, getState) => {
             }
             dispatch(receiveCartContents(cartTotals))
         })
+        .catch(() => {
+            dispatch(addNotification(taxErrorNotification))
+        })
 }
 
 export const submitEstimateShipping = () => {
     return (dispatch) => {
-        dispatch(closeModal(CART_ESTIMATE_SHIPPING_MODAL))
+        dispatch(setTaxRequestInitiation(true))
         dispatch(fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME))
             .then(() => {
                 dispatch(fetchTaxEstimate())
+            })
+            .then(() => {
+                dispatch(closeModal(CART_ESTIMATE_SHIPPING_MODAL))
+                dispatch(setTaxRequestInitiation(false))
             })
     }
 }
