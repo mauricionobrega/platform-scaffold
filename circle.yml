@@ -26,6 +26,7 @@ test:
         #    pwd: web
         - ./web/tests/system/run-tests-in-parallel.sh:
             parallel: true
+            pwd: web
     post:
        - cp -R lighthouse/* $CIRCLE_ARTIFACTS:
            pwd: web
