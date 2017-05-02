@@ -12,13 +12,14 @@ fi
 
 # Start preview if branch is not master.
 if [ "$CURRENT_BRANCH" != "master" ]; then
-    echo "Running tests against local build"
+    echo "Running tests against local build."
     # Kill background processes when this script exits.
     trap 'kill $(jobs -p)' EXIT
     export ACTIVE_PROFILE=local
+    echo "Running Test Server."
     npm run dev &
     while ! echo exit | nc localhost 8443; do sleep 20; done
 else
-    echo "Running tests against production"
+    echo "On production branch, test server not needed."
     export ACTIVE_PROFILE=production
 fi

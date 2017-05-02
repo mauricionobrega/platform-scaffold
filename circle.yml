@@ -6,10 +6,10 @@ dependencies:
         - "web/node_modules"
         - "native/node_modules"
     pre:
-        - ./web/scripts/install-google-chrome-stable.sh &> $CIRCLE_ARTIFACTS/installChrome.log:
+        - ./web/scripts/install-google-chrome-stable.sh </dev/null &>/dev/null &> $CIRCLE_ARTIFACTS/installChrome.log:
             background: true
             parallel: true
-        - npm install &> $CIRCLE_ARTIFACTS/npmInstall.log:
+        - npm install </dev/null >/dev/null 2>&1 &> $CIRCLE_ARTIFACTS/npmInstall.log:
             pwd: web
             background: true
             parallel: true
@@ -23,8 +23,8 @@ dependencies:
 test:
     override:
         - ./tests/system/run-tests-in-parallel.sh:
-            parallel: true
             pwd: web
+            parallel: true
     post:
        - cp -R lighthouse/* $CIRCLE_ARTIFACTS:
            pwd: web
