@@ -6,10 +6,10 @@ dependencies:
         - "web/node_modules"
         - "native/node_modules"
     pre:
-        - ./web/scripts/install-google-chrome-stable.sh:
+        - ./web/scripts/install-google-chrome-stable.sh &> $CIRCLE_ARTIFACTS/installChrome.log:
             background: true
             parallel: true
-        - npm install:
+        - npm install &> $CIRCLE_ARTIFACTS/npmInstall.log:
             pwd: web
             background: true
             parallel: true
@@ -18,21 +18,12 @@ dependencies:
         #    pwd: native
 test:
     override:
-        # - npm run lint:
-        #     pwd: web
-        # - npm test -- --runInBand:
-        #     pwd: web
-        # # Calculate the Lighthouse score 
-        # - npm run test:pwa-ci:
-        #     pwd: web
-        # Run end-to-end tests
-        # - npm run smoke-test:
-        #    pwd: web
         - ./tests/system/run-tests-in-parallel.sh:
             parallel: true
             pwd: web
     post:
        - cp -R lighthouse/* $CIRCLE_ARTIFACTS:
+           background: true
            pwd: web
 experimental:
     notify:
