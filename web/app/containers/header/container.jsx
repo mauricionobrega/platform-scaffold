@@ -106,6 +106,7 @@ class Header extends React.Component {
                 </div>
 
                 <Search
+                    className="t-header__search"
                     isOverlay
                     isOpen={searchIsOpen}
                     onChange={this.onChangeSearchQuery}

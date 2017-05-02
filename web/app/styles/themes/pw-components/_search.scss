@@ -29,10 +29,6 @@
     z-index: $z1-depth + 1;
 
     border-bottom: $border;
-
-    .pw-button {
-        min-height: $header-height;
-    }
 }
 
 
@@ -46,6 +42,8 @@
 
 // Search Input Field
 // ---
+//
+// 1. Override iOS styles
 
 .pw-search__input {
     min-height: $header-height;
@@ -53,7 +51,7 @@
     border: 0;
 
     &[type] {
-        box-shadow: none;
+        box-shadow: none; // 1
     }
 }
 
@@ -74,16 +72,6 @@
 
     &:not(.pw--is-empty) {
         animation: slide-up 0.3s ease-in 1 reverse, fadeIn 0.3s ease-out 1 forwards;
-    }
-
-    .pw-list-tile__primary {
-        color: $font-color;
-    }
-
-    .pw-list-tile__action {
-        padding: $unit*1.5;
-
-        color: $neutral-40;
     }
 }
 
