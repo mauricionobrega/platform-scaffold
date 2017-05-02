@@ -5,7 +5,7 @@ import {SubmissionError} from 'redux-form'
 import {receiveLoginHref, receiveRegisterHref} from '../actions'
 import {getLoginHref, getFormKey, getRegisterHref} from '../selectors'
 import {fetchPageData} from '../app/commands'
-import {setSigninLoaded, setRegisterLoaded} from '../../login/responses'
+import {setSigninLoaded, setRegisterLoaded} from '../../login/results'
 
 import {isFormResponseInvalid, parseSigninHref, parseRegisterHref} from './parsers/parsers'
 

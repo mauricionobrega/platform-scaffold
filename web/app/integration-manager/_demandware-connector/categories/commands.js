@@ -1,7 +1,7 @@
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 import {makeDemandwareRequest} from '../utils'
-import {receiveCategoryContents, receiveCategoryInformation} from '../../categories/responses'
-import {receiveProductListProductData} from '../../products/responses'
+import {receiveCategoryContents, receiveCategoryInformation} from '../../categories/results'
+import {receiveProductListProductData} from '../../products/results'
 import {parseProductListData} from '../parsers'
 
 import {API_END_POINT_URL, SITE_ID} from '../constants'

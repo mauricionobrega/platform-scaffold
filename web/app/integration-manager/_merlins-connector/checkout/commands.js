@@ -5,7 +5,7 @@ import {parseCheckoutEntityID, extractMagentoShippingStepData} from '../../../ut
 import {getCookieValue} from '../../../utils/utils'
 import {submitForm} from '../utils'
 import {getCart} from '../cart/commands'
-import {receiveCheckoutData, receiveShippingMethodInitialValues, receiveCheckoutConfirmationData} from './../../checkout/responses'
+import {receiveCheckoutData, receiveShippingMethodInitialValues, receiveCheckoutConfirmationData} from './../../checkout/results'
 import {fetchPageData} from '../app/commands'
 import {getCustomerEntityID} from '../selectors'
 import {getIsLoggedIn} from '../../../containers/app/selectors'

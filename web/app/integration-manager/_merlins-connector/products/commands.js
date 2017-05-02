@@ -3,7 +3,7 @@ import {receiveFormInfo} from '../actions'
 
 import {fetchPageData} from '../app/commands'
 
-import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../../products/responses'
+import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../../products/results'
 import {productDetailsParser, productDetailsUIParser, pdpAddToCartFormParser} from './parsers'
 
 export const fetchPdpData = (url) => (dispatch) => {

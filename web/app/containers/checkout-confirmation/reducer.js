@@ -1,7 +1,7 @@
 import {handleActions} from 'redux-actions'
 import Immutable from 'immutable'
 import * as checkoutConfirmationActions from './actions'
-import {receiveCheckoutConfirmationData} from '../../integration-manager/checkout/responses'
+import {receiveCheckoutConfirmationData} from '../../integration-manager/checkout/results'
 import {mergePayload} from '../../utils/reducer-utils'
 
 export default handleActions({

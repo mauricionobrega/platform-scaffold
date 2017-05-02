@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import {handleActions} from 'redux-actions'
-import {setSigninLoaded, setRegisterLoaded} from '../../integration-manager/login/responses'
+import {setSigninLoaded, setRegisterLoaded} from '../../integration-manager/login/results'
 
 const initialState = Immutable.fromJS({
     signinSection: false,

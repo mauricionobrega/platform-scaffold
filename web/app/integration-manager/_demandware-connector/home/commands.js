@@ -1,4 +1,4 @@
-import {receiveHomeData} from '../../responses'
+import {receiveHomeData} from '../../results'
 
 export const fetchHomeData = () => (dispatch) => {
     // Banners are being pulled from the bundle right now
