@@ -34,7 +34,7 @@ else
     echo 'Running Lint'
     # ESLint
     npm run lint
-    npm run -- --runInBand
+    npm test -- --runInBand
     npm run test:pwa-ci
   fi
 
