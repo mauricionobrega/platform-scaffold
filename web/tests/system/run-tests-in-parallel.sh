@@ -33,8 +33,10 @@ else
     echo 'Running Lint'
     # ESLint
     npm run lint
+    npm run -- --runInBand
+    npm run test:pwa-ci
   fi
-
+  
   #If the node total is greater than 1 assign the first node to lint. Divy up the remaining tests.
   if [ $CIRCLE_NODE_TOTAL -gt 1 ]; then
     echo $CIRCLE_NODE_TOTAL 'Circle CI nodes. Running tests in parallel.'

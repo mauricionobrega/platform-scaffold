@@ -24,8 +24,7 @@ test:
         # Run end-to-end tests
         # - npm run smoke-test:
         #    pwd: web
-        - ./tests/system/run-tests-in-parallel.sh:
-            pwd: web
+        - ./web/tests/system/run-tests-in-parallel.sh:
             parallel: true
     post:
        - cp -R lighthouse/* $CIRCLE_ARTIFACTS:
