@@ -21,7 +21,6 @@ import {
     UnwrappedLogin,
     UnwrappedProductDetails,
     UnwrappedProductList,
-    UnwrappedSearchResult
 } from '../templates'
 
 import Home from '../home/container'
@@ -38,7 +37,6 @@ import * as footerActions from '../footer/actions'
 import * as navigationActions from '../navigation/actions'
 import * as productsActions from '../../store/products/actions'
 import * as categoriesActions from '../../store/categories/actions'
-import * as searchResultActions from '../../store/search-result/actions'
 
 import {OFFLINE_ASSET_URL} from './constants'
 import {closeModal} from '../../store/modals/actions'
@@ -174,9 +172,6 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                     dispatch(checkoutConfirmationActions.process(receivedAction))
                     // Resets the cart count to 0
                     dispatch(cartActions.getCart())
-                } else if (pageComponent === UnwrappedSearchResult) {
-                    dispatch(searchResultActions.processSearchResultData(receivedAction))
-                    dispatch(productsActions.processSearchResult(receivedAction))
                 }
                 dispatch(footerActions.process(receivedAction))
                 dispatch(navigationActions.process(receivedAction))

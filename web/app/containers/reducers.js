@@ -14,8 +14,6 @@ import login from './login/reducer'
 import navigation from './navigation/reducer'
 import productDetails from './product-details/reducer'
 import productList from './product-list/reducer'
-import searchResult from './search-result/reducer'
-
 
 const uiReducer = combineReducers({
     app,
@@ -29,8 +27,7 @@ const uiReducer = combineReducers({
     login,
     navigation,
     productDetails,
-    productList,
-    searchResult
+    productList
 })
 
 export default uiReducer

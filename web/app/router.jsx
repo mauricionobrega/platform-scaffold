@@ -6,7 +6,7 @@ import {Provider} from 'react-redux'
 
 // Containers
 import App from './containers/app/container'
-import {Cart, CheckoutConfirmation, CheckoutPayment, CheckoutShipping, Home, Login, ProductList, ProductDetails, SearchResult} from './containers/templates'
+import {Cart, CheckoutConfirmation, CheckoutPayment, CheckoutShipping, Home, Login, ProductList, ProductDetails} from './containers/templates'
 import CheckoutHeader from './containers/checkout-header/container'
 import CheckoutFooter from './containers/checkout-footer/container'
 
@@ -47,7 +47,7 @@ const Router = ({store}) => (
                 <Route component={ProductList} path="charms.html" routeName="productListPage" />
                 <Route component={ProductDetails} path="checkout/cart/configure/id/*/product_id/*/" routeName="cartEditPage" />
                 <Route component={ProductDetails} path="*.html" routeName="productDetailsPage" />
-                <Route component={SearchResult} path="catalogsearch/result/*" routeName="searchResultPage" />
+                <Route component={ProductList} path="catalogsearch/result/*" routeName="searchResultPage" />
                 <Route component={CheckoutShipping} path="checkout/" routeName="checkingShipping" Header={CheckoutHeader} Footer={CheckoutFooter} headerHasSignIn />
                 {/*
                     The URL for the payment page on desktop is /checkout/#payment,
