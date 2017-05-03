@@ -19,13 +19,13 @@ const noop = (f) => f
 
 analyticManager.init({
     projectSlug: AJS_SLUG,      // eslint-disable-line no-undef
-    isDebug: false
+    debug: true
 })
 
 const configureStore = (initialState) => {
     const middlewares = [
-        thunk,
-        analytics(({type, payload}, state) => analyticManager.distribute(type, payload, state))
+        analytics(({type, payload}, state) => analyticManager.distribute(type, payload, state)),
+        thunk
     ]
 
     const reducer = combineReducers({

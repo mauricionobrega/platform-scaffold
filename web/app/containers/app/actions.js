@@ -2,7 +2,7 @@
 /* eslint-disable import/named */
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 
-import * as analyticConstants from 'progressive-web-sdk/dist/analytics/analytic-constants'
+import {EventAction, Page} from '../../../../../progressive-web-sdk/src/analytics/analytic-constants'
 
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
@@ -39,8 +39,8 @@ export const updateSvgSprite = createAction('Updated SVG sprite', ['sprite'])
 export const onRouteChanged = createActionWithAnalytics(
     'On route changed',
     ['currentURL'],
-    analyticConstants.pageview,
-    (currentURL, routeName) => ({name: routeName})
+    EventAction.pageview,
+    (currentURL, routeName) => ({[Page.templateName]: routeName})
 )
 
 /**
