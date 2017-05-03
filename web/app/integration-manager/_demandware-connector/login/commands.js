@@ -1,6 +1,6 @@
 import {noop} from 'progressive-web-sdk/dist/utils/utils'
-import {setRegisterLoaded, setSigninLoaded} from '../../login/responses'
-import {setLoggedIn} from '../../responses'
+import {setRegisterLoaded, setSigninLoaded} from '../../login/results'
+import {setLoggedIn} from '../../results'
 import {initDemandwareSession, storeAuthToken, makeDemandwareRequest, deleteBasketID, storeBasketID} from '../utils'
 import {requestCartData, createBasket, handleCartData} from '../cart/utils'
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'

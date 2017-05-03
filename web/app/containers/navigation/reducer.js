@@ -1,6 +1,6 @@
 import {handleActions} from 'redux-actions'
 import Immutable from 'immutable'
-import {receiveNavigationData, setLoggedIn} from '../../integration-manager/responses'
+import {receiveNavigationData, setLoggedIn} from '../../integration-manager/results'
 import {mergePayload} from '../../utils/reducer-utils'
 import {receiveData, setNavigationPath} from './actions'
 import {SIGN_IN_LINK_TEXT, ACCOUNT_LINK_TEXT} from './constants'

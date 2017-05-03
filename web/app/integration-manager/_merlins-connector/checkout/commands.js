@@ -1,11 +1,11 @@
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {SubmissionError} from 'redux-form'
-import {checkoutShippingParser, parseCheckoutData, parseShippingMethods, checkoutConfirmationParser} from './parsers'
-import {parseCheckoutEntityID} from '../../../utils/magento-utils'
+import {parseShippingInitialValues, parseLocations, parseShippingMethods, checkoutConfirmationParser} from './parsers'
+import {parseCheckoutEntityID, extractMagentoShippingStepData} from '../../../utils/magento-utils'
 import {getCookieValue} from '../../../utils/utils'
 import {submitForm} from '../utils'
 import {getCart} from '../cart/commands'
-import {receiveCheckoutShippingData, receiveCheckoutData, receiveShippingMethodInitialValues, receiveCheckoutConfirmationData} from './../../checkout/responses'
+import {receiveCheckoutData, receiveShippingMethodInitialValues, receiveCheckoutConfirmationData} from './../../checkout/results'
 import {fetchPageData} from '../app/commands'
 import {getCustomerEntityID} from '../selectors'
 import {getIsLoggedIn} from '../../../containers/app/selectors'
@@ -17,60 +17,59 @@ import * as paymentSelectors from '../../../store/checkout/payment/selectors'
 import * as shippingSelectors from '../../../store/checkout/shipping/selectors'
 import {CREATE_ACCOUNT_POST_URL} from '../constants'
 
-export const fetchShippingMethodsEstimate = (formKey) => {
-    return (dispatch, getState) => {
-        const currentState = getState()
-        const isLoggedIn = getIsLoggedIn(currentState)
-        const formValues = getFormValues(formKey)(currentState)
-        const entityID = getCustomerEntityID(currentState)
-        const registeredFieldNames = getFormRegisteredFields(formKey)(currentState).map(({name}) => name)
-        // Default values to use if none have been selected
-        const address = {country_id: 'US', region_id: '0', postcode: null}
+export const fetchShippingMethodsEstimate = (formKey) => (dispatch, getState) => {
+    const currentState = getState()
+    const isLoggedIn = getIsLoggedIn(currentState)
+    const formValues = getFormValues(formKey)(currentState)
+    const entityID = getCustomerEntityID(currentState)
+    const registeredFieldNames = getFormRegisteredFields(formKey)(currentState).map(({name}) => name)
+    // Default values to use if none have been selected
+    const address = {country_id: 'US', region_id: '0', postcode: null}
 
-        if (formValues) {
-            // Only return the field value if the field is registered
-            const getRegisteredFieldValue = (fieldName) => {
-                return registeredFieldNames.includes(fieldName) ? formValues[fieldName] : undefined
-            }
-            address.country_id = getRegisteredFieldValue('countryId')
-            address.region_id = getRegisteredFieldValue('regionId')
-            address.postcode = getRegisteredFieldValue('postcode')
-            if (formValues.region) {
-                address.region = getRegisteredFieldValue('region')
-                // Remove the region_id in case we have an old value
-                delete address.region_id
-            }
+    if (formValues) {
+        // Only return the field value if the field is registered
+        const getRegisteredFieldValue = (fieldName) => {
+            return registeredFieldNames.includes(fieldName) ? formValues[fieldName] : undefined
         }
-        const estimateURL = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/estimate-shipping-methods`
-        return makeJsonEncodedRequest(estimateURL, {address}, {method: 'POST'})
-            .then((response) => response.json())
-            .then((responseJSON) => {
-                const shippingMethods = parseShippingMethods(responseJSON)
-                const initialValues = {
-                    shipping_method: shippingMethods[0].value
-                }
-                dispatch(receiveCheckoutData({shipping: {shippingMethods}}))
-                dispatch(receiveShippingMethodInitialValues({initialValues})) // set initial value for method
-            })
+        address.country_id = getRegisteredFieldValue('countryId')
+        address.region_id = getRegisteredFieldValue('regionId')
+        address.postcode = getRegisteredFieldValue('postcode')
+        if (formValues.region) {
+            address.region = getRegisteredFieldValue('region')
+            // Remove the region_id in case we have an old value
+            delete address.region_id
+        }
     }
+    const estimateURL = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/estimate-shipping-methods`
+    return makeJsonEncodedRequest(estimateURL, {address}, {method: 'POST'})
+        .then((response) => response.json())
+        .then((responseJSON) => {
+            const shippingMethods = parseShippingMethods(responseJSON)
+            const initialValues = {
+                shipping_method: shippingMethods[0].value
+            }
+            dispatch(receiveCheckoutData({shipping: {shippingMethods}}))
+            dispatch(receiveShippingMethodInitialValues({initialValues})) // set initial value for method
+        })
 }
 
 const processCheckoutData = ($response) => (dispatch) => {
-    const customerEntityID = parseCheckoutEntityID($response)
-    dispatch(receiveEntityID(customerEntityID))
-    return dispatch(receiveCheckoutData(parseCheckoutData($response)))
+    dispatch(receiveEntityID(parseCheckoutEntityID($response)))
+    const magentoFieldData = extractMagentoShippingStepData($response)
+          .getIn(['children', 'shipping-address-fieldset', 'children'])
+
+    return dispatch(receiveCheckoutData({
+        locations: parseLocations(magentoFieldData).locations,
+        shipping: {
+            initialValues: parseShippingInitialValues(magentoFieldData)
+        }
+    }))
 }
 
 export const fetchCheckoutShippingData = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
-        .then(([$, $response]) => { // eslint-disable-line no-unused-vars
-            dispatch(receiveCheckoutShippingData(checkoutShippingParser($, $response)))
-            return dispatch(processCheckoutData($response))
-        })
-        .then(() => {
-            // fetch shipping estimate
-            return dispatch(fetchShippingMethodsEstimate(SHIPPING_FORM_NAME))
-        })
+        .then(([$, $response]) => dispatch(processCheckoutData($response)))  // eslint-disable-line no-unused-vars
+        .then(() => dispatch(fetchShippingMethodsEstimate(SHIPPING_FORM_NAME)))
         .catch((error) => { console.info(error.message) })
 }
 

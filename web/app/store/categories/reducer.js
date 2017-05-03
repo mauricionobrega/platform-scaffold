@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import {handleActions} from 'redux-actions'
 import {mergePayload} from '../../utils/reducer-utils'
-import {receiveCategory, receiveCategoryInformation, receiveCategoryContents} from '../../integration-manager/categories/responses'
+import {receiveCategory, receiveCategoryInformation, receiveCategoryContents} from '../../integration-manager/categories/results'
 import {changeFilter} from './actions'
 
 const initialState = Immutable.Map()

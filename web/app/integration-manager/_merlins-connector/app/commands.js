@@ -14,7 +14,7 @@ import {
     setPageFetchError,
     setCheckoutShippingURL,
     setCartURL
-} from '../../responses'
+} from '../../results'
 
 export const fetchPageData = (url) => (dispatch) => {
     return makeRequest(url)

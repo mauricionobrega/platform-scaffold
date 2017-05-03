@@ -7,7 +7,7 @@ import {normalizePhone} from '../../../utils/normalize-utils'
 import {showCompanyAndApt} from '../actions'
 import {SHIPPING_FORM_NAME} from '../constants'
 import {fetchShippingMethodsEstimate} from '../../../integration-manager/checkout/commands'
-import {getShippingFormTitle, getIsCompanyOrAptShown} from '../selectors'
+import {getIsCompanyOrAptShown} from '../selectors'
 import {getCountries, getAvailableRegions} from '../../../store/checkout/locations/selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -19,7 +19,6 @@ import Icon from 'progressive-web-sdk/dist/components/icon'
 const ShippingAddressForm = ({
     countries,
     fetchShippingMethods,
-    formTitle,
     handleShowCompanyAndApt,
     isCompanyOrAptShown,
     regions
@@ -42,7 +41,7 @@ const ShippingAddressForm = ({
     return (
         <div>
             <div className="t-checkout-shipping__title u-padding-top-lg u-padding-bottom-md">
-                <h2 className="u-h4 u-text-uppercase">{formTitle}</h2>
+                <h2 className="u-h4 u-text-uppercase">Shipping Address</h2>
             </div>
 
             <div className="u-padding-md u-border-light-top u-border-light-bottom u-bg-color-neutral-00">
@@ -179,10 +178,6 @@ ShippingAddressForm.propTypes = {
     * Fetches the available shipping methods from the back end
     */
     fetchShippingMethods: React.PropTypes.func,
-    /**
-    * The title for the form
-    */
-    formTitle: React.PropTypes.string,
 
     /**
      * Shows the "Company" and "Apt #" fields
@@ -214,7 +209,6 @@ ShippingAddressForm.propTypes = {
 
 const mapStateToProps = createPropsSelector({
     countries: getCountries,
-    formTitle: getShippingFormTitle,
     isCompanyOrAptShown: getIsCompanyOrAptShown,
     regions: getAvailableRegions(SHIPPING_FORM_NAME)
 })
@@ -223,8 +217,6 @@ const mapDispatchToProps = {
     handleShowCompanyAndApt: showCompanyAndApt,
     fetchShippingMethods: () => fetchShippingMethodsEstimate(SHIPPING_FORM_NAME)
 }
-
-
 
 export default connect(
     mapStateToProps,
