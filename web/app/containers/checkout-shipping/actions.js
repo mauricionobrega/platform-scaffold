@@ -109,9 +109,9 @@ export const submitShipping = () => {
                 street: newAddress.addressLine2
                     ? [newAddress.addressLine1, newAddress.addressLine2]
                     : [newAddress.addressLine1],
-                regionId: newAddress.region_id,
+                region_id: newAddress.region_id,
                 region: newAddress.region,
-                countryId: newAddress.country_id,
+                country_id: newAddress.country_id,
                 save_in_address_book: true
             }
         } else {
@@ -129,9 +129,9 @@ export const submitShipping = () => {
                 street: savedAddress.street[1]
                     ? [savedAddress.street[0], savedAddress.street[1]]
                     : [savedAddress.street[0]],
-                regionId: savedAddress.country_id,
+                region_id: savedAddress.region.region_id,
                 region: savedAddress.region.region,
-                countryId: savedAddress.country_id,
+                country_id: savedAddress.country_id,
                 save_in_address_book: false
             }
         }
