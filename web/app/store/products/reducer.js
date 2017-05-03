@@ -5,7 +5,7 @@ import {
     receiveProductDetailsProductData,
     receiveProductListProductData,
     receiveCartProductData
-} from '../../integration-manager/products/responses'
+} from '../../integration-manager/products/results'
 
 const initialState = Immutable.Map()
 

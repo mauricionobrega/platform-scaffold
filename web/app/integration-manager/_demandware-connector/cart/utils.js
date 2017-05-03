@@ -1,7 +1,7 @@
 import {makeDemandwareRequest, getBasketID, storeBasketID, deleteBasketID} from '../utils'
 import {getCartItems} from '../../../store/cart/selectors'
-import {receiveCartProductData} from '../../products/responses'
-import {receiveCartContents} from '../../cart/responses'
+import {receiveCartProductData} from '../../products/results'
+import {receiveCartContents} from '../../cart/results'
 
 import {getProductThumbnailSrcByPathKey, getProductThumbnailByPathKey} from '../../../store/products/selectors'
 import {getProductHref} from '../parsers'
