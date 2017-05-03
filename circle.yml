@@ -10,7 +10,7 @@ dependencies:
         - ./web/scripts/install-google-chrome-stable.sh $> $CIRCLE_ARTIFACTS/logs/installChrome.log:
             background: true
             parallel: true
-        - npm install &> $CIRCLE_ARTIFACTS/logs/npmInstall.log:
+        - npm install:
             pwd: web
             parallel: true
         - ./tests/system/start-test-server.sh &> $CIRCLE_ARTIFACTS/logs/startTestServer.log:
