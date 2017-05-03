@@ -116,24 +116,16 @@ export const submitPayment = (formValues) => (dispatch, getState) => {
     // debugger
     return createBasket()
         .then((basket) => {
-            // set payment method
             const orderTotal = getOrderTotal(getState())
             const type = getCardData(formValues.ccnumber).cardType
-            const expiryMonth = /^\d\d/.exec(formValues.ccexpiry)[0]
-            const expiryYear = /\d\d$/.exec(formValues.ccexpiry)[0]
             const requestOptions = {
                 method: 'POST',
                 body: JSON.stringify({
                     amount: orderTotal,
+                    payment_method_id: 'CREDIT_CARD',
                     payment_card: {
-                        card_type: type,
-                        expiration_month: parseInt(expiryMonth),
-                        expiration_year: 2000 + parseInt(expiryYear),
-                        holder: formValues.ccname,
-                        number: formValues.ccnumber,
-                        security_code: formValues.cvv
-                    },
-                    payment_method_id: 'CREDIT_CARD'
+                        card_type: type
+                    }
                 })
             }
             return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}/payment_instruments`, requestOptions)
@@ -176,7 +168,39 @@ export const submitPayment = (formValues) => (dispatch, getState) => {
                     if (responseJSON.fault) {
                         throw new Error(responseJSON.fault.message)
                     }
-
+                    return responseJSON
+                })
+                .then(({order_no, payment_instruments}) => {
+                    // set payment method
+                    // const orderTotal = getOrderTotal(getState())
+                    const type = getCardData(formValues.ccnumber).cardType
+                    const expiryMonth = /^\d\d/.exec(formValues.ccexpiry)[0]
+                    const expiryYear = /\d\d$/.exec(formValues.ccexpiry)[0]
+                    const paymentInstrumentID = payment_instruments[0].payment_instrument_id
+                    const requestOptions = {
+                        method: 'PATCH',
+                        body: JSON.stringify({
+                            payment_card: {
+                                card_type: type,
+                                expiration_month: parseInt(expiryMonth),
+                                expiration_year: 2000 + parseInt(expiryYear),
+                                holder: formValues.ccname,
+                                number: formValues.ccnumber,
+                                security_code: formValues.cvv
+                            },
+                            payment_method_id: 'CREDIT_CARD'
+                        })
+                    }
+                    return makeDemandwareRequest(`${API_END_POINT_URL}/orders/${order_no}/payment_instruments/${paymentInstrumentID}`, requestOptions)
+                        .then((response) => response.json())
+                        .then((responseJSON) => {
+                            if (responseJSON.fault) {
+                                throw new Error(responseJSON.fault.message)
+                            }
+                            return responseJSON
+                        })
+                })
+                .then((responseJSON) => {
                     dispatch(receiveOrderConfirmationContents({
                         orderNumber: responseJSON.order_no
                     }))
