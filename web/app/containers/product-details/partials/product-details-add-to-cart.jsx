@@ -40,6 +40,7 @@ const ProductDetailsAddToCart = ({quantity, setQuantity, onSubmit, disabled, isI
                 </div>
             </div>
 
+            {/* Note that the "Update Cart" feature doesn't actually do that.. */}
             <Button
                 type="submit"
                 icon="plus"
