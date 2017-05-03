@@ -45,8 +45,21 @@ export const parseProductDetails = ({id, name, price, long_description, image_gr
 }
 
 export const getCurrentProductID = () => {
-    const productIDMatch = /(\d+).html/.exec(window.location.href)
-    return productIDMatch ? productIDMatch[1] : ''
+    let productID
+
+    let productIDMatch = /(\d+).html/.exec(window.location.href)
+    if (productIDMatch) {
+        productID = productIDMatch[1]
+    }
+
+    if (!productID) {
+    // Cart edit style: https://.../checkout/cart/configure/id/{basket_id}/product_id/{product_id}/
+        productIDMatch = /product_id\/(\d+)/.exec(window.location.href)
+        productID = productIDMatch ? productIDMatch[1] : ''
+    }
+
+    console.log('[getCurrentProductID]', productID)
+    return productID
 }
 
 export const parseCategories = (categories) => {

@@ -66,7 +66,7 @@ class CartProductItem extends React.Component {
     render() {
         const {
             cartItemId,
-            configure_url, /* Example: https://www.merlinspotions.com/checkout/cart/configure/id/1906/product_id/1/ */
+            configureUrl,
             product,
             quantity,
             itemPrice,
@@ -107,7 +107,7 @@ class CartProductItem extends React.Component {
                     <Button
                         className="u-text-small u-color-brand u-flex-none u-text-letter-spacing-normal"
                         innerClassName="c--no-min-width u-padding-start-0 u-padding-bottom-0"
-                        href={configure_url}
+                        href={configureUrl}
                         >
                         Edit
                     </Button>
@@ -139,7 +139,7 @@ CartProductItem.defaultProps = {
 
 CartProductItem.propTypes = {
     cartItemId: PropTypes.string, /* CartItem.id */
-    configure_url: PropTypes.string,
+    configureUrl: PropTypes.string,
     href: PropTypes.string,
     itemPrice: PropTypes.string,
     linePrice: PropTypes.string,

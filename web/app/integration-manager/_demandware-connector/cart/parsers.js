@@ -2,12 +2,16 @@ import {getProductHref} from '../parsers'
 import {formatPrice} from '../utils'
 
 /* eslint-disable camelcase */
-export const parseCartContents = ({product_items = [], product_sub_total, merchandize_total_tax, order_total}) => /* Cart */ {
+export const parseCartContents = ({basket_id, product_items = [], product_sub_total, merchandize_total_tax, order_total}) => /* Cart */ {
     const items = product_items.map(({item_id, product_id, price_after_order_discount, quantity}) => ({
         id: item_id,
         productId: product_id,
         quantity,
         href: getProductHref(product_id),
+        // This is a "made up" URL scheme that matches Magento/Merlins right now
+        // so that we can use the same route. SFCC doesn't seem to have the same
+        // concept. See router.jsx
+        configureUrl: `/checkout/cart/configure/id/${basket_id}/product_id/${product_id}/`,
         itemPrice: `${formatPrice(price_after_order_discount / quantity)}`,
         linePrice: `${formatPrice(price_after_order_discount)}`
     }))
