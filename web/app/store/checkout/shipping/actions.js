@@ -13,6 +13,9 @@ export const fetchShippingMethodsEstimate = (formKey) => {
         const formValues = getFormValues(formKey)(currentState)
         const entityID = getCustomerEntityID(currentState)
         const registeredFieldNames = getFormRegisteredFields(formKey)(currentState).map(({name}) => name)
+
+        // @TODO: We should probably pull this data from the STATE instead of form
+        //        fields since there might not be fields, i.e. w/ Saved Addresses
         const address = parseLocationData(formValues, registeredFieldNames)
 
         const getEstimateURL = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/estimate-shipping-methods`

@@ -54,7 +54,15 @@ export const submitPayment = () => {
 
         const paymentInformation = {
             billingAddress: {
-                ...address
+                city: address.city,
+                company: address.company,
+                countryId: address.countryId,
+                firstname: address.firstname,
+                lastname: address.lastname,
+                postcode: address.postcode,
+                regionId: address.regionId,
+                saveInAddressBook: address.saveInAddressBook,
+                street: address.street,
             },
             cartId: entityID,
             email,
