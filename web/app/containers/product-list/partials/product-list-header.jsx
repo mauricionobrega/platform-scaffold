@@ -1,7 +1,8 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
-import * as selectors from '../selectors'
+import {getCategoryTitle, getCategoryParentTitle, getCategoryParentHref} from '../../../store/categories/selectors'
+import {getProductListContentsLoaded} from '../selectors'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
 import Link from 'progressive-web-sdk/dist/components/link'
@@ -48,10 +49,10 @@ ProductListHeader.propTypes = {
 }
 
 const mapStateToProps = createPropsSelector({
-    contentsLoaded: selectors.getProductListContentsLoaded,
-    parentHref: selectors.getProductListParentHref,
-    parentName: selectors.getProductListParentName,
-    title: selectors.getProductListTitle
+    contentsLoaded: getProductListContentsLoaded,
+    parentHref: getCategoryParentHref,
+    parentName: getCategoryParentTitle,
+    title: getCategoryTitle
 })
 
 export default connect(mapStateToProps)(ProductListHeader)
