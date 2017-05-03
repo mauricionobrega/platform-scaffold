@@ -175,8 +175,8 @@ const attemptToInitializeApp = () => {
      * otherwise slow down initialization.
      */
     const setupMessagingClient = (serviceWorkerSupported) => {
-        if ((!serviceWorkerSupported) || isRunningInAstro ) {
-            return;
+        if ((!serviceWorkerSupported) || isRunningInAstro) {
+            return
         }
         // We need to create window.Mobify.WebPush.PWAClient
         // at this point. If a project is configured to use
