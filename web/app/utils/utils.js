@@ -98,3 +98,8 @@ export const parseLocationData = (formValues, registeredFieldNames) => {
     }
     return address
 }
+
+
+export const buildQueryString = (query) => {
+    return query.replace(/ /g, '+')
+}
