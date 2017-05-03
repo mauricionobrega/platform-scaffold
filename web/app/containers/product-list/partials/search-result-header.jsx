@@ -20,7 +20,7 @@ const SearchResultHeader = ({searchTerm}) => (
             <div className="u-margin-top-md">
                 {searchTerm ?
                     <h1 className="u-text-uppercase">
-                        <span>Result For </span>
+                        <span>Results For </span>
                         <span className="u-text-lighter">'{searchTerm}'</span>
                     </h1>
                 :
