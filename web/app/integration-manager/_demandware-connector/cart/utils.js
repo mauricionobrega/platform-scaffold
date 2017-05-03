@@ -3,7 +3,7 @@ import {getCartItems} from '../../../store/cart/selectors'
 import {receiveCartProductData} from '../../products/results'
 import {receiveCartContents} from '../../cart/results'
 
-import {getProductThumbnailSrcByPathKey, getProductThumbnailByPathKey} from '../../../store/products/selectors'
+import {getProductById, getProductThumbnailSrcByPathKey, getProductThumbnailByPathKey} from '../../../store/products/selectors'
 import {getProductHref} from '../parsers'
 import {API_END_POINT_URL} from '../constants'
 import {parseCartProducts, parseCartContents} from './parsers'
@@ -87,9 +87,7 @@ export const fetchCartItemImages = () => (dispatch, getState) => {
                 return makeDemandwareRequest(`${API_END_POINT_URL}/products/${productId}/images?all_images=false&view_type=${largeViewType},${thumbnailViewType}`, {method: 'GET'})
                     .then((response) => response.json())
                     .then(({image_groups, name, short_description}) => {
-                        const product /* Product */ = {
-                            id: productId
-                        }
+                        const product = getProductById(productId)(currentState).toJS()
 
                         const thumbnail = image_groups.find((group) => group.view_type === thumbnailViewType)
                         if (thumbnail) {

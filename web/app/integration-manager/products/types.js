@@ -30,10 +30,10 @@ const Product = Runtypes.Record({
     id: ProductID,
     title: Text,
     price: Money,
-    href: URL,
-    thumbnail: Image,
-    images: Runtypes.Array(Image)
+    href: URL
 }).And(Runtypes.Optional({
+    thumbnail: Image,
+    images: Runtypes.Array(Image),
     description: Text,
     variationCategories: Runtypes.Array(VariationCategory),
     variants: Runtypes.Array(Variant)
