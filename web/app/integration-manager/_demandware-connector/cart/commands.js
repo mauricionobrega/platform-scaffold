@@ -1,5 +1,5 @@
 import {makeDemandwareRequest, getAuthTokenPayload} from '../utils'
-import {receiveCheckoutData} from '../../checkout/responses'
+import {receiveCheckoutData} from '../../checkout/results'
 import {parseAndReceiveCartResponse, requestCartData, createBasket} from './utils'
 import {getCurrentProductID} from '../parsers'
 import {API_END_POINT_URL} from '../constants'

@@ -1,5 +1,5 @@
 import {makeDemandwareRequest, getBasketID, storeBasketID, deleteBasketID} from '../utils'
-import {receiveCartContents} from '../../cart/responses'
+import {receiveCartContents} from '../../cart/results'
 import {getProductThumbnailSrcByPathKey} from '../../../store/products/selectors'
 import {parseBasketContents, getProductHref} from '../parsers'
 import {API_END_POINT_URL} from '../constants'

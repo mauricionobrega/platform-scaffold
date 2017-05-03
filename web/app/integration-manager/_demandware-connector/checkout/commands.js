@@ -3,7 +3,7 @@ import {createBasket} from '../cart/utils'
 import {makeDemandwareRequest} from '../utils'
 import {API_END_POINT_URL} from '../constants'
 import {STATES} from './constants'
-import {receiveCheckoutData, receiveShippingMethodInitialValues} from './../../checkout/responses'
+import {receiveCheckoutData, receiveShippingMethodInitialValues} from './../../checkout/results'
 
 export const fetchShippingMethodsEstimate = () => (dispatch) => {
     return createBasket()

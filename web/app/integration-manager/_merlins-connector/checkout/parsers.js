@@ -1,27 +1,7 @@
-import {extractMagentoShippingStepData} from '../../../utils/magento-utils'
+const getNameValue = (firstname, lastname) =>
+      [firstname, lastname].filter((item) => item).join(' ')
 
-
-export const checkoutShippingParser = ($, $html) => {
-    const shippingStepData = extractMagentoShippingStepData($html)
-
-    return {
-        formTitle: shippingStepData.getIn(['config', 'popUpForm', 'options', 'title'])
-    }
-}
-
-const getNameValue = (firstname, lastname) => {
-    let name
-    if (firstname.value) {
-        name = `${firstname.value} `
-    }
-    if (lastname.value) {
-        name += lastname.value
-    }
-
-    return name
-}
-
-const parseShippingInitialValues = (shippingFieldData) => {
+export const parseShippingInitialValues = (shippingFieldData) => {
     const fieldData = shippingFieldData.toJS()
     const streetFields = fieldData.street.children
     return {
@@ -51,16 +31,6 @@ export const parseLocations = (shippingStepData) => {
     }
 }
 
-export const parseCheckoutData = ($response) => {
-    const magentoFieldData = extractMagentoShippingStepData($response).getIn(['children', 'shipping-address-fieldset', 'children'])
-    const initialValues = parseShippingInitialValues(magentoFieldData)
-    const locationsData = parseLocations(magentoFieldData)
-    return {
-        ...locationsData,
-        shipping: {initialValues}
-    }
-}
-
 export const parseShippingMethods = (shippingMethods) => {
     if (!shippingMethods || !shippingMethods.map) {
         return []
@@ -72,4 +42,15 @@ export const parseShippingMethods = (shippingMethods) => {
             value: `${method.carrier_code}_${method.method_code}`
         }
     })
+}
+
+export const checkoutConfirmationParser = ($, $html) => {
+    const $checkoutSuccess = $html.find('.checkout-success')
+    const $orderInSpan = $checkoutSuccess.find('p span')
+    const $orderInAnchor = $checkoutSuccess.find('p a')
+
+    return {
+        orderNumber: $orderInSpan.length ? $orderInSpan.text() : $orderInAnchor.text(),
+        orderUrl: $orderInAnchor.length ? $orderInAnchor.attr('href') : ''
+    }
 }

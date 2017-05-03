@@ -5,7 +5,7 @@ import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 
 import * as appActions from './actions'
 
-import {receiveAppData, setPageFetchError, setCheckoutShippingURL, setCartURL, setLoggedIn} from '../../integration-manager/responses'
+import {receiveAppData, setPageFetchError, setCheckoutShippingURL, setCartURL, setLoggedIn} from '../../integration-manager/results'
 import {CURRENT_URL, FETCHED_PATHS} from './constants'
 
 export const initialState = fromJS({
