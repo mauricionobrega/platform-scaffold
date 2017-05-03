@@ -9,11 +9,12 @@ import ProductDetailsItemAddedModal from './partials/product-details-item-added-
 import ProductNearestStores from './partials/product-nearest-stores'
 
 const ProductDetails = ({route: {routeName}}) => {
+    const isInCheckout = (routeName === 'cartEditPage')
     return (
         <div className="t-product-details">
-            <ProductDetailsHeading isInCheckout={routeName === 'cartEditPage'} />
+            <ProductDetailsHeading isInCheckout={isInCheckout} />
             <ProductDetailsCarousel />
-            <ProductDetailsAddToCart />
+            <ProductDetailsAddToCart isInCheckout={isInCheckout} />
             <ProductDetailsDescription />
             <ProductDetailsItemAddedModal />
             <div className="u-padding-md u-bg-color-neutral-10">

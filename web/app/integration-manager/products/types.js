@@ -44,6 +44,5 @@ export const Products = Runtypes.Dictionary(Product, ProductID)
 
 export const ProductUIData = Runtypes.Record({
     breadcrumbs: Runtypes.Array(Link),
-    itemQuantity: Runtypes.Number,
-    ctaText: Runtypes.String
+    itemQuantity: Runtypes.Number
 })
