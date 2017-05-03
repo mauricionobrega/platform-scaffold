@@ -5,6 +5,8 @@ const path = require('path')
 const webpack = require('webpack')
 const baseCommon = require('./base.common')
 
+const webPackageJson = require('../package.json')
+
 const readNativeAstroVersion = () => {
     const nativePackageJson = require('../../native/package.json').dependencies['mobify-progressive-app-sdk']
     return `'${nativePackageJson}'`
@@ -54,6 +56,7 @@ module.exports = {
             }
         }),
         new webpack.DefinePlugin({
+            MESSAGING_SITE_ID: JSON.stringify(webPackageJson.messagingSiteId),
             NATIVE_WEBPACK_ASTRO_VERSION: readNativeAstroVersion()
         })
     ]

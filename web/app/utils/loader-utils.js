@@ -24,16 +24,16 @@ export const loadScript = ({id, src, onload, isAsync = true, onerror}) => {
 export const loadScriptAsPromise = ({id, src, onload, isAsync = true, rejectOnError = true}) => {
     return new Promise(
         (resolve, reject) => {
-            loadScript(
+            loadScript({
                 id,
                 src,
-                typeof onload === funcType ? () => {
+                onload: typeof onload === funcType ? () => {
                     onload()
                     resolve()
                 } : resolve,
                 isAsync,
-                rejectOnError ? reject : resolve
-            )
+                onerror: rejectOnError ? reject : resolve
+            })
         }
     )
 }

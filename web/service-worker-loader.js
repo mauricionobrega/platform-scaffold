@@ -7,9 +7,3 @@ if (isPreview) {
 } else {
     self.importScripts('https://cdn.mobify.com/sites/progressive-web-scaffold/production/worker.js')
 }
-
-// Load the Messaging worker code if we're not running under Astro
-import isRunningIn from './app/vendor/astro-detect'
-if (!isRunningIn.app()) {
-    self.importScripts('https://webpush-cdn.mobify.net/pwa-messaging-service-worker.js')
-}

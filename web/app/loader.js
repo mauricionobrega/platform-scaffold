@@ -1,4 +1,4 @@
-/* global NATIVE_WEBPACK_ASTRO_VERSION */
+/* global NATIVE_WEBPACK_ASTRO_VERSION, MESSAGING_SITE_ID */
 import {getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
 import cacheHashManifest from '../tmp/loader-cache-hash-manifest.json'
@@ -25,7 +25,6 @@ const attemptToInitializeApp = () => {
     window.Progressive = {
         AstroPromise: Promise.resolve({})
     }
-
 
     // This isn't accurate but does describe the case where the PR currently works
     const IS_PREVIEW = /mobify-path=true/.test(document.cookie)
@@ -72,7 +71,8 @@ const attemptToInitializeApp = () => {
 
         const workerPathElements = [SW_LOADER_PATH]
         const messagingSWVersionKey = 'messagingServiceWorkerVersion'
-        const versionData = localStorage.getItem(messagingSWVersionKey)
+
+        const versionData = localStorage.getItem(messagingSWVersionKey) || {}
 
         const version = versionData.SERVICE_WORKER_CURRENT_VERSION
         if (version) {
@@ -146,20 +146,51 @@ const attemptToInitializeApp = () => {
         })
             .then(
                 () => {
-                    // We assume window.Progressive will
-                    // exist at this point.
+                    // We assume window.Progressive will exist at this point.
                     const messagingClient = window.Progressive.MessagingClient || {}
                     // If init is not a function, this will
                     // throw, and the catch below will
                     // cause the promise to reject with
                     // the error.
-                    return messagingClient.init()
+                    return messagingClient.init(
+                        {
+                            debug: IS_PREVIEW,
+                            siteId: MESSAGING_SITE_ID  // replaced at build time
+                        }
+                    )
                 }
             )
             .catch(
                 // Catch the error to silence logging
-                (error) => Promise.reject(error)
+                (error) => {
+                    console.log(`Error loading ${MESSAGING_PWA_CLIENT_PATH}: ${error}`)
+                    Promise.reject(error)
+                }
             )
+    }
+
+    /**
+     * Do the preloading preparation for the Messaging client.
+     * This includes any work that does not require a network fetch or
+     * otherwise slow down initialization.
+     */
+    const setupMessagingClient = (serviceWorkerSupported) => {
+        if ((!serviceWorkerSupported) || isRunningInAstro ) {
+            return;
+        }
+        // We need to create window.Mobify.WebPush.PWAClient
+        // at this point. If a project is configured to use
+        // non-progressive Messaging, it will load the
+        // webpush-client-loader, which will then detect that
+        // window.Mobify.WebPush.PWAClient exists and do nothing.
+        window.Mobify = window.Mobify || {}
+        window.Mobify.WebPush = window.Mobify.WebPush || {}
+        window.Mobify.WebPush.PWAClient = {}
+
+        // We know we're not running in Astro, and that service worker is
+        // supported and loaded, so we can add a deferred function to
+        // load and initialize the Messaging client.
+        deferredUntilLoadComplete.push(loadAndInitMessagingClient)
     }
 
     if (isReactRoute()) {
@@ -190,6 +221,11 @@ const attemptToInitializeApp = () => {
          ? loadWorker()
          : Promise.resolve(false)
         ).then((serviceWorkerSupported) => {
+
+            // Set up the Messaging client intergration - this must be
+            // done now, but the work is deferred until after script
+            // loading is complete.
+            setupMessagingClient(serviceWorkerSupported)
 
             loadAsset('link', {
                 href: getAssetUrl('main.css'),
@@ -256,13 +292,6 @@ const attemptToInitializeApp = () => {
                         .then(() => window.Astro)
                 )
 
-            } else {
-                // If we're not running in Astro and the service worker is
-                // supported and loaded, then add a deferred function to
-                // load and initialize the Messaging client.
-                if (serviceWorkerSupported) {
-                    deferredUntilLoadComplete.push(loadAndInitMessagingClient)
-                }
             }
 
             Promise.all(loadingPromises)
