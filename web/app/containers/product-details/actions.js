@@ -73,18 +73,18 @@ export const submitCartForm = (formValues) => (dispatch, getStore) => {
         .then(() => dispatch(addToCartComplete()))
 }
 
-const variationBlurSelector = createPropsSelector({
+const variationChangeSelector = createPropsSelector({
     variationSelections: getAddToCartFormValues,
     categoryIds: getProductVariationCategoryIds,
     variants: getProductVariants
 })
 
-export const onVariationBlur = () => (dispatch, getStore) => {
+export const onVariationChange = () => (dispatch, getStore) => {
     const {
         variationSelections,
         categoryIds,
         variants
-    } = variationBlurSelector(getStore())
+    } = variationChangeSelector(getStore())
 
     return dispatch(getProductVariantData(variationSelections, variants, categoryIds))
 }
