@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react'
-import {getHighResImage} from '../../../utils/utils'
+import {getHighResImage} from '../../../integration-manager/_merlins-connector/utils'
 
 // SDK Components
 import Image from 'progressive-web-sdk/dist/components/image'

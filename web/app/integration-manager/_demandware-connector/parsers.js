@@ -1,15 +1,5 @@
-
 import {SITE_ID} from './constants'
-
-const formatPrice = (price) => {
-    if (!price) {
-        price = 0
-    }
-    return `$${price.toFixed(2)}`
-}
-
-
-
+import {formatPrice} from './utils'
 
 const parseImages = (imageGroups) => {
     const largeImages = imageGroups.filter((imageGroup) => imageGroup.view_type === 'large')[0]
@@ -33,6 +23,8 @@ const parseVariationCategories = (variation_attributes) => {
 }
 /* eslint-enable camelcase */
 
+export const getProductHref = (productID) => `/s/2017refresh/${productID}.html`
+
 export const parseProductDetails = ({id, name, price, long_description, image_groups, variants, variation_attributes}) => {
     const images = parseImages(image_groups)
     return {
@@ -53,36 +45,21 @@ export const parseProductDetails = ({id, name, price, long_description, image_gr
 }
 
 export const getCurrentProductID = () => {
-    const productIDMatch = /(\d+).html/.exec(window.location.href)
-    return productIDMatch ? productIDMatch[1] : ''
-}
+    let productID
 
-export const parseBasketContents = ({product_items, product_sub_total, product_total}) => {
-    /* eslint-disable camelcase */
-    let summary_count = 0
-    const items = product_items ? product_items.map(({item_id, product_name, product_id, base_price, quantity}) => {
-        summary_count += quantity
-        return {
-            product_name,
-            product_price: `${formatPrice(base_price)}`,
-            product_image: {},
-            qty: quantity,
-            // item_id is different from product_id
-            // it is used when updating the item in the cart
-            // (delete item, update item qty etc)
-            item_id,
-            // product_id is used to describe which product the item is
-            // (used to fetch product images, or build the product URL etc)
-            product_id
-        }
-    }) : []
-    return {
-        items,
-        subtotal: formatPrice(product_total),
-        subtotal_excl_tax: formatPrice(product_sub_total),
-        summary_count
+    let productIDMatch = /(\d+).html/.exec(window.location.href)
+    if (productIDMatch) {
+        productID = productIDMatch[1]
     }
-    /* eslint-enable camelcase  */
+
+    if (!productID) {
+    // Cart edit style: https://.../checkout/cart/configure/id/{basket_id}/product_id/{product_id}/
+        productIDMatch = /product_id\/(\d+)/.exec(window.location.href)
+        productID = productIDMatch ? productIDMatch[1] : ''
+    }
+
+    console.log('[getCurrentProductID]', productID)
+    return productID
 }
 
 export const parseCategories = (categories) => {
@@ -95,8 +72,6 @@ export const parseCategories = (categories) => {
         }
     })
 }
-
-export const getProductHref = (productID) => `/s/2017refresh/${productID}.html`
 
 export const parseProductHit = ({product_id, product_name, price, prices, image}) => {
     // Some products don't have _any_ pricing on them!

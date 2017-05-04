@@ -22,7 +22,7 @@ const noResultsText = 'We can\'t find products matching the selection'
 const ResultList = ({products}) => (
     <List className="c--borderless">
         {products.map((product) => {
-            return <ProductTile key={product.title} {...product} />
+            return <ProductTile key={product.id} {...product} />
         })}
     </List>
 )

@@ -1,8 +1,5 @@
 import * as Runtypes from 'runtypes'
-import {Text, ProductID, Identifier, URL, Image} from '../types'
-
-// A monetary value, notionally with an amount and a currency.
-const Money = Runtypes.String
+import {Text, ProductID, Identifier, URL, Image, Money} from '../types'
 
 const VariationCategoryID = Identifier
 
@@ -33,10 +30,10 @@ const Product = Runtypes.Record({
     id: ProductID,
     title: Text,
     price: Money,
-    href: URL,
-    thumbnail: Image,
-    images: Runtypes.Array(Image)
+    href: URL
 }).And(Runtypes.Optional({
+    thumbnail: Image,
+    images: Runtypes.Array(Image),
     description: Text,
     variationCategories: Runtypes.Array(VariationCategory),
     variants: Runtypes.Array(Variant)
@@ -47,6 +44,5 @@ export const Products = Runtypes.Dictionary(Product, ProductID)
 
 export const ProductUIData = Runtypes.Record({
     breadcrumbs: Runtypes.Array(Link),
-    itemQuantity: Runtypes.Number,
-    ctaText: Runtypes.String
+    itemQuantity: Runtypes.Number
 })

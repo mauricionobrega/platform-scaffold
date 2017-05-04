@@ -4,21 +4,12 @@ import {createPropsSelector} from 'reselect-immutable-helpers'
 import classNames from 'classnames'
 import {getCartURL} from '../../app/selectors'
 
-
 import Button from 'progressive-web-sdk/dist/components/button'
 import Image from 'progressive-web-sdk/dist/components/image'
 import List from 'progressive-web-sdk/dist/components/list'
 import ProductItem from '../../../components/product-item'
 
 import * as selectors from '../../../store/cart/selectors'
-
-// Parses strings in the format: $Dollars.Cents
-// Dollar amounts only, cents must be specified.
-export const productSubtotal = (price, quantity) => {
-    const priceInCents = price.replace(/[$,. ]/g, '')
-    const priceNumber = parseFloat(priceInCents) / 100
-    return (priceNumber * quantity).toFixed(2)
-}
 
 const SUBTOTAL_CLASSES = classNames(
     't-mini-cart__subtotal',
@@ -34,7 +25,7 @@ const SUBTOTAL_CLASSES = classNames(
 
 /* eslint-disable camelcase */
 
-const MiniCartProductList = ({items, subtotal, cartURL}) => {
+const MiniCartProductList = ({items, orderTotal, cartURL}) => {
     return (
         <div className="u-padding-md">
             <Button href={cartURL} className="c--tertiary u-width-full u-margin-bottom u-text-capitalize">
@@ -42,17 +33,17 @@ const MiniCartProductList = ({items, subtotal, cartURL}) => {
             </Button>
 
             <List>
-                {items.map(({product_name, product_price, qty, product_image, product_url}) =>
+                {items.map(({product, itemPrice, linePrice, quantity}) =>
                     <ProductItem
                         className="u-padding-top-lg u-padding-bottom-lg u-padding-start u-padding-end"
-                        title={<h2 className="u-h3">{product_name}</h2>}
-                        price={product_price}
-                        key={product_url}
-                        image={<Image src={product_image.src} alt={product_image.alt} width="64px" height="64px" />}
+                        title={<h2 className="u-h3">{product.name}</h2>}
+                        price={itemPrice}
+                        key={product.id}
+                        image={<Image src={product.thumbnail.src} alt={product.thumbnail.alt} width="64px" height="64px" />}
                         >
                         <div>
-                            <p className="u-margin-bottom-sm">Qty: {qty}</p>
-                            <p>Sub-Total: ${productSubtotal(product_price, qty)}</p>
+                            <p className="u-margin-bottom-sm">Qty: {quantity}</p>
+                            <p>Sub-Total: {linePrice}</p>
                         </div>
                     </ProductItem>
                 )}
@@ -60,7 +51,7 @@ const MiniCartProductList = ({items, subtotal, cartURL}) => {
 
             <div className={SUBTOTAL_CLASSES}>
                 <div className="u-flex u-text-uppercase">Subtotal:</div>
-                <div className="u-flex-none">{subtotal}</div>
+                <div className="u-flex-none">{orderTotal}</div>
             </div>
         </div>
     )
@@ -69,13 +60,13 @@ const MiniCartProductList = ({items, subtotal, cartURL}) => {
 MiniCartProductList.propTypes = {
     cartURL: PropTypes.string,
     items: PropTypes.array,
-    subtotal: PropTypes.string
+    orderTotal: PropTypes.string
 }
 
 const mapStateToProps = createPropsSelector({
     cartURL: getCartURL,
     items: selectors.getCartItems,
-    subtotal: selectors.getCartSubtotal
+    orderTotal: selectors.getOrderTotal
 })
 
 export default connect(mapStateToProps)(MiniCartProductList)

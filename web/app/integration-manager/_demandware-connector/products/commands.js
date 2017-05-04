@@ -25,7 +25,7 @@ export const fetchPdpData = () => (dispatch) => {
                 productDetailsMap[getProductHref(id)] = productDetailsData
             })
             dispatch(receiveProductDetailsProductData(productDetailsMap))
-            dispatch(receiveProductDetailsUIData({[productPathKey]: {itemQuantity: responseJSON.step_quantity, ctaText: 'Add To Cart'}}))
+            dispatch(receiveProductDetailsUIData({[productPathKey]: {itemQuantity: responseJSON.step_quantity}}))
         })
 }
 

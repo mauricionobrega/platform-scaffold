@@ -2,7 +2,7 @@ import {noop} from 'progressive-web-sdk/dist/utils/utils'
 import {setRegisterLoaded, setSigninLoaded} from '../../login/results'
 import {setLoggedIn} from '../../results'
 import {initDemandwareSession, storeAuthToken, makeDemandwareRequest, deleteBasketID, storeBasketID} from '../utils'
-import {requestCartData, parseAndReceiveCartResponse, createBasket} from '../cart/utils'
+import {requestCartData, createBasket, handleCartData} from '../cart/utils'
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {SubmissionError} from 'redux-form'
 
@@ -80,7 +80,7 @@ export const login = ({login}) => (dispatch) => {
             return createBasket(basketContents)
 
         })
-        .then((responseJSON) => dispatch(parseAndReceiveCartResponse(responseJSON)))
+        .then((responseJSON) => dispatch(handleCartData(responseJSON)))
         .then(() => {
             // Navigate to the homepage, since we haven't made an account page yet
             // and demandware's account page is at the same URL as their login page
