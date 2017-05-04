@@ -40,8 +40,8 @@ export const getProductVariantData = (selections, variants, categoryIds) => (dis
                 browserHistory.push({
                     pathname: getProductHref(id)
                 })
-                return
-            }, 500)
+            }, 250)
+            return
         }
     }
 }
