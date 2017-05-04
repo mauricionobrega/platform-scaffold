@@ -15,3 +15,5 @@ install:
 
 test_script:
   - pushd web && npm run smoke-test && popd
+  - echo hello
+  
