@@ -6,11 +6,11 @@
 // ---
 
 .u-text-font-family {
-    @include text-font-family(true);
+    font-family: $font-family !important;
 }
 
 .u-text-header-font-family {
-    @include text-header-font-family(true);
+    font-family: $header-font-family !important;
 
     // Added with webfontloader. See loadFonts() in app/container.js
     .wf-active & {
@@ -19,7 +19,7 @@
 }
 
 .u-text-loaded-header-font-family {
-    @include text-loaded-header-font-family(true);
+    font-family: $loaded-header-font-family !important;
 }
 
 
@@ -27,43 +27,46 @@
 // ---
 
 .u-text-thin {
-    @include text-thin(true);
+    font-weight: $font-weight-thin !important;
 }
 
 .u-text-extra-light {
-    @include text-extra-light(true);
+    font-weight: $font-weight-extra-light !important;
 }
 
 .u-text-light {
-    @include text-light(true);
+    font-weight: $font-weight-light !important;
 }
 
 .u-text-regular {
-    @include text-regular(true);
+    font-weight: $font-weight-regular !important;
 }
 
 .u-text-medium {
-    @include text-medium(true);
+    font-weight: $font-weight-medium !important;
 }
 
 .u-text-semi-bold {
-    @include text-semi-bold(true);
+    font-weight: $font-weight-semi-bold !important;
 }
 
 .u-text-bold {
-    @include text-bold(true);
+    font-weight: $font-weight-bold !important;
 }
 
 .u-text-normal {
-    @include text-normal(true);
+    font-weight: $font-weight-regular !important;
 }
 
 .u-text-italic {
-    @include text-italic(true);
+    font-style: italic !important;
 }
 
 .u-text-quiet {
-    @include text-quiet(true);
+    color: $neutral-50 !important;
+    font-size: $small-font-size !important;
+
+    fill: $neutral-50 !important;
 }
 
 
@@ -71,27 +74,27 @@
 // ---
 
 .u-text-size-smaller {
-    @include text-size-smaller(true);
+    font-size: $smaller-font-size !important;
 }
 
 .u-text-size-small {
-    @include text-size-small(true);
+    font-size: $small-font-size !important;
 }
 
 .u-text-size-normal {
-    @include text-size-normal(true);
+    font-size: $font-size !important;
 }
 
 .u-text-size-big {
-    @include text-size-big(true);
+    font-size: $big-font-size !important;
 }
 
 .u-text-size-bigger {
-    @include text-size-bigger(true);
+    font-size: $bigger-font-size !important;
 }
 
 .u-text-size-huge {
-    @include text-size-huge(true);
+    font-size: $huge-font-size !important;
 }
 
 
@@ -99,35 +102,35 @@
 // ---
 
 .u-text-line-height-0 {
-    @include line-height(true, 0)
+    line-height: 0 !important;
 }
 
 .u-text-line-height-tiny {
-    @include line-height(true, $tiny-line-height) // $tiny-line-height: 8px;
+    line-height: $tiny-line-height !important;
 }
 
 .u-text-line-height-smaller {
-    @include line-height(true, $smaller-line-height) // $smaller-line-height: 12px;
+    line-height: $smaller-line-height !important;
 }
 
 .u-text-line-height-small {
-    @include line-height(true, $small-line-height) // $small-line-height: 16px;
+    line-height: $small-line-height !important;
 }
 
 .u-text-line-height {
-    @include line-height(true, $line-height); // $line-height: 20px;
+    line-height: $line-height !important;
 }
 
 .u-text-line-height-big {
-    @include line-height(true, $big-line-height); // $big-line-height: 24px;
+    line-height: $big-line-height !important;
 }
 
 .u-text-line-height-bigger {
-    @include line-height(true, $bigger-line-height); // $bigger-line-height: 28px;
+    line-height: $bigger-line-height !important;
 }
 
 .u-text-line-height-huge {
-    @include line-height(true, $huge-line-height); // $huge-line-height: 32px;
+    line-height: $huge-line-height !important;
 }
 
 
@@ -135,11 +138,11 @@
 // ---
 
 .u-text-letter-spacing {
-    @include letter-spacing(true, 1px);
+    letter-spacing: 1px !important;
 }
 
 .u-text-letter-spacing-normal {
-    @include letter-spacing(true, initial);
+    letter-spacing: initial !important;
 }
 
 
@@ -150,15 +153,15 @@
 // these styles with the opposite direction. Templates need not be changed.
 
 .u-text-align-start {
-    @include text-align-start(true);
+    text-align: left !important;
 }
 
 .u-text-align-center {
-    @include text-align-center(true);
+    text-align: center !important;
 }
 
 .u-text-align-end {
-    @include text-align-end(true);
+    text-align: right !important;
 }
 
 
@@ -168,7 +171,7 @@
 // Set text uppercase, letterspaced for legibility.
 
 .u-text-uppercase {
-    @include text-uppercase(true);
+    text-transform: uppercase !important;
 }
 
 
@@ -178,7 +181,7 @@
 // Capitalize first letter of string.
 
 .u-text-capitalize {
-    @include text-capitalize(true);
+    text-transform: capitalize !important;
 }
 
 
@@ -188,7 +191,7 @@
 // Lowercase all text in string.
 
 .u-text-lowercase {
-    @include text-lowercase(true);
+    text-transform: lowercase !important;
 }
 
 
@@ -198,9 +201,9 @@
 // Vertical aligment of text and replaced (inline-block) elements within a line.
 
 .u-align-middle {
-    @include align-middle(true);
+    vertical-align: middle !important;
 }
 
 .u-align-baseline {
-    @include align-baseline(true);
+    vertical-align: baseline !important;
 }

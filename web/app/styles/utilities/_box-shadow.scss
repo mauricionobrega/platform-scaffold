@@ -2,25 +2,17 @@
 // ===
 
 .u-box-shadow {
-    @include box-shadow(true, false, $box-shadow);
+    box-shadow: $box-shadow !important;
 }
 
 .u-box-shadow-inset {
-    @include box-shadow(true, true, $inset-box-shadow);
+    box-shadow: $inset-box-shadow !important;
 }
 
 .u-box-shadow-lg {
-    @include box-shadow(true, false, $large-box-shadow);
+    box-shadow: $large-box-shadow !important;
 }
 
 .u-box-shadow-input {
-    @include box-shadow(true, true, $input-box-shadow);
-}
-
-.u-box-shadow-brand {
-    @include box-shadow(true, false, $box-shadow: null, $horizontal: 2px, $vertical: 2px, $blur: 5px, $distance: 5px, $color: $brand-color);
-}
-
-.u-box-shadow-accent-inset {
-    @include box-shadow(true, true, $box-shadow: null, $inset-box-shadow: null, $horizontal: 2px, $vertical: 2px, $blur: 5px, $distance: 5px, $color: $accent-color);
+    box-shadow: $input-box-shadow !important;
 }

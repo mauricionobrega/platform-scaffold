@@ -8,11 +8,11 @@
 // these styles with the opposite direction. Templates need not be changed.
 
 .u-float-start {
-    @include float-start(true);
+    float: left !important;
 }
 
 .u-float-end {
-    @include float-end(true);
+    float: right !important;
 }
 
 
@@ -20,9 +20,23 @@
 // ---
 //
 // Contain all floated children and their margins.
+//
+// 1. Avoid an Opera bug when the contenteditable attribute is included anywhere
+//    else in the document.
+// 2. Contain the the first child’s top margin. Ensures rendering is consistent
+//    with the other common clearfix method, `overflow: hidden`.
 
 .u-clearfix {
-    @include clearfix(true);
+    &::before,
+    &::after {
+        content: ' ' !important; // 1
+
+        display: table !important; // 2
+    }
+
+    &::after {
+        clear: both !important;
+    }
 }
 
 
@@ -32,7 +46,7 @@
 // Create a new positioning context.
 
 .u-position-relative {
-    @include position-relative(true);
+    position: relative !important;
 }
 
 
@@ -42,7 +56,7 @@
 // Create a new positioning context.
 
 .u-position-absolute {
-    @include position-absolute(true);
+    position: absolute !important;
 }
 
 
@@ -52,7 +66,7 @@
 // Create a new positioning context.
 
 .u-position-fixed {
-    @include position-fixed(true);
+    position: fixed !important;
 }
 
 
@@ -60,23 +74,26 @@
 // ---
 
 .u-position-top {
-    @include position-top(true);
+    top: 0 !important;
 }
 
 .u-position-right {
-    @include position-right(true);
+    right: 0 !important;
 }
 
 .u-position-bottom {
-    @include position-bottom(true);
+    bottom: 0 !important;
 }
 
 .u-position-left {
-    @include position-left(true);
+    left: 0 !important;
 }
 
 .u-position-full {
-    @include position-full(true);
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
 }
 
 
@@ -84,19 +101,19 @@
 // ---
 
 .u-bleed-top {
-    @include base-bleed(true, $unit, 'top');
+    margin-top: -$unit !important;
 }
 
 .u-bleed-end {
-    @include base-bleed(true, $unit, 'end');
+    margin-right: -$unit !important;
 }
 
 .u-bleed-bottom {
-    @include base-bleed(true, $unit, 'bottom');
+    margin-bottom: -$unit !important;
 }
 
 .u-bleed-start {
-    @include base-bleed(true, $unit, 'start');
+    margin-left: -$unit !important;
 }
 
 
@@ -107,7 +124,7 @@
 // will contain floated children and their margins.
 
 .u-block-context {
-    @include block-context(true);
+    overflow: hidden !important;
 }
 
 

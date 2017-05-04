@@ -5,39 +5,57 @@
 // ---
 
 .u-color-neutral-00 {
-    @include color-neutral-00(true);
+    color: $neutral-00 !important;
+
+    fill: $neutral-00 !important;
 }
 
 .u-color-neutral-10 {
-    @include color-neutral-10(true);
+    color: $neutral-10 !important;
+
+    fill: $neutral-10 !important;
 }
 
 .u-color-neutral-15 {
-    @include color-neutral-15(true);
+    color: $neutral-15 !important;
+
+    fill: $neutral-15 !important;
 }
 
 .u-color-neutral-20 {
-    @include color-neutral-20(true);
+    color: $neutral-20 !important;
+
+    fill: $neutral-20 !important;
 }
 
 .u-color-neutral-30 {
-    @include color-neutral-30(true);
+    color: $neutral-30 !important;
+
+    fill: $neutral-30 !important;
 }
 
 .u-color-neutral-40 {
-    @include color-neutral-40(true);
+    color: $neutral-40 !important;
+
+    fill: $neutral-40 !important;
 }
 
 .u-color-neutral-50 {
-    @include color-neutral-50(true);
+    color: $neutral-50 !important;
+
+    fill: $neutral-50 !important;
 }
 
 .u-color-neutral-60 {
-    @include color-neutral-60(true);
+    color: $neutral-60 !important;
+
+    fill: $neutral-60 !important;
 }
 
 .u-color-neutral-70 {
-    @include color-neutral-70(true);
+    color: $neutral-70 !important;
+
+    fill: $neutral-70 !important;
 }
 
 
@@ -45,31 +63,45 @@
 // ---
 
 .u-color-brand {
-    @include color-brand(true);
+    color: $brand-color !important;
+
+    fill: $brand-color !important;
 }
 
 .u-color-accent {
-    @include color-accent(true);
+    color: $accent-color !important;
+
+    fill: $accent-color !important;
 }
 
 .u-primary-action {
-    @include color-primary-action(true);
+    color: $primary-action-color !important;
+
+    fill: $primary-action-color !important;
 }
 
 .u-secondary-action {
-    @include color-secondary-action(true);
+    color: $secondary-action-color !important;
+
+    fill: $secondary-action-color !important;
 }
 
 .u-color-success {
-    @include color-success(true);
+    color: $success-color !important;
+
+    fill: $success-color !important;
 }
 
 .u-color-error {
-    @include color-error(true);
+    color: $error-color !important;
+
+    fill: $error-color !important;
 }
 
 .u-color-sale {
-    @include color-sale(true);
+    color: $sale-color !important;
+
+    fill: $sale-color !important;
 }
 
 
@@ -77,39 +109,39 @@
 // ---
 
 .u-bg-color-neutral-00 {
-    @include bg-color-neutral-00(true);
+    background-color: $neutral-00 !important;
 }
 
 .u-bg-color-neutral-10 {
-    @include bg-color-neutral-10(true);
+    background-color: $neutral-10 !important;
 }
 
 .u-bg-color-neutral-15 {
-    @include bg-color-neutral-15(true);
+    background-color: $neutral-15 !important;
 }
 
 .u-bg-color-neutral-20 {
-    @include bg-color-neutral-20(true);
+    background-color: $neutral-20 !important;
 }
 
 .u-bg-color-neutral-30 {
-    @include bg-color-neutral-30(true);
+    background-color: $neutral-30 !important;
 }
 
 .u-bg-color-neutral-40 {
-    @include bg-color-neutral-40(true);
+    background-color: $neutral-40 !important;
 }
 
 .u-bg-color-neutral-50 {
-    @include bg-color-neutral-50(true);
+    background-color: $neutral-50 !important;
 }
 
 .u-bg-color-neutral-60 {
-    @include bg-color-neutral-60(true);
+    background-color: $neutral-60 !important;
 }
 
 .u-bg-color-neutral-70 {
-    @include bg-color-neutral-70(true);
+    background-color: $neutral-70 !important;
 }
 
 
@@ -117,29 +149,29 @@
 // ---
 
 .u-bg-color-brand {
-    @include bg-color-brand(true);
+    background-color: $brand-color !important;
 }
 
 .u-bg-color-accent {
-    @include bg-color-accent(true);
+    background-color: $accent-color !important;
 }
 
 .u-bg-color-primary-action {
-    @include bg-color-primary-action(true);
+    background-color: $primary-action-color !important;
 }
 
 .u-bg-color-secondary-action {
-    @include bg-color-secondary-action(true);
+    background-color: $secondary-action-color !important;
 }
 
 .u-bg-color-success {
-    @include bg-color-success(true);
+    background-color: $success-color !important;
 }
 
 .u-bg-color-error {
-    @include bg-color-error(true);
+    background-color: $error-color !important;
 }
 
 .u-bg-color-sale {
-    @include bg-color-sale(true);
+    background-color: $sale-color !important;
 }

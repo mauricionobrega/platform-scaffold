@@ -2,17 +2,17 @@
 // ===
 
 .u-z-index-1 {
-    @include z-index(true, $z1-depth);
+    z-index: $z1-depth !important;
 }
 
 .u-z-index-2 {
-    @include z-index(true, $z2-depth);
+    z-index: $z2-depth !important;
 }
 
 .u-z-index-3 {
-    @include z-index(true, $z3-depth);
+    z-index: $z3-depth !important;
 }
 
 .u-z-index-4 {
-    @include z-index(true, $z4-depth);
+    z-index: $z4-depth !important;
 }

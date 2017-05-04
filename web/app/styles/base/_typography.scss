@@ -23,27 +23,27 @@ h6 {
 }
 
 h1 {
-    @include heading-level-1;
+    @extend %h1;
 }
 
 h2 {
-    @include heading-level-2;
+    @extend %h2;
 }
 
 h3 {
-    @include heading-level-3;
+    @extend %h3;
 }
 
 h4 {
-    @include heading-level-4;
+    @extend %h4;
 }
 
 h5 {
-    @include heading-level-5;
+    @extend %h5;
 }
 
 h6 {
-    @include heading-level-6;
+    @extend %h6;
 }
 
 
@@ -70,7 +70,7 @@ a {
 
 hr {
     margin: ($unit * 2) 0;
-    border: 1px solid $border-color;
+    border: $border;
     border-width: 0 0 1px;
 }
 

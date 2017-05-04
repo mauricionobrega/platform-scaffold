@@ -6,7 +6,7 @@
 // ---
 
 .u-display-block {
-    @include display-block(true);
+    display: block !important;
 }
 
 
@@ -14,7 +14,7 @@
 // ---
 
 .u-display-inline-block {
-    @include display-inline-block(true);
+    display: inline-block !important;
 }
 
 
@@ -22,7 +22,7 @@
 // ---
 
 .u-display-inline {
-    @include display-inline(true);
+    display: inline !important;
 }
 
 
@@ -30,5 +30,5 @@
 // ---
 
 .u-display-none {
-    @include display-none(true);
+    display: none !important;
 }
