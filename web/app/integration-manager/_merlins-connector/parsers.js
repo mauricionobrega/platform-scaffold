@@ -1,7 +1,7 @@
-import {SUGGESTION_URL} from '../constants'
-import {buildQueryString} from '../../../utils/utils'
+import {SUGGESTION_URL} from '../../containers/header/constants'
+import {buildQueryString} from '../../utils/utils'
 
-const parseSearchSuggestions = (json) => {
+export const parseSearchSuggestions = (json) => {
     if (!json.length) {
         return null
     }
@@ -18,5 +18,3 @@ const parseSearchSuggestions = (json) => {
 
     return suggestions
 }
-
-export default parseSearchSuggestions

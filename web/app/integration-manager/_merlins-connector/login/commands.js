@@ -1,11 +1,14 @@
-import {makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+import {makeRequest, makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import {SubmissionError} from 'redux-form'
 
 import {receiveLoginHref, receiveRegisterHref} from '../actions'
 import {getLoginHref, getFormKey, getRegisterHref} from '../selectors'
 import {fetchPageData} from '../app/commands'
+import {getCart} from '../cart/commands'
 import {setSigninLoaded, setRegisterLoaded} from '../../login/results'
+import {receiveNavigationData} from '../../results'
+import {parseNavigation} from '../navigation/parser'
 
 import {isFormResponseInvalid, parseSigninHref, parseRegisterHref} from './parsers/parsers'
 
@@ -73,3 +76,14 @@ export const navigateToSection = (router, routes, sectionName) => {
         router.push(findPathForRoute(routes, sectionName))
     }
 }
+
+export const logout = () => (dispatch) => (
+    makeRequest('/customer/account/logout/')
+        // Don't wait for the cart to do everything else
+        .then(() => { dispatch(getCart()) })
+        // Update navigation menu
+        // Need to request current location so that the right entry is active
+        .then(() => makeRequest(window.location.href))
+        .then(jqueryResponse)
+        .then(([$, $response]) => dispatch(receiveNavigationData(parseNavigation($, $response))))
+)
