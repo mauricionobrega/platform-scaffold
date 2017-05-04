@@ -40,7 +40,7 @@ class ProductNearestStores extends React.Component {
         })
 
         const merlinsPotionsScript = document.createElement('script')
-        merlinsPotionsScript.append(merlinsPotionsAsync)
+        merlinsPotionsScript.innerHTML = merlinsPotionsAsync
         document.body.appendChild(merlinsPotionsScript)
     }
 
