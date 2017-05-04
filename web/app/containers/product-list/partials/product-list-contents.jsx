@@ -88,7 +88,7 @@ const ProductListContents = ({
             <div className="t-product-list__num-results u-padding-md u-padding-start-sm u-padding-end-sm">
                 {contentsLoaded ?
                     <div>
-                        {hasProducts &&
+                        {products.length > 0 &&
                             <div className="u-flexbox">
                                 <div className="t-product-list__filter u-flex u-margin-end-md">
                                     <div className="u-text-semi-bold u-margin-bottom-sm">
@@ -100,14 +100,31 @@ const ProductListContents = ({
                                         onClick={openModal}
                                         disabled={routeName === 'searchResultPage' || activeFilters.length > 0}
                                     >
-                                        {/* This list of options corresponds to the functions in app/utils/sort-utils.js */}
-                                        <option value="position">Position</option>
-                                        <option value="name">Name</option>
-                                        <option value="price">Price</option>
-                                    </select>
+                                        Filter
+                                    </Button>
+                                </div>
+                                <div className="t-product-list__sort u-flex">
+                                    <label htmlFor="sort" className="u-text-semi-bold u-margin-bottom-sm">
+                                        Sort by
+                                    </label>
 
-                                    <div className="t-product-list__sort-icon">
-                                        <Icon name="caret-down" />
+                                    <div>
+                                        <div className="u-position-relative u-width-full">
+                                            <select
+                                                className="t-product-list__sort-select"
+                                                onChange={(e) => { sortChange(e.target.value) }}
+                                                onBlur={(e) => { sortChange(e.target.value) }}
+                                            >
+                                                {/* This list of options corresponds to the functions in app/utils/sort-utils.js */}
+                                                <option value="position">Position</option>
+                                                <option value="name">Name</option>
+                                                <option value="price">Price</option>
+                                            </select>
+
+                                            <div className="t-product-list__sort-icon">
+                                                <Icon name="caret-down" />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
