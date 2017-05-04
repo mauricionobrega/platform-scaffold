@@ -16,3 +16,11 @@ install:
 test_script:
   - pushd web && npm run test:pwa-ci && popd
   # - pushd web && npm run smoke-test && popd
+
+artifacts:
+  - path: web/lighthouse/audit-local.html
+    name: lighthouse
+
+  # - path: web/tests/screenshots
+  #   name: screenshots
+
