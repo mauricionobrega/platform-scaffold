@@ -11,7 +11,8 @@ install:
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
   # install modules
-  - pushd web && npm install && popd web
+  - pushd web && npm install && popd
 
 test_script:
-  - pushd web && npm run test:pwa-ci && popd web
+  - pushd web && npm run test:pwa-ci && popd
+  # - pushd web && npm run smoke-test && popd
