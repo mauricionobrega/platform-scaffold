@@ -5,7 +5,7 @@ import {createPropsSelector} from 'reselect-immutable-helpers'
 
 import {getItemQuantity, getAddToCartFormValues} from './selectors'
 import {getCurrentPathKey, getCartURL} from '../app/selectors'
-import {getProductVariants, getProductVariationCategories, getProductVariationCategoryIds} from '../../store/products/selectors'
+import {getSelectedProductId, getProductVariants, getProductVariationCategories, getProductVariationCategoryIds} from '../../store/products/selectors'
 
 import {addToCart} from '../../integration-manager/cart/commands'
 import {getProductVariantData} from '../../integration-manager/products/commands'
@@ -39,13 +39,13 @@ export const goToCheckout = () => (dispatch, getState) => {
 }
 
 const submitCartFormSelector = createPropsSelector({
-    key: getCurrentPathKey,
+    productId: getSelectedProductId,
     qty: getItemQuantity,
     variations: getProductVariationCategories
 })
 
 export const submitCartForm = (formValues) => (dispatch, getStore) => {
-    const {key, qty, variations} = submitCartFormSelector(getStore())
+    const {productId, qty, variations} = submitCartFormSelector(getStore())
 
     if (variations) {
         const errors = {}
@@ -60,7 +60,7 @@ export const submitCartForm = (formValues) => (dispatch, getStore) => {
     }
 
     dispatch(addToCartStarted())
-    return dispatch(addToCart(key, qty))
+    return dispatch(addToCart(productId, qty))
         .then(() => dispatch(openModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL)))
         .catch((error) => {
             console.error('Error adding to cart', error)

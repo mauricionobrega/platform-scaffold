@@ -132,3 +132,10 @@ export const makeDemandwareUnAuthenticatedRequest = (url, options) => {
     }
     return makeRequest(url, requestOptions)
 }
+
+export const formatPrice = (price) => {
+    if (!price) {
+        price = 0
+    }
+    return `$${price.toFixed(2)}`
+}

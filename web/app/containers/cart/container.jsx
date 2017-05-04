@@ -11,7 +11,7 @@ import Icon from 'progressive-web-sdk/dist/components/icon'
 import Image from 'progressive-web-sdk/dist/components/image'
 
 import {isRunningInAstro, trigger} from '../../utils/astro-integration'
-import {getCartContentsLoaded, getCartHasItems} from '../../store/cart/selectors'
+import {getCartLoaded, getCartHasItems} from '../../store/cart/selectors'
 import EstimateShippingReduxForm from './partials/cart-estimate-shipping'
 
 import CartWishlistModal from './partials/cart-wishlist'
@@ -80,12 +80,12 @@ class Cart extends React.Component {
 
     render() {
         const {
-            contentsLoaded,
+            cartLoaded,
             hasItems
         } = this.props
-        const isCartEmptyAndLoaded = !hasItems && contentsLoaded
+        const isCartEmptyAndLoaded = !hasItems && cartLoaded
         const templateClassnames = classNames('t-cart u-bg-color-neutral-10', {
-            't--loaded': contentsLoaded
+            't--loaded': cartLoaded
         })
 
         return (
@@ -105,13 +105,13 @@ class Cart extends React.Component {
 }
 
 Cart.propTypes = {
-    contentsLoaded: PropTypes.bool,
+    cartLoaded: PropTypes.bool,
     hasItems: PropTypes.bool,
     removeItemID: PropTypes.string
 }
 
 const mapStateToProps = createPropsSelector({
-    contentsLoaded: getCartContentsLoaded,
+    cartLoaded: getCartLoaded,
     hasItems: getCartHasItems
 })
 
