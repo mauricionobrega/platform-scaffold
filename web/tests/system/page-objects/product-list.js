@@ -1,7 +1,7 @@
 const selectors = {
     productListTemplateIdentifier: '.t-product-list__container',
     productDetailsItem(index) {
-        return `.pw-list .t-product-list__product-tile:nth-child(${index}) .pw--is-loaded`
+        return `.pw-list .pw-list-tile:nth-child(${index}) .pw--is-loaded`
     }
 }
 
