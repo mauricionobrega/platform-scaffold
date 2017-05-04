@@ -36,10 +36,12 @@ export const getProductVariantData = (selections, variants, categoryIds) => (dis
 
     for (const {values, id} of variants) {
         if (categoryIds.every((id) => selections[id] === values[id])) {
-            browserHistory.push({
-                pathname: getProductHref(id)
-            })
-            return
+            setTimeout(() => {
+                browserHistory.push({
+                    pathname: getProductHref(id)
+                })
+                return
+            }, 500)
         }
     }
 }
