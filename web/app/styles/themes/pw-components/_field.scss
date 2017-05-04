@@ -183,8 +183,7 @@ $field__disabled-select-triangle: 'data:image/svg+xml;utf8,<svg xmlns="http://ww
             pointer-events: none;
         }
 
-        &::before {
-            // 3
+        &::before { // 3
             content: '';
 
             position: absolute;
