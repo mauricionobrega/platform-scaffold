@@ -46,8 +46,8 @@ export const submitPayment = () => {
                 postcode,
                 city,
                 street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1],
-                regionId: region_id,
-                countryId: country_id,
+                region_id,
+                country_id,
                 saveInAddressBook: false
             }
         }
@@ -56,11 +56,11 @@ export const submitPayment = () => {
             billingAddress: {
                 city: address.city,
                 company: address.company,
-                countryId: address.countryId,
+                countryId: address.country_id,
                 firstname: address.firstname,
                 lastname: address.lastname,
                 postcode: address.postcode,
-                regionId: address.regionId,
+                regionId: address.region_id,
                 saveInAddressBook: address.saveInAddressBook,
                 street: address.street,
             },
