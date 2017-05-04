@@ -80,6 +80,7 @@ class App extends React.Component {
         requestIdleCallback(() => {
             UnwrappedProductList.preload()
         })
+
     }
 
     render() {
