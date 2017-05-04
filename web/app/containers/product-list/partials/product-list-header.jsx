@@ -18,6 +18,9 @@ const ProductListHeader = ({title, contentsLoaded}) => (
                     <Link href="/" className="u-text-size-small">Home</Link>
                 </div>
             }
+            <div className="t-product-list__breadcrumb">
+                <Link href="/" className="u-text-small">Home</Link>
+            </div>
             <div className="u-margin-top-md">
                 {contentsLoaded ?
                     <h1 className="u-text-uppercase">{title}</h1>

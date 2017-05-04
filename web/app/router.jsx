@@ -47,6 +47,7 @@ const Router = ({store}) => (
                 <Route component={ProductList} path="charms.html" routeName="productListPage" />
                 <Route component={ProductDetails} path="checkout/cart/configure/id/*/product_id/*/" routeName="cartEditPage" />
                 <Route component={ProductDetails} path="*.html" routeName="productDetailsPage" />
+                <Route component={ProductList} path="catalogsearch/result/*" routeName="searchResultPage" />
                 <Route component={CheckoutShipping} path="checkout/" routeName="checkingShipping" Header={CheckoutHeader} Footer={CheckoutFooter} headerHasSignIn />
                 {/*
                     The URL for the payment page on desktop is /checkout/#payment,
