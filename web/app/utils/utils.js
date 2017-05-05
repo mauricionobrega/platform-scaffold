@@ -64,9 +64,11 @@ export const typecheck = (type, value) => {
     return value
 }
 
-export const createTypedAction = (description, type) => createReduxAction(
+export const createTypedAction = (description, type, key) => createReduxAction(
     description,
-    (payload) => typecheck(type, payload)
+    key
+        ? (payload) => { return {[key]: typecheck(type, payload)} }
+        : (payload) => typecheck(type, payload)
 )
 
 export const parseLocationData = (formValues, registeredFieldNames) => {
