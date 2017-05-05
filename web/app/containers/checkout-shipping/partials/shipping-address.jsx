@@ -7,7 +7,7 @@ import classNames from 'classnames'
 import {setShowAddNewAddress} from '../actions'
 import {ADD_NEW_ADDRESS_FIELD, SAVED_SHIPPING_ADDRESS_FIELD} from '../constants'
 import {getIsLoggedIn} from '../../app/selectors'
-import {getShippingFormTitle, getShowAddNewAddress} from '../selectors'
+import {getShowAddNewAddress} from '../selectors'
 import {getSavedAddresses} from '../../../store/checkout/shipping/selectors'
 
 import Field from 'progressive-web-sdk/dist/components/field'
@@ -15,7 +15,6 @@ import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 import ShippingAddressFields from './shipping-address-fields'
 
 const ShippingAddressForm = ({
-    formTitle,
     handleShowAddNewAddress,
     isLoggedIn,
     savedAddresses,
@@ -59,7 +58,7 @@ const ShippingAddressForm = ({
 
     const renderAddressFormOrSavedAddressesOrBoth = () => {
         if (isLoggedIn && savedAddresses) {
-            const classes = classNames({
+            const classes = classNames('t-checkout-payment__add-new-address', {
                 'u-border-light u-padding-md': showAddNewAddress
             })
 
@@ -85,7 +84,9 @@ const ShippingAddressForm = ({
                         </ReduxForm.Field>
 
                         {showAddNewAddress &&
-                            <ShippingAddressFields />
+                            <div className="t-checkout-payment__add-new-address-form">
+                                <ShippingAddressFields />
+                            </div>
                         }
                     </div>
                 </FieldRow>
@@ -98,7 +99,7 @@ const ShippingAddressForm = ({
     return (
         <div className="t-checkout-shipping__shipping-address">
             <div className="t-checkout-shipping__title u-padding-top-lg u-padding-bottom-md">
-                <h2 className="u-h4 u-text-uppercase">{formTitle}</h2>
+                <h2 className="u-h4 u-text-uppercase">Shipping Address</h2>
             </div>
 
             <div className="u-padding-md u-border-light-top u-border-light-bottom u-bg-color-neutral-00">
@@ -151,7 +152,6 @@ ShippingAddressForm.propTypes = {
 }
 
 const mapStateToProps = createPropsSelector({
-    formTitle: getShippingFormTitle,
     isLoggedIn: getIsLoggedIn,
     savedAddresses: getSavedAddresses,
     showAddNewAddress: getShowAddNewAddress
