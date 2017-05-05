@@ -19,7 +19,10 @@ trap 'kill $(jobs -pr)' SIGINT SIGTERM EXIT
 # CI will fail the build if the score is below a threshold.
 # See min_lighthouse_score in package.json
 
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
+if [[ "$OSTYPE" == "msys" ]]; then
+	# Running on Windows
+	certutil –addstore -enterprise –f “Root” dev-server/localhost.pem
+else
 	sudo apt-get install libnss3-tools
 	# Initialize database of certificates
 	mkdir -p $HOME/.pki/nssdb
