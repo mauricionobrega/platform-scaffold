@@ -255,14 +255,16 @@ const attemptToInitializeApp = () => {
                     // to the enabledHTMLString
                     .then(
                         () => {
-                            window.Capture.init(
-                                (capture) => {
-                                    // NOTE: by this time, the captured doc has changed a little
-                                    // bit from original desktop. It now has some of our own
-                                    // assets (e.g. main.css) but they can be safely ignored.
-                                    return capture.enabledHTMLString()
-                                }
-                            )
+                            return new Promise((resolve) => {
+                                window.Capture.init(
+                                    (capture) => {
+                                        // NOTE: by this time, the captured doc has changed a little
+                                        // bit from original desktop. It now has some of our own
+                                        // assets (e.g. main.css) but they can be safely ignored.
+                                        resolve(capture.enabledHTMLString())
+                                    }
+                                )
+                            })
                         }
                     ),
 
