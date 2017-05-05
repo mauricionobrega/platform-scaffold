@@ -24,10 +24,8 @@ export const parseLocations = (shippingStepData) => {
     }
 
     return {
-        locations: {
-            countries: shippingStepData.getIn(['country_id', 'options']),
-            regions: shippingStepData.getIn(['region_id', 'options'])
-        }
+        countries: shippingStepData.getIn(['country_id', 'options']),
+        regions: shippingStepData.getIn(['region_id', 'options'])
     }
 }
 

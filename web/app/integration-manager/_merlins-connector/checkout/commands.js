@@ -5,7 +5,7 @@ import {parseCheckoutEntityID, extractMagentoShippingStepData} from '../../../ut
 import {getCookieValue} from '../../../utils/utils'
 import {submitForm} from '../utils'
 import {getCart} from '../cart/commands'
-import {receiveCheckoutData, receiveShippingMethodInitialValues, receiveCheckoutConfirmationData} from './../../checkout/results'
+import {receiveCheckoutData, receiveShippingMethodInitialValues, receiveCheckoutConfirmationData, receiveCheckoutLocations} from './../../checkout/results'
 import {fetchPageData} from '../app/commands'
 import {getCustomerEntityID} from '../selectors'
 import {getIsLoggedIn} from '../../../containers/app/selectors'
@@ -60,8 +60,9 @@ const processCheckoutData = ($response) => (dispatch) => {
     const magentoFieldData = extractMagentoShippingStepData($response)
           .getIn(['children', 'shipping-address-fieldset', 'children'])
 
+    dispatch(receiveCheckoutLocations(parseLocations(magentoFieldData)))
+
     return dispatch(receiveCheckoutData({
-        locations: parseLocations(magentoFieldData).locations,
         shipping: {
             initialValues: parseShippingInitialValues(magentoFieldData)
         }

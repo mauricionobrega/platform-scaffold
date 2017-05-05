@@ -5,7 +5,9 @@ const CountryID = Identifier
 
 const Country = Runtypes.Record({
     id: CountryID,
-    label: Text
+    label: Text,
+    regionRequired: Runtypes.Boolean,
+    postcodeRequired: Runtypes.Boolean
 })
 
 const Region = Runtypes.Record({
@@ -35,7 +37,7 @@ const ShippingMethod = Runtypes.Record({
     id: Identifier
 })
 
-const LocationList = Runtypes.Record({
+export const LocationList = Runtypes.Record({
     countries: Runtypes.Array(Country),
     regions: Runtypes.Array(Region)
 })

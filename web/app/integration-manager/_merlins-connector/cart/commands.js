@@ -3,13 +3,13 @@ import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 import {removeNotification} from '../../../containers/app/actions'
 import {getIsLoggedIn} from '../../../containers/app/selectors'
-import {getUenc} from '../selectors'
-import {getCustomerEntityID} from '../../../store/checkout/selectors'
+import {getCustomerEntityID, getUenc} from '../selectors'
 import {receiveCartContents} from '../../cart/results'
+import {receiveEntityID} from '../actions'
 import {receiveCartProductData} from '../../products/results'
 import {submitForm, textFromFragment} from '../utils'
 import {parseLocations} from '../checkout/parsers'
-import {receiveCheckoutData} from '../../checkout/results'
+import {receiveCheckoutLocations} from '../../checkout/results'
 import {fetchShippingMethodsEstimate} from '../checkout/commands'
 import {fetchPageData} from '../app/commands'
 import {parseCart, parseCartProducts} from './parser'
@@ -118,16 +118,11 @@ const ESTIMATE_FIELD_PATH = ['#block-summary', 'Magento_Ui/js/core/app', 'compon
 
 export const fetchCartPageData = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
-        .then((res) => {
-            const [$, $response] = res // eslint-disable-line no-unused-vars
-            const customerEntityID = parseCheckoutEntityID($response)
+        .then(([$, $response]) => { // eslint-disable-line no-unused-vars
             const magentoFieldData = extractMagentoJson($response).getIn(ESTIMATE_FIELD_PATH)
-            const locationsData = parseLocations(magentoFieldData)
 
-            return dispatch(receiveCheckoutData({
-                customerEntityID,
-                ...locationsData
-            }))
+            dispatch(receiveCheckoutLocations(parseLocations(magentoFieldData)))
+            dispatch(receiveEntityID(parseCheckoutEntityID($response)))
         })
         .then(() => dispatch(fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME)))
 }
