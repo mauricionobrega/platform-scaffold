@@ -113,20 +113,21 @@ const ShippingAddressForm = ({
                     <FieldRow>
                         <ReduxForm.Field component={Field} className="pw--has-select" name="countryId" label="Country">
                             <select>
-                                {countries.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
+                                {countries.map(({label, id}) => <option value={id} key={id}>{label}</option>)}
                             </select>
                         </ReduxForm.Field>
                     </FieldRow>
 
                     <FieldRow>
                         {regions.length === 0 ?
-                            <ReduxForm.Field component={Field} name="region" label="State/Province">
+                            <ReduxForm.Field component={Field} name="region" label="Region">
                                 <input type="text" noValidate />
                             </ReduxForm.Field>
                         :
                             <ReduxForm.Field component={Field} className="pw--has-select" name="regionId" label="State/Province">
                                 <select>
-                                    {regions.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
+                                    <option value={null}>Please select a region, state, or province</option>
+                                    {regions.map(({label, id}) => <option value={id} key={id}>{label}</option>)}
                                 </select>
                             </ReduxForm.Field>
                         }

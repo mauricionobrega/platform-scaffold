@@ -1,5 +1,5 @@
 import * as Runtypes from 'runtypes'
-import {Nullable, Money, Identifier, Email} from '../types'
+import {Nullable, Money, Identifier, Email, Text} from '../types'
 
 const CountryID = Identifier
 

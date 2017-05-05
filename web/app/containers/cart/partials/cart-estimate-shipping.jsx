@@ -38,7 +38,7 @@ export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateP
                     <FieldRow>
                         <ReduxForm.Field component={Field} className="pw--has-select" name="countryId" label="Country">
                             <select>
-                                {countries.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
+                                {countries.map(({label, id}) => <option value={id} key={id}>{label}</option>)}
                             </select>
                         </ReduxForm.Field>
                     </FieldRow>
@@ -51,6 +51,7 @@ export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateP
                         :
                             <ReduxForm.Field component={Field} className="pw--has-select" name="regionId" label="State/Province">
                                 <select>
+                                    <option value={null}>Please select a region, state, or province</option>
                                     {stateProvinces.map(({label, value}) => <option value={value} key={label}>{label}</option>)}
                                 </select>
                             </ReduxForm.Field>
