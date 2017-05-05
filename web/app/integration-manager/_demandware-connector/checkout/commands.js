@@ -3,7 +3,7 @@ import {createBasket} from '../cart/utils'
 import {makeDemandwareRequest} from '../utils'
 import {API_END_POINT_URL} from '../constants'
 import {STATES} from './constants'
-import {receiveCheckoutData, receiveShippingMethodInitialValues} from './../../checkout/results'
+import {receiveCheckoutData, receiveShippingMethodInitialValues, receiveCheckoutLocations} from './../../checkout/results'
 
 export const fetchShippingMethodsEstimate = () => (dispatch) => {
     return createBasket()
@@ -60,13 +60,13 @@ export const fetchCheckoutShippingData = () => (dispatch) => {
                             countryId: 'us'
                         }
                     }
-                    dispatch(receiveShippingMethodInitialValues({initialValues}))
                     /* eslint-enable camelcase */
-                    return dispatch(receiveCheckoutData({
-                        locations: {
-                            countries: [{value: 'us', label: 'United States'}],
-                            regions: STATES
-                        }
+                    dispatch(receiveShippingMethodInitialValues({initialValues}))
+                    dispatch(receiveCheckoutLocations({
+                        countries: [
+                            {value: 'us', label: 'United States', regionRequired: true, postcodeRequired: true}
+                        ],
+                        regions: STATES
                     }))
                 })
                 .then(() => dispatch(fetchShippingMethodsEstimate()))
