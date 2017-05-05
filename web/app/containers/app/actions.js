@@ -20,7 +20,7 @@ import {
     UnwrappedCheckoutShipping,
     UnwrappedLogin,
     UnwrappedProductDetails,
-    UnwrappedProductList
+    UnwrappedProductList,
 } from '../templates'
 
 import Home from '../home/container'
