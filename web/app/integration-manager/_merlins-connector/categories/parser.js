@@ -6,7 +6,10 @@ import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 export const parseCategoryId = ($, $html) => {
     const className = $html.find('li[class*="category"]').attr('class')
     const classMatch = /category(\d+)/.exec(className)
-    return classMatch[1]
+    if (classMatch) {
+        return classMatch[1]
+    }
+    return null
 }
 
 export const parseCategoryTitle = ($, $html) => getTextFrom($html, '.page-title')

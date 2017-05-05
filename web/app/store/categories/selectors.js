@@ -17,6 +17,7 @@ export const getCategoryProductPaths = createGetSelector(getSelectedCategory, 'p
 export const getCategoryItemCount = createGetSelector(getSelectedCategory, 'itemCount')
 export const getCategoryTitle = createGetSelector(getSelectedCategory, 'title')
 export const getCategoryParentID = createGetSelector(getSelectedCategory, 'parentId', null)
+export const getCategorySearchTerm = createGetSelector(getSelectedCategory, 'searchTerm')
 
 export const getCategoryParent = createSelector(
     getCategories,
