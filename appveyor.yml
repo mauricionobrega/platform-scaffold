@@ -12,6 +12,9 @@ install:
   - ps: Install-Product node $env:nodejs_version
   # install modules
   - pushd web && npm install && popd
+  # Install localhost certificate
+  - openssl pkcs12 -inkey web/dev-server/localhost.pem -export -out web/dev-server/localhost.pfx
+  - ps: Import-PfxCertificate -FilePath web/dev-server/localhost.pfx
 
 test_script:
   - pushd web && npm run test:pwa-ci && popd
