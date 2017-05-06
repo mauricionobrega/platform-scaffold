@@ -5,7 +5,7 @@ import {createPropsSelector} from 'reselect-immutable-helpers'
 import {CART_ESTIMATE_SHIPPING_MODAL, ESTIMATE_FORM_NAME} from '../constants'
 import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {isModalOpen} from 'progressive-web-sdk/dist/store/modals/selectors'
-import {getCountries, getAvailableRegions} from '../../../store/checkout/locations/selectors'
+import {getCountries, getAvailableRegions} from '../../../store/checkout/selectors'
 import {submitEstimateShipping} from '../actions'
 import {isTaxRequestPending} from '../selectors'
 
