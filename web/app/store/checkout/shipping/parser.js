@@ -36,11 +36,11 @@ export const parseShippingInitialValues = (shippingFieldData) => {
     }
 
     if (fieldData.country_id.value) {
-        shippingData.country_id = fieldData.country_id.value
+        shippingData.countryId = fieldData.country_id.value
     }
 
     if (fieldData.region_id.value) {
-        shippingData.region_id = fieldData.region_id.value
+        shippingData.regionId = fieldData.region_id.value
     }
 
     return shippingData

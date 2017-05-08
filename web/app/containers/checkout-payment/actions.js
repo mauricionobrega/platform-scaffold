@@ -38,22 +38,40 @@ export const submitPayment = () => {
         const currentState = getState()
         const entityID = getCustomerEntityID(currentState)
         const isLoggedIn = getIsLoggedIn(currentState)
-        const sameAddress = getPaymentBillingFormValues(currentState).billing_same_as_shipping
+        const billingIsSameAsShippingAddress = getPaymentBillingFormValues(currentState).billing_same_as_shipping
 
         let address = {}
         const email = getEmailAddress(currentState)
 
-        if (sameAddress) {
-            address = getShippingAddress(currentState).toJS()
+        if (billingIsSameAsShippingAddress) {
+            const shippingAddress = getShippingAddress(currentState).toJS()
+            address = {
+                // NOT spreading `address` because it contains many incorrectly
+                // formatted keys, as far as the payment-information request
+                // is concerned
+                customerAddressId: `${shippingAddress.customerAddressId}`,
+                customerId: `${shippingAddress.customerId}`,
+                firstname: shippingAddress.firstname,
+                lastname: shippingAddress.lastname,
+                company: shippingAddress.company,
+                postcode: shippingAddress.postcode,
+                city: shippingAddress.city,
+                street: shippingAddress.street,
+                region: shippingAddress.region,
+                regionCode: shippingAddress.regionCode,
+                regionId: `${shippingAddress.regionId}`,
+                countryId: shippingAddress.countryId,
+                saveInAddressBook: false
+            }
         } else {
             const {
                 name,
                 company,
                 addressLine1,
                 addressLine2,
-                country_id,
+                countryId,
                 city,
-                region_id,
+                regionId,
                 postcode,
             } = getPaymentBillingFormValues(currentState)
             const names = name.split(' ')
@@ -65,23 +83,15 @@ export const submitPayment = () => {
                 postcode,
                 city,
                 street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1],
-                region_id,
-                country_id,
+                regionId,
+                countryId,
                 saveInAddressBook: false
             }
         }
 
         const paymentInformation = {
             billingAddress: {
-                city: address.city,
-                company: address.company,
-                countryId: address.country_id,
-                firstname: address.firstname,
-                lastname: address.lastname,
-                postcode: address.postcode,
-                regionId: address.region_id,
-                saveInAddressBook: address.saveInAddressBook,
-                street: address.street,
+                ...address
             },
             cartId: entityID,
             email,

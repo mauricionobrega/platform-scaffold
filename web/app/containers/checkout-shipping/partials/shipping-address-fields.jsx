@@ -103,7 +103,7 @@ const ShippingAddressFields = ({
                 <ReduxForm.Field
                     component={Field}
                     className="pw--has-select"
-                    name="country_id"
+                    name="countryId"
                     label="Country"
                 >
                     <select>
@@ -129,7 +129,7 @@ const ShippingAddressFields = ({
                     <ReduxForm.Field
                         component={Field}
                         className="pw--has-select"
-                        name="region_id"
+                        name="regionId"
                         label="State/Province"
                     >
                         <select>

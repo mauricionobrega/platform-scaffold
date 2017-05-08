@@ -94,6 +94,7 @@ export const submitShipping = () => {
         const submittingWithNewAddress = getShippingFormValues(currentState).saved_address === ADD_NEW_ADDRESS_FIELD
         let address
 
+        // Format the shipping address according to whether it's a saved or new address
         if (submittingWithNewAddress) {
             const {name} = getShippingFormValues(currentState)
             const names = name.split(' ')
@@ -109,31 +110,26 @@ export const submitShipping = () => {
                 street: newAddress.addressLine2
                     ? [newAddress.addressLine1, newAddress.addressLine2]
                     : [newAddress.addressLine1],
-                region_id: newAddress.region_id,
+                regionId: newAddress.regionId,
                 region: newAddress.region,
-                country_id: newAddress.country_id,
-                save_in_address_book: true
+                countryId: newAddress.countryId,
+                saveInAddressBook: true
             }
         } else {
             const {saved_address} = getShippingFormValues(currentState)
             const savedAddress = getSavedAddresses(currentState).toJS()
-                .filter((address) => address.id === parseInt(saved_address))[0] || {}
+                .filter(({customerAddressId}) => {
+                    return parseInt(customerAddressId) === parseInt(saved_address)
+                })[0] || {}
 
             address = {
-                firstname: savedAddress.firstname,
-                lastname: savedAddress.lastname,
-                company: savedAddress.company,
-                telephone: savedAddress.telephone,
-                postcode: savedAddress.postcode,
-                city: savedAddress.city,
-                street: savedAddress.street[1]
-                    ? [savedAddress.street[0], savedAddress.street[1]]
-                    : [savedAddress.street[0]],
-                region_id: savedAddress.region.region_id,
-                region: savedAddress.region.region,
-                country_id: savedAddress.country_id,
-                save_in_address_book: false
+                ...savedAddress,
+                region: savedAddress.region,
+                saveInAddressBook: false
             }
+
+            delete address.default_billing
+            delete address.default_shipping
         }
 
         // Prepare to update the store with the information submitted so far
@@ -162,8 +158,14 @@ export const submitShipping = () => {
         const entityID = getCustomerEntityID(currentState)
         const isLoggedIn = getIsLoggedIn(currentState)
         const persistShippingURL = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/shipping-information`
-        makeJsonEncodedRequest(persistShippingURL, addressData, {method: 'POST'})
-            .then((response) => response.json())
+        return makeJsonEncodedRequest(persistShippingURL, addressData, {method: 'POST'})
+            .then((response) => {
+                if (response.status === 400) {
+                    throw Error
+                }
+
+                return response.json()
+            })
             .then((responseJSON) => {
                 if (responseJSON.payment_methods) {
                     // TO DO: send response data to the next container
@@ -171,6 +173,13 @@ export const submitShipping = () => {
                         pathname: '/checkout/payment/'
                     })
                 }
+            })
+            .catch(() => {
+                dispatch(addNotification({
+                    content: `Unable to save shipping information. Please, check input data.`,
+                    id: 'submitShippingError',
+                    showRemoveButton: true
+                }))
             })
     }
 }

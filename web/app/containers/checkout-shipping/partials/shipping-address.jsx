@@ -22,13 +22,21 @@ const ShippingAddressForm = ({
 }) => {
 
     const renderSavedAddresses = (address) => {
-        const {city, country_id, firstname, id, lastname, postcode, region} = address
+        const {
+            city,
+            countryId,
+            firstname,
+            customerAddressId,
+            lastname,
+            postcode,
+            regionCode
+        } = address
         const street = address.street.join(', ')
         const shippingAddress = (
             <div className="u-color-neutral-40">
                 <p className="u-margin-bottom-sm">
                     {/* eslint-disable camelcase */}
-                    {city}, {region.region_code}, {country_id}, {postcode}
+                    {city}, {regionCode}, {countryId}, {postcode}
                     {/* eslint-enable camelcase */}
                 </p>
                 <p>{firstname} {lastname}</p>
@@ -36,7 +44,7 @@ const ShippingAddressForm = ({
         )
 
         return (
-            <FieldRow key={id}>
+            <FieldRow key={customerAddressId}>
                 <ReduxForm.Field
                     component={Field}
                     name={SAVED_SHIPPING_ADDRESS_FIELD}
@@ -49,7 +57,7 @@ const ShippingAddressForm = ({
                         type="radio"
                         noValidate
                         onChange={handleShowAddNewAddress}
-                        value={id}
+                        value={customerAddressId}
                     />
                 </ReduxForm.Field>
             </FieldRow>
