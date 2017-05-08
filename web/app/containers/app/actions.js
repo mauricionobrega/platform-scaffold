@@ -54,6 +54,8 @@ export const removeAllNotifications = createAction('Remove All Notifications')
 
 export const updateSvgSprite = createAction('Updated SVG sprite', 'sprite')
 
+export const incrementPageVisitCount = createAction('Increment Page Visit Count')
+
 /**
  * Action dispatched when the route changes
  * @param {string} currentURL - what's currently shown in the address bar
