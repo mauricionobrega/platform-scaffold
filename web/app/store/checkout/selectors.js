@@ -18,7 +18,7 @@ export const getSelectedCountryID = (formKey) => createSelector(
 export const getAvailableRegions = (formKey) => createSelector(
     getRegions,
     getSelectedCountryID(formKey),
-    (regions, id) => regions.filter((region) => region.get('country_id') === id)
+    (regions, id) => regions.filter((region) => region.get('countryId') === id)
 )
 
 export const getEmailAddress = createGetSelector(getCheckout, 'emailAddress')
