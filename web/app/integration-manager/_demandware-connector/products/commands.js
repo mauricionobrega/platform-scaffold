@@ -6,7 +6,14 @@ import {parseProductDetails, getCurrentProductID, getProductHref} from '../parse
 import {API_END_POINT_URL} from '../constants'
 
 export const fetchPdpData = () => (dispatch) => {
-    const productURL = `${API_END_POINT_URL}/products/${getCurrentProductID()}?expand=prices,images,variations`
+    let productID = getCurrentProductID()
+    const varID = window.location.search.match(/varID=(\d+)/)
+
+    if (varID) {
+        productID = varID[1]
+    }
+
+    const productURL = `${API_END_POINT_URL}/products/${productID}?expand=prices,images,variations`
     const productPathKey = urlToPathKey(window.location.href)
     const options = {
         method: 'GET'
@@ -36,11 +43,9 @@ export const getProductVariantData = (selections, variants, categoryIds) => (dis
 
     for (const {values, id} of variants) {
         if (categoryIds.every((id) => selections[id] === values[id])) {
-            setTimeout(() => {
-                browserHistory.push({
-                    pathname: getProductHref(id)
-                })
-            }, 250)
+            browserHistory.push({
+                pathname: getProductHref(id)
+            })
             return
         }
     }

@@ -8,12 +8,16 @@ import {onVariationChange} from '../actions'
 import Field from 'progressive-web-sdk/dist/components/field'
 
 const ProductDetailsVariations = ({variations, onVariationChange}) => {
+    const getInitialValue = (values) => {
+        return values[0].value
+    }
     return (
         <div>
             {variations.map(({id, label, values = []}) => (
                 <ReduxForm.Field
                     label={label}
                     name={id}
+                    initialValues={getInitialValue(values)}
                     component={Field}
                     key={id}
                     className="u-margin-bottom-lg u-margin-top"
