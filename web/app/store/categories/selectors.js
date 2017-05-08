@@ -23,9 +23,7 @@ export const getCategoryParent = createSelector(
     getCategories,
     getCategoryParentID,
     (categories, parentId) => {
-        return parentId
-            ? categories.find((category) => category.get('id') === parentId)
-            : Immutable.Map()
+        return (parentId && categories.find((category) => category.get('id') === parentId)) || Immutable.Map()
     }
 )
 
