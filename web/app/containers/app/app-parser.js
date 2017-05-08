@@ -1,7 +1,3 @@
-/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
-/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
-/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
-
 import {getCheckoutConfigObject} from '../../utils/magento-utils'
 import {isRunningInAstro, jsRpcMethod} from '../../utils/astro-integration'
 

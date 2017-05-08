@@ -1,7 +1,3 @@
-/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
-/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
-/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
-
 const checkoutConfirmationParser = ($, $html) => {
     const $checkoutSuccess = $html.find('.checkout-success')
     const $orderInSpan = $checkoutSuccess.find('p span')

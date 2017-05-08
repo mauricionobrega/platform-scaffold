@@ -1,7 +1,3 @@
-/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
-/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
-/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
-
 import {initCacheManifest, getBuildOrigin} from 'progressive-web-sdk/dist/asset-utils'
 import cacheHashManifest from '../tmp/cache-hash-manifest.json'
 
