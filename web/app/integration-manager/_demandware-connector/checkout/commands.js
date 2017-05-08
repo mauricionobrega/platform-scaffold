@@ -3,31 +3,27 @@ import {createBasket} from '../cart/utils'
 import {makeDemandwareRequest} from '../utils'
 import {API_END_POINT_URL} from '../constants'
 import {STATES} from './constants'
-import {receiveCheckoutData, receiveShippingMethodInitialValues, receiveCheckoutLocations} from './../../checkout/results'
+import {receiveShippingMethods, receiveShippingMethodInitialValues, receiveCheckoutLocations} from './../../checkout/results'
+
+const basketUrl = (basketID) => `${API_END_POINT_URL}/baskets/${basketID}`
 
 export const fetchShippingMethodsEstimate = () => (dispatch) => {
     return createBasket()
-        .then((basketID) => {
-            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/shipments/me/shipping_methods`, {method: 'GET'})
-                .then((response) => response.json())
-                .then((responseJSON) => {
-                    const shippingMethods = responseJSON.applicable_shipping_methods.map(({name, description, price, id}) => {
-                        return {
-                            label: `${name} - ${description}`,
-                            cost: `$${price.toFixed(2)}`,
-                            value: id
-                        }
-                    })
-
-                    return dispatch(receiveCheckoutData({shipping: {shippingMethods}}))
-                })
-        })
+        .then((basketID) => makeDemandwareRequest(`${basketUrl(basketID)}/shipments/me/shipping_methods`, {method: 'GET'}))
+        .then((response) => response.json())
+        .then(({applicable_shipping_methods}) => dispatch(receiveShippingMethods(
+            applicable_shipping_methods.map(({name, description, price, id}) => ({
+                label: `${name} - ${description}`,
+                cost: `$${price.toFixed(2)}`,
+                id
+            }))
+        )))
 }
 
 export const fetchCheckoutShippingData = () => (dispatch) => {
     return createBasket()
         .then((basketID) => {
-            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}`, {method: 'GET'})
+            return makeDemandwareRequest(basketUrl(basketID), {method: 'GET'})
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     const {
@@ -98,7 +94,7 @@ export const submitShipping = (formValues) => (dispatch) => {
                     customer_name: name
                 })
             }
-            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/customer`, requestOptions)
+            return makeDemandwareRequest(`${basketUrl(basketID)}/customer`, requestOptions)
                 .then(() => basketID)
         })
         .then((basketID) => {

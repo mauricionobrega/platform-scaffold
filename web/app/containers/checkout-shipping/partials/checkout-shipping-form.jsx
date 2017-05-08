@@ -4,7 +4,7 @@ import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as ReduxForm from 'redux-form'
 
 import {getIsLoggedIn} from '../../app/selectors'
-import {getShippingAddress, getShippingInitialValues} from '../../../store/checkout/shipping/selectors'
+import {getShippingInitialValues} from '../../../store/checkout/shipping/selectors'
 
 import {submitShipping} from '../actions'
 import {SHIPPING_FORM_NAME} from '../constants'
