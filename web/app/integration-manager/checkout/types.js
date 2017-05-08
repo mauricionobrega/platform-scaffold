@@ -37,6 +37,8 @@ const ShippingMethod = Runtypes.Record({
     id: Identifier
 })
 
+export const ShippingMethods = Runtypes.Array(ShippingMethod)
+
 export const LocationList = Runtypes.Record({
     countries: Runtypes.Array(Country),
     regions: Runtypes.Array(Region)

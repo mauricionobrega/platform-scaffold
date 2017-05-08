@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as ReduxForm from 'redux-form'
 
-import {getShippingMethods} from '../../../store/checkout/shipping/selectors'
+import {getShippingMethods} from '../../../store/checkout/selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
@@ -19,15 +19,15 @@ const ShippingMethod = ({shippingMethods}) => {
             </div>
 
             <div className="u-padding-md u-border-light-top u-border-light-bottom u-bg-color-neutral-00">
-                {shippingMethods && shippingMethods.map(({label, info, cost, value}, idx) => {
+                {shippingMethods && shippingMethods.map(({label, cost, id}) => {
                     return (
-                        <FieldRow key={idx}>
+                        <FieldRow key={id}>
                             <ReduxForm.Field
                                 component={Field}
                                 name="shipping_method"
                                 type="radio"
-                                value={value}
-                                label={<ShippingMethodLabel label={label} info={info} cost={cost} />}
+                                value={id}
+                                label={<ShippingMethodLabel label={label} cost={cost} />}
                             >
                                 <input type="radio" noValidate />
                             </ReduxForm.Field>

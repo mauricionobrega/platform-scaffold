@@ -3,7 +3,6 @@ const getNameValue = (firstname, lastname) =>
 
 export const parseShippingInitialValues = (shippingFieldData) => {
     const fieldData = shippingFieldData.toJS()
-    console.log(fieldData)
     const streetFields = fieldData.street.children
     return {
         name: getNameValue(fieldData.firstname.value, fieldData.lastname.value),
@@ -52,13 +51,11 @@ export const parseShippingMethods = (shippingMethods) => {
     if (!shippingMethods || !shippingMethods.map) {
         return []
     }
-    return shippingMethods.map((method) => {
-        return {
-            label: `${method.method_title} - ${method.carrier_title}`,
-            cost: `$${method.price_incl_tax.toFixed(2)}`,
-            value: `${method.carrier_code}_${method.method_code}`
-        }
-    })
+    return shippingMethods.map((method) => ({
+        label: `${method.method_title} - ${method.carrier_title}`,
+        cost: `$${method.price_incl_tax.toFixed(2)}`,
+        id: `${method.carrier_code}_${method.method_code}`
+    }))
 }
 
 export const checkoutConfirmationParser = ($, $html) => {

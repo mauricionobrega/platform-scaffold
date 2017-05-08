@@ -5,7 +5,7 @@ import {parseCheckoutEntityID, extractMagentoShippingStepData} from '../../../ut
 import {getCookieValue} from '../../../utils/utils'
 import {submitForm} from '../utils'
 import {getCart} from '../cart/commands'
-import {receiveCheckoutData, receiveShippingMethodInitialValues, receiveCheckoutConfirmationData, receiveCheckoutLocations} from './../../checkout/results'
+import {receiveCheckoutData, receiveShippingMethods, receiveShippingMethodInitialValues, receiveCheckoutConfirmationData, receiveCheckoutLocations} from './../../checkout/results'
 import {fetchPageData} from '../app/commands'
 import {getCustomerEntityID} from '../selectors'
 import {getIsLoggedIn} from '../../../containers/app/selectors'
@@ -43,16 +43,7 @@ export const fetchShippingMethodsEstimate = (formKey) => (dispatch, getState) =>
     const estimateURL = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/estimate-shipping-methods`
     return makeJsonEncodedRequest(estimateURL, {address}, {method: 'POST'})
         .then((response) => response.json())
-        .then((responseJSON) => {
-            const shippingMethods = parseShippingMethods(responseJSON)
-            if (shippingMethods.length > 0) {
-                const initialValues = {
-                    shipping_method: shippingMethods[0].value
-                }
-                dispatch(receiveCheckoutData({shipping: {shippingMethods}}))
-                dispatch(receiveShippingMethodInitialValues({initialValues})) // set initial value for method
-            }
-        })
+        .then((responseJSON) => dispatch(receiveShippingMethods(parseShippingMethods(responseJSON))))
 }
 
 const processCheckoutData = ($response) => (dispatch) => {
@@ -62,10 +53,8 @@ const processCheckoutData = ($response) => (dispatch) => {
 
     dispatch(receiveCheckoutLocations(parseLocations(magentoFieldData)))
 
-    return dispatch(receiveCheckoutData({
-        shipping: {
-            initialValues: parseShippingInitialValues(magentoFieldData)
-        }
+    return dispatch(receiveShippingMethodInitialValues({
+        initialValues: parseShippingInitialValues(magentoFieldData)
     }))
 }
 
