@@ -3,9 +3,10 @@ const getNameValue = (firstname, lastname) =>
 
 export const parseShippingInitialValues = (shippingFieldData) => {
     const fieldData = shippingFieldData.toJS()
+    console.log(fieldData)
     const streetFields = fieldData.street.children
     return {
-        name: getNameValue(fieldData.firstname, fieldData.lastname),
+        name: getNameValue(fieldData.firstname.value, fieldData.lastname.value),
         addressLine1: streetFields[0].value,
         company: fieldData.company.value,
         addressLine2: streetFields[1].value,
