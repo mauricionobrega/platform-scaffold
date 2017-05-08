@@ -64,7 +64,7 @@ export const fetchCheckoutShippingData = () => (dispatch) => {
                     dispatch(receiveShippingMethodInitialValues({initialValues}))
                     dispatch(receiveCheckoutLocations({
                         countries: [
-                            {value: 'us', label: 'United States', regionRequired: true, postcodeRequired: true}
+                            {id: 'us', label: 'United States', regionRequired: true, postcodeRequired: true}
                         ],
                         regions: STATES
                     }))

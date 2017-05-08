@@ -127,7 +127,7 @@ const ShippingAddressForm = ({
                             <ReduxForm.Field component={Field} className="pw--has-select" name="regionId" label="State/Province">
                                 <select>
                                     <option value={null}>Please select a region, state, or province</option>
-                                    {regions.map(({label, id}) => <option value={id} key={id}>{label}</option>)}
+                                    {regions.map(({label, id}) => <option value={id} key={label}>{label}</option>)}
                                 </select>
                             </ReduxForm.Field>
                         }
