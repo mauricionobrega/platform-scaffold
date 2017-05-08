@@ -1,5 +1,3 @@
-import assign from 'lodash.assign'
-
 import commands from './commands'
 import reducer from './reducer'
 
@@ -15,7 +13,7 @@ export const config = {
 }
 
 const Connector = (cfg) => {
-    assign(config, defaultConfig, cfg)
+    Object.assign(config, defaultConfig, cfg)
     return {commands, reducer}
 }
 
