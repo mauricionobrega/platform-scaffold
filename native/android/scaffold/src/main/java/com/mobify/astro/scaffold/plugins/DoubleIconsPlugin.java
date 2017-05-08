@@ -1,4 +1,4 @@
-package com.mobify.astro.merlins.plugins;
+package com.mobify.astro.scaffold.plugins;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -14,7 +14,7 @@ import com.mobify.astro.messaging.EventRegistrar;
 import com.mobify.astro.messaging.MessageSender;
 import com.mobify.astro.messaging.annotations.RpcMethod;
 import com.mobify.astro.plugins.headerbarplugin.HeaderContentItem;
-import com.mobify.astro.merlins.R;
+import com.mobify.astro.scaffold.R;
 import com.mobify.astro.utilities.HeaderUtilities;
 
 public class DoubleIconsPlugin extends AstroPlugin {
