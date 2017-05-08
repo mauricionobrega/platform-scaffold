@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 /* global NATIVE_WEBPACK_ASTRO_VERSION */
 import {getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
