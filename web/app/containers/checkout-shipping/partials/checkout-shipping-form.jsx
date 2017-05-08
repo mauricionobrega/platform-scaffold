@@ -27,9 +27,10 @@ const validate = (values) => {
         'postcode',
         'telephone'
     ]
-    const isSavedAddressSelected = values.saved_address !== undefined
+    const isSavedAddressSelected = !!values.saved_address
 
     if (isSavedAddressSelected) {
+        // If user has chosen a saved address, no further validation necessary
         return errors
     }
 
@@ -50,10 +51,6 @@ class CheckoutShippingForm extends React.Component {
     constructor(props) {
         super(props)
         this.onSubmit = this.onSubmit.bind(this)
-    }
-
-    componentDidMount() {
-        this.props.fetchSavedAddresses()
     }
 
     onSubmit(values) {
