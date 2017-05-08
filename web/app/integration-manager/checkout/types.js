@@ -16,7 +16,7 @@ const Region = Runtypes.Record({
     label: Text
 })
 
-const Address = Runtypes.Record({
+export const Address = Runtypes.Record({
     name: Text,
     addressLine1: Text,
     addressLine2: Text,

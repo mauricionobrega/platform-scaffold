@@ -1,11 +1,13 @@
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {SubmissionError} from 'redux-form'
+import {createSelector} from 'reselect'
+
 import {parseShippingInitialValues, parseLocations, parseShippingMethods, checkoutConfirmationParser} from './parsers'
 import {parseCheckoutEntityID, extractMagentoShippingStepData} from '../../../utils/magento-utils'
 import {getCookieValue} from '../../../utils/utils'
 import {submitForm} from '../utils'
 import {getCart} from '../cart/commands'
-import {receiveCheckoutData, receiveShippingMethods, receiveShippingMethodInitialValues, receiveCheckoutConfirmationData, receiveCheckoutLocations} from './../../checkout/results'
+import {receiveShippingMethods, receiveShippingMethodInitialValues, receiveCheckoutConfirmationData, receiveCheckoutLocations, storeBillingAddress} from './../../checkout/results'
 import {fetchPageData} from '../app/commands'
 import {getCustomerEntityID} from '../selectors'
 import {getIsLoggedIn} from '../../../containers/app/selectors'
@@ -17,11 +19,16 @@ import * as paymentSelectors from '../../../store/checkout/payment/selectors'
 import * as shippingSelectors from '../../../store/checkout/shipping/selectors'
 import {CREATE_ACCOUNT_POST_URL} from '../constants'
 
+const getCartBaseUrl = createSelector(
+    getCustomerEntityID,
+    getIsLoggedIn,
+    (entityID, isLoggedIn) => `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}`
+)
+
 export const fetchShippingMethodsEstimate = (formKey) => (dispatch, getState) => {
     const currentState = getState()
-    const isLoggedIn = getIsLoggedIn(currentState)
+    const cartBaseUrl = getCartBaseUrl(currentState)
     const formValues = getFormValues(formKey)(currentState)
-    const entityID = getCustomerEntityID(currentState)
     const registeredFieldNames = getFormRegisteredFields(formKey)(currentState).map(({name}) => name)
     // Default values to use if none have been selected
     const address = {country_id: 'US', region_id: '0', postcode: null}
@@ -40,7 +47,7 @@ export const fetchShippingMethodsEstimate = (formKey) => (dispatch, getState) =>
             delete address.region_id
         }
     }
-    const estimateURL = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/estimate-shipping-methods`
+    const estimateURL = `${cartBaseUrl}/estimate-shipping-methods`
     return makeJsonEncodedRequest(estimateURL, {address}, {method: 'POST'})
         .then((response) => response.json())
         .then((responseJSON) => dispatch(receiveShippingMethods(parseShippingMethods(responseJSON))))
@@ -73,59 +80,56 @@ export const fetchCheckoutConfirmationData = (url) => (dispatch) => {
         })
 }
 
-export const submitShipping = (formValues) => {
-    return (dispatch, getState) => {
-        const currentState = getState()
-        const {
-            firstname,
-            lastname,
-            company,
-            addressLine1,
-            addressLine2,
-            countryId,
-            city,
-            regionId,
-            region,
-            postcode,
-            telephone,
-            shipping_method
-        } = formValues
-        const entityID = getCustomerEntityID(currentState)
-        const isLoggedIn = getIsLoggedIn(currentState)
-        const shippingSelections = shipping_method.split('_')
-        const address = {
-            firstname,
-            lastname,
-            company: company || '',
-            telephone,
-            postcode,
-            city,
-            street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1],
-            regionId,
-            region,
-            countryId,
-            save_in_address_book: true
-        }
-        const addressInformation = {
-            addressInformation: {
-                shippingAddress: address,
-                billingAddress: {
-                    ...address,
-                    saveInAddressBook: false
-                },
-                shipping_carrier_code: shippingSelections[0],
-                shipping_method_code: shippingSelections[1]
-            }
-        }
-        const persistShippingURL = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/shipping-information`
-        return makeJsonEncodedRequest(persistShippingURL, addressInformation, {method: 'POST'})
-            .then((response) => response.json())
-            .then((responseJSON) => {
-                if (!responseJSON.payment_methods) {
-                    throw new SubmissionError({_error: 'Unable to save shipping address'})
-                }
-            })
+const addressFormToAddressObject = ({
+    firstname,
+    lastname,
+    company,
+    addressLine1,
+    addressLine2,
+    countryId,
+    city,
+    regionId,
+    region,
+    postcode,
+    telephone
+}) => ({
+    firstname,
+    lastname,
+    company: company || '',
+    telephone,
+    postcode,
+    city,
+    street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1],
+    regionId,
+    region,
+    countryId
+})
+
+export const submitShipping = (formValues) => (dispatch, getState) => {
+    const currentState = getState()
+    const cartBaseUrl = getCartBaseUrl(currentState)
+    const address = addressFormToAddressObject(formValues)
+    const shippingSelections = formValues.shipping_method.split('_')
+    const addressInformation = {
+        shippingAddress: {
+            ...address,
+            saveInAddressBook: true
+        },
+        billingAddress: {
+            ...address,
+            saveInAddressBook: false
+        },
+        shipping_carrier_code: shippingSelections[0],
+        shipping_method_code: shippingSelections[1]
     }
+
+    return makeJsonEncodedRequest(`${cartBaseUrl}/shipping-information`, {addressInformation}, {method: 'POST'})
+        .then((response) => response.json())
+        .then((responseJSON) => {
+            if (!responseJSON.payment_methods) {
+                throw new SubmissionError({_error: 'Unable to save shipping address'})
+            }
+        })
 }
 
 export const checkCustomerEmail = () => {
@@ -194,37 +198,16 @@ export const fetchCheckoutPaymentData = (url) => (dispatch) => {
 
 export const submitPayment = (formValues) => (dispatch, getState) => {
     const currentState = getState()
+    const cartBaseUrl = getCartBaseUrl(currentState)
     const entityID = getCustomerEntityID(currentState)
-    const isLoggedIn = getIsLoggedIn(currentState)
-    const {
-        firstname,
-        lastname,
-        company,
-        addressLine1,
-        addressLine2,
-        countryId,
-        city,
-        regionId,
-        postcode,
-        username
-    } = formValues
-    const address = {
-        firstname,
-        lastname,
-        company: company || '',
-        postcode,
-        city,
-        street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1],
-        regionId,
-        countryId,
-        saveInAddressBook: false
-    }
+    const address = addressFormToAddressObject(formValues)
     const paymentInformation = {
         billingAddress: {
-            ...address
+            ...address,
+            saveInAddressBook: false
         },
         cartId: entityID,
-        email: username,
+        email: formValues.username,
         paymentMethod: {
             additional_data: null,
             method: 'checkmo',
@@ -232,10 +215,9 @@ export const submitPayment = (formValues) => (dispatch, getState) => {
         }
     }
 
-    const persistPaymentURL = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/payment-information`
     // Save payment address for confirmation
-    dispatch(receiveCheckoutData({payment: {address}}))
-    return makeJsonEncodedRequest(persistPaymentURL, paymentInformation, {method: 'POST'})
+    dispatch(storeBillingAddress(address))
+    return makeJsonEncodedRequest(`${cartBaseUrl}/payment-information`, paymentInformation, {method: 'POST'})
         .then((response) => response.json())
         .then((responseJSON) => {
             // Looks like when it is successful, the responseJSON is a number

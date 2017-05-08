@@ -24,3 +24,5 @@ export const getAvailableRegions = (formKey) => createSelector(
 export const getShippingMethods = createGetSelector(getCheckout, 'shippingMethods', Immutable.List())
 
 export const getEmailAddress = createGetSelector(getCheckout, 'emailAddress')
+
+export const getBillingAddress = createGetSelector(getCheckout, 'billingAddress')
