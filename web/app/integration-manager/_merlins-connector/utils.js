@@ -55,7 +55,5 @@ export const submitForm = (url, data, options) => {
  * @param {*string} src the URL to the higher resolution image
  */
 export const getHighResImage = (src) => {
-    const result = src ? src.replace(/thumbnail\/\d+x\d+/, 'small_image/240x300') : src
-    console.log(`getHighResImage ${src} -> ${result}`)
-    return result
+    return src ? src.replace(/thumbnail\/\d+x\d+/, 'small_image/240x300') : src
 }
