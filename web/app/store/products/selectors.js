@@ -16,8 +16,6 @@ export const getProductThumbnail = createGetSelector(getSelectedProduct, 'thumbn
 
 export const getProductVariationCategories = createGetSelector(getSelectedProduct, 'variationCategories', Immutable.List())
 
-// export const getFirstVariation = createGetSelector(getSelectedProduct, 'variationCategories', Immutable.List())
-
 export const getProductVariationCategoryIds = createSelector(
     getProductVariationCategories,
     (categories) => categories.map((category) => category.get('id'))

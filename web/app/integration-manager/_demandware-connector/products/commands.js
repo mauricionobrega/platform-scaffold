@@ -1,4 +1,3 @@
-// import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../../products/results'
 import {setCurrentURL} from '../../results'
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
@@ -8,7 +7,6 @@ import {API_END_POINT_URL} from '../constants'
 
 export const fetchPdpData = (url) => (dispatch) => {
     const productID = getCurrentProductID(url)
-
     const productURL = `${API_END_POINT_URL}/products/${productID}?expand=prices,images,variations`
     const productPathKey = urlToPathKey(url)
     const options = {
@@ -39,11 +37,9 @@ export const getProductVariantData = (selections, variants, categoryIds) => (dis
 
     for (const {values, id} of variants) {
         if (categoryIds.every((id) => selections[id] === values[id])) {
-            const current = getProductHref(id)
-
-            dispatch(setCurrentURL(current))
-            dispatch(fetchPdpData(current))
-
+            const currentProductHref = getProductHref(id)
+            dispatch(setCurrentURL(currentProductHref))
+            dispatch(fetchPdpData(currentProductHref))
             return
         }
     }
