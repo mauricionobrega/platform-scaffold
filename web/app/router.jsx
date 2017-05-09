@@ -61,7 +61,7 @@ const Router = ({store}) => (
                 <Route
                     component={CheckoutShipping}
                     path="checkout/"
-                    routeName="checkingShipping"
+                    routeName="checkout-shipping"
                     Header={CheckoutHeader}
                     Footer={CheckoutFooter}
                     headerHasSignIn
@@ -101,7 +101,7 @@ const Router = ({store}) => (
                 <Route
                     component={CheckoutShipping}
                     path="*/COShipping-Start*"
-                    routeName="checkingShipping"
+                    routeName="checkout-shipping"
                     Header={CheckoutHeader}
                     Footer={CheckoutFooter}
                     headerHasSignIn
