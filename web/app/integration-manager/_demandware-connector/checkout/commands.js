@@ -22,51 +22,49 @@ export const fetchShippingMethodsEstimate = () => (dispatch) => {
 
 export const fetchCheckoutShippingData = () => (dispatch) => {
     return createBasket()
-        .then((basketID) => {
-            return makeDemandwareRequest(basketUrl(basketID), {method: 'GET'})
-                .then((response) => response.json())
-                .then((responseJSON) => {
-                    const {
-                        customer_info: {
-                            email
-                        },
-                        shipments: [{
-                            shipping_address,
-                            shipping_method
-                        }]
-                    } = responseJSON
-                    let initialValues
-                    /* eslint-disable camelcase */
-                    if (shipping_address) {
-                        initialValues = {
-                            username: email,
-                            name: shipping_address.full_name,
-                            company: shipping_address.company_name,
-                            addressLine1: shipping_address.address1,
-                            addressLine2: shipping_address.address2,
-                            countryId: shipping_address.country_code,
-                            city: shipping_address.city,
-                            regionId: shipping_address.state_code,
-                            postcode: shipping_address.postal_code,
-                            telephone: shipping_address.phone,
-                            shipping_method: shipping_method ? shipping_method.id : undefined
-                        }
-                    } else {
-                        initialValues = {
-                            countryId: 'us'
-                        }
-                    }
-                    /* eslint-enable camelcase */
-                    dispatch(receiveShippingMethodInitialValues({initialValues}))
-                    dispatch(receiveCheckoutLocations({
-                        countries: [
-                            {id: 'us', label: 'United States', regionRequired: true, postcodeRequired: true}
-                        ],
-                        regions: STATES
-                    }))
-                })
-                .then(() => dispatch(fetchShippingMethodsEstimate()))
+        .then((basketID) => makeDemandwareRequest(basketUrl(basketID), {method: 'GET'}))
+        .then((response) => response.json())
+        .then((responseJSON) => {
+            const {
+                customer_info: {
+                    email
+                },
+                shipments: [{
+                    shipping_address,
+                    shipping_method
+                }]
+            } = responseJSON
+            let initialValues
+            /* eslint-disable camelcase */
+            if (shipping_address) {
+                initialValues = {
+                    username: email,
+                    name: shipping_address.full_name,
+                    company: shipping_address.company_name,
+                    addressLine1: shipping_address.address1,
+                    addressLine2: shipping_address.address2,
+                    countryId: shipping_address.country_code,
+                    city: shipping_address.city,
+                    regionId: shipping_address.state_code,
+                    postcode: shipping_address.postal_code,
+                    telephone: shipping_address.phone,
+                    shipping_method: shipping_method ? shipping_method.id : undefined
+                }
+            } else {
+                initialValues = {
+                    countryId: 'us'
+                }
+            }
+            /* eslint-enable camelcase */
+            dispatch(receiveShippingMethodInitialValues({initialValues}))
+            dispatch(receiveCheckoutLocations({
+                countries: [
+                    {id: 'us', label: 'United States', regionRequired: true, postcodeRequired: true}
+                ],
+                regions: STATES
+            }))
         })
+        .then(() => dispatch(fetchShippingMethodsEstimate()))
 }
 
 export const submitShipping = (formValues) => (dispatch) => {
@@ -119,7 +117,7 @@ export const submitShipping = (formValues) => (dispatch) => {
                     }
                 })
             }
-            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/shipments/me`, requestOptions)
+            return makeDemandwareRequest(`${basketUrl(basketID)}/shipments/me`, requestOptions)
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     if (responseJSON.fault) {
