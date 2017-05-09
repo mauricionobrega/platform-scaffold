@@ -14,6 +14,6 @@ export const updatingShippingAndBilling = (...args) => connector.updatingShippin
 
 export const checkoutSignIn = (...args) => connector.checkoutSignIn(...args)
 export const checkoutRegister = (...args) => connector.checkoutRegister(...args)
-export const checkCustomerEmail = (...args) => connector.checkCustomerEmail(...args)
+export const checkCustomerEmail = (email) => connector.checkCustomerEmail(email)
 
 export const submitPayment = (...args) => connector.submitPayment(...args)

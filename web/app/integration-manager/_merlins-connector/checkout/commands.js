@@ -136,16 +136,16 @@ export const submitShipping = (formValues) => {
     }
 }
 
-export const checkCustomerEmail = () => {
-    return (dispatch, getState) => {
-        const formValues = getShippingFormValues(getState())
-
-        return makeJsonEncodedRequest('/rest/default/V1/customers/isEmailAvailable', {customerEmail: formValues.username}, {method: 'POST'})
-            .then((response) => response.text())
-            .then((responseText) => {
-                return /true/.test(responseText)
-            })
-    }
+export const checkCustomerEmail = (email) => (dispatch) => {
+    return makeJsonEncodedRequest(
+            '/rest/default/V1/customers/isEmailAvailable',
+            {customerEmail: email},
+            {method: 'POST'}
+        )
+        .then((response) => response.text())
+        .then((responseText) => {
+            return /true/.test(responseText)
+        })
 }
 
 export const checkoutSignIn = (formValues) => {

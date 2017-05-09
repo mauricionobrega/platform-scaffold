@@ -60,8 +60,10 @@ export const submitShipping = () => (dispatch, getState) => {
         })
 }
 
-export const checkCustomerEmail = () => (dispatch) => {
-    return dispatch(checkCustomerEmailCommand())
+export const checkCustomerEmail = () => (dispatch, getState) => {
+    const formValues = getShippingFormValues(getState())
+
+    return dispatch(checkCustomerEmailCommand(formValues.username))
         .then((emailAvailable) => {
             if (emailAvailable) {
                 return dispatch(onShippingEmailAvailable())
