@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import * as parser from './parsers/parser'
 import * as constants from './constants'
 import * as utils from '../../utils/utils'
