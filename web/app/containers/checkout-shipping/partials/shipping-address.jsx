@@ -52,6 +52,8 @@ const ShippingAddressForm = ({
                         <strong className="u-text-semi-bold">{street}</strong>
                     }
                     caption={shippingAddress}
+                    type="radio"
+                    value={customerAddressId}
                 >
                     <input
                         type="radio"
@@ -82,6 +84,8 @@ const ShippingAddressForm = ({
                                     Add a new address
                                 </strong>
                             }
+                            type="radio"
+                            value={ADD_NEW_ADDRESS_FIELD}
                         >
                             <input
                                 type="radio"

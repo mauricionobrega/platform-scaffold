@@ -1,10 +1,12 @@
 import {makeJsonEncodedRequest, makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
-import {parseLocationData} from '../../../utils/utils'
+import {createAction, parseLocationData} from '../../../utils/utils'
 import {getCustomerEntityID} from '../selectors'
 import {getIsLoggedIn} from '../../../containers/app/selectors'
 import {getFormValues, getFormRegisteredFields} from '../../form/selectors'
 import {parseShippingMethods} from './parser'
 import {receiveShippingMethodInitialValues, receiveSavedShippingAddresses, receiveCheckoutData} from '../actions'
+
+export const setDefaultShippingAddressId = createAction('Receive default shipping address ID', 'defaultShippingAddressId')
 
 export const fetchShippingMethodsEstimate = (formKey) => {
     return (dispatch, getState) => {
@@ -46,7 +48,12 @@ export const fetchSavedShippingAddresses = () => {
         return makeRequest(fetchURL, {method: 'GET'})
             .then((response) => response.json())
             .then(({customer}) => {
+                let defaultShippingId
                 const addresses = customer.addresses.map((address) => {
+                    if (address.default_shipping) {
+                        defaultShippingId = address.id
+                    }
+
                     // Not spreading `address` because it has key/values that
                     // we want to rename and remove
                     return {
@@ -65,6 +72,7 @@ export const fetchSavedShippingAddresses = () => {
                     }
                 })
 
+                dispatch(setDefaultShippingAddressId(defaultShippingId))
                 dispatch(receiveSavedShippingAddresses(addresses))
             })
     }

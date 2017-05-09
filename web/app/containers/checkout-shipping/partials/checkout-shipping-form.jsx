@@ -4,7 +4,7 @@ import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as ReduxForm from 'redux-form'
 
 import {getIsLoggedIn} from '../../app/selectors'
-import {getShippingAddress} from '../../../store/checkout/shipping/selectors'
+import {getInitialShippingAddress} from '../../../store/checkout/shipping/selectors'
 
 import {submitShipping} from '../actions'
 import {fetchSavedShippingAddresses} from '../../../store/checkout/shipping/actions'
@@ -111,7 +111,7 @@ CheckoutShippingForm.propTypes = {
 }
 
 const mapStateToProps = createPropsSelector({
-    initialValues: getShippingAddress,
+    initialValues: getInitialShippingAddress,
     isLoggedIn: getIsLoggedIn
 })
 

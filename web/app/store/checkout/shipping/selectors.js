@@ -2,6 +2,7 @@ import {createSelector} from 'reselect'
 import Immutable from 'immutable'
 import {createGetSelector} from 'reselect-immutable-helpers'
 import {getCheckout} from '../../selectors'
+import {ADD_NEW_ADDRESS_FIELD} from '../../../containers/checkout-shipping/constants'
 
 export const getShipping = createGetSelector(getCheckout, 'shipping', Immutable.Map())
 
@@ -10,6 +11,15 @@ export const getSavedAddresses = createGetSelector(getCheckout, 'savedAddresses'
 export const getShippingMethods = createGetSelector(getShipping, 'shippingMethods', Immutable.List())
 
 export const getShippingAddress = createGetSelector(getShipping, 'address', Immutable.Map())
+
+export const getInitialShippingAddress = createSelector(
+    getCheckout,
+    getShippingAddress,
+    (checkout, address) => {
+        const savedAddressId = checkout.get('defaultShippingAddressId') || ADD_NEW_ADDRESS_FIELD
+        return address.set('saved_address', `${savedAddressId}`)
+    }
+)
 
 export const getSelectedShippingMethodValue = createGetSelector(getShippingAddress, 'shipping_method', '')
 
