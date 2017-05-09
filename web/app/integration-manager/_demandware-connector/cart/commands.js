@@ -118,3 +118,5 @@ export const addToWishlist = (productID, productURL) => (dispatch) => {
                 })
         })
 }
+
+export const fetchTaxEstimate = (address, shippingMethod) => Promise.reject('Method not implemented')
