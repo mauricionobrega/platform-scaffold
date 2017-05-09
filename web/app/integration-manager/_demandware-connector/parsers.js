@@ -21,21 +21,6 @@ const parseVariationCategories = (variation_attributes) => {
         }))
     }))
 }
-
-const getInitialVariantValues = (variants, id) => {
-    const currentVariant = variants.find(({product_id}) => product_id === id)
-    return currentVariant && currentVariant.variation_values
-    // if (currentVariant) {
-    //     return currentVariant.variation_value
-    // }
-    // //
-    // // const variationValues = {}
-    // // variationCategories.forEach(({id, values}) => {
-    // //     variationValues[id] = values[0].value
-    // // })
-    // //
-    // // return variationValues
-}
 /* eslint-enable camelcase */
 
 export const getProductHref = (productID) => `/s/2017refresh/${productID}.html`
@@ -49,7 +34,6 @@ export const parseProductDetails = ({id, name, price, long_description, image_gr
         description: long_description,
         thumbnail: images[0],
         images,
-        initialVariantValues: getInitialVariantValues(variants, id, variation_attributes), // eslint-disable camelcase
         variationCategories: parseVariationCategories(variation_attributes),
         variants: variants.map(({product_id, variation_values}) => {
             return {
