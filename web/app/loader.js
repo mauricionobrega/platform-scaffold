@@ -72,16 +72,9 @@ const attemptToInitializeApp = () => {
         const workerPathElements = [SW_LOADER_PATH]
         const messagingSWVersionKey = 'messagingServiceWorkerVersion'
 
-        const versionData = localStorage.getItem(messagingSWVersionKey) || {}
-
-        const version = versionData.SERVICE_WORKER_CURRENT_VERSION
-        if (version) {
-            workerPathElements.push(`msg_sw_version=${version}`)
-        }
-
-        const hash = versionData.SERVICE_WORKER_CURRENT_HASH
-        if (hash) {
-            workerPathElements.push(`msg_sw_hash=${hash}`)
+        const swVersion = localStorage.getItem(messagingSWVersionKey) || ''
+        if (swVersion) {
+            workerPathElements.push(`msg_sw_version=${swVersion}`)
         }
 
         // Add a deferred function that will asynchronously update the Messaging
@@ -92,8 +85,12 @@ const attemptToInitializeApp = () => {
                     .then((response) => response.json())
                     .then((versionData) => {
                         // Persist the result in localStorage
-                        if (isLocalStorageAvailable()) {
-                            localStorage.setItem(messagingSWVersionKey, versionData)
+                        if (isLocalStorageAvailable() && versionData) {
+                            localStorage.setItem(
+                                messagingSWVersionKey,
+                                (versionData.SERVICE_WORKER_CURRENT_VERSION || '') + '_' +
+                                (versionData.SERVICE_WORKER_CURRENT_HASH || '')
+                            )
                         }
                         return versionData
                     })
