@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {onRouteChanged, fetchPage, removeAllNotifications, checkIfOffline, setFetchedPage} from './containers/app/actions'
+import {onRouteChanged, removeAllNotifications, checkIfOffline, setFetchedPage} from './containers/app/actions'
 
 import {trigger as astroTrigger} from './utils/astro-integration'
 
@@ -23,12 +23,10 @@ const template = (WrappedComponent) => {
 
             dispatch(onRouteChanged(url, route.routeName))
 
-            if (WrappedComponent.fetcher) {
-                WrappedComponent.fetcher(route.fetchUrl || url, route.routeName, dispatch)
+            if (route.fetchAction) {
+                dispatch(route.fetchAction(route.fetchUrl || url, route.routeName))
                     .then(() => dispatch(setFetchedPage(url)))
                     .then(() => dispatch(checkIfOffline()))
-            } else if (!route.suppressFetch) {
-                dispatch(fetchPage(url, WrappedComponent, route.routeName, route.fetchUrl))
             }
             dispatch(removeAllNotifications())
         }
@@ -46,7 +44,6 @@ const template = (WrappedComponent) => {
 
         componentWillReceiveProps(nextProps) {
             if (getPath(this.props.location) !== getPath(nextProps.location)) {
-                console.log('changing', Template.displayName)
                 this.dispatchRouteChange(nextProps)
                 this.props.dispatch(removeAllNotifications())
             }

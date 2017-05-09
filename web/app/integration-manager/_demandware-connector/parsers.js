@@ -1,37 +1,47 @@
-
 import {SITE_ID} from './constants'
+import {formatPrice} from './utils'
 
-const formatPrice = (price) => {
-    if (!price) {
-        price = 0
-    }
-    return `$${price.toFixed(2)}`
-}
-
-const parseCarouselItems = (imageGroups) => {
+const parseImages = (imageGroups) => {
     const largeImages = imageGroups.filter((imageGroup) => imageGroup.view_type === 'large')[0]
-    return largeImages.images.map(({alt, link}, idx) => ({alt, img: link, position: idx.toString()}))
+
+    return largeImages.images.map(({alt, link}) => ({
+        alt,
+        src: link
+    }))
 }
 
-export const parseProductDetails = ({name, price, long_description, image_groups, variants, variation_attributes}) => {
+/* eslint-disable camelcase */
+const parseVariationCategories = (variation_attributes) => {
+    return variation_attributes.map(({id, name, values}) => ({
+        id,
+        label: name,
+        values: values.map(({name, value}) => ({
+            label: name,
+            value
+        }))
+    }))
+}
+/* eslint-enable camelcase */
+
+export const getProductHref = (productID) => `/s/2017refresh/${productID}.html`
+
+export const parseProductDetails = ({id, name, price, long_description, image_groups, variants, variation_attributes}) => {
+    const images = parseImages(image_groups)
     return {
+        id,
         title: name,
         price: `${formatPrice(price)}`,
         description: long_description,
-        carouselItems: parseCarouselItems(image_groups),
-        variationOptions: variation_attributes,
-        availableVariations: variants.map(({product_id, variation_values}) => {
+        thumbnail: images[0],
+        images,
+        variationCategories: parseVariationCategories(variation_attributes),
+        variants: variants.map(({product_id, variation_values}) => {
             return {
-                variationID: product_id,
-                variationValues: variation_values
+                id: product_id,
+                values: variation_values
             }
         })
     }
-}
-
-export const getCurrentProductID = () => {
-    const productIDMatch = /(\d+).html/.exec(window.location.href)
-    return productIDMatch ? productIDMatch[1] : ''
 }
 
 export const parseBasketContents = ({product_items, product_sub_total, product_total, order_total}) => {
@@ -60,7 +70,23 @@ export const parseBasketContents = ({product_items, product_sub_total, product_t
         summary_count,
         orderTotal: order_total
     }
-    /* eslint-enable camelcase  */
+}
+
+export const getCurrentProductID = () => {
+    let productID
+    let productIDMatch = /(\d+).html/.exec(window.location.href)
+    if (productIDMatch) {
+        productID = productIDMatch[1]
+    }
+
+    if (!productID) {
+    // Cart edit style: https://.../checkout/cart/configure/id/{basket_id}/product_id/{product_id}/
+        productIDMatch = /product_id\/(\d+)/.exec(window.location.href)
+        productID = productIDMatch ? productIDMatch[1] : ''
+    }
+
+    console.log('[getCurrentProductID]', productID)
+    return productID
 }
 
 export const parseCategories = (categories) => {
@@ -74,31 +100,21 @@ export const parseCategories = (categories) => {
     })
 }
 
-export const getProductHref = (productID) => `/s/2017refresh/${productID}.html`
-
 export const parseProductHit = ({product_id, product_name, price, prices, image}) => {
     // Some products don't have _any_ pricing on them!
     const finalPrice = price || (prices && prices['usd-sale-prices']) || undefined
-    let formattedPrice = '$ N/A'
-    if (finalPrice) {
-        formattedPrice = `${formatPrice(finalPrice)}`
+    const thumbnail = {
+        alt: image.alt,
+        src: image.link
     }
 
     return {
+        id: product_id,
         title: product_name,
-        price: formattedPrice,
-        link: {
-            href: getProductHref(product_id),
-            text: product_name
-        },
-        image: {
-            alt: image.alt,
-            src: image.link
-        },
-        carouselItems: [{
-            img: image.link,
-            position: '1'
-        }]
+        price: finalPrice ? formatPrice(finalPrice) : '$ N/A',
+        href: getProductHref(product_id),
+        thumbnail,
+        images: [thumbnail]
     }
 }
 

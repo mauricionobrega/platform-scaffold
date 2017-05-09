@@ -91,7 +91,7 @@ class CreditCardForm extends React.Component {
 
                 <FieldRow>
                     <ReduxForm.Field component={Field} name="ccexpiry" label="Expiry">
-                        <ExpiryDate />
+                        <ExpiryDate placeholder="mm/yy" />
                     </ReduxForm.Field>
 
                     <ReduxForm.Field component={Field} className="pw--overlayed-hint t-checkout-payment__credit-card-hints" name="cvv" label="CVV" hint={cvvHint}>

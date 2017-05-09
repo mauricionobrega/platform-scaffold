@@ -1,8 +1,6 @@
 import React from 'react'
 import template from '../../template'
 
-import {fetchPdpData} from '../../integration-manager/products/commands'
-
 import ProductDetailsHeading from './partials/product-details-heading'
 import ProductDetailsCarousel from './partials/product-details-carousel'
 import ProductDetailsDescription from './partials/product-details-description'
@@ -11,11 +9,12 @@ import ProductDetailsItemAddedModal from './partials/product-details-item-added-
 import ProductNearestStores from './partials/product-nearest-stores'
 
 const ProductDetails = ({route: {routeName}}) => {
+    const isInCheckout = (routeName === 'cartEditPage')
     return (
         <div className="t-product-details">
-            <ProductDetailsHeading isInCheckout={routeName === 'cartEditPage'} />
+            <ProductDetailsHeading isInCheckout={isInCheckout} />
             <ProductDetailsCarousel />
-            <ProductDetailsAddToCart />
+            <ProductDetailsAddToCart isInCheckout={isInCheckout} />
             <ProductDetailsDescription />
             <ProductDetailsItemAddedModal />
             <div className="u-padding-md u-bg-color-neutral-10">
@@ -25,7 +24,6 @@ const ProductDetails = ({route: {routeName}}) => {
     )
 }
 
-ProductDetails.fetcher = (url, routeName, dispatch) => dispatch(fetchPdpData(url, routeName))
 
 ProductDetails.propTypes = {
     /**

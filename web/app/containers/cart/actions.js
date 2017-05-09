@@ -1,3 +1,4 @@
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 import {closeModal, openModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {fetchShippingMethodsEstimate} from '../../integration-manager/checkout/commands'
@@ -7,20 +8,45 @@ import {
     CART_REMOVE_ITEM_MODAL,
     CART_WISHLIST_MODAL
 } from './constants'
-import {removeFromCart, updateItemQuantity, addToWishlist} from '../../integration-manager/cart/commands'
+import {removeFromCart, updateItemQuantity, addToWishlist, fetchTaxEstimate} from '../../integration-manager/cart/commands'
 import {addNotification} from '../app/actions'
 import {getIsLoggedIn} from '../app/selectors'
 import {trigger} from '../../utils/astro-integration'
+import {getFormValues, getFormRegisteredFields} from '../../store/form/selectors'
+import {getSelectedShippingMethod} from '../../store/checkout/shipping/selectors'
+import {parseLocationData} from '../../utils/utils'
 
-export const receiveData = createAction('Receive Cart Data')
 export const setRemoveItemId = createAction('Set item id for removal', ['removeItemId'])
 export const setIsWishlistComplete = createAction('Set wishlist add complete', ['isWishlistAddComplete'])
+export const setTaxRequestPending = createAction('Set tax request pending', ['taxRequestPending'])
 
-export const submitEstimateShipping = () => {
-    return (dispatch) => {
-        dispatch(fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME))
-        dispatch(closeModal(CART_ESTIMATE_SHIPPING_MODAL))
-    }
+const shippingFormSelector = createPropsSelector({
+    formValues: getFormValues(ESTIMATE_FORM_NAME),
+    registeredFields: getFormRegisteredFields(ESTIMATE_FORM_NAME),
+    shippingMethod: getSelectedShippingMethod
+})
+
+const taxErrorNotification = {
+    content: 'Unable to calculate tax.',
+    id: 'taxError',
+    showRemoveButton: true
+}
+
+export const submitEstimateShipping = () => (dispatch, getState) => {
+    const currentState = getState()
+    const {formValues, registeredFields, shippingMethod} = shippingFormSelector(currentState)
+    const address = parseLocationData(formValues, registeredFields.map(({name}) => name))
+
+    dispatch(setTaxRequestPending(true))
+    dispatch(fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME))
+        .then(() => {
+            return dispatch(fetchTaxEstimate(address, shippingMethod.value))
+                .catch(() => dispatch(addNotification(taxErrorNotification)))
+        })
+        .then(() => {
+            dispatch(closeModal(CART_ESTIMATE_SHIPPING_MODAL))
+            dispatch(setTaxRequestPending(false))
+        })
 }
 
 export const removeItem = (itemID) => (dispatch) => {

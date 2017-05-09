@@ -1,5 +1,5 @@
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
-import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../../products/responses'
+import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../../products/results'
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 import {makeDemandwareRequest} from '../utils'
 import {parseProductDetails, getCurrentProductID, getProductHref} from '../parsers'
@@ -14,31 +14,34 @@ export const fetchPdpData = () => (dispatch) => {
     return makeDemandwareRequest(productURL, options)
         .then((response) => response.json())
         .then((responseJSON) => {
-            const productDetailsData = parseProductDetails(responseJSON)
-            productDetailsData.availableVariations.forEach(({variationID}) => {
-                dispatch(receiveProductDetailsProductData({[getProductHref(variationID)]: productDetailsData}))
+            const productDetailsData = {
+                ...parseProductDetails(responseJSON),
+                href: productPathKey
+            }
+            const productDetailsMap = {
+                [productPathKey]: productDetailsData
+            }
+            productDetailsData.variants.forEach(({id}) => {
+                productDetailsMap[getProductHref(id)] = productDetailsData
             })
-            dispatch(receiveProductDetailsProductData({[productPathKey]: productDetailsData}))
-            dispatch(receiveProductDetailsUIData({[productPathKey]: {itemQuantity: responseJSON.step_quantity, ctaText: 'Add To Cart'}}))
+            dispatch(receiveProductDetailsProductData(productDetailsMap))
+            dispatch(receiveProductDetailsUIData({[productPathKey]: {itemQuantity: responseJSON.step_quantity}}))
         })
 }
 
-export const getProductVariationData = (variationSelections, availableVariations, variationOptions) => (dispatch) => {
-    let isFullySelected = true
-    variationOptions.forEach(({id}) => {
-        if (!variationSelections[id]) {
-            isFullySelected = false
-        }
-    })
+export const getProductVariantData = (selections, variants, categoryIds) => (dispatch) => {
+    if (categoryIds.some((id) => !selections[id])) {
+        return
+    }
 
-    if (isFullySelected) {
-        const selectedVariationData = availableVariations.filter(({variationValues: {color, size}}) => {
-            return color === variationSelections.color && size === variationSelections.size
-        })[0]
-        if (selectedVariationData) {
-            browserHistory.push({
-                pathname: getProductHref(selectedVariationData.variationID)
-            })
+    for (const {values, id} of variants) {
+        if (categoryIds.every((id) => selections[id] === values[id])) {
+            setTimeout(() => {
+                browserHistory.push({
+                    pathname: getProductHref(id)
+                })
+            }, 250)
+            return
         }
     }
 }

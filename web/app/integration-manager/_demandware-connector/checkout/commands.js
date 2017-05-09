@@ -1,13 +1,13 @@
 import {SubmissionError} from 'redux-form'
-import {createBasket, parseAndReceiveCartResponse} from '../cart/utils'
 import {getOrderTotal} from '../../../store/cart/selectors'
+import {createBasket} from '../cart/utils'
 import {makeDemandwareRequest, getAuthTokenPayload, getAuthToken} from '../utils'
 import {populateLocationsData, createOrderAddressObject} from './utils'
-import {parseShippingAddressFromBasket} from './parsers'
 import {API_END_POINT_URL, PAYMENT_URL, SITE_ID} from '../constants'
-import {receiveCheckoutData, receiveShippingInitialValues, receiveBillingInitialValues} from './../../checkout/responses'
-import {receiveOrderConfirmationContents} from '../../responses'
+import {receiveCheckoutData, receiveShippingMethodInitialValues, receiveBillingInitialValues} from './../../checkout/results'
+import {receiveOrderConfirmationContents} from '../../results'
 import {getCardData} from 'progressive-web-sdk/dist/card-utils'
+import {parseShippingAddressFromBasket} from './parsers'
 
 export const fetchShippingMethodsEstimate = () => (dispatch) => {
     return createBasket()
@@ -36,7 +36,7 @@ export const fetchCheckoutShippingData = () => (dispatch) => {
             return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}`, {method: 'GET'})
                 .then((response) => response.json())
                 .then((responseJSON) => {
-                    dispatch(receiveShippingInitialValues({initialValues: parseShippingAddressFromBasket(responseJSON)}))
+                    dispatch(receiveShippingMethodInitialValues({initialValues: parseShippingAddressFromBasket(responseJSON)}))
                     return dispatch(populateLocationsData())
                 })
                 .then(() => dispatch(fetchShippingMethodsEstimate()))
@@ -52,7 +52,7 @@ export const fetchCheckoutPaymentData = () => (dispatch) => {
                 .then((responseJSON) => {
                     const addressData = parseShippingAddressFromBasket(responseJSON)
 
-                    dispatch(receiveShippingInitialValues({initialValues: addressData}))
+                    dispatch(receiveShippingMethodInitialValues({initialValues: addressData}))
                     dispatch(receiveBillingInitialValues({initialValues: {...addressData, billing_same_as_shipping: true}}))
                 })
         })

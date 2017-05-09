@@ -1,13 +1,19 @@
 import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
-import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
-import productListParser from './parsers/product-list'
+import {getCurrentPathKey} from '../../containers/app/selectors'
+import {getSelectedCategory} from './selectors'
 
-export const receiveCategory = createAction('Receive Category Data')
+export const changeFilter = createAction('Change Filter')
 
-export const process = ({payload}) => {
-    const {$, $response, url} = payload
+export const changeFilterTo = (filterQuery) => (dispatch, getStore) => {
+    const currentState = getStore()
+    const categoryData = getSelectedCategory(currentState).toJS()
 
-    return receiveCategory({
-        [urlToPathKey(url)]: productListParser($, $response)
-    })
+    categoryData.filters.forEach((filter) =>
+        filter.kinds.forEach((kind) => {
+            kind.active = kind.query === filterQuery
+        })
+    )
+
+    const newCategories = {[getCurrentPathKey(currentState)]: categoryData}
+    dispatch(changeFilter(newCategories))
 }

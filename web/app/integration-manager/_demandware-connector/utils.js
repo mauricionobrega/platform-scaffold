@@ -5,11 +5,17 @@ const AUTH_KEY_NAME = 'mob-auth'
 const BASKET_KEY_NAME = 'mob-basket'
 
 export const storeAuthToken = (authorization) => {
-    window.sessionStorage.setItem(AUTH_KEY_NAME, authorization)
+    if (authorization) {
+        window.sessionStorage.setItem(AUTH_KEY_NAME, authorization)
+    }
 }
 
 export const getAuthToken = () => {
     return window.sessionStorage.getItem(AUTH_KEY_NAME)
+}
+
+export const deleteAuthToken = () => {
+    window.sessionStorage.removeItem(AUTH_KEY_NAME)
 }
 
 export const deleteBasketID = () => {
@@ -80,6 +86,12 @@ export const initDemandWareAuthAndSession = () => {
         }
         return makeRequest(`${API_END_POINT_URL}/customers/auth`, requestOptions)
             .then((response) => {
+                if (response.status === 401) {
+                    // The server did not accept the token, start from scratch
+                    deleteAuthToken()
+                    return initDemandWareAuthAndSession()
+                }
+
                 const authorizationToken = response.headers.get('Authorization')
                 storeAuthToken(authorizationToken)
                 return {
@@ -119,4 +131,11 @@ export const makeDemandwareUnAuthenticatedRequest = (url, options) => {
         headers: REQUEST_HEADERS
     }
     return makeRequest(url, requestOptions)
+}
+
+export const formatPrice = (price) => {
+    if (!price) {
+        price = 0
+    }
+    return `$${price.toFixed(2)}`
 }

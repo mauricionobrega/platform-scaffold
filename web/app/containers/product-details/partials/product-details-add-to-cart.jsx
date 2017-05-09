@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import * as ReduxForm from 'redux-form'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as selectors from '../selectors'
+import {getProductInitialValues} from '../../../store/products/selectors'
 import * as actions from '../actions'
 
 import ProductDetailsVariations from './product-details-variations'
@@ -10,7 +11,7 @@ import Button from 'progressive-web-sdk/dist/components/button'
 import Icon from 'progressive-web-sdk/dist/components/icon'
 import Stepper from 'progressive-web-sdk/dist/components/stepper'
 
-const ProductDetailsAddToCart = ({quantity, ctaText, setQuantity, onSubmit, disabled, handleSubmit}) => {
+const ProductDetailsAddToCart = ({quantity, setQuantity, onSubmit, disabled, isInCheckout, handleSubmit}) => {
     const stepperProps = {
         decrementIcon: 'minus',
         disabled,
@@ -39,10 +40,11 @@ const ProductDetailsAddToCart = ({quantity, ctaText, setQuantity, onSubmit, disa
                 </div>
             </div>
 
+            {/* Note that the "Update Cart" feature doesn't actually do that.. */}
             <Button
                 type="submit"
                 icon="plus"
-                title={ctaText}
+                title={isInCheckout ? 'Update Cart' : 'Add to Cart'}
                 showIconText={true}
                 className="c--primary u-width-full u-text-uppercase u-margin-bottom-lg t-product-details__add-to-cart"
                 disabled={disabled}
@@ -54,18 +56,17 @@ const ProductDetailsAddToCart = ({quantity, ctaText, setQuantity, onSubmit, disa
 ProductDetailsAddToCart.propTypes = {
     setQuantity: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
-    ctaText: PropTypes.string,
     disabled: PropTypes.bool,
     handleSubmit: PropTypes.func,
     initialValues: PropTypes.object,
+    isInCheckout: PropTypes.bool,
     quantity: PropTypes.number
 }
 
 const mapStateToProps = createPropsSelector({
-    ctaText: selectors.getCTAText,
     quantity: selectors.getItemQuantity,
     disabled: selectors.getAddToCartDisabled,
-    initialValues: selectors.getProductInitialValues
+    initialValues: getProductInitialValues
 })
 
 const mapDispatchToProps = {

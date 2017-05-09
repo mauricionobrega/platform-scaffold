@@ -1,8 +1,12 @@
-import {makeDemandwareRequest, getBasketID, storeBasketID} from '../utils'
-import {receiveCartContents} from '../../cart/responses'
-import {getFirstProductImageByPathKey} from '../../../containers/product-details/selectors'
-import {parseBasketContents, getProductHref} from '../parsers'
+import {makeDemandwareRequest, getBasketID, storeBasketID, deleteBasketID} from '../utils'
+import {getCartItems} from '../../../store/cart/selectors'
+import {receiveCartProductData} from '../../products/results'
+import {receiveCartContents} from '../../cart/results'
+
+import {getProductById, getProductThumbnailSrcByPathKey, getProductThumbnailByPathKey} from '../../../store/products/selectors'
+import {getProductHref} from '../parsers'
 import {API_END_POINT_URL} from '../constants'
+import {parseCartProducts, parseCartContents} from './parsers'
 
 export const createBasket = (basketContents) => {
     const basketID = getBasketID()
@@ -12,6 +16,7 @@ export const createBasket = (basketContents) => {
     const options = {
         method: 'POST'
     }
+
     if (basketContents) {
         options.body = JSON.stringify(basketContents)
     }
@@ -25,7 +30,7 @@ export const createBasket = (basketContents) => {
 }
 
 export const getProductImage = (item, currentState) => {
-    const productImage = getFirstProductImageByPathKey(getProductHref(item.product_id))(currentState)
+    const productImage = getProductThumbnailSrcByPathKey(getProductHref(item.product_id))(currentState)
 
     if (productImage) {
         // If we already have images for the item in our state, then just use those
@@ -46,31 +51,81 @@ export const getProductImage = (item, currentState) => {
     }
 }
 
-export const fetchBasketItemImages = (responseJSON, currentState) => {
-    const basketData = parseBasketContents(responseJSON)
-    if (basketData.items.length) {
-        return Promise.all(basketData.items.map((item) => getProductImage(item, currentState)))
-            .then((itemImages) => {
-                return {
-                    ...basketData,
-                    items: basketData.items.map((item, i) => ({...item, product_image: itemImages[i]}))
-                }
+const imageFromJson = (imageJson, name, description) => ({
+    /* Image */
+    src: imageJson.link,
+    alt: `${name} - ${description}`,
+    caption: imageJson.title
+})
+
+/**
+ * Fetches product images for items that are in the cart and don't already
+ * have them.
+ */
+export const fetchCartItemImages = () => (dispatch, getState) => {
+
+    /* TODO: The `view_type` is configurable per instance. This is something that
+    *       might have to be configurable in the connector to say what `view_type`
+    *       is a thumbnail and which one is the large image type. */
+    const thumbnailViewType = 'medium'
+    const largeViewType = 'large'
+
+    const currentState = getState()
+    const items = getCartItems(currentState)
+    const updatedProducts = {}
+
+    // We use the .thumbnail as an indicator of whether the product has images already
+    return Promise.all(
+        items.filter((cartItem) => getProductThumbnailByPathKey(getProductHref(cartItem.get('productId')))(currentState).size === 0)
+            .map((cartItem) => {
+                const productId = cartItem.get('productId')
+
+                return makeDemandwareRequest(`${API_END_POINT_URL}/products/${productId}/images?all_images=false&view_type=${largeViewType},${thumbnailViewType}`, {method: 'GET'})
+                    .then((response) => response.json())
+                    .then(({image_groups, name, short_description}) => {
+                        const product = getProductById(productId)(currentState).toJS()
+
+                        const thumbnail = image_groups.find((group) => group.view_type === thumbnailViewType)
+                        if (thumbnail) {
+                            product.thumbnail = imageFromJson(thumbnail.images[0], name, short_description)
+                        }
+
+                        const largeGroup = image_groups.find((group) => group.view_type === largeViewType)
+                        if (largeGroup) {
+                            product.images = largeGroup.images.map((image) => imageFromJson(image, name, short_description))
+                        }
+
+                        updatedProducts[getProductHref(productId)] = product
+                    })
             })
-    }
-    return Promise.resolve(basketData)
+    )
+    .then(() => {
+        dispatch(receiveCartProductData(updatedProducts))
+    })
 }
 
-export const parseAndReceiveCartResponse = (responseJSON) => (dispatch, getState) => {
-    return fetchBasketItemImages(responseJSON, getState())
-        .then((basketData) => dispatch(receiveCartContents(basketData)))
-}
-
-export const requestCartData = () => {
+export const requestCartData = (noRetry) => {
     return createBasket()
-        .then((basket) => {
-            const options = {
-                method: 'GET'
+        .then((basketID) => makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}`, {method: 'GET'}))
+        .then((response) => {
+            if (response.status === 404) {
+                if (noRetry) {
+                    throw new Error('Cart not found')
+                }
+                // Our basket has expired, clear and start over
+                deleteBasketID()
+                return requestCartData(true)
             }
-            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}`, options)
+            return response
         })
+}
+
+export const handleCartData = (responseJSON) => (dispatch) => {
+    // Note: These need to be dispatched in this order, otherwise there's
+    //       a chance we could try to render cart items and not have product
+    //       data in the store for it.
+    dispatch(receiveCartProductData(parseCartProducts(responseJSON)))
+    dispatch(receiveCartContents(parseCartContents(responseJSON)))
+
+    return dispatch(fetchCartItemImages())
 }

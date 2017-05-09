@@ -1,3 +1,4 @@
+import {createAction as createReduxAction} from 'redux-actions'
 
 /**
  * Wraps an action creator function so that the React synthetic action
@@ -32,12 +33,6 @@ export const getCookieValue = (cookieName) => {
     return result
 }
 
-
-// converts the image URL to a high resolution format
-export const getHighResImage = (src) => {
-    return src ? src.replace(/thumbnail\/\d+x\d+/, 'small_image/240x300') : src
-}
-
 export const splitFullName = (fullname) => {
     const names = fullname.split(' ')
     return {
@@ -45,7 +40,6 @@ export const splitFullName = (fullname) => {
         lastname: names.slice(-1).join(' ')
     }
 }
-
 
 /**
  * Currently requestIdleCallback is only supported in Chrome,
@@ -59,4 +53,45 @@ export const requestIdleCallback = (fn) => {
     } else {
         return setTimeout(() => fn(), 1)
     }
+}
+
+export const typecheck = (type, value) => {
+    try {
+        type.check(value)
+    } catch (e) {
+        console.error('Type check failed: ', e, '\n\nValue: ', value)
+    }
+    return value
+}
+
+export const createTypedAction = (description, type) => createReduxAction(
+    description,
+    (payload) => typecheck(type, payload)
+)
+
+export const parseLocationData = (formValues, registeredFieldNames) => {
+    // Default values to use if none have been selected
+    const address = {country_id: 'US', region_id: '0', postcode: null}
+
+    if (formValues) {
+        // Only return the field value if the field is registered
+        const getRegisteredFieldValue = (fieldName) => {
+            return registeredFieldNames.includes(fieldName) ? formValues[fieldName] : undefined
+        }
+        address.country_id = getRegisteredFieldValue('country_id')
+        address.postcode = getRegisteredFieldValue('postcode')
+        if (formValues.region) {
+            address.region = getRegisteredFieldValue('region')
+            // Remove the region_id in case we have an old value
+            delete address.region_id
+        } else {
+            address.region_id = getRegisteredFieldValue('region_id')
+        }
+    }
+    return address
+}
+
+
+export const buildQueryString = (query) => {
+    return query.replace(/ /g, '+')
 }

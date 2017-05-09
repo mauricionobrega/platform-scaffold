@@ -1,23 +1,32 @@
 import React from 'react'
 import template from '../../template'
-
-import {fetchProductListData} from '../../integration-manager/categories/commands'
 import {isRunningInAstro} from '../../utils/astro-integration'
 import ProductListHeader from './partials/product-list-header'
+import SearchResultHeader from './partials/search-result-header'
 import ProductListContents from './partials/product-list-contents'
+import ProductListFilterModal from './partials/product-list-filter-modal'
 
-const ProductList = () => {
+const ProductList = ({route: {routeName}}) => {
     return (
         <div className="t-product-list">
             {!isRunningInAstro &&
-                <ProductListHeader />
+                <div>
+                    {routeName === 'searchResultPage' ?
+                        <SearchResultHeader />
+                    :
+                        <ProductListHeader />
+                    }
+                </div>
             }
-            <ProductListContents />
+            <ProductListContents routeName={routeName} />
+            <ProductListFilterModal />
         </div>
     )
 }
 
-ProductList.fetcher = (url, routeName, dispatch) => dispatch(fetchProductListData(url, routeName))
-
+ProductList.propTypes = {
+    // Route object added by react router
+    route: React.PropTypes.object
+}
 
 export default template(ProductList)

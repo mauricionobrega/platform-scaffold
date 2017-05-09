@@ -1,11 +1,11 @@
 import {handleActions} from 'redux-actions'
 import Immutable from 'immutable'
 import {mergePayload} from '../../utils/reducer-utils'
-import {receiveData, setRemoveItemId, setIsWishlistComplete} from './actions'
+import {setRemoveItemId, setIsWishlistComplete, setTaxRequestPending} from './actions'
 
 
 export default handleActions({
-    [receiveData]: mergePayload,
+    [setTaxRequestPending]: mergePayload,
     [setRemoveItemId]: mergePayload,
     [setIsWishlistComplete]: mergePayload
 }, Immutable.Map())

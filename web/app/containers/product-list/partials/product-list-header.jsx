@@ -1,23 +1,20 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
-import * as selectors from '../selectors'
+import {getCategoryTitle, getCategoryParentTitle, getCategoryParentHref} from '../../../store/categories/selectors'
+import {getProductListContentsLoaded} from '../selectors'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
 import Link from 'progressive-web-sdk/dist/components/link'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import Image from 'progressive-web-sdk/dist/components/image'
 
-import {isRunningInAstro} from '../../../utils/astro-integration'
-
 const ProductListHeader = ({title, contentsLoaded, parentName, parentHref}) => (
     <div className="u-flexbox u-align-bottom">
         <div className="u-flex u-padding-top-lg u-padding-bottom-lg u-padding-start-md">
-            {!isRunningInAstro &&
-                <div className="t-product-list__breadcrumb">
-                    <Link href={parentHref} className="u-text-small">{parentName}</Link>
-                </div>
-            }
+            <div className="t-product-list__breadcrumb">
+                <Link href={parentHref} className="u-text-small">{parentName}</Link>
+            </div>
             <div className="u-margin-top-md">
                 {contentsLoaded ?
                     <h1 className="u-text-uppercase">{title}</h1>
@@ -48,10 +45,10 @@ ProductListHeader.propTypes = {
 }
 
 const mapStateToProps = createPropsSelector({
-    contentsLoaded: selectors.getProductListContentsLoaded,
-    parentHref: selectors.getProductListParentHref,
-    parentName: selectors.getProductListParentName,
-    title: selectors.getProductListTitle
+    contentsLoaded: getProductListContentsLoaded,
+    parentHref: getCategoryParentHref,
+    parentName: getCategoryParentTitle,
+    title: getCategoryTitle
 })
 
 export default connect(mapStateToProps)(ProductListHeader)

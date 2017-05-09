@@ -36,7 +36,7 @@ const ShippingMethod = ({shippingMethods}) => {
                 })}
 
                 <FieldRow className="u-margin-top-lg">
-                    <Button type="submit" className="c--primary u-width-full u-text-uppercase">
+                    <Button type="submit" className="c--primary u-width-full u-text-uppercase qa-checkout__continue-to-payment">
                         Continue to Payment
                     </Button>
                 </FieldRow>

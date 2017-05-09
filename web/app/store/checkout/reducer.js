@@ -1,15 +1,14 @@
 import Immutable from 'immutable'
 import {handleActions} from 'redux-actions'
 import {mergePayload} from '../../utils/reducer-utils'
-import {receiveCheckoutData, receiveShippingMethodInitialValues} from './actions'
-import * as integrationManagerResponses from '../../integration-manager/checkout/responses'
+import {receiveCheckoutData} from './actions'
+import * as integrationManagerResults from '../../integration-manager/checkout/results'
 
 const productReducer = handleActions({
     [receiveCheckoutData]: mergePayload,
-    [receiveShippingMethodInitialValues]: mergePayload,
-    [integrationManagerResponses.receiveShippingInitialValues]: mergePayload,
-    [integrationManagerResponses.receiveBillingInitialValues]: mergePayload,
-    [integrationManagerResponses.receiveCheckoutData]: mergePayload
+    [integrationManagerResults.receiveBillingInitialValues]: mergePayload,
+    [integrationManagerResults.receiveShippingMethodInitialValues]: mergePayload,
+    [integrationManagerResults.receiveCheckoutData]: mergePayload
 }, Immutable.Map())
 
 export default productReducer

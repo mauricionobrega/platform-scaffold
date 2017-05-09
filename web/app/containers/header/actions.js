@@ -1,3 +1,18 @@
 import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 
+import {SUGGESTION_URL} from './constants'
+import {buildQueryString} from '../../utils/utils'
+import {getSearchSuggestions} from '../../integration-manager/commands'
+
 export const toggleHeader = createAction('Toggled the header', ['isCollapsed'])
+
+export const openSearch = createAction('Open header search')
+export const closeSearch = createAction('Close header search')
+
+export const searchQueryChanged = (query) => (dispatch) => (
+    dispatch(getSearchSuggestions(query))
+)
+
+export const searchSubmit = (query) => (dispatch) => {
+    window.location.href = `${window.location.origin}${SUGGESTION_URL}${buildQueryString(query)}`
+}

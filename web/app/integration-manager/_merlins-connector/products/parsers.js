@@ -11,6 +11,17 @@ const parseCarouselItems = (magentoObject) => {
     return carouselSetup.toJS()
 }
 
+const carouselItemsToImages = (carouselItems) => {
+    return carouselItems.map(({img, isMain, full, thumb, caption}) => ({
+        alt: '',
+        src: img,
+        isMain,
+        zoomSrc: full,
+        thumbnailSrc: thumb,
+        caption,
+    }))
+}
+
 const parseBreadcrumbs = ($, $breadcrumbsLinks) => {
     return $breadcrumbsLinks.get()
         .map((breadcrumbLink) => parseTextLink($(breadcrumbLink)))
@@ -19,11 +30,16 @@ const parseBreadcrumbs = ($, $breadcrumbsLinks) => {
 export const productDetailsParser = ($, $html) => {
     const $mainContent = $html.find('.page-main')
     const magentoObject = extractMagentoJson($html)
+    const carouselItems = parseCarouselItems(magentoObject)
+    const images = carouselItemsToImages(carouselItems)
+
     return {
+        id: $mainContent.find('#product_addtocart_form input[name="product"]').val(),
         title: getTextFrom($mainContent, '.page-title-wrapper.product .page-title > span'),
         price: getTextFrom($mainContent, '.product-info-price .price-wrapper .price'),
-        carouselItems: parseCarouselItems(magentoObject),
-        description: getTextFrom($mainContent, '.product.info.detailed .product.attibute.description p')
+        description: getTextFrom($mainContent, '.product.info.detailed .product.attibute.description p'),
+        images,
+        thumbnail: images[0]
     }
 }
 
@@ -40,8 +56,7 @@ export const productDetailsUIParser = ($, $html) => {
 
     return {
         breadcrumbs: parseBreadcrumbs($, $breadcrumbs),
-        itemQuantity: parseInt($form.find('#qty').val()),
-        ctaText: $form.find('.tocart').text()
+        itemQuantity: parseInt($form.find('#qty').val())
     }
 }
 
@@ -70,18 +85,14 @@ export const productListParser = ($, $html) => {
     $products.each((_, product) => {
         const $product = $(product)
         const link = parseTextLink($product.find('.product-item-link'))
-        const image = parseImage($product.find('.product-image-photo'))
+        const thumbnail = parseImage($product.find('.product-image-photo'))
         productMap[urlToPathKey(link.href)] = {
+            id: $product.find('.price-box').attr('data-product-id'),
             title: link.text,
             price: getTextFrom($product, '.price'),
-            link,
-            image,
-            carouselItems: [
-                {
-                    img: image.src,
-                    position: '1'
-                }
-            ]
+            href: link.href,
+            thumbnail,
+            images: [thumbnail]
         }
     })
     return productMap

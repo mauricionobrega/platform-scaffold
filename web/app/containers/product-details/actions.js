@@ -1,13 +1,14 @@
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 import {SubmissionError} from 'redux-form'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 
-import * as selectors from './selectors'
-import * as appSelectors from '../app/selectors'
-import {getFormValues} from '../../store/form/selectors'
+import {getItemQuantity, getAddToCartFormValues} from './selectors'
+import {getCurrentPathKey, getCartURL} from '../app/selectors'
+import {getSelectedProductId, getProductVariants, getProductVariationCategories, getProductVariationCategoryIds} from '../../store/products/selectors'
 
 import {addToCart} from '../../integration-manager/cart/commands'
-import {getProductVariationData} from '../../integration-manager/products/commands'
+import {getProductVariantData} from '../../integration-manager/products/commands'
 import {openModal, closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {addNotification} from '../app/actions'
 import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from './constants'
@@ -17,7 +18,7 @@ import {isRunningInAstro, trigger} from '../../utils/astro-integration'
 export const receiveNewItemQuantity = createAction('Set item quantity')
 export const setItemQuantity = (quantity) => (dispatch, getStore) => {
     dispatch(receiveNewItemQuantity({
-        [appSelectors.getCurrentPathKey(getStore())]: {
+        [getCurrentPathKey(getStore())]: {
             itemQuantity: quantity
         }
     }))
@@ -33,50 +34,57 @@ export const goToCheckout = () => (dispatch, getState) => {
         // otherwise, navigating is taken care of by the button press
         trigger('open:cart-modal')
     } else {
-        browserHistory.push(appSelectors.getCartURL(getState()))
+        browserHistory.push(getCartURL(getState()))
     }
 }
 
+const submitCartFormSelector = createPropsSelector({
+    productId: getSelectedProductId,
+    qty: getItemQuantity,
+    variations: getProductVariationCategories
+})
 
 export const submitCartForm = (formValues) => (dispatch, getStore) => {
-    const currentState = getStore()
-    const key = appSelectors.getCurrentPathKey(currentState)
-    const qty = selectors.getItemQuantity(currentState)
-    const variations = selectors.getVariationOptions(currentState)
-    dispatch(addToCartStarted())
+    const {productId, qty, variations} = submitCartFormSelector(getStore())
 
-    return new Promise((resolve, reject) => {
+    if (variations) {
         const errors = {}
-        if (variations) {
-            variations.toJS().forEach(({id, name}) => {
-                if (!formValues[id]) {
-                    errors[id] = `Please select a ${name}.`
-                }
-            })
+        variations.forEach(({id, label}) => {
+            if (!formValues[id]) {
+                errors[id] = `Please select a ${label}`
+            }
+        })
+        if (Object.keys(errors).length > 0) {
+            return Promise.reject(new SubmissionError(errors))
         }
-        if (Object.keys(errors).length) {
-            return reject(new SubmissionError(errors))
-        }
-        return resolve(true)
-    })
-    .then(() => dispatch(addToCart(key, qty)))
-    .then(() => dispatch(openModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL)))
-    .catch((error) => {
-        console.error(`Error adding to cart: ${error}`)
-        return dispatch(addNotification({
-            content: 'Unable to add item to the cart.',
-            id: 'addToCartError',
-            showRemoveButton: true
-        }))
-    })
-    .then(() => dispatch(addToCartComplete()))
+    }
 
+    dispatch(addToCartStarted())
+    return dispatch(addToCart(productId, qty))
+        .then(() => dispatch(openModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL)))
+        .catch((error) => {
+            console.error('Error adding to cart', error)
+            return dispatch(addNotification({
+                content: 'Unable to add item to the cart.',
+                id: 'addToCartError',
+                showRemoveButton: true
+            }))
+        })
+        .then(() => dispatch(addToCartComplete()))
 }
 
-export const onVariationBlur = () => (dispatch, getStore) => {
-    const currentState = getStore()
-    const variationSelections = getFormValues('product-add-to-cart')(currentState)
-    const availableVariations = selectors.getProductVariations(currentState).toJS()
-    const variationOptions = selectors.getVariationOptions(currentState).toJS()
-    return dispatch(getProductVariationData(variationSelections, availableVariations, variationOptions))
+const variationChangeSelector = createPropsSelector({
+    variationSelections: getAddToCartFormValues,
+    categoryIds: getProductVariationCategoryIds,
+    variants: getProductVariants
+})
+
+export const onVariationChange = () => (dispatch, getStore) => {
+    const {
+        variationSelections,
+        categoryIds,
+        variants
+    } = variationChangeSelector(getStore())
+
+    return dispatch(getProductVariantData(variationSelections, variants, categoryIds))
 }
