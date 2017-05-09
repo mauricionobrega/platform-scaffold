@@ -173,7 +173,7 @@ export const checkoutSignIn = ({username, password}) => (dispatch) => (
     })
         .then((responseData) => {
             if (responseData.errors) {
-                throw Error(responseData.message)
+                throw new Error(responseData.message)
             }
             // Refetch the page now that the user is logged in
             return dispatch(fetchCheckoutShippingData(window.location.href))
