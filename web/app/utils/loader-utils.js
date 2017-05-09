@@ -94,7 +94,7 @@ const messagingSWVersionKey = 'messagingServiceWorkerVersion'
 
 /**
  * Kick off a fetch for the service worker version, returning a Promise
- * thaht resolves when the fetch is done.
+ * that resolves when the fetch is done.
  * @returns {*|Promise.<T>}
  */
 export const updateMessagingSWVersion = () => {
