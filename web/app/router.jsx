@@ -40,6 +40,7 @@ if (isRunningInAstro) {
     }
 }
 
+
 const Router = ({store}) => (
     <Provider store={store}>
         <SDKRouter>
@@ -57,7 +58,7 @@ const Router = ({store}) => (
                 <Route component={ProductList} path="catalogsearch/result/*" routeName="searchResultPage" fetchAction={fetchProductListData} />
                 {/* Careful. The routeName on this 'configure' route is used to change how the ProductDetails component renders */}
                 <Route component={ProductDetails} path="checkout/cart/configure/id/*/product_id/*/" routeName="cartEditPage" fetchAction={fetchPdpData} />
-                <Route component={ProductDetails} ignoreScrollBehavior={false} path="*.html*" routeName="productDetailsPage" fetchAction={fetchPdpData} />
+                <Route component={ProductDetails} path="*.html*" routeName="productDetailsPage" fetchAction={fetchPdpData} />
                 <Route
                     component={CheckoutShipping}
                     path="checkout/"

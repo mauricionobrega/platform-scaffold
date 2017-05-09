@@ -10,3 +10,4 @@ export const setNavigationAccountLink = createAction('Set Navigation Account Lin
 export const setCheckoutShippingURL = createAction('Set Checkout Shipping URL', ['checkoutShippingURL'])
 export const setCartURL = createAction('Set Cart URL', ['cartURL'])
 export const receiveSearchSuggestions = createAction('Receive search suggestions')
+export const setCurrentURL = createAction('Set Current URL', ['currentURL'])

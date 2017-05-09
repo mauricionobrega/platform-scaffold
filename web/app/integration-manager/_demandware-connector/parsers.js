@@ -21,6 +21,11 @@ const parseVariationCategories = (variation_attributes) => {
         }))
     }))
 }
+
+const getInitialVariantValues = (variants, id) => {
+    const currentVariant = variants.find(({product_id}) => product_id === id)
+    return currentVariant && currentVariant.variation_values
+}
 /* eslint-enable camelcase */
 
 export const getProductHref = (productID) => `/s/2017refresh/${productID}.html`
@@ -34,6 +39,7 @@ export const parseProductDetails = ({id, name, price, long_description, image_gr
         description: long_description,
         thumbnail: images[0],
         images,
+        initialVariantValues: getInitialVariantValues(variants, id), // eslint-disable camelcase
         variationCategories: parseVariationCategories(variation_attributes),
         variants: variants.map(({product_id, variation_values}) => {
             return {
@@ -44,17 +50,17 @@ export const parseProductDetails = ({id, name, price, long_description, image_gr
     }
 }
 
-export const getCurrentProductID = () => {
+export const getCurrentProductID = (url) => {
     let productID
 
-    let productIDMatch = /(\d+).html/.exec(window.location.href)
+    let productIDMatch = /(\d+).html/.exec(url)
     if (productIDMatch) {
         productID = productIDMatch[1]
     }
 
     if (!productID) {
     // Cart edit style: https://.../checkout/cart/configure/id/{basket_id}/product_id/{product_id}/
-        productIDMatch = /product_id\/(\d+)/.exec(window.location.href)
+        productIDMatch = /product_id\/(\d+)/.exec(url)
         productID = productIDMatch ? productIDMatch[1] : ''
     }
 

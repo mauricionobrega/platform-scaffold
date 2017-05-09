@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import * as ReduxForm from 'redux-form'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as selectors from '../selectors'
-import {getProductInitialValues} from '../../../store/products/selectors'
+import {getProductInitialVariantValues} from '../../../store/products/selectors'
 import * as actions from '../actions'
 
 import ProductDetailsVariations from './product-details-variations'
@@ -66,7 +66,7 @@ ProductDetailsAddToCart.propTypes = {
 const mapStateToProps = createPropsSelector({
     quantity: selectors.getItemQuantity,
     disabled: selectors.getAddToCartDisabled,
-    initialValues: getProductInitialValues
+    initialValues: getProductInitialVariantValues
 })
 
 const mapDispatchToProps = {
