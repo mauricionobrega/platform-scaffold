@@ -43,8 +43,10 @@ export const getProductVariantData = (selections, variants, categoryIds) => (dis
 
     for (const {values, id} of variants) {
         if (categoryIds.every((id) => selections[id] === values[id])) {
+            let variationID = getProductHref(id).match(/(\d+).html/)[1]
+
             browserHistory.push({
-                pathname: getProductHref(id)
+                pathname: `${window.location.pathname}?varID=${variationID}`
             })
             return
         }

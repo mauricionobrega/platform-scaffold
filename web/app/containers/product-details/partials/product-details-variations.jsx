@@ -26,8 +26,6 @@ const ProductDetailsVariations = ({variations, onVariationChange}) => {
                     }}
                 >
                     <select name={id}>
-                        {/* Include an empty option to show by default */}
-                        <option />
                         {values.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
                     </select>
                 </ReduxForm.Field>
