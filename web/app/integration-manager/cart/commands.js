@@ -4,7 +4,10 @@ export const register = (commands) => {
     connector = commands
 }
 
-export const getCart = (...args) => connector.getCart(...args)
+/**
+ * Retrieves the current cart information.
+ */
+export const getCart = () => connector.getCart()
 
 export const initCartPage = (...args) => connector.initCartPage(...args)
 
