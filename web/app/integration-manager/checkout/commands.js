@@ -8,8 +8,8 @@ export const initCheckoutShippingPage = (url, routeName) => connector.initChecko
 export const initCheckoutPaymentPage = (url, routeName) => connector.initCheckoutPaymentPage(url, routeName)
 export const initCheckoutConfirmationPage = (url, routeName) => connector.initCheckoutConfirmationPage(url, routeName)
 
-export const submitShipping = (...args) => connector.submitShipping(...args)
-export const fetchShippingMethodsEstimate = (...args) => connector.fetchShippingMethodsEstimate(...args)
+export const submitShipping = (formValues) => connector.submitShipping(formValues)
+export const fetchShippingMethodsEstimate = (formName) => connector.fetchShippingMethodsEstimate(formName)
 export const updatingShippingAndBilling = (...args) => connector.updatingShippingAndBilling(...args)
 
 export const checkoutSignIn = (...args) => connector.checkoutSignIn(...args)

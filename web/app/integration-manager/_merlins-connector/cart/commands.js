@@ -48,8 +48,8 @@ export const getCart = () => (dispatch) => {
         })
 }
 
-export const addToCart = (productId, quantity) => (dispatch, getState) => {
-    const product = getProductById(productId)(getState())
+export const addToCart = (productID, quantity) => (dispatch, getState) => {
+    const product = getProductById(productID)(getState())
     const formInfo = getState().integrationManager.get(urlToPathKey(product.get('href')))
     const formValues = {
         ...formInfo.get('hiddenInputs').toJS(),
