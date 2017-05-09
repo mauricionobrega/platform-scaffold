@@ -10,11 +10,37 @@ export const initCartPage = (url, routeName) => connector.initCartPage(url, rout
  * Retrieves the current cart information.
  */
 export const getCart = () => connector.getCart()
+
+/**
+ * Adds a product to the cart
+ * @param productID {string} The product's ID
+ * @param quantity {number} The quantity to add
+ */
 export const addToCart = (productID, quantity) => connector.addToCart(productID, quantity)
-export const removeFromCart = (itemId) => connector.removeFromCart(itemId)
 
-export const updateItemQuantity = (itemId, itemQuantity) => connector.updateItemQuantity(itemId, itemQuantity)
+/**
+ * Removes an item from the cart
+ * @param itemID {string} The cart item ID to remove
+ */
+export const removeFromCart = (itemID) => connector.removeFromCart(itemID)
 
+/**
+ * Updates the quantity of the given item in the cart
+ * @param itemID {string} The cart item ID to update
+ * @param quantity {number} The new quantity
+ */
+export const updateItemQuantity = (itemID, quantity) => connector.updateItemQuantity(itemID, quantity)
+
+/**
+ * Add a product to the wishlist
+ * @param productID {string} The product's ID
+ * @param productURL {strin} The URL of the product's detail page
+ */
 export const addToWishlist = (productID, productURL) => connector.addToWishlist(productID, productURL)
 
+/**
+ * Estimates taxes for a proposed address and shipping method
+ * @param address {object} The address to use for tax estimation
+ * @param shippingMethod {string} The shipping method to use for tax estimation (connector-specific!)
+ */
 export const fetchTaxEstimate = (address, shippingMethod) => connector.fetchTaxEstimate(address, shippingMethod)
