@@ -2,7 +2,6 @@ import {createSelector} from 'reselect'
 import Immutable from 'immutable'
 import {createGetSelector} from 'reselect-immutable-helpers'
 import {getCheckout} from '../../selectors'
-import {ADD_NEW_ADDRESS_FIELD} from '../../../containers/checkout-shipping/constants'
 
 export const getShipping = createGetSelector(getCheckout, 'shipping', Immutable.Map())
 
