@@ -38,6 +38,7 @@ export const onShippingLoginError = (errorMessage) =>
 
 export const submitSignIn = () => (dispatch, getState) => {
     const formValues = getShippingFormValues(getState())
+    dispatch(removeNotification('shippingEmailError'))
     return dispatch(checkoutSignIn(formValues))
         .catch((error) => dispatch(onShippingLoginError(error.message)))
 }
@@ -60,12 +61,12 @@ export const submitShipping = () => (dispatch, getState) => {
         })
 }
 
-export const checkCustomerEmail = () => (dispatch) => {
-    return dispatch(checkCustomerEmailCommand())
-        .then((emailAvailable) => {
-            if (emailAvailable) {
-                return dispatch(onShippingEmailAvailable())
-            }
-            return dispatch(onShippingEmailRecognized())
-        })
+export const checkCustomerEmail = () => (dispatch, getState) => {
+    const {username} = getShippingFormValues(getState())
+    return dispatch(checkCustomerEmailCommand(username))
+        .then((emailAvailable) => dispatch(
+            emailAvailable
+                ? onShippingEmailAvailable()
+                : onShippingEmailRecognized()
+        ))
 }
