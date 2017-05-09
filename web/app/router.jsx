@@ -46,7 +46,7 @@ const Router = ({store}) => (
             <Route path="/" component={App} onChange={OnChange}>
                 <IndexRoute component={Home} routeName="home" fetchAction={initHomePage} />
                 <Route component={Cart} path="checkout/cart/" routeName="cart" fetchAction={initCartPage} />
-                <Route component={Login} path="customer/account/login/" routeName="signin" fetchAction={InitLoginPage} />
+                <Route component={Login} path="customer/account/login/" routeName="signin" fetchAction={initLoginPage} />
                 <Route component={Login} path="customer/account/create/" routeName="register" fetchAction={initRegisterPage} />
                 <Route component={ProductList} path="potions.html" routeName="productListPage" fetchAction={initProductListPage} />
                 <Route component={ProductList} path="books.html" routeName="productListPage" fetchAction={initProductListPage} />
@@ -88,7 +88,7 @@ const Router = ({store}) => (
                     routeName="checkout-confirmation"
                     Header={CheckoutHeader}
                     Footer={CheckoutFooter}
-                    fetchAction={fetchCheckoutConfirmationData}
+                    fetchAction={initCheckoutConfirmationPage}
                 />
 
                 {/* SFCC Connector routes */}
@@ -107,7 +107,7 @@ const Router = ({store}) => (
                     headerHasSignIn
                     fetchAction={initCheckoutShippingPage}
                 />
-                <Route component={Login} path="*/Account-Show*" routeName="signin" fetchAction={InitLoginPage} />
+                <Route component={Login} path="*/Account-Show*" routeName="signin" fetchAction={initLoginPage} />
                 <Route component={Cart} path="*/Cart-Show*" routeName="cart" fetchAction={initCartPage} />
 
             </Route>
