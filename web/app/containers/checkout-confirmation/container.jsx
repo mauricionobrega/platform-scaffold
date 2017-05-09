@@ -7,7 +7,6 @@ import CheckoutConfirmationDetails from './partials/checkout-confirmation-detail
 import CheckoutConfirmationModal from './partials/checkout-confirmation-modal'
 import CheckoutConfirmationQuestions from './partials/checkout-confirmation-questions'
 
-import template from '../../template'
 
 import {trigger} from '../../utils/astro-integration'
 

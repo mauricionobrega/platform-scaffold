@@ -1,6 +1,6 @@
 import {SubmissionError} from 'redux-form'
 import {getOrderTotal} from '../../../store/cart/selectors'
-import {createBasket} from '../cart/utils'
+import {createBasket, handleCartData} from '../cart/utils'
 import {makeDemandwareRequest, getAuthTokenPayload, getAuthToken} from '../utils'
 import {populateLocationsData, createOrderAddressObject} from './utils'
 import {API_END_POINT_URL, PAYMENT_URL, SITE_ID} from '../constants'
@@ -104,7 +104,7 @@ export const submitShipping = (formValues) => (dispatch) => {
                             if (responseJSON.fault) {
                                 throw new SubmissionError({_error: 'Unable to save shipping data'})
                             }
-                            dispatch(parseAndReceiveCartResponse(responseJSON))
+                            dispatch(handleCartData(responseJSON))
 
                             return PAYMENT_URL
                         })
@@ -170,13 +170,13 @@ export const submitPayment = (formValues) => (dispatch, getState) => {
                     }
                     return responseJSON
                 })
-                .then(({order_no, payment_instruments}) => {
+                .then((orderData) => {
                     // set payment method
                     // const orderTotal = getOrderTotal(getState())
                     const type = getCardData(formValues.ccnumber).cardType
                     const expiryMonth = /^\d\d/.exec(formValues.ccexpiry)[0]
                     const expiryYear = /\d\d$/.exec(formValues.ccexpiry)[0]
-                    const paymentInstrumentID = payment_instruments[0].payment_instrument_id
+                    const paymentInstrumentID = orderData.payment_instruments[0].payment_instrument_id
                     const requestOptions = {
                         method: 'PATCH',
                         body: JSON.stringify({
@@ -191,7 +191,7 @@ export const submitPayment = (formValues) => (dispatch, getState) => {
                             payment_method_id: 'CREDIT_CARD'
                         })
                     }
-                    return makeDemandwareRequest(`${API_END_POINT_URL}/orders/${order_no}/payment_instruments/${paymentInstrumentID}`, requestOptions)
+                    return makeDemandwareRequest(`${API_END_POINT_URL}/orders/${orderData.order_no}/payment_instruments/${paymentInstrumentID}`, requestOptions)
                         .then((response) => response.json())
                         .then((responseJSON) => {
                             if (responseJSON.fault) {
