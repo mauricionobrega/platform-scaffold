@@ -94,6 +94,7 @@
     "validator": "7.0.0",
     "webpack": "2.3.3",
     "webpack-bundle-analyzer": "2.3.1",
+    "webpack-bundle-size-analyzer": "2.6.0",
     "webpack-dev-server": "1.16.2",
     "webpack-hot-middleware": "2.13.0"
   },
@@ -126,6 +127,8 @@
     "test:pwa-prod": "bash ./scripts/lighthouse-prod.sh",
     "test:pwa-ci": "bash ./scripts/lighthouse-ci.sh",
     "test:pwa-local": "bash ./scripts/lighthouse-local.sh",
+    "test:stats": "webpack --config webpack/production.js --profile --json > stats.json",
+    "test:size": "webpack --config webpack/production.js --json | webpack-bundle-size-analyzer",
     "test:server": "bash ./scripts/test-server.sh",
     "test:watch": "npm test -- --watch",
     "prod:build": "bash ./scripts/build.sh",
