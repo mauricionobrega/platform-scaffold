@@ -106,7 +106,7 @@ export const fetchCartItemImages = () => (dispatch, getState) => {
 
 export const requestCartData = (noRetry) => {
     return createBasket()
-        .then((basketID) => makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}`, {method: 'GET'}))
+        .then((basket) => makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}`, {method: 'GET'}))
         .then((response) => {
             if (response.status === 404) {
                 if (noRetry) {

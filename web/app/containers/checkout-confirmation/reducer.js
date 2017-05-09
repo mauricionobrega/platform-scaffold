@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 import * as checkoutConfirmationActions from './actions'
 import {receiveCheckoutConfirmationData} from '../../integration-manager/checkout/results'
 import {mergePayload} from '../../utils/reducer-utils'
-import {receiveOrderConfirmationContents} from '../../integration-manager/responses'
+import {receiveOrderConfirmationContents} from '../../integration-manager/results'
 
 export default handleActions({
     [receiveOrderConfirmationContents]: mergePayload,

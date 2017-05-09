@@ -1,5 +1,5 @@
 import {STATES} from './constants'
-import {receiveCheckoutData} from './../../checkout/responses'
+import {receiveCheckoutData} from './../../checkout/results'
 
 export const populateLocationsData = () => (dispatch) => {
     return dispatch(receiveCheckoutData({

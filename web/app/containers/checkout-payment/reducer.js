@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import {handleActions} from 'redux-actions'
 import * as checkoutPaymentActions from './actions'
-import {receiveHasExistingCard} from '../../integration-manager/checkout/responses'
+import {receiveHasExistingCard} from '../../integration-manager/checkout/results'
 import {DEFAULT_CARD} from './constants'
 import {mergePayload} from '../../utils/reducer-utils'
 
