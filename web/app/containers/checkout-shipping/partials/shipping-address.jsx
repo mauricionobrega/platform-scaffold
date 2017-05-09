@@ -58,11 +58,13 @@ const ShippingAddressForm = ({
                     caption={shippingAddress}
                     type="radio"
                     value={customerAddressId}
+                    customEventHandlers={{
+                        onChange: handleShowAddNewAddress
+                    }}
                 >
                     <input
                         type="radio"
                         noValidate
-                        onChange={handleShowAddNewAddress}
                         value={customerAddressId}
                     />
                 </ReduxForm.Field>
@@ -90,11 +92,13 @@ const ShippingAddressForm = ({
                             }
                             type="radio"
                             value={ADD_NEW_ADDRESS_FIELD}
+                            customEventHandlers={{
+                                onChange: handleShowAddNewAddress
+                            }}
                         >
                             <input
                                 type="radio"
                                 noValidate
-                                onChange={handleShowAddNewAddress}
                                 value={ADD_NEW_ADDRESS_FIELD}
                             />
                         </ReduxForm.Field>
