@@ -27,7 +27,7 @@ class FooterNewsletterSubscription extends React.Component {
         return (
             <div className="t-footer__newsletter u-padding-md u-padding-top-lg u-padding-bottom-lg">
                 <div>
-                    <h2 className="u-h2 u-margin-bottom-md">
+                    <h2 className="u-h3 u-margin-bottom-md">
                         Subscribe to Merlin&#39;s Newsletter
                     </h2>
 

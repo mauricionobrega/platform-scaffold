@@ -52,7 +52,7 @@ const HomeCategory = ({category: {href, text}}) => {
             startAction={<CategoryImage alt={text} />}
             endAction={<Icon name="chevron-right" />}
         >
-            <div className="u-h2 t-home__category-text u-text-extra-light">SHOP</div>
+            <div className="u-h3 t-home__category-text u-text-extra-light">SHOP</div>
 
             {text ?
                 <div className="t-home__category-text t--text-large">{text}</div>
