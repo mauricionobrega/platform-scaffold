@@ -4,4 +4,4 @@ export const register = (commands) => {
     connector = commands
 }
 
-export const fetchHomeData = (...args) => connector.fetchHomeData(...args)
+export const initHomePage = (...args) => connector.initHomePage(...args)

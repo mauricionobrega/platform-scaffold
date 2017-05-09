@@ -32,7 +32,7 @@ const fetchCategoryInfo = (id) => (dispatch) => {
         .then(processCategory(dispatch))
 }
 
-export const fetchProductListData = (url) => (dispatch) => {
+export const initProductListPage = (url) => (dispatch) => {
     const categoryIDMatch = /\/([^/]+)$/.exec(url)
     const categoryID = categoryIDMatch ? categoryIDMatch[1] : ''
 

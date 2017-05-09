@@ -12,7 +12,7 @@ import {parseNavigation} from '../navigation/parser'
 
 import {isFormResponseInvalid, parseSigninHref, parseRegisterHref} from './parsers/parsers'
 
-export const fetchSigninData = (url) => (dispatch) => {
+export const initLoginPage = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then((res) => {
             dispatch(receiveLoginHref(parseSigninHref(res[1])))
@@ -20,7 +20,7 @@ export const fetchSigninData = (url) => (dispatch) => {
         })
 }
 
-export const fetchRegisterData = (url) => (dispatch) => {
+export const initRegisterPage = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then((res) => {
             dispatch(receiveRegisterHref(parseRegisterHref(res[1])))

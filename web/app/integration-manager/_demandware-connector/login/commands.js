@@ -8,14 +8,14 @@ import {SubmissionError} from 'redux-form'
 
 import {API_END_POINT_URL, REQUEST_HEADERS} from '../constants'
 
-const fetchLoginData = () => (dispatch) => {
+const initLoginData = () => (dispatch) => {
     dispatch(setSigninLoaded())
     dispatch(setRegisterLoaded())
     return Promise.resolve()
 }
 
-export const fetchSigninData = fetchLoginData
-export const fetchRegisterData = fetchLoginData
+export const initLoginPage = initLoginData
+export const initRegisterPage = initLoginData
 
 export const navigateToSection = () => (dispatch) => noop()
 

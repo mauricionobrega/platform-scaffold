@@ -6,7 +6,7 @@ import {fetchPageData} from '../app/commands'
 import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../../products/results'
 import {productDetailsParser, productDetailsUIParser, pdpAddToCartFormParser} from './parsers'
 
-export const fetchPdpData = (url) => (dispatch) => {
+export const initProductDetailsPage = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then((res) => {
             const [$, $response] = res

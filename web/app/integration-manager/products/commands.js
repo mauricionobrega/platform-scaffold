@@ -4,6 +4,6 @@ export const register = (commands) => {
     connector = commands
 }
 
-export const fetchPdpData = (...args) => connector.fetchPdpData(...args)
+export const initProductDetailsPage = (...args) => connector.initProductDetailsPage(...args)
 
 export const getProductVariantData = (...args) => connector.getProductVariantData(...args)

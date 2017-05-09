@@ -66,14 +66,14 @@ const processCheckoutData = ($response) => (dispatch) => {
     }))
 }
 
-export const fetchCheckoutShippingData = (url) => (dispatch) => {
+export const initCheckoutShippingPage = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then(([$, $response]) => dispatch(processCheckoutData($response)))  // eslint-disable-line no-unused-vars
         .then(() => dispatch(fetchShippingMethodsEstimate(SHIPPING_FORM_NAME)))
         .catch((error) => { console.info(error.message) })
 }
 
-export const fetchCheckoutConfirmationData = (url) => (dispatch) => {
+export const initCheckoutConfirmationPage = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then(([$, $response]) => {
             dispatch(receiveCheckoutConfirmationData(checkoutConfirmationParser($, $response)))
@@ -170,7 +170,7 @@ export const checkoutSignIn = (formValues) => {
                         return reject(Error(responseData.message))
                     } else {
                         // Refetch the page now that the user is logged in
-                        return resolve(dispatch(fetchCheckoutShippingData(window.location.href)))
+                        return resolve(dispatch(initCheckoutShippingPage(window.location.href)))
                     }
                 }
             })
@@ -192,7 +192,7 @@ export const checkoutRegister = (userCredentials) => {
         })
 }
 
-export const fetchCheckoutPaymentData = (url) => (dispatch) => {
+export const initCheckoutPaymentPage = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then((res) => {
             const [$, $response] = res // eslint-disable-line no-unused-vars

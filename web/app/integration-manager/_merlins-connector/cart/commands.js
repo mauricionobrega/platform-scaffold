@@ -116,7 +116,7 @@ export const updateItemQuantity = (itemId, itemQuantity) => {
 
 const ESTIMATE_FIELD_PATH = ['#block-summary', 'Magento_Ui/js/core/app', 'components', 'block-summary', 'children', 'block-shipping', 'children', 'address-fieldsets', 'children']
 
-export const fetchCartPageData = (url) => (dispatch) => {
+export const initCartPage = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then((res) => {
             const [$, $response] = res // eslint-disable-line no-unused-vars

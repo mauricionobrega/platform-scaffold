@@ -4,4 +4,4 @@ export const register = (commands) => {
     connector = commands
 }
 
-export const fetchProductListData = (...args) => connector.fetchProductListData(...args)
+export const initProductListPage = (...args) => connector.initProductListPage(...args)

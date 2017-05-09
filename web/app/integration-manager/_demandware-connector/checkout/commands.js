@@ -24,7 +24,7 @@ export const fetchShippingMethodsEstimate = () => (dispatch) => {
         })
 }
 
-export const fetchCheckoutShippingData = () => (dispatch) => {
+export const initCheckoutShippingPage = () => (dispatch) => {
     return createBasket()
         .then((basketID) => {
             return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}`, {method: 'GET'})

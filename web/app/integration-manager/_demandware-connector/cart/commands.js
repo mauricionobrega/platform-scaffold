@@ -65,7 +65,7 @@ export const updateItemQuantity = (itemId, itemQuantity) => (dispatch) => {
         })
 }
 
-export const fetchCartPageData = () => (dispatch) => {
+export const initCartPage = () => (dispatch) => {
     return new Promise(() => {
         dispatch(receiveCheckoutData({
             locations: {
