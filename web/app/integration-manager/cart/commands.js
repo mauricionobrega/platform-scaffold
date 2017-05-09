@@ -10,8 +10,8 @@ export const initCartPage = (url, routeName) => connector.initCartPage(url, rout
  * Retrieves the current cart information.
  */
 export const getCart = () => connector.getCart()
-export const removeFromCart = (...args) => connector.removeFromCart(...args)
 export const addToCart = (productID, quantity) => connector.addToCart(productID, quantity)
+export const removeFromCart = (itemId) => connector.removeFromCart(itemId)
 
 export const updateItemQuantity = (...args) => connector.updateItemQuantity(...args)
 
