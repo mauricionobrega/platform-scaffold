@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {createAction, getCookieValue, urlToPathKey} from '../../utils/utils'
 import {generateFormKeyCookie} from '../../utils/magento-utils'
 import {makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'

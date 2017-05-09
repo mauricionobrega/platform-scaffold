@@ -1,5 +1,6 @@
 /* global NATIVE_WEBPACK_ASTRO_VERSION, MESSAGING_SITE_ID */
 import {getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
+import {isSamsungBrowser} from 'progressive-web-sdk/dist/utils/utils'
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
 import cacheHashManifest from '../tmp/loader-cache-hash-manifest.json'
 import {isRunningInAstro} from './utils/astro-integration'
@@ -190,7 +191,7 @@ const attemptToInitializeApp = () => {
         deferredUntilLoadComplete.push(loadAndInitMessagingClient)
     }
 
-    if (isReactRoute()) {
+    if (isReactRoute() && !isSamsungBrowser(window.navigator.userAgent)) {
         if (!isRunningInAstro) {
             displayPreloader(preloadCSS, preloadHTML, preloadJS)
         }
