@@ -89,6 +89,7 @@ $tiny-line-height: 8px;
 $huge-font-size: 28px;
 $bigger-font-size: 24px;
 $big-font-size: 20px;
+$medium-font-size: 16px;
 $font-size: 14px;
 $small-font-size: 12px;
 $smaller-font-size: 8px;
@@ -113,14 +114,14 @@ $h2-line-height: $bigger-line-height;
 $h3-font-size: $big-font-size;
 $h3-line-height: $big-line-height;
 
-$h4-font-size: $font-size;
-$h4-line-height: $line-height;
+$h4-font-size: $big-font-size;
+$h4-line-height: $big-line-height;
 
-$h5-font-size: $small-font-size;
-$h5-line-height: $small-line-height;
+$h5-font-size: $medium-font-size;
+$h5-line-height: $line-height;
 
-$h6-font-size: $smaller-font-size;
-$h6-line-height: $smaller-line-height;
+$h6-font-size: $font-size;
+$h6-line-height: $line-height;
 
 // [DDD] Color Palette
 // ---
