@@ -132,10 +132,10 @@ export const initCartPage = (url) => (dispatch) => {
         .then(() => dispatch(fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME)))
 }
 
-export const addToWishlist = (productId, productURL) => (dispatch, getState) => {
+export const addToWishlist = (productID, productURL) => (dispatch, getState) => {
     const currentState = getState()
     const payload = {
-        product: productId,
+        product: productID,
         // This won't always be defined, but add to wishlist will still work
         // if it's missing
         uenc: getUenc(urlToPathKey(productURL))(currentState)

@@ -76,7 +76,7 @@ export const initCartPage = () => (dispatch) => {
     })
 }
 
-export const addToWishlist = (productId) => (dispatch) => {
+export const addToWishlist = (productID, productURL) => (dispatch) => {
     const {sub} = getAuthTokenPayload()
     const customerID = JSON.parse(sub).customer_info.customer_id
 
@@ -104,7 +104,7 @@ export const addToWishlist = (productId) => (dispatch) => {
                 method: 'POST',
                 body: JSON.stringify({
                     type: 'product',
-                    product_id: productId,
+                    product_id: productID,
                     quantity: 1
                 })
             }
