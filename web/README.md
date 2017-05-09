@@ -218,5 +218,5 @@ npm run dev
 To visualize bundle script content, run:
 
 ```
-MOBIFY_ANALYZE=true npm run prod:build
+npm run analyze-build
 ```
