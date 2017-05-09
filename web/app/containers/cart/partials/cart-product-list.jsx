@@ -166,7 +166,7 @@ const CartProductList = ({items, isLoggedIn, summaryCount, onSaveLater, onUpdate
             <div className="t-cart__product-list-title u-padding-top-md u-padding-bottom-md">
                 <div className="u-flexbox u-align-center">
                     <h1 className="u-flex u-text-uppercase">
-                        Cart {summaryCount > 0 && <span className="u-text-lighter">({summaryCount} Items)</span>}
+                        Cart {summaryCount > 0 && <span className="u-text-light">({summaryCount} Items)</span>}
                     </h1>
                     {!isLoggedIn &&
                         <Button className="u-flex-none u-color-brand u-text-letter-spacing-normal" onClick={onOpenSignIn}>
