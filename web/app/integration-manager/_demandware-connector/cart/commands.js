@@ -76,7 +76,7 @@ export const initCartPage = () => (dispatch) => {
     })
 }
 
-export const addToWishlist = (productID, productURL) => (dispatch) => {
+export const addToWishlist = (productID) => (dispatch) => {
     const {sub} = getAuthTokenPayload()
     const customerID = JSON.parse(sub).customer_info.customer_id
 
@@ -96,8 +96,6 @@ export const addToWishlist = (productID, productURL) => (dispatch) => {
             }
             return makeDemandwareRequest(`${API_END_POINT_URL}/customers/${customerID}/product_lists`, requestOptions)
                 .then((response) => response.json())
-
-
         })
         .then(({id}) => {
             const requestOptions = {
@@ -119,4 +117,4 @@ export const addToWishlist = (productID, productURL) => (dispatch) => {
         })
 }
 
-export const fetchTaxEstimate = (address, shippingMethod) => Promise.reject('Method not implemented')
+export const fetchTaxEstimate = () => Promise.reject('Method not implemented')
