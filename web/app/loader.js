@@ -4,7 +4,13 @@ import {isSamsungBrowser} from 'progressive-web-sdk/dist/utils/utils'
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
 import cacheHashManifest from '../tmp/loader-cache-hash-manifest.json'
 import {isRunningInAstro} from './utils/astro-integration'
-import {loadScriptAsPromise, isLocalStorageAvailable} from './utils/loader-utils'
+import {
+    getMessagingSWVersion,
+    isLocalStorageAvailable,
+    loadAndInitMessagingClient,
+    loadScriptAsPromise,
+    updateMessagingSWVersion
+} from './utils/loader-utils'
 import {getNeededPolyfills} from './utils/polyfills'
 import ReactRegexes from './loader-routes'
 
@@ -34,9 +40,6 @@ const attemptToInitializeApp = () => {
     const CAPTURING_CDN = '//cdn.mobify.com/capturejs/capture-latest.min.js'
     const ASTRO_CLIENT_CDN = `//assets.mobify.com/astro/astro-client-${ASTRO_VERSION}.min.js`
     const SW_LOADER_PATH = `/service-worker-loader.js?preview=${IS_PREVIEW}&b=${cacheHashManifest.buildDate}`
-
-    const MESSAGING_PWA_SW_VERSION_PATH = 'https://webpush-cdn.mobify.net/pwa-serviceworker-version.json'
-    const MESSAGING_PWA_CLIENT_PATH = 'https://webpush-cdn.mobify.net/pwa-messaging-client.js'
 
     // An array of functions that will be called when all the scripts
     // loaded by this function are done. They are only executed if all
@@ -71,34 +74,11 @@ const attemptToInitializeApp = () => {
         }
 
         const workerPathElements = [SW_LOADER_PATH]
-        const messagingSWVersionKey = 'messagingServiceWorkerVersion'
 
-        const swVersion = localStorage.getItem(messagingSWVersionKey) || ''
+        const swVersion = getMessagingSWVersion()
         if (swVersion) {
             workerPathElements.push(`msg_sw_version=${swVersion}`)
         }
-
-        // Add a deferred function that will asynchronously update the Messaging
-        // version data.
-        deferredUntilLoadComplete.push(
-            () => {
-                fetch(MESSAGING_PWA_SW_VERSION_PATH)
-                    .then((response) => response.json())
-                    .then((versionData) => {
-                        // Persist the result in localStorage
-                        if (isLocalStorageAvailable() && versionData) {
-                            localStorage.setItem(
-                                messagingSWVersionKey,
-                                (versionData.SERVICE_WORKER_CURRENT_VERSION || '') + '_' +
-                                (versionData.SERVICE_WORKER_CURRENT_HASH || '')
-                            )
-                        }
-                        return versionData
-                    })
-                    // If the fetch or JSON-decode fails, just log.
-                    .catch((error) => { console.log(error) })
-            }
-        )
 
         // Return the service worker path
         return workerPathElements.join('&')
@@ -112,7 +92,8 @@ const attemptToInitializeApp = () => {
         navigator.serviceWorker.register(getServiceWorkerURL())
             .then(() => navigator.serviceWorker.ready)
             .then(() => true)
-            .catch(() => {})
+            .catch(() => {
+            })
     )
 
     const asyncInitApp = () => {
@@ -128,43 +109,6 @@ const attemptToInitializeApp = () => {
 
             runJsonpAsync()
         }
-    }
-
-    /**
-     * Start the asynchronous loading and intialization of the Messaging client,
-     * storing a Promise in window.Progressive.MessagingClientInitPromise that
-     * is resolved when the load and initialization is complete. If either load
-     * or init fails, the Promise is rejected.
-     */
-    const loadAndInitMessagingClient = () => {
-        window.Progressive.MessagingClientInitPromise = loadScriptAsPromise({
-            id: 'progressive-web-messaging-client',
-            src: MESSAGING_PWA_CLIENT_PATH,
-            rejectOnError: true
-        })
-            .then(
-                () => {
-                    // We assume window.Progressive will exist at this point.
-                    const messagingClient = window.Progressive.MessagingClient || {}
-                    // If init is not a function, this will
-                    // throw, and the catch below will
-                    // cause the promise to reject with
-                    // the error.
-                    return messagingClient.init(
-                        {
-                            debug: IS_PREVIEW,
-                            siteId: MESSAGING_SITE_ID  // replaced at build time
-                        }
-                    )
-                }
-            )
-            .catch(
-                // Catch the error to silence logging
-                (error) => {
-                    console.log(`Error loading ${MESSAGING_PWA_CLIENT_PATH}: ${error}`)
-                    Promise.reject(error)
-                }
-            )
     }
 
     /**
@@ -185,10 +129,14 @@ const attemptToInitializeApp = () => {
         window.Mobify.WebPush = window.Mobify.WebPush || {}
         window.Mobify.WebPush.PWAClient = {}
 
+        // Add a deferred function that will asynchronously update
+        // the Messaging worker version data.
+        deferredUntilLoadComplete.push(updateMessagingSWVersion)
+
         // We know we're not running in Astro, and that service worker is
         // supported and loaded, so we can add a deferred function to
         // load and initialize the Messaging client.
-        deferredUntilLoadComplete.push(loadAndInitMessagingClient)
+        deferredUntilLoadComplete.push(() => loadAndInitMessagingClient(IS_PREVIEW, MESSAGING_SITE_ID))
     }
 
     if (isReactRoute() && !isSamsungBrowser(window.navigator.userAgent)) {
@@ -297,7 +245,7 @@ const attemptToInitializeApp = () => {
             Promise.all(loadingPromises)
                 .then(
                     // Execute any deferred functions
-                    deferredUntilLoadComplete.forEach((def) => { def() })
+                    () => deferredUntilLoadComplete.forEach((def) => { def() })
                 )
         })
     } else {

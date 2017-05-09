@@ -60,7 +60,7 @@ module.exports = {
             }
         }),
         new webpack.DefinePlugin({
-            MESSAGING_SITE_ID: JSON.stringify(webPackageJson.messagingSiteId),
+            MESSAGING_SITE_ID: `'${webPackageJson.messagingSiteId}'`,
             NATIVE_WEBPACK_ASTRO_VERSION: readNativeAstroVersion()
         })
     ]
