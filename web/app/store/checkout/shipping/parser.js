@@ -19,8 +19,7 @@ export const parseShippingInitialValues = (shippingFieldData) => {
         addressLine1: streetFields[0].value,
         company: fieldData.company.value,
         addressLine2: streetFields[1].value,
-        billing_same_as_shipping: true,
-        saved_address: undefined
+        billing_same_as_shipping: true
     }
 
     if (fieldData.telephone.value) {
