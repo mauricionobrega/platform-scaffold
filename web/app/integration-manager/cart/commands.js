@@ -13,7 +13,7 @@ export const getCart = () => connector.getCart()
 export const addToCart = (productID, quantity) => connector.addToCart(productID, quantity)
 export const removeFromCart = (itemId) => connector.removeFromCart(itemId)
 
-export const updateItemQuantity = (...args) => connector.updateItemQuantity(...args)
+export const updateItemQuantity = (itemId, itemQuantity) => connector.updateItemQuantity(itemId, itemQuantity)
 
 export const addToWishlist = (...args) => connector.addToWishlist(...args)
 
