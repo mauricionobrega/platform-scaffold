@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 // THIS IS A GENERATED FILE, DO NOT EDIT
 
 import {combineReducers} from 'redux'
@@ -14,10 +18,8 @@ import login from './login/reducer'
 import navigation from './navigation/reducer'
 import productDetails from './product-details/reducer'
 import productList from './product-list/reducer'
-// import {reducer as formReducer} from 'redux-form'
 
-
-const rootReducer = combineReducers({
+const uiReducer = combineReducers({
     app,
     cart,
     checkoutConfirmation,
@@ -29,9 +31,7 @@ const rootReducer = combineReducers({
     login,
     navigation,
     productDetails,
-    productList,
-    // form: formReducer,
-
+    productList
 })
 
-export default rootReducer
+export default uiReducer

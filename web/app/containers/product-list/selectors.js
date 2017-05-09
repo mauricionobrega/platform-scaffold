@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import Immutable from 'immutable'
 import {createSelector} from 'reselect'
 import {createGetSelector, createHasSelector} from 'reselect-immutable-helpers'
@@ -26,6 +30,7 @@ export const getProductPaths = createGetSelector(getSelectedCategory, 'products'
 export const getNumItems = createGetSelector(getSelectedCategory, 'itemCount')
 export const getHasProducts = createSelector(getNumItems, (count) => count > 0)
 export const getProductListTitle = createGetSelector(getSelectedCategory, 'title')
+export const getSearchResultTerm = createGetSelector(getSelectedCategory, 'searchTerm')
 export const getNoResultsText = createGetSelector(getSelectedCategory, 'noResultsText')
 export const getProductListProducts = createSelector(
     getProducts,
@@ -65,6 +70,10 @@ export const getFilteredAndSortedListProducts = createSelector(
     (products, sort) => {
         const arrayOfProducts = products.toJS()
         const options = sort.get('options')
+
+        if (arrayOfProducts < 1) {
+            return []
+        }
 
         if (!options) {
             return arrayOfProducts
