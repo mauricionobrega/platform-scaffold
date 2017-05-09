@@ -2,7 +2,7 @@
 /* eslint-disable import/named */
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 
-import {EventAction, Page} from '../../../../../progressive-web-sdk/src/analytics/analytic-constants'
+import {EventAction, Page} from 'progressive-web-sdk/src/analytics/analytics-constants'
 
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
@@ -32,7 +32,7 @@ export const onRouteChanged = createActionWithAnalytics(
     'On route changed',
     ['currentURL'],
     EventAction.pageview,
-    (currentURL, routeName) => ({[Page.templateName]: routeName})
+    (currentURL, routeName) => (new Page({[Page.TEMPLATENAME]: routeName}))
 )
 
 /**

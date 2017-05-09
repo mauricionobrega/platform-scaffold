@@ -13,7 +13,7 @@ import {reducer as formReducer} from 'redux-form'
 import analytics from 'redux-analytics'
 
 // TO-DO - remember to revert this change
-import {analyticManager} from '../../../../progressive-web-sdk/src/analytics/analytic-manager'
+import analyticManager from 'progressive-web-sdk/src/analytics/analytics-manager'
 
 const noop = (f) => f
 
