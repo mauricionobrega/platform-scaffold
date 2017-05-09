@@ -17,8 +17,8 @@ if [ "$CURRENT_BRANCH" != "master" ]; then
     trap 'kill $(jobs -p)' EXIT
     export ACTIVE_PROFILE=local
     echo "Running Test Server."
-    npm run dev &
-    while ! echo exit | nc localhost 8443; do sleep 20; done
+    npm run prod:build
+    npm run test:server
 else
     echo "On production branch, test server not needed."
     export ACTIVE_PROFILE=production
