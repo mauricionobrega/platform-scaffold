@@ -2,6 +2,7 @@ import {QUERY_URL, SUGGESTION_URL} from './constants'
 import * as utils from '../../utils/utils'
 import parseSearchSuggestions from './parsers/search-suggestions'
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+import {browserHistory} from 'progressive-web-sdk/dist/routing'
 
 export const toggleHeader = utils.createAction('Toggled the header', 'isCollapsed')
 
@@ -29,6 +30,6 @@ export const searchSubmit = (query) => {
     return (dispatch) => {
         const queryString = utils.buildQueryString(query)
         const searchURL = `${SUGGESTION_URL}${queryString}`
-        window.location.href = `${window.location.origin}${searchURL}`
+        browserHistory.push({pathname: `${searchURL}`})
     }
 }
