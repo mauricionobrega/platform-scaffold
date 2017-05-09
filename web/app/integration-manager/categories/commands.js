@@ -4,4 +4,4 @@ export const register = (commands) => {
     connector = commands
 }
 
-export const initProductListPage = (...args) => connector.initProductListPage(...args)
+export const initProductListPage = (url, routeName) => connector.initProductListPage(url, routeName)

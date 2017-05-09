@@ -4,4 +4,4 @@ export const register = (commands) => {
     connector = commands
 }
 
-export const initHomePage = (...args) => connector.initHomePage(...args)
+export const initHomePage = (url, routeName) => connector.initHomePage(url, routeName)
