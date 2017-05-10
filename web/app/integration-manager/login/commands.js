@@ -34,5 +34,13 @@ export const navigatedToSection = (router, routes, sectionName) => connector.nav
  */
 export const login = (username, password, rememberMe) => connector.login(username, password, rememberMe)
 
-export const logout = (...args) => connector.logout(...args)
-export const registerUser = (...args) => connector.registerUser(...args)
+/**
+ * Logs the current user out
+ */
+export const logout = () => connector.logout()
+
+/**
+ * Creates an account using the given parameters
+ * @param {string} formValues The form values provided from the registration form
+ */
+export const registerUser = (formValues) => connector.registerUser(formValues)
