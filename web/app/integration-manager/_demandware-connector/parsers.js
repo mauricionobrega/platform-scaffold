@@ -22,19 +22,9 @@ const parseVariationCategories = (variation_attributes) => {
     }))
 }
 
-const setInitialVariantValues = (variants, id, variationCategories) => {
+const setInitialVariantValues = (variants, id) => {
     const currentVariant = variants.find(({product_id}) => product_id === id)
-
-    if (currentVariant) {
-        return currentVariant.variation_values
-    }
-
-    const defaultVariant = {}
-    variationCategories.forEach(({id, values}) => {
-        defaultVariant[id] = values[0].value
-    })
-
-    return defaultVariant
+    return currentVariant.variation_values && currentVariant
 }
 
 /* eslint-enable camelcase */
@@ -50,7 +40,7 @@ export const parseProductDetails = ({id, name, price, long_description, image_gr
         description: long_description,
         thumbnail: images[0],
         images,
-        initialValues: setInitialVariantValues(variants, id, variation_attributes),
+        initialValues: setInitialVariantValues(variants, id),
         variationCategories: parseVariationCategories(variation_attributes),
         variants: variants.map(({product_id, variation_values}) => {
             return {
