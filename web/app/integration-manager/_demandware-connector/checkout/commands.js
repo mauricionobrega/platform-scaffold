@@ -28,8 +28,6 @@ export const fetchShippingMethodsEstimate = () => (dispatch) => {
         })
 }
 
-
-
 export const fetchCheckoutShippingData = () => (dispatch) => {
     return createBasket()
         .then((basket) => {
@@ -57,6 +55,9 @@ export const fetchCheckoutPaymentData = () => (dispatch) => {
                 })
         })
 }
+
+// We don't need to fetch any data for this page
+export const fetchCheckoutConfirmationData = () => Promise.resolve()
 
 export const submitShipping = (formValues) => (dispatch) => {
     const {
@@ -113,7 +114,6 @@ export const submitShipping = (formValues) => (dispatch) => {
 }
 
 export const submitPayment = (formValues) => (dispatch, getState) => {
-    // debugger
     return createBasket()
         .then((basket) => {
             const orderTotal = getOrderTotal(getState())
