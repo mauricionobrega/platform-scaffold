@@ -79,14 +79,6 @@ export const getCurrentProductID = (url) => {
     return productID
 }
 
-export const getInitialSelectedVariant = (variants, initialValues) => {
-    return variants.find(({values}) => {
-        return Object.keys(values).every((key) => {
-            return values[key] === initialValues[key]
-        })
-    })
-}
-
 export const parseCategories = (categories) => {
     return categories.map((category) => {
         return {
