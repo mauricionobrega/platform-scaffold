@@ -170,7 +170,7 @@ export const checkoutSignIn = (formValues) => {
                 success: (responseData) => {
                     dispatch(removeAllNotifications())
                     if (responseData.errors) {
-                        return reject(Error(responseData.message))
+                        return reject(new Error(responseData.message))
                     } else {
                         // Refetch the page now that the user is logged in
                         return resolve(dispatch(initCheckoutShippingPage(window.location.href)))
