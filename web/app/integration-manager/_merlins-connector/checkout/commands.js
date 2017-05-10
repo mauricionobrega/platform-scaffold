@@ -45,11 +45,15 @@ export const fetchShippingMethodsEstimate = (formKey) => (dispatch, getState) =>
         .then((response) => response.json())
         .then((responseJSON) => {
             const shippingMethods = parseShippingMethods(responseJSON)
-            const initialValues = {
-                shipping_method: shippingMethods[0].value
-            }
             dispatch(receiveCheckoutData({shipping: {shippingMethods}}))
-            dispatch(receiveShippingMethodInitialValues({initialValues})) // set initial value for method
+
+            if (shippingMethods.length) {
+                const initialValues = {
+                    shipping_method: shippingMethods[0].value
+                }
+                // set initial value for method
+                dispatch(receiveShippingMethodInitialValues({initialValues}))
+            }
         })
 }
 
