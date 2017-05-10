@@ -166,7 +166,7 @@ npm run test:watch
 
 ## Automated end-to-end tests
 
-To verify that changes do not break the checkout flow:
+To verify that changes do not break the guest and registered checkout flows:
 
 ```
 npm run smoke-test
@@ -218,5 +218,5 @@ npm run dev
 To visualize bundle script content, run:
 
 ```
-MOBIFY_ANALYZE=true npm run prod:build
+npm run analyze-build
 ```

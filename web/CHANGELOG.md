@@ -1,6 +1,15 @@
 ## To be released
-- Use "Mobify Development Server" certificate for HTTPS local development [#491](https://github.com/mobify/platform-scaffold/pull/461)
+- Rename all files containing JSX to have a .jsx file extension [#525](https://github.com/mobify/platform-scaffold/pull/525)
+- Fix PLP to successfully display no results message if there are no products [#525](https://github.com/mobify/platform-scaffold/pull/525)
+- Update SDK version to 0.14.6 [#557](https://github.com/mobify/platform-scaffold/pull/557)
+- Add `analyze-build` npm script [#575](https://github.com/mobify/platform-scaffold/pull/575)
 
+## 0.16.2
+- Update dependencies, including babel, jsdom, jest, and more.
+
+## 0.16.1
+- Use "Mobify Development Server" certificate for HTTPS local development [#491](https://github.com/mobify/platform-scaffold/pull/461)
+- Dependency updates and code splitting [#465](https://github.com/mobify/platform-scaffold/pull/465)
 
 ## 0.16.0 (March 15, 2017)
 - Renamed repo from `progressive-web-scaffold` to `platform-scaffold`

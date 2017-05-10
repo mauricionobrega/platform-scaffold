@@ -146,3 +146,31 @@ export const requestIdleCallback = (fn) => {
         return setTimeout(() => fn(), 1)
     }
 }
+
+
+export const parseLocationData = (formValues, registeredFieldNames) => {
+    // Default values to use if none have been selected
+    const address = {country_id: 'US', region_id: '0', postcode: null}
+
+    if (formValues) {
+        // Only return the field value if the field is registered
+        const getRegisteredFieldValue = (fieldName) => {
+            return registeredFieldNames.includes(fieldName) ? formValues[fieldName] : undefined
+        }
+        address.country_id = getRegisteredFieldValue('country_id')
+        address.postcode = getRegisteredFieldValue('postcode')
+        if (formValues.region) {
+            address.region = getRegisteredFieldValue('region')
+            // Remove the region_id in case we have an old value
+            delete address.region_id
+        } else {
+            address.region_id = getRegisteredFieldValue('region_id')
+        }
+    }
+    return address
+}
+
+
+export const buildQueryString = (query) => {
+    return query.replace(/ /g, '+')
+}

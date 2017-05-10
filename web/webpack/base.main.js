@@ -13,7 +13,6 @@ const analyzeBundle = process.env.MOBIFY_ANALYZE === 'true'
 const config = {
     devtool: 'cheap-source-map',
     entry: [
-        'whatwg-fetch',
         './app/main.jsx'
     ],
     output: {
@@ -43,6 +42,17 @@ const config = {
             name: 'vendor',
             minChunks: (module) => /node_modules/.test(module.resource)
         }),
+        new webpack.optimize.CommonsChunkPlugin({
+            // These dependencies are shared between several of the route chunks
+            async: 'common-dependencies',
+            minChunks: (module) => {
+                const context = module.context
+                const targets = [/progressive-web-sdk/]
+                return context &&
+                    context.indexOf('node_modules') >= 0 &&
+                    targets.find((target) => target.test(context))
+            }
+        }),
         new ExtractTextPlugin({
             filename: '[name].css'
         }),
@@ -62,7 +72,7 @@ const config = {
     module: {
         rules: [
             {
-                test: /\.jsx?$/,
+                test: /\.js(x?)$/,
                 exclude: /node_modules(?!\/mobify-progressive-app-sdk)/,
                 loader: 'babel-loader',
                 options: {
