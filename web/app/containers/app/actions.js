@@ -9,7 +9,7 @@ import {createAction, createActionWithAnalytics} from 'progressive-web-sdk/dist/
 import {logout} from '../../integration-manager/login/commands'
 import {setPageFetchError} from '../../integration-manager/results'
 
-import {OFFLINE_ASSET_URL} from './constants'
+import {CURRENT_URL, OFFLINE_ASSET_URL} from './constants'
 import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {OFFLINE_MODAL} from '../offline/constants'
 
@@ -26,7 +26,7 @@ export const updateSvgSprite = createAction('Updated SVG sprite', ['sprite'])
  */
 export const onRouteChanged = createActionWithAnalytics(
     'On route changed',
-    ['currentURL'],
+    [CURRENT_URL],
     analyticConstants.pageview,
     (currentURL, routeName) => ({name: routeName})
 )
