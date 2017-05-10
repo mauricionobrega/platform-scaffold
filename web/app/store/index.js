@@ -12,6 +12,7 @@ import modalReducer from './modals/reducer'
 import productReducer from './products/reducer'
 import checkoutReducer from './checkout/reducer'
 import {reducer as formReducer} from 'redux-form'
+import pushMessagingReducer from './push-messaging/reducer'
 
 import analytics from 'redux-analytics'
 import {analyticManager} from 'progressive-web-sdk/dist/analytics/analytic-manager'
@@ -25,7 +26,8 @@ const reducer = combineReducers({
     modals: modalReducer,
     products: productReducer,
     checkout: checkoutReducer,
-    form: formReducer
+    form: formReducer,
+    pushMessaging: pushMessagingReducer
 })
 
 const configureStore = (initialState) => {
