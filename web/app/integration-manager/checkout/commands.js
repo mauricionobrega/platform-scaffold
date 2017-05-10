@@ -19,9 +19,30 @@ export const initCheckoutPaymentPage = (url, routeName) => connector.initCheckou
  */
 export const initCheckoutConfirmationPage = (url, routeName) => connector.initCheckoutConfirmationPage(url, routeName)
 
+/**
+ * Submits the shipping stage of the checkout flow.
+ * @param {object} formValues All of the values from the shipping form (see store/checkout/constants:SHIPPING_FORM_NAME)
+ */
 export const submitShipping = (formValues) => connector.submitShipping(formValues)
+
+/**
+ * Submits the payment stage of the checkout flow.
+ * @param {object} formValues All of the values from the payment form (see store/checkout/constants:PAYMENT_FORM_NAME)
+ */
+export const submitPayment = (formValues) => connector.submitPayment(formValues)
+
+/**
+ * Fetches shipping methods estimates for the given checkout stage
+ * @param {string} formName The stage's form name to estimate shipping on
+ */
 export const fetchShippingMethodsEstimate = (formName) => connector.fetchShippingMethodsEstimate(formName)
-export const updatingShippingAndBilling = (...args) => connector.updatingShippingAndBilling(...args)
+
+/**
+ * Updates the registered customer's billing and shipping addresses using
+ * the address that was given during checkout. This should be called during
+ * checkout once shipping information has been provided.
+ */
+export const updatingShippingAndBilling = () => connector.updatingShippingAndBilling()
 
 /**
  * TODO: Do we really need this one? Seems the only difference is what happens _AFTER_
@@ -43,5 +64,3 @@ export const checkoutRegister = (...args) => connector.checkoutRegister(...args)
  * @return {boolean} `true` if the email is available, `false` if the email is associated with an existing account
  */
 export const isEmailAvailable = (email) => connector.isEmailAvailable(email)
-
-export const submitPayment = (...args) => connector.submitPayment(...args)
