@@ -12,7 +12,16 @@ export const submitShipping = (formValues) => connector.submitShipping(formValue
 export const fetchShippingMethodsEstimate = (formName) => connector.fetchShippingMethodsEstimate(formName)
 export const updatingShippingAndBilling = (...args) => connector.updatingShippingAndBilling(...args)
 
+/**
+ * TODO: Do we really need this one? Seems the only difference is what happens _AFTER_
+ * we are signed in, which we could handle in the UI action and not in the connector
+ */
 export const checkoutSignIn = (...args) => connector.checkoutSignIn(...args)
+
+/**
+ * TODO: Do we really need this one? Seems the only difference is what happens _AFTER_
+ * we register, which we could handle in the UI action and not in the connector
+ */
 export const checkoutRegister = (...args) => connector.checkoutRegister(...args)
 
 /**
