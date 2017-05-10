@@ -4,6 +4,9 @@ export const register = (commands) => {
     connector = commands
 }
 
+/**
+ * Initializes any required data for the Cart page
+ */
 export const initCartPage = (url, routeName) => connector.initCartPage(url, routeName)
 
 /**

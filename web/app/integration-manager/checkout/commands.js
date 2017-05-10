@@ -4,8 +4,19 @@ export const register = (commands) => {
     connector = commands
 }
 
+/**
+ * Initializes any required data for the Checkout Shipping page
+ */
 export const initCheckoutShippingPage = (url, routeName) => connector.initCheckoutShippingPage(url, routeName)
+
+/**
+ * Initializes any required data for the Checking Payment page
+ */
 export const initCheckoutPaymentPage = (url, routeName) => connector.initCheckoutPaymentPage(url, routeName)
+
+/**
+ * Initializes any required data for the Checkout Confirmation page
+ */
 export const initCheckoutConfirmationPage = (url, routeName) => connector.initCheckoutConfirmationPage(url, routeName)
 
 export const submitShipping = (formValues) => connector.submitShipping(formValues)

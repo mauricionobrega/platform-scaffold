@@ -4,7 +4,14 @@ export const register = (commands) => {
     connector = commands
 }
 
+/**
+ * Initializes any required data for the Login page
+ */
 export const initLoginPage = (url, routeName) => connector.initLoginPage(url, routeName)
+
+/**
+ * Initializes any required data for the Register page
+ */
 export const initRegisterPage = (url, routeName) => connector.initRegisterPage(url, routeName)
 
 export const navigateToSection = (...args) => connector.navigateToSection(...args)
