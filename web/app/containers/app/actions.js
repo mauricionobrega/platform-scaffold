@@ -168,6 +168,7 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                     dispatch(checkoutShippingUIActions.process(receivedAction))
                     dispatch(checkoutActions.processCheckoutData(receivedAction))
                     dispatch(checkoutShippingActions.fetchShippingMethodsEstimate(SHIPPING_FORM_NAME))
+                    dispatch(checkoutShippingActions.fetchSavedShippingAddresses())
                 } else if (pageComponent === UnwrappedCart) {
                     dispatch(checkoutActions.processCartCheckoutData(receivedAction))
                 } else if (pageComponent === UnwrappedCheckoutPayment) {

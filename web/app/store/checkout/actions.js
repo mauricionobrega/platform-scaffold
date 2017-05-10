@@ -12,6 +12,8 @@ export const receiveCheckoutData = createAction('Receive Checkout Data')
 
 export const receiveShippingMethodInitialValues = createAction('Receive Shipping Method Initial Values', 'shipping')
 
+export const receiveSavedShippingAddresses = createAction('Receive Saved Shipping Addresses', 'savedAddresses')
+
 export const processCheckoutData = ({payload: {$response}}) => {
     return (dispatch) => {
         const customerEntityID = getCheckoutEntityID($response)

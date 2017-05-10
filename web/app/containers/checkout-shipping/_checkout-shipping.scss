@@ -35,6 +35,20 @@
 }
 
 
+// Add New Address
+// ---
+
+.t-checkout-payment__add-new-address {
+    transition: padding 0.2s ease-out;
+}
+
+.t-checkout-payment__add-new-address-form {
+    opacity: 0;
+
+    animation: fadeIn 0.2s 0.2s ease-out 1 forwards;
+}
+
+
 // Mobile Styles
 // ---
 
