@@ -94,7 +94,15 @@ export const submitSignInForm = (formValues) => (dispatch) => {
         return Promise.reject(new SubmissionError(errors))
     }
 
-    return dispatch(login(formValues))
+    const {
+        login: {
+            username,
+            password
+        },
+        persistent_remember_me
+    } = formValues
+
+    return dispatch(login(username, password, persistent_remember_me))
         .then(handleLoginSuccess)
 }
 
@@ -104,6 +112,14 @@ export const submitRegisterForm = (formValues) => (dispatch) => {
         return Promise.reject(new SubmissionError(errors))
     }
 
-    return dispatch(registerUser(formValues))
+    const {
+        firstname,
+        lastname,
+        email,
+        password,
+        password_confirmation
+    } = formValues
+
+    return dispatch(registerUser(firstname, lastname, email, password, password_confirmation))
         .then(handleLoginSuccess)
 }
