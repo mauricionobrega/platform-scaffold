@@ -13,15 +13,16 @@ export const hideRegistrationForm = createAction('Hiding Registration Form (Save
 export const submitRegisterForm = () => {
     return (dispatch, getState) => {
         dispatch(removeAllNotifications())
+        const currentState = getState()
+        const firstname = shippingSelectors.getShippingFirstName(currentState)
+        const lastname = shippingSelectors.getShippingLastName(currentState)
+        const email = getEmailAddress(currentState)
+        const {
+            password,
+            password_confirmation
+        } = formSelectors.getConfirmationFormValues(currentState)
 
-        const userCredentials = {
-            firstname: shippingSelectors.getShippingFirstName(getState()),
-            lastname: shippingSelectors.getShippingLastName(getState()),
-            email: getEmailAddress(getState()),
-            ...formSelectors.getConfirmationFormValues(getState())
-        }
-
-        return registerUser(userCredentials)
+        return dispatch(registerUser(firstname, lastname, email, password, password_confirmation))
             .then(() => {
                 dispatch(openModal(CHECKOUT_CONFIRMATION_MODAL))
                 dispatch(updatingShippingAndBilling())
