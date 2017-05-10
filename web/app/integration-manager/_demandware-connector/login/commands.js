@@ -1,4 +1,3 @@
-import {noop} from 'progressive-web-sdk/dist/utils/utils'
 import {setRegisterLoaded, setSigninLoaded} from '../../login/results'
 import {setLoggedIn} from '../../results'
 import {initDemandwareSession, storeAuthToken, makeDemandwareRequest, deleteBasketID, storeBasketID} from '../utils'
@@ -17,7 +16,7 @@ const initLoginData = () => (dispatch) => {
 export const initLoginPage = initLoginData
 export const initRegisterPage = initLoginData
 
-export const navigatedToSection = () => (dispatch) => noop()
+export const navigatedToSection = () => (dispatch) => Promise.resolve()
 
 export const login = ({login}) => (dispatch) => {
 
