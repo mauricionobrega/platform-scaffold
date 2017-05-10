@@ -14,7 +14,10 @@ export const initLoginPage = (url, routeName) => connector.initLoginPage(url, ro
  */
 export const initRegisterPage = (url, routeName) => connector.initRegisterPage(url, routeName)
 
-export const navigateToSection = (...args) => connector.navigateToSection(...args)
+/**
+ * Called when the user switches between the Sign In and Register sections.
+ */
+export const navigatedToSection = (router, routes, sectionName) => connector.navigatedToSection(router, routes, sectionName)
 
 export const login = (...args) => connector.login(...args)
 export const logout = (...args) => connector.logout(...args)

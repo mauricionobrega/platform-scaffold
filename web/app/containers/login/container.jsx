@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {withRouter} from 'progressive-web-sdk/dist/routing'
 import template from '../../template'
 
-import {navigateToSection} from '../../integration-manager/login/commands'
+import {navigatedToSection} from '../../integration-manager/login/commands'
 
 import SignInPanel from './partials/signin-panel'
 import RegisterPanel from './partials/register-panel'
@@ -29,7 +29,7 @@ class Login extends React.Component {
     }
 
     onChangeTab(index) {
-        this.props.navigateToSection(
+        this.props.navigatedToSection(
             this.props.router,
             this.props.routes,
             SECTION_FOR_INDEX[index]
@@ -85,11 +85,11 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = {
-    navigateToSection
+    navigatedToSection
 }
 
 Login.propTypes = {
-    navigateToSection: PropTypes.func,
+    navigatedToSection: PropTypes.func,
     route: PropTypes.object,
     router: PropTypes.object,
     routes: PropTypes.array

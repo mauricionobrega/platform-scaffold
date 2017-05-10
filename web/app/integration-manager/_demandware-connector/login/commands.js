@@ -17,7 +17,7 @@ const initLoginData = () => (dispatch) => {
 export const initLoginPage = initLoginData
 export const initRegisterPage = initLoginData
 
-export const navigateToSection = () => (dispatch) => noop()
+export const navigatedToSection = () => (dispatch) => noop()
 
 export const login = ({login}) => (dispatch) => {
 
