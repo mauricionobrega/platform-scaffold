@@ -6,7 +6,6 @@ import {login, registerUser} from '../../integration-manager/login/commands'
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import isReactRoute from 'progressive-web-sdk/dist/routing/is-react-route'
 
-
 const validateSignInForm = (formValues) => {
     const errors = {
         login: {}
@@ -94,7 +93,7 @@ export const submitSignInForm = (formValues) => (dispatch) => {
         return Promise.reject(new SubmissionError(errors))
     }
 
-    return dispatch(login(formValues))
+    return dispatch(login(formValues.login.username, formValues.login.password, formValues.persistent_remember_me || false))
         .then(handleLoginSuccess)
 }
 

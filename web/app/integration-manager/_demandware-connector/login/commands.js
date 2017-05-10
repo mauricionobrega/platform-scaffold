@@ -18,9 +18,9 @@ export const initRegisterPage = initLoginData
 
 export const navigatedToSection = () => (dispatch) => Promise.resolve()
 
-export const login = ({login}) => (dispatch) => {
 
-    const authorizationData = window.btoa(`${login.username}:${login.password}`)
+export const login = (username, password) => (dispatch) => {
+    const authorizationData = window.btoa(`${username}:${password}`)
     const requestOptions = {
         method: 'POST',
         body: '{type: "credentials"}',
@@ -36,6 +36,8 @@ export const login = ({login}) => (dispatch) => {
         .then((response) => response.json())
         .then((basket) => {
             basketContents = basket
+
+            // Actual login call
             return makeRequest(`${API_END_POINT_URL}/customers/auth`, requestOptions)
         })
         .then((response) => {

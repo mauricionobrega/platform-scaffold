@@ -49,11 +49,21 @@ const submitForm = (href, formValues, formSelector) => {
         })
 }
 
-export const login = (formValues) => (dispatch, getState) => {
+export const login = (username, password, rememberMe) => (dispatch, getState) => {
     const currentState = getState()
     const href = getLoginHref(currentState)
     const formKey = getFormKey(currentState)
-    return submitForm(href, {...formValues, form_key: formKey}, '.form-login')
+
+    const data = {
+        login: {
+            username,
+            password
+        },
+        persistent_remember_me: rememberMe,
+        form_key: formKey
+    }
+
+    return submitForm(href, data, '.form-login')
 }
 
 export const registerUser = (formValues) => (dispatch, getState) => {
