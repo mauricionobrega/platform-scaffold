@@ -1,14 +1,16 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {createAction} from '../../utils/utils'
 import {makeRequest, makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import checkoutPaymentParser from './checkout-payment-parser'
-
 import {getPaymentBillingFormValues} from '../../store/form/selectors'
 import {getCustomerEntityID, getEmailAddress} from '../../store/checkout/selectors'
 import {getShippingAddress} from '../../store/checkout/shipping/selectors'
 import {getIsLoggedIn} from '../app/selectors'
-
 import {receiveCheckoutData} from '../../store/checkout/actions'
 
 export const receiveContents = createAction('Received CheckoutPayment Contents')
@@ -34,27 +36,46 @@ export const fetchContents = () => {
     }
 }
 
+
 export const submitPayment = () => {
     return (dispatch, getState) => {
         const currentState = getState()
         const entityID = getCustomerEntityID(currentState)
         const isLoggedIn = getIsLoggedIn(currentState)
-        const sameAddress = getPaymentBillingFormValues(currentState).billing_same_as_shipping
+        const billingIsSameAsShippingAddress = getPaymentBillingFormValues(currentState).billing_same_as_shipping
 
         let address = {}
         const email = getEmailAddress(currentState)
 
-        if (sameAddress) {
-            address = getShippingAddress(currentState).toJS()
+        if (billingIsSameAsShippingAddress) {
+            const shippingAddress = getShippingAddress(currentState).toJS()
+            address = {
+                // NOT spreading `address` because it contains many incorrectly
+                // formatted keys, as far as the payment-information request
+                // is concerned
+                customerAddressId: `${shippingAddress.customerAddressId}`,
+                customerId: `${shippingAddress.customerId}`,
+                firstname: shippingAddress.firstname,
+                lastname: shippingAddress.lastname,
+                company: shippingAddress.company,
+                postcode: shippingAddress.postcode,
+                city: shippingAddress.city,
+                street: shippingAddress.street,
+                region: shippingAddress.region,
+                regionCode: shippingAddress.regionCode,
+                regionId: `${shippingAddress.regionId}`,
+                countryId: shippingAddress.countryId,
+                saveInAddressBook: false
+            }
         } else {
             const {
                 name,
                 company,
                 addressLine1,
                 addressLine2,
-                country_id,
+                countryId,
                 city,
-                region_id,
+                regionId,
                 postcode,
             } = getPaymentBillingFormValues(currentState)
             const names = name.split(' ')
@@ -66,8 +87,8 @@ export const submitPayment = () => {
                 postcode,
                 city,
                 street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1],
-                regionId: region_id,
-                countryId: country_id,
+                regionId,
+                countryId,
                 saveInAddressBook: false
             }
         }
