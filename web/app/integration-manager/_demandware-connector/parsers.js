@@ -24,7 +24,7 @@ const parseVariationCategories = (variation_attributes) => {
 
 const setInitialVariantValues = (variants, id) => {
     const currentVariant = variants.find(({product_id}) => product_id === id)
-    return currentVariant.variation_values && currentVariant
+    return currentVariant && currentVariant.variation_values
 }
 
 /* eslint-enable camelcase */
