@@ -20,7 +20,10 @@ export const getInitialShippingAddress = createSelector(
     getShippingAddress,
     (checkout, address) => {
         const savedAddressId = checkout.get('defaultShippingAddressId')
-        return address.set('saved_address', `${savedAddressId}`)
+        if (savedAddressId) {
+            return address.set('saved_address', `${savedAddressId}`)
+        }
+        return address
     }
 )
 

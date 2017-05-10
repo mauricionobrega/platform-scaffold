@@ -95,7 +95,8 @@ export const submitSignIn = () => {
 export const submitShipping = () => {
     return (dispatch, getState) => {
         const currentState = getState()
-        const submittingWithNewAddress = getShippingFormValues(currentState).saved_address === ADD_NEW_ADDRESS_FIELD
+        const savedAddress = getShippingFormValues(currentState).saved_address
+        const submittingWithNewAddress = savedAddress === ADD_NEW_ADDRESS_FIELD || savedAddress === undefined
         let address
 
         // Format the shipping address according to whether it's a saved or new address
