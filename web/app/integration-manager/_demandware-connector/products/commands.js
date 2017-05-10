@@ -29,13 +29,13 @@ export const initProductDetailsPage = () => (dispatch) => {
         })
 }
 
-export const getProductVariantData = (selections, variants, categoryIds) => (dispatch) => {
-    if (categoryIds.some((id) => !selections[id])) {
+export const getProductVariantData = (variationSelections, variants, categoryIds) => (dispatch) => {
+    if (categoryIds.some((id) => !variationSelections[id])) {
         return
     }
 
     for (const {values, id} of variants) {
-        if (categoryIds.every((id) => selections[id] === values[id])) {
+        if (categoryIds.every((id) => variationSelections[id] === values[id])) {
             setTimeout(() => {
                 browserHistory.push({
                     pathname: getProductHref(id)

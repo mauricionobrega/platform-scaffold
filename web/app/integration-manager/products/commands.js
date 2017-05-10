@@ -6,4 +6,4 @@ export const register = (commands) => {
 
 export const initProductDetailsPage = (url, routeName) => connector.initProductDetailsPage(url, routeName)
 
-export const getProductVariantData = (...args) => connector.getProductVariantData(...args)
+export const getProductVariantData = (variationSelections, variants, categoryIds) => connector.getProductVariantData(variationSelections, variants, categoryIds)
