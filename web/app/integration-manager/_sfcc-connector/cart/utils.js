@@ -1,4 +1,4 @@
-import {makeDemandwareRequest, getBasketID, storeBasketID, deleteBasketID} from '../utils'
+import {makeSfccRequest, getBasketID, storeBasketID, deleteBasketID} from '../utils'
 import {getCartItems} from '../../../store/cart/selectors'
 import {receiveCartProductData} from '../../products/results'
 import {receiveCartContents} from '../../cart/results'
@@ -21,7 +21,7 @@ export const createBasket = (basketContents) => {
         options.body = JSON.stringify(basketContents)
     }
 
-    return makeDemandwareRequest(`${API_END_POINT_URL}/baskets`, options)
+    return makeSfccRequest(`${API_END_POINT_URL}/baskets`, options)
         .then((response) => response.json())
         .then((basket) => {
             storeBasketID(basket.basket_id)
@@ -43,8 +43,8 @@ export const getProductImage = (item, currentState) => {
             alt: item.product_name
         })
     } else {
-        // We have no images for the item in our state, fetch images using demandware's API
-        return makeDemandwareRequest(`${API_END_POINT_URL}/products/${item.product_id}/images?view_type=large`, {method: 'GET'})
+        // We have no images for the item in our state, fetch images using the Salseforce Commerce Cloud API
+        return makeSfccRequest(`${API_END_POINT_URL}/products/${item.product_id}/images?view_type=large`, {method: 'GET'})
             .then((response) => response.json())
             .then(({image_groups}) => {
                 return Promise.resolve({
@@ -84,7 +84,7 @@ export const fetchCartItemImages = () => (dispatch, getState) => {
             .map((cartItem) => {
                 const productId = cartItem.get('productId')
 
-                return makeDemandwareRequest(`${API_END_POINT_URL}/products/${productId}/images?all_images=false&view_type=${largeViewType},${thumbnailViewType}`, {method: 'GET'})
+                return makeSfccRequest(`${API_END_POINT_URL}/products/${productId}/images?all_images=false&view_type=${largeViewType},${thumbnailViewType}`, {method: 'GET'})
                     .then((response) => response.json())
                     .then(({image_groups, name, short_description}) => {
                         const product = getProductById(productId)(currentState).toJS()
@@ -110,7 +110,7 @@ export const fetchCartItemImages = () => (dispatch, getState) => {
 
 export const requestCartData = (noRetry) => {
     return createBasket()
-        .then((basketID) => makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}`, {method: 'GET'}))
+        .then((basketID) => makeSfccRequest(`${API_END_POINT_URL}/baskets/${basketID}`, {method: 'GET'}))
         .then((response) => {
             if (response.status === 404) {
                 if (noRetry) {
