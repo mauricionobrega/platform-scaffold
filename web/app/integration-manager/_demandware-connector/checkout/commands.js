@@ -133,6 +133,8 @@ export const submitShipping = (formValues) => (dispatch) => {
         })
 }
 
+export const updatingShippingAndBilling = () => () => Promise.resolve()
+
 // We're not currently checking the customer's email on the demandware site
 // Return true to prevent the welcome banner from showing
 export const isEmailAvailable = () => () => Promise.resolve(true)
