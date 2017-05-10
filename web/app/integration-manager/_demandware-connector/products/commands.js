@@ -8,7 +8,6 @@ import {API_END_POINT_URL} from '../constants'
 export const fetchPdpData = (url) => (dispatch) => {
     const productURL = `${API_END_POINT_URL}/products/${getCurrentProductID(url)}?expand=prices,images,variations`
     const productPathKey = urlToPathKey(url)
-
     const options = {
         method: 'GET'
     }
@@ -19,14 +18,12 @@ export const fetchPdpData = (url) => (dispatch) => {
                 ...parseProductDetails(responseJSON),
                 href: productPathKey
             }
-
             const productDetailsMap = {
                 [productPathKey]: productDetailsData
             }
             productDetailsData.variants.forEach(({id}) => {
                 productDetailsMap[getProductHref(id)] = productDetailsData
             })
-
             dispatch(receiveProductDetailsProductData(productDetailsMap))
             dispatch(receiveProductDetailsUIData({[productPathKey]: {itemQuantity: responseJSON.step_quantity}}))
 
