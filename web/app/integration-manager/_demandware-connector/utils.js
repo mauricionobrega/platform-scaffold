@@ -27,6 +27,10 @@ export const getBasketID = () => {
 }
 
 export const storeBasketID = (basketID) => {
+    if (basketID === undefined) {
+        throw new Error('Storing basketID that is undefined!!')
+    }
+
     window.sessionStorage.setItem(BASKET_KEY_NAME, basketID)
 }
 
