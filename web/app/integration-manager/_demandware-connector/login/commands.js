@@ -108,8 +108,9 @@ export const registerUser = ({firstname, lastname, email, password}) => (dispatc
             if (responseJSON.fault) {
                 throw new SubmissionError({_error: 'Unable to create account.'})
             }
+
             // Creating a user doesn't sign them in automatically, so dispatch the login command
-            return dispatch(login({login: {username: email, password}}))
+            return dispatch(login(email, password, true))
         })
 
 }
