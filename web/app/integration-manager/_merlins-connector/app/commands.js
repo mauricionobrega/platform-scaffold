@@ -16,8 +16,8 @@ import {
     setLoggedIn
 } from '../../results'
 
-export const fetchPageData = (url) => (dispatch) => {
-    return makeRequest(url)
+export const fetchPageData = (url) => (dispatch) => (
+    makeRequest(url)
         .then(jqueryResponse)
         .then((res) => {
             const [$, $response] = res
@@ -33,7 +33,7 @@ export const fetchPageData = (url) => (dispatch) => {
                 dispatch(setPageFetchError(error.message))
             }
         })
-}
+)
 
 export const initApp = () => (dispatch) => {
     const formKey = generateFormKeyCookie()

@@ -1,8 +1,7 @@
 import {getCheckoutConfigObject} from '../../../utils/magento-utils'
 
 export const parseLoginStatus = ($html) => {
-    const welcomePresent = !!$html.find('.customer-welcome').length
-    if (welcomePresent) {
+    if ($html.find('.customer-welcome').length > 0) {
         return true
     }
     // We may be on a checkout page so check the checkout config object
