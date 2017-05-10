@@ -1,6 +1,6 @@
 import {setRegisterLoaded, setSigninLoaded} from '../../login/results'
 import {setLoggedIn} from '../../results'
-import {initDemandwareSession, storeAuthToken, makeDemandwareRequest, deleteBasketID, storeBasketID} from '../utils'
+import {initDemandwareSession, deleteAuthToken, storeAuthToken, makeDemandwareRequest, deleteBasketID, storeBasketID} from '../utils'
 import {requestCartData, createBasket, handleCartData} from '../cart/utils'
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {SubmissionError} from 'redux-form'
@@ -17,7 +17,6 @@ export const initLoginPage = initLoginData
 export const initRegisterPage = initLoginData
 
 export const navigatedToSection = () => (dispatch) => Promise.resolve()
-
 
 export const login = (username, password) => (dispatch) => {
     const authorizationData = window.btoa(`${username}:${password}`)
@@ -86,6 +85,27 @@ export const login = (username, password) => (dispatch) => {
             // Navigate to the homepage, since we haven't made an account page yet
             // and demandware's account page is at the same URL as their login page
             return '/on/demandware.store/Sites-2017refresh-Site/default/Home-Show'
+        })
+}
+
+export const logout = () => (dispatch) => {
+    const requestOptions = {
+        method: 'DELETE',
+    }
+
+    return makeDemandwareRequest(`${API_END_POINT_URL}/customers/auth`, requestOptions)
+        .then((response) => {
+            // We don't really do any serious error checking here because we can't
+            // really do much about it.
+            if (response.fault) {
+                console.error('Error logging out. Clearing auth tokens anyways.', response.json())
+            }
+
+            deleteBasketID()
+            deleteAuthToken()
+            dispatch(setLoggedIn(false))
+
+            return Promise.resolve()
         })
 }
 
