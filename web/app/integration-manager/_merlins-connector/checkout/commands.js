@@ -148,50 +148,6 @@ export const checkCustomerEmail = () => {
     }
 }
 
-// export const checkoutSignIn = (formValues) => {
-//     return (dispatch) => {
-//         const {
-//             username,
-//             password
-//         } = formValues
-//
-//         // This data has to be sent via AJAX, it doesn't work with makeJsonEncodedRequest
-//         // If we send this using makeRequest, fetch or makeJsonEncodedRequest we get back a 400 (bad request) error
-//         // After comparing our request (using makeRequest, fetch or makeJsonEncodedRequest) to the desktop request (using AJAX)
-//         // The only difference we could find is that the desktop request is sent via AJAX and therefor includes the header X-Requested-With: XMLHttpRequest
-//         return new Promise((resolve, reject) => {
-//             window.Progressive.$.ajax({
-//                 url: '/customer/ajax/login',
-//                 data: JSON.stringify({username, password, context: 'checkout'}),
-//                 method: 'POST',
-//                 success: (responseData) => {
-//                     dispatch(removeAllNotifications())
-//                     if (responseData.errors) {
-//                         return reject(Error(responseData.message))
-//                     } else {
-//                         // Refetch the page now that the user is logged in
-//                         return resolve(dispatch(fetchCheckoutShippingData(window.location.href)))
-//                     }
-//                 }
-//             })
-//         })
-//     }
-// }
-//
-// export const checkoutRegister = (userCredentials) => {
-//     return submitForm(CREATE_ACCOUNT_POST_URL, userCredentials, {method: 'POST'})
-//         .then((response) => {
-//             const responseUrlHas = (chunk) => response.url.search(chunk) >= 0
-//             const redirectUrlIsNotToCreate = responseUrlHas('/account/') && !responseUrlHas('/create/')
-//
-//             if (!redirectUrlIsNotToCreate) {
-//                 throw new SubmissionError('Could not complete registration. The email you provided may already be in use.')
-//             }
-//
-//             return Promise.resolve()
-//         })
-// }
-
 export const fetchCheckoutPaymentData = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then((res) => {

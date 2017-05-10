@@ -2,7 +2,6 @@ import {makeRequest, makeFormEncodedRequest} from 'progressive-web-sdk/dist/util
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import {SubmissionError} from 'redux-form'
 
-// import {receiveLoginHref, receiveRegisterHref} from '../actions'
 import {getFormKey} from '../selectors'
 import {fetchPageData} from '../app/commands'
 import {getCart} from '../cart/commands'
@@ -16,7 +15,6 @@ import {isFormResponseInvalid} from './parsers/parsers'
 export const fetchSigninData = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then(() => {
-            // dispatch(receiveLoginHref(parseSigninHref(res[1])))
             dispatch(setSigninLoaded())
         })
 }
@@ -24,7 +22,6 @@ export const fetchSigninData = (url) => (dispatch) => {
 export const fetchRegisterData = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then(() => {
-            // dispatch(receiveRegisterHref(parseRegisterHref(res[1])))
             dispatch(setRegisterLoaded())
         })
 }
