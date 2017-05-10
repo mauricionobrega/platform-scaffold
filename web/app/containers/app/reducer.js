@@ -17,7 +17,6 @@ export const initialState = fromJS({
 })
 
 export default handleActions({
-    [appActions.setPageFetchError]: mergePayload,
     [receiveAppData]: mergePayload,
     [setPageFetchError]: mergePayload,
     [setCheckoutShippingURL]: mergePayload,
