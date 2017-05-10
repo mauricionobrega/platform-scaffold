@@ -14,7 +14,7 @@ import * as checkoutPaymentActions from '../actions'
 
 // SDK Components
 import CardInput from 'progressive-web-sdk/dist/components/card-input'
-// import ExpiryDate from 'progressive-web-sdk/dist/components/expiry-date'
+import ExpiryDate from 'progressive-web-sdk/dist/components/expiry-date'
 import Field from 'progressive-web-sdk/dist/components/field'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 import Image from 'progressive-web-sdk/dist/components/image'
@@ -90,9 +90,9 @@ class CreditCardForm extends React.Component {
                 </FieldRow>
 
                 <FieldRow>
-                    {/*<ReduxForm.Field component={Field} name="ccexpiry" label="Expiry">
+                    <ReduxForm.Field component={Field} name="ccexpiry" label="Expiry">
                         <ExpiryDate placeholder="mm/yy" />
-                    </ReduxForm.Field>*/}
+                    </ReduxForm.Field>
 
                     <ReduxForm.Field component={Field} className="pw--overlayed-hint t-checkout-payment__credit-card-hints" name="cvv" label="CVV" hint={cvvHint}>
                         <input type="tel" noValidate maxLength={currentCard.cvvLength} />
