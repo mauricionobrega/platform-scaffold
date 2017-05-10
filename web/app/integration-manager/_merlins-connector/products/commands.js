@@ -24,3 +24,5 @@ export const initProductDetailsPage = (url) => (dispatch) => {
         })
         .catch((error) => { console.info(error.message) })
 }
+
+export const getProductVariantData = () => (dispatch) => Promise.resolve()
