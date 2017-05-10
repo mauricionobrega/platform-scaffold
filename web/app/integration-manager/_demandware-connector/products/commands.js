@@ -53,4 +53,6 @@ export const getProductVariantData = (selections, variants, categoryIds) => (dis
             return dispatch(fetchPdpData(currentProductHref))
         }
     }
+
+    return Promise.resolve()
 }
