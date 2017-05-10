@@ -39,9 +39,7 @@ const ShippingAddressForm = ({
         const shippingAddress = (
             <div className="u-color-neutral-40">
                 <p className="u-margin-bottom-sm">
-                    {/* eslint-disable camelcase */}
                     {city}, {regionCode}, {countryId}, {postcode}
-                    {/* eslint-enable camelcase */}
                 </p>
                 <p>{firstname} {lastname}</p>
             </div>
@@ -59,7 +57,9 @@ const ShippingAddressForm = ({
                     type="radio"
                     value={customerAddressId}
                     customEventHandlers={{
-                        onChange: handleShowAddNewAddress
+                        onChange: () => {
+                            handleShowAddNewAddress(false)
+                        }
                     }}
                 >
                     <input
@@ -80,7 +80,7 @@ const ShippingAddressForm = ({
 
             return [
                 savedAddresses.map(renderSavedAddresses),
-                <FieldRow key="addNewAddressField" className={classes}>
+                <FieldRow key={ADD_NEW_ADDRESS_FIELD} className={classes}>
                     <div className="u-flex">
                         <ReduxForm.Field
                             component={Field}
@@ -93,7 +93,9 @@ const ShippingAddressForm = ({
                             type="radio"
                             value={ADD_NEW_ADDRESS_FIELD}
                             customEventHandlers={{
-                                onChange: handleShowAddNewAddress
+                                onChange: () => {
+                                    handleShowAddNewAddress(true)
+                                }
                             }}
                         >
                             <input
@@ -178,9 +180,7 @@ const mapStateToProps = createPropsSelector({
 })
 
 const mapDispatchToProps = {
-    handleShowAddNewAddress: (e) => {
-        return setShowAddNewAddress(e.target.value === ADD_NEW_ADDRESS_FIELD)
-    }
+    handleShowAddNewAddress: (bool) => setShowAddNewAddress(bool)
 }
 
 
