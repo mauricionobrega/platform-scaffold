@@ -6,8 +6,7 @@ import {parseProductDetails, getCurrentProductID, getProductHref} from '../parse
 import {API_END_POINT_URL} from '../constants'
 
 export const fetchPdpData = (url) => (dispatch) => {
-    const productID = getCurrentProductID(url)
-    const productURL = `${API_END_POINT_URL}/products/${productID}?expand=prices,images,variations`
+    const productURL = `${API_END_POINT_URL}/products/${getCurrentProductID(url)}?expand=prices,images,variations`
     const productPathKey = urlToPathKey(url)
     const options = {
         method: 'GET'
