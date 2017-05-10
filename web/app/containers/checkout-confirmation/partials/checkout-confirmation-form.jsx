@@ -7,6 +7,8 @@ import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 
+import {CONFIRMATION_FORM_NAME} from '../../../store/form/constants'
+
 const CheckoutConfirmationForm = ({
     error,
     handleSubmit,
@@ -113,7 +115,7 @@ const validate = (values) => {
 }
 
 const CheckoutPaymentReduxForm = ReduxForm.reduxForm({
-    form: 'confirmationForm',
+    form: CONFIRMATION_FORM_NAME,
     validate,
 })(CheckoutConfirmationForm)
 

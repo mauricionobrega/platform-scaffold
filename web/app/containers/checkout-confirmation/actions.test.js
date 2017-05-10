@@ -2,13 +2,11 @@
 import {submitRegisterForm} from './actions'
 import Immutable from 'immutable'
 
-
 jest.mock('../../integration-manager/checkout/commands')
 import {checkoutRegister, updatingShippingAndBilling} from '../../integration-manager/checkout/commands'
 jest.mock('../app/actions')
 import {addNotification} from '../app/actions'
-
-
+import {CONFIRMATION_FORM_NAME} from '../../store/form/constants'
 
 describe('submitRegisterForm', () => {
     const mockDispatch = jest.fn()
@@ -25,7 +23,7 @@ describe('submitRegisterForm', () => {
             }
         }),
         form: {
-            confirmationForm: {
+            [CONFIRMATION_FORM_NAME]: {
                 values: {
                     password: 'Test'
                 }
@@ -39,7 +37,6 @@ describe('submitRegisterForm', () => {
         const thunk = submitRegisterForm()
         expect(typeof thunk).toBe('function')
 
-
         return thunk(mockDispatch, mockGetState)
             .then(() => {
                 expect(mockDispatch).toBeCalled()
@@ -52,7 +49,6 @@ describe('submitRegisterForm', () => {
         checkoutRegister.mockImplementationOnce(() => Promise.resolve())
         const thunk = submitRegisterForm()
         expect(typeof thunk).toBe('function')
-
 
         return thunk(mockDispatch, mockGetState)
             .then(() => {

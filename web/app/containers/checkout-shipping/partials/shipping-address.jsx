@@ -5,7 +5,7 @@ import * as ReduxForm from 'redux-form'
 import {normalizePhone} from '../../../utils/normalize-utils'
 
 import {showCompanyAndApt} from '../actions'
-import {SHIPPING_FORM_NAME} from '../constants'
+import {SHIPPING_FORM_NAME} from '../../../store/form/constants'
 import {fetchShippingMethodsEstimate} from '../../../integration-manager/checkout/commands'
 import {getIsCompanyOrAptShown} from '../selectors'
 import {getCountries, getAvailableRegions} from '../../../store/checkout/locations/selectors'
@@ -14,7 +14,6 @@ import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 import Icon from 'progressive-web-sdk/dist/components/icon'
-
 
 const ShippingAddressForm = ({
     countries,
@@ -36,7 +35,6 @@ const ShippingAddressForm = ({
             <Icon name="chevron-down" className="u-margin-start-sm u-color-brand" />
         </Button>
     )
-
 
     return (
         <div>
