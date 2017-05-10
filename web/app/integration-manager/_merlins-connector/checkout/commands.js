@@ -139,7 +139,7 @@ export const submitShipping = (formValues) => {
     }
 }
 
-export const checkCustomerEmail = (email) => (dispatch) => {
+export const isEmailAvailable = (email) => (dispatch) => {
     return makeJsonEncodedRequest(
             '/rest/default/V1/customers/isEmailAvailable',
             {customerEmail: email},

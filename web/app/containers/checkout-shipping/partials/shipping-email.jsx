@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as ReduxForm from 'redux-form'
 
-import {checkCustomerEmail, submitSignIn} from '../actions'
+import {isEmailAvailable, submitSignIn} from '../actions'
 import {getCustomerEmailRecognized, getEmailError} from '../selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -13,7 +13,7 @@ import Icon from 'progressive-web-sdk/dist/components/icon'
 import Link from 'progressive-web-sdk/dist/components/link'
 
 
-const ShippingEmail = ({submitSignIn, customerEmailRecognized, checkCustomerEmail}) => {
+const ShippingEmail = ({submitSignIn, customerEmailRecognized, isEmailAvailable}) => {
     const passwordHint = (
         <Link className="u-color-brand" href="/customer/account/forgotpassword/">
             Forgot password
@@ -33,7 +33,7 @@ const ShippingEmail = ({submitSignIn, customerEmailRecognized, checkCustomerEmai
                         name="username"
                         label="Email order confirmation to"
                         customEventHandlers={{
-                            onBlur: checkCustomerEmail
+                            onBlur: isEmailAvailable
                         }}
                     >
                         <input type="email" noValidate placeholder="Email Address" />
@@ -67,7 +67,7 @@ ShippingEmail.propTypes = {
     /**
     * Checks if the users email address has an account associated with it
     */
-    checkCustomerEmail: React.PropTypes.func,
+    isEmailAvailable: React.PropTypes.func,
     /**
     * True if the users email address has an account associated with it
     */
@@ -85,8 +85,7 @@ const mapStateToProps = createPropsSelector({
 
 const mapDispatchToProps = {
     submitSignIn,
-    checkCustomerEmail
+    isEmailAvailable
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShippingEmail)
