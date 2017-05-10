@@ -74,7 +74,6 @@ export const initCheckoutShippingPage = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then(([$, $response]) => dispatch(processCheckoutData($response)))  // eslint-disable-line no-unused-vars
         .then(() => dispatch(fetchShippingMethodsEstimate(SHIPPING_FORM_NAME)))
-        .catch((error) => { console.info(error.message) })
 }
 
 export const initCheckoutConfirmationPage = (url) => (dispatch) => {
