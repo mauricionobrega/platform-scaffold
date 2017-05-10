@@ -13,14 +13,9 @@
 // Note! This utility class should come **BEFORE** the `u-flexbox` class in
 // order to ensure that an element with both classes inherits only the
 // `display: flex` property.
-//
-// 1. Ensure inline elements are treated as block-level.
-// 2. Prevent width collapsing in old implementations.
 
 .u-flex {
-    display: block !important; // 1
-    flex: 1 1 auto !important;
-    width: 100% !important; // 2
+    @include flex(true);
 }
 
 
@@ -28,12 +23,9 @@
 // ---
 //
 // Shrink Flexbox items to a minimum size.
-//
-// 1. Ensure width collapses in old implementations.
 
 .u-flex-shrink {
-    flex: initial !important;
-    width: auto !important; // 1
+    @include flex-shrink(true);
 }
 
 
@@ -54,18 +46,9 @@
 //
 // Note! This should come **AFTER** the `u-flex` utility class in order to
 // ensure an element that has both classes inherits `display: flex`!
-//
-// 1. Remove default styles present on common root elements.
-// 2. Ensure in iOS 5 and 6 that flex-direction isn't inherited from
-//    any flexbox parents that has flex-direction set to direction-row-reverse
 
 .u-flexbox {
-    display: flex !important;
-    flex-direction: row !important; // 2
-    margin: 0 !important; // 1
-    padding: 0 !important; // 1
-
-    list-style: none !important; // 1
+    @include flexbox(true);
 }
 
 .u-flexbox-gutters {
