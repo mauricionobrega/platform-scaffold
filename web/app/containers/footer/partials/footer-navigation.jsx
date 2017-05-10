@@ -3,7 +3,6 @@ import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as selectors from '../selectors'
 import {connect} from 'react-redux'
 
-import Divider from 'progressive-web-sdk/dist/components/divider'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import Link from 'progressive-web-sdk/dist/components/link'
 
@@ -17,13 +16,6 @@ const FooterNavigation = ({navigation}) => {
                     </Link>
                 )
             })}
-
-            <Divider />
-
-
-            <div className="t-footer__copyright u-padding-bottom">
-                <p>Copyright Merlin&#39;s Potions 2016. All rights reserved.</p>
-            </div>
         </div>
 
     )

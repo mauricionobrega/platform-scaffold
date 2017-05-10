@@ -10,12 +10,12 @@ const social = [
     ['http://www.youtube.com/#TODO', 'static/svg/youtube.svg', 'Youtube'],
 ]
 
-const FooterSocialIcons = () => {
+const NavigationSocialIcons = () => {
     return (
-        <div className="t-footer__social u-padding-md">
+        <div className="t-navigation__social u-padding-md">
             <div className="u-flexbox u-justify-center u-padding-md">
                 {social.map(([url, icon, title]) =>
-                    <a href={url} className="t-footer__social-link" key={url}>
+                    <a href={url} className="t-navigation__social-link" key={url}>
                         <LazyLoadContent
                             placeholder={<span className="u-visually-hidden">Image loading</span>}
                             threshold={100}
@@ -34,4 +34,4 @@ const FooterSocialIcons = () => {
     )
 }
 
-export default FooterSocialIcons
+export default NavigationSocialIcons

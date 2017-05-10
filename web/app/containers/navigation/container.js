@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
+import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
 import Nav from 'progressive-web-sdk/dist/components/nav'
 import NavMenu from 'progressive-web-sdk/dist/components/nav-menu'
@@ -15,6 +16,15 @@ import {isModalOpen} from '../../store/selectors'
 import {closeModal} from '../../store/modals/actions'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 import {withRouter} from 'progressive-web-sdk/dist/routing'
+import LazyLoadContent from '../../components/lazy-load-content'
+import Image from 'progressive-web-sdk/dist/components/image'
+
+const social = [
+    ['http://www.facebook.com/#TODO', 'static/svg/facebook.svg', 'Facebook'],
+    ['http://www.twitter.com/#TODO', 'static/svg/twitter.svg', 'Twitter'],
+    ['http://plus.google.com/#TODO', 'static/svg/googleplus.svg', 'Google+'],
+    ['http://www.youtube.com/#TODO', 'static/svg/youtube.svg', 'Youtube'],
+]
 
 const Navigation = (props) => {
     const {path, isOpen, root, closeNavigation, router, logoutAction} = props
@@ -66,6 +76,31 @@ const Navigation = (props) => {
                 </HeaderBar>
 
                 <NavMenu itemFactory={itemFactory} />
+
+                <div>
+                    <div className="t-navigation__social">
+                        <div className="u-flexbox u-justify-center">
+                            {social.map(([url, icon, title]) =>
+                                <a href={url} className="t-navigation__social-link" key={url}>
+                                    <LazyLoadContent
+                                        placeholder={<span className="u-visually-hidden">Image loading</span>}
+                                        threshold={100}
+                                    >
+                                        <Image
+                                            src={getAssetUrl(icon)}
+                                            alt={title}
+                                            height="32px"
+                                            width="32px"
+                                        />
+                                    </LazyLoadContent>
+                                </a>
+                            )}
+                        </div>
+                    </div>
+                    <div className="t-navigation__copyright u-padding-md">
+                        <p>Copyright Merlin&#39;s Potions 2016. All rights reserved.</p>
+                    </div>
+                </div>
             </Nav>
         </Sheet>
     )
