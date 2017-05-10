@@ -121,7 +121,7 @@ export const submitPayment = (formValues) => (dispatch, getState) => {
             const requestOptions = {
                 method: 'POST',
                 body: JSON.stringify({
-                    amount: orderTotal,
+                    amount: parseInt(orderTotal.replace(/\$/g, '')),
                     payment_method_id: 'CREDIT_CARD',
                     payment_card: {
                         card_type: type

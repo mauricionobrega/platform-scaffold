@@ -92,12 +92,12 @@ const Router = ({store}) => (
                 />
 
                 {/* SFCC Connector routes */}
-                <Route component={Home} path="*/Home-Show*" routeName="home" />
-                <Route component={ProductList} path="*/womens*" routeName="productListPage" />
-                <Route component={ProductList} path="*/mens*" routeName="productListPage" />
-                <Route component={ProductList} path="*/newarrivals*" routeName="productListPage" />
-                <Route component={ProductList} path="*/electronics*" routeName="productListPage" />
-                <Route component={ProductList} path="*/Search-Show?*" routeName="productListPage" />
+                <Route component={Home} path="*/Home-Show*" routeName="home" fetchAction={fetchHomeData} />
+                <Route component={ProductList} path="*/womens*" routeName="productListPage" fetchAction={fetchProductListData} />
+                <Route component={ProductList} path="*/mens*" routeName="productListPage" fetchAction={fetchProductListData} />
+                <Route component={ProductList} path="*/newarrivals*" routeName="productListPage" fetchAction={fetchProductListData} />
+                <Route component={ProductList} path="*/electronics*" routeName="productListPage" fetchAction={fetchProductListData} />
+                <Route component={ProductList} path="*/Search-Show?*" routeName="productListPage" fetchAction={fetchProductListData} />
                 <Route
                     component={CheckoutShipping}
                     path="*/COShipping-Start*"
@@ -107,9 +107,9 @@ const Router = ({store}) => (
                     headerHasSignIn
                     fetchAction={fetchCheckoutShippingData}
                 />
-                <Route component={CheckoutPayment} path="*/COBilling-Start*" routeName="checkout-payment" Header={CheckoutHeader} Footer={CheckoutFooter} />
-                <Route component={Login} path="*/Account-Show*" routeName="signin" />
-                <Route component={Cart} path="*/Cart-Show*" routeName="cart" />
+                <Route component={CheckoutPayment} path="*/COBilling-Start*" routeName="checkout-payment" Header={CheckoutHeader} Footer={CheckoutFooter} fetchAction={fetchCheckoutPaymentData} />
+                <Route component={Login} path="*/Account-Show*" routeName="signin" fetchAction={fetchSigninData} />
+                <Route component={Cart} path="*/Cart-Show*" routeName="cart" fetchAction={fetchCartPageData} />
                 <Route component={CheckoutConfirmation} path="*/COSummary-Submit*" routeName="checkout-confirmation" Header={CheckoutHeader} Footer={CheckoutFooter} />
 
             </Route>
