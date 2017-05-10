@@ -6,16 +6,23 @@ export const register = (commands) => {
 
 /**
  * Initializes any required data for the Login page
+ * @param {string} url The url of the current page
+ * @param {string} routeName The route name of the current page
  */
 export const initLoginPage = (url, routeName) => connector.initLoginPage(url, routeName)
 
 /**
  * Initializes any required data for the Register page
+ * @param {string} url The url of the current page
+ * @param {string} routeName The route name of the current page
  */
 export const initRegisterPage = (url, routeName) => connector.initRegisterPage(url, routeName)
 
 /**
  * Called when the user switches between the Sign In and Register sections.
+ * @param {object} router The React router object
+ * @param {string} routes The routes configured in this application
+ * @param {string} sectionName The section that was selected (typically this maps to a route name, but that is not guaranteed)
  */
 export const navigatedToSection = (router, routes, sectionName) => connector.navigatedToSection(router, routes, sectionName)
 

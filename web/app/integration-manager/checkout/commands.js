@@ -6,16 +6,22 @@ export const register = (commands) => {
 
 /**
  * Initializes any required data for the Checkout Shipping page
+ * @param {string} url The url of the current page
+ * @param {string} routeName The route name of the current page
  */
 export const initCheckoutShippingPage = (url, routeName) => connector.initCheckoutShippingPage(url, routeName)
 
 /**
  * Initializes any required data for the Checking Payment page
+ * @param {string} url The url of the current page
+ * @param {string} routeName The route name of the current page
  */
 export const initCheckoutPaymentPage = (url, routeName) => connector.initCheckoutPaymentPage(url, routeName)
 
 /**
  * Initializes any required data for the Checkout Confirmation page
+ * @param {string} url The url of the current page
+ * @param {string} routeName The route name of the current page
  */
 export const initCheckoutConfirmationPage = (url, routeName) => connector.initCheckoutConfirmationPage(url, routeName)
 

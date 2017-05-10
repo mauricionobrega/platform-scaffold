@@ -6,6 +6,8 @@ export const register = (commands) => {
 
 /**
  * Initializes any required data for the Cart page
+ * @param {string} url The url of the current page
+ * @param {string} routeName The route name of the current page
  */
 export const initCartPage = (url, routeName) => connector.initCartPage(url, routeName)
 
