@@ -22,6 +22,7 @@ const ProductDetailsVariations = ({variations, onVariationChange}) => {
                     }}
                 >
                     <select name={id}>
+                        <option disabled value="">{label}</option>
                         {values.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
                     </select>
                 </ReduxForm.Field>

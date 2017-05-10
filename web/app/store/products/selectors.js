@@ -20,7 +20,6 @@ export const getProductVariationCategoryIds = createSelector(
     getProductVariationCategories,
     (categories) => categories.map((category) => category.get('id'))
 )
-
 export const getProductVariants = createGetSelector(getSelectedProduct, 'variants')
 export const getProductInitialValues = createGetSelector(getSelectedProduct, 'initialValues')
 
