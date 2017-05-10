@@ -32,22 +32,6 @@ export const onRouteChanged = createActionWithAnalytics(
     (currentURL, routeName) => ({name: routeName})
 )
 
-/**
- * Action dispatched when content for a global page render is ready.
- *
- * @param {object} $ - a selector library like jQuery
- * @param {object} $response - a jQuery-wrapped DOM object
- * @param {string} url - the URL of the page received
- * @param {string} currentURL - what's currently shown in the address bar
- * @param {string} routeName - the name of the route we received the page for
- */
-export const onPageReceived = createAction('On page received', [
-    '$',
-    '$response',
-    'url',
-    'currentURL',
-    'routeName'
-])
 
 export const setFetchedPage = createAction('Set fetched page', ['url'])
 

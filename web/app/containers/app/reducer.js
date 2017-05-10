@@ -27,11 +27,6 @@ export default handleActions({
     [appActions.onRouteChanged]: (state, {payload: {currentURL}}) => {
         return state.set(CURRENT_URL, currentURL)
     },
-    // Remove this reducer once we've fully converted to the integration manager
-    [appActions.onPageReceived]: (state, {payload: {url}}) => {
-        const path = urlToPathKey(url)
-        return state.setIn([FETCHED_PATHS, path], true)
-    },
     [appActions.setFetchedPage]: (state, {payload: {url}}) => {
         const path = urlToPathKey(url)
         return state.setIn([FETCHED_PATHS, path], true)
