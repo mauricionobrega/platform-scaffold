@@ -9,7 +9,7 @@ import {receiveCheckoutData, receiveShippingMethodInitialValues, receiveCheckout
 import {fetchPageData} from '../app/commands'
 import {getCustomerEntityID} from '../selectors'
 import {getIsLoggedIn} from '../../../containers/app/selectors'
-import {getShippingFormValues, getFormValues, getFormRegisteredFields} from '../../../store/form/selectors'
+import {getFormValues, getFormRegisteredFields} from '../../../store/form/selectors'
 import {receiveEntityID} from '../actions'
 import {removeAllNotifications} from '../../../containers/app/actions'
 import {SHIPPING_FORM_NAME} from '../../../containers/checkout-shipping/constants'
