@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 /* eslint-disable import/namespace */
 /* eslint-disable import/named */
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
@@ -164,6 +168,7 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                     dispatch(checkoutShippingUIActions.process(receivedAction))
                     dispatch(checkoutActions.processCheckoutData(receivedAction))
                     dispatch(checkoutShippingActions.fetchShippingMethodsEstimate(SHIPPING_FORM_NAME))
+                    dispatch(checkoutShippingActions.fetchSavedShippingAddresses())
                 } else if (pageComponent === UnwrappedCart) {
                     dispatch(checkoutActions.processCartCheckoutData(receivedAction))
                 } else if (pageComponent === UnwrappedCheckoutPayment) {

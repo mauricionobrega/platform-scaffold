@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
@@ -14,7 +18,7 @@ import ShippingMethodLabel from './shipping-method-label'
 
 const ShippingMethod = ({shippingMethods}) => {
     return (
-        <div>
+        <div className="t-checkout-shipping__shipping-method">
             <div className="t-checkout-shipping__title u-padding-top-lg u-padding-bottom-md">
                 <h2 className="u-h4 u-text-uppercase">Shipping Method</h2>
             </div>
