@@ -9,7 +9,7 @@
     font-family: $font-family !important;
 }
 
-.u-text-header-family {
+.u-text-family-header {
     font-family: $header-font-family !important;
 
     // Added with webfontloader. See loadFonts() in app/container.js
@@ -18,7 +18,7 @@
     }
 }
 
-.u-text-loaded-family {
+.u-text-family-loaded {
     font-family: $loaded-header-font-family !important;
 }
 
