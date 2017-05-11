@@ -11,7 +11,7 @@ import * as appActions from './actions'
 import {CURRENT_URL, FETCHED_PATHS} from './constants'
 
 export const initialState = fromJS({
-    pageVisitCount: 0,
+    pageVisitCount: 1,
     [CURRENT_URL]: window.location.href,
     notifications: [],
     fetchError: null,
@@ -49,7 +49,10 @@ export default handleActions({
     [appActions.updateSvgSprite]: (state, {payload}) => {
         return state.set('sprite', payload.sprite)
     },
-    [appActions.incrementPageVisitCount]: (state) => {
+    [appActions.onPageVisitIncrement]: (state) => {
         return state.update('pageVisitCount', (count) => ++count)
+    },
+    [appActions.onPageVisitRehydration]: (state, {payload}) => {
+        return state.update('pageVisitCount', (oldCount) => oldCount + payload)
     }
 }, initialState)

@@ -24,6 +24,9 @@ import * as selectors from './selectors'
 
 import NotificationManager from '../../components/notification-manager'
 
+import SoftAsk from '../../components/push-messaging/soft-ask'
+import WebPushConnector from '../../components/push-messaging/web-push-connector'
+
 import {requestIdleCallback} from '../../utils/utils'
 
 // These Unwrapped containers are loadable components. They'll only be
@@ -132,6 +135,8 @@ class App extends React.Component {
                 <SkipLinks items={skipLinksItems} />
 
                 <div id="app-wrap" className="t-app__wrapper u-flexbox u-direction-column">
+                    <WebPushConnector />
+
                     {isRunningInAstro &&
                         <NativeConnector />
                     }
@@ -175,6 +180,7 @@ class App extends React.Component {
                             <Offline reload={reload} location={children.props.location} route={routeProps} />
                     }
                 </div>
+                <SoftAsk showOnPageVisit={3} />
             </div>
         )
     }
