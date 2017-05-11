@@ -5,7 +5,7 @@ import {parseShippingInitialValues, parseLocations, parseShippingMethods, checko
 import {parseCheckoutEntityID, extractMagentoShippingStepData} from '../../../utils/magento-utils'
 import {getCookieValue} from '../../../utils/utils'
 import {getCart} from '../cart/commands'
-import {receiveCheckoutData, receiveShippingMethodInitialValues, receiveCheckoutConfirmationData, receiveHasExistingCard} from './../../checkout/results'
+import {receiveCheckoutData, receiveShippingInitialValues, receiveCheckoutConfirmationData, receiveHasExistingCard} from './../../checkout/results'
 
 import {fetchPageData} from '../app/commands'
 import {getCustomerEntityID} from '../selectors'
@@ -50,7 +50,7 @@ export const fetchShippingMethodsEstimate = (formKey) => (dispatch, getState) =>
                 shipping_method: shippingMethods[0].value
             }
             dispatch(receiveCheckoutData({shipping: {shippingMethods}}))
-            dispatch(receiveShippingMethodInitialValues({initialValues})) // set initial value for method
+            dispatch(receiveShippingInitialValues({initialValues})) // set initial value for method
         })
 }
 

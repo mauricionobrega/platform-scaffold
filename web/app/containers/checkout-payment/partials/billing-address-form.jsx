@@ -193,7 +193,9 @@ BillingAddressForm.propTypes = {
     * Name of saved shipping address
     */
     name: PropTypes.string,
-
+    /**
+    * Whether the new address fields display
+    */
     newShippingAddressIsEnabled: PropTypes.bool,
 
     /**
