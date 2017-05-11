@@ -4,7 +4,6 @@
 
 import React from 'react'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
-import LazyLoadContent from '../../../components/lazy-load-content'
 import Image from 'progressive-web-sdk/dist/components/image'
 
 const social = [
@@ -16,21 +15,16 @@ const social = [
 
 const NavigationSocialIcons = () => {
     return (
-        <div className="t-navigation__social u-padding-md">
-            <div className="u-flexbox u-justify-center u-padding-md">
+        <div className="t-navigation__social">
+            <div className="u-flexbox u-justify-center">
                 {social.map(([url, icon, title]) =>
                     <a href={url} className="t-navigation__social-link" key={url}>
-                        <LazyLoadContent
-                            placeholder={<span className="u-visually-hidden">Image loading</span>}
-                            threshold={100}
-                        >
-                            <Image
-                                src={getAssetUrl(icon)}
-                                alt={title}
-                                height="32px"
-                                width="32px"
-                            />
-                        </LazyLoadContent>
+                        <Image
+                            src={getAssetUrl(icon)}
+                            alt={title}
+                            height="32px"
+                            width="32px"
+                        />
                     </a>
                 )}
             </div>
