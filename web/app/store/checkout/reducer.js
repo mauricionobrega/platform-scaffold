@@ -7,7 +7,7 @@ import * as integrationManagerResults from '../../integration-manager/checkout/r
 const productReducer = handleActions({
     [receiveCheckoutData]: mergePayload,
     [integrationManagerResults.receiveBillingInitialValues]: mergePayload,
-    [integrationManagerResults.receiveShippingMethodInitialValues]: mergePayload,
+    [integrationManagerResults.receiveShippingInitialValues]: mergePayload,
     [integrationManagerResults.receiveCheckoutData]: mergePayload
 }, Immutable.Map())
 

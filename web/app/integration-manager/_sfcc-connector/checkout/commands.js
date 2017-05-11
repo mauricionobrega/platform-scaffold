@@ -1,14 +1,16 @@
 import {SubmissionError} from 'redux-form'
 import {createBasket} from '../cart/utils'
 import {makeSfccRequest} from '../utils'
-import {API_END_POINT_URL} from '../constants'
+import {populateLocationsData} from './utils'
+import {parseShippingAddressFromBasket} from './parsers'
+import {API_END_POINT_URL, PAYMENT_URL} from '../constants'
 import {STATES} from './constants'
-import {receiveCheckoutData, receiveShippingMethodInitialValues} from './../../checkout/results'
+import {receiveCheckoutData, receiveShippingInitialValues, receiveBillingInitialValues} from './../../checkout/results'
 
 export const fetchShippingMethodsEstimate = () => (dispatch) => {
     return createBasket()
-        .then((basketID) => {
-            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basketID}/shipments/me/shipping_methods`, {method: 'GET'})
+        .then((basket) => {
+            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}/shipments/me/shipping_methods`, {method: 'GET'})
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     const shippingMethods = responseJSON.applicable_shipping_methods.map(({name, description, price, id}) => {
@@ -26,8 +28,8 @@ export const fetchShippingMethodsEstimate = () => (dispatch) => {
 
 export const fetchCheckoutShippingData = () => (dispatch) => {
     return createBasket()
-        .then((basketID) => {
-            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basketID}`, {method: 'GET'})
+        .then((basket) => {
+            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}`, {method: 'GET'})
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     const {
@@ -60,7 +62,7 @@ export const fetchCheckoutShippingData = () => (dispatch) => {
                             countryId: 'us'
                         }
                     }
-                    dispatch(receiveShippingMethodInitialValues({initialValues}))
+                    dispatch(receiveShippingInitialValues({initialValues}))
                     /* eslint-enable camelcase */
                     return dispatch(receiveCheckoutData({
                         locations: {
@@ -70,6 +72,21 @@ export const fetchCheckoutShippingData = () => (dispatch) => {
                     }))
                 })
                 .then(() => dispatch(fetchShippingMethodsEstimate()))
+        })
+}
+
+export const fetchCheckoutPaymentData = () => (dispatch) => {
+    dispatch(populateLocationsData())
+    return createBasket()
+        .then((basket) => {
+            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}`, {method: 'GET'})
+                .then((response) => response.json())
+                .then((responseJSON) => {
+                    const addressData = parseShippingAddressFromBasket(responseJSON)
+
+                    dispatch(receiveShippingInitialValues({initialValues: addressData}))
+                    dispatch(receiveBillingInitialValues({initialValues: {...addressData, billing_same_as_shipping: true}}))
+                })
         })
 }
 
@@ -90,7 +107,7 @@ export const submitShipping = (formValues) => (dispatch) => {
         shipping_method
     } = formValues
     return createBasket()
-        .then((basketID) => {
+        .then((basket) => {
             const requestOptions = {
                 method: 'PUT',
                 body: JSON.stringify({
@@ -98,8 +115,8 @@ export const submitShipping = (formValues) => (dispatch) => {
                     customer_name: name
                 })
             }
-            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basketID}/customer`, requestOptions)
-                .then(() => basketID)
+            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}/customer`, requestOptions)
+                .then(() => basket.basket_id)
         })
         .then((basketID) => {
             const requestOptions = {
@@ -129,6 +146,8 @@ export const submitShipping = (formValues) => (dispatch) => {
                     if (responseJSON.fault) {
                         throw new SubmissionError({_error: 'Unable to save shipping data'})
                     }
+
+                    return PAYMENT_URL
                 })
         })
 }
