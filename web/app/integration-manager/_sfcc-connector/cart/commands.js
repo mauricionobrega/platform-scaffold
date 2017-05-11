@@ -1,5 +1,4 @@
 import {makeSfccRequest, getAuthTokenPayload} from '../utils'
-import {receiveCheckoutData} from '../../checkout/results'
 import {populateLocationsData} from '../checkout/utils'
 import {requestCartData, createBasket, handleCartData} from './utils'
 import {API_END_POINT_URL} from '../constants'
