@@ -54,7 +54,12 @@ export const submitShipping = () => (dispatch, getState) => {
         lastname,
         ...formValues
     }
-    dispatch(receiveCheckoutData({shipping: {address}, emailAddress: formValues.username}))
+    const shippingData = {shipping: {address}}
+
+    if (formValues.username) {
+        shippingData.emailAddress = formValues.username
+    }
+    dispatch(receiveCheckoutData(shippingData))
     return dispatch(submitShippingCommand(address))
         .then((paymentURL) => {
             browserHistory.push({

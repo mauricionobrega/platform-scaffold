@@ -8,7 +8,8 @@ const productReducer = handleActions({
     [receiveCheckoutData]: mergePayload,
     [integrationManagerResults.receiveBillingInitialValues]: mergePayload,
     [integrationManagerResults.receiveShippingInitialValues]: mergePayload,
-    [integrationManagerResults.receiveCheckoutData]: mergePayload
+    [integrationManagerResults.receiveCheckoutData]: mergePayload,
+    [integrationManagerResults.receiveUserEmail]: mergePayload
 }, Immutable.Map())
 
 export default productReducer

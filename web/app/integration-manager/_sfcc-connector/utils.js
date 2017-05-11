@@ -40,10 +40,11 @@ export const getAuthTokenPayload = (authToken) => {
     return JSON.parse(window.atob(authToken.split('.')[1]))
 }
 
-export const isUserLoggedIn = (authorization) => {
+
+export const getCustomerData = (authorization) => {
     const {sub} = getAuthTokenPayload(authorization)
     const subData = JSON.parse(sub)
-    return !subData.customer_info.guest
+    return subData.customer_info
 }
 
 export const initSfccSession = (authorization) => {

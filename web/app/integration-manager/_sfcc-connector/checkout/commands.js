@@ -79,7 +79,7 @@ export const fetchCheckoutShippingData = () => (dispatch) => {
 }
 
 // We don't need to fetch any data for this page
-export const fetchCheckoutConfirmationData = () => Promise.resolve()
+export const fetchCheckoutConfirmationData = () => () => Promise.resolve()
 
 export const fetchCheckoutPaymentData = () => (dispatch) => {
     dispatch(populateLocationsData())

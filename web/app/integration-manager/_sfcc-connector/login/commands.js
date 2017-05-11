@@ -19,9 +19,9 @@ export const fetchRegisterData = fetchLoginData
 
 export const navigateToSection = () => (dispatch) => noop()
 
-export const login = ({login}) => (dispatch) => {
+export const login = (username, password) => (dispatch) => {
 
-    const authorizationData = window.btoa(`${login.username}:${login.password}`)
+    const authorizationData = window.btoa(`${username}:${password}`)
     const requestOptions = {
         method: 'POST',
         body: '{type: "credentials"}',
@@ -62,7 +62,7 @@ export const login = ({login}) => (dispatch) => {
         .then(() => makeSfccRequest(`${API_END_POINT_URL}/customers/${customerID}/baskets`), {method: 'GET'})
         .then((response) => response.json())
         .then(({baskets}) => {
-            if (baskets.length) {
+            if (baskets && baskets.length) {
                 const basketID = baskets[0].basket_id
                 storeBasketID(basketID)
                 if (!basketContents.product_items) {
@@ -88,7 +88,7 @@ export const login = ({login}) => (dispatch) => {
         })
 }
 
-export const registerUser = ({firstname, lastname, email, password}) => (dispatch) => {
+export const registerUser = (firstname, lastname, email, password) => (dispatch) => {
     const requestOptions = {
         method: 'POST',
         body: JSON.stringify({
