@@ -1,0 +1,8 @@
+extends:
+  - './node_modules/mobify-code-style/es6/mobify-es6-react-a11y.yml'
+env:
+  node: true
+  jest: true
+rules:
+  # We're using Node 6, so we have to use require statements
+  import/no-commonjs: 'off'

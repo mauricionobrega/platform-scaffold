@@ -1,0 +1,28 @@
+@charset 'UTF-8';
+
+// Components
+// ---
+@import 'components/page/base';
+@import 'components/page/theme';
+
+
+// Containers
+// ---
+@import 'containers/home/home';
+@import 'containers/pdp/pdp';
+@import 'containers/plp/plp';
+
+
+// Body
+// ---
+$bg: #ff0;
+$fg: #f0f;
+
+body {
+  background-color: $bg;
+  color: $fg;
+  font-family: sans-serif;
+  font-size: 30px;
+  font-style: italic;
+  font-weight: bold;
+}
