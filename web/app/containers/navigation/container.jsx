@@ -5,7 +5,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
-import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
 import Nav from 'progressive-web-sdk/dist/components/nav'
 import NavMenu from 'progressive-web-sdk/dist/components/nav-menu'
@@ -21,13 +20,6 @@ import {closeModal} from '../../store/modals/actions'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 import {withRouter} from 'progressive-web-sdk/dist/routing'
 import NavigationSocialIcons from './partials/navigation-social-icons'
-
-const social = [
-    ['http://www.facebook.com/#TODO', 'static/svg/facebook.svg', 'Facebook'],
-    ['http://www.twitter.com/#TODO', 'static/svg/twitter.svg', 'Twitter'],
-    ['http://plus.google.com/#TODO', 'static/svg/googleplus.svg', 'Google+'],
-    ['http://www.youtube.com/#TODO', 'static/svg/youtube.svg', 'Youtube'],
-]
 
 const Navigation = (props) => {
     const {path, isOpen, root, closeNavigation, router, logoutAction} = props
