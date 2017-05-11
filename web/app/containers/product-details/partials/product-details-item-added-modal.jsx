@@ -38,12 +38,12 @@ const ProductDetailsItemAddedModal = ({open, onDismiss, quantity, title, price, 
             {/* Modal product information */}
             <div className="u-flex u-margin-bottom-md">
                 <ProductItem customWidth="20%"
-                    title={<h2 className="u-h5 u-text-family u-text-medium">{title}</h2>}
+                    title={<h2 className="u-h5 u-text-family u-text-weight-medium">{title}</h2>}
                     image={<img role="presentation" src={productImage} alt="" width="60px" />}
                 >
                     <div className="u-flexbox u-justify-between u-padding-top-sm">
                         <p>Qty: {quantity}</p>
-                        <p className="u-text-bold">{price}</p>
+                        <p className="u-text-weight-bold">{price}</p>
                     </div>
                 </ProductItem>
             </div>

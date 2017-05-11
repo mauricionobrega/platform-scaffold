@@ -83,7 +83,7 @@ class CartProductItem extends React.Component {
         return (
             <ProductItem customWidth="40%"
                 className={productItemClassNames}
-                title={<h2 className="u-h5 u-text-family u-text-medium">{product_name}</h2>}
+                title={<h2 className="u-h5 u-text-family u-text-weight-medium">{product_name}</h2>}
                 image={<ProductImage {...product_image} src={imageSrc} />}
                 >
                 <p className="u-color-neutral-50">Color: Maroon</p>
@@ -104,7 +104,7 @@ class CartProductItem extends React.Component {
 
                     <Field>
                         <div className="u-text-align-end u-flex">
-                            <div className="u-h5 u-color-accent u-text-bold">{product_price}</div>
+                            <div className="u-h5 u-color-accent u-text-weight-bold">{product_price}</div>
                             <div className="u-text-quiet"><em>Was $29.99</em></div>
                         </div>
                     </Field>
@@ -166,7 +166,7 @@ const CartProductList = ({items, isLoggedIn, summaryCount, onSaveLater, onUpdate
             <div className="t-cart__product-list-title u-padding-top-md u-padding-bottom-md">
                 <div className="u-flexbox u-align-center">
                     <h1 className="u-flex u-text-uppercase">
-                        Cart {summaryCount > 0 && <span className="u-text-light">({summaryCount} Items)</span>}
+                        Cart {summaryCount > 0 && <span className="u-text-weight-light">({summaryCount} Items)</span>}
                     </h1>
                     {!isLoggedIn &&
                         <Button className="u-flex-none u-color-brand u-text-letter-spacing-normal" onClick={onOpenSignIn}>

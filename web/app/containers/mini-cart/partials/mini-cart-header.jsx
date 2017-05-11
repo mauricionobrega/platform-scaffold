@@ -11,7 +11,7 @@ const MiniCartHeader = ({closeMiniCart}) => (
     <HeaderBar>
         <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
             <h2 className="u-text-family-header u-text-uppercase">
-                <span className="u-text-extra-light">Shopping</span> Cart
+                <span className="u-text-weight-extra-light">Shopping</span> Cart
             </h2>
         </HeaderBarTitle>
 

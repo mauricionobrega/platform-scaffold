@@ -49,7 +49,7 @@ $field__disabled-select-triangle: 'data:image/svg+xml;utf8,<svg xmlns="http://ww
     width: 100%;
     margin-bottom: $unit;
 
-    font-weight: $font-weight-semi-bold;
+    font-weight: $semi-bold-font-weight;
     font-size: $font-size;
     line-height: 1em;
 }
@@ -140,7 +140,7 @@ $field__disabled-select-triangle: 'data:image/svg+xml;utf8,<svg xmlns="http://ww
     &.pw--checked {
         .c-field__label,
         .pw-field__label {
-            font-weight: $font-weight-semi-bold;
+            font-weight: $semi-bold-font-weight;
         }
     }
 }

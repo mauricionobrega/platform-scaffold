@@ -31,7 +31,7 @@
 .pw-ledger__value {
     padding: 0; // 1
 
-    font-weight: $font-weight-semi-bold;
+    font-weight: $semi-bold-font-weight;
     font-size: $medium-font-size;
 }
 
@@ -54,7 +54,7 @@
 .pw-ledger__row.pw--total {
     justify-content: center;
 
-    font-weight: $font-weight-semi-bold;
+    font-weight: $semi-bold-font-weight;
 
     &,
     .pw-ledger__value {

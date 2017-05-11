@@ -28,7 +28,7 @@ import * as AstroIntegration from '../../utils/astro-integration'
 const LoginTitle = ({title}) => {
     if (title) {
         return (
-            <h1 className="u-text-uppercase u-text-regular">
+            <h1 className="u-text-uppercase u-text-weight-regular">
                 {title}
             </h1>
         )

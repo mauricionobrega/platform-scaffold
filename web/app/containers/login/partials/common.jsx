@@ -17,7 +17,7 @@ import Sheet from 'progressive-web-sdk/dist/components/sheet'
 export const PanelHeading = ({heading}) => {
     if (heading) {
         return (
-            <h3 className="u-margin-bottom u-color-brand u-text-family u-text-regular">
+            <h3 className="u-margin-bottom u-color-brand u-text-family u-text-weight-regular">
                 {heading}
             </h3>
         )
@@ -114,7 +114,7 @@ export const LoginFieldLabel = ({label, type, forgotPassword}) => (
         {label}
 
         {type === 'password' && forgotPassword &&
-            <Link className="u-float-end u-text-regular" href={forgotPassword.href}>
+            <Link className="u-float-end u-text-weight-regular" href={forgotPassword.href}>
                 {forgotPassword.title}
             </Link>
         }

@@ -19,7 +19,7 @@ const titleClassName = classNames(
     'c-product-tile__name',
     'u-h4',
     'u-text-family',
-    'u-text-medium',
+    'u-text-weight-medium',
     'u-color-neutral-60'
 )
 
@@ -36,7 +36,7 @@ const ProductTile = ({className, image, link, price}) => {
         ? <h2 className={titleClassName}>{link.text}</h2>
         : <SkeletonBlock height="34px" />
     const priceElement = price
-        ? <span className="u-text-bold u-color-error">{price}</span>
+        ? <span className="u-text-weight-bold u-color-error">{price}</span>
         : <SkeletonBlock height="22px" width="50px" />
 
     return (

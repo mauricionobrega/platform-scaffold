@@ -42,8 +42,8 @@ const CheckoutConfirmationSplash = (props) => {
                     {...GRID_SETTINGS}
                 >
                     <div className="t-checkout-confirmation__thanks u-padding-bottom-lg">
-                        <h1 className="u-margin-bottom-md u-text-extra-light u-text-uppercase">
-                            <span className="u-text-regular">Thanks,</span> order confirmed
+                        <h1 className="u-margin-bottom-md u-text-weight-extra-light u-text-uppercase">
+                            <span className="u-text-weight-regular">Thanks,</span> order confirmed
                         </h1>
 
                         <div className="u-text-content">

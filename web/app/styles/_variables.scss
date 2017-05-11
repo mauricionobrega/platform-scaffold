@@ -73,8 +73,8 @@ $desktop-breakpoint: (
 // [CCC] Typography
 // ---
 $font-family: 'San Francisco', 'Roboto', 'Fira Sans', 'Segoe UI', sans-serif;
-$header-font-family: 'Avenir Next Condensed', 'Roboto Condensed', 'Helvetica Neue', 'Roboto', sans-serif;
-$loaded-header-font-family: 'Oswald', $header-font-family;
+$font-family-header: 'Avenir Next Condensed', 'Roboto Condensed', 'Helvetica Neue', 'Roboto', sans-serif;
+$font-family-loaded-header: 'Oswald', $font-family-header;
 
 // Line height
 $huge-line-height: 32px;
@@ -95,13 +95,13 @@ $small-font-size: 12px;
 $smaller-font-size: 8px;
 
 // Font weight
-$font-weight-thin: 100;
-$font-weight-extra-light: 200;
-$font-weight-light: 300;
-$font-weight-regular: 400;
-$font-weight-medium: 500;
-$font-weight-semi-bold: 600;
-$font-weight-bold: 700;
+$thin-font-weight: 100;
+$extra-light-font-weight: 200;
+$light-font-weight: 300;
+$regular-font-weight: 400;
+$medium-font-weight: 500;
+$semi-bold-font-weight: 600;
+$bold-font-weight: 700;
 
 
 // [DDD] Color Palette

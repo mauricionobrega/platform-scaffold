@@ -33,7 +33,7 @@ const ProductDetailsHeading = ({breadcrumbs, title, price, isInCheckout}) => (
         }
 
         {price ?
-            <span className="t-product-details-heading__price t-product-details__price u-color-accent u-text-regular u-text-family-header u-text-letter-spacing-small">{price}</span>
+            <span className="t-product-details-heading__price t-product-details__price u-color-accent u-text-weight-regular u-text-family-header u-text-letter-spacing-small">{price}</span>
         :
             <SkeletonBlock width="25%" height="32px" />
         }

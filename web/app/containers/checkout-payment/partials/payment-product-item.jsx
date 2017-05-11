@@ -57,7 +57,7 @@ const PaymentProductItem = ({
                 <div className="u-text-align-end u-flex">
                     {onSale ?
                         <div>
-                            <div className="u-h5 u-color-accent u-text-medium">
+                            <div className="u-h5 u-color-accent u-text-weight-medium">
                                 {product_sale_price}
                             </div>
 
@@ -66,7 +66,7 @@ const PaymentProductItem = ({
                             </div>
                         </div>
                     :
-                        <div className="u-h5 u-text-medium">
+                        <div className="u-h5 u-text-weight-medium">
                             {product_price}
                         </div>
                     }

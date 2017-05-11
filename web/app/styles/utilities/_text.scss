@@ -10,51 +10,51 @@
 }
 
 .u-text-family-header {
-    font-family: $header-font-family !important;
+    font-family: $font-family-header !important;
 
     // Added with webfontloader. See loadFonts() in app/container.js
     .wf-active & {
-        font-family: $loaded-header-font-family !important; // TODO: Remove !important
+        font-family: $font-family-loaded-header !important; // TODO: Remove !important
     }
 }
 
 .u-text-family-loaded {
-    font-family: $loaded-header-font-family !important;
+    font-family: $font-family-loaded-header !important;
 }
 
 
 // Weights & Style
 // ---
 
-.u-text-thin {
-    font-weight: $font-weight-thin !important;
+.u-text-weight-thin {
+    font-weight: $thin-font-weight !important;
 }
 
-.u-text-extra-light {
-    font-weight: $font-weight-extra-light !important;
+.u-text-weight-extra-light {
+    font-weight: $extra-light-font-weight !important;
 }
 
-.u-text-light {
-    font-weight: $font-weight-light !important;
+.u-text-weight-light {
+    font-weight: $light-font-weight !important;
 }
 
-.u-text-regular {
-    font-weight: $font-weight-regular !important;
+.u-text-weight-regular {
+    font-weight: $regular-font-weight !important;
 }
 
-.u-text-medium {
-    font-weight: $font-weight-medium !important;
+.u-text-weight-medium {
+    font-weight: $medium-font-weight !important;
 }
 
-.u-text-semi-bold {
-    font-weight: $font-weight-semi-bold !important;
+.u-text-weight-semi-bold {
+    font-weight: $semi-bold-font-weight !important;
 }
 
-.u-text-bold {
-    font-weight: $font-weight-bold !important;
+.u-text-weight-bold {
+    font-weight: $bold-font-weight !important;
 }
 
-.u-text-italic {
+.u-text-style-italic {
     font-style: italic !important;
 }
 

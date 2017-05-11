@@ -83,7 +83,7 @@ class BillingAddressForm extends React.Component {
                             <ReduxForm.Field
                                 component={Field}
                                 name="billing_same_as_shipping"
-                                label={<strong className="u-text-medium">Same as shipping address</strong>}
+                                label={<strong className="u-text-weight-medium">Same as shipping address</strong>}
                                 caption={shippingAddress}
                             >
                                 <input type="checkbox" defaultChecked={!newShippingAddressIsEnabled} onChange={this.handleSavedAddress} noValidate />
