@@ -8,7 +8,7 @@ import {
 } from '../../integration-manager/checkout/commands'
 import {login} from '../../integration-manager/login/commands'
 import {getShippingFormValues} from '../../store/form/selectors'
-import {addNotification, removeNotification} from '../app/actions'
+import {addNotification, removeNotification} from 'progressive-web-sdk/dist/store/notifications/actions'
 
 export const showCompanyAndApt = createAction('Showing the "Company" and "Apt #" fields')
 export const setCustomerEmailRecognized = createAction('Set Customer email Recognized', ['customerEmailRecognized'])

@@ -12,6 +12,7 @@ import {initApp} from '../../integration-manager/app/commands'
 import {hidePreloader} from 'progressive-web-sdk/dist/preloader'
 import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
 import SkipLinks from 'progressive-web-sdk/dist/components/skip-links'
+import {removeNotification} from 'progressive-web-sdk/dist/store/notifications/actions'
 import Header from '../../containers/header/container'
 import Footer from '../../containers/footer/container'
 import MiniCart from '../../containers/mini-cart/container'
@@ -177,8 +178,8 @@ const mapStateToProps = createPropsSelector({
 })
 
 const mapDispatchToProps = {
-    removeNotification: appActions.removeNotification,
-    fetchSvgSprite: () => appActions.fetchSvgSprite(),
+    removeNotification,
+    fetchSvgSprite: appActions.fetchSvgSprite,
     fetchPage: (fetchAction, url, routeName) => fetchAction(url, routeName),
     initApp
 }

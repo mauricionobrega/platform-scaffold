@@ -12,11 +12,8 @@ import {logout} from '../../integration-manager/login/commands'
 
 import {OFFLINE_ASSET_URL} from './constants'
 import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
+import {addNotification} from 'progressive-web-sdk/dist/store/notifications/actions'
 import {OFFLINE_MODAL} from '../offline/constants'
-
-export const addNotification = createAction('Add Notification')
-export const removeNotification = createAction('Remove Notification')
-export const removeAllNotifications = createAction('Remove All Notifications')
 
 export const updateSvgSprite = createAction('Updated SVG sprite', ['sprite'])
 

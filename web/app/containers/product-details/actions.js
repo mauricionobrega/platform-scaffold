@@ -10,7 +10,7 @@ import {getSelectedProductId, getProductVariants, getProductVariationCategories,
 import {addToCart} from '../../integration-manager/cart/commands'
 import {getProductVariantData} from '../../integration-manager/products/commands'
 import {openModal, closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
-import {addNotification} from '../app/actions'
+import {addNotification} from 'progressive-web-sdk/dist/store/notifications/actions'
 import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from './constants'
 
 import {isRunningInAstro, trigger} from '../../utils/astro-integration'

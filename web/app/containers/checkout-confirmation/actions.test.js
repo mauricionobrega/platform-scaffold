@@ -7,9 +7,8 @@ jest.mock('../../integration-manager/checkout/commands')
 import {updatingShippingAndBilling} from '../../integration-manager/checkout/commands'
 jest.mock('../../integration-manager/login/commands')
 import {registerUser} from '../../integration-manager/login/commands'
-jest.mock('../app/actions')
-import {addNotification} from '../app/actions'
-
+jest.mock('progressive-web-sdk/dist/store/notifications/actions')
+import {addNotification} from 'progressive-web-sdk/dist/store/notifications/actions'
 
 
 describe('submitRegisterForm', () => {

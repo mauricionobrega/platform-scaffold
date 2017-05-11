@@ -9,7 +9,7 @@ import {
     CART_WISHLIST_MODAL
 } from './constants'
 import {removeFromCart, updateItemQuantity, addToWishlist, fetchTaxEstimate} from '../../integration-manager/cart/commands'
-import {addNotification} from '../app/actions'
+import {addNotification} from 'progressive-web-sdk/dist/store/notifications/actions'
 import {getIsLoggedIn} from '../app/selectors'
 import {trigger} from '../../utils/astro-integration'
 import {getFormValues, getFormRegisteredFields} from '../../store/form/selectors'

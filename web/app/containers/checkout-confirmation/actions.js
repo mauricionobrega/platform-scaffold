@@ -1,6 +1,6 @@
 import {CHECKOUT_CONFIRMATION_MODAL, CHECKOUT_CONFIRMATION_REGISTRATION_FAILED} from './constants'
 import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
-import {addNotification, removeAllNotifications} from '../app/actions'
+import {addNotification, removeAllNotifications} from 'progressive-web-sdk/dist/store/notifications/actions'
 import {openModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import * as shippingSelectors from '../../store/checkout/shipping/selectors'
 import * as formSelectors from '../../store/form/selectors'
