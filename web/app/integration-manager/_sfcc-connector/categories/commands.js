@@ -36,7 +36,6 @@ export const fetchProductListData = (url) => (dispatch) => {
     const categoryIDMatch = /\/([^/]+)$/.exec(url)
     const categoryID = categoryIDMatch ? categoryIDMatch[1] : ''
 
-
     return dispatch(fetchCategoryInfo(categoryID))
         .then(() => makeSfccRequest(makeCategorySearchURL(categoryID), {method: 'GET'}))
         .then((response) => response.json())
