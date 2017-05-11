@@ -1,10 +1,13 @@
 import {SubmissionError} from 'redux-form'
-import {createBasket} from '../cart/utils'
-import {makeSfccRequest} from '../utils'
-import {populateLocationsData} from './utils'
+import {createBasket, handleCartData} from '../cart/utils'
+import {makeSfccRequest, getAuthToken, getAuthTokenPayload} from '../utils'
+import {getOrderTotal} from '../../../store/cart/selectors'
+import {populateLocationsData, createOrderAddressObject} from './utils'
 import {parseShippingAddressFromBasket} from './parsers'
-import {API_END_POINT_URL, PAYMENT_URL} from '../constants'
+import {API_END_POINT_URL, PAYMENT_URL, SITE_ID} from '../constants'
 import {STATES} from './constants'
+import {receiveOrderConfirmationContents} from '../../results'
+import {getCardData} from 'progressive-web-sdk/dist/card-utils'
 import {receiveCheckoutData, receiveShippingInitialValues, receiveBillingInitialValues} from './../../checkout/results'
 
 export const fetchShippingMethodsEstimate = () => (dispatch) => {
@@ -93,26 +96,20 @@ export const fetchCheckoutPaymentData = () => (dispatch) => {
 export const submitShipping = (formValues) => (dispatch) => {
     const {
         name,
-        firstname,
-        lastname,
         username,
-        company,
-        addressLine1,
-        addressLine2,
-        countryId,
-        city,
-        regionId,
-        postcode,
-        telephone,
         shipping_method
     } = formValues
+    const orderAddress = createOrderAddressObject(formValues)
     return createBasket()
         .then((basket) => {
+            const authToken = getAuthTokenPayload(getAuthToken())
+            const customerID = JSON.parse(authToken.sub).customer_info.customer_id
             const requestOptions = {
                 method: 'PUT',
                 body: JSON.stringify({
                     email: username,
-                    customer_name: name
+                    customer_name: name,
+                    customer_id: customerID
                 })
             }
             return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}/customer`, requestOptions)
@@ -120,37 +117,131 @@ export const submitShipping = (formValues) => (dispatch) => {
         })
         .then((basketID) => {
             const requestOptions = {
-                method: 'PATCH',
-                body: JSON.stringify({
-                    shipping_address: {
-                        address1: addressLine1,
-                        address2: addressLine2,
-                        city,
-                        country_code: countryId,
-                        first_name: firstname,
-                        last_name: lastname,
-                        full_name: name,
-                        phone: telephone,
-                        postal_code: postcode,
-                        state_code: regionId,
-                        company_name: company
-                    },
-                    shipping_method: {
-                        id: shipping_method
-                    }
-                })
+                method: 'PUT',
+                body: JSON.stringify(orderAddress)
             }
-            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basketID}/shipments/me`, requestOptions)
+            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basketID}/shipments/me/shipping_address?use_as_billing=true`, requestOptions)
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     if (responseJSON.fault) {
                         throw new SubmissionError({_error: 'Unable to save shipping data'})
                     }
+                })
+                .then(() => {
+                    const shippingMethodRequestOptions = {
+                        method: 'PUT',
+                        body: JSON.stringify({id: shipping_method})
+                    }
+                    return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basketID}/shipments/me/shipping_method`, shippingMethodRequestOptions)
+                        .then((response) => response.json())
+                        .then((responseJSON) => {
+                            if (responseJSON.fault) {
+                                throw new SubmissionError({_error: 'Unable to save shipping data'})
+                            }
+                            dispatch(handleCartData(responseJSON))
 
-                    return PAYMENT_URL
+                            return PAYMENT_URL
+                        })
                 })
         })
 }
+
+export const submitPayment = (formValues) => (dispatch, getState) => {
+    return createBasket()
+        .then((basket) => {
+            const orderTotal = getOrderTotal(getState())
+            const type = getCardData(formValues.ccnumber).cardType
+            const requestOptions = {
+                method: 'POST',
+                body: JSON.stringify({
+                    amount: parseInt(orderTotal.replace('$', '')),
+                    payment_method_id: 'CREDIT_CARD',
+                    payment_card: {
+                        card_type: type
+                    }
+                })
+            }
+            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}/payment_instruments`, requestOptions)
+                .then((response) => response.json())
+                .then((responseJSON) => {
+                    if (responseJSON.fault) {
+                        throw new Error(responseJSON.fault.message)
+                    }
+                    return responseJSON
+                })
+        })
+        .then((basket) => {
+            if (!formValues.billing_same_as_shipping) {
+                // set billing address
+                const billingAddress = createOrderAddressObject(formValues)
+                const requestOptions = {
+                    method: 'PUT',
+                    body: JSON.stringify(billingAddress)
+                }
+                return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}/billing_address?use_as_shipping=false`, requestOptions)
+                    .then((response) => response.json())
+                    .then((responseJSON) => {
+                        if (responseJSON.fault) {
+                            throw new Error(responseJSON.fault.message)
+                        }
+                        return responseJSON
+                    })
+            }
+            return basket
+        })
+        .then((basket) => {
+            // place order
+            const requestOptions = {
+                method: 'POST',
+                body: JSON.stringify(basket)
+            }
+            return makeSfccRequest(`${API_END_POINT_URL}/orders`, requestOptions)
+                .then((response) => response.json())
+                .then((responseJSON) => {
+                    if (responseJSON.fault) {
+                        throw new Error(responseJSON.fault.message)
+                    }
+                    return responseJSON
+                })
+                .then((orderData) => {
+                    // set payment method
+                    // const orderTotal = getOrderTotal(getState())
+                    const type = getCardData(formValues.ccnumber).cardType
+                    const expiryMonth = /^\d\d/.exec(formValues.ccexpiry)[0]
+                    const expiryYear = /\d\d$/.exec(formValues.ccexpiry)[0]
+                    const paymentInstrumentID = orderData.payment_instruments[0].payment_instrument_id
+                    const requestOptions = {
+                        method: 'PATCH',
+                        body: JSON.stringify({
+                            payment_card: {
+                                card_type: type,
+                                expiration_month: parseInt(expiryMonth),
+                                expiration_year: 2000 + parseInt(expiryYear),
+                                holder: formValues.ccname,
+                                number: formValues.ccnumber,
+                                security_code: formValues.cvv
+                            },
+                            payment_method_id: 'CREDIT_CARD'
+                        })
+                    }
+                    return makeSfccRequest(`${API_END_POINT_URL}/orders/${orderData.order_no}/payment_instruments/${paymentInstrumentID}`, requestOptions)
+                        .then((response) => response.json())
+                        .then((responseJSON) => {
+                            if (responseJSON.fault) {
+                                throw new Error(responseJSON.fault.message)
+                            }
+                            return responseJSON
+                        })
+                })
+                .then((responseJSON) => {
+                    dispatch(receiveOrderConfirmationContents({
+                        orderNumber: responseJSON.order_no
+                    }))
+                    return `/on/demandware.store/${SITE_ID}/default/COSummary-Submit`
+                })
+        })
+}
+
 
 // We're not currently checking the customer's email on the sfcc site
 // Return true to prevent the welcome banner from showing
