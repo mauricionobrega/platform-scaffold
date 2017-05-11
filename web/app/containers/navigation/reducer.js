@@ -10,14 +10,19 @@ export const initialState = Immutable.fromJS({
     root: {},
 })
 
+const ACCOUNT_TITLE_PATH = ['root', 'children', 0, 'title']
 
 export const reducer = handleActions({
     [receiveNavigationData]: mergePayload,
     [receiveData]: mergePayload,
     [setNavigationPath]: mergePayload,
     [setLoggedIn]: (state, {payload: {isLoggedIn}}) => {
+        // Don't try to replace stuff if it's empty
+        if (!state.hasIn(ACCOUNT_TITLE_PATH)) {
+            return state
+        }
         return state.setIn(
-            ['root', 'children', 0, 'title'],
+            ACCOUNT_TITLE_PATH,
             isLoggedIn ? ACCOUNT_LINK_TEXT : SIGN_IN_LINK_TEXT
         )
     }
