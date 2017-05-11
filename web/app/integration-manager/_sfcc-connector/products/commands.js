@@ -2,7 +2,7 @@ import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../
 import {setCurrentURL} from '../../results'
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 import {makeSfccRequest} from '../utils'
-import {parseProductDetails, getCurrentProductID, getProductHref} from '../parsers'
+import {parseProductDetails, getCurrentProductID, getProductHref, getInitialSelectedVariant} from '../parsers'
 import {API_END_POINT_URL} from '../constants'
 
 export const fetchPdpData = (url) => (dispatch) => {
