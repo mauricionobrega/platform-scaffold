@@ -19,6 +19,7 @@ import Navigation from '../../containers/navigation/container'
 import NativeConnector from '../native-connector/container'
 import * as appActions from '../app/actions'
 import * as selectors from './selectors'
+import {getNotifications} from '../../store/selectors'
 
 import NotificationManager from '../../components/notification-manager'
 
@@ -169,7 +170,7 @@ App.propTypes = {
 }
 
 const mapStateToProps = createPropsSelector({
-    notifications: selectors.getNotifications,
+    notifications: getNotifications,
     fetchError: selectors.getFetchError,
     hasFetchedCurrentPath: selectors.hasFetchedCurrentPath,
     sprite: selectors.getSvgSprite
