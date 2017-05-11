@@ -4,9 +4,9 @@ import {splitFullName} from '../../utils/utils'
 import {receiveCheckoutData} from '../../store/checkout/actions'
 import {
     submitShipping as submitShippingCommand,
-    checkCustomerEmail as checkCustomerEmailCommand,
-    checkoutSignIn
+    checkCustomerEmail as checkCustomerEmailCommand
 } from '../../integration-manager/checkout/commands'
+import {login} from '../../integration-manager/login/commands'
 import {getShippingFormValues} from '../../store/form/selectors'
 import {addNotification, removeNotification} from '../app/actions'
 
@@ -37,9 +37,12 @@ export const onShippingLoginError = (errorMessage) =>
     })
 
 export const submitSignIn = () => (dispatch, getState) => {
-    const formValues = getShippingFormValues(getState())
+    const {
+        username,
+        password
+    } = getShippingFormValues(getState())
     dispatch(removeNotification('shippingEmailError'))
-    return dispatch(checkoutSignIn(formValues))
+    return dispatch(login(username, password, 'on'))
         .catch((error) => dispatch(onShippingLoginError(error.message)))
 }
 

@@ -9,22 +9,25 @@ import isReactRoute from 'progressive-web-sdk/dist/routing/is-react-route'
 
 const validateSignInForm = (formValues) => {
     const errors = {
-        login: {}
     }
-    if (!formValues.login) {
+    if (!formValues) {
         return {
             _error: 'Please fill in the form'
         }
     }
-    const email = formValues.login.username
-    if (!email) {
-        errors.login.username = 'Email address is required'
-    } else if (!isEmail(email)) {
-        errors.login.username = 'Email address is invalid'
+
+    const {
+        username,
+        password
+    } = formValues
+
+    if (!username) {
+        errors.username = 'Email address is required'
+    } else if (!isEmail(username)) {
+        errors.username = 'Email address is invalid'
     }
-    const password = formValues.login.password
     if (!password) {
-        errors.login.password = 'Password is required'
+        errors.password = 'Password is required'
     }
     return errors
 }
@@ -90,11 +93,17 @@ const handleLoginSuccess = (href) => {
 
 export const submitSignInForm = (formValues) => (dispatch) => {
     const errors = validateSignInForm(formValues)
-    if (errors._error || Object.keys(errors.login).length) {
+    if (errors._error || Object.keys(errors).length) {
         return Promise.reject(new SubmissionError(errors))
     }
 
-    return dispatch(login(formValues))
+    const {
+        username,
+        password,
+        persistent_remember_me
+    } = formValues
+
+    return dispatch(login(username, password, persistent_remember_me))
         .then(handleLoginSuccess)
 }
 
@@ -104,6 +113,14 @@ export const submitRegisterForm = (formValues) => (dispatch) => {
         return Promise.reject(new SubmissionError(errors))
     }
 
-    return dispatch(registerUser(formValues))
+    const {
+        firstname,
+        lastname,
+        email,
+        password,
+        password_confirmation
+    } = formValues
+
+    return dispatch(registerUser(firstname, lastname, email, password, password_confirmation))
         .then(handleLoginSuccess)
 }

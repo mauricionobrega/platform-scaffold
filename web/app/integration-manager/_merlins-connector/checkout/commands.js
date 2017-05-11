@@ -6,7 +6,6 @@ import {createPropsSelector} from 'reselect-immutable-helpers'
 import {parseShippingInitialValues, parseLocations, parseShippingMethods, checkoutConfirmationParser} from './parsers'
 import {parseCheckoutEntityID, extractMagentoShippingStepData} from '../../../utils/magento-utils'
 import {getCookieValue} from '../../../utils/utils'
-import {submitForm} from '../utils'
 import {getCart} from '../cart/commands'
 import {receiveShippingMethods, receiveShippingMethodInitialValues, receiveCheckoutConfirmationData, receiveCheckoutLocations, storeBillingAddress} from './../../checkout/results'
 import {fetchPageData} from '../app/commands'
@@ -17,7 +16,6 @@ import {receiveEntityID} from '../actions'
 import {SHIPPING_FORM_NAME} from '../../../containers/checkout-shipping/constants'
 import * as paymentSelectors from '../../../store/checkout/payment/selectors'
 import * as shippingSelectors from '../../../store/checkout/shipping/selectors'
-import {CREATE_ACCOUNT_POST_URL} from '../constants'
 
 const getCartBaseUrl = createSelector(
     getCustomerEntityID,
@@ -164,33 +162,6 @@ const jqueryAjaxWrapper = (options) => {
         })
     })
 }
-
-export const checkoutSignIn = ({username, password}) => (dispatch) => (
-    jqueryAjaxWrapper({
-        url: '/customer/ajax/login',
-        data: JSON.stringify({username, password, context: 'checkout'}),
-        method: 'POST',
-    })
-        .then((responseData) => {
-            if (responseData.errors) {
-                throw new Error(responseData.message)
-            }
-            // Refetch the page now that the user is logged in
-            return dispatch(fetchCheckoutShippingData(window.location.href))
-        })
-)
-
-export const checkoutRegister = (userCredentials) => (
-    submitForm(CREATE_ACCOUNT_POST_URL, userCredentials, {method: 'POST'})
-        .then((response) => {
-            const responseUrlHas = (chunk) => response.url.search(chunk) >= 0
-            const redirectUrlIsNotToCreate = responseUrlHas('/account/') && !responseUrlHas('/create/')
-
-            if (!redirectUrlIsNotToCreate) {
-                throw new SubmissionError('Could not complete registration. The email you provided may already be in use.')
-            }
-        })
-)
 
 const paymentSubmissionSelector = createPropsSelector({
     cartBaseUrl: getCartBaseUrl,
