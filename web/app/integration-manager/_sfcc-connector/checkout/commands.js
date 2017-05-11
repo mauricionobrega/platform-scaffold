@@ -205,7 +205,6 @@ export const submitPayment = (formValues) => (dispatch, getState) => {
                 })
                 .then((orderData) => {
                     // set payment method
-                    // const orderTotal = getOrderTotal(getState())
                     const type = getCardData(formValues.ccnumber).cardType
                     const expiryMonth = /^\d\d/.exec(formValues.ccexpiry)[0]
                     const expiryYear = /\d\d$/.exec(formValues.ccexpiry)[0]
