@@ -21,8 +21,6 @@ export const fetchNavigationData = () => (dispatch) => {
                     type: 'AccountNavItem'
                 }
 
-            console.log('Account node:', accountNode)
-
             return dispatch(receiveNavigationData({
                 path: '/',
                 root: {
