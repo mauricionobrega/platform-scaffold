@@ -57,7 +57,13 @@ export const checkoutRegister = (...args) => connector.checkoutRegister(...args)
  * Checks to see if a given email is available for registration.
  * Connectors my choose to not implement this in which case they can simply
  * return `new Promise(true)` (which means the email is available and not in use)
+ *
+ * Note: the result is returned directly rather than being updated in the state
+ *
  * @param {string} email The email to check
  * @return {boolean} `true` if the email is available, `false` if the email is associated with an existing account
+ * @example
+ * dispatch(isEmailAvailable('somebody@example.com'))
+ *     .then((isAvailable) => ...)
  */
 export const isEmailAvailable = (email) => connector.isEmailAvailable(email)
