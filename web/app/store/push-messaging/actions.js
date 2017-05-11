@@ -3,8 +3,9 @@ import {createAction} from '../../utils/utils'
 const clientPromise = window.Progressive.MessagingClientInitPromise
 
 // TODO - Check for existence of client before calling
-export const subscribe = (channel = null) => (dispatch) => {
-    window.Progressive.MessagingClient.subscribe({[channel]: true})
+export const subscribe = (channels) => (dispatch) => {
+    channels = channels || {default: true}
+    return window.Progressive.MessagingClient.subscribe(channels)
 }
 
 // TODO - wrapper module that lives somewhere else than here?

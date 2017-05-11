@@ -35,7 +35,7 @@ class WebPushConnector extends React.Component {
     }
 
     render() {
-        return <noscript />
+        return null
     }
 }
 

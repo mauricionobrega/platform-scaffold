@@ -8,6 +8,7 @@ import Button from 'progressive-web-sdk/dist/components/button'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
 import * as messagingActions from '../../store/push-messaging/actions'
+import * as messagingSelectors from '../../store/push-messaging/selectors'
 import * as appSelectors from '../../containers/app/selectors'
 
 const DEFAULT_PAGE_VISITS = 5
@@ -30,7 +31,11 @@ class SoftAsk extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (!this.state.isDismissed && (nextProps.pageVisitCount >= (this.props.showOnPageVisit || DEFAULT_PAGE_VISITS))) {
+        if (
+            !this.state.isDismissed &&
+            nextProps.canShowSoftAsk &&
+            nextProps.pageVisitCount >= (this.props.showOnPageVisit || DEFAULT_PAGE_VISITS)
+        ) {
             this.setState({
                 isShown: true
             })
@@ -50,6 +55,9 @@ class SoftAsk extends React.Component {
 
     onAccept() {
         this.props.subscribe()
+        this.setState({
+            isShown: false
+        })
     }
 
     render() {
@@ -112,7 +120,8 @@ SoftAsk.propTypes = {
 }
 
 const mapStateToProps = createPropsSelector({
-    pageVisitCount: appSelectors.getPageVisitCount
+    pageVisitCount: appSelectors.getPageVisitCount,
+    canShowSoftAsk: messagingSelectors.canShowSoftAsk
 })
 
 const mapDispatchToProps = {
