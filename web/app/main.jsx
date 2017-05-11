@@ -29,7 +29,7 @@ import {clientAnalytics} from './utils/analytics/client-analytics'
 import {pushMessaging} from './utils/push-messaging/push-messaging-distributor'
 
 // import connector from './integration-manager/_merlins-connector'
-import connector from './integration-manager/_demandware-connector'
+import connector from './integration-manager/_sfcc-connector'
 
 import {registerConnector} from './integration-manager'
 
