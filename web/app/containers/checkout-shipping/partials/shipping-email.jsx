@@ -65,13 +65,13 @@ const ShippingEmail = ({submitSignIn, customerEmailRecognized, isEmailAvailable}
 
 ShippingEmail.propTypes = {
     /**
-    * Checks if the users email address has an account associated with it
-    */
-    isEmailAvailable: React.PropTypes.func,
-    /**
     * True if the users email address has an account associated with it
     */
     customerEmailRecognized: React.PropTypes.bool,
+    /**
+    * Checks if the users email address has an account associated with it
+    */
+    isEmailAvailable: React.PropTypes.func,
     /**
     * Submits the sign in form data
     */

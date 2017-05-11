@@ -1,9 +1,10 @@
+import {SubmissionError} from 'redux-form'
+import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {setRegisterLoaded, setSigninLoaded} from '../../login/results'
 import {setLoggedIn} from '../../results'
 import {initDemandwareSession, deleteAuthToken, storeAuthToken, makeDemandwareRequest, deleteBasketID, storeBasketID} from '../utils'
 import {requestCartData, createBasket, handleCartData} from '../cart/utils'
-import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
-import {SubmissionError} from 'redux-form'
+import {fetchNavigationData} from '../app/commands'
 
 import {API_END_POINT_URL, REQUEST_HEADERS} from '../constants'
 
@@ -78,7 +79,6 @@ export const login = (username, password) => (dispatch) => {
                     .then((response) => response.json())
             }
             return createBasket(basketContents)
-
         })
         .then((responseJSON) => dispatch(handleCartData(responseJSON)))
         .then(() => {
@@ -105,7 +105,9 @@ export const logout = () => (dispatch) => {
             deleteAuthToken()
             dispatch(setLoggedIn(false))
 
-            return Promise.resolve()
+            // This isn't great, but it's the only _simple_ way to refresh the
+            // navigation menu to show the Account status correctly.
+            return dispatch(fetchNavigationData())
         })
 }
 

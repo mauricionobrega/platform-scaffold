@@ -3,24 +3,33 @@ import {receiveNavigationData, setLoggedIn, setCheckoutShippingURL, setCartURL} 
 import {getCart} from '../cart/commands'
 import {parseCategories} from '../parsers'
 
-import {API_END_POINT_URL, SIGN_IN_URL, CHECKOUT_SHIPPING_URL, CART_URL} from '../constants'
+import {API_END_POINT_URL, SIGN_IN_URL, SIGN_OUT_URL, CHECKOUT_SHIPPING_URL, CART_URL} from '../constants'
 
 export const fetchNavigationData = () => (dispatch) => {
     return utils.makeDemandwareUnAuthenticatedRequest(`${API_END_POINT_URL}/categories/root?levels=2`, {method: 'GET'})
         .then((response) => response.json())
         .then(({categories}) => {
             const navData = parseCategories(categories)
+
+            const accountNode = utils.isUserLoggedIn(utils.getAuthToken())
+                ? {
+                    path: SIGN_OUT_URL,
+                    type: 'AccountLogoutNavItem'
+                }
+                : {
+                    path: SIGN_IN_URL,
+                    type: 'AccountNavItem'
+                }
+
+            console.log('Account node:', accountNode)
+
             return dispatch(receiveNavigationData({
                 path: '/',
                 root: {
                     title: 'root',
                     path: '/',
                     children: [
-                        {
-                            // TODO: Find a way to get this data without hardcoding
-                            path: SIGN_IN_URL,
-                            type: 'AccountNavItem'
-                        },
+                        accountNode,
                         ...navData
                     ]
                 }
@@ -34,7 +43,7 @@ export const initApp = () => (dispatch) => {
         .then(() => {
             dispatch(setCheckoutShippingURL(CHECKOUT_SHIPPING_URL))
             dispatch(setCartURL(CART_URL))
-            return dispatch(setLoggedIn(utils.isUserLoggedIn(utils.getAuthToken())))
+            dispatch(setLoggedIn(utils.isUserLoggedIn(utils.getAuthToken())))
         })
         .then(() => dispatch(getCart()))
 }
