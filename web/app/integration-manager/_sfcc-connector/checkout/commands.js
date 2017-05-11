@@ -1,6 +1,6 @@
 import {SubmissionError} from 'redux-form'
 import {createBasket} from '../cart/utils'
-import {makeDemandwareRequest} from '../utils'
+import {makeSfccRequest} from '../utils'
 import {API_END_POINT_URL} from '../constants'
 import {STATES} from './constants'
 import {receiveCheckoutData, receiveShippingMethodInitialValues} from './../../checkout/results'
@@ -8,7 +8,7 @@ import {receiveCheckoutData, receiveShippingMethodInitialValues} from './../../c
 export const fetchShippingMethodsEstimate = () => (dispatch) => {
     return createBasket()
         .then((basketID) => {
-            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/shipments/me/shipping_methods`, {method: 'GET'})
+            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basketID}/shipments/me/shipping_methods`, {method: 'GET'})
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     const shippingMethods = responseJSON.applicable_shipping_methods.map(({name, description, price, id}) => {
@@ -27,7 +27,7 @@ export const fetchShippingMethodsEstimate = () => (dispatch) => {
 export const fetchCheckoutShippingData = () => (dispatch) => {
     return createBasket()
         .then((basketID) => {
-            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}`, {method: 'GET'})
+            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basketID}`, {method: 'GET'})
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     const {
@@ -98,7 +98,7 @@ export const submitShipping = (formValues) => (dispatch) => {
                     customer_name: name
                 })
             }
-            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/customer`, requestOptions)
+            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basketID}/customer`, requestOptions)
                 .then(() => basketID)
         })
         .then((basketID) => {
@@ -123,7 +123,7 @@ export const submitShipping = (formValues) => (dispatch) => {
                     }
                 })
             }
-            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/shipments/me`, requestOptions)
+            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basketID}/shipments/me`, requestOptions)
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     if (responseJSON.fault) {
@@ -133,11 +133,6 @@ export const submitShipping = (formValues) => (dispatch) => {
         })
 }
 
-// We're not currently checking the customer's email on the demandware site
+// We're not currently checking the customer's email on the sfcc site
 // Return true to prevent the welcome banner from showing
 export const checkCustomerEmail = () => () => Promise.resolve(true)
-
-// Checkout sign in is currently not implemented on our demandware site
-// The merlin's designs for checkout sign in don't translate well to
-// the functionality available to us with demandware
-export const checkoutSignIn = () => () => Promise.resolve()

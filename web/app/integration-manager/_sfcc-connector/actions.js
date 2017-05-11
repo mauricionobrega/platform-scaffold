@@ -5,4 +5,4 @@ import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 // by the app should go into ./results.js
 
 // Example.
-export const exampleAction = createAction('Some Demandware-specific action')
+export const exampleAction = createAction('Some SFCC-specific action')

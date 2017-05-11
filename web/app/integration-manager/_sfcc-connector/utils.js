@@ -46,7 +46,7 @@ export const isUserLoggedIn = (authorization) => {
     return !subData.customer_info.guest
 }
 
-export const initDemandwareSession = (authorization) => {
+export const initSfccSession = (authorization) => {
     const options = {
         method: 'POST',
         body: '{ type : "session" }',
@@ -62,7 +62,7 @@ export const initDemandwareSession = (authorization) => {
         })
 }
 
-export const initDemandWareAuthAndSession = () => {
+export const initSfccAuthAndSession = () => {
     const authorizationToken = getAuthToken()
     if (authorizationToken) {
         const {exp} = getAuthTokenPayload(authorizationToken.replace('Bearer ', ''))
@@ -89,7 +89,7 @@ export const initDemandWareAuthAndSession = () => {
                 if (response.status === 401) {
                     // The server did not accept the token, start from scratch
                     deleteAuthToken()
-                    return initDemandWareAuthAndSession()
+                    return initSfccAuthAndSession()
                 }
 
                 const authorizationToken = response.headers.get('Authorization')
@@ -110,12 +110,12 @@ export const initDemandWareAuthAndSession = () => {
         .then((response) => {
             authorization = response.headers.get('Authorization')
             storeAuthToken(authorization)
-            return initDemandwareSession(authorization)
+            return initSfccSession(authorization)
         })
 }
 
-export const makeDemandwareRequest = (url, options) => {
-    return initDemandWareAuthAndSession()
+export const makeSfccRequest = (url, options) => {
+    return initSfccAuthAndSession()
         .then((headers) => {
             const requestOptions = {
                 ...options,
@@ -125,7 +125,7 @@ export const makeDemandwareRequest = (url, options) => {
         })
 }
 
-export const makeDemandwareUnAuthenticatedRequest = (url, options) => {
+export const makeSfccUnAuthenticatedRequest = (url, options) => {
     const requestOptions = {
         ...options,
         headers: REQUEST_HEADERS
