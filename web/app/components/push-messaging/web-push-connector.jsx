@@ -13,13 +13,11 @@ class WebPushConnector extends React.Component {
     }
 
     componentDidMount() {
-        const promise = window.Progressive.MessagingClientInitPromise
-
-        console.info('[Messaging] begin init')
-        promise && promise
+        console.info('[Messaging] Init start')
+        window.Progressive.MessagingClientInitPromise
             .then(() => window.Progressive.MessagingClient.register(this.handleStateUpdate))
             .then((state) => this.props.stateUpdate(state))
-            .then(() => console.info('[Messaging] init complete'))
+            .then(() => console.info('[Messaging] Init finish'))
     }
 
     handleStateUpdate(event) {

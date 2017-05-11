@@ -133,10 +133,19 @@ const attemptToInitializeApp = () => {
         // the Messaging worker version data.
         deferredUntilLoadComplete.push(updateMessagingSWVersion)
 
+        // Creating an early promise that users of the Messaging Client can
+        // chain means they don't need to poll for it's existence
+        let clientInitResolver
+        let clientInitRejecter
+        window.Progressive.MessagingClientInitPromise = new Promise((resolve, reject) => {
+            clientInitResolver = resolve
+            clientInitRejecter = reject
+        })
+
         // We know we're not running in Astro, and that service worker is
         // supported and loaded, so we can add a deferred function to
         // load and initialize the Messaging client.
-        deferredUntilLoadComplete.push(() => loadAndInitMessagingClient(IS_PREVIEW, MESSAGING_SITE_ID))
+        deferredUntilLoadComplete.push(() => loadAndInitMessagingClient(IS_PREVIEW, MESSAGING_SITE_ID, clientInitResolver, clientInitRejecter))
     }
 
     if (isReactRoute() && !isSamsungBrowser(window.navigator.userAgent)) {
