@@ -45,9 +45,14 @@ export const getAuthTokenPayload = (authToken) => {
 }
 
 export const isUserLoggedIn = (authorization) => {
-    const {sub} = getAuthTokenPayload(authorization)
-    const subData = JSON.parse(sub)
-    return !subData.customer_info.guest
+    try {
+        const {sub} = getAuthTokenPayload(authorization)
+        const subData = JSON.parse(sub)
+        return !subData.customer_info.guest
+    } catch (e) {
+        console.log('Error checking if user is logged in. Assuming `false`', e)
+        return false
+    }
 }
 
 export const initDemandwareSession = (authorization) => {
