@@ -18,7 +18,7 @@ import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 const titleClassName = classNames(
     'c-product-tile__name',
     'u-h4',
-    'u-text-font-family',
+    'u-text-family',
     'u-text-medium',
     'u-color-neutral-60'
 )

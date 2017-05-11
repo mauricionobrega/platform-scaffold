@@ -31,7 +31,7 @@ const SUBTOTAL_CLASSES = classNames(
     'u-padding-top-lg',
 
     'u-h4',
-    'u-text-header-font-family'
+    'u-text-header-family'
 )
 
 /* eslint-disable camelcase */

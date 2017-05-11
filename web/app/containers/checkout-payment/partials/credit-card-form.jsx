@@ -117,7 +117,7 @@ class CreditCardForm extends React.Component {
                             <ReduxForm.Field
                                 component={Field}
                                 name="selectCreditCard"
-                                label={<strong className="u-text-normal">VISA **** **** **** 5678</strong>}
+                                label={<strong className="u-text-regular">VISA **** **** **** 5678</strong>}
                                 caption="John Appleseed"
                             >
                                 <input type="radio" value={PAYMENT_EXISTING_CARD} onChange={this.handleRadioChange} defaultChecked noValidate />

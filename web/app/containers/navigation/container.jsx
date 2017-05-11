@@ -59,7 +59,7 @@ const Navigation = (props) => {
             <Nav root={root.title ? root : null} path={path} onPathChange={onPathChange}>
                 <HeaderBar>
                     <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
-                        <h2 className="u-text-header-font-family u-text-uppercase">
+                        <h2 className="u-text-header-family u-text-uppercase">
                             <span className="u-text-extra-light">Merlin's</span> Potions
                         </h2>
                     </HeaderBarTitle>

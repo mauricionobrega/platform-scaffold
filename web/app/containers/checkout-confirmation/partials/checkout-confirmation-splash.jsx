@@ -32,7 +32,7 @@ const CheckoutConfirmationSplash = (props) => {
                     className="t-checkout-confirmation__splash-image"
                     {...GRID_SETTINGS}
                 >
-                    <div className="u-text-align-center u-padding-lg u-text-line-height-0">
+                    <div className="u-text-align-center u-padding-lg u-text-height-0">
                         <Image src={getAssetUrl('static/img/checkout/confirmed.png')} alt="Sparkling checkmark, signifying completion" height="57px" width="99px" />
                     </div>
                 </GridSpan>
@@ -43,7 +43,7 @@ const CheckoutConfirmationSplash = (props) => {
                 >
                     <div className="t-checkout-confirmation__thanks u-padding-bottom-lg">
                         <h1 className="u-margin-bottom-md u-text-extra-light u-text-uppercase">
-                            <span className="u-text-normal">Thanks,</span> order confirmed
+                            <span className="u-text-regular">Thanks,</span> order confirmed
                         </h1>
 
                         <div className="u-text-content">
