@@ -5,6 +5,7 @@ import rootReducer from '../containers/reducers'
 import cartReducer from './cart/reducer'
 import categoryReducer from './categories/reducer'
 import modalReducer from 'progressive-web-sdk/dist/store/modals/reducer'
+import notificationsReducer from 'progressive-web-sdk/dist/store/notifications/reducer'
 import productReducer from './products/reducer'
 import checkoutReducer from './checkout/reducer'
 import {reducer as imReducer} from '../integration-manager/reducer'
@@ -27,6 +28,7 @@ const configureStore = (initialState) => {
         cart: cartReducer,
         ui: rootReducer,
         modals: modalReducer,
+        notifications: notificationsReducer,
         products: productReducer,
         checkout: checkoutReducer,
         integrationManager: imReducer,
