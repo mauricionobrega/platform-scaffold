@@ -6,9 +6,9 @@
 import {mount} from 'enzyme'
 import React from 'react'
 
-import FooterSocialIcons from './footer-social-icons'
+import NavigationSocialIcons from './navigation-social-icons'
 
-test('FooterSocialIcons renders without errors', () => {
-    const wrapper = mount(<FooterSocialIcons />)
+test('NavigationSocialIcons renders without errors', () => {
+    const wrapper = mount(<NavigationSocialIcons />)
     expect(wrapper.length).toBe(1)
 })
