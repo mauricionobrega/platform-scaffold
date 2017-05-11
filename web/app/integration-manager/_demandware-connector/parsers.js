@@ -22,9 +22,19 @@ const parseVariationCategories = (variation_attributes) => {
     }))
 }
 
-const setInitialVariantValues = (variants, id) => {
+const setInitialVariantValues = (variants, id, variationCategories) => {
     const currentVariant = variants.find(({product_id}) => product_id === id)
-    return currentVariant && currentVariant.variation_values
+
+    if (currentVariant) {
+        return currentVariant.variation_values
+    }
+
+    const defaultVariant = {}
+    variationCategories.forEach(({id, values}) => {
+        defaultVariant[id] = values[0].value
+    })
+
+    return defaultVariant
 }
 
 /* eslint-enable camelcase */
@@ -40,7 +50,7 @@ export const parseProductDetails = ({id, name, price, long_description, image_gr
         description: long_description,
         thumbnail: images[0],
         images,
-        initialValues: setInitialVariantValues(variants, id),
+        initialValues: setInitialVariantValues(variants, id, variation_attributes),
         variationCategories: parseVariationCategories(variation_attributes),
         variants: variants.map(({product_id, variation_values}) => {
             return {
@@ -67,6 +77,14 @@ export const getCurrentProductID = (url) => {
 
     console.log('[getCurrentProductID]', productID)
     return productID
+}
+
+export const getInitialSelectedVariant = (variants, initialValues) => {
+    return variants.find(({values}) => {
+        return Object.keys(values).every((key) => {
+            return values[key] === initialValues[key]
+        })
+    })
 }
 
 export const parseCategories = (categories) => {
