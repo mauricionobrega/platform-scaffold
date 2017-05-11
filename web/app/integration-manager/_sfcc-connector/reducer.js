@@ -7,7 +7,7 @@ import {exampleAction} from './actions'
 
 const initialState = Immutable.Map()
 
-// Add Demandware-specific actions here
+// Add SFCC-specific actions here
 const reducer = handleActions({
     [exampleAction]: (state, {payload}) => state.mergeDeep(payload)
 }, initialState)

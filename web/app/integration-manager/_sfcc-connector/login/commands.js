@@ -1,7 +1,7 @@
 import {noop} from 'progressive-web-sdk/dist/utils/utils'
 import {setRegisterLoaded, setSigninLoaded} from '../../login/results'
 import {setLoggedIn} from '../../results'
-import {initDemandwareSession, storeAuthToken, makeDemandwareRequest, deleteBasketID, storeBasketID} from '../utils'
+import {initSfccSession, storeAuthToken, makeSfccRequest, deleteBasketID, storeBasketID} from '../utils'
 import {requestCartData, createBasket, handleCartData} from '../cart/utils'
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {SubmissionError} from 'redux-form'
@@ -56,10 +56,10 @@ export const login = ({login}) => (dispatch) => {
             storeAuthToken(authorization)
             dispatch(setLoggedIn(true))
             deleteBasketID()
-            return initDemandwareSession(authorization)
+            return initSfccSession(authorization)
         })
         // Check if the user has a basket already
-        .then(() => makeDemandwareRequest(`${API_END_POINT_URL}/customers/${customerID}/baskets`), {method: 'GET'})
+        .then(() => makeSfccRequest(`${API_END_POINT_URL}/customers/${customerID}/baskets`), {method: 'GET'})
         .then((response) => response.json())
         .then(({baskets}) => {
             if (baskets.length) {
@@ -74,7 +74,7 @@ export const login = ({login}) => (dispatch) => {
                     method: 'POST',
                     body: JSON.stringify(basketContents.product_items)
                 }
-                return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, requestOptions)
+                return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, requestOptions)
                     .then((response) => response.json())
             }
             return createBasket(basketContents)
@@ -101,7 +101,7 @@ export const registerUser = ({firstname, lastname, email, password}) => (dispatc
             }
         })
     }
-    return makeDemandwareRequest(`${API_END_POINT_URL}/customers`, requestOptions)
+    return makeSfccRequest(`${API_END_POINT_URL}/customers`, requestOptions)
         .then((response) => response.json())
         .then((responseJSON) => {
             if (responseJSON.fault) {
