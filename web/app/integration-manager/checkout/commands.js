@@ -50,9 +50,6 @@ export const fetchShippingMethodsEstimate = (formName) => connector.fetchShippin
  */
 export const updatingShippingAndBilling = () => connector.updatingShippingAndBilling()
 
-export const checkoutSignIn = (...args) => connector.checkoutSignIn(...args)
-export const checkoutRegister = (...args) => connector.checkoutRegister(...args)
-
 /**
  * Checks to see if a given email is available for registration.
  * Connectors my choose to not implement this in which case they can simply

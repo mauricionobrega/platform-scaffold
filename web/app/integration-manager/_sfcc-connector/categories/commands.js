@@ -1,5 +1,5 @@
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
-import {makeDemandwareRequest} from '../utils'
+import {makeSfccRequest} from '../utils'
 import {receiveCategoryContents, receiveCategoryInformation} from '../../categories/results'
 import {receiveProductListProductData} from '../../products/results'
 import {parseProductListData} from '../parsers'
@@ -27,7 +27,7 @@ const processCategory = (dispatch) => ({parent_category_id, id, name}) => {
 /* eslint-enable camelcase, no-use-before-define */
 
 const fetchCategoryInfo = (id) => (dispatch) => {
-    return makeDemandwareRequest(makeCategoryURL(id), {method: 'GET'})
+    return makeSfccRequest(makeCategoryURL(id), {method: 'GET'})
         .then((response) => response.json())
         .then(processCategory(dispatch))
 }
@@ -37,7 +37,7 @@ export const initProductListPage = (url) => (dispatch) => {
     const categoryID = categoryIDMatch ? categoryIDMatch[1] : ''
 
     return dispatch(fetchCategoryInfo(categoryID))
-        .then(() => makeDemandwareRequest(makeCategorySearchURL(categoryID), {method: 'GET'}))
+        .then(() => makeSfccRequest(makeCategorySearchURL(categoryID), {method: 'GET'}))
         .then((response) => response.json())
         .then(({hits, total}) => {
             const productListData = parseProductListData(hits)

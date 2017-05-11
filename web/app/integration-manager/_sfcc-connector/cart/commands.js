@@ -1,4 +1,4 @@
-import {makeDemandwareRequest, getAuthTokenPayload} from '../utils'
+import {makeSfccRequest, getAuthTokenPayload} from '../utils'
 import {receiveCheckoutData} from '../../checkout/results'
 import {requestCartData, createBasket, handleCartData} from './utils'
 import {API_END_POINT_URL} from '../constants'
@@ -20,7 +20,7 @@ export const addToCart = (productID, quantity) => (dispatch) => {
                     quantity
                 }])
             }
-            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, options)
+            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, options)
                 .then((response) => {
                     if (response.ok) {
                         return response.json()
@@ -34,7 +34,7 @@ export const addToCart = (productID, quantity) => (dispatch) => {
 export const removeFromCart = (itemId) => (dispatch) => {
     return createBasket()
         .then((basketID) => {
-            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/items/${itemId}`, {method: 'DELETE'})
+            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basketID}/items/${itemId}`, {method: 'DELETE'})
                 .then((response) => {
                     if (response.ok) {
                         return response.json()
@@ -54,7 +54,7 @@ export const updateItemQuantity = (itemId, itemQuantity) => (dispatch) => {
                     quantity: itemQuantity
                 })
             }
-            return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/items/${itemId}`, requestOptions)
+            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basketID}/items/${itemId}`, requestOptions)
                 .then((response) => {
                     if (response.ok) {
                         return response.json()
@@ -80,7 +80,7 @@ export const addToWishlist = (productID) => (dispatch) => {
     const {sub} = getAuthTokenPayload()
     const customerID = JSON.parse(sub).customer_info.customer_id
 
-    return makeDemandwareRequest(`${API_END_POINT_URL}/customers/${customerID}/product_lists`, {method: 'GET'})
+    return makeSfccRequest(`${API_END_POINT_URL}/customers/${customerID}/product_lists`, {method: 'GET'})
         .then((response) => response.json())
         .then(({count, data}) => {
             if (count) {
@@ -94,7 +94,7 @@ export const addToWishlist = (productID) => (dispatch) => {
                     name: 'Saved for Later'
                 })
             }
-            return makeDemandwareRequest(`${API_END_POINT_URL}/customers/${customerID}/product_lists`, requestOptions)
+            return makeSfccRequest(`${API_END_POINT_URL}/customers/${customerID}/product_lists`, requestOptions)
                 .then((response) => response.json())
         })
         .then(({id}) => {
@@ -107,7 +107,7 @@ export const addToWishlist = (productID) => (dispatch) => {
                 })
             }
 
-            return makeDemandwareRequest(`${API_END_POINT_URL}/customers/${customerID}/product_lists/${id}/items`, requestOptions)
+            return makeSfccRequest(`${API_END_POINT_URL}/customers/${customerID}/product_lists/${id}/items`, requestOptions)
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     if (responseJSON.fault) {

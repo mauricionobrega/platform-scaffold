@@ -3,7 +3,9 @@ import {submitRegisterForm} from './actions'
 import Immutable from 'immutable'
 
 jest.mock('../../integration-manager/checkout/commands')
-import {checkoutRegister, updatingShippingAndBilling} from '../../integration-manager/checkout/commands'
+import {updatingShippingAndBilling} from '../../integration-manager/checkout/commands'
+jest.mock('../../integration-manager/login/commands')
+import {registerUser} from '../../integration-manager/login/commands'
 jest.mock('../app/actions')
 import {addNotification} from '../app/actions'
 import {CONFIRMATION_FORM_NAME} from '../../store/form/constants'
@@ -32,8 +34,8 @@ describe('submitRegisterForm', () => {
     })
 
     test('shows a notification on error', () => {
-        checkoutRegister.mockClear()
-        checkoutRegister.mockImplementationOnce(() => Promise.reject('Test error'))
+        registerUser.mockClear()
+        registerUser.mockImplementationOnce(() => Promise.reject('Test error'))
         const thunk = submitRegisterForm()
         expect(typeof thunk).toBe('function')
 
@@ -45,8 +47,8 @@ describe('submitRegisterForm', () => {
     })
 
     test('calls updateShippingAndBilling on success', () => {
-        checkoutRegister.mockClear()
-        checkoutRegister.mockImplementationOnce(() => Promise.resolve())
+        registerUser.mockClear()
+        registerUser.mockImplementationOnce(() => Promise.resolve())
         const thunk = submitRegisterForm()
         expect(typeof thunk).toBe('function')
 

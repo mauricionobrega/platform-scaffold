@@ -6,7 +6,7 @@ import {parseCategories} from '../parsers'
 import {API_END_POINT_URL, SIGN_IN_URL, SIGN_OUT_URL, CHECKOUT_SHIPPING_URL, CART_URL} from '../constants'
 
 export const fetchNavigationData = () => (dispatch) => {
-    return utils.makeDemandwareUnAuthenticatedRequest(`${API_END_POINT_URL}/categories/root?levels=2`, {method: 'GET'})
+    return utils.makeSfccUnAuthenticatedRequest(`${API_END_POINT_URL}/categories/root?levels=2`, {method: 'GET'})
         .then((response) => response.json())
         .then(({categories}) => {
             const navData = parseCategories(categories)
@@ -36,7 +36,7 @@ export const fetchNavigationData = () => (dispatch) => {
 }
 
 export const initApp = () => (dispatch) => {
-    return utils.initDemandWareAuthAndSession()
+    return utils.initSfccAuthAndSession()
         .then(() => dispatch(fetchNavigationData()))
         .then(() => {
             dispatch(setCheckoutShippingURL(CHECKOUT_SHIPPING_URL))

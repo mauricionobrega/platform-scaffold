@@ -2,7 +2,7 @@ import {SubmissionError} from 'redux-form'
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {setRegisterLoaded, setSigninLoaded} from '../../login/results'
 import {setLoggedIn} from '../../results'
-import {initDemandwareSession, deleteAuthToken, storeAuthToken, makeDemandwareRequest, deleteBasketID, storeBasketID} from '../utils'
+import {initSfccSession, deleteAuthToken, storeAuthToken, makeSfccRequest, deleteBasketID, storeBasketID} from '../utils'
 import {requestCartData, createBasket, handleCartData} from '../cart/utils'
 import {fetchNavigationData} from '../app/commands'
 
@@ -57,10 +57,10 @@ export const login = (username, password) => (dispatch) => {
             storeAuthToken(authorization)
             dispatch(setLoggedIn(true))
             deleteBasketID()
-            return initDemandwareSession(authorization)
+            return initSfccSession(authorization)
         })
         // Check if the user has a basket already
-        .then(() => makeDemandwareRequest(`${API_END_POINT_URL}/customers/${customerID}/baskets`), {method: 'GET'})
+        .then(() => makeSfccRequest(`${API_END_POINT_URL}/customers/${customerID}/baskets`), {method: 'GET'})
         .then((response) => response.json())
         .then(({baskets}) => {
             if (baskets.length) {
@@ -75,7 +75,7 @@ export const login = (username, password) => (dispatch) => {
                 }
                 const basketID = baskets[0].basket_id
                 storeBasketID(basketID)
-                return makeDemandwareRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, requestOptions)
+                return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, requestOptions)
                     .then((response) => response.json())
             }
             return createBasket(basketContents)
@@ -93,7 +93,7 @@ export const logout = () => (dispatch) => {
         method: 'DELETE',
     }
 
-    return makeDemandwareRequest(`${API_END_POINT_URL}/customers/auth`, requestOptions)
+    return makeSfccRequest(`${API_END_POINT_URL}/customers/auth`, requestOptions)
         .then((response) => {
             // We don't really do any serious error checking here because we can't
             // really do much about it.
@@ -124,7 +124,7 @@ export const registerUser = ({firstname, lastname, email, password}) => (dispatc
             }
         })
     }
-    return makeDemandwareRequest(`${API_END_POINT_URL}/customers`, requestOptions)
+    return makeSfccRequest(`${API_END_POINT_URL}/customers`, requestOptions)
         .then((response) => response.json())
         .then((responseJSON) => {
             if (responseJSON.fault) {
