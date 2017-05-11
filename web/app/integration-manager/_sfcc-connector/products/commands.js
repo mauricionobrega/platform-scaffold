@@ -1,7 +1,7 @@
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../../products/results'
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
-import {makeDemandwareRequest} from '../utils'
+import {makeSfccRequest} from '../utils'
 import {parseProductDetails, getCurrentProductID, getProductHref} from '../parsers'
 import {API_END_POINT_URL} from '../constants'
 
@@ -11,7 +11,7 @@ export const fetchPdpData = () => (dispatch) => {
     const options = {
         method: 'GET'
     }
-    return makeDemandwareRequest(productURL, options)
+    return makeSfccRequest(productURL, options)
         .then((response) => response.json())
         .then((responseJSON) => {
             const productDetailsData = {
