@@ -10,8 +10,8 @@ import {normalizePhone} from '../../../utils/normalize-utils'
 
 import {showCompanyAndApt} from '../actions'
 import {SHIPPING_FORM_NAME} from '../constants'
-import {fetchShippingMethodsEstimate} from '../../../integration-manager/checkout/commands'
 import {getIsCompanyOrAptShown} from '../selectors'
+import {fetchShippingMethodsEstimate} from '../../../integration-manager/checkout/commands'
 import {getCountries, getAvailableRegions} from '../../../store/checkout/locations/selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
