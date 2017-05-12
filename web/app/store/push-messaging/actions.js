@@ -1,7 +1,5 @@
 import {createAction} from '../../utils/utils'
 
-const clientPromise = window.Progressive.MessagingClientInitPromise
-
 // TODO - Check for existence of client before calling
 export const subscribe = (channels) => (dispatch) => {
     channels = channels || {default: true}
@@ -12,7 +10,7 @@ export const subscribe = (channels) => (dispatch) => {
 // TODO - write a meta action handler to dispatch changes to local storage?
 export const setInStorage = (key, value) => {
     // TODO - global flag set if local storage not available on first check?
-    clientPromise.then(() => {
+    window.Progressive.MessagingClientInitPromise.then(() => {
         const result = window.Progressive.MessagingClient.LocalStorage.set(key, value)
         console.info('[Messaging] set in storage:', key, value)
         return result
@@ -20,7 +18,7 @@ export const setInStorage = (key, value) => {
 }
 
 export const getFromStorage = (key) => {
-    return clientPromise.then(() => {
+    return window.Progressive.MessagingClientInitPromise.then(() => {
         const result = window.Progressive.MessagingClient.LocalStorage.get(key)
         console.info('[Messaging] get from storage:', key, result)
         return result
