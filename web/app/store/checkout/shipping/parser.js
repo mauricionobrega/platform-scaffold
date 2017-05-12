@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 const getNameValue = (firstname, lastname) => {
     let name
     if (firstname.value) {
@@ -19,19 +23,29 @@ export const parseShippingInitialValues = (shippingFieldData) => {
         addressLine1: streetFields[0].value,
         company: fieldData.company.value,
         addressLine2: streetFields[1].value,
-        city: fieldData.city.value,
-        telephone: fieldData.telephone.value,
         billing_same_as_shipping: true
     }
+
+    if (fieldData.telephone.value) {
+        shippingData.telephone = fieldData.telephone.value
+    }
+
+    if (fieldData.city.value) {
+        shippingData.city = fieldData.city.value
+    }
+
     if (fieldData.postcode.value) {
         shippingData.postcode = fieldData.postcode.value
     }
+
     if (fieldData.country_id.value) {
-        shippingData.country_id = fieldData.country_id.value
+        shippingData.countryId = fieldData.country_id.value
     }
+
     if (fieldData.region_id.value) {
         shippingData.regionId = fieldData.region_id.value
     }
+
     return shippingData
 }
 

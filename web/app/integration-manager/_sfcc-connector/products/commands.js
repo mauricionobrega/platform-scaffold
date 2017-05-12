@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../../products/results'
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'

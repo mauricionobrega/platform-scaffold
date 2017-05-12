@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {makeSfccRequest, getAuthTokenPayload} from '../utils'
 import {receiveCheckoutData} from '../../checkout/results'
 import {requestCartData, createBasket, handleCartData} from './utils'

@@ -9,3 +9,25 @@
     font-size: $unit*3;
     line-height: $unit*3.5;
 }
+
+// Social Link
+// ---
+
+.t-navigation__social-link {
+    display: block;
+
+    & + & {
+        margin-left: $unit*3;
+    }
+}
+
+
+// Copyright
+// ---
+
+.t-navigation__copyright {
+    color: $neutral-40;
+    font-size: $small-font-size;
+    line-height: $font-size;
+    text-align: center;
+}

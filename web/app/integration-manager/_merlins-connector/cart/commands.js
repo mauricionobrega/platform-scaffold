@@ -1,9 +1,14 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {makeRequest, makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 import {removeNotification} from '../../../containers/app/actions'
 import {getIsLoggedIn} from '../../../containers/app/selectors'
 import {getUenc} from '../selectors'
+import {receiveEntityID} from '../actions'
 import {getCustomerEntityID} from '../../../store/checkout/selectors'
 import {receiveCartContents} from '../../cart/results'
 import {receiveCartProductData} from '../../products/results'
@@ -125,10 +130,9 @@ export const initCartPage = (url) => (dispatch) => {
             const magentoFieldData = extractMagentoJson($response).getIn(ESTIMATE_FIELD_PATH)
             const locationsData = parseLocations(magentoFieldData)
 
-            return dispatch(receiveCheckoutData({
-                customerEntityID,
-                ...locationsData
-            }))
+            dispatch(receiveEntityID(customerEntityID))
+
+            return dispatch(receiveCheckoutData(locationsData))
         })
         .then(() => dispatch(fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME)))
 }
