@@ -13,7 +13,7 @@ import {getCustomerEntityID} from '../selectors'
 import {getIsLoggedIn} from '../../../containers/app/selectors'
 import {getFormValues, getFormRegisteredFields} from '../../../store/form/selectors'
 import {receiveEntityID} from '../actions'
-import {SHIPPING_FORM_NAME} from '../../../containers/checkout-shipping/constants'
+import {SHIPPING_FORM_NAME, ADD_NEW_ADDRESS_FIELD} from '../../../containers/checkout-shipping/constants'
 import * as paymentSelectors from '../../../store/checkout/payment/selectors'
 import * as shippingSelectors from '../../../store/checkout/shipping/selectors'
 
@@ -23,11 +23,7 @@ const getCartBaseUrl = createSelector(
     (entityID, isLoggedIn) => `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}`
 )
 
-export const fetchShippingMethodsEstimate = (formKey) => (dispatch, getState) => {
-    const currentState = getState()
-    const cartBaseUrl = getCartBaseUrl(currentState)
-    const formValues = getFormValues(formKey)(currentState)
-    const registeredFieldNames = getFormRegisteredFields(formKey)(currentState).map(({name}) => name)
+const parseLocationData = (formValues, registeredFieldNames) => {
     // Default values to use if none have been selected
     const address = {country_id: 'US', region_id: '0', postcode: null}
 
@@ -36,15 +32,36 @@ export const fetchShippingMethodsEstimate = (formKey) => (dispatch, getState) =>
         const getRegisteredFieldValue = (fieldName) => {
             return registeredFieldNames.includes(fieldName) ? formValues[fieldName] : undefined
         }
-        address.country_id = getRegisteredFieldValue('countryId')
-        address.region_id = getRegisteredFieldValue('regionId')
-        address.postcode = getRegisteredFieldValue('postcode')
+
+        const countryId = getRegisteredFieldValue('country_id')
+        if (countryId) {
+            address.country_id = countryId
+        }
+
+        const postcode = getRegisteredFieldValue('postcode')
+        if (postcode) {
+            address.postcode = postcode
+        }
+
         if (formValues.region) {
             address.region = getRegisteredFieldValue('region')
             // Remove the region_id in case we have an old value
             delete address.region_id
+        } else {
+            address.region_id = getRegisteredFieldValue('region_id')
         }
     }
+
+    return address
+}
+
+
+export const fetchShippingMethodsEstimate = (formKey) => (dispatch, getState) => {
+    const currentState = getState()
+    const cartBaseUrl = getCartBaseUrl(currentState)
+    const formValues = getFormValues(formKey)(currentState)
+    const registeredFieldNames = getFormRegisteredFields(formKey)(currentState).map(({name}) => name)
+    const address = parseLocationData(formValues, registeredFieldNames)
     const estimateURL = `${cartBaseUrl}/estimate-shipping-methods`
     return makeJsonEncodedRequest(estimateURL, {address}, {method: 'POST'})
         .then((response) => response.json())
@@ -67,7 +84,6 @@ export const fetchCheckoutShippingData = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then(([$, $response]) => dispatch(processCheckoutData($response)))  // eslint-disable-line no-unused-vars
         .then(() => dispatch(fetchShippingMethodsEstimate(SHIPPING_FORM_NAME)))
-        .catch((error) => { console.info(error.message) })
 }
 
 export const fetchCheckoutPaymentData = (url) => (dispatch) => {
@@ -108,19 +124,46 @@ const addressFormToAddressObject = ({
     street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1],
     regionId,
     region,
-    countryId
+    countryId,
+    saveInAddressBook: true
 })
 
 export const submitShipping = (formValues) => (dispatch, getState) => {
     const currentState = getState()
     const cartBaseUrl = getCartBaseUrl(currentState)
-    const address = addressFormToAddressObject(formValues)
+    const savedAddress = formValues.saved_address
+    const submittingWithNewAddress = savedAddress === ADD_NEW_ADDRESS_FIELD || savedAddress === undefined
+    let address
+
+    // Format the shipping address according to whether it's a saved or new address
+    if (submittingWithNewAddress) {
+        const {name} = formValues
+        const names = name.split(' ')
+
+        address = addressFormToAddressObject({
+            firstname: names.slice(0, -1).join(' '),
+            lastname: names.slice(-1).join(' '),
+            ...formValues
+        })
+    } else {
+        const {saved_address} = formValues
+        const savedAddress = shippingSelectors.getSavedAddresses(currentState).toJS()
+            .filter(({customerAddressId}) => {
+                return parseInt(customerAddressId) === parseInt(saved_address)
+            })[0] || {}
+
+        address = {
+            ...savedAddress,
+            region: savedAddress.region,
+            saveInAddressBook: false
+        }
+
+        delete address.default_billing
+        delete address.default_shipping
+    }
     const shippingSelections = formValues.shipping_method.split('_')
     const addressInformation = {
-        shippingAddress: {
-            ...address,
-            saveInAddressBook: true
-        },
+        shippingAddress: address,
         billingAddress: {
             ...address,
             saveInAddressBook: false
@@ -130,7 +173,12 @@ export const submitShipping = (formValues) => (dispatch, getState) => {
     }
 
     return makeJsonEncodedRequest(`${cartBaseUrl}/shipping-information`, {addressInformation}, {method: 'POST'})
-        .then((response) => response.json())
+        .then((response) => {
+            if (response.status === 400) {
+                throw Error(`Error submitting shipping information: ${response.statusText}`)
+            }
+            return response.json()
+        })
         .then((responseJSON) => {
             if (!responseJSON.payment_methods) {
                 throw new SubmissionError({_error: 'Unable to save shipping address'})

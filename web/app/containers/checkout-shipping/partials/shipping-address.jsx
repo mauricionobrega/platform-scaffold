@@ -1,163 +1,131 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as ReduxForm from 'redux-form'
-import {normalizePhone} from '../../../utils/normalize-utils'
+import classNames from 'classnames'
 
-import {showCompanyAndApt} from '../actions'
-import {SHIPPING_FORM_NAME} from '../constants'
-import {fetchShippingMethodsEstimate} from '../../../integration-manager/checkout/commands'
-import {getIsCompanyOrAptShown} from '../selectors'
-import {getCountries, getAvailableRegions} from '../../../store/checkout/selectors'
+import {setShowAddNewAddress} from '../actions'
+import {ADD_NEW_ADDRESS_FIELD, SAVED_SHIPPING_ADDRESS_FIELD} from '../constants'
+import {getIsLoggedIn} from '../../app/selectors'
+import {getShowAddNewAddress} from '../selectors'
+import {getSavedAddresses} from '../../../store/checkout/shipping/selectors'
 
-import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
-import Icon from 'progressive-web-sdk/dist/components/icon'
-
+import ShippingAddressFields from './shipping-address-fields'
 
 const ShippingAddressForm = ({
-    countries,
-    fetchShippingMethods,
-    handleShowCompanyAndApt,
-    isCompanyOrAptShown,
-    regions
+    handleShowAddNewAddress,
+    isLoggedIn,
+    savedAddresses,
+    showAddNewAddress
 }) => {
 
-    const addCompanyButton = (
-        <Button
-            className="c--is-anchor"
-            innerClassName="c--no-min-height u-padding-0"
-            onClick={handleShowCompanyAndApt}
-            >
-            <span className="u-color-brand u-text-letter-spacing-normal u-text-small">
-                Add company or apt #
-            </span>
-            <Icon name="chevron-down" className="u-margin-start-sm u-color-brand" />
-        </Button>
-    )
+    const renderSavedAddresses = (address) => {
+        const {
+            city,
+            countryId,
+            firstname,
+            customerAddressId,
+            lastname,
+            postcode,
+            regionCode
+        } = address
+        const street = address.street.join(', ')
+        const shippingAddress = (
+            <div className="u-color-neutral-40">
+                <p className="u-margin-bottom-sm">
+                    {city}, {regionCode}, {countryId}, {postcode}
+                </p>
+                <p>{firstname} {lastname}</p>
+            </div>
+        )
 
+        return (
+            <FieldRow key={customerAddressId}>
+                <ReduxForm.Field
+                    component={Field}
+                    name={SAVED_SHIPPING_ADDRESS_FIELD}
+                    label={
+                        <strong className="u-text-semi-bold">{street}</strong>
+                    }
+                    caption={shippingAddress}
+                    type="radio"
+                    value={customerAddressId}
+                    customEventHandlers={{
+                        onChange: () => {
+                            handleShowAddNewAddress(false)
+                        }
+                    }}
+                >
+                    <input
+                        type="radio"
+                        noValidate
+                        value={customerAddressId}
+                    />
+                </ReduxForm.Field>
+            </FieldRow>
+        )
+    }
+
+    const renderAddressFormOrSavedAddressesOrBoth = () => {
+        if (isLoggedIn && savedAddresses) {
+            const classes = classNames('t-checkout-payment__add-new-address', {
+                'u-border-light u-padding-md': showAddNewAddress
+            })
+
+            return [
+                savedAddresses.map(renderSavedAddresses),
+                <FieldRow key={ADD_NEW_ADDRESS_FIELD} className={classes}>
+                    <div className="u-flex">
+                        <ReduxForm.Field
+                            component={Field}
+                            name={SAVED_SHIPPING_ADDRESS_FIELD}
+                            label={
+                                <strong className="u-text-semi-bold">
+                                    Add a new address
+                                </strong>
+                            }
+                            type="radio"
+                            value={ADD_NEW_ADDRESS_FIELD}
+                            customEventHandlers={{
+                                onChange: () => {
+                                    handleShowAddNewAddress(true)
+                                }
+                            }}
+                        >
+                            <input
+                                type="radio"
+                                noValidate
+                                value={ADD_NEW_ADDRESS_FIELD}
+                            />
+                        </ReduxForm.Field>
+
+                        {showAddNewAddress &&
+                            <div className="t-checkout-payment__add-new-address-form">
+                                <ShippingAddressFields />
+                            </div>
+                        }
+                    </div>
+                </FieldRow>
+            ]
+        } else {
+            return <ShippingAddressFields />
+        }
+    }
 
     return (
-        <div>
+        <div className="t-checkout-shipping__shipping-address">
             <div className="t-checkout-shipping__title u-padding-top-lg u-padding-bottom-md">
                 <h2 className="u-h4 u-text-uppercase">Shipping Address</h2>
             </div>
 
             <div className="u-padding-md u-border-light-top u-border-light-bottom u-bg-color-neutral-00">
-                {/* <FieldRow>
-                    <ReduxForm.Field
-                        component={Field}
-                        name="shipping-address"
-                        label={<strong className="u-text-semi-bold">725 West Georgia</strong>}
-                        caption={shippingAddress}
-                    >
-                        <input type="radio" noValidate />
-                    </ReduxForm.Field>
-                </FieldRow> */ }
-
-                <div className="u-margin-top-md">
-                    {/* <FieldRow>
-                        <ReduxForm.Field
-                            component={Field}
-                            name="address"
-                            label={<strong className="u-text-semi-bold">Add a new address</strong>}
-                        >
-                            <input type="radio" checked noValidate />
-                        </ReduxForm.Field>
-                    </FieldRow>*/}
-
-                    <FieldRow>
-                        <ReduxForm.Field component={Field} name="name" label="Full Name">
-                            <input type="text" noValidate />
-                        </ReduxForm.Field>
-                    </FieldRow>
-
-                    <FieldRow>
-                        <ReduxForm.Field
-                            component={Field}
-                            name="addressLine1"
-                            label="Address"
-                            caption={!isCompanyOrAptShown && addCompanyButton}
-                        >
-                            <input type="text" noValidate />
-                        </ReduxForm.Field>
-                    </FieldRow>
-
-                    {isCompanyOrAptShown &&
-                        <FieldRow>
-                            <ReduxForm.Field
-                                component={Field}
-                                name="company"
-                                label="Company"
-                            >
-                                <input type="text" noValidate placeholder="Optional" />
-                            </ReduxForm.Field>
-
-                            <ReduxForm.Field
-                                component={Field}
-                                name="addressLine2"
-                                label="Apt #, suite etc."
-                            >
-                                <input type="text" noValidate placeholder="Optional" />
-                            </ReduxForm.Field>
-                        </FieldRow>
-                    }
-
-                    <FieldRow>
-                        <ReduxForm.Field component={Field} name="city" label="City">
-                            <input type="text" noValidate />
-                        </ReduxForm.Field>
-                    </FieldRow>
-
-                    <FieldRow>
-                        <ReduxForm.Field component={Field} className="pw--has-select" name="countryId" label="Country">
-                            <select>
-                                {countries.map(({label, id}) => <option value={id} key={id}>{label}</option>)}
-                            </select>
-                        </ReduxForm.Field>
-                    </FieldRow>
-
-                    <FieldRow>
-                        {regions.length === 0 ?
-                            <ReduxForm.Field component={Field} name="region" label="Region">
-                                <input type="text" noValidate />
-                            </ReduxForm.Field>
-                        :
-                            <ReduxForm.Field component={Field} className="pw--has-select" name="regionId" label="State/Province">
-                                <select>
-                                    <option value={null}>Please select a region, state, or province</option>
-                                    {regions.map(({label, id}) => <option value={id} key={label}>{label}</option>)}
-                                </select>
-                            </ReduxForm.Field>
-                        }
-                    </FieldRow>
-
-                    <FieldRow>
-                        <ReduxForm.Field
-                            component={Field}
-                            name="postcode"
-                            label="Postal Code"
-                            customEventHandlers={{
-                                onBlur: fetchShippingMethods
-                            }}
-                        >
-                            <input type="text" noValidate />
-                        </ReduxForm.Field>
-                    </FieldRow>
-
-                    <FieldRow>
-                        <ReduxForm.Field
-                            component={Field}
-                            name="telephone"
-                            label="Phone"
-                            caption="In case we need to contact you about your order"
-                            normalize={normalizePhone}
-                        >
-                            <input type="tel" noValidate />
-                        </ReduxForm.Field>
-                    </FieldRow>
-                </div>
+                {renderAddressFormOrSavedAddressesOrBoth()}
             </div>
         </div>
     )
@@ -165,43 +133,40 @@ const ShippingAddressForm = ({
 
 ShippingAddressForm.propTypes = {
     /**
-    * Countries available to ship to
-    */
-    countries: React.PropTypes.arrayOf(React.PropTypes.shape({
-        label: React.PropTypes.string,
-        value: React.PropTypes.string
-    })),
-    /**
      * Whether the form is disabled or not
      */
     disabled: React.PropTypes.bool,
-    /**
-    * Fetches the available shipping methods from the back end
-    */
-    fetchShippingMethods: React.PropTypes.func,
 
     /**
-     * Shows the "Company" and "Apt #" fields
+    * The title for the form
+    */
+    formTitle: React.PropTypes.string,
+
+    /**
+     * Handles whether or not to show the "Add New Address" form fields
      */
-    handleShowCompanyAndApt: React.PropTypes.func,
+    handleShowAddNewAddress: React.PropTypes.func,
+
     /**
     * (Internal) added by redux form
     */
     invalid: React.PropTypes.bool,
 
     /**
-     * Whether the "Company" and "Apt #" fields display
+     * Whether the user is logged in or not
      */
-    isCompanyOrAptShown: React.PropTypes.bool,
+    isLoggedIn: React.PropTypes.bool,
+
     /**
-    * Regions available to ship to
+    * Saved addresses from the user's account
     */
-    regions: React.PropTypes.arrayOf(React.PropTypes.shape({
-        country_id: React.PropTypes.string,
-        label: React.PropTypes.string,
-        title: React.PropTypes.string,
-        value: React.PropTypes.string
-    })),
+    savedAddresses: React.PropTypes.array,
+
+    /**
+    * Whether or not to show the "Add New Addres" form fields
+    */
+    showAddNewAddress: React.PropTypes.bool,
+
     /**
     * (Internal) Added by redux form
     */
@@ -209,14 +174,13 @@ ShippingAddressForm.propTypes = {
 }
 
 const mapStateToProps = createPropsSelector({
-    countries: getCountries,
-    isCompanyOrAptShown: getIsCompanyOrAptShown,
-    regions: getAvailableRegions(SHIPPING_FORM_NAME)
+    isLoggedIn: getIsLoggedIn,
+    savedAddresses: getSavedAddresses,
+    showAddNewAddress: getShowAddNewAddress
 })
 
 const mapDispatchToProps = {
-    handleShowCompanyAndApt: showCompanyAndApt,
-    fetchShippingMethods: () => fetchShippingMethodsEstimate(SHIPPING_FORM_NAME)
+    handleShowAddNewAddress: (bool) => setShowAddNewAddress(bool)
 }
 
 export default connect(

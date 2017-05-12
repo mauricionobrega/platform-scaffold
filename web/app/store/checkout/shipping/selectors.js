@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {createSelector} from 'reselect'
 import Immutable from 'immutable'
 import {createGetSelector} from 'reselect-immutable-helpers'
@@ -5,9 +9,23 @@ import {getCheckout} from '../../selectors'
 
 export const getShipping = createGetSelector(getCheckout, 'shipping', Immutable.Map())
 
+export const getSavedAddresses = createGetSelector(getCheckout, 'savedAddresses', Immutable.List())
+
 export const getShippingMethods = createGetSelector(getShipping, 'shippingMethods', Immutable.List())
 
 export const getShippingAddress = createGetSelector(getShipping, 'address', Immutable.Map())
+
+export const getInitialShippingAddress = createSelector(
+    getCheckout,
+    getShippingAddress,
+    (checkout, address) => {
+        const savedAddressId = checkout.get('defaultShippingAddressId')
+        if (savedAddressId) {
+            return address.set('saved_address', `${savedAddressId}`)
+        }
+        return address
+    }
+)
 
 export const getSelectedShippingMethodValue = createGetSelector(getShippingAddress, 'shipping_method', '')
 

@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import Immutable from 'immutable'
 import {handleActions} from 'redux-actions'
 import {mergePayload} from '../../utils/reducer-utils'
@@ -10,8 +14,12 @@ import {
     receiveShippingMethods
 } from '../../integration-manager/checkout/results'
 
-const productReducer = handleActions({
+import {setDefaultShippingAddressId} from './shipping/actions'
+
+export default handleActions({
     [localActions.receiveCheckoutData]: mergePayload,
+    [localActions.receiveSavedShippingAddresses]: mergePayload,
+    [setDefaultShippingAddressId]: mergePayload,
     [receiveShippingMethodInitialValues]: mergePayload,
     [receiveCheckoutData]: mergePayload,
     [receiveCheckoutLocations]: mergePayload,
@@ -20,7 +28,4 @@ const productReducer = handleActions({
         // Using `set` here will make sure the list in the store is
         // correctly truncated.
         state.set('shippingMethods', payload)
-
 }, Immutable.Map())
-
-export default productReducer
