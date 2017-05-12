@@ -8,7 +8,7 @@ import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 
 import {splitFullName} from '../../utils/utils'
-import {receiveCheckoutData} from '../../store/checkout/actions'
+import {receiveCheckoutData} from '../../integration-manager/checkout/results'
 
 import {
     submitShipping as submitShippingCommand,
@@ -57,6 +57,7 @@ export const submitSignIn = () => (dispatch, getState) => {
 }
 
 export const submitShipping = () => (dispatch, getState) => {
+    debugger
     const currentState = getState()
     const formValues = getShippingFormValues(currentState)
     const {firstname, lastname} = splitFullName(formValues.name)
@@ -65,7 +66,6 @@ export const submitShipping = () => (dispatch, getState) => {
         lastname,
         ...formValues
     }
-
     dispatch(receiveCheckoutData({shipping: {address}, emailAddress: formValues.username}))
 
     return dispatch(submitShippingCommand(address))
