@@ -1,16 +1,21 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as ReduxForm from 'redux-form'
 
 import {getIsLoggedIn} from '../../app/selectors'
-import {getShippingAddress} from '../../../store/checkout/shipping/selectors'
+import {getInitialShippingAddress} from '../../../store/checkout/shipping/selectors'
 
 import {submitShipping} from '../actions'
+import {fetchSavedShippingAddresses} from '../../../store/checkout/shipping/actions'
 import {SHIPPING_FORM_NAME} from '../constants'
 
 import {Grid, GridSpan} from 'progressive-web-sdk/dist/components/grid'
-import ShippingAddressForm from './shipping-address'
+import ShippingAddress from './shipping-address'
 import ShippingEmail from './shipping-email'
 import ShippingMethod from './shipping-method'
 
@@ -27,6 +32,13 @@ const validate = (values, props) => {
         'postcode',
         'telephone'
     ]
+    const isSavedAddressSelected = !!values.saved_address
+
+    if (isSavedAddressSelected) {
+        // If user has chosen a saved address, no further validation necessary
+        return errors
+    }
+
     if (values.username && !/^[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.username)) {
         errors.username = 'Enter a valid email address'
     }
@@ -72,7 +84,7 @@ class CheckoutShippingForm extends React.Component {
                 <Grid className="u-center-piece">
                     <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 7}}>
                         {!isLoggedIn && <ShippingEmail />}
-                        <ShippingAddressForm />
+                        <ShippingAddress />
                     </GridSpan>
 
                     <GridSpan tablet={{span: 6, pre: 1, post: 1}} desktop={{span: 5}}>
@@ -90,6 +102,10 @@ CheckoutShippingForm.propTypes = {
      */
     disabled: React.PropTypes.bool,
     /**
+     * Fetches the current user's saved addresses
+     */
+    fetchSavedAddresses: React.PropTypes.func,
+    /**
      * Redux-form internal
      */
     handleSubmit: React.PropTypes.func,
@@ -104,11 +120,12 @@ CheckoutShippingForm.propTypes = {
 }
 
 const mapStateToProps = createPropsSelector({
-    initialValues: getShippingAddress,
+    initialValues: getInitialShippingAddress,
     isLoggedIn: getIsLoggedIn
 })
 
 const mapDispatchToProps = {
+    fetchSavedAddresses: fetchSavedShippingAddresses,
     submitShipping
 }
 
