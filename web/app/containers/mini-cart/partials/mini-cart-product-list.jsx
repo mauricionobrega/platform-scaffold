@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
@@ -20,7 +24,7 @@ const SUBTOTAL_CLASSES = classNames(
     'u-padding-top-lg',
 
     'u-h4',
-    'u-heading-family'
+    'u-text-family-header'
 )
 
 /* eslint-disable camelcase */

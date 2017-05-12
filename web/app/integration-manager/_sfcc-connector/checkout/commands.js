@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {SubmissionError} from 'redux-form'
 import {createBasket, handleCartData} from '../cart/utils'
 import {makeSfccRequest, getAuthToken, getAuthTokenPayload} from '../utils'

@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
@@ -17,7 +21,7 @@ import MiniCartHeader from './partials/mini-cart-header'
 import MiniCartProductList from './partials/mini-cart-product-list'
 
 const MiniCartEmpty = () => (
-    <div className="t-mini-cart__empty-content u-flexbox u-flex u-column">
+    <div className="t-mini-cart__empty-content u-flexbox u-flex u-direction-column">
         <Image
             className="u-margin-bottom-md"
             height="140px"
@@ -35,7 +39,7 @@ const MiniCartMain = ({hasItems, closeMiniCart, checkoutShippingURL}) => {
     const buttonClasses = 'c--primary u-width-full u-text-uppercase'
 
     return (
-        <div className="t-mini-cart__content u-flexbox u-column u-padding-md">
+        <div className="t-mini-cart__content u-flexbox u-direction-column u-padding-md">
             {hasItems ? <MiniCartProductList /> : <MiniCartEmpty />}
 
             <div className="u-padding-top-lg u-flex-none">

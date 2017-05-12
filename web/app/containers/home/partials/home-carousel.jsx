@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
@@ -25,7 +29,7 @@ const HomeCarousel = ({banners}) => {
                                 <Image
                                     src={getAssetUrl(`static/img/homepage_carousel/slide-${index + 1}.jpg`)}
                                     alt={alt}
-                                    className="u-block"
+                                    className="u-display-block"
                                     hidePlaceholder={true}
                                     loadingIndicator={placeholder}
                                 />

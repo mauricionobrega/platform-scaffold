@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {makeSfccRequest, getBasketID, storeBasketID, deleteBasketID} from '../utils'
 import {getCartItems} from '../../../store/cart/selectors'
 import {receiveCartProductData} from '../../products/results'

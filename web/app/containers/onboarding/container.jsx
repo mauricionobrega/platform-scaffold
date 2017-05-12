@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React from 'react'
 
 import CarouselItem from 'progressive-web-sdk/dist/components/carousel/carousel-item'
@@ -12,9 +16,9 @@ const OnboardingScreen = ({imageURL, imageAlt, title, subtitle, primaryButton, l
                     <div>
                         <img src={imageURL} className="carousel-item-image" alt={imageAlt} />
                         {title &&
-                            <h2 className="item-title u-color-neutral-60 u-text-font-family u-text-semi-bold">{title}</h2>
+                            <h2 className="item-title u-color-neutral-60 u-text-family u-text-weight-medium">{title}</h2>
                         }
-                        <p className="item-subtitle u-text-font-family">{subtitle}</p>
+                        <p className="item-subtitle u-text-family">{subtitle}</p>
                     </div>
                 </div>
                 {primaryButton &&

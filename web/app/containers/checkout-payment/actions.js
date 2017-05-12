@@ -1,11 +1,14 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 import {getPaymentBillingFormValues} from '../../store/form/selectors'
 import {getEmailAddress} from '../../store/checkout/selectors'
 import {getShippingAddress} from '../../store/checkout/shipping/selectors'
-import {splitFullName} from '../../utils/utils'
 import {submitPayment as submitPaymentCommand} from '../../integration-manager/checkout/commands'
-
+import {splitFullName} from '../../utils/utils'
 
 export const receiveContents = createAction('Received CheckoutPayment Contents')
 export const toggleFixedPlaceOrder = createAction('Toggled the fixed "Place Order" container', ['isFixedPlaceOrderShown'])
@@ -16,27 +19,59 @@ export const setCvvType = createAction('Setting CVV type', ['cvvType'])
 
 export const submitPayment = () => (dispatch, getState) => {
     const currentState = getState()
-    const billingValues = getPaymentBillingFormValues(currentState)
+    const billingFormValues = getPaymentBillingFormValues(currentState)
+    const billingIsSameAsShippingAddress = billingFormValues.billing_same_as_shipping
+
+    // Careful. This get's completely overwritten below
+    let address = null
     const email = getEmailAddress(currentState)
-    const sameAddress = billingValues.billing_same_as_shipping
 
-    let address = {
-        ...billingValues
-    }
-
-    if (sameAddress) {
+    if (billingIsSameAsShippingAddress) {
+        const shippingAddress = getShippingAddress(currentState).toJS()
         address = {
-            ...address,
-            ...getShippingAddress(currentState).toJS()
+            // NOT spreading `address` because it contains many incorrectly
+            // formatted keys, as far as the payment-information request
+            // is concerned
+            customerAddressId: `${shippingAddress.customerAddressId}`,
+            customerId: `${shippingAddress.customerId}`,
+            username: email,
+            firstname: shippingAddress.firstname,
+            lastname: shippingAddress.lastname,
+            company: shippingAddress.company,
+            postcode: shippingAddress.postcode,
+            city: shippingAddress.city,
+            street: shippingAddress.street,
+            region: shippingAddress.region,
+            regionCode: shippingAddress.regionCode,
+            regionId: `${shippingAddress.regionId}`,
+            countryId: shippingAddress.countryId,
+            saveInAddressBook: false
         }
-
     } else {
-        const {firstname, lastname} = splitFullName(billingValues.name)
+        const {
+            name,
+            company,
+            addressLine1,
+            addressLine2,
+            countryId,
+            city,
+            regionId,
+            postcode,
+        } = billingFormValues
+
+        const {firstname, lastname} = splitFullName(name)
+
         address = {
-            ...address,
             firstname,
             lastname,
-            username: email
+            username: email,
+            company: company || '',
+            postcode,
+            city,
+            street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1],
+            regionId,
+            countryId,
+            saveInAddressBook: false
         }
     }
     return dispatch(submitPaymentCommand(address))

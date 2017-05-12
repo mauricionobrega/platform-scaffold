@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {noop} from 'progressive-web-sdk/dist/utils/utils'
 import {setRegisterLoaded, setSigninLoaded} from '../../login/results'
 import {setLoggedIn} from '../../results'

@@ -1,14 +1,21 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import Immutable from 'immutable'
 import {handleActions} from 'redux-actions'
 import {mergePayload} from '../../utils/reducer-utils'
-import {receiveCheckoutData} from './actions'
+import {receiveSavedShippingAddresses} from './actions'
 import * as integrationManagerResults from '../../integration-manager/checkout/results'
+import {setDefaultShippingAddressId} from './shipping/actions'
 
-const productReducer = handleActions({
-    [receiveCheckoutData]: mergePayload,
+const checkoutReducer = handleActions({
+    [receiveSavedShippingAddresses]: mergePayload,
+    [integrationManagerResults.receiveShippingMethodInitialValues]: mergePayload,
     [integrationManagerResults.receiveBillingInitialValues]: mergePayload,
     [integrationManagerResults.receiveShippingInitialValues]: mergePayload,
-    [integrationManagerResults.receiveCheckoutData]: mergePayload
+    [integrationManagerResults.receiveCheckoutData]: mergePayload,
+    [setDefaultShippingAddressId]: mergePayload
 }, Immutable.Map())
 
-export default productReducer
+export default checkoutReducer

@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React from 'react'
 import {GRID_SETTINGS} from '../constants'
 
@@ -37,7 +41,7 @@ const CheckoutConfirmationQuestions = () => (
     <Grid className="t-checkout-confirmation__questions u-center-piece">
         <GridSpan {...GRID_SETTINGS}>
             <div className="t-checkout-confirmation__heading u-padding-md u-padding-top-lg">
-                <h2 className="u-h4 u-text-all-caps">Any Questions</h2>
+                <h2 className="u-h4 u-text-uppercase">Any Questions</h2>
             </div>
         </GridSpan>
 
@@ -52,7 +56,7 @@ const CheckoutConfirmationQuestions = () => (
 
         <GridSpan {...GRID_SETTINGS}>
             <div className="u-padding-lg">
-                <Button onClick={continueShopping} className="c--tertiary u-width-full u-text-all-caps">
+                <Button onClick={continueShopping} className="c--tertiary u-width-full u-text-uppercase">
                     Continue Shopping
                 </Button>
             </div>

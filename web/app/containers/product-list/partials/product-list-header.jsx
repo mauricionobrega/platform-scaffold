@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
@@ -13,7 +17,7 @@ const ProductListHeader = ({title, contentsLoaded, parentName, parentHref}) => (
     <div className="u-flexbox u-align-bottom">
         <div className="u-flex u-padding-top-lg u-padding-bottom-lg u-padding-start-md">
             <div className="t-product-list__breadcrumb">
-                <Link href={parentHref} className="u-text-small">{parentName}</Link>
+                <Link href={parentHref} className="u-text-size-small">{parentName}</Link>
             </div>
             <div className="u-margin-top-md">
                 {contentsLoaded ?
