@@ -41,7 +41,7 @@ const ProductDetailsCarousel = ({images, contentsLoaded}) => {
     }
 
     const imgProps = {
-        className: classNames('u-block', {
+        className: classNames('u-display-block', {
             'c--is-transitioning': !contentsLoaded // Carousel hasn't received the final images yet
         }),
         hidePlaceholder: true,

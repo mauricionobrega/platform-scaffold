@@ -6,16 +6,16 @@
 
 .item-title {
     margin: 10px 46px 0;
-    font-size: 20px;
-    line-height: 24px;
+    font-size: $big-font-size;
+    line-height: $big-line-height;
     letter-spacing: 0;
 }
 
 .item-subtitle {
     margin: 16px 42px 0;
     color: #3a3a48;
-    font-size: 14px;
-    line-height: 20px;
+    font-size: $font-size;
+    line-height: $line-height;
 }
 
 .button-wrapper + .button-wrapper {

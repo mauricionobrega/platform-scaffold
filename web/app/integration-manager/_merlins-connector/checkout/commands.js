@@ -206,35 +206,25 @@ export const submitPayment = (formValues) => (dispatch, getState) => {
     const currentState = getState()
     const entityID = getCustomerEntityID(currentState)
     const isLoggedIn = getIsLoggedIn(currentState)
-    const {
-        firstname,
-        lastname,
-        company,
-        addressLine1,
-        addressLine2,
-        countryId,
-        city,
-        regionId,
-        postcode,
-        username
-    } = formValues
+
     const address = {
-        firstname,
-        lastname,
-        company: company || '',
-        postcode,
-        city,
-        street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1],
-        regionId,
-        countryId,
+        firstname: formValues.firstname,
+        lastname: formValues.lastname,
+        company: formValues.company || '',
+        postcode: formValues.postcode,
+        city: formValues.city,
+        street: formValues.street,
+        regionId: formValues.regionId,
+        countryId: formValues.countryId,
         saveInAddressBook: false
     }
+
     const paymentInformation = {
         billingAddress: {
             ...address
         },
         cartId: entityID,
-        email: username,
+        email: formValues.username,
         paymentMethod: {
             additional_data: null,
             method: 'checkmo',

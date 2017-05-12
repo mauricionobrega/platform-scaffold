@@ -45,7 +45,7 @@ const CheckoutConfirmationForm = ({
             <FieldRow>
                 <Button
                     type="submit"
-                    className="c--primary u-text-all-caps u-width-full"
+                    className="c--primary u-text-uppercase u-width-full"
                     disabled={submitting}
                 >
                     Create Account

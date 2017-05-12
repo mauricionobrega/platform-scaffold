@@ -19,7 +19,7 @@ const ProductItem = ({
     title,
     customWidth
 }) => {
-    const classes = classNames('c-product-item', 'u-flexbox', 'u-row-reverse', className)
+    const classes = classNames('c-product-item', 'u-flexbox', 'u-direction-row-reverse', className)
 
     return (
         <article className={classes}>

@@ -7,9 +7,8 @@ import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 import {removeNotification} from '../../../containers/app/actions'
 import {getIsLoggedIn} from '../../../containers/app/selectors'
-import {getUenc} from '../selectors'
+import {getUenc, getCustomerEntityID} from '../selectors'
 import {receiveEntityID} from '../actions'
-import {getCustomerEntityID} from '../../../store/checkout/selectors'
 import {receiveCartContents} from '../../cart/results'
 import {receiveCartProductData} from '../../products/results'
 import {submitForm, textFromFragment} from '../utils'
@@ -131,10 +130,10 @@ export const initCartPage = (url) => (dispatch) => {
             const locationsData = parseLocations(magentoFieldData)
 
             dispatch(receiveEntityID(customerEntityID))
+            dispatch(receiveCheckoutData(locationsData))
 
-            return dispatch(receiveCheckoutData(locationsData))
+            return dispatch(fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME))
         })
-        .then(() => dispatch(fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME)))
 }
 
 export const addToWishlist = (productID, productURL) => (dispatch, getState) => {
