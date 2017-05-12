@@ -16,7 +16,7 @@ let cart
 let checkout
 
 const PRODUCT_LIST_INDEX = process.env.PRODUCT_LIST_INDEX || 2
-const PRODUCT_INDEX = process.env.PRODUCT_INDEX || 2
+const PRODUCT_INDEX = process.env.PRODUCT_INDEX || 1
 
 export default {
     '@tags': ['checkout'],
