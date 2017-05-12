@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import * as ReduxForm from 'redux-form'
 import {connect} from 'react-redux'
@@ -46,6 +50,7 @@ class BillingAddressForm extends React.Component {
             street
         } = this.props
 
+        const hasShippingAddress = !!(street || city || postcode || name)
         const shippingAddress = (
             <div>
                 <p>{street}, {city}, {postcode}</p>
@@ -73,7 +78,7 @@ class BillingAddressForm extends React.Component {
                 </div>
 
                 <div className="u-border-light-top u-border-light-bottom u-bg-color-neutral-00 t-checkout-payment__card">
-                    {city &&
+                    {hasShippingAddress &&
                         <FieldRow className="u-padding-md">
                             <ReduxForm.Field
                                 component={Field}
@@ -86,7 +91,7 @@ class BillingAddressForm extends React.Component {
                         </FieldRow>
                     }
 
-                    {(newShippingAddressIsEnabled || !city) &&
+                    {(newShippingAddressIsEnabled || !hasShippingAddress) &&
                         <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg u-border-light-top">
                             <FieldRow>
                                 <ReduxForm.Field component={Field} name="name" label="Full name">
