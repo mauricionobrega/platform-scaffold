@@ -110,9 +110,9 @@ export const signOut = () => (dispatch) => (
     dispatch(logout()).then(() => {
         // Desktop's message includes 'redirect to home page' message
         // so we'll just hardcode a message instead
-        dispatch(addNotification({
-            content: 'You are now signed out',
-            id: 'signedOutNotification'
-        }))
+        dispatch(addNotification(
+            'signedOutNotification',
+            'You are now signed out'
+        ))
     })
 )

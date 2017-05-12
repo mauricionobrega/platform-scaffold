@@ -34,23 +34,23 @@ export const submitRegisterForm = () => {
             })
             .catch((error) => {
                 if (error.name !== 'SubmissionError') {
-                    dispatch(addNotification({
-                        content: `Sorry, registration failed. Contact us for assistance. ${error.message}`,
-                        id: CHECKOUT_CONFIRMATION_REGISTRATION_FAILED,
-                        showRemoveButton: true
-                    }))
+                    dispatch(addNotification(
+                        CHECKOUT_CONFIRMATION_REGISTRATION_FAILED,
+                        `Sorry, registration failed. Contact us for assistance. ${error.message}`,
+                        true
+                    ))
                 } else if (error.message.includes('Unable to save')) {
-                    dispatch(addNotification({
-                        content: error.message,
-                        id: CHECKOUT_CONFIRMATION_REGISTRATION_FAILED,
-                        showRemoveButton: true
-                    }))
+                    dispatch(addNotification(
+                        CHECKOUT_CONFIRMATION_REGISTRATION_FAILED,
+                        error.message,
+                        true
+                    ))
                 } else {
-                    dispatch(addNotification({
-                        content: 'Could not complete registration. The email you provided may already be in use.',
-                        id: CHECKOUT_CONFIRMATION_REGISTRATION_FAILED,
-                        showRemoveButton: true
-                    }))
+                    dispatch(addNotification(
+                        CHECKOUT_CONFIRMATION_REGISTRATION_FAILED,
+                        'Could not complete registration. The email you provided may already be in use.',
+                        true
+                    ))
                 }
             })
     }
