@@ -18,11 +18,11 @@
     background-color: $background-color;
     box-shadow: $inset-box-shadow;
 
-    font-family: $font-family-header;
+    font-family: $header-font-family;
 
     // Added with webfontloader. See loadFonts() in app/container.js
     .wf-active & {
-        font-family: $font-family-loaded-header;
+        font-family: $loaded-header-font-family;
     }
 
     .pw-carousel__inner {

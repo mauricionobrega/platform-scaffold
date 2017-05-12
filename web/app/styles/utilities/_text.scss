@@ -10,16 +10,16 @@
 }
 
 .u-text-family-header {
-    font-family: $font-family-header !important;
+    font-family: $header-font-family !important;
 
     // Added with webfontloader. See loadFonts() in app/container.js
     .wf-active & {
-        font-family: $font-family-loaded-header !important; // TODO: Remove !important
+        font-family: $loaded-header-font-family !important; // TODO: Remove !important
     }
 }
 
 .u-text-family-loaded {
-    font-family: $font-family-loaded-header !important;
+    font-family: $loaded-header-font-family !important;
 }
 
 

@@ -73,8 +73,8 @@ $desktop-breakpoint: (
 // [CCC] Typography
 // ---
 $font-family: 'San Francisco', 'Roboto', 'Fira Sans', 'Segoe UI', sans-serif;
-$font-family-header: 'Avenir Next Condensed', 'Roboto Condensed', 'Helvetica Neue', 'Roboto', sans-serif;
-$font-family-loaded-header: 'Oswald', $font-family-header;
+$header-font-family: 'Avenir Next Condensed', 'Roboto Condensed', 'Helvetica Neue', 'Roboto', sans-serif;
+$loaded-header-font-family: 'Oswald', $header-font-family;
 
 // Line height
 $huge-line-height: 32px;

@@ -12,13 +12,13 @@ h5,
 h6 {
     margin: 0;
 
-    font-family: $font-family-header;
+    font-family: $header-font-family;
     font-weight: normal;
     line-height: 1.25;
 
     // Added with webfontloader. See loadFonts() in app/container.js
     .wf-active & {
-        font-family: $font-family-loaded-header;
+        font-family: $loaded-header-font-family;
     }
 }
 
