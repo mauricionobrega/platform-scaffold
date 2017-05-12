@@ -34,6 +34,11 @@ export const UnwrappedLogin = Loadable({
     LoadingComponent: ContainerPlaceholder
 })
 
+export const UnwrappedJasonLogin = Loadable({
+    loader: () => import('./jason-login/container'),
+    LoadingComponent: ContainerPlaceholder
+})
+
 export const UnwrappedProductDetails = Loadable({
     loader: () => import('./product-details/container'),
     LoadingComponent: ContainerPlaceholder
@@ -50,6 +55,7 @@ export const CheckoutPayment = template(UnwrappedCheckoutPayment)
 export const CheckoutShipping = template(UnwrappedCheckoutShipping)
 export const Home = template(UnwrappedHome)
 export const Login = template(UnwrappedLogin)
+export const JasonLogin = template(UnwrappedJasonLogin)
 export const ProductDetails = template(UnwrappedProductDetails)
 export const ProductList = template(UnwrappedProductList)
 export const Offline = template(UnwrappedOffline)

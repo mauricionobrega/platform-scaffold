@@ -21,9 +21,12 @@ const template = (WrappedComponent) => {
         dispatchRouteChange({dispatch, location, route}) {
             const url = getURL(location)
 
+            console.log('dispatch route change')
             dispatch(onRouteChanged(url, route.routeName))
+            console.log('dispatched route change')
 
             if (!route.suppressFetch) {
+                console.log('will fetch')
                 dispatch(fetchPage(url, WrappedComponent, route.routeName, route.fetchUrl))
             }
             dispatch(removeAllNotifications())

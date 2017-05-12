@@ -10,14 +10,14 @@ import checkoutShipping from './checkout-shipping/reducer'
 import footer from './footer/reducer'
 import header from './header/reducer'
 import home from './home/reducer'
+import jasonLogin from './jason-login/reducer'
 import login from './login/reducer'
 import navigation from './navigation/reducer'
 import productDetails from './product-details/reducer'
 import productList from './product-list/reducer'
-// import {reducer as formReducer} from 'redux-form'
 
 
-const rootReducer = combineReducers({
+const uiReducer = combineReducers({
     app,
     cart,
     checkoutConfirmation,
@@ -26,12 +26,12 @@ const rootReducer = combineReducers({
     footer,
     header,
     home,
+    jasonLogin,
     login,
     navigation,
     productDetails,
     productList,
-    // form: formReducer,
 
 })
 
-export default rootReducer
+export default uiReducer

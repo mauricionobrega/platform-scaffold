@@ -7,17 +7,23 @@ import * as actions from '../actions'
 import SignInForm from './signin-form'
 import {PanelDescription} from './common'
 
-const SignInPanel = ({description, submitForm}) => (
-    <div className="t-login__signin-panel">
-        <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg">
-            <PanelDescription description={description} />
-        </div>
+const SignInPanel = (props) => {
+    const {
+        description,
+        submitForm
+    } = props
+    return (
+        <div className="t-login__signin-panel">
+            <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg">
+                <PanelDescription description={description} />
+            </div>
 
-        <div className="u-padding-start-md u-padding-end-md u-padding-bottom-lg">
-            <SignInForm submitForm={submitForm} />
+            <div className="u-padding-start-md u-padding-end-md u-padding-bottom-lg">
+                <SignInForm submitForm={submitForm} />
+            </div>
         </div>
-    </div>
-)
+    )
+}
 
 SignInPanel.propTypes = {
     description: PropTypes.string,

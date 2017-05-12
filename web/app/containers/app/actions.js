@@ -18,6 +18,7 @@ import {
     UnwrappedCheckoutConfirmation,
     UnwrappedCheckoutPayment,
     UnwrappedCheckoutShipping,
+    UnwrappedJasonLogin,
     UnwrappedLogin,
     UnwrappedProductDetails,
     UnwrappedProductList
@@ -31,6 +32,7 @@ import * as checkoutShippingUIActions from '../checkout-shipping/actions'
 import * as checkoutShippingActions from '../../store/checkout/shipping/actions'
 import * as cartActions from '../../store/cart/actions'
 import * as homeActions from '../home/actions'
+import * as jasonLoginActions from '../jason-login/actions'
 import * as loginActions from '../login/actions'
 import * as productDetailsActions from '../product-details/actions'
 import * as footerActions from '../footer/actions'
@@ -132,6 +134,7 @@ const requestCapturedDoc = () => {
  * by react-router, ideally.
  */
 export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
+    console.log('fetch page')
     return (dispatch, getState) => {
         const isNotTestingEnvironment = !!window.Progressive
         const request = isInitialEntryToSite && isNotTestingEnvironment
@@ -154,6 +157,8 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
                     dispatch(homeActions.process(receivedAction))
                 } else if (pageComponent === UnwrappedLogin) {
                     dispatch(loginActions.process(receivedAction))
+                } else if (pageComponent === UnwrappedJasonLogin) {
+                    dispatch(jasonLoginActions.process(receivedAction))
                 } else if (pageComponent === UnwrappedProductDetails) {
                     dispatch(productDetailsActions.process(receivedAction))
                     dispatch(productsActions.processProductDetails(receivedAction))

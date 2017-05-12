@@ -6,7 +6,7 @@ import {Provider} from 'react-redux'
 
 // Containers
 import App from './containers/app/container'
-import {Cart, CheckoutConfirmation, CheckoutPayment, CheckoutShipping, Home, Login, ProductList, ProductDetails} from './containers/templates'
+import {Cart, CheckoutConfirmation, CheckoutPayment, CheckoutShipping, Home, Login, ProductList, ProductDetails, JasonLogin} from './containers/templates'
 import CheckoutHeader from './containers/checkout-header/container'
 import CheckoutFooter from './containers/checkout-footer/container'
 
@@ -37,7 +37,7 @@ const Router = ({store}) => (
 
                 <IndexRoute component={Home} routeName="home" />
                 <Route component={Cart} path="checkout/cart/" routeName="cart" />
-                <Route component={Login} path="customer/account/login/" routeName="signin" />
+                <Route component={JasonLogin} path="customer/account/login/" routeName="signin" />
                 <Route component={Login} path="customer/account/create/" routeName="register" />
                 <Route component={ProductList} path="potions.html" routeName="productListPage" />
                 <Route component={ProductList} path="books.html" routeName="productListPage" />
