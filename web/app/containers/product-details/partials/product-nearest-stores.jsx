@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 /* eslint-disable react/self-closing-comp */
 import React, {PropTypes} from 'react'
 
@@ -40,7 +44,7 @@ class ProductNearestStores extends React.Component {
         })
 
         const merlinsPotionsScript = document.createElement('script')
-        merlinsPotionsScript.append(merlinsPotionsAsync)
+        merlinsPotionsScript.innerHTML = merlinsPotionsAsync
         document.body.appendChild(merlinsPotionsScript)
     }
 

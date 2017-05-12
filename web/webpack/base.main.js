@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 /* eslint-disable import/no-commonjs */
 /* eslint-env node */
 
@@ -13,7 +17,6 @@ const analyzeBundle = process.env.MOBIFY_ANALYZE === 'true'
 const config = {
     devtool: 'cheap-source-map',
     entry: [
-        'whatwg-fetch',
         './app/main.jsx'
     ],
     output: {
@@ -42,6 +45,17 @@ const config = {
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
             minChunks: (module) => /node_modules/.test(module.resource)
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            // These dependencies are shared between several of the route chunks
+            async: 'common-dependencies',
+            minChunks: (module) => {
+                const context = module.context
+                const targets = [/progressive-web-sdk/]
+                return context &&
+                    context.indexOf('node_modules') >= 0 &&
+                    targets.find((target) => target.test(context))
+            }
         }),
         new ExtractTextPlugin({
             filename: '[name].css'

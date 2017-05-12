@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
@@ -12,11 +16,14 @@ import * as selectors from './selectors'
 import {getCartSummaryCount} from '../../store/cart/selectors'
 
 import {HeaderBar} from 'progressive-web-sdk/dist/components/header-bar'
+import Icon from 'progressive-web-sdk/dist/components/icon'
+import Search from 'progressive-web-sdk/dist/components/search'
 
 import NavigationAction from './partials/navigation-action'
 import HeaderTitle from './partials/header-title'
 import StoresAction from './partials/stores-action'
 import CartAction from './partials/cart-action'
+import SearchAction from './partials/search-action'
 
 import {isRunningInAstro, trigger} from '../../utils/astro-integration'
 
@@ -29,6 +36,9 @@ class Header extends React.Component {
         this.handleScroll = throttle(this.handleScroll.bind(this), SCROLL_CHECK_INTERVAL)
         // Start off uncollapsed
         this.headerHeight = Number.MAX_VALUE
+
+        this.onChangeSearchQuery = this.onChangeSearchQuery.bind(this)
+        this.onSearchSubmit = this.onSearchSubmit.bind(this)
     }
 
     componentDidMount() {
@@ -37,6 +47,18 @@ class Header extends React.Component {
 
     componentWillUnmount() {
         window.removeEventListener('scroll', this.handleScroll)
+    }
+
+    onChangeSearchQuery(e) {
+        const {value} = e.target
+        this.props.searchQueryChanged(value)
+    }
+
+    onSearchSubmit(e) {
+        e.preventDefault()
+
+        const value = e.target.query.value
+        this.props.searchSubmit(value)
     }
 
     handleScroll() {
@@ -50,7 +72,16 @@ class Header extends React.Component {
     }
 
     render() {
-        const {onMenuClick, onMiniCartClick, isCollapsed, itemCount} = this.props
+        const {
+            onMenuClick,
+            onMiniCartClick,
+            onSearchOpenClick,
+            onSearchCloseClick,
+            isCollapsed,
+            itemCount,
+            searchIsOpen,
+            searchSuggestions
+        } = this.props
 
         if (isRunningInAstro) {
             trigger('cart:count-updated', {
@@ -63,17 +94,45 @@ class Header extends React.Component {
             't--hide-label': isCollapsed
         })
 
+        const searchIcon = <Icon name="search" title="Submit search" />
+        const clearIcon = <Icon name="close" title="Clear search field" />
+
         return (
             <header className="t-header" ref={(el) => { this.headerHeight = el ? el.scrollHeight : Number.MAX_VALUE }}>
                 <div className="t-header__bar">
                     <HeaderBar>
                         <NavigationAction innerButtonClassName={innerButtonClassName} onClick={onMenuClick} />
-                        <div className="t-header__placeholder" />
+                        <SearchAction innerButtonClassName={innerButtonClassName} onClick={onSearchOpenClick} />
                         <HeaderTitle isCollapsed={isCollapsed} />
                         <StoresAction innerButtonClassName={innerButtonClassName} />
                         <CartAction innerButtonClassName={innerButtonClassName} onClick={onMiniCartClick} />
                     </HeaderBar>
                 </div>
+
+                <Search
+                    className="t-header__search"
+                    isOverlay
+                    isOpen={searchIsOpen}
+                    onChange={this.onChangeSearchQuery}
+                    onClose={onSearchCloseClick}
+                    onSubmit={this.onSearchSubmit}
+                    termSuggestions={searchSuggestions}
+                    submitButtonProps={{
+                        className: 'c--secondary t-header__search-submit-button',
+                        children: searchIcon
+                    }}
+                    inputProps={{
+                        placeholder: 'Search the entire store',
+                        name: 'query'
+                    }}
+                    closeButtonProps={{
+                        className: 'u-visually-hidden'
+                    }}
+                    clearButtonProps={{
+                        className: 'u-color-brand',
+                        children: clearIcon
+                    }}
+                />
             </header>
         )
     }
@@ -82,20 +141,32 @@ class Header extends React.Component {
 Header.propTypes = {
     isCollapsed: PropTypes.bool,
     itemCount: PropTypes.number,
+    searchIsOpen: PropTypes.bool,
+    searchQueryChanged: PropTypes.func,
+    searchSubmit: PropTypes.func,
+    searchSuggestions: PropTypes.array,
     toggleHeader: PropTypes.func,
     onMenuClick: PropTypes.func,
-    onMiniCartClick: PropTypes.func
+    onMiniCartClick: PropTypes.func,
+    onSearchCloseClick: PropTypes.func,
+    onSearchOpenClick: PropTypes.func,
 }
 
 const mapStateToProps = createPropsSelector({
     isCollapsed: selectors.getIsCollapsed,
-    itemCount: getCartSummaryCount
+    itemCount: getCartSummaryCount,
+    searchIsOpen: selectors.getSearchIsOpen,
+    searchSuggestions: selectors.getSearchSuggestions
 })
 
 const mapDispatchToProps = {
     onMenuClick: () => openModal(NAVIGATION_MODAL),
     onMiniCartClick: miniCartActions.requestOpenMiniCart,
-    toggleHeader: headerActions.toggleHeader
+    onSearchOpenClick: headerActions.openSearch,
+    onSearchCloseClick: headerActions.closeSearch,
+    searchSubmit: headerActions.searchSubmit,
+    toggleHeader: headerActions.toggleHeader,
+    searchQueryChanged: headerActions.searchQueryChanged,
 }
 
 export default connect(

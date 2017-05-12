@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 // MOBIFY PROGRESSIVE SERVICE WORKER LOADER
 // DO NOT MODIFY WITHOUT APPROVAL FROM MOBIFY
 const isPreview = /preview=true/.test(self.location.search)

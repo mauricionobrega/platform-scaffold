@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {createAction} from '../../utils/utils'
 import {extractMagentoShippingStepData, getCheckoutEntityID, extractMagentoJson} from '../../utils/magento-utils'
 
@@ -7,6 +11,8 @@ import {parseShippingInitialValues} from './shipping/parser'
 export const receiveCheckoutData = createAction('Receive Checkout Data')
 
 export const receiveShippingMethodInitialValues = createAction('Receive Shipping Method Initial Values', 'shipping')
+
+export const receiveSavedShippingAddresses = createAction('Receive Saved Shipping Addresses', 'savedAddresses')
 
 export const processCheckoutData = ({payload: {$response}}) => {
     return (dispatch) => {

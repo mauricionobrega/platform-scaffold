@@ -1,4 +1,3 @@
-import polyfill from 'progressive-web-sdk/dist/polyfill'
 import {initCacheManifest, getBuildOrigin} from 'progressive-web-sdk/dist/asset-utils'
 import cacheHashManifest from '../tmp/cache-hash-manifest.json'
 
@@ -15,11 +14,11 @@ __webpack_public_path__ = origin // eslint-disable-line camelcase, no-undef
 import React from 'react'
 import {render} from 'react-dom'
 
-// Redux
-import configureStore from './store'
-
 // Router
 import Router from './router'
+
+// Redux
+import configureStore from './store'
 
 // Stylesheet: importing it here compiles the SCSS into CSS. The CSS is actually
 // added to the markup in `loader.js`
@@ -27,14 +26,11 @@ import Stylesheet from './stylesheet.scss' // eslint-disable-line no-unused-vars
 
 import {analyticManager} from 'progressive-web-sdk/dist/analytics/analytic-manager'
 import {clientAnalytics} from './utils/analytics/client-analytics'
-import {pushMessaging} from './utils/push-messaging/push-messaging-distributor'
-
-polyfill()
 
 analyticManager.init({
-    projectSlug: AJS_SLUG,      // eslint-disable-line no-undef
+    projectSlug: AJS_SLUG, // eslint-disable-line no-undef
     isDebug: false
-}, clientAnalytics, pushMessaging)
+}, clientAnalytics)
 initCacheManifest(cacheHashManifest)
 
 const store = configureStore()

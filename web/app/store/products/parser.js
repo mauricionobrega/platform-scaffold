@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {extractMagentoJson} from '../../utils/magento-utils'
 import {getTextFrom, parseTextLink, parseImage} from '../../utils/parser-utils'
 import {urlToPathKey} from '../../utils/utils'

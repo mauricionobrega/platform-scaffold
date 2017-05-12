@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {parseTextLink, getTextFrom, parseSelect} from '../../../utils/parser-utils'
 import {urlToPathKey} from '../../../utils/utils'
 
@@ -52,6 +56,9 @@ const priceFilterParser = ($, $html) => {
 const productListParser = ($, $html) => {
     const $numItems = $html.find('#toolbar-amount .toolbar-number').first()
     const $sortSelect = $html.find('.sorter-options').first()
+    const title = getTextFrom($html, '.page-title')
+    const searchTermMatch = title.match(/'(.*)'/)
+    const searchTerm = searchTermMatch ? searchTermMatch[1] : undefined
 
     const products = $
           .makeArray($html.find('.item.product-item'))
@@ -64,7 +71,8 @@ const productListParser = ($, $html) => {
         noResultsText: getTextFrom($html, '.message.empty'),
         itemCount: $numItems.length > 0 ? $numItems.text() : '0',
         products,
-        title: getTextFrom($html, '.page-title'),
+        title,
+        searchTerm,
         filters: priceFilterParser($, $html),
         sort: parseSelect($, $sortSelect)
     }

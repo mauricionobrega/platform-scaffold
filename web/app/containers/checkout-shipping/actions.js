@@ -1,26 +1,30 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 /* eslint-disable import/namespace */
 /* eslint-disable import/named */
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {createAction} from '../../utils/utils'
-import {
-    UnwrappedCheckoutShipping
-} from '../templates'
+import {UnwrappedCheckoutShipping} from '../templates'
 import checkoutShippingParser from './parsers/checkout-shipping'
 import {addNotification, fetchPage, removeAllNotifications, removeNotification} from '../app/actions'
 import {getCustomerEntityID} from '../../store/checkout/selectors'
 import {getIsLoggedIn} from '../app/selectors'
 import {getShippingFormValues} from '../../store/form/selectors'
+import {getSavedAddresses} from '../../store/checkout/shipping/selectors'
 import {receiveCheckoutData} from '../../store/checkout/actions'
+import {ADD_NEW_ADDRESS_FIELD} from './constants'
 
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 
 export const showCompanyAndApt = createAction('Showing the "Company" and "Apt #" fields')
-
+export const setShowAddNewAddress = createAction('Setting the "Saved/New Address" field', 'showAddNewAddress')
 export const receiveData = createAction('Receive Checkout Shipping Data')
+
 export const process = ({payload: {$, $response}}) => {
     return receiveData(checkoutShippingParser($, $response))
 }
-
 
 export const onShippingEmailRecognized = () => {
     return (dispatch) => {
@@ -91,38 +95,61 @@ export const submitSignIn = () => {
 export const submitShipping = () => {
     return (dispatch, getState) => {
         const currentState = getState()
-        const {
-            name,
-            company,
-            addressLine1,
-            addressLine2,
-            country_id,
-            city,
-            username,
-            region_id,
-            region,
-            postcode,
-            telephone,
-            shipping_method
-        } = getShippingFormValues(currentState)
-        const entityID = getCustomerEntityID(currentState)
-        const isLoggedIn = getIsLoggedIn(currentState)
-        const names = name.split(' ')
-        const shippingSelections = shipping_method.split('_')
-        const address = {
-            firstname: names.slice(0, -1).join(' '),
-            lastname: names.slice(-1).join(' '),
-            company: company || '',
-            telephone,
-            postcode,
-            city,
-            street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1],
-            regionId: region_id,
-            region,
-            countryId: country_id,
-            save_in_address_book: true
+        const savedAddress = getShippingFormValues(currentState).saved_address
+        const submittingWithNewAddress = savedAddress === ADD_NEW_ADDRESS_FIELD || savedAddress === undefined
+        let address
+
+        // Format the shipping address according to whether it's a saved or new address
+        if (submittingWithNewAddress) {
+            const {name} = getShippingFormValues(currentState)
+            const names = name.split(' ')
+            const newAddress = getShippingFormValues(currentState)
+
+            address = {
+                firstname: names.slice(0, -1).join(' '),
+                lastname: names.slice(-1).join(' '),
+                company: newAddress.company || '',
+                telephone: newAddress.telephone,
+                postcode: newAddress.postcode,
+                city: newAddress.city,
+                street: newAddress.addressLine2
+                    ? [newAddress.addressLine1, newAddress.addressLine2]
+                    : [newAddress.addressLine1],
+                regionId: newAddress.regionId,
+                region: newAddress.region,
+                countryId: newAddress.countryId,
+                saveInAddressBook: true
+            }
+        } else {
+            const {saved_address} = getShippingFormValues(currentState)
+            const savedAddress = getSavedAddresses(currentState).toJS()
+                .filter(({customerAddressId}) => {
+                    return parseInt(customerAddressId) === parseInt(saved_address)
+                })[0] || {}
+
+            address = {
+                ...savedAddress,
+                region: savedAddress.region,
+                saveInAddressBook: false
+            }
+
+            delete address.default_billing
+            delete address.default_shipping
         }
-        const addressInformation = {
+
+        // Prepare to update the store with the information submitted so far
+        const {username, shipping_method} = getShippingFormValues(currentState)
+        const shipping = {
+            address: {
+                ...address,
+                shipping_method,
+            }
+        }
+        dispatch(receiveCheckoutData({shipping, emailAddress: username}))
+
+        // Prepare and then run Shipping Information request
+        const shippingSelections = shipping_method.split('_')
+        const addressData = {
             addressInformation: {
                 shippingAddress: address,
                 billingAddress: {
@@ -133,16 +160,17 @@ export const submitShipping = () => {
                 shipping_method_code: shippingSelections[1]
             }
         }
+        const entityID = getCustomerEntityID(currentState)
+        const isLoggedIn = getIsLoggedIn(currentState)
         const persistShippingURL = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/shipping-information`
-        const shipping = {
-            address: {
-                ...address,
-                shipping_method,
-            }
-        }
-        dispatch(receiveCheckoutData({shipping, emailAddress: username}))
-        makeJsonEncodedRequest(persistShippingURL, addressInformation, {method: 'POST'})
-            .then((response) => response.json())
+        return makeJsonEncodedRequest(persistShippingURL, addressData, {method: 'POST'})
+            .then((response) => {
+                if (response.status === 400) {
+                    throw Error
+                }
+
+                return response.json()
+            })
             .then((responseJSON) => {
                 if (responseJSON.payment_methods) {
                     // TO DO: send response data to the next container
@@ -150,6 +178,13 @@ export const submitShipping = () => {
                         pathname: '/checkout/payment/'
                     })
                 }
+            })
+            .catch(() => {
+                dispatch(addNotification({
+                    content: `Unable to save shipping information. Please, check input data.`,
+                    id: 'submitShippingError',
+                    showRemoveButton: true
+                }))
             })
     }
 }

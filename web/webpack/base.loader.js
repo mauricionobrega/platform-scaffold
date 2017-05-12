@@ -1,9 +1,15 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 /* eslint-disable import/no-commonjs */
 /* eslint-env node */
 
 const path = require('path')
 const webpack = require('webpack')
 const baseCommon = require('./base.common')
+
+const webPackageJson = require('../package.json')
 
 const readNativeAstroVersion = () => {
     const nativePackageJson = require('../../native/package.json').dependencies['mobify-progressive-app-sdk']
@@ -12,10 +18,14 @@ const readNativeAstroVersion = () => {
 
 module.exports = {
     devtool: 'cheap-source-map',
-    entry: './app/loader.js',
+    entry: {
+        loader: './app/loader.js',
+        'core-polyfill': 'core-js',
+        'fetch-polyfill': 'whatwg-fetch'
+    },
     output: {
         path: path.resolve(process.cwd(), 'build'),
-        filename: 'loader.js'
+        filename: '[name].js'
     },
     resolve: {
         extensions: ['.js', '.jsx', '.json']
@@ -50,6 +60,7 @@ module.exports = {
             }
         }),
         new webpack.DefinePlugin({
+            MESSAGING_SITE_ID: `'${webPackageJson.messagingSiteId}'`,
             NATIVE_WEBPACK_ASTRO_VERSION: readNativeAstroVersion()
         })
     ]
