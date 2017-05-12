@@ -63,9 +63,9 @@ class OrderSummary extends React.Component {
             // cart,
             cartItems,
             isFixedPlaceOrderShown,
+            orderTotal,
+            subtotal,
             summaryCount,
-            subtotalExclTax,
-            subtotalInclTax,
             shippingRate,
             shippingLabel,
             taxAmount
@@ -90,7 +90,7 @@ class OrderSummary extends React.Component {
                     <Ledger className="u-border-light-top">
                         <LedgerRow
                             label={`Subtotal (${summaryCount} items)`}
-                            value={subtotalExclTax}
+                            value={subtotal}
                         />
 
                         <LedgerRow
@@ -139,7 +139,7 @@ class OrderSummary extends React.Component {
                         <LedgerRow
                             label="Total"
                             isTotal={true}
-                            value={subtotalInclTax}
+                            value={orderTotal}
                         />
                     </Ledger>
 
@@ -164,7 +164,7 @@ class OrderSummary extends React.Component {
                             </Button>
 
                             <p className="u-margin-top-md">
-                                Total: <strong>{subtotalInclTax}</strong>
+                                Total: <strong>{orderTotal}</strong>
                             </p>
                         </div>
                     </div>
@@ -197,6 +197,11 @@ OrderSummary.propTypes = {
     isFixedPlaceOrderShown: PropTypes.bool,
 
     /**
+     * The total cost of the order
+     */
+    orderTotal: PropTypes.string,
+
+    /**
      * Shipping rate label
      */
     shippingLabel: PropTypes.string,
@@ -207,14 +212,9 @@ OrderSummary.propTypes = {
     shippingRate: PropTypes.string,
 
     /**
-     * Subtotal excluding tax
+     * Total of all cart items (excluding shipping and taxes)
      */
-    subtotalExclTax: PropTypes.string,
-
-    /**
-     * Subtotal including tax
-     */
-    subtotalInclTax: PropTypes.string,
+    subtotal: PropTypes.string,
 
     /**
      * Total item count in cart
@@ -234,8 +234,8 @@ OrderSummary.propTypes = {
 
 const mapStateToProps = createPropsSelector({
     cartItems: cartSelectors.getCartItems,
-    subtotalExclTax: cartSelectors.getSubtotalExcludingTax,
-    subtotalInclTax: cartSelectors.getSubtotalIncludingTax,
+    subtotal: cartSelectors.getSubtotal,
+    orderTotal: cartSelectors.getOrderTotal,
     shippingRate: getSelectedShippingRate,
     shippingLabel: getSelectedShippingLabel,
     taxAmount: cartSelectors.getTaxAmount,

@@ -4,6 +4,7 @@
 
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
+import {extractPathFromURL} from 'progressive-web-sdk/dist/utils/utils'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 
 import Nav from 'progressive-web-sdk/dist/components/nav'
@@ -15,22 +16,25 @@ import * as merlinsNavItem from '../../components/nav-item'
 import * as selectors from './selectors'
 import {NAVIGATION_MODAL} from './constants'
 import {signOut} from '../app/actions'
-import {isModalOpen} from '../../store/selectors'
-import {closeModal} from '../../store/modals/actions'
+import {isModalOpen} from 'progressive-web-sdk/dist/store/modals/selectors'
+import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
+import {setNavigationPath} from './actions'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 import {withRouter} from 'progressive-web-sdk/dist/routing'
 import NavigationSocialIcons from './partials/navigation-social-icons'
 
 const Navigation = (props) => {
-    const {path, isOpen, root, closeNavigation, router, logoutAction} = props
+    const {path, isOpen, root, closeNavigation, router, setNavigationPath, logoutAction} = props
 
-    const onPathChange = (path) => {
-        const url = new URL(path)
-        // Path in the nav expected to be on this domain. React-router now only accepts
-        // a path, instead of a full url.
-        const routerPath = url.pathname + url.search + url.hash
-        router.push(routerPath)
-        closeNavigation()
+    const onPathChange = (path, isLeaf) => {
+        if (isLeaf) {
+            const routerPath = extractPathFromURL(path, true)
+            router.push(routerPath)
+            setNavigationPath('/')
+            closeNavigation()
+        } else {
+            setNavigationPath(path)
+        }
     }
 
     /**
@@ -98,6 +102,10 @@ Navigation.propTypes = {
      * The react-router router object.
      */
     router: PropTypes.object,
+    /**
+    * Sets the current path for the navigation menu
+    */
+    setNavigationPath: PropTypes.func
 }
 
 
@@ -109,7 +117,8 @@ const mapStateToProps = createPropsSelector({
 
 const mapDispatchToProps = {
     closeNavigation: () => closeModal(NAVIGATION_MODAL),
-    logoutAction: () => signOut()
+    setNavigationPath,
+    logoutAction: signOut
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Navigation))

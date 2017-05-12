@@ -5,9 +5,11 @@
 import {handleActions} from 'redux-actions'
 import {fromJS, List} from 'immutable'
 import {mergePayload} from '../../utils/reducer-utils'
-import {urlToPathKey} from '../../utils/utils'
+import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 
 import * as appActions from './actions'
+
+import {receiveAppData, setPageFetchError, setCheckoutShippingURL, setCartURL, setLoggedIn} from '../../integration-manager/results'
 import {CURRENT_URL, FETCHED_PATHS} from './constants'
 
 export const initialState = fromJS({
@@ -20,10 +22,21 @@ export const initialState = fromJS({
 
 export default handleActions({
     [appActions.receiveData]: mergePayload,
+    [appActions.setPageFetchError]: mergePayload,
+    [receiveAppData]: mergePayload,
+    [setPageFetchError]: mergePayload,
+    [setCheckoutShippingURL]: mergePayload,
+    [setCartURL]: mergePayload,
+    [setLoggedIn]: mergePayload,
     [appActions.onRouteChanged]: (state, {payload: {currentURL}}) => {
         return state.set(CURRENT_URL, currentURL)
     },
+    // Remove this reducer once we've fully converted to the integration manager
     [appActions.onPageReceived]: (state, {payload: {url}}) => {
+        const path = urlToPathKey(url)
+        return state.setIn([FETCHED_PATHS, path], true)
+    },
+    [appActions.setFetchedPage]: (state, {payload: {url}}) => {
         const path = urlToPathKey(url)
         return state.setIn([FETCHED_PATHS, path], true)
     },
@@ -41,7 +54,6 @@ export default handleActions({
     [appActions.removeAllNotifications]: (state) => {
         return state.set('notifications', List())
     },
-    [appActions.setPageFetchError]: mergePayload,
     [appActions.clearPageFetchError]: (state) => {
         return state.set('fetchError', null)
     },

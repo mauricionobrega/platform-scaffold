@@ -5,18 +5,19 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
-import * as selectors from '../selectors'
+import {getCategoryTitle, getCategoryParentTitle, getCategoryParentHref} from '../../../store/categories/selectors'
+import {getProductListContentsLoaded} from '../selectors'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
 import Link from 'progressive-web-sdk/dist/components/link'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import Image from 'progressive-web-sdk/dist/components/image'
 
-const ProductListHeader = ({title, contentsLoaded}) => (
+const ProductListHeader = ({title, contentsLoaded, parentName, parentHref}) => (
     <div className="u-flexbox u-align-bottom">
         <div className="u-flex u-padding-top-lg u-padding-bottom-lg u-padding-start-md">
             <div className="t-product-list__breadcrumb">
-                <Link href="/" className="u-text-size-small">Home</Link>
+                <Link href={parentHref} className="u-text-size-small">{parentName}</Link>
             </div>
             <div className="u-margin-top-md">
                 {contentsLoaded ?
@@ -42,12 +43,16 @@ const ProductListHeader = ({title, contentsLoaded}) => (
 
 ProductListHeader.propTypes = {
     contentsLoaded: PropTypes.bool,
+    parentHref: PropTypes.string,
+    parentName: PropTypes.string,
     title: PropTypes.string
 }
 
 const mapStateToProps = createPropsSelector({
-    contentsLoaded: selectors.getProductListContentsLoaded,
-    title: selectors.getProductListTitle
+    contentsLoaded: getProductListContentsLoaded,
+    parentHref: getCategoryParentHref,
+    parentName: getCategoryParentTitle,
+    title: getCategoryTitle
 })
 
 export default connect(mapStateToProps)(ProductListHeader)

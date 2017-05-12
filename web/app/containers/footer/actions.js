@@ -2,35 +2,13 @@
 /* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
-import * as parser from './parsers/parser'
+import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 import * as constants from './constants'
-import * as utils from '../../utils/utils'
-import {makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
+import * as commands from '../../integration-manager/commands'
 
-export const receiveData = utils.createAction('Receive footer data')
+export const newsletterSignupComplete = createAction('Newsletter signup complete', ['signupStatus'])
 
-export const process = ({payload: {$, $response}}) => receiveData({
-    newsletter: parser.parseNewsLetter($response),
-    navigation: parser.parseNavigation($, $response)
-})
-
-export const newsletterSignupComplete = utils.createAction('Newsletter signup complete',
-    'signupStatus'
-)
-
-export const signUpToNewsletter = (action, method, data) => {
-    return (dispatch) => {
-
-        const onSuccess = () => {
-            dispatch(newsletterSignupComplete(constants.SIGNUP_SUCCESSFUL))
-        }
-
-        const onFail = () => {
-            dispatch(newsletterSignupComplete(constants.SIGNUP_FAILED))
-        }
-
-        return makeFormEncodedRequest(action, data, {method})
-            .then(onSuccess)
-            .catch(onFail)
-    }
-}
+export const signUpToNewsletter = (data) => (dispatch) =>
+    commands.submitNewsletter(data)
+        .then(() => dispatch(newsletterSignupComplete(constants.SIGNUP_SUCCESSFUL)))
+        .catch(() => dispatch(newsletterSignupComplete(constants.SIGNUP_FAILED)))

@@ -10,8 +10,8 @@ import Button from 'progressive-web-sdk/dist/components/button'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
 import {OFFLINE_MODAL} from '../constants'
-import {openModal, closeModal} from '../../../store/modals/actions'
-import {isModalOpen} from '../../../store/selectors'
+import {openModal, closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
+import {isModalOpen} from 'progressive-web-sdk/dist/store/modals/selectors'
 
 const OfflineModal = ({
     closeModal,

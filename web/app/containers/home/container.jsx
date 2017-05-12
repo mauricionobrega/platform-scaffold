@@ -3,6 +3,7 @@
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
 import React from 'react'
+import template from '../../template'
 
 // Partials
 import HomeCarousel from './partials/home-carousel'
@@ -17,4 +18,5 @@ const Home = () => {
     )
 }
 
-export default Home
+
+export default template(Home)

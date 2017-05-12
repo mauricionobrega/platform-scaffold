@@ -5,11 +5,13 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
+import {getCategoryItemCount} from '../../../store/categories/selectors'
 import * as selectors from '../selectors'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import {PRODUCT_LIST_FILTER_MODAL} from '../constants'
-import {openModal} from '../../../store/modals/actions'
-import {changeFilterTo, changeSort} from '../../../store/categories/actions'
+import {openModal} from 'progressive-web-sdk/dist/store/modals/actions'
+import {changeFilterTo} from '../../../store/categories/actions'
+import {changeSort} from '../actions'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import List from 'progressive-web-sdk/dist/components/list'
@@ -19,10 +21,13 @@ import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
 import ProductTile from '../../../components/product-tile'
 
+const noResultsText = 'We can\'t find products matching the selection'
+const emptySearchText = 'Your search returned no results. Please check your spelling and try searching again.'
+
 const ResultList = ({products}) => (
     <List className="c--borderless">
         {products.map((product) => {
-            return <ProductTile key={product.title} {...product} />
+            return <ProductTile key={product.id} {...product} />
         })}
     </List>
 )
@@ -31,7 +36,7 @@ ResultList.propTypes = {
     products: PropTypes.array
 }
 
-const NoResultsList = ({bodyText, routeName}) => (
+const NoResultsList = ({routeName}) => (
     <div className="u-flexbox u-direction-column u-align-center">
         <Image
             className="u-flex-none"
@@ -42,20 +47,12 @@ const NoResultsList = ({bodyText, routeName}) => (
         />
 
         <div className="t-product-list__no-results-text u-text-align-center">
-            {routeName === 'searchResultPage' ?
-                <div>
-                    Your search returned no results. Please check your spelling and try searching again.
-                </div>
-            :
-                <div>{bodyText}</div>
-            }
-
+            {routeName === 'searchResultPage' ? emptySearchText : noResultsText}
         </div>
     </div>
 )
 
 NoResultsList.propTypes = {
-    bodyText: PropTypes.string,
     routeName: PropTypes.string
 }
 
@@ -63,11 +60,8 @@ const ProductListContents = ({
     activeFilters,
     clearFilters,
     contentsLoaded,
-    hasProducts,
-    noResultsText,
     products,
     openModal,
-    sort,
     sortChange,
     routeName
 }) => (
@@ -97,7 +91,7 @@ const ProductListContents = ({
             <div className="t-product-list__num-results u-padding-md u-padding-start-sm u-padding-end-sm">
                 {contentsLoaded ?
                     <div>
-                        {hasProducts &&
+                        {products.length > 0 &&
                             <div className="u-flexbox">
                                 <div className="t-product-list__filter u-flex u-margin-end-md">
                                     <div className="u-text-weight-semi-bold u-margin-bottom-sm">
@@ -122,11 +116,10 @@ const ProductListContents = ({
                                                 onChange={(e) => { sortChange(e.target.value) }}
                                                 onBlur={(e) => { sortChange(e.target.value) }}
                                             >
-                                                {sort.options.map((option) =>
-                                                    <option value={option.value} key={option.value}>
-                                                        {option.text}
-                                                    </option>)
-                                                }
+                                                {/* This list of options corresponds to the functions in app/utils/sort-utils.js */}
+                                                <option value="position">Position</option>
+                                                <option value="name">Name</option>
+                                                <option value="price">Price</option>
                                             </select>
                                             <div className="t-product-list__sort-icon">
                                                 <Icon name="caret-down" />
@@ -142,10 +135,10 @@ const ProductListContents = ({
                 }
             </div>
 
-            {(hasProducts || !contentsLoaded) ?
+            {(products.length > 0 || !contentsLoaded) ?
                 <ResultList products={products} />
             :
-                <NoResultsList routeName={routeName} bodyText={noResultsText} />
+                <NoResultsList routeName={routeName} />
             }
         </div>
     </div>
@@ -157,21 +150,17 @@ ProductListContents.propTypes = {
     activeFilters: PropTypes.array,
     clearFilters: PropTypes.func,
     contentsLoaded: PropTypes.bool,
-    hasProducts: PropTypes.bool,
-    noResultsText: PropTypes.string,
+    numItems: PropTypes.number,
     openModal: PropTypes.func,
     routeName: PropTypes.string,
-    sort: PropTypes.object,
-    sortChange: PropTypes.func,
+    sortChange: PropTypes.func
 }
 
 const mapStateToProps = createPropsSelector({
-    activeFilters: selectors.getActiveFilters,
-    hasProducts: selectors.getHasProducts,
     contentsLoaded: selectors.getProductListContentsLoaded,
-    noResultsText: selectors.getNoResultsText,
-    products: selectors.getFilteredAndSortedListProducts,
-    sort: selectors.getSort
+    numItems: getCategoryItemCount,
+    activeFilters: selectors.getActiveFilters,
+    products: selectors.getFilteredAndSortedListProducts
 })
 
 const mapDispatchToProps = {

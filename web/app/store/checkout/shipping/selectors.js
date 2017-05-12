@@ -52,9 +52,9 @@ export const getShippingFullName = createSelector(getShippingFirstName, getShipp
 
 export const getStreet = createGetSelector(getShippingAddress, 'street', Immutable.List())
 
-export const getStreetLineOne = createSelector(getStreet, (street) => { return street.size ? street.get(0) : '' })
+export const getAddressLineOne = createGetSelector(getShippingAddress, 'addressLine1')
 
-export const getStreetLineTwo = createSelector(getStreet, (street) => { return street.size ? street.get(1) : '' })
+export const getAddressLineTwo = createGetSelector(getShippingAddress, 'addressLine2')
 
 export const getTelephone = createGetSelector(getShippingAddress, 'telephone')
 

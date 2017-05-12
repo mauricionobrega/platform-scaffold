@@ -3,25 +3,67 @@
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
 /* eslint-env jest */
-import {process} from './actions'
-
-let realFetch
-beforeAll(() => {
-    realFetch = global.fetch
-    global.fetch = jest.fn()
-    global.fetch.mockReturnValue(Promise.resolve())
-})
-
-afterAll(() => {
-    global.fetch = realFetch
-})
-
-jest.mock('./parsers/checkout-confirmation')
-import checkoutConfirmationParser from './parsers/checkout-confirmation'
+import {submitRegisterForm} from './actions'
+import Immutable from 'immutable'
 
 
-test('process parses the response and dispatches receiveData', () => {
-    const thunk = process({payload: {$: '$', $response: '$response'}})
-    expect(typeof thunk).toBe('object')
-    expect(checkoutConfirmationParser).toBeCalledWith('$', '$response')
+jest.mock('../../integration-manager/checkout/commands')
+import {updatingShippingAndBilling} from '../../integration-manager/checkout/commands'
+jest.mock('../../integration-manager/login/commands')
+import {registerUser} from '../../integration-manager/login/commands'
+jest.mock('../app/actions')
+import {addNotification} from '../app/actions'
+
+
+
+describe('submitRegisterForm', () => {
+    const mockDispatch = jest.fn()
+    mockDispatch.mockImplementation((...args) => args[0])
+
+    const mockGetState = () => ({
+        checkout: Immutable.fromJS({
+            email: 'test@email.com',
+            shipping: {
+                address: {
+                    firstname: 'test',
+                    lastname: 'test'
+                }
+            }
+        }),
+        form: {
+            confirmationForm: {
+                values: {
+                    password: 'Test'
+                }
+            }
+        }
+    })
+
+    test('shows a notification on error', () => {
+        registerUser.mockClear()
+        registerUser.mockImplementationOnce(() => Promise.reject('Test error'))
+        const thunk = submitRegisterForm()
+        expect(typeof thunk).toBe('function')
+
+
+        return thunk(mockDispatch, mockGetState)
+            .then(() => {
+                expect(mockDispatch).toBeCalled()
+                expect(addNotification).toBeCalled()
+            })
+    })
+
+    test('calls updateShippingAndBilling on success', () => {
+        registerUser.mockClear()
+        registerUser.mockImplementationOnce(() => Promise.resolve())
+        const thunk = submitRegisterForm()
+        expect(typeof thunk).toBe('function')
+
+
+        return thunk(mockDispatch, mockGetState)
+            .then(() => {
+                expect(mockDispatch).toBeCalled()
+                expect(updatingShippingAndBilling).toBeCalled()
+            })
+    })
 })

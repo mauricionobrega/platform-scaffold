@@ -5,7 +5,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
-import * as selectors from '../selectors'
+import {getCategorySearchTerm} from '../../../store/categories/selectors'
 
 import Breadcrumbs from 'progressive-web-sdk/dist/components/breadcrumbs'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
@@ -40,7 +40,7 @@ SearchResultHeader.propTypes = {
 }
 
 const mapStateToProps = createPropsSelector({
-    searchTerm: selectors.getSearchResultTerm
+    searchTerm: getCategorySearchTerm
 })
 
 export default connect(mapStateToProps)(SearchResultHeader)

@@ -10,7 +10,7 @@ import {createPropsSelector} from 'reselect-immutable-helpers'
 // Selectors
 import * as selectors from '../selectors'
 import {getCountries, getRegions} from '../../../store/checkout/locations/selectors'
-import {getShippingFullName, getStreetLineOne, getCity, getPostcode} from '../../../store/checkout/shipping/selectors'
+import {getShippingFullName, getAddressLineOne, getCity, getPostcode} from '../../../store/checkout/shipping/selectors'
 
 // Actions
 import * as checkoutPaymentActions from '../actions'
@@ -234,7 +234,7 @@ const mapStateToProps = createPropsSelector({
     newShippingAddressIsEnabled: selectors.getNewShippingAddressIsEnabled,
     postcode: getPostcode,
     regions: getRegions,
-    street: getStreetLineOne,
+    street: getAddressLineOne,
 })
 
 const mapDispatchToProps = {
