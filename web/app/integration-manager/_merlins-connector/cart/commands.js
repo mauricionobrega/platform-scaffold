@@ -127,8 +127,8 @@ export const fetchCartPageData = (url) => (dispatch) => {
 
             dispatch(receiveCheckoutLocations(parseLocations(magentoFieldData)))
             dispatch(receiveEntityID(parseCheckoutEntityID($response)))
+            dispatch(fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME))
         })
-        .then(() => dispatch(fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME)))
 }
 
 export const addToWishlist = (productId, productURL) => (dispatch, getState) => {
