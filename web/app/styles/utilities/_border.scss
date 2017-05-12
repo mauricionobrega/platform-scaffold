@@ -5,27 +5,27 @@
 // ---
 
 .u-border {
-    @include border(true);
+    border: $border !important;
 }
 
 .u-border-0 {
-    @include border-0(true);
+    border: 0 !important;
 }
 
 .u-border-top {
-    @include border-top(true);
-}
-
-.u-border-start {
-    @include border-start(true);
-}
-
-.u-border-bottom {
-    @include border-bottom(true);
+    border-top: $border !important;
 }
 
 .u-border-end {
-    @include border-end(true);
+    border-right: $border !important;
+}
+
+.u-border-bottom {
+    border-bottom: $border !important;
+}
+
+.u-border-start {
+    border-left: $border !important;
 }
 
 
@@ -33,29 +33,29 @@
 // ---
 
 .u-border-light {
-    border: 1px solid $neutral-15; // @TODO: Add to Spline
+    border: $light-border !important;
 }
 
 .u-border-light-top {
-    border-top: 1px solid $neutral-15; // @TODO: Add to Spline
+    border-top: $light-border !important;
 }
 
-// .u-border-light-start {
-//     @include border-start(true);
-// }
+.u-border-light-end {
+    border-right: $light-border !important;
+}
 
 .u-border-light-bottom {
-    border-bottom: 1px solid $neutral-15; // @TODO: Add to Spline
+    border-bottom: $light-border !important;
 }
 
-// .u-border-light-end {
-//     @include border-end(true);
-// }
+.u-border-light-start {
+    border-left: $light-border !important;
+}
 
 
 // Border (Other)
 // ---
 
 .u-border-radius {
-    @include border-radius(true);
+    border-radius: $border-radius !important;
 }

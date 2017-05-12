@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import * as selectors from '../selectors'
@@ -25,7 +29,7 @@ const ProductDetailsHeading = ({breadcrumbs, title, price, isInCheckout, cartURL
         }
 
         {price ?
-            <span className="t-product-details-heading__price t-product-details__price u-color-accent u-text-normal u-text-header-font-family u-text-letter-spacing">{price}</span>
+            <span className="t-product-details-heading__price t-product-details__price u-color-accent u-text-weight-regular u-text-family-header u-text-letter-spacing-small">{price}</span>
         :
             <SkeletonBlock width="25%" height="32px" />
         }

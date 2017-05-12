@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import isEmail from 'validator/lib/isEmail'
 import {SubmissionError} from 'redux-form'
 
@@ -5,7 +9,6 @@ import {isRunningInAstro, jsRpcMethod} from '../../utils/astro-integration'
 import {login, registerUser} from '../../integration-manager/login/commands'
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import isReactRoute from 'progressive-web-sdk/dist/routing/is-react-route'
-
 
 const validateSignInForm = (formValues) => {
     const errors = {

@@ -17,7 +17,7 @@
 		87132A231B6016FF00FC74A4 /* Cordova.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 87132A1F1B6016FF00FC74A4 /* Cordova.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		87C6A88C1B43044D001876CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C6A88B1B43044D001876CE /* AppDelegate.swift */; };
 		87C6A8931B43044D001876CE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87C6A8921B43044D001876CE /* Images.xcassets */; };
-		87C6A8A21B43044D001876CE /* scaffoldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C6A8A11B43044D001876CE /* scaffoldTests.swift */; };
+		87C6A8A21B43044D001876CE /* ProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C6A8A11B43044D001876CE /* ProjectTests.swift */; };
 		87C6A8E91B430E15001876CE /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 87C6A8D71B430E15001876CE /* config.xml */; };
 		CBC6D60C1D19B7E900DC3785 /* PushClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBC6D60B1D19B7E900DC3785 /* PushClient.framework */; };
 		CBC6D60D1D19B7EF00DC3785 /* PushClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CBC6D60B1D19B7E900DC3785 /* PushClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -61,7 +61,7 @@
 		87C6A8921B43044D001876CE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		87C6A89B1B43044D001876CE /* scaffoldTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = scaffoldTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		87C6A8A01B43044D001876CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		87C6A8A11B43044D001876CE /* scaffoldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scaffoldTests.swift; sourceTree = "<group>"; };
+		87C6A8A11B43044D001876CE /* ProjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTests.swift; sourceTree = "<group>"; };
 		87C6A8D71B430E15001876CE /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
 		87C6A8F51B430EDD001876CE /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
 		87C6A8F71B430FA2001876CE /* app.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = app.js; path = ../../app/app.js; sourceTree = "<group>"; };
@@ -156,7 +156,7 @@
 		87C6A89E1B43044D001876CE /* scaffoldTests */ = {
 			isa = PBXGroup;
 			children = (
-				87C6A8A11B43044D001876CE /* scaffoldTests.swift */,
+				87C6A8A11B43044D001876CE /* ProjectTests.swift */,
 				87C6A89F1B43044D001876CE /* Supporting Files */,
 			);
 			path = scaffoldTests;
@@ -327,7 +327,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87C6A8A21B43044D001876CE /* scaffoldTests.swift in Sources */,
+				87C6A8A21B43044D001876CE /* ProjectTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

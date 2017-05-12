@@ -1,15 +1,15 @@
 //
-//  scaffoldTests.swift
-//  scaffoldTests
+//  ProjectTests.swift
+//  ProjectTests
 //
-//  Created by Mike Klemarewski on 2015-06-30.
+//  Created by Mobify on 2015-06-30.
 //  Copyright (c) 2015 Mobify. All rights reserved.
 //
 
 import UIKit
 import XCTest
 
-class scaffoldTests: XCTestCase {
+class ProjectTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
