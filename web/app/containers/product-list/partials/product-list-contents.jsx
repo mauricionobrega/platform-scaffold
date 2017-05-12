@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
@@ -15,14 +19,15 @@ import Image from 'progressive-web-sdk/dist/components/image'
 import Icon from 'progressive-web-sdk/dist/components/icon'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 
-import ProductTile from './product-tile'
+import ProductTile from '../../../components/product-tile'
 
 const noResultsText = 'We can\'t find products matching the selection'
+const emptySearchText = 'Your search returned no results. Please check your spelling and try searching again.'
 
 const ResultList = ({products}) => (
     <List className="c--borderless">
         {products.map((product) => {
-            return <ProductTile key={product.title} {...product} />
+            return <ProductTile key={product.id} {...product} />
         })}
     </List>
 )
@@ -31,7 +36,7 @@ ResultList.propTypes = {
     products: PropTypes.array
 }
 
-const NoResultsList = () => (
+const NoResultsList = ({routeName}) => (
     <div className="u-flexbox u-direction-column u-align-center">
         <Image
             className="u-flex-none"
@@ -42,10 +47,14 @@ const NoResultsList = () => (
         />
 
         <div className="t-product-list__no-results-text u-text-align-center">
-            {noResultsText}
+            {routeName === 'searchResultPage' ? emptySearchText : noResultsText}
         </div>
     </div>
 )
+
+NoResultsList.propTypes = {
+    routeName: PropTypes.string
+}
 
 const ProductListContents = ({
     activeFilters,
@@ -53,7 +62,8 @@ const ProductListContents = ({
     contentsLoaded,
     products,
     openModal,
-    sortChange
+    sortChange,
+    routeName
 }) => (
     <div>
         {contentsLoaded && activeFilters.length > 0 && (
@@ -81,45 +91,48 @@ const ProductListContents = ({
         <div className="t-product-list__container u-padding-end u-padding-bottom-lg u-padding-start">
             <div className="t-product-list__num-results u-padding-md u-padding-start-sm u-padding-end-sm">
                 {contentsLoaded ?
-                    <div className="u-flexbox">
-                        <div className="t-product-list__filter u-flex u-margin-end-md">
-                            <div className="u-text-semi-bold u-margin-bottom-sm">
-                                {products.length} Items
-                            </div>
+                    <div>
+                        {products.length > 0 &&
+                            <div className="u-flexbox">
+                                <div className="t-product-list__filter u-flex u-margin-end-md">
+                                    <div className="u-text-semi-bold u-margin-bottom-sm">
+                                        {products.length} Items
+                                    </div>
 
-                            <Button
-                                className="c--tertiary u-width-full u-text-uppercase"
-                                onClick={openModal}
-                                disabled={activeFilters.length > 0}
-                            >
-                                Filter
-                            </Button>
-                        </div>
-
-                        <div className="t-product-list__sort u-flex">
-                            <label htmlFor="sort" className="u-text-semi-bold u-margin-bottom-sm">
-                                Sort by
-                            </label>
-
-                            <div>
-                                <div className="u-position-relative u-width-full">
-                                    <select
-                                        className="t-product-list__sort-select"
-                                        onChange={(e) => { sortChange(e.target.value) }}
-                                        onBlur={(e) => { sortChange(e.target.value) }}
+                                    <Button
+                                        className="c--tertiary u-width-full u-text-uppercase"
+                                        onClick={openModal}
+                                        disabled={routeName === 'searchResultPage' || activeFilters.length > 0}
                                     >
-                                        {/* This list of options corresponds to the functions in app/utils/sort-utils.js */}
-                                        <option value="position">Position</option>
-                                        <option value="name">Name</option>
-                                        <option value="price">Price</option>
-                                    </select>
+                                        Filter
+                                    </Button>
+                                </div>
+                                <div className="t-product-list__sort u-flex">
+                                    <label htmlFor="sort" className="u-text-semi-bold u-margin-bottom-sm">
+                                        Sort by
+                                    </label>
 
-                                    <div className="t-product-list__sort-icon">
-                                        <Icon name="caret-down" />
+                                    <div>
+                                        <div className="u-position-relative u-width-full">
+                                            <select
+                                                className="t-product-list__sort-select"
+                                                onChange={(e) => { sortChange(e.target.value) }}
+                                                onBlur={(e) => { sortChange(e.target.value) }}
+                                            >
+                                                {/* This list of options corresponds to the functions in app/utils/sort-utils.js */}
+                                                <option value="position">Position</option>
+                                                <option value="name">Name</option>
+                                                <option value="price">Price</option>
+                                            </select>
+
+                                            <div className="t-product-list__sort-icon">
+                                                <Icon name="caret-down" />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        }
                     </div>
                 :
                     <SkeletonBlock height="20px" />
@@ -129,7 +142,7 @@ const ProductListContents = ({
             {(products.length > 0 || !contentsLoaded) ?
                 <ResultList products={products} />
             :
-                <NoResultsList />
+                <NoResultsList routeName={routeName} />
             }
         </div>
     </div>
@@ -143,6 +156,7 @@ ProductListContents.propTypes = {
     contentsLoaded: PropTypes.bool,
     numItems: PropTypes.number,
     openModal: PropTypes.func,
+    routeName: PropTypes.string,
     sortChange: PropTypes.func
 }
 

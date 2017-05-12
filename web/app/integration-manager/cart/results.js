@@ -1,3 +1,4 @@
-import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
+import {createTypedAction} from '../../utils/utils'
+import {Cart} from './types'
 
-export const receiveCartContents = createAction('Received Cart Contents')
+export const receiveCartContents = createTypedAction('Receive Cart Contents', Cart)

@@ -1,46 +1,41 @@
+import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
+import {textFromFragment, productSubtotal, getHighResImage} from '../utils'
 
-export const textFromFragment = (fragment) => {
-    const e = document.createElement('div')
-    e.innerHTML = fragment
-    return e.textContent.trim()
+export const parseCartProducts = ({items}) => /* Products */ {
+    const products = items.map(({product_id, product_name, product_url, product_price, product_image}) => ({
+        id: product_id,
+        title: product_name,
+        href: product_url,
+        price: textFromFragment(product_price),
+        thumbnail: {
+            src: getHighResImage(product_image.src),
+            alt: product_image.alt,
+            size: { /* See getHighResImage which has size hard-coded */
+                width: '240px',
+                height: '300px'
+            }
+        }
+    }))
+
+    const productMap = {}
+    products.forEach((product) => {
+        productMap[urlToPathKey(product.href)] = product
+    })
+
+    return productMap
 }
 
-export const quoteItemReviver = (k, v) => {
-    if (k === 'product_price') {
-        return textFromFragment(v)
+export const parseCart = ({items, subtotal, subtotal_excl_tax}) => /* Cart */ {
+    return {
+        items: items.map(({item_id, product_id, product_url, qty, product_price}) => ({
+            id: item_id,
+            productId: product_id,
+            href: product_url,
+            quantity: qty,
+            itemPrice: textFromFragment(product_price),
+            linePrice: productSubtotal(textFromFragment(product_price), qty)
+        })),
+        subtotal: textFromFragment(subtotal_excl_tax),
+        orderTotal: textFromFragment(subtotal)
     }
-    return v
 }
-
-const PRODUCT_ID_REGEX = /\/product_id\/(\d+)/
-const productIdFromUrl = (url) => {
-    if (!url) {
-        return undefined
-    }
-    return PRODUCT_ID_REGEX.exec(url)[1] || undefined
-}
-
-export const cartReviver = (k, v) => {
-    switch (k) {
-        case 'subtotal':
-        case 'subtotal_excl_tax':
-        case 'subtotal_incl_tax':
-            return textFromFragment(v)
-        case 'items':
-            return v.map((item) => {
-                for (const k of Object.keys(item)) {
-                    item[k] = quoteItemReviver(k, item[k])
-                }
-                item.productId = productIdFromUrl(item.configure_url)
-                return item
-            })
-        default:
-            return v
-    }
-}
-
-export const parse = (responseText) => {
-    return JSON.parse(responseText, cartReviver).cart
-}
-
-export default parse

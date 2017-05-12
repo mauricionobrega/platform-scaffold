@@ -10,6 +10,10 @@ export const fetchProductListData = (url) => (dispatch) => {
         .then((res) => {
             const [$, $response] = res
             const pathKey = urlToPathKey(url)
+
+            const title = parseCategoryTitle($, $response)
+            const searchTermMatch = title.match(/'(.*)'/)
+
             // Receive page contents
             dispatch(receiveProductListProductData(productListParser($, $response)))
             dispatch(receiveCategoryInformation(pathKey, {
@@ -17,7 +21,8 @@ export const fetchProductListData = (url) => (dispatch) => {
                 href: pathKey,
                 parentId: null,
                 filters: priceFilterParser($, $response),
-                title: parseCategoryTitle($, $response),
+                title,
+                searchTerm: searchTermMatch ? searchTermMatch[0] : null
             }))
             dispatch(receiveCategoryContents(pathKey, categoryProductsParser($, $response)))
         })

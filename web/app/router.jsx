@@ -44,7 +44,6 @@ const Router = ({store}) => (
     <Provider store={store}>
         <SDKRouter>
             <Route path="/" component={App} onChange={OnChange}>
-
                 <IndexRoute component={Home} routeName="home" fetchAction={fetchHomeData} />
                 <Route component={Cart} path="checkout/cart/" routeName="cart" fetchAction={fetchCartPageData} />
                 <Route component={Login} path="customer/account/login/" routeName="signin" fetchAction={fetchSigninData} />
@@ -55,6 +54,8 @@ const Router = ({store}) => (
                 <Route component={ProductList} path="supplies.html" routeName="productListPage" fetchAction={fetchProductListData} />
                 <Route component={ProductList} path="new-arrivals.html" routeName="productListPage" fetchAction={fetchProductListData} />
                 <Route component={ProductList} path="charms.html" routeName="productListPage" fetchAction={fetchProductListData} />
+                <Route component={ProductList} path="catalogsearch/result/*" routeName="searchResultPage" fetchAction={fetchProductListData} />
+                {/* Careful. The routeName on this 'configure' route is used to change how the ProductDetails component renders */}
                 <Route component={ProductDetails} path="checkout/cart/configure/id/*/product_id/*/" routeName="cartEditPage" fetchAction={fetchPdpData} />
                 <Route component={ProductDetails} path="*.html" routeName="productDetailsPage" fetchAction={fetchPdpData} />
                 <Route
@@ -90,7 +91,7 @@ const Router = ({store}) => (
                     fetchAction={fetchCheckoutConfirmationData}
                 />
 
-
+                {/* SFCC Connector routes */}
                 <Route component={Home} path="*/Home-Show*" routeName="home" fetchAction={fetchHomeData} />
                 <Route component={ProductList} path="*/womens*" routeName="productListPage" fetchAction={fetchProductListData} />
                 <Route component={ProductList} path="*/mens*" routeName="productListPage" fetchAction={fetchProductListData} />

@@ -17,14 +17,13 @@ export const getCategoryProductPaths = createGetSelector(getSelectedCategory, 'p
 export const getCategoryItemCount = createGetSelector(getSelectedCategory, 'itemCount')
 export const getCategoryTitle = createGetSelector(getSelectedCategory, 'title')
 export const getCategoryParentID = createGetSelector(getSelectedCategory, 'parentId', null)
+export const getCategorySearchTerm = createGetSelector(getSelectedCategory, 'searchTerm')
 
 export const getCategoryParent = createSelector(
     getCategories,
     getCategoryParentID,
     (categories, parentId) => {
-        return parentId
-            ? categories.find((category) => category.get('id') === parentId)
-            : Immutable.Map()
+        return (parentId && categories.find((category) => category.get('id') === parentId)) || Immutable.Map()
     }
 )
 

@@ -6,14 +6,16 @@ import {getIsLoggedIn} from '../../../containers/app/selectors'
 import {getUenc} from '../selectors'
 import {getCustomerEntityID} from '../../../store/checkout/selectors'
 import {receiveCartContents} from '../../cart/results'
-import {receiveCheckoutData} from '../../checkout/results'
-import {submitForm} from '../utils'
-import parseCart from './parser'
+import {receiveCartProductData} from '../../products/results'
+import {submitForm, textFromFragment} from '../utils'
 import {parseLocations} from '../checkout/parsers'
+import {receiveCheckoutData} from '../../checkout/results'
 import {fetchShippingMethodsEstimate} from '../checkout/commands'
 import {fetchPageData} from '../app/commands'
+import {parseCart, parseCartProducts} from './parser'
 import {parseCheckoutEntityID, extractMagentoJson} from '../../../utils/magento-utils'
 import {ESTIMATE_FORM_NAME, ADD_TO_WISHLIST_URL} from '../../../containers/cart/constants'
+import {getProductById} from '../../../store/products/selectors'
 
 const LOAD_CART_SECTION_URL = '/customer/section/load/?sections=cart%2Cmessages&update_section_id=true'
 const REMOVE_CART_ITEM_URL = '/checkout/sidebar/removeItem/'
@@ -32,18 +34,33 @@ export const getCart = () => (dispatch) => {
     dispatch(removeNotification('cartUpdateError'))
     const currentTimeMs = new Date().getTime()
     return makeRequest(`${LOAD_CART_SECTION_URL}&_=${currentTimeMs}`, opts)
-        .then((response) => response.text())
-        .then((responseText) => dispatch(receiveCartContents(parseCart(responseText))))
+        .then((response) => response.json())
+        .then(({cart}) => {
+            cart.items.forEach((item) => {
+                item.product_price = textFromFragment(item.product_price)
+            })
+
+            if (cart.items.length > 0) {
+                dispatch(receiveCartProductData(parseCartProducts(cart)))
+            }
+
+            dispatch(receiveCartContents(parseCart(cart)))
+        })
 }
 
-export const addToCart = (key, qty) => (dispatch, getState) => {
-    const formInfo = getState().integrationManager.get(key)
+export const addToCart = (productId, quantity) => (dispatch, getState) => {
+    const product = getProductById(productId)(getState())
+    const formInfo = getState().integrationManager.get(urlToPathKey(product.get('href')))
     const formValues = {
         ...formInfo.get('hiddenInputs').toJS(),
-        qty
+        qty: quantity
     }
 
-    return submitForm(formInfo.get('submitUrl'), formValues, {method: formInfo.get('method')})
+    return submitForm(
+            formInfo.get('submitUrl'),
+            formValues,
+            {method: formInfo.get('method')}
+        )
         .then(() => dispatch(getCart()))
 }
 

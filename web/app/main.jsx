@@ -24,8 +24,9 @@ import configureStore from './store'
 // added to the markup in `loader.js`
 import Stylesheet from './stylesheet.scss' // eslint-disable-line no-unused-vars
 
+
 import connector from './integration-manager/_merlins-connector'
-// import connector from './integration-manager/_demandware-connector'
+// import connector from './integration-manager/_sfcc-connector'
 
 import {registerConnector} from './integration-manager'
 

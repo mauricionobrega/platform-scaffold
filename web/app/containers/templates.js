@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 // The wrapping is implemented here to avoid a circular dependency
 // involving the containers and the app actions.
 import Loadable from 'react-loadable'
@@ -20,7 +24,6 @@ export const registerPreloadCallbacks = () => {
         requestIdleCallback(() => loadable.preload())
     })
 }
-
 
 // These are on the old model and need to be wrapped here
 // rather than in container.js to avoid circular imports

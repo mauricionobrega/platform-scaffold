@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import {reduxForm} from 'redux-form'
 import {createPropsSelector} from 'reselect-immutable-helpers'
@@ -43,13 +47,13 @@ class SignInForm extends React.Component {
                 <FieldSet className="t-login__signin-fieldset">
                     <LoginField
                         label="Email"
-                        name="login[username]"
+                        name="username"
                         type="email"
                         />
 
                     <LoginField
                         label="Password"
-                        name="login[password]"
+                        name="password"
                         type="password"
                         forgotPassword={{href: FORGOT_PASSWORD_PATH}}
                         />

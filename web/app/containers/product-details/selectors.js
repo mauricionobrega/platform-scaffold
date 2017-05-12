@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {createSelector} from 'reselect'
 import Immutable from 'immutable'
 import {createGetSelector, createHasSelector} from 'reselect-immutable-helpers'
@@ -36,7 +40,6 @@ export const getAddToCartDisabled = createSelector(
 )
 
 export const getItemQuantity = createGetSelector(getSelectedProductDetails, 'itemQuantity')
-export const getCTAText = createGetSelector(getSelectedProductDetails, 'ctaText', 'Add To Cart')
 
 export const getProductDetailsBreadcrumbs = createGetSelector(
     getSelectedProductDetails,

@@ -3,11 +3,11 @@ import {connect} from 'react-redux'
 import * as ReduxForm from 'redux-form'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import {getProductVariationCategories} from '../../../store/products/selectors'
-import {onVariationBlur} from '../actions'
+import {onVariationChange} from '../actions'
 
 import Field from 'progressive-web-sdk/dist/components/field'
 
-const ProductDetailsVariations = ({variations, onVariationBlur}) => {
+const ProductDetailsVariations = ({variations, onVariationChange}) => {
     return (
         <div>
             {variations.map(({id, label, values = []}) => (
@@ -18,7 +18,7 @@ const ProductDetailsVariations = ({variations, onVariationBlur}) => {
                     key={id}
                     className="u-margin-bottom-lg u-margin-top"
                     customEventHandlers={{
-                        onBlur: onVariationBlur
+                        onChange: onVariationChange
                     }}
                 >
                     <select name={id}>
@@ -41,7 +41,7 @@ ProductDetailsVariations.propTypes = {
             value: PropTypes.string
         }))
     })),
-    onVariationBlur: PropTypes.func
+    onVariationChange: PropTypes.func
 }
 
 const mapStateToProps = createPropsSelector({
@@ -49,7 +49,7 @@ const mapStateToProps = createPropsSelector({
 })
 
 const mapDispatchToProps = {
-    onVariationBlur
+    onVariationChange
 }
 
 export default connect(

@@ -16,3 +16,8 @@ export const receiveProductListProductData = createTypedAction(
     'Receive ProductList product data',
     Products
 )
+
+export const receiveCartProductData = createTypedAction(
+    'Receive Cart product data',
+    Products
+)

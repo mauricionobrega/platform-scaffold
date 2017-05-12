@@ -1,12 +1,24 @@
-/* eslint-env jest */
-import parse from './parser'
+/* eslint-env jquery, jest, node */
+import {parseCart, parseCartProducts} from './parser'
 
-describe('Parsing the cart contents', () => {
+describe('Parsing the cart', () => {
+    test('should map cart summary information to Cart type', () => {
+        const data = require('./cart-contents-example.json')
+        const expected = require('./cart-contents-parse-cart-expected.json')
 
-    test('should be able to parse the server response from the cart endpoint', () => {
-        const responseJSON = (require('./cart-contents-example.json'))
-        const parsed = require('./cart-contents-parsed.json')
-        expect(parse(JSON.stringify(responseJSON))).toEqual(parsed)
+        const cart = parseCart(data.cart)
+
+        expect(cart).toEqual(expected)
     })
+})
 
+describe('Parsing the cart products', () => {
+    test('should map cart product information to Product type', () => {
+        const data = require('./cart-contents-example.json')
+        const expected = require('./cart-contents-parse-cart-products-expected.json')
+
+        const cartProducts = parseCartProducts(data.cart)
+
+        expect(cartProducts).toEqual(expected)
+    })
 })

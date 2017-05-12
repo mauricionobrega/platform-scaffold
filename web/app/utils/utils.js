@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {createAction as createReduxAction} from 'redux-actions'
 
 /**
@@ -33,12 +37,6 @@ export const getCookieValue = (cookieName) => {
     return result
 }
 
-
-// converts the image URL to a high resolution format
-export const getHighResImage = (src) => {
-    return src ? src.replace(/thumbnail\/\d+x\d+/, 'small_image/240x300') : src
-}
-
 export const splitFullName = (fullname) => {
     const names = fullname.split(' ')
     return {
@@ -46,7 +44,6 @@ export const splitFullName = (fullname) => {
         lastname: names.slice(-1).join(' ')
     }
 }
-
 
 /**
  * Currently requestIdleCallback is only supported in Chrome,
@@ -66,8 +63,7 @@ export const typecheck = (type, value) => {
     try {
         type.check(value)
     } catch (e) {
-        console.info(e)
-        console.log(value)
+        console.error('Type check failed: ', e, '\n\nValue: ', value)
     }
     return value
 }
@@ -86,8 +82,17 @@ export const parseLocationData = (formValues, registeredFieldNames) => {
         const getRegisteredFieldValue = (fieldName) => {
             return registeredFieldNames.includes(fieldName) ? formValues[fieldName] : undefined
         }
-        address.country_id = getRegisteredFieldValue('country_id')
-        address.postcode = getRegisteredFieldValue('postcode')
+
+        const countryId = getRegisteredFieldValue('country_id')
+        if (countryId) {
+            address.country_id = countryId
+        }
+
+        const postcode = getRegisteredFieldValue('postcode')
+        if (postcode) {
+            address.postcode = postcode
+        }
+
         if (formValues.region) {
             address.region = getRegisteredFieldValue('region')
             // Remove the region_id in case we have an old value
@@ -96,6 +101,7 @@ export const parseLocationData = (formValues, registeredFieldNames) => {
             address.region_id = getRegisteredFieldValue('region_id')
         }
     }
+
     return address
 }
 

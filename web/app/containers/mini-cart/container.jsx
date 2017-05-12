@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
@@ -10,7 +14,7 @@ import {isModalOpen} from 'progressive-web-sdk/dist/store/modals/selectors'
 import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {MINI_CART_MODAL} from './constants'
 import {stripEvent} from '../../utils/utils'
-import {getCartContentsLoaded, getCartHasItems} from '../../store/cart/selectors'
+import {getCartLoaded, getCartHasItems} from '../../store/cart/selectors'
 import {getCheckoutShippingURL} from '../app/selectors'
 
 import MiniCartHeader from './partials/mini-cart-header'
@@ -60,20 +64,20 @@ MiniCartMain.propTypes = {
 }
 
 
-const MiniCart = ({hasItems, contentsLoaded, isOpen, closeMiniCart, checkoutShippingURL}) => {
+const MiniCart = ({hasItems, cartLoaded, isOpen, closeMiniCart, checkoutShippingURL}) => {
     return (
         <Sheet className="t-mini-cart" open={isOpen} onDismiss={closeMiniCart} maskOpacity={0.7} effect="slide-right" coverage="85%">
             <MiniCartHeader closeMiniCart={closeMiniCart} />
 
-            {contentsLoaded && <MiniCartMain hasItems={hasItems} closeMiniCart={closeMiniCart} checkoutShippingURL={checkoutShippingURL} />}
+            {cartLoaded && <MiniCartMain hasItems={hasItems} closeMiniCart={closeMiniCart} checkoutShippingURL={checkoutShippingURL} />}
         </Sheet>
     )
 }
 
 MiniCart.propTypes = {
+    cartLoaded: PropTypes.bool,
     checkoutShippingURL: PropTypes.string,
     closeMiniCart: PropTypes.func,
-    contentsLoaded: PropTypes.bool,
     getCart: PropTypes.func,
     hasItems: PropTypes.bool,
     isOpen: PropTypes.bool,
@@ -81,7 +85,7 @@ MiniCart.propTypes = {
 
 const mapStateToProps = createPropsSelector({
     checkoutShippingURL: getCheckoutShippingURL,
-    contentsLoaded: getCartContentsLoaded,
+    cartLoaded: getCartLoaded,
     isOpen: isModalOpen(MINI_CART_MODAL),
     hasItems: getCartHasItems
 })

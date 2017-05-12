@@ -1,7 +1,9 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 /* eslint-disable import/namespace */
 /* eslint-disable import/named */
-import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
-
 import {EventAction, Page, Transaction} from 'progressive-web-sdk/src/analytics/analytics-constants'
 
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
@@ -10,8 +12,7 @@ import {createAction, createActionWithAnalytics} from 'progressive-web-sdk/dist/
 
 import appParser from './app-parser'
 
-import * as navigationActions from '../navigation/actions'
-import {getCart} from '../../integration-manager/cart/commands'
+import {logout} from '../../integration-manager/login/commands'
 
 import {OFFLINE_ASSET_URL} from './constants'
 import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
@@ -115,27 +116,13 @@ export const fetchSvgSprite = () => {
 }
 
 
-export const signOut = () => {
-    return (dispatch) => {
-        return makeRequest('/customer/account/logout/')
-            .then(() => {
-                // Desktop's message includes 'redirect to home page' message
-                // so we'll just hardcode a message instead
-                dispatch(addNotification({
-                    content: 'You are now signed out',
-                    id: 'signedOutNotification'
-                }))
-                dispatch(getCart())
-
-                // Update navigation menu
-                // Need to request current location so when we are on Potions PLP
-                // the potions nav item will render as 'active'
-                return makeRequest(window.location.href)
-                    .then(jqueryResponse)
-                    .then((res) => {
-                        const [$, $response] = res
-                        dispatch(navigationActions.process({payload: {$, $response}}))
-                    })
-            })
-    }
-}
+export const signOut = () => (dispatch) => (
+    dispatch(logout()).then(() => {
+        // Desktop's message includes 'redirect to home page' message
+        // so we'll just hardcode a message instead
+        dispatch(addNotification({
+            content: 'You are now signed out',
+            id: 'signedOutNotification'
+        }))
+    })
+)

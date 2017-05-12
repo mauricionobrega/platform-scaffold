@@ -20,3 +20,4 @@ export const register = (commands) => {
 }
 
 export const submitNewsletter = (...args) => connector.submitNewsletter(...args)
+export const getSearchSuggestions = (...args) => connector.getSearchSuggestions(...args)
