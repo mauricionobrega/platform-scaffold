@@ -57,7 +57,6 @@ export const submitSignIn = () => (dispatch, getState) => {
 }
 
 export const submitShipping = () => (dispatch, getState) => {
-    debugger
     const currentState = getState()
     const formValues = getShippingFormValues(currentState)
     const {firstname, lastname} = splitFullName(formValues.name)

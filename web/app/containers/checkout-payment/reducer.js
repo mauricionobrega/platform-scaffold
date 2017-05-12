@@ -11,8 +11,6 @@ import {mergePayload} from '../../utils/reducer-utils'
 
 const initialState = Immutable.fromJS({
     isFixedPlaceOrderShown: true,
-    hasExistingCreditCard: true,
-    newShippingAddressIsEnabled: false,
     cvvType: DEFAULT_CARD
 })
 
