@@ -19,7 +19,9 @@ const noop = (f) => f
 
 analyticManager.init({
     projectSlug: AJS_SLUG,      // eslint-disable-line no-undef
-    debug: true
+    debug: true,
+    mobifyGAID: 'UA-53825302-1',
+    ecommerceLibrary: 'ecommerce'
 })
 
 const configureStore = (initialState) => {

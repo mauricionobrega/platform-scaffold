@@ -2,7 +2,7 @@
 /* eslint-disable import/named */
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 
-import {EventAction, Page} from 'progressive-web-sdk/src/analytics/analytics-constants'
+import {EventAction, Page, Transaction} from 'progressive-web-sdk/src/analytics/analytics-constants'
 
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
@@ -33,6 +33,13 @@ export const onRouteChanged = createActionWithAnalytics(
     ['currentURL'],
     EventAction.pageview,
     (currentURL, routeName) => (new Page({[Page.TEMPLATENAME]: routeName}))
+)
+
+export const sendPurchaseEvent = createActionWithAnalytics(
+    'Send Purchase Event',
+    [],
+    EventAction.purchase,
+    (transaction, products) => (new Transaction(transaction, products))
 )
 
 /**
