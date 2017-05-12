@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {handleActions} from 'redux-actions'
 import {mergePayload} from '../../utils/reducer-utils'
 import {receiveFormInfo, receiveEntityID, receiveFormKey} from './actions'
