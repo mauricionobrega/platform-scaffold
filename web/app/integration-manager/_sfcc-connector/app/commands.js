@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import * as utils from '../utils'
 import {receiveNavigationData, setLoggedIn, setCheckoutShippingURL, setCartURL} from '../../results'
 import {getCart} from '../cart/commands'
