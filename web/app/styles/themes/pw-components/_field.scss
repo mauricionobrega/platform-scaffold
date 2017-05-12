@@ -49,7 +49,7 @@ $field__disabled-select-triangle: 'data:image/svg+xml;utf8,<svg xmlns="http://ww
     width: 100%;
     margin-bottom: $unit;
 
-    font-weight: 600;
+    font-weight: $semi-bold-font-weight;
     font-size: $font-size;
     line-height: 1em;
 }
@@ -61,7 +61,7 @@ $field__disabled-select-triangle: 'data:image/svg+xml;utf8,<svg xmlns="http://ww
 .pw-field__hint {
     flex: 0 0 auto;
 
-    font-size: 12px;
+    font-size: $small-font-size;
 }
 
 
@@ -69,12 +69,13 @@ $field__disabled-select-triangle: 'data:image/svg+xml;utf8,<svg xmlns="http://ww
 // ---
 
 .pw-field__caption {
-    @include text-quiet();
-
     padding-top: $unit/2;
 
-    font-size: 12px; // @TODO: Remove this line once text-quiet uses a $font-size-small var
-    line-height: 16px;
+    color: $neutral-50;
+    font-size: $small-font-size;
+    line-height: $small-line-height;
+
+    fill: $neutral-50;
 }
 
 
@@ -139,7 +140,7 @@ $field__disabled-select-triangle: 'data:image/svg+xml;utf8,<svg xmlns="http://ww
     &.pw--checked {
         .c-field__label,
         .pw-field__label {
-            font-weight: 600;
+            font-weight: $semi-bold-font-weight;
         }
     }
 }

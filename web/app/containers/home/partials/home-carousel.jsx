@@ -29,7 +29,7 @@ const HomeCarousel = ({banners}) => {
                                 <Image
                                     src={getAssetUrl(`static/img/homepage_carousel/slide-${index + 1}.jpg`)}
                                     alt={alt}
-                                    className="u-block"
+                                    className="u-display-block"
                                     hidePlaceholder={true}
                                     loadingIndicator={placeholder}
                                 />
