@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React from 'react'
 import * as ReduxForm from 'redux-form'
 import isEmail from 'validator/lib/isEmail'
@@ -11,15 +15,16 @@ const NewsletterForm = ({handleSubmit, disabled, submitting, onSubmit}) => {
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <FieldRow>
                 <ReduxForm.Field component={Field} name="email">
-                    <input type="email"
+                    <input
+                        type="email"
                         placeholder="Enter your email..."
-                        noValidate />
+                        noValidate
+                    />
                 </ReduxForm.Field>
-            </FieldRow>
 
-            <FieldRow>
-                <Button type="submit"
-                    className="c--secondary u-width-full u-text-uppercase"
+                <Button
+                    type="submit"
+                    className="c--tertiary u-margin-0 u-text-uppercase"
                     disabled={submitting || disabled}>
                     Submit
                 </Button>

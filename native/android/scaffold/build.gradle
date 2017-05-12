@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.mobify.astro.merlins"
+        applicationId "com.mobify.astro.scaffold"
         minSdkVersion 19
         targetSdkVersion 19
         versionCode 1
@@ -20,7 +20,7 @@ android {
     }
     productFlavors {
         previewEnabled {
-            applicationId "com.mobify.astro.merlins.preview"
+            applicationId "com.mobify.astro.scaffold.preview"
         }
         previewDisabled {}
     }

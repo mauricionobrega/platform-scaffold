@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import * as actions from '../actions'
 import {connect} from 'react-redux'
@@ -8,7 +12,7 @@ const FooterNewsletterSubscription = ({onSubmit}) => {
     return (
         <div className="t-footer__newsletter u-padding-md u-padding-top-lg u-padding-bottom-lg">
             <div>
-                <h2 className="u-h2 u-margin-bottom-md">
+                <h2 className="u-h4 u-margin-bottom-md u-text-uppercase">
                     Subscribe to Merlin&#39;s Newsletter
                 </h2>
 
