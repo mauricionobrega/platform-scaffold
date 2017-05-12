@@ -11,7 +11,6 @@ import {setDefaultShippingAddressId} from './shipping/actions'
 
 const checkoutReducer = handleActions({
     [receiveSavedShippingAddresses]: mergePayload,
-    [integrationManagerResults.receiveShippingMethodInitialValues]: mergePayload,
     [integrationManagerResults.receiveBillingInitialValues]: mergePayload,
     [integrationManagerResults.receiveShippingInitialValues]: mergePayload,
     [integrationManagerResults.receiveCheckoutData]: mergePayload,
