@@ -5,10 +5,12 @@
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {SubmissionError} from 'redux-form'
 import {parseShippingInitialValues, parseLocations, parseShippingMethods, checkoutConfirmationParser} from './parsers'
+import {parseCartTotals} from '../cart/parser'
 import {parseCheckoutEntityID, extractMagentoShippingStepData} from '../../../utils/magento-utils'
 import {getCookieValue} from '../../../utils/utils'
 import {getCart} from '../cart/commands'
 import {receiveCheckoutData, receiveShippingMethodInitialValues, receiveCheckoutConfirmationData} from './../../checkout/results'
+import {receiveCartContents} from './../../cart/results'
 import {fetchPageData} from '../app/commands'
 import {getCustomerEntityID} from '../selectors'
 import {getIsLoggedIn} from '../../../containers/app/selectors'
@@ -175,6 +177,9 @@ export const submitShipping = (formValues) => (dispatch, getState) => {
             if (!responseJSON.payment_methods) {
                 throw new SubmissionError({_error: 'Unable to save shipping address'})
             }
+
+            // @TODO: insert orderTotal update action/dispatch here
+            return dispatch(receiveCartContents(parseCartTotals(responseJSON)))
         })
 }
 

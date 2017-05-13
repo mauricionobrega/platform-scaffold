@@ -20,3 +20,8 @@ export const getPaymentBillingFormValues = createSelector(getPaymentBillingForm,
 
 export const getConfirmationForm = createSelector(getForm, (form) => form.confirmationForm)
 export const getConfirmationFormValues = createSelector(getConfirmationForm, (confirmationForm) => confirmationForm.values)
+
+export const getCouponForm = createSelector(getForm, (form) => form.cartPromoForm)
+export const getCouponValue = createSelector(getCouponForm, (cartPromoForm) => {
+    return cartPromoForm ? cartPromoForm.values.promo : undefined
+})

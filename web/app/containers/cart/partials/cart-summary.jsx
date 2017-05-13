@@ -10,14 +10,28 @@ import {CART_ESTIMATE_SHIPPING_MODAL} from '../constants'
 import {openModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {getSelectedShippingRate, getSelectedShippingLabel, getPostcode} from '../../../store/checkout/shipping/selectors'
 import {getCheckoutShippingURL} from '../../app/selectors'
+import {removePromoCode} from '../actions' // @TODO figure out where this is coming from
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import CartPromoForm from './cart-promo-form'
 import Icon from 'progressive-web-sdk/dist/components/icon'
 import {Ledger, LedgerRow} from 'progressive-web-sdk/dist/components/ledger'
 import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/accordion'
+import OrderTotal from '../../../components/order-total'
 
-const CartSummary = ({summaryCount, subtotal, orderTotal, shippingRate, shippingLabel, onCalculateClick, zipCode, taxAmount, checkoutShippingURL}) => {
+const CartSummary = ({
+    checkoutShippingURL,
+    summaryCount,
+    subtotal,
+    shippingRate,
+    shippingLabel,
+    zipCode,
+    taxAmount,
+    discountAmount,
+    discountLabel,
+    onCalculateClick,
+    removePromoCode
+}) => {
     const calculateButton = (
         <Button innerClassName="u-padding-end-0 u-color-brand u-text-letter-spacing-normal" onClick={onCalculateClick}>
             Calculate <Icon name="chevron-right" />
@@ -31,6 +45,13 @@ const CartSummary = ({summaryCount, subtotal, orderTotal, shippingRate, shipping
             </Button>
         </span>
     )
+
+    const removeButton = (
+        <Button innerClassName="u-color-brand u-padding-start-0 u-text-letter-spacing-normal" onClick={removePromoCode}>
+            Remove Discount
+        </Button>
+    )
+
 
     return (
         <div className="t-cart__summary">
@@ -52,20 +73,16 @@ const CartSummary = ({summaryCount, subtotal, orderTotal, shippingRate, shipping
                         value={subtotal}
                     />
 
-                    {/* <LedgerRow
-                        label="Discount: FREESHIP"
-                        valueAction={<span className="u-color-accent">-$10.00</span>}
-                    />*/}
-
-                    {!taxAmount ?
+                    {(discountAmount && discountLabel) &&
                         <LedgerRow
-                            className="u-flex-none"
-                            label="Taxes"
-                            labelAction="Rates based on shipping location"
-                            valueAction={calculateButton}
+                            className="pw--sale"
+                            label={`Discount: ${discountLabel}`}
+                            labelAction={removeButton}
+                            value={discountAmount}
                         />
-                    :
-                    [
+                    }
+
+                    {shippingRate && [
                         <LedgerRow
                             label={`Shipping (${shippingLabel})`}
                             value={shippingRate}
@@ -74,19 +91,23 @@ const CartSummary = ({summaryCount, subtotal, orderTotal, shippingRate, shipping
                         <LedgerRow
                             className="u-flex-none u-border-0"
                             label="Taxes"
-                            labelAction={editButton}
                             value={taxAmount}
+                            labelAction={editButton}
                             key="Taxes"
                         />
-                    ]
-                    }
+                    ]}
 
-                    <LedgerRow
-                        label="Total"
-                        isTotal={true}
-                        value={orderTotal}
-                    />
+                    {!shippingRate &&
+                        <LedgerRow
+                            className="u-flex-none"
+                            label="Taxes"
+                            labelAction="Rates based on shipping location"
+                            valueAction={calculateButton}
+                            key="taxWithCalculate"
+                        />
+                    }
                 </Ledger>
+                <OrderTotal className="u-border-light-top" />
 
                 <div className="u-padding-end-md u-padding-bottom-lg u-padding-start-md">
                     <Button
@@ -104,7 +125,11 @@ const CartSummary = ({summaryCount, subtotal, orderTotal, shippingRate, shipping
 
 CartSummary.propTypes = {
     checkoutShippingURL: PropTypes.string,
+    discountAmount: PropTypes.string,
+    discountLabel: PropTypes.string,
+    grandTotal: PropTypes.string,
     orderTotal: PropTypes.string,
+    removePromoCode: PropTypes.func,
     shippingLabel: PropTypes.string,
     shippingRate: PropTypes.string,
     subtotal: PropTypes.string,
@@ -115,6 +140,8 @@ CartSummary.propTypes = {
 }
 
 const mapStateToProps = createPropsSelector({
+    discountAmount: cartSelectors.getDiscountAmount,
+    discountLabel: cartSelectors.getDiscountLabel,
     checkoutShippingURL: getCheckoutShippingURL,
     subtotal: cartSelectors.getSubtotal,
     orderTotal: cartSelectors.getOrderTotal,
@@ -126,7 +153,8 @@ const mapStateToProps = createPropsSelector({
 })
 
 const mapDispatchToProps = {
-    onCalculateClick: () => openModal(CART_ESTIMATE_SHIPPING_MODAL)
+    onCalculateClick: () => openModal(CART_ESTIMATE_SHIPPING_MODAL),
+    removePromoCode
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartSummary)

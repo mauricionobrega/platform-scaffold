@@ -9,6 +9,9 @@ import {removeNotification} from '../../../containers/app/actions'
 import {getIsLoggedIn} from '../../../containers/app/selectors'
 import {getUenc} from '../selectors'
 import {getCustomerEntityID} from '../../../store/checkout/selectors'
+import {getDiscountLabel} from '../../../store/cart/selectors'
+import {getSelectedShippingMethod} from '../../../store/checkout/shipping/selectors'
+import {getFormValues, getFormRegisteredFields} from '../../../store/form/selectors'
 import {receiveCartContents} from '../../cart/results'
 import {receiveCartProductData} from '../../products/results'
 import {submitForm, textFromFragment} from '../utils'
@@ -16,10 +19,11 @@ import {parseLocations} from '../checkout/parsers'
 import {receiveCheckoutData} from '../../checkout/results'
 import {fetchShippingMethodsEstimate} from '../checkout/commands'
 import {fetchPageData} from '../app/commands'
-import {parseCart, parseCartProducts} from './parser'
+import {parseCart, parseCartProducts, parseCartTotals} from './parser'
 import {parseCheckoutEntityID, extractMagentoJson} from '../../../utils/magento-utils'
 import {ESTIMATE_FORM_NAME, ADD_TO_WISHLIST_URL} from '../../../containers/cart/constants'
 import {getProductById} from '../../../store/products/selectors'
+import {parseLocationData} from '../../../utils/utils'
 
 const LOAD_CART_SECTION_URL = '/customer/section/load/?sections=cart%2Cmessages&update_section_id=true'
 const REMOVE_CART_ITEM_URL = '/checkout/sidebar/removeItem/'
@@ -176,10 +180,70 @@ export const fetchTaxEstimate = (address, shippingMethod) => (dispatch, getState
     return makeJsonEncodedRequest(getTotalsURL, requestData, {method: 'POST'})
         .then((response) => response.json())
         .then((responseJSON) => {
-            dispatch(receiveCartContents({
-                subtotal: `$${responseJSON.subtotal.toFixed(2)}`,
-                subtotal_incl_tax: `$${responseJSON.subtotal_incl_tax.toFixed(2)}`,
-                tax_amount: `$${responseJSON.tax_amount.toFixed(2)}`
-            }))
+            dispatch(receiveCartContents(
+                // @TODO: Verify that this works as intended
+                parseCartTotals(responseJSON)
+                // {
+                //     subtotal: `$${responseJSON.subtotal.toFixed(2)}`,
+                //     subtotal_incl_tax: `$${responseJSON.subtotal_incl_tax.toFixed(2)}`,
+                //     tax_amount: `$${responseJSON.tax_amount.toFixed(2)}`
+                // }
+            ))
+        })
+}
+
+export const getCartTotalsInfo = (currentState) => {
+    const formValues = getFormValues(ESTIMATE_FORM_NAME)(currentState)
+    const registeredFieldNames = getFormRegisteredFields(ESTIMATE_FORM_NAME)(currentState).map(({name}) => name)
+    const address = parseLocationData(formValues, registeredFieldNames) || {}
+    let shippingMethod = getSelectedShippingMethod(currentState).toJS().value || ''
+    shippingMethod = shippingMethod.length ? shippingMethod.split('_') : []
+    const requestData = {
+        addressInformation: {
+            address,
+            shipping_carrier_code: shippingMethod[0],
+            shipping_method_code: shippingMethod[1]
+        }
+    }
+
+    const isLoggedIn = getIsLoggedIn(currentState)
+    const entityID = getCustomerEntityID(currentState)
+    const getTotalsURL = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/totals-information`
+    return makeJsonEncodedRequest(getTotalsURL, requestData, {method: 'POST'})
+        .then((response) => response.json())
+        // the above request will be handled by other actions below!
+}
+
+export const putPromoCode = () => (dispatch, getState) => {
+    const currentState = getState()
+    const isLoggedIn = getIsLoggedIn(currentState)
+    const entityID = getCustomerEntityID(currentState)
+    const discountLabel = getDiscountLabel(currentState)
+
+    const putPromoUrl = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/coupons/${discountLabel}`
+    return makeJsonEncodedRequest(putPromoUrl, {}, {method: 'PUT'})
+        .then((response) => {
+            if (response.status === 404) {
+                throw Error('Unable to apply promo, code is invalid')
+            }
+            return response.json()
+        })
+        .then(() => getCartTotalsInfo(currentState))
+        .then((responseJSON) => {
+            dispatch(receiveCartContents(parseCartTotals(responseJSON)))
+        })
+
+}
+
+export const deletePromoCode = () => (dispatch, getState) => {
+    const currentState = getState()
+    const isLoggedIn = getIsLoggedIn(currentState)
+    const entityID = getCustomerEntityID(currentState)
+    const deletePromoUrl = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/coupons/`
+    return makeJsonEncodedRequest(deletePromoUrl, {}, {method: 'DELETE'})
+        .then((response) => response.json())
+        .then(() => getCartTotalsInfo(currentState))
+        .then((responseJSON) => {
+            dispatch(receiveCartContents(parseCartTotals(responseJSON)))
         })
 }

@@ -11,7 +11,14 @@ import {
     CART_REMOVE_ITEM_MODAL,
     CART_WISHLIST_MODAL
 } from './constants'
-import {removeFromCart, updateItemQuantity, addToWishlist, fetchTaxEstimate} from '../../integration-manager/cart/commands'
+import {
+    removeFromCart,
+    updateItemQuantity,
+    addToWishlist,
+    fetchTaxEstimate,
+    putPromoCode,
+    deletePromoCode
+} from '../../integration-manager/cart/commands'
 import {addNotification} from '../app/actions'
 import {getIsLoggedIn} from '../app/selectors'
 import {trigger} from '../../utils/astro-integration'
@@ -108,6 +115,34 @@ export const updateItem = (itemId, itemQuantity) => (dispatch) => {
             dispatch(addNotification({
                 content: error.message,
                 id: 'cartUpdateError',
+                showRemoveButton: true
+            }))
+        })
+}
+
+export const submitPromoCode = () => (dispatch) => {
+    dispatch(putPromoCode())
+        .catch(({message}) => {
+            let notificationMessage
+            if (message.includes('Unable to apply promo')) {
+                notificationMessage = message
+            } else {
+                notificationMessage = 'Unable to apply promo'
+            }
+            dispatch(addNotification({
+                content: notificationMessage,
+                id: 'promoError',
+                showRemoveButton: true
+            }))
+        })
+}
+
+export const removePromoCode = () => (dispatch) => {
+    dispatch(deletePromoCode())
+        .catch(() => {
+            dispatch(addNotification({
+                content: 'Unable to remove promo',
+                id: 'promoError',
                 showRemoveButton: true
             }))
         })

@@ -21,3 +21,7 @@ export const addToWishlist = (...args) => connector.addToWishlist(...args)
 export const addToCart = (...args) => connector.addToCart(...args)
 
 export const fetchTaxEstimate = (...args) => connector.fetchTaxEstimate(...args)
+
+export const putPromoCode = (...args) => connector.submitPromoCode(...args)
+
+export const deletePromoCode = (...args) => connector.removePromoCode(...args)

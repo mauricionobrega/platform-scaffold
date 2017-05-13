@@ -26,3 +26,16 @@ describe('Parsing the cart products', () => {
         expect(cartProducts).toEqual(expected)
     })
 })
+
+// @TODO add test for parseCartTotals
+describe('Parsing the cart totals', () => {
+    test('should map the cart totals based on somethign soemthign', () => {
+        // const data = require('./cart-contents-example.json')
+        // const expected = require('./cart-contents-parse-cart-products-expected.json')
+        //
+        // const cartProducts = parseCartProducts(data.cart)
+        //
+        // expect(cartProducts).toEqual(expected)
+        throw Error('create test for parseCartTotals')
+    })
+})
