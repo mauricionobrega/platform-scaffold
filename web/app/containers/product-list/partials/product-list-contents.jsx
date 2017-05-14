@@ -26,8 +26,11 @@ const emptySearchText = 'Your search returned no results. Please check your spel
 
 const ResultList = ({products}) => (
     <List className="c--borderless">
-        {products.map((product) => {
-            return <ProductTile key={product.id} {...product} />
+        {products.map((product, idx) => {
+            return product ?
+                <ProductTile key={product.id} {...product} />
+                :
+                <ProductTile key={idx} />
         })}
     </List>
 )
