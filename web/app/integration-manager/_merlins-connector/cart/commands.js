@@ -6,9 +6,9 @@ import {makeRequest, makeJsonEncodedRequest} from 'progressive-web-sdk/dist/util
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 import {removeNotification} from 'progressive-web-sdk/dist/store/notifications/actions'
-import {getIsLoggedIn} from '../../../containers/app/selectors'
-import {getUenc} from '../selectors'
-import {getCustomerEntityID} from '../../../store/checkout/selectors'
+import {getIsLoggedIn} from '../../../store/user/selectors'
+import {getUenc, getCustomerEntityID} from '../selectors'
+import {receiveEntityID} from '../actions'
 import {receiveCartContents} from '../../cart/results'
 import {receiveCartProductData} from '../../products/results'
 import {submitForm, textFromFragment} from '../utils'
@@ -128,12 +128,11 @@ export const fetchCartPageData = (url) => (dispatch) => {
             const magentoFieldData = extractMagentoJson($response).getIn(ESTIMATE_FIELD_PATH)
             const locationsData = parseLocations(magentoFieldData)
 
-            return dispatch(receiveCheckoutData({
-                customerEntityID,
-                ...locationsData
-            }))
+            dispatch(receiveEntityID(customerEntityID))
+            dispatch(receiveCheckoutData(locationsData))
+
+            return dispatch(fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME))
         })
-        .then(() => dispatch(fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME)))
 }
 
 export const addToWishlist = (productId, productURL) => (dispatch, getState) => {
