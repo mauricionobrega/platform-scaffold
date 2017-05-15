@@ -3,40 +3,57 @@ import {createAction} from '../../utils/utils'
 import * as messagingSelectors from './selectors'
 import {PAGE_VISIT_COUNT} from './constants'
 
-// TODO - Check for existence of client before calling
 export const subscribe = (channels) => (dispatch) => {
     channels = channels || {default: true}
+
     console.info('[Messaging] Subscribed to channel:', channels)
-    return window.Progressive.MessagingClient.subscribe(channels)
+    return window.Progressive.MessagingClientInitPromise
+        .then(() => window.Progressive.MessagingClient.subscribe(channels))
+        .catch((err) => console.error(err))
+}
+
+// TODO - These need to be separated from the Redux actions that are exported
+
+/**
+ * Method to be called when an ask for a specific messaging channel has been shown.
+ */
+const channelOfferShown = (channel) => {
+    if (typeof channel !== 'string' || channel.length === 0) {
+        console.log('[Messaging] Channel name must be specified.')
+    }
+
+    console.info(`[Messaging] Notifying client that channel ${channel} was displayed.`)
+    return window.Progressive.MessagingClientInitPromise
+        .then(() => window.Progressive.MessagingClient.channelOfferShown(channel))
+        .catch((err) => console.error(err))
 }
 
 let storage
 
-// TODO - wrapper module that lives somewhere else than here?
-// TODO - write a meta action handler to dispatch changes to local storage?
-export const setInStorage = (key, value) => {
-    // TODO - global flag set if local storage not available on first check?
+const setInStorage = (key, value) => {
     return window.Progressive.MessagingClientInitPromise.then(() => {
         storage = Object.assign({}, {
             [key]: value
         })
         const result = window.Progressive.MessagingClient.LocalStorage.set('pwa:storage', JSON.stringify(storage))
         console.info('[Messaging] set in storage:', key, value)
+
         return result
     })
     .catch((err) => console.error(err))
 }
 
-export const getFromStorage = (key) => {
+const getFromStorage = (key) => {
     return window.Progressive.MessagingClientInitPromise.then(() => {
         const result = window.Progressive.MessagingClient.LocalStorage.get(key)
         console.info('[Messaging] get from storage:', key, result)
+
         return JSON.parse(result)
     })
     .catch((err) => console.error(err))
 }
 
-export const rehydrateFromStore = (key) => {
+const rehydrateFromStore = (key) => {
     return getFromStorage('pwa:storage').then((store) => {
         if (store === null) {
             return null
