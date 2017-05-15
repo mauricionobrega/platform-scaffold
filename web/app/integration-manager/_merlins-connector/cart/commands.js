@@ -6,7 +6,7 @@ import {makeRequest, makeJsonEncodedRequest} from 'progressive-web-sdk/dist/util
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 import {removeNotification} from '../../../containers/app/actions'
-import {getIsLoggedIn} from '../../../containers/app/selectors'
+import {getIsLoggedIn} from '../../../../store/user/selectors'
 import {getUenc} from '../selectors'
 import {getCustomerEntityID} from '../../../store/checkout/selectors'
 import {receiveCartContents} from '../../cart/results'
