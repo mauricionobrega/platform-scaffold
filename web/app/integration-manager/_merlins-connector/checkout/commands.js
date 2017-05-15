@@ -7,7 +7,6 @@ import {SubmissionError} from 'redux-form'
 
 import {parseShippingInitialValues, parseLocations, parseShippingMethods, checkoutConfirmationParser} from './parsers'
 import {parseCheckoutEntityID, extractMagentoShippingStepData} from '../../../utils/magento-utils'
-// import {getCookieValue} from '../../../utils/utils'
 import {getCart} from '../cart/commands'
 import {receiveCheckoutData, receiveShippingInitialValues, receiveCheckoutConfirmationData, receiveBillingInitialValues} from './../../checkout/results'
 
