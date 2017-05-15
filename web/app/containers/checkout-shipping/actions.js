@@ -8,7 +8,7 @@ import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 
 import {splitFullName} from '../../utils/utils'
-import {receiveCheckoutData} from '../../store/checkout/actions'
+import {receiveCheckoutData} from '../../integration-manager/checkout/results'
 
 import {
     submitShipping as submitShippingCommand,
