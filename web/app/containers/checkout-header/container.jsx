@@ -23,7 +23,7 @@ const CheckoutHeader = function({headerHasSignIn, isLoggedIn}) {
             <HeaderBar className="t-checkout-header__bar">
                 <HeaderBarTitle className="u-flex-none u-padding-start u-text-align-start">
                     <h2 className="u-align-center u-text-family-header u-text-uppercase">
-                        <span className="u-text-weight-extra-light">MERLIN'S</span> CHECKOUT
+                        <span className="u-text-weight-extra-light">SECURE</span> CHECKOUT
                     </h2>
                 </HeaderBarTitle>
 

@@ -65,7 +65,7 @@ const Navigation = (props) => {
                 <HeaderBar>
                     <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
                         <h2 className="u-text-family-header u-text-uppercase">
-                            <span className="u-text-weight-extra-light">Merlin&#39;s</span> Potions
+                            <span className="u-text-weight-extra-light">Menu</span>
                         </h2>
                     </HeaderBarTitle>
 
@@ -79,7 +79,7 @@ const Navigation = (props) => {
                 <div>
                     <NavigationSocialIcons />
                     <div className="t-navigation__copyright u-padding-md">
-                        <p>Copyright Merlin&#39;s Potions 2016. All rights reserved.</p>
+                        <p>© 2016 Mobify Research & Development Inc. All rights reserved.</p>
                     </div>
                 </div>
             </Nav>
