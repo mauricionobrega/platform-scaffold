@@ -161,8 +161,17 @@ export const parseLocationData = (formValues, registeredFieldNames) => {
         const getRegisteredFieldValue = (fieldName) => {
             return registeredFieldNames.includes(fieldName) ? formValues[fieldName] : undefined
         }
-        address.country_id = getRegisteredFieldValue('country_id')
-        address.postcode = getRegisteredFieldValue('postcode')
+
+        const countryId = getRegisteredFieldValue('country_id')
+        if (countryId) {
+            address.country_id = countryId
+        }
+
+        const postcode = getRegisteredFieldValue('postcode')
+        if (postcode) {
+            address.postcode = postcode
+        }
+
         if (formValues.region) {
             address.region = getRegisteredFieldValue('region')
             // Remove the region_id in case we have an old value
@@ -171,6 +180,7 @@ export const parseLocationData = (formValues, registeredFieldNames) => {
             address.region_id = getRegisteredFieldValue('region_id')
         }
     }
+
     return address
 }
 
