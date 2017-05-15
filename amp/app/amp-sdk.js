@@ -2,7 +2,6 @@
  * Code that might be good to move into the AMP-SDK repository...
  */
 import React from 'react'
-import ReactInjection from 'react-dom/lib/ReactInjection'
 
 const getDisplayName = (Component) => (
     Component.displayName || Component.name || 'Component'

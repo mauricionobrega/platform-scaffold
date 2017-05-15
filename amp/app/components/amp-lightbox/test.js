@@ -1,4 +1,4 @@
-import {mount, shallow} from 'enzyme'
+import {mount} from 'enzyme'
 /* eslint-env jest */
 import React from 'react'
 
