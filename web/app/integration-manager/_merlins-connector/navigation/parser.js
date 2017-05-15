@@ -2,6 +2,8 @@
 /* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
+import {SIGNED_IN_NAV_ITEM_TYPE, GUEST_NAV_ITEM_TYPE} from '../../../containers/navigation/constants'
+
 export const parseNavigation = ($, $content) => {
     const root = {title: 'Root', path: '/', children: []}
     const $signIn = $content.find('.header.links li.authorization-link a').first()
@@ -10,13 +12,13 @@ export const parseNavigation = ($, $content) => {
     if (/logout/i.test(signInHref)) {
         root.children.push({
             title: $signIn.text().trim(),
-            type: 'AccountLogoutNavItem',
+            type: SIGNED_IN_NAV_ITEM_TYPE,
         })
     } else {
         root.children.push({
             title: $signIn.text().trim(),
             path: $signIn.attr('href'),
-            type: 'AccountNavItem',
+            type: GUEST_NAV_ITEM_TYPE,
         })
     }
 

@@ -8,6 +8,7 @@ import {getCart} from '../cart/commands'
 import {parseCategories} from '../parsers'
 
 import {API_END_POINT_URL, SIGN_IN_URL, SIGN_OUT_URL, CHECKOUT_SHIPPING_URL, CART_URL} from '../constants'
+import {SIGNED_IN_NAV_ITEM_TYPE, GUEST_NAV_ITEM_TYPE} from '../../../containers/navigation/constants'
 
 export const fetchNavigationData = () => (dispatch) => {
     return utils.makeSfccUnAuthenticatedRequest(`${API_END_POINT_URL}/categories/root?levels=2`, {method: 'GET'})
@@ -18,11 +19,11 @@ export const fetchNavigationData = () => (dispatch) => {
             const accountNode = utils.isUserLoggedIn(utils.getAuthToken())
                 ? {
                     path: SIGN_OUT_URL,
-                    type: 'AccountLogoutNavItem'
+                    type: SIGNED_IN_NAV_ITEM_TYPE
                 }
                 : {
                     path: SIGN_IN_URL,
-                    type: 'AccountNavItem'
+                    type: GUEST_NAV_ITEM_TYPE
                 }
 
             return dispatch(receiveNavigationData({
