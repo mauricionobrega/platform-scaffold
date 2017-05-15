@@ -14,3 +14,4 @@ export const setCheckoutShippingURL = createAction('Set Checkout Shipping URL', 
 export const setCartURL = createAction('Set Cart URL', ['cartURL'])
 export const receiveOrderConfirmationContents = createAction('Receive Order Confirmation Contents')
 export const receiveSearchSuggestions = createAction('Receive search suggestions')
+export const setCurrentURL = createAction('Set Current URL', ['currentURL'])

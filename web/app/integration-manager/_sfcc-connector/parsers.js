@@ -25,6 +25,22 @@ const parseVariationCategories = (variation_attributes) => {
         }))
     }))
 }
+
+const setInitialVariantValues = (variants, id, variationCategories) => {
+    const currentVariant = variants.find(({product_id}) => product_id === id)
+
+    if (currentVariant) {
+        return currentVariant.variation_values
+    }
+
+    const defaultVariant = {}
+    variationCategories.forEach(({id, values}) => {
+        defaultVariant[id] = values[0].value
+    })
+
+    return defaultVariant
+}
+
 /* eslint-enable camelcase */
 
 export const getProductHref = (productID) => `/s/2017refresh/${productID}.html`
@@ -38,6 +54,7 @@ export const parseProductDetails = ({id, name, price, long_description, image_gr
         description: long_description,
         thumbnail: images[0],
         images,
+        initialValues: setInitialVariantValues(variants, id, variation_attributes),
         variationCategories: parseVariationCategories(variation_attributes),
         variants: variants.map(({product_id, variation_values}) => {
             return {
@@ -76,21 +93,31 @@ export const parseBasketContents = ({product_items, product_sub_total, product_t
     }
 }
 
-export const getCurrentProductID = () => {
+export const getCurrentProductID = (url) => {
     let productID
-    let productIDMatch = /(\d+).html/.exec(window.location.href)
+
+    let productIDMatch = /(\d+).html/.exec(url)
+
     if (productIDMatch) {
         productID = productIDMatch[1]
     }
 
     if (!productID) {
-    // Cart edit style: https://.../checkout/cart/configure/id/{basket_id}/product_id/{product_id}/
-        productIDMatch = /product_id\/(\d+)/.exec(window.location.href)
+        // Cart edit style: https://.../checkout/cart/configure/id/{basket_id}/product_id/{product_id}/
+        productIDMatch = /product_id\/(\d+)/.exec(url)
         productID = productIDMatch ? productIDMatch[1] : ''
     }
 
     console.log('[getCurrentProductID]', productID)
     return productID
+}
+
+export const getInitialSelectedVariant = (variants, initialValues) => {
+    return variants.find(({values}) => {
+        return Object.keys(values).every((key) => {
+            return values[key] === initialValues[key]
+        })
+    })
 }
 
 export const parseCategories = (categories) => {
