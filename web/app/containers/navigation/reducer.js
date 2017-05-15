@@ -14,12 +14,15 @@ export const initialState = Immutable.fromJS({
     root: {},
 })
 
-
 export const reducer = handleActions({
     [receiveNavigationData]: mergePayload,
     [receiveData]: mergePayload,
     [setNavigationPath]: mergePayload,
     [setLoggedIn]: (state, {payload: {isLoggedIn}}) => {
+        // Don't create the navigation object if it doesn't exist already
+        if (!state.hasIn(['root', 'children', 0])) {
+            return state
+        }
         return state.setIn(
             ['root', 'children', 0, 'title'],
             isLoggedIn ? ACCOUNT_LINK_TEXT : SIGN_IN_LINK_TEXT

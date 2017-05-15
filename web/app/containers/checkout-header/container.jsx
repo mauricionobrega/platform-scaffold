@@ -7,7 +7,7 @@ import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import {isRunningInAstro} from '../../utils/astro-integration'
 
-import {getIsLoggedIn} from '../app/selectors'
+import {getIsLoggedIn} from '../../store/user/selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import {HeaderBar, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'

@@ -2,7 +2,10 @@
 /* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
-import {getCheckout} from '../../store/selectors'
+import Immutable from 'immutable'
 import {createGetSelector} from 'reselect-immutable-helpers'
+import {getCheckout} from '../../selectors'
 
-export const getEmailAddress = createGetSelector(getCheckout, 'emailAddress')
+export const getBilling = createGetSelector(getCheckout, 'billing', Immutable.Map())
+
+export const getBillingInitialValues = createGetSelector(getBilling, 'initialValues')

@@ -16,9 +16,8 @@ import * as cartSelectors from '../../store/cart/selectors'
 
 const OrderTotal = ({
     className,
-    grandTotal,
-    subtotalInclTax,
-    subtotalWithDiscount,
+    orderTotal,
+    subtotal,
     taxAmount,
     discountAmount
 }) => {
@@ -26,11 +25,11 @@ const OrderTotal = ({
 
     let displayTotal
     if (discountAmount && !taxAmount) {
-        displayTotal = subtotalWithDiscount
+        displayTotal = subtotal
     } else if (taxAmount) {
-        displayTotal = grandTotal
+        displayTotal = orderTotal
     } else {
-        displayTotal = subtotalInclTax
+        displayTotal = subtotal
     }
 
     return (
@@ -50,17 +49,15 @@ OrderTotal.propTypes = {
      */
     className: PropTypes.string,
     discountAmount: PropTypes.string,
-    grandTotal: PropTypes.string,
-    subtotalInclTax: PropTypes.string,
-    subtotalWithDiscount: PropTypes.string,
+    orderTotal: PropTypes.string,
+    subtotal: PropTypes.string,
     taxAmount: PropTypes.string,
 }
 
 const mapStateToProps = createPropsSelector({
     discountAmount: cartSelectors.getDiscountAmount,
-    grandTotal: cartSelectors.getGrandTotal,
-    subtotalInclTax: cartSelectors.getSubtotalIncludingTax,
-    subtotalWithDiscount: cartSelectors.getSubtotalWithDiscount,
+    orderTotal: cartSelectors.getOrderTotal,
+    subtotal: cartSelectors.getSubtotal,
     taxAmount: cartSelectors.getTaxAmount,
 })
 

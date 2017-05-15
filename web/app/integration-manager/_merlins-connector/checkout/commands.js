@@ -4,18 +4,20 @@
 
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {SubmissionError} from 'redux-form'
+
 import {parseShippingInitialValues, parseLocations, parseShippingMethods, checkoutConfirmationParser} from './parsers'
 import {parseCartTotals} from '../cart/parser'
 import {parseCheckoutEntityID, extractMagentoShippingStepData} from '../../../utils/magento-utils'
 import {getCookieValue} from '../../../utils/utils'
 import {getCart} from '../cart/commands'
-import {receiveCheckoutData, receiveShippingMethodInitialValues, receiveCheckoutConfirmationData} from './../../checkout/results'
+import {receiveCheckoutData, receiveShippingInitialValues, receiveCheckoutConfirmationData, receiveHasExistingCard} from './../../checkout/results'
 import {receiveCartContents} from './../../cart/results'
 import {fetchPageData} from '../app/commands'
 import {getCustomerEntityID} from '../selectors'
-import {getIsLoggedIn} from '../../../containers/app/selectors'
+import {getIsLoggedIn} from '../../../store/user/selectors'
 import {getShippingFormValues, getFormValues, getFormRegisteredFields} from '../../../store/form/selectors'
 import {receiveEntityID} from '../actions'
+import {PAYMENT_URL} from '../constants'
 import {SHIPPING_FORM_NAME, ADD_NEW_ADDRESS_FIELD} from '../../../containers/checkout-shipping/constants'
 import * as paymentSelectors from '../../../store/checkout/payment/selectors'
 import * as shippingSelectors from '../../../store/checkout/shipping/selectors'
@@ -74,7 +76,7 @@ export const fetchShippingMethodsEstimate = (formKey) => (dispatch, getState) =>
             }
 
             dispatch(receiveCheckoutData({shipping: {shippingMethods}}))
-            dispatch(receiveShippingMethodInitialValues({address: initialValues})) // set initial value for method
+            dispatch(receiveShippingInitialValues({address: initialValues})) // set initial value for method
         })
 }
 
@@ -179,7 +181,8 @@ export const submitShipping = (formValues) => (dispatch, getState) => {
             }
 
             // @TODO: insert orderTotal update action/dispatch here
-            return dispatch(receiveCartContents(parseCartTotals(responseJSON)))
+            dispatch(receiveCartContents(parseCartTotals(responseJSON)))
+            return PAYMENT_URL
         })
 }
 
@@ -199,6 +202,7 @@ export const fetchCheckoutPaymentData = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then((res) => {
             const [$, $response] = res // eslint-disable-line no-unused-vars
+            dispatch(receiveHasExistingCard(true))
             return dispatch(processCheckoutData($response))
         })
 }
@@ -207,35 +211,25 @@ export const submitPayment = (formValues) => (dispatch, getState) => {
     const currentState = getState()
     const entityID = getCustomerEntityID(currentState)
     const isLoggedIn = getIsLoggedIn(currentState)
-    const {
-        firstname,
-        lastname,
-        company,
-        addressLine1,
-        addressLine2,
-        countryId,
-        city,
-        regionId,
-        postcode,
-        username
-    } = formValues
+
     const address = {
-        firstname,
-        lastname,
-        company: company || '',
-        postcode,
-        city,
-        street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1],
-        regionId,
-        countryId,
+        firstname: formValues.firstname,
+        lastname: formValues.lastname,
+        company: formValues.company || '',
+        postcode: formValues.postcode,
+        city: formValues.city,
+        street: formValues.street,
+        regionId: formValues.regionId,
+        countryId: formValues.countryId,
         saveInAddressBook: false
     }
+
     const paymentInformation = {
         billingAddress: {
             ...address
         },
         cartId: entityID,
-        email: username,
+        email: formValues.username,
         paymentMethod: {
             additional_data: null,
             method: 'checkmo',

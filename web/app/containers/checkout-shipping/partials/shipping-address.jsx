@@ -10,7 +10,7 @@ import classNames from 'classnames'
 
 import {setShowAddNewAddress} from '../actions'
 import {ADD_NEW_ADDRESS_FIELD, SAVED_SHIPPING_ADDRESS_FIELD} from '../constants'
-import {getIsLoggedIn} from '../../app/selectors'
+import {getIsLoggedIn} from '../../../store/user/selectors'
 import {getShowAddNewAddress} from '../selectors'
 import {getSavedAddresses} from '../../../store/checkout/shipping/selectors'
 
