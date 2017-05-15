@@ -46,6 +46,6 @@ export const initApp = () => (dispatch) => {
             dispatch(setCheckoutShippingURL(CHECKOUT_SHIPPING_URL))
             dispatch(setCartURL(CART_URL))
             dispatch(setLoggedIn(utils.isUserLoggedIn(utils.getAuthToken())))
+            return dispatch(getCart())
         })
-        .then(() => dispatch(getCart()))
 }
