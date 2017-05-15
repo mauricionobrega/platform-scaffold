@@ -7,7 +7,7 @@ import Immutable from 'immutable'
 import {receiveNavigationData, setLoggedIn} from '../../integration-manager/results'
 import {mergePayload} from '../../utils/reducer-utils'
 import {receiveData, setNavigationPath} from './actions'
-import {SIGN_IN_LINK_TEXT, SIGN_OUT_LINK_TEXT} from './constants'
+import {SIGN_IN_LINK_TEXT, SIGN_OUT_LINK_TEXT, GUEST_NAV_ITEM_TYPE, SIGNED_IN_NAV_ITEM_TYPE} from './constants'
 
 export const initialState = Immutable.fromJS({
     path: undefined,
@@ -23,9 +23,14 @@ export const reducer = handleActions({
         if (!state.hasIn(['root', 'children', 0])) {
             return state
         }
-        return state.setIn(
+        return state
+            .setIn(
                 ['root', 'children', 0, 'title'],
                 isLoggedIn ? SIGN_OUT_LINK_TEXT : SIGN_IN_LINK_TEXT
+            )
+            .setIn(
+                ['root', 'children', 0, 'type'],
+                isLoggedIn ? SIGNED_IN_NAV_ITEM_TYPE : GUEST_NAV_ITEM_TYPE
             )
     }
 }, initialState)
