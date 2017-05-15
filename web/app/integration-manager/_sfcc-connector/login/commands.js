@@ -5,8 +5,9 @@
 import {noop} from 'progressive-web-sdk/dist/utils/utils'
 import {setRegisterLoaded, setSigninLoaded} from '../../login/results'
 import {setLoggedIn} from '../../results'
-import {initSfccSession, storeAuthToken, makeSfccRequest, deleteBasketID, storeBasketID} from '../utils'
+import {initSfccSession, storeAuthToken, makeSfccRequest, deleteBasketID, storeBasketID, getAuthTokenPayload} from '../utils'
 import {requestCartData, createBasket, handleCartData} from '../cart/utils'
+import {createOrderAddressObject} from '../checkout/utils'
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {SubmissionError} from 'redux-form'
 
@@ -115,4 +116,38 @@ export const registerUser = (firstname, lastname, email, password) => (dispatch)
             return dispatch(login(email, password))
         })
 
+}
+
+const addAddress = (formValues, addressName) => {
+    const addressData = createOrderAddressObject(formValues)
+    const {sub} = getAuthTokenPayload()
+    const customerId = JSON.parse(sub).customer_info.customer_id
+    const requestData = {
+        method: 'POST',
+        body: JSON.stringify({
+            ...addressData,
+            address_id: addressName
+        })
+    }
+    return makeSfccRequest(`${API_END_POINT_URL}/customers/${customerId}/addresses`, requestData)
+        .then((response) => {
+            if (response.status === 200) {
+                return response.json
+            }
+            throw Error('Unable to save address')
+        })
+}
+
+
+// updateShippingAddress and updateBillingAddress are separate commands to
+// support other connectors that require different actions for saving a
+// shipping vs. a billing address
+// SFCC doesn't diferentiate between the two address types,
+// so these commands do effectively the same thing
+export const updateShippingAddress = (formValues) => (dispatch) => {
+    return addAddress(formValues, 'shipping_address')
+}
+
+export const updateBillingAddress = (formValues) => (dispatch) => {
+    return addAddress(formValues, 'billing_address')
 }

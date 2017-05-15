@@ -8,7 +8,7 @@ import {addNotification, removeAllNotifications} from '../app/actions'
 import {openModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import * as shippingSelectors from '../../store/checkout/shipping/selectors'
 import * as formSelectors from '../../store/form/selectors'
-import * as paymentSelectors from '../../store/checkout/payment/selectors'
+import {getBillingAddress} from '../../store/checkout/billing/selectors'
 import {getEmailAddress} from '../../store/checkout/selectors'
 import {updateShippingAddress, updateBillingAddress, registerUser} from '../../integration-manager/login/commands'
 
@@ -25,18 +25,19 @@ export const submitRegisterForm = () => {
             password,
             password_confirmation
         } = formSelectors.getConfirmationFormValues(currentState)
-        const shippingData = shippingSelectors.getShippingAddress(getState()).toJS()
-        const paymentData = paymentSelectors.getPayment(getState())
-        const shippingIsDifferentThanBilling = JSON.stringify(shippingData) !== JSON.stringify(paymentData)
+        const shippingData = shippingSelectors.getShippingAddress(currentState).toJS()
+        const billingAddressData = getBillingAddress(currentState).toJS()
 
         return dispatch(registerUser(firstname, lastname, email, password, password_confirmation))
             .then(() => {
                 dispatch(openModal(CHECKOUT_CONFIRMATION_MODAL))
                 return dispatch(updateShippingAddress(shippingData))
                     .then(() => {
-                        if (shippingIsDifferentThanBilling) {
-                            dispatch(updateBillingAddress(paymentData))
+                        if (!billingAddressData.sameAsShipping) {
+                            return dispatch(updateBillingAddress(billingAddressData))
                         }
+
+                        return Promise.resolve()
                     })
                     .then(() => dispatch(hideRegistrationForm()))
             })
