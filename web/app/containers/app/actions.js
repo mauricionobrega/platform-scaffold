@@ -10,11 +10,10 @@ import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import {createAction, createActionWithAnalytics} from 'progressive-web-sdk/dist/utils/action-creation'
 
-import appParser from './app-parser'
-
 import {logout} from '../../integration-manager/login/commands'
+import {setPageFetchError} from '../../integration-manager/results'
 
-import {OFFLINE_ASSET_URL} from './constants'
+import {CURRENT_URL, OFFLINE_ASSET_URL} from './constants'
 import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {addNotification} from 'progressive-web-sdk/dist/store/notifications/actions'
 import {OFFLINE_MODAL} from '../offline/constants'
@@ -28,36 +27,12 @@ export const updateSvgSprite = createAction('Updated SVG sprite', ['sprite'])
  */
 export const onRouteChanged = createActionWithAnalytics(
     'On route changed',
-    ['currentURL'],
+    [CURRENT_URL],
     analyticConstants.pageview,
     (currentURL, routeName) => ({name: routeName})
 )
 
-/**
- * Action dispatched when content for a global page render is ready.
- *
- * @param {object} $ - a selector library like jQuery
- * @param {object} $response - a jQuery-wrapped DOM object
- * @param {string} url - the URL of the page received
- * @param {string} currentURL - what's currently shown in the address bar
- * @param {string} routeName - the name of the route we received the page for
- */
-export const onPageReceived = createAction('On page received', [
-    '$',
-    '$response',
-    'url',
-    'currentURL',
-    'routeName'
-])
-
 export const setFetchedPage = createAction('Set fetched page', ['url'])
-
-export const receiveData = createAction('Receive App Data')
-export const process = ({payload: {$response}}) => {
-    return receiveData(appParser($response))
-}
-
-export const setPageFetchError = createAction('Set page fetch error', ['fetchError'])
 export const clearPageFetchError = createAction('Clear page fetch error')
 
 /**
@@ -65,29 +40,27 @@ export const clearPageFetchError = createAction('Clear page fetch error')
  * return a JSON object where `{offline: true}` if the request failed, which we
  * can use to detect if we're offline.
  */
-export const checkIfOffline = () => {
-    return (dispatch) => {
-        // we need to cachebreak every request to ensure we don't get something
-        // stale from the disk cache on the device - the CDN will ignore query
-        // parameters for this asset, however
-        return fetch(`${OFFLINE_ASSET_URL}?${Date.now()}`, {
-            cache: 'no-store'
+export const checkIfOffline = () => (dispatch) => {
+    // we need to cachebreak every request to ensure we don't get something
+    // stale from the disk cache on the device - the CDN will ignore query
+    // parameters for this asset, however
+    return fetch(`${OFFLINE_ASSET_URL}?${Date.now()}`, {
+        cache: 'no-store'
+    })
+        .then((response) => response.json())
+        .then((json) => {
+            if (json.offline) {
+                dispatch(setPageFetchError('Network failure, using worker cache'))
+            } else {
+                dispatch(clearPageFetchError())
+                dispatch(closeModal(OFFLINE_MODAL))
+            }
         })
-            .then((response) => response.json())
-            .then((json) => {
-                if (json.offline) {
-                    dispatch(setPageFetchError('Network failure, using worker cache'))
-                } else {
-                    dispatch(clearPageFetchError())
-                    dispatch(closeModal(OFFLINE_MODAL))
-                }
-            })
-            .catch((error) => {
-                // In cases where we don't have the worker installed, this means
-                // we indeed have a network failure, so switch on offline
-                dispatch(setPageFetchError(error.message))
-            })
-    }
+        .catch((error) => {
+            // In cases where we don't have the worker installed, this means
+            // we indeed have a network failure, so switch on offline
+            dispatch(setPageFetchError(error.message))
+        })
 }
 
 /**
@@ -96,13 +69,11 @@ export const checkIfOffline = () => {
  * the DOM. See here for details on the issue with `use`:
  * @URL: https://bugs.chromium.org/p/chromium/issues/detail?id=470601
  */
-export const fetchSvgSprite = () => {
-    return (dispatch) => {
-        const spriteUrl = getAssetUrl('static/svg/sprite-dist/sprite.svg')
-        return makeRequest(spriteUrl)
-            .then((response) => response.text())
-            .then((text) => dispatch(updateSvgSprite(text)))
-    }
+export const fetchSvgSprite = () => (dispatch) => {
+    const spriteUrl = getAssetUrl('static/svg/sprite-dist/sprite.svg')
+    return makeRequest(spriteUrl)
+        .then((response) => response.text())
+        .then((text) => dispatch(updateSvgSprite(text)))
 }
 
 

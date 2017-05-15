@@ -2,16 +2,16 @@
 /* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
-import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../../products/results'
+import {setCurrentURL} from '../../results'
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 import {makeSfccRequest} from '../utils'
-import {parseProductDetails, getCurrentProductID, getProductHref} from '../parsers'
+import {parseProductDetails, getCurrentProductID, getProductHref, getInitialSelectedVariant} from '../parsers'
 import {API_END_POINT_URL} from '../constants'
 
-export const fetchPdpData = () => (dispatch) => {
-    const productURL = `${API_END_POINT_URL}/products/${getCurrentProductID()}?expand=prices,images,variations`
-    const productPathKey = urlToPathKey(window.location.href)
+export const fetchPdpData = (url) => (dispatch) => {
+    const productURL = `${API_END_POINT_URL}/products/${getCurrentProductID(url)}?expand=prices,images,variations`
+    const productPathKey = urlToPathKey(url)
     const options = {
         method: 'GET'
     }
@@ -30,22 +30,33 @@ export const fetchPdpData = () => (dispatch) => {
             })
             dispatch(receiveProductDetailsProductData(productDetailsMap))
             dispatch(receiveProductDetailsUIData({[productPathKey]: {itemQuantity: responseJSON.step_quantity}}))
+
+            // since the pathname will always be master, the productHref will
+            // only === pathname when landing on master page
+            if (getProductHref(productDetailsData.id) === window.location.pathname) {
+                const {variants, initialValues} = productDetailsData
+                const defaultVariant = getInitialSelectedVariant(variants, initialValues)
+                const currentProductHref = defaultVariant.id
+
+                dispatch(setCurrentURL(getProductHref(currentProductHref)))
+                dispatch(fetchPdpData(getProductHref(currentProductHref)))
+            }
         })
 }
 
 export const getProductVariantData = (selections, variants, categoryIds) => (dispatch) => {
     if (categoryIds.some((id) => !selections[id])) {
-        return
+        return Promise.resolve()
     }
 
     for (const {values, id} of variants) {
         if (categoryIds.every((id) => selections[id] === values[id])) {
-            setTimeout(() => {
-                browserHistory.push({
-                    pathname: getProductHref(id)
-                })
-            }, 250)
-            return
+            const currentProductHref = getProductHref(id)
+            dispatch(setCurrentURL(currentProductHref))
+
+            return dispatch(fetchPdpData(currentProductHref))
         }
     }
+
+    return Promise.resolve()
 }

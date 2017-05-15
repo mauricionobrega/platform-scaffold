@@ -8,11 +8,11 @@
 // these styles with the opposite direction. Templates need not be changed.
 
 .u-float-start {
-    @include float-start(true);
+    float: left !important;
 }
 
 .u-float-end {
-    @include float-end(true);
+    float: right !important;
 }
 
 
@@ -20,19 +20,91 @@
 // ---
 //
 // Contain all floated children and their margins.
+//
+// 1. Avoid an Opera bug when the contenteditable attribute is included anywhere
+//    else in the document.
+// 2. Contain the the first child’s top margin. Ensures rendering is consistent
+//    with the other common clearfix method, `overflow: hidden`.
 
 .u-clearfix {
     @include clearfix(true);
 }
 
 
-// Positioning context
+// Positioning relative
 // ---
 //
 // Create a new positioning context.
 
-.u-position-context {
-    @include position-context(true);
+.u-position-relative {
+    position: relative !important;
+}
+
+
+// Positioning absolute
+// ---
+//
+// Create a new positioning context.
+
+.u-position-absolute {
+    position: absolute !important;
+}
+
+
+// Positioning fixed
+// ---
+//
+// Create a new positioning context.
+
+.u-position-fixed {
+    position: fixed !important;
+}
+
+
+// Positioning coordinate
+// ---
+
+.u-position-top {
+    top: 0 !important;
+}
+
+.u-position-right {
+    right: 0 !important;
+}
+
+.u-position-bottom {
+    bottom: 0 !important;
+}
+
+.u-position-left {
+    left: 0 !important;
+}
+
+.u-position-full {
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+}
+
+
+// Bleed
+// ---
+
+.u-bleed-top {
+    margin-top: -$unit !important;
+}
+
+.u-bleed-end {
+    margin-right: -$unit !important;
+}
+
+.u-bleed-bottom {
+    margin-bottom: -$unit !important;
+}
+
+.u-bleed-start {
+    margin-left: -$unit !important;
 }
 
 
@@ -43,7 +115,7 @@
 // will contain floated children and their margins.
 
 .u-block-context {
-    @include block-context(true);
+    overflow: hidden !important;
 }
 
 

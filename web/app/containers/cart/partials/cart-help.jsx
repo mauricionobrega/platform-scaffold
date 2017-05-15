@@ -10,7 +10,7 @@ import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/acco
 const CartHelp = () => (
     <div className="t-cart__help">
         <div className="t-cart__help-title u-flexbox">
-            <h2 className="u-flex">
+            <h2 className="u-h3 u-flex">
                 Order Summary
             </h2>
         </div>
