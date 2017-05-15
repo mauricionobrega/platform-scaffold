@@ -7,14 +7,12 @@ import {handleActions} from 'redux-actions'
 import {mergePayload} from '../../utils/reducer-utils'
 import * as localActions from './actions'
 import {
-    receiveShippingMethodInitialValues,
+    receiveShippingInitialValues,
     receiveCheckoutData,
     receiveCheckoutLocations,
     storeBillingAddress,
-    receiveSavedShippingAddresses,
     receiveShippingMethods,
-    receiveBillingInitialValues,
-    receiveShippingInitialValues
+    receiveBillingInitialValues
 } from '../../integration-manager/checkout/results'
 
 import {setDefaultShippingAddressId} from './shipping/actions'
@@ -23,10 +21,9 @@ export default handleActions({
     [localActions.receiveCheckoutData]: mergePayload,
     [localActions.receiveSavedShippingAddresses]: mergePayload,
     [setDefaultShippingAddressId]: mergePayload,
-    [receiveShippingMethodInitialValues]: mergePayload,
+    [receiveShippingInitialValues]: mergePayload,
     [receiveCheckoutData]: mergePayload,
     [receiveCheckoutLocations]: mergePayload,
-    [receiveSavedShippingAddresses]: mergePayload,
     [storeBillingAddress]: mergePayload,
     [receiveBillingInitialValues]: mergePayload,
     [receiveShippingInitialValues]: mergePayload,
