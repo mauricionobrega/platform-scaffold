@@ -112,6 +112,7 @@ class Header extends React.Component {
                 <Search
                     className="t-header__search"
                     isOverlay
+                    onClickSuggestion={onSearchCloseClick}
                     isOpen={searchIsOpen}
                     onChange={this.onChangeSearchQuery}
                     onClose={onSearchCloseClick}

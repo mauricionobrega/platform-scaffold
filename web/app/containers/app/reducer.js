@@ -9,7 +9,7 @@ import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 
 import * as appActions from './actions'
 
-import {setPageFetchError, setCheckoutShippingURL, setCartURL, setLoggedIn, setCurrentURL} from '../../integration-manager/results'
+import {setPageFetchError, setCheckoutShippingURL, setCartURL, setCurrentURL} from '../../integration-manager/results'
 import {CURRENT_URL, FETCHED_PATHS} from './constants'
 
 export const initialState = fromJS({
@@ -25,7 +25,6 @@ export default handleActions({
     [setCheckoutShippingURL]: mergePayload,
     [setCartURL]: mergePayload,
     [setCurrentURL]: mergePayload,
-    [setLoggedIn]: mergePayload,
     [appActions.onRouteChanged]: mergePayload,
     [appActions.setFetchedPage]: (state, {payload: {url}}) => state.setIn([FETCHED_PATHS, urlToPathKey(url)], true),
     [appActions.addNotification]: (state, {payload}) => (
