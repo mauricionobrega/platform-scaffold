@@ -7,7 +7,7 @@ import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as ReduxForm from 'redux-form'
 
-import {getIsLoggedIn} from '../../app/selectors'
+import {getIsLoggedIn} from '../../../store/user/selectors'
 import {getInitialShippingAddress} from '../../../store/checkout/shipping/selectors'
 
 import {submitShipping} from '../actions'

@@ -10,7 +10,7 @@ import {CART_WISHLIST_MODAL} from '../constants'
 import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {setIsWishlistComplete} from '../actions'
 import {isModalOpen} from 'progressive-web-sdk/dist/store/modals/selectors'
-import {getIsLoggedIn} from '../../app/selectors'
+import {getIsLoggedIn} from '../../../store/user/selectors'
 import {getIsWishlistAddComplete} from '../selectors'
 
 import Sheet from 'progressive-web-sdk/dist/components/sheet'

@@ -6,7 +6,7 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import {GRID_SETTINGS} from '../constants'
-import {getIsLoggedIn} from '../../app/selectors'
+import {getIsLoggedIn} from '../../../store/user/selectors'
 import * as selectors from '../selectors'
 
 import {Grid, GridSpan} from 'progressive-web-sdk/dist/components/grid'
