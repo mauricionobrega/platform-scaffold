@@ -8,7 +8,6 @@ import {setRegisterLoaded, setSigninLoaded} from '../../login/results'
 import {setLoggedIn} from '../../results'
 import {initSfccSession, deleteAuthToken, storeAuthToken, makeSfccRequest, deleteBasketID, storeBasketID} from '../utils'
 import {requestCartData, createBasket, handleCartData} from '../cart/utils'
-import {fetchNavigationData} from '../app/commands'
 
 import {API_END_POINT_URL, REQUEST_HEADERS} from '../constants'
 
