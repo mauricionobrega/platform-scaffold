@@ -56,10 +56,8 @@ export const login = (username, password, rememberMe) => (dispatch, getState) =>
     const formKey = getFormKey(currentState)
 
     const formData = {
-        login: {
-            username,
-            password
-        },
+        'login[username]': username,
+        'login[password]': password,
         form_key: formKey,
         send: ''
     }
