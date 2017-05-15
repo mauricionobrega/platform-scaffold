@@ -52,7 +52,7 @@ export const fetchShippingMethodsEstimate = (formName) => connector.fetchShippin
  * the address that was given during checkout. This should be called during
  * checkout once shipping information has been provided.
  */
-export const updatingShippingAndBilling = () => connector.updatingShippingAndBilling()
+export const updateShippingAndBilling = () => connector.updateShippingAndBilling()
 
 /**
  * Checks to see if a given email is available for registration.

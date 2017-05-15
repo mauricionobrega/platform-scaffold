@@ -245,7 +245,7 @@ export const submitPayment = (formValues) => (dispatch, getState) => {
         })
 }
 
-export const updatingShippingAndBilling = () => () => Promise.resolve()
+export const updateShippingAndBilling = () => () => Promise.resolve()
 
 // We're not currently checking the customer's email on the sfcc site
 // Return true to prevent the welcome banner from showing

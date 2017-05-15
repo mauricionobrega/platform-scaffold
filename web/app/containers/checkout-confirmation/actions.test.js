@@ -7,7 +7,7 @@ import {submitRegisterForm} from './actions'
 import Immutable from 'immutable'
 
 jest.mock('../../integration-manager/checkout/commands')
-import {updatingShippingAndBilling} from '../../integration-manager/checkout/commands'
+import {updateShippingAndBilling} from '../../integration-manager/checkout/commands'
 jest.mock('../../integration-manager/login/commands')
 import {registerUser} from '../../integration-manager/login/commands'
 jest.mock('../app/actions')
@@ -59,7 +59,7 @@ describe('submitRegisterForm', () => {
         return thunk(mockDispatch, mockGetState)
             .then(() => {
                 expect(mockDispatch).toBeCalled()
-                expect(updatingShippingAndBilling).toBeCalled()
+                expect(updateShippingAndBilling).toBeCalled()
             })
     })
 })

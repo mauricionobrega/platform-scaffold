@@ -333,7 +333,7 @@ const updateBillingAddress = () => {
     }
 }
 
-export const updatingShippingAndBilling = () => {
+export const updateShippingAndBilling = () => {
     return (dispatch, getState) => {
         const shippingData = shippingSelectors.getShippingAddress(getState()).toJS()
         const formData = buildFormData({
