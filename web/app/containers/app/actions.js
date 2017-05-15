@@ -11,7 +11,7 @@ import * as analyticConstants from 'progressive-web-sdk/dist/analytics/analytic-
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import {createAction, createActionWithMeta, createAnalyticsMeta} from '../../utils/utils'
-import {getCurrentUrl, getPageVisitCount} from './selectors'
+import {getCurrentUrl} from './selectors'
 
 import appParser from './app-parser'
 
@@ -41,7 +41,6 @@ import * as footerActions from '../footer/actions'
 import * as navigationActions from '../navigation/actions'
 import * as productsActions from '../../store/products/actions'
 import * as categoriesActions from '../../store/categories/actions'
-import * as messagingActions from '../../store/push-messaging/actions'
 
 import {OFFLINE_ASSET_URL} from './constants'
 import {closeModal} from '../../store/modals/actions'
@@ -49,47 +48,11 @@ import {OFFLINE_MODAL} from '../offline/constants'
 
 let isInitialEntryToSite = true
 
-// TODO - Remove need for this after integration manager merge - perhaps the bug
-// with Template.jsx componentWillMount every page load will be fixed
-let skipFirstPage = true
-
 export const addNotification = createAction('Add Notification')
 export const removeNotification = createAction('Remove Notification')
 export const removeAllNotifications = createAction('Remove All Notifications')
 
 export const updateSvgSprite = createAction('Updated SVG sprite', 'sprite')
-
-export const onPageVisitIncrement = createAction('Increment Page Visit Count')
-
-// TODO - Buffer actions while waiting for Messaging init promise
-export const incrementPageVisitCount = (count = 1) => {
-    return (dispatch, getState) => {
-        if (!skipFirstPage) {
-            dispatch(onPageVisitIncrement(count))
-        }
-
-        const currCount = getPageVisitCount(getState())
-        messagingActions.setInStorage('pwa:pageVisitCount', currCount)
-        skipFirstPage = false
-    }
-}
-
-// TODO - Generalize storage of specific slices of store
-export const onPageVisitRehydration = createAction('Page Visit Count Rehydrated')
-
-export const rehydratePageVisitCount = () => {
-    return (dispatch) => {
-        if (!skipFirstPage) {
-            return Promise.resolve()
-        }
-
-        return messagingActions.getFromStorage('pwa:pageVisitCount').then((count) => {
-            if (count !== null) {
-                dispatch(onPageVisitRehydration(count))
-            }
-        })
-    }
-}
 
 /**
  * Action dispatched when the route changes

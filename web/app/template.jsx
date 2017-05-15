@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {onRouteChanged, fetchPage, removeAllNotifications, incrementPageVisitCount, rehydratePageVisitCount} from './containers/app/actions'
+import {onRouteChanged, fetchPage, removeAllNotifications} from './containers/app/actions'
+import {incrementPageVisitCount, rehydratePageVisitCount} from './store/push-messaging/actions'
 
 import {trigger as astroTrigger} from './utils/astro-integration'
 

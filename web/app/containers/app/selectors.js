@@ -23,5 +23,3 @@ export const hasFetchedCurrentPath = createHasSelector(getFetchedPaths, getCurre
 export const getIsLoggedIn = createGetSelector(getApp, 'isLoggedIn')
 export const getFormKey = createGetSelector(getApp, 'formKey')
 export const getSvgSprite = createGetSelector(getApp, 'sprite')
-
-export const getPageVisitCount = createGetSelector(getApp, 'pageVisitCount')

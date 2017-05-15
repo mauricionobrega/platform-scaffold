@@ -9,7 +9,6 @@ import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
 import * as messagingActions from '../../store/push-messaging/actions'
 import * as messagingSelectors from '../../store/push-messaging/selectors'
-import * as appSelectors from '../../containers/app/selectors'
 
 const DEFAULT_PAGE_VISITS = 5
 
@@ -120,7 +119,7 @@ SoftAsk.propTypes = {
 }
 
 const mapStateToProps = createPropsSelector({
-    pageVisitCount: appSelectors.getPageVisitCount,
+    pageVisitCount: messagingSelectors.getPageVisitCount,
     canShowSoftAsk: messagingSelectors.canShowSoftAsk
 })
 
