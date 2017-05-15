@@ -13,13 +13,13 @@ export const getCart = () => (dispatch) => {
         .then((responseJSON) => dispatch(handleCartData(responseJSON)))
 }
 
-export const addToCart = (productID, quantity) => (dispatch) => {
+export const addToCart = (productId, quantity) => (dispatch) => {
     return createBasket()
         .then((basket) => {
             const options = {
                 method: 'POST',
                 body: JSON.stringify([{
-                    product_id: productID,
+                    product_id: productId,
                     quantity
                 }])
             }
@@ -74,7 +74,7 @@ export const initCartPage = () => (dispatch) => {
     })
 }
 
-export const addToWishlist = (productID) => (dispatch) => {
+export const addToWishlist = (productId) => (dispatch) => {
     const {sub} = getAuthTokenPayload()
     const customerID = JSON.parse(sub).customer_info.customer_id
 
@@ -100,7 +100,7 @@ export const addToWishlist = (productID) => (dispatch) => {
                 method: 'POST',
                 body: JSON.stringify({
                     type: 'product',
-                    product_id: productID,
+                    product_id: productId,
                     quantity: 1
                 })
             }

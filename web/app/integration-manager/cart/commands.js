@@ -22,10 +22,10 @@ export const getCart = () => connector.getCart()
 
 /**
  * Adds a product to the cart
- * @param productID {string} The product's ID
+ * @param productId {string} The product's ID
  * @param quantity {number} The quantity to add
  */
-export const addToCart = (productID, quantity) => connector.addToCart(productID, quantity)
+export const addToCart = (productId, quantity) => connector.addToCart(productId, quantity)
 
 /**
  * Removes an item from the cart
@@ -42,10 +42,10 @@ export const updateItemQuantity = (itemID, quantity) => connector.updateItemQuan
 
 /**
  * Add a product to the wishlist
- * @param productID {string} The product's ID
+ * @param productId {string} The product's ID
  * @param productURL {strin} The URL of the product's detail page
  */
-export const addToWishlist = (productID, productURL) => connector.addToWishlist(productID, productURL)
+export const addToWishlist = (productId, productURL) => connector.addToWishlist(productId, productURL)
 
 /**
  * Estimates taxes for a proposed address and shipping method

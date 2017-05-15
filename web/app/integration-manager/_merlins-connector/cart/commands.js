@@ -53,8 +53,8 @@ export const getCart = () => (dispatch) => {
         })
 }
 
-export const addToCart = (productID, quantity) => (dispatch, getState) => {
-    const product = getProductById(productID)(getState())
+export const addToCart = (productId, quantity) => (dispatch, getState) => {
+    const product = getProductById(productId)(getState())
     const formInfo = getState().integrationManager.get(urlToPathKey(product.get('href')))
     const formValues = {
         ...formInfo.get('hiddenInputs').toJS(),
@@ -136,10 +136,10 @@ export const initCartPage = (url) => (dispatch) => {
         })
 }
 
-export const addToWishlist = (productID, productURL) => (dispatch, getState) => {
+export const addToWishlist = (productId, productURL) => (dispatch, getState) => {
     const currentState = getState()
     const payload = {
-        product: productID,
+        product: productId,
         // This won't always be defined, but add to wishlist will still work
         // if it's missing
         uenc: getUenc(urlToPathKey(productURL))(currentState)
