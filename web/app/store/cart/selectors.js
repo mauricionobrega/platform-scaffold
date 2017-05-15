@@ -5,17 +5,32 @@
 import Immutable from 'immutable'
 import {createSelector} from 'reselect'
 import {createGetSelector, createHasSelector} from 'reselect-immutable-helpers'
-import {getCart} from '../selectors'
+import {getCart, getProducts} from '../selectors'
 
-export const getCartContentsLoaded = createHasSelector(getCart, 'items')
+export const getCartLoaded = createHasSelector(getCart, 'items')
 
-export const getCartItems = createGetSelector(getCart, 'items', Immutable.List())
-export const getCartSubtotal = createGetSelector(getCart, 'subtotal')
+const getCartItemsPrivate = createGetSelector(getCart, 'items', Immutable.List())
+export const getCartItems = createSelector(
+    getCartItemsPrivate,
+    getProducts,
+    (items, products) => items.map((item) => {
+        const productId = item.get('productId')
+        return item.set('product', products.find((product) => productId === product.get('id')))
+    })
+)
+
 export const getCartHasItems = createSelector(
     getCartItems,
     (items) => items.size > 0
 )
-export const getCartSummaryCount = createGetSelector(getCart, 'summary_count')
-export const getSubtotalExcludingTax = createGetSelector(getCart, 'subtotal_excl_tax')
-export const getSubtotalIncludingTax = createGetSelector(getCart, 'subtotal_incl_tax')
-export const getTaxAmount = createGetSelector(getCart, 'tax_amount')
+
+export const getCartSummaryCount = createSelector(
+    getCartItems,
+    (items) => items.reduce((quantity, cartItem) => quantity + cartItem.get('quantity'), 0)
+)
+
+export const getSubtotal = createGetSelector(getCart, 'subtotal')
+export const getOrderTotal = createGetSelector(getCart, 'orderTotal')
+export const getTaxes = createGetSelector(getCart, 'taxes', Immutable.Map())
+export const getTaxAmount = createGetSelector(getTaxes, 'amount')
+export const getTaxLabel = createGetSelector(getTaxes, 'label')

@@ -6,24 +6,20 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import * as selectors from '../selectors'
 import {createPropsSelector} from 'reselect-immutable-helpers'
+import {getCartURL} from '../../app/selectors'
+import {getProductTitle, getProductPrice} from '../../../store/products/selectors'
 
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import Breadcrumbs from 'progressive-web-sdk/dist/components/breadcrumbs'
 
 import {isRunningInAstro} from '../../../utils/astro-integration'
 
-const checkoutBreadcrumb = [
-    {
-        text: 'Cart',
-        href: '/checkout/cart'
-    }
-]
 
-const ProductDetailsHeading = ({breadcrumbs, title, price, isInCheckout}) => (
+const ProductDetailsHeading = ({breadcrumbs, title, price, isInCheckout, cartURL}) => (
     <div className="t-product-details-heading u-padding-md u-box-shadow u-position-relative u-z-index-1">
         {!isRunningInAstro &&
             <div className="t-product-details__breadcrumbs u-margin-bottom-md">
-                <Breadcrumbs items={isInCheckout ? checkoutBreadcrumb : breadcrumbs} />
+                <Breadcrumbs items={!isInCheckout ? breadcrumbs : [{text: 'Cart', href: cartURL}]} />
             </div>
         }
         {title ?
@@ -33,7 +29,7 @@ const ProductDetailsHeading = ({breadcrumbs, title, price, isInCheckout}) => (
         }
 
         {price ?
-            <span className="t-product-details-heading__price t-product-details__price u-color-accent u-text-normal u-text-header-font-family u-text-letter-spacing">{price}</span>
+            <span className="t-product-details-heading__price t-product-details__price u-color-accent u-text-weight-regular u-text-family-header u-text-letter-spacing-small">{price}</span>
         :
             <SkeletonBlock width="25%" height="32px" />
         }
@@ -42,6 +38,7 @@ const ProductDetailsHeading = ({breadcrumbs, title, price, isInCheckout}) => (
 
 ProductDetailsHeading.propTypes = {
     breadcrumbs: PropTypes.array,
+    cartURL: PropTypes.string,
     isInCheckout: PropTypes.bool,
     price: PropTypes.string,
     title: PropTypes.string
@@ -49,8 +46,9 @@ ProductDetailsHeading.propTypes = {
 
 const mapStateToProps = createPropsSelector({
     breadcrumbs: selectors.getProductDetailsBreadcrumbs,
-    title: selectors.getProductTitle,
-    price: selectors.getProductPrice
+    cartURL: getCartURL,
+    title: getProductTitle,
+    price: getProductPrice
 })
 
 export default connect(mapStateToProps)(ProductDetailsHeading)

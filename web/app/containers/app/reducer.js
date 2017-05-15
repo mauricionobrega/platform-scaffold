@@ -5,9 +5,11 @@
 import {handleActions} from 'redux-actions'
 import {fromJS, List} from 'immutable'
 import {mergePayload} from '../../utils/reducer-utils'
-import {urlToPathKey} from '../../utils/utils'
+import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 
 import * as appActions from './actions'
+
+import {setPageFetchError, setCheckoutShippingURL, setCartURL, setLoggedIn, setCurrentURL} from '../../integration-manager/results'
 import {CURRENT_URL, FETCHED_PATHS} from './constants'
 
 export const initialState = fromJS({
@@ -19,33 +21,25 @@ export const initialState = fromJS({
 })
 
 export default handleActions({
-    [appActions.receiveData]: mergePayload,
-    [appActions.onRouteChanged]: (state, {payload: {currentURL}}) => {
-        return state.set(CURRENT_URL, currentURL)
-    },
-    [appActions.onPageReceived]: (state, {payload: {url}}) => {
-        const path = urlToPathKey(url)
-        return state.setIn([FETCHED_PATHS, path], true)
-    },
-    [appActions.addNotification]: (state, {payload}) => {
-        return state.update('notifications', (notifications) => {
-            // Don't allow duplicate notifications to be added
+    [setPageFetchError]: mergePayload,
+    [setCheckoutShippingURL]: mergePayload,
+    [setCartURL]: mergePayload,
+    [setCurrentURL]: mergePayload,
+    [setLoggedIn]: mergePayload,
+    [appActions.onRouteChanged]: mergePayload,
+    [appActions.setFetchedPage]: (state, {payload: {url}}) => state.setIn([FETCHED_PATHS, urlToPathKey(url)], true),
+    [appActions.addNotification]: (state, {payload}) => (
+        // Don't allow duplicate notifications to be added
+        state.update('notifications', (notifications) => {
             return notifications.every(({id}) => id !== payload.id) ? notifications.push(payload) : notifications
         })
-    },
-    [appActions.removeNotification]: (state, {payload}) => {
-        return state.update('notifications', (notifications) => {
-            return notifications.filterNot(({id}) => id === payload)
-        })
-    },
-    [appActions.removeAllNotifications]: (state) => {
-        return state.set('notifications', List())
-    },
-    [appActions.setPageFetchError]: mergePayload,
-    [appActions.clearPageFetchError]: (state) => {
-        return state.set('fetchError', null)
-    },
-    [appActions.updateSvgSprite]: (state, {payload}) => {
-        return state.set('sprite', payload.sprite)
-    }
+    ),
+    [appActions.removeNotification]: (state, {payload}) => (
+        state.update('notifications', (notifications) => (
+            notifications.filterNot(({id}) => id === payload)
+        ))
+    ),
+    [appActions.removeAllNotifications]: (state) => state.set('notifications', List()),
+    [appActions.clearPageFetchError]: (state) => state.set('fetchError', null),
+    [appActions.updateSvgSprite]: mergePayload
 }, initialState)

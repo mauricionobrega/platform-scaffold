@@ -4,12 +4,15 @@
 
 const DOLLAR_SIGN = /\$/
 
+// replacing $ sign with empty string to compare the price
+const getPriceValue = (item) => parseFloat(item.get('price').replace(DOLLAR_SIGN, ''))
+
 export const sortLib = {
     // sort by name
     name: (a, b) => {
         // getting name of products
-        const nameA = a.title
-        const nameB = b.title
+        const nameA = a.get('title')
+        const nameB = b.get('title')
 
         if (nameA < nameB) {
             return -1
@@ -21,14 +24,8 @@ export const sortLib = {
     },
 
     // sort by price
-    price: (a, b) => {
-        // replacing $ sign with empty string to compare the price
-        const priceA = parseFloat(a.price.replace(DOLLAR_SIGN, ''))
-        const priceB = parseFloat(b.price.replace(DOLLAR_SIGN, ''))
-
-        return priceA - priceB
-    },
+    price: (a, b) => (getPriceValue(a) - getPriceValue(b)),
 
     // sort by postition (default)
-    position: () => { return 0 }
+    position: () => 0
 }

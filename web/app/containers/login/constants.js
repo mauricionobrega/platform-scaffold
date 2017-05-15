@@ -5,6 +5,7 @@
 // a few constants to make refactoring easier in future
 export const SIGN_IN_SECTION = 'signin'
 export const REGISTER_SECTION = 'register'
+export const REMEMBER_ME_MODAL = 'remember-me-modal'
 export const SECTION_NAMES = {
     [SIGN_IN_SECTION]: 'Sign In',
     [REGISTER_SECTION]: 'Register'

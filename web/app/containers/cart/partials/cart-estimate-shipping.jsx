@@ -7,11 +7,11 @@ import {connect} from 'react-redux'
 import * as ReduxForm from 'redux-form'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import {CART_ESTIMATE_SHIPPING_MODAL, ESTIMATE_FORM_NAME} from '../constants'
-import {closeModal} from '../../../store/modals/actions'
-import {isModalOpen} from '../../../store/selectors'
+import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
+import {isModalOpen} from 'progressive-web-sdk/dist/store/modals/selectors'
 import {getCountries, getAvailableRegions} from '../../../store/checkout/locations/selectors'
 import {submitEstimateShipping} from '../actions'
-import {getTaxInitiation} from '../selectors'
+import {isTaxRequestPending} from '../selectors'
 
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -21,13 +21,13 @@ import IconLabelButton from '../../../components/icon-label-button'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 import InlineLoader from 'progressive-web-sdk/dist/components/inline-loader'
 
-export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateProvinces, submitEstimateShipping, isTaxRequested, handleSubmit}) => {
+export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateProvinces, submitEstimateShipping, isTaxRequestPending, handleSubmit}) => {
     return (
         <Sheet className="t-cart__estimate-shipping-modal" open={isOpen} onDismiss={closeModal} maskOpacity={0.7} effect="slide-right" coverage="85%">
             <HeaderBar>
                 <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
-                    <h1 className="u-h4 u-heading-family u-text-uppercase">
-                        <span className="u-text-extra-lighter">Estimate Shipping</span>
+                    <h1 className="u-h4 u-text-family-header u-text-uppercase">
+                        <span className="u-text-weight-extra-light">Estimate Shipping</span>
                     </h1>
                 </HeaderBarTitle>
 
@@ -40,7 +40,7 @@ export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateP
             <div className="u-padding-md">
                 <form onSubmit={handleSubmit(submitEstimateShipping)}>
                     <FieldRow>
-                        <ReduxForm.Field component={Field} className="pw--has-select" name="country_id" label="Country">
+                        <ReduxForm.Field component={Field} className="pw--has-select" name="countryId" label="Country">
                             <select>
                                 {countries.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
                             </select>
@@ -53,9 +53,9 @@ export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateP
                                 <input type="text" noValidate />
                             </ReduxForm.Field>
                         :
-                            <ReduxForm.Field component={Field} className="pw--has-select" name="region_id" label="State/Province">
+                            <ReduxForm.Field component={Field} className="pw--has-select" name="regionId" label="State/Province">
                                 <select>
-                                    {stateProvinces.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
+                                    {stateProvinces.map(({label, value}) => <option value={value} key={label}>{label}</option>)}
                                 </select>
                             </ReduxForm.Field>
                         }
@@ -69,13 +69,13 @@ export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateP
                     </FieldRow>
 
                     <FieldRow>
-                        {!isTaxRequested ?
-                            <Button className="c--secondary u-width-full u-text-uppercase" type="submit">
-                                Get Estimate
-                            </Button>
-                        :
+                        {isTaxRequestPending ?
                             <Button className="c--secondary u-width-full">
                                 <InlineLoader className="pw--white" title="Estimating" />
+                            </Button>
+                        :
+                            <Button className="c--secondary u-width-full u-text-uppercase" type="submit">
+                                Get Estimate
                             </Button>
                         }
                     </FieldRow>
@@ -102,7 +102,7 @@ CartEstimateShippingModal.propTypes = {
      */
     isOpen: React.PropTypes.bool,
 
-    isTaxRequested: React.PropTypes.bool,
+    isTaxRequestPending: React.PropTypes.bool,
 
     stateProvinces: React.PropTypes.array,
     /**
@@ -113,7 +113,7 @@ CartEstimateShippingModal.propTypes = {
 
 const mapStateToProps = createPropsSelector({
     countries: getCountries,
-    isTaxRequested: getTaxInitiation,
+    isTaxRequestPending,
     isOpen: isModalOpen(CART_ESTIMATE_SHIPPING_MODAL),
     stateProvinces: getAvailableRegions(ESTIMATE_FORM_NAME)
 })
@@ -121,8 +121,6 @@ const mapStateToProps = createPropsSelector({
 const mapDispatchToProps = {
     closeModal: () => closeModal(CART_ESTIMATE_SHIPPING_MODAL),
     submitEstimateShipping
-
-
 }
 
 const EstimateShippingReduxForm = ReduxForm.reduxForm({

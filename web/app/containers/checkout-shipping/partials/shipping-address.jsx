@@ -51,7 +51,7 @@ const ShippingAddressForm = ({
                     component={Field}
                     name={SAVED_SHIPPING_ADDRESS_FIELD}
                     label={
-                        <strong className="u-text-semi-bold">{street}</strong>
+                        <strong className="u-text-weight-semi-bold">{street}</strong>
                     }
                     caption={shippingAddress}
                     type="radio"
@@ -86,7 +86,7 @@ const ShippingAddressForm = ({
                             component={Field}
                             name={SAVED_SHIPPING_ADDRESS_FIELD}
                             label={
-                                <strong className="u-text-semi-bold">
+                                <strong className="u-text-weight-semi-bold">
                                     Add a new address
                                 </strong>
                             }
@@ -182,8 +182,6 @@ const mapStateToProps = createPropsSelector({
 const mapDispatchToProps = {
     handleShowAddNewAddress: (bool) => setShowAddNewAddress(bool)
 }
-
-
 
 export default connect(
     mapStateToProps,

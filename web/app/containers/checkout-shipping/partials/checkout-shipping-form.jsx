@@ -19,10 +19,11 @@ import ShippingAddress from './shipping-address'
 import ShippingEmail from './shipping-email'
 import ShippingMethod from './shipping-method'
 
-const validate = (values) => {
+const REQUIRED_TEXT = 'Required'
+
+const validate = (values, props) => {
     const errors = {}
     const requiredFieldNames = [
-        'username',
         'name',
         'addressLine1',
         'city',
@@ -42,9 +43,13 @@ const validate = (values) => {
         errors.username = 'Enter a valid email address'
     }
 
+    if (!props.isLoggedIn && !values.username) {
+        errors.username = REQUIRED_TEXT
+    }
+
     requiredFieldNames.forEach((fieldName) => {
         if (!values[fieldName]) {
-            errors[fieldName] = 'Required'
+            errors[fieldName] = REQUIRED_TEXT
         }
     })
 
@@ -59,7 +64,7 @@ class CheckoutShippingForm extends React.Component {
 
     onSubmit(values) {
         return new Promise((resolve, reject) => {
-            const errors = validate(values)
+            const errors = validate(values, this.props)
             if (!Object.keys(errors).length) {
                 this.props.submitShipping()
                 return resolve()
