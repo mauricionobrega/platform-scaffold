@@ -13,7 +13,7 @@ import {
 } from './constants'
 import {removeFromCart, updateItemQuantity, addToWishlist, fetchTaxEstimate} from '../../integration-manager/cart/commands'
 import {addNotification} from '../app/actions'
-import {getIsLoggedIn} from '../../app/selectors'
+import {getIsLoggedIn} from '../../store/user/selectors'
 import {trigger} from '../../utils/astro-integration'
 import {getFormValues, getFormRegisteredFields} from '../../store/form/selectors'
 import {getSelectedShippingMethod} from '../../store/checkout/shipping/selectors'
