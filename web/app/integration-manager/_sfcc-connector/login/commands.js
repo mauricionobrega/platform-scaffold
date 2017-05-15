@@ -106,15 +106,25 @@ export const registerUser = (firstname, lastname, email, password) => (dispatch)
             }
         })
     }
+    let responseHeaders
     return makeSfccRequest(`${API_END_POINT_URL}/customers`, requestOptions)
-        .then((response) => response.json())
+        .then((response) => {
+            responseHeaders = response.headers
+            return response.json()
+        })
         .then((responseJSON) => {
             if (responseJSON.fault) {
                 throw new SubmissionError({_error: 'Unable to create account.'})
             }
-            // Creating a user doesn't sign them in automatically, so dispatch the login command
-            return dispatch(login(email, password))
+            const authorization = responseHeaders.get('Authorization')
+            if (authorization) {
+                storeAuthToken(authorization)
+                return initSfccSession(authorization)
+            }
+            return Promise.resolve()
         })
+        // Creating a user doesn't sign them in automatically, so dispatch the login command
+        .then(() => dispatch(login(email, password)))
 
 }
 
