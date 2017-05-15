@@ -16,12 +16,12 @@ router.get('*', (req, res) => {
     const PUBLIC_FOLDER = path.join(__dirname, `app/containers/test-container`)
 
     const appString = renderToString(<TestContainer/>)
-    const baseCSS = fs.readFileSync(`${PUBLIC_FOLDER}/container.css`).toString()
+    const containerCSS = fs.readFileSync(`${PUBLIC_FOLDER}/container.css`).toString()
 
     res.send(template({
         body: appString,
         title: 'Hello World from the server',
-        includeBaseCSS: baseCSS,
+        includeCSS: containerCSS,
         META: {
             url: 'https://www.mobify/canonical-test'
         }

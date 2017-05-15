@@ -1,4 +1,4 @@
-export default ({body, title, includeBaseCSS, META}) => {
+export default ({body, title, includeCSS, META}) => {
     return `
         <!doctype html>
         <html amp lang="en" class="amp-border-box">
@@ -13,8 +13,7 @@ export default ({body, title, includeBaseCSS, META}) => {
 
                 <!-- AMP Component JS includes go here -->
                 <style amp-custom>
-                    /* Project base style */
-                    ${includeBaseCSS}
+                    ${includeCSS}
                 </style>
             </head>
             <body>
