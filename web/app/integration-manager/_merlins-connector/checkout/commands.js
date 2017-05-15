@@ -22,7 +22,7 @@ import {
 
 import {fetchPageData} from '../app/commands'
 import {getCustomerEntityID} from '../selectors'
-import {getIsLoggedIn} from '../../../containers/app/selectors'
+import {getIsLoggedIn} from '../../../store/user/selectors'
 import {getFormValues, getFormRegisteredFields} from '../../../store/form/selectors'
 import {receiveEntityID} from '../actions'
 import {PAYMENT_URL} from '../constants'

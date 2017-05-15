@@ -7,6 +7,7 @@ import thunk from 'redux-thunk'
 import Immutable from 'immutable'
 
 import rootReducer from '../containers/reducers'
+import userReducer from './user/reducer'
 import cartReducer from './cart/reducer'
 import categoryReducer from './categories/reducer'
 import modalReducer from 'progressive-web-sdk/dist/store/modals/reducer'
@@ -23,11 +24,11 @@ const configureStore = (initialState) => {
         thunk,
         analytics(({type, payload}, state) => analyticManager.distribute(type, payload, state))
     ]
-
     const reducer = combineReducers({
         categories: categoryReducer,
         cart: cartReducer,
         ui: rootReducer,
+        user: userReducer,
         modals: modalReducer,
         products: productReducer,
         checkout: checkoutReducer,
