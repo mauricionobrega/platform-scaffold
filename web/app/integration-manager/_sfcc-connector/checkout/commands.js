@@ -82,7 +82,7 @@ export const initCheckoutShippingPage = () => (dispatch) => {
         })
 }
 
-export const fetchCheckoutPaymentData = () => (dispatch) => {
+export const initCheckoutPaymentPage = () => (dispatch) => {
     dispatch(populateLocationsData())
     return createBasket()
         .then((basket) => {
