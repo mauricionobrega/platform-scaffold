@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 
 
@@ -6,7 +10,7 @@ const ShippingMethodLabel = ({label, info, cost}) => {
         <div className="u-flexbox">
             <div className="u-flex">
                 <div>{label}</div>
-                <div className="u-text-quiet u-text-normal u-margin-top-sm">{info}</div>
+                <div className="u-text-quiet u-text-weight-regular u-margin-top-sm">{info}</div>
             </div>
             <div className="u-flex-none">{cost}</div>
         </div>

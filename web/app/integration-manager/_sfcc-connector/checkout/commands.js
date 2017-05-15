@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {SubmissionError} from 'redux-form'
 import {createBasket} from '../cart/utils'
 import {makeSfccRequest} from '../utils'
@@ -136,8 +140,3 @@ export const submitShipping = (formValues) => (dispatch) => {
 // We're not currently checking the customer's email on the sfcc site
 // Return true to prevent the welcome banner from showing
 export const checkCustomerEmail = () => () => Promise.resolve(true)
-
-// Checkout sign in is currently not implemented on our sfcc site
-// The merlin's designs for checkout sign in don't translate well to
-// the functionality available to us with sfcc
-export const checkoutSignIn = () => () => Promise.resolve()

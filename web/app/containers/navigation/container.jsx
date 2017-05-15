@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {extractPathFromURL} from 'progressive-web-sdk/dist/utils/utils'
@@ -17,6 +21,7 @@ import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {setNavigationPath} from './actions'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 import {withRouter} from 'progressive-web-sdk/dist/routing'
+import NavigationSocialIcons from './partials/navigation-social-icons'
 
 const Navigation = (props) => {
     const {path, isOpen, root, closeNavigation, router, setNavigationPath, logoutAction} = props
@@ -59,8 +64,8 @@ const Navigation = (props) => {
             <Nav root={root.title ? root : null} path={path} onPathChange={onPathChange}>
                 <HeaderBar>
                     <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
-                        <h2 className="t-navigation__title u-heading-family u-text-uppercase">
-                            <span className="u-text-extra-lighter">Merlin's</span> Potions
+                        <h2 className="u-text-family-header u-text-uppercase">
+                            <span className="u-text-weight-extra-light">Merlin&#39;s</span> Potions
                         </h2>
                     </HeaderBarTitle>
 
@@ -70,6 +75,13 @@ const Navigation = (props) => {
                 </HeaderBar>
 
                 <NavMenu itemFactory={itemFactory} />
+
+                <div>
+                    <NavigationSocialIcons />
+                    <div className="t-navigation__copyright u-padding-md">
+                        <p>Copyright Merlin&#39;s Potions 2016. All rights reserved.</p>
+                    </div>
+                </div>
             </Nav>
         </Sheet>
     )

@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import * as ReduxForm from 'redux-form'
 import {connect} from 'react-redux'
@@ -46,6 +50,7 @@ class BillingAddressForm extends React.Component {
             street
         } = this.props
 
+        const hasShippingAddress = !!(street || city || postcode || name)
         const shippingAddress = (
             <div>
                 <p>{street}, {city}, {postcode}</p>
@@ -59,7 +64,7 @@ class BillingAddressForm extends React.Component {
                 innerClassName="c--no-min-height u-padding-0"
                 onClick={this.showCompanyAndAptField}
             >
-                <span className="u-color-brand u-text-letter-spacing-normal u-text-small">
+                <span className="u-color-brand u-text-letter-spacing-normal u-text-size-small">
                     Add company, apt #, suite etc.
                 </span>
                 <Icon name="chevron-down" className="u-margin-start-sm u-color-brand" />
@@ -73,12 +78,12 @@ class BillingAddressForm extends React.Component {
                 </div>
 
                 <div className="u-border-light-top u-border-light-bottom u-bg-color-neutral-00 t-checkout-payment__card">
-                    {city &&
+                    {hasShippingAddress &&
                         <FieldRow className="u-padding-md">
                             <ReduxForm.Field
                                 component={Field}
                                 name="billing_same_as_shipping"
-                                label={<strong className="u-text-semi-bold">Same as shipping address</strong>}
+                                label={<strong className="u-text-weight-medium">Same as shipping address</strong>}
                                 caption={shippingAddress}
                             >
                                 <input type="checkbox" defaultChecked={!newShippingAddressIsEnabled} onChange={this.handleSavedAddress} noValidate />
@@ -86,7 +91,7 @@ class BillingAddressForm extends React.Component {
                         </FieldRow>
                     }
 
-                    {(newShippingAddressIsEnabled || !city) &&
+                    {(newShippingAddressIsEnabled || !hasShippingAddress) &&
                         <div className="u-padding-md u-padding-top-lg u-padding-bottom-lg u-border-light-top">
                             <FieldRow>
                                 <ReduxForm.Field component={Field} name="name" label="Full name">

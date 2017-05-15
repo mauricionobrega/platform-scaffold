@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {Field as ReduxFormField} from 'redux-form'
@@ -14,7 +18,7 @@ export const LoginFieldLabel = ({label, forgotPassword}) => (
         {label}
 
         {forgotPassword &&
-            <Link className="u-float-end u-text-normal" href={forgotPassword.href}>
+            <Link className="u-float-end u-text-weight-regular" href={forgotPassword.href}>
                 Forgot Your Password?
             </Link>
         }

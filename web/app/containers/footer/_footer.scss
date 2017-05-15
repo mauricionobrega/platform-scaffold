@@ -9,16 +9,6 @@
     //
 }
 
-
-// Social
-// ---
-
-.t-footer__social {
-    background: $neutral-10;
-    box-shadow: $inset-box-shadow;
-}
-
-
 // Navigation
 // ---
 
@@ -26,40 +16,20 @@
     background-color: $brand-color;
 
     color: #fff;
-
-    a {
-        color: #fff;
-    }
 }
+
+
+.t-footer__navigation-link {
+    display: inline-block;
+    margin-right: $unit;
+    margin-left: $unit;
+    padding-bottom: $unit;
+
+    color: #fff;
+    font-size: $small-font-size;
+}
+
 
 
 // Panel Newsletter
 // ---
-
-.t-footer__newsletter {
-    background: #fff;
-}
-
-
-// Social Link
-// ---
-
-.t-footer__social-link {
-    display: block;
-
-    & + & {
-        margin-left: $unit*3;
-    }
-}
-
-
-// Copyright
-// ---
-
-.t-footer__copyright {
-    margin: 0;
-
-    color: #fff;
-    font-size: 12px;
-    line-height: $font-size;
-}

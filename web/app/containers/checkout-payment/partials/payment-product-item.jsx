@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import {getHighResImage} from '../../../integration-manager/_merlins-connector/utils'
 
@@ -34,7 +38,7 @@ const PaymentProductItem = ({
             image={productImage}
         >
             <div className="u-flexbox u-align-bottom">
-                <div className="u-flex-none u-color-neutral-50 u-text-small">
+                <div className="u-flex-none u-color-neutral-50 u-text-size-small">
                     {options && options.map(({label, value}, idx) => (
                         <p
                             className={idx > 0 ? 'u-margin-top-sm' : ''}
@@ -51,7 +55,7 @@ const PaymentProductItem = ({
 
                 <div className="u-text-align-end u-flex">
                     <div>
-                        <div className="u-h5 u-text-semi-bold">
+                        <div className="u-h5 u-text-weight-semi-bold">
                             {linePrice}
                         </div>
 

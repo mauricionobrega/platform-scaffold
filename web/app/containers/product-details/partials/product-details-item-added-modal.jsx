@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
@@ -31,16 +35,16 @@ const ProductDetailsItemAddedModal = ({open, onDismiss, quantity, title, price, 
             </div>
         </div>
 
-        <div className="u-flexbox u-column u-flex u-padding-md">
+        <div className="u-flexbox u-direction-column u-flex u-padding-md">
             {/* Modal product information */}
             <div className="u-flex u-margin-bottom-md">
                 <ProductItem customWidth="20%"
-                    title={<h2 className="u-h5 u-text-font-family u-text-semi-bold">{title}</h2>}
+                    title={<h2 className="u-h5 u-text-family u-text-weight-medium">{title}</h2>}
                     image={<img role="presentation" src={thumbnail.src} alt={thumbnail.alt} width="60px" />}
                 >
                     <div className="u-flexbox u-justify-between u-padding-top-sm">
                         <p>Qty: {quantity}</p>
-                        <p className="u-text-bold">{price}</p>
+                        <p className="u-text-weight-bold">{price}</p>
                     </div>
                 </ProductItem>
             </div>

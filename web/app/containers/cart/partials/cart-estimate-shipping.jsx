@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React from 'react'
 import {connect} from 'react-redux'
 import * as ReduxForm from 'redux-form'
@@ -22,8 +26,8 @@ export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateP
         <Sheet className="t-cart__estimate-shipping-modal" open={isOpen} onDismiss={closeModal} maskOpacity={0.7} effect="slide-right" coverage="85%">
             <HeaderBar>
                 <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
-                    <h1 className="u-h4 u-heading-family u-text-uppercase">
-                        <span className="u-text-extra-lighter">Estimate Shipping</span>
+                    <h1 className="u-h4 u-text-family-header u-text-uppercase">
+                        <span className="u-text-weight-extra-light">Estimate Shipping</span>
                     </h1>
                 </HeaderBarTitle>
 

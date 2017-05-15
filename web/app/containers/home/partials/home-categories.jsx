@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import classNames from 'classnames'
 import {connect} from 'react-redux'
@@ -38,7 +42,7 @@ CategoryImage.propTypes = {
 
 const HomeCategory = ({category: {path, title}}) => {
     const categoryClasses = classNames('t-home__category-section', {
-        'u-text-all-caps': !!title
+        'u-text-uppercase': !!title
     })
 
     return (
@@ -48,7 +52,7 @@ const HomeCategory = ({category: {path, title}}) => {
             startAction={<CategoryImage alt={title} />}
             endAction={<Icon name="chevron-right" />}
         >
-            <div className="u-h2 t-home__category-text u-text-extra-lighter">SHOP</div>
+            <div className="u-h3 t-home__category-text u-text-weight-extra-light">SHOP</div>
 
             {title ?
                 <div className="t-home__category-text t--text-large">{title}</div>

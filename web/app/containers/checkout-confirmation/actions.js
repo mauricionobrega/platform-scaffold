@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {CHECKOUT_CONFIRMATION_MODAL, CHECKOUT_CONFIRMATION_REGISTRATION_FAILED} from './constants'
 import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 import {addNotification, removeAllNotifications} from '../app/actions'
@@ -5,22 +9,24 @@ import {openModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import * as shippingSelectors from '../../store/checkout/shipping/selectors'
 import * as formSelectors from '../../store/form/selectors'
 import {getEmailAddress} from '../../store/checkout/selectors'
-import {checkoutRegister, updatingShippingAndBilling} from '../../integration-manager/checkout/commands'
+import {updatingShippingAndBilling} from '../../integration-manager/checkout/commands'
+import {registerUser} from '../../integration-manager/login/commands'
 
 export const hideRegistrationForm = createAction('Hiding Registration Form (Save Your Address Details)')
 
 export const submitRegisterForm = () => {
     return (dispatch, getState) => {
         dispatch(removeAllNotifications())
+        const currentState = getState()
+        const firstname = shippingSelectors.getShippingFirstName(currentState)
+        const lastname = shippingSelectors.getShippingLastName(currentState)
+        const email = getEmailAddress(currentState)
+        const {
+            password,
+            password_confirmation
+        } = formSelectors.getConfirmationFormValues(currentState)
 
-        const userCredentials = {
-            firstname: shippingSelectors.getShippingFirstName(getState()),
-            lastname: shippingSelectors.getShippingLastName(getState()),
-            email: getEmailAddress(getState()),
-            ...formSelectors.getConfirmationFormValues(getState())
-        }
-
-        return checkoutRegister(userCredentials)
+        return dispatch(registerUser(firstname, lastname, email, password, password_confirmation))
             .then(() => {
                 dispatch(openModal(CHECKOUT_CONFIRMATION_MODAL))
                 dispatch(updatingShippingAndBilling())

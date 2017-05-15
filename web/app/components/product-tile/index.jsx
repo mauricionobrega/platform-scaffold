@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import classNames from 'classnames'
 
@@ -14,8 +18,8 @@ import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 const titleClassName = classNames(
     'c-product-tile__name',
     'u-h4',
-    'u-text-font-family',
-    'u-text-semi-bold',
+    'u-text-family',
+    'u-text-weight-medium',
     'u-color-neutral-60'
 )
 
@@ -40,7 +44,7 @@ const ProductTile = ({className, thumbnail, href, price, title}) => {
         ? <h2 className={titleClassName}>{title}</h2>
         : <SkeletonBlock height="34px" />
     const priceElement = price
-        ? <span className="u-text-bold u-color-error">{price}</span>
+        ? <span className="u-text-weight-bold u-color-error">{price}</span>
         : <SkeletonBlock height="22px" width="50px" />
 
     return (
