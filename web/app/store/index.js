@@ -26,7 +26,6 @@ const configureStore = (initialState) => {
         thunk,
         analytics(({type, payload}, state) => analyticManager.distribute(type, payload, state))
     ]
-    debugger
     const reducer = combineReducers({
         categories: categoryReducer,
         cart: cartReducer,
