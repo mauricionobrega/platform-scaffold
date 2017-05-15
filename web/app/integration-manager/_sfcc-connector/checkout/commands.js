@@ -67,8 +67,8 @@ export const fetchCheckoutShippingData = () => (dispatch) => {
                 ],
                 regions: STATES
             }))
+            dispatch(fetchShippingMethodsEstimate())
         })
-        .then(() => dispatch(fetchShippingMethodsEstimate()))
 }
 
 export const submitShipping = (formValues) => (dispatch) => {
