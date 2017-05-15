@@ -32,52 +32,18 @@ export const submitPayment = () => (dispatch, getState) => {
         cvv: billingFormValues.cvv
     }
 
+
     if (billingIsSameAsShippingAddress) {
-        const shippingAddress = getShippingAddress(currentState).toJS()
         address = {
-            // NOT spreading `address` because it contains many incorrectly
-            // formatted keys, as far as the payment-information request
-            // is concerned
-            customerAddressId: `${shippingAddress.customerAddressId}`,
-            customerId: `${shippingAddress.customerId}`,
             username: email,
-            firstname: shippingAddress.firstname,
-            lastname: shippingAddress.lastname,
-            company: shippingAddress.company,
-            postcode: shippingAddress.postcode,
-            city: shippingAddress.city,
-            street: shippingAddress.street,
-            region: shippingAddress.region,
-            regionCode: shippingAddress.regionCode,
-            regionId: `${shippingAddress.regionId}`,
-            countryId: shippingAddress.countryId,
-            saveInAddressBook: false
+            ...getShippingAddress(currentState).toJS()
         }
     } else {
-        const {
-            name,
-            company,
-            addressLine1,
-            addressLine2,
-            countryId,
-            city,
-            regionId,
-            postcode,
-        } = billingFormValues
-
-        const {firstname, lastname} = splitFullName(name)
-
+        const {firstname, lastname} = splitFullName(billingFormValues.name)
         address = {
             firstname,
             lastname,
-            username: email,
-            company: company || '',
-            postcode,
-            city,
-            street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1],
-            regionId,
-            countryId,
-            saveInAddressBook: false
+            ...billingFormValues
         }
     }
     return dispatch(submitPaymentCommand({...address, ...paymentInfo}))
