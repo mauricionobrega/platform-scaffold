@@ -6,7 +6,7 @@ import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 
 import {getCart} from '../cart/commands'
-import {appParser} from './parser'
+import {parseLoginStatus} from './parser'
 import {parseNavigation} from '../navigation/parser'
 import {receiveFormKey} from '../actions'
 import {CHECKOUT_SHIPPING_URL, CART_URL} from '../constants'
@@ -14,19 +14,18 @@ import {generateFormKeyCookie} from '../../../utils/magento-utils'
 
 import {
     receiveNavigationData,
-    receiveAppData,
     setPageFetchError,
     setCheckoutShippingURL,
-    setCartURL
+    setCartURL,
+    setLoggedIn
 } from '../../results'
 
-export const fetchPageData = (url) => (dispatch) => {
-    return makeRequest(url)
+export const fetchPageData = (url) => (dispatch) => (
+    makeRequest(url)
         .then(jqueryResponse)
         .then((res) => {
             const [$, $response] = res
-            const appData = appParser($response)
-            dispatch(receiveAppData({...appData}))
+            dispatch(setLoggedIn(parseLoginStatus($response)))
             dispatch(receiveNavigationData(parseNavigation($, $response)))
             return res
         })
@@ -38,7 +37,7 @@ export const fetchPageData = (url) => (dispatch) => {
                 dispatch(setPageFetchError(error.message))
             }
         })
-}
+)
 
 export const initApp = () => (dispatch) => {
     const formKey = generateFormKeyCookie()
