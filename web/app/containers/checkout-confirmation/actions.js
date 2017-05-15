@@ -29,14 +29,11 @@ export const submitRegisterForm = () => {
         const shippingData = shippingSelectors.getShippingAddress(getState()).toJS()
         const paymentData = paymentSelectors.getPayment(getState())
         const shippingIsDifferentThanBilling = JSON.stringify(shippingData) !== JSON.stringify(paymentData)
-        if (shippingIsDifferentThanBilling) {
-            return dispatch(updateBillingAddress())
-        }
 
         return dispatch(registerUser(firstname, lastname, email, password, password_confirmation))
             .then(() => {
                 dispatch(openModal(CHECKOUT_CONFIRMATION_MODAL))
-                dispatch(updateShippingAddress(shippingData))
+                return dispatch(updateShippingAddress(shippingData))
                     .then(() => {
                         if (shippingIsDifferentThanBilling) {
                             dispatch(updateBillingAddress(paymentData))
