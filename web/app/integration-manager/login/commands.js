@@ -14,3 +14,5 @@ export const navigateToSection = (...args) => connector.navigateToSection(...arg
 export const login = (...args) => connector.login(...args)
 export const registerUser = (...args) => connector.registerUser(...args)
 export const logout = (...args) => connector.logout(...args)
+export const updateShippingAddress = (...args) => connector.updateShippingAddress(...args)
+export const updateBillingAddress = (...args) => connector.updateBillingAddress(...args)

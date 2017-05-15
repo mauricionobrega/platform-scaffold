@@ -8,9 +8,10 @@ import {addNotification, removeAllNotifications} from '../app/actions'
 import {openModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import * as shippingSelectors from '../../store/checkout/shipping/selectors'
 import * as formSelectors from '../../store/form/selectors'
+import * as paymentSelectors from '../../store/checkout/payment/selectors'
 import {getEmailAddress} from '../../store/checkout/selectors'
-import {updatingShippingAndBilling} from '../../integration-manager/checkout/commands'
-import {registerUser} from '../../integration-manager/login/commands'
+// import {updatingShippingAndBilling} from '../../integration-manager/checkout/commands'
+import {updateShippingAddress, updateBillingAddress, registerUser} from '../../integration-manager/login/commands'
 
 export const hideRegistrationForm = createAction('Hiding Registration Form (Save Your Address Details)')
 
@@ -25,12 +26,23 @@ export const submitRegisterForm = () => {
             password,
             password_confirmation
         } = formSelectors.getConfirmationFormValues(currentState)
+        const shippingData = shippingSelectors.getShippingAddress(getState()).toJS()
+        const paymentData = paymentSelectors.getPayment(getState())
+        const shippingIsDifferentThanBilling = JSON.stringify(shippingData) !== JSON.stringify(paymentData)
+        if (shippingIsDifferentThanBilling) {
+            return dispatch(updateBillingAddress())
+        }
 
         return dispatch(registerUser(firstname, lastname, email, password, password_confirmation))
             .then(() => {
                 dispatch(openModal(CHECKOUT_CONFIRMATION_MODAL))
-                dispatch(updatingShippingAndBilling())
-                dispatch(hideRegistrationForm())
+                dispatch(updateShippingAddress(shippingData))
+                    .then(() => {
+                        if (shippingIsDifferentThanBilling) {
+                            dispatch(updateBillingAddress(paymentData))
+                        }
+                    })
+                    .then(() => dispatch(hideRegistrationForm()))
             })
             .catch((error) => {
                 if (error.name !== 'SubmissionError') {

@@ -15,4 +15,4 @@ export const fetchShippingMethodsEstimate = (...args) => connector.fetchShipping
 export const fetchCheckoutPaymentData = (...args) => connector.fetchCheckoutPaymentData(...args)
 export const submitPayment = (...args) => connector.submitPayment(...args)
 export const fetchCheckoutConfirmationData = (...args) => connector.fetchCheckoutConfirmationData(...args)
-export const updatingShippingAndBilling = (...args) => connector.updatingShippingAndBilling(...args)
+// export const updatingShippingAndBilling = (...args) => connector.updatingShippingAndBilling(...args)
