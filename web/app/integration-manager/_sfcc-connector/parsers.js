@@ -48,9 +48,36 @@ export const parseProductDetails = ({id, name, price, long_description, image_gr
     }
 }
 
+export const parseBasketContents = ({product_items, product_sub_total, product_total, order_total}) => {
+    /* eslint-disable camelcase */
+    let summary_count = 0
+    const items = product_items ? product_items.map(({item_id, product_name, product_id, base_price, quantity}) => {
+        summary_count += quantity
+        return {
+            product_name,
+            product_price: `${formatPrice(base_price)}`,
+            product_image: {},
+            qty: quantity,
+            // item_id is different from product_id
+            // it is used when updating the item in the cart
+            // (delete item, update item qty etc)
+            item_id,
+            // product_id is used to describe which product the item is
+            // (used to fetch product images, or build the product URL etc)
+            product_id
+        }
+    }) : []
+    return {
+        items,
+        subtotal: formatPrice(product_total),
+        subtotal_excl_tax: formatPrice(product_sub_total),
+        summary_count,
+        orderTotal: order_total
+    }
+}
+
 export const getCurrentProductID = () => {
     let productID
-
     let productIDMatch = /(\d+).html/.exec(window.location.href)
     if (productIDMatch) {
         productID = productIDMatch[1]

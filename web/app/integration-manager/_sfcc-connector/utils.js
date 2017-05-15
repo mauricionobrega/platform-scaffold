@@ -106,7 +106,7 @@ export const initSfccAuthAndSession = () => {
     }
     const options = {
         method: 'POST',
-        body: '{ type : "session" }',
+        body: '{ type : "guest" }',
         headers: REQUEST_HEADERS
     }
     let authorization
