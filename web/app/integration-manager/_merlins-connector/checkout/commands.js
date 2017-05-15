@@ -4,18 +4,21 @@
 
 import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {SubmissionError} from 'redux-form'
+
 import {parseShippingInitialValues, parseLocations, parseShippingMethods, checkoutConfirmationParser} from './parsers'
 import {parseCheckoutEntityID, extractMagentoShippingStepData} from '../../../utils/magento-utils'
 import {getCookieValue} from '../../../utils/utils'
 import {getCart} from '../cart/commands'
-import {receiveCheckoutData, receiveShippingMethodInitialValues, receiveCheckoutConfirmationData} from './../../checkout/results'
+import {receiveCheckoutData, receiveShippingInitialValues, receiveCheckoutConfirmationData, receiveHasExistingCard} from '../../checkout/results'
+
 import {fetchPageData} from '../app/commands'
+import {receiveEntityID} from '../actions'
+import {PAYMENT_URL} from '../constants'
 import {getCustomerEntityID} from '../selectors'
 import {getIsLoggedIn} from '../../../containers/app/selectors'
-import {getFormValues, getFormRegisteredFields} from '../../../store/form/selectors'
-import {receiveEntityID} from '../actions'
-import {SHIPPING_FORM_NAME} from '../../../store/form/constants'
 import {ADD_NEW_ADDRESS_FIELD} from '../../../containers/checkout-shipping/constants'
+import {getFormValues, getFormRegisteredFields} from '../../../store/form/selectors'
+import {SHIPPING_FORM_NAME} from '../../../store/form/constants'
 import * as paymentSelectors from '../../../store/checkout/payment/selectors'
 import * as shippingSelectors from '../../../store/checkout/shipping/selectors'
 
@@ -67,16 +70,13 @@ export const fetchShippingMethodsEstimate = (formKey) => (dispatch, getState) =>
         .then((response) => response.json())
         .then((responseJSON) => {
             const shippingMethods = parseShippingMethods(responseJSON)
+            const initialValues = {
+                shipping_method: shippingMethods[0].value,
+                ...address
+            }
 
             dispatch(receiveCheckoutData({shipping: {shippingMethods}}))
-
-            if (shippingMethods.length) {
-                const initialValues = {
-                    shipping_method: shippingMethods[0].value
-                }
-                // set initial value for method
-                dispatch(receiveShippingMethodInitialValues({initialValues}))
-            }
+            dispatch(receiveShippingInitialValues({address: initialValues})) // set initial value for method
         })
 }
 
@@ -179,6 +179,7 @@ export const submitShipping = (formValues) => (dispatch, getState) => {
             if (!responseJSON.payment_methods) {
                 throw new SubmissionError({_error: 'Unable to save shipping address'})
             }
+            return PAYMENT_URL
         })
 }
 
@@ -198,6 +199,7 @@ export const initCheckoutPaymentPage = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then((res) => {
             const [$, $response] = res // eslint-disable-line no-unused-vars
+            dispatch(receiveHasExistingCard(true))
             return dispatch(processCheckoutData($response))
         })
 }

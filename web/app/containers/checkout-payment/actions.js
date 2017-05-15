@@ -24,8 +24,13 @@ export const submitPayment = () => (dispatch, getState) => {
 
     // Careful. This get's completely overwritten below
     let address = null
-
     const email = getEmailAddress(currentState)
+    const paymentInfo = {
+        ccname: billingFormValues.ccname,
+        ccnumber: billingFormValues.ccnumber,
+        ccexpiry: billingFormValues.ccexpiry,
+        cvv: billingFormValues.cvv
+    }
 
     if (billingIsSameAsShippingAddress) {
         const shippingAddress = getShippingAddress(currentState).toJS()
@@ -75,8 +80,7 @@ export const submitPayment = () => (dispatch, getState) => {
             saveInAddressBook: false
         }
     }
-
-    return dispatch(submitPaymentCommand(address))
+    return dispatch(submitPaymentCommand({...address, ...paymentInfo}))
         .then((url) => {
             browserHistory.push({
                 pathname: url

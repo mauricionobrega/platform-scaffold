@@ -68,6 +68,8 @@ export const login = (username, password) => (dispatch) => {
         .then((response) => response.json())
         .then(({baskets}) => {
             if (baskets.length) {
+                const basketID = baskets[0].basket_id
+                storeBasketID(basketID)
                 if (!basketContents.product_items) {
                     // There is no basket to merge, so return the existing one
                     return Promise.resolve(baskets[0])
@@ -77,8 +79,6 @@ export const login = (username, password) => (dispatch) => {
                     method: 'POST',
                     body: JSON.stringify(basketContents.product_items)
                 }
-                const basketID = baskets[0].basket_id
-                storeBasketID(basketID)
                 return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, requestOptions)
                     .then((response) => response.json())
             }

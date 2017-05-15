@@ -107,9 +107,10 @@ const Router = ({store}) => (
                     headerHasSignIn
                     fetchAction={initCheckoutShippingPage}
                 />
+                <Route component={CheckoutPayment} path="*/COBilling-Start*" routeName="checkout-payment" Header={CheckoutHeader} Footer={CheckoutFooter} fetchAction={initCheckoutPaymentPage} />
                 <Route component={Login} path="*/Account-Show*" routeName="signin" fetchAction={initLoginPage} />
                 <Route component={Cart} path="*/Cart-Show*" routeName="cart" fetchAction={initCartPage} />
-
+                <Route component={CheckoutConfirmation} path="*/COSummary-Submit*" routeName="checkout-confirmation" Header={CheckoutHeader} Footer={CheckoutFooter} />
             </Route>
         </SDKRouter>
     </Provider>
