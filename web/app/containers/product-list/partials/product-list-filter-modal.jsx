@@ -42,7 +42,7 @@ class ProductListFilterModal extends React.Component {
                 <HeaderBar>
                     <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
                         <h1 className="u-h3 u-text-uppercase">
-                            <span className="u-text-extra-lighter">Filter Results By</span>
+                            <span className="u-text-weight-extra-light">Filter Results By</span>
                         </h1>
                     </HeaderBarTitle>
 

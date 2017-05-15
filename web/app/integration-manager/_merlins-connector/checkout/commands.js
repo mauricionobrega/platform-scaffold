@@ -11,12 +11,21 @@ import {parseShippingInitialValues, parseLocations, parseShippingMethods, checko
 import {parseCheckoutEntityID, extractMagentoShippingStepData} from '../../../utils/magento-utils'
 import {getCookieValue} from '../../../utils/utils'
 import {getCart} from '../cart/commands'
-import {receiveShippingMethods, receiveShippingMethodInitialValues, receiveCheckoutConfirmationData, receiveCheckoutLocations, storeBillingAddress} from './../../checkout/results'
+import {
+    receiveShippingMethods,
+    receiveShippingInitialValues,
+    receiveCheckoutConfirmationData,
+    receiveCheckoutLocations,
+    storeBillingAddress,
+    receiveHasExistingCard
+} from './../../checkout/results'
+
 import {fetchPageData} from '../app/commands'
 import {getCustomerEntityID} from '../selectors'
 import {getIsLoggedIn} from '../../../containers/app/selectors'
 import {getFormValues, getFormRegisteredFields} from '../../../store/form/selectors'
 import {receiveEntityID} from '../actions'
+import {PAYMENT_URL} from '../constants'
 import {SHIPPING_FORM_NAME, ADD_NEW_ADDRESS_FIELD} from '../../../containers/checkout-shipping/constants'
 import * as paymentSelectors from '../../../store/checkout/payment/selectors'
 import * as shippingSelectors from '../../../store/checkout/shipping/selectors'
@@ -69,7 +78,16 @@ export const fetchShippingMethodsEstimate = (formKey) => (dispatch, getState) =>
     const estimateURL = `${cartBaseUrl}/estimate-shipping-methods`
     return makeJsonEncodedRequest(estimateURL, {address}, {method: 'POST'})
         .then((response) => response.json())
-        .then((responseJSON) => dispatch(receiveShippingMethods(parseShippingMethods(responseJSON))))
+        .then((responseJSON) => {
+            const shippingMethods = parseShippingMethods(responseJSON)
+            const initialValues = {
+                shipping_method: shippingMethods[0].value,
+                ...address
+            }
+
+            dispatch(receiveShippingMethods(shippingMethods))
+            dispatch(receiveShippingInitialValues({address: initialValues})) // set initial value for method
+        })
 }
 
 const processCheckoutData = ($response) => (dispatch) => {
@@ -79,7 +97,7 @@ const processCheckoutData = ($response) => (dispatch) => {
 
     dispatch(receiveCheckoutLocations(parseLocations(magentoFieldData)))
 
-    return dispatch(receiveShippingMethodInitialValues({
+    return dispatch(receiveShippingInitialValues({
         initialValues: parseShippingInitialValues(magentoFieldData)
     }))
 }
@@ -94,6 +112,7 @@ export const fetchCheckoutPaymentData = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then((res) => {
             const [$, $response] = res // eslint-disable-line no-unused-vars
+            dispatch(receiveHasExistingCard(true))
             return dispatch(processCheckoutData($response))
         })
 }
@@ -187,6 +206,7 @@ export const submitShipping = (formValues) => (dispatch, getState) => {
             if (!responseJSON.payment_methods) {
                 throw new SubmissionError({_error: 'Unable to save shipping address'})
             }
+            return PAYMENT_URL
         })
 }
 

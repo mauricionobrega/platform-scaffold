@@ -11,7 +11,10 @@ import {
     receiveCheckoutData,
     receiveCheckoutLocations,
     storeBillingAddress,
-    receiveShippingMethods
+    receiveSavedShippingAddresses,
+    receiveShippingMethods,
+    receiveBillingInitialValues,
+    receiveShippingInitialValues
 } from '../../integration-manager/checkout/results'
 
 import {setDefaultShippingAddressId} from './shipping/actions'
@@ -23,7 +26,10 @@ export default handleActions({
     [receiveShippingMethodInitialValues]: mergePayload,
     [receiveCheckoutData]: mergePayload,
     [receiveCheckoutLocations]: mergePayload,
+    [receiveSavedShippingAddresses]: mergePayload,
     [storeBillingAddress]: mergePayload,
+    [receiveBillingInitialValues]: mergePayload,
+    [receiveShippingInitialValues]: mergePayload,
     [receiveShippingMethods]: (state, {payload}) =>
         // Using `set` here will make sure the list in the store is
         // correctly truncated.

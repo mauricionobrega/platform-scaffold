@@ -3,10 +3,9 @@
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
 import {makeSfccRequest, getAuthTokenPayload} from '../utils'
-import {receiveCheckoutData} from '../../checkout/results'
+import {populateLocationsData} from '../checkout/utils'
 import {requestCartData, createBasket, handleCartData} from './utils'
 import {API_END_POINT_URL} from '../constants'
-import {STATES} from '../checkout/constants'
 
 export const getCart = () => (dispatch) => {
     return requestCartData()
@@ -16,7 +15,7 @@ export const getCart = () => (dispatch) => {
 
 export const addToCart = (productID, qty) => (dispatch) => {
     return createBasket()
-        .then((basketID) => {
+        .then((basket) => {
             const options = {
                 method: 'POST',
                 body: JSON.stringify([{
@@ -24,7 +23,7 @@ export const addToCart = (productID, qty) => (dispatch) => {
                     quantity: qty
                 }])
             }
-            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, options)
+            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}/items`, options)
                 .then((response) => {
                     if (response.ok) {
                         return response.json()
@@ -37,8 +36,8 @@ export const addToCart = (productID, qty) => (dispatch) => {
 
 export const removeFromCart = (itemId) => (dispatch) => {
     return createBasket()
-        .then((basketID) => {
-            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basketID}/items/${itemId}`, {method: 'DELETE'})
+        .then((basket) => {
+            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}/items/${itemId}`, {method: 'DELETE'})
                 .then((response) => {
                     if (response.ok) {
                         return response.json()
@@ -51,14 +50,14 @@ export const removeFromCart = (itemId) => (dispatch) => {
 
 export const updateItemQuantity = (itemId, itemQuantity) => (dispatch) => {
     return createBasket()
-        .then((basketID) => {
+        .then((basket) => {
             const requestOptions = {
                 method: 'PATCH',
                 body: JSON.stringify({
                     quantity: itemQuantity
                 })
             }
-            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basketID}/items/${itemId}`, requestOptions)
+            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}/items/${itemId}`, requestOptions)
                 .then((response) => {
                     if (response.ok) {
                         return response.json()
@@ -71,12 +70,7 @@ export const updateItemQuantity = (itemId, itemQuantity) => (dispatch) => {
 
 export const fetchCartPageData = () => (dispatch) => {
     return new Promise(() => {
-        dispatch(receiveCheckoutData({
-            locations: {
-                countries: [{value: 'us', label: 'United States'}],
-                regions: STATES
-            }
-        }))
+        dispatch(populateLocationsData())
     })
 }
 

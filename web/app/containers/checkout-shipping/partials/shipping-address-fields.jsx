@@ -34,7 +34,7 @@ const ShippingAddressFields = ({
             innerClassName="c--no-min-height u-padding-0"
             onClick={handleShowCompanyAndApt}
         >
-            <span className="u-color-brand u-text-letter-spacing-normal u-text-small">
+            <span className="u-color-brand u-text-letter-spacing-normal u-text-size-small">
                 Add company or apt #
             </span>
             <Icon name="chevron-down" className="u-margin-start-sm u-color-brand" />

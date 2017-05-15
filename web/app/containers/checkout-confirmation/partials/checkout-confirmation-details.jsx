@@ -32,7 +32,7 @@ const CheckoutConfirmationDetails = (props) => {
         <Grid className="u-center-piece">
             <GridSpan {...GRID_SETTINGS}>
                 <div className="t-checkout-confirmation__heading u-padding-md u-padding-top-lg">
-                    <h2 className="u-h4 u-text-all-caps">Save Your Address Details</h2>
+                    <h2 className="u-h4 u-text-uppercase">Save Your Address Details</h2>
                 </div>
             </GridSpan>
 

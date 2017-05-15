@@ -44,10 +44,10 @@ class BillingAddressForm extends React.Component {
             countries,
             isCompanyOrAptShown,
             name,
-            newShippingAddressIsEnabled,
             postcode,
             regions,
-            street
+            street,
+            newShippingAddressIsEnabled
         } = this.props
 
         const hasShippingAddress = !!(street || city || postcode || name)
@@ -64,7 +64,7 @@ class BillingAddressForm extends React.Component {
                 innerClassName="c--no-min-height u-padding-0"
                 onClick={this.showCompanyAndAptField}
             >
-                <span className="u-color-brand u-text-letter-spacing-normal u-text-small">
+                <span className="u-color-brand u-text-letter-spacing-normal u-text-size-small">
                     Add company, apt #, suite etc.
                 </span>
                 <Icon name="chevron-down" className="u-margin-start-sm u-color-brand" />
@@ -83,10 +83,14 @@ class BillingAddressForm extends React.Component {
                             <ReduxForm.Field
                                 component={Field}
                                 name="billing_same_as_shipping"
-                                label={<strong className="u-text-semi-bold">Same as shipping address</strong>}
+                                type="checkbox"
+                                label={<strong className="u-text-weight-medium">Same as shipping address</strong>}
                                 caption={shippingAddress}
+                                customEventHandlers={{
+                                    onChange: this.handleSavedAddress
+                                }}
                             >
-                                <input type="checkbox" defaultChecked={!newShippingAddressIsEnabled} onChange={this.handleSavedAddress} noValidate />
+                                <input type="checkbox" noValidate />
                             </ReduxForm.Field>
                         </FieldRow>
                     }
@@ -194,10 +198,9 @@ BillingAddressForm.propTypes = {
     * Name of saved shipping address
     */
     name: PropTypes.string,
-
     /**
-     * Whether the new address fields display
-     */
+    * Whether the new address fields display
+    */
     newShippingAddressIsEnabled: PropTypes.bool,
 
     /**
