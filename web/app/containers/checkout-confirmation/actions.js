@@ -10,7 +10,6 @@ import * as shippingSelectors from '../../store/checkout/shipping/selectors'
 import * as formSelectors from '../../store/form/selectors'
 import * as paymentSelectors from '../../store/checkout/payment/selectors'
 import {getEmailAddress} from '../../store/checkout/selectors'
-// import {updatingShippingAndBilling} from '../../integration-manager/checkout/commands'
 import {updateShippingAddress, updateBillingAddress, registerUser} from '../../integration-manager/login/commands'
 
 export const hideRegistrationForm = createAction('Hiding Registration Form (Save Your Address Details)')
