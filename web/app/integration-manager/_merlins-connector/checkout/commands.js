@@ -241,8 +241,10 @@ const paymentSubmissionSelector = createPropsSelector({
 })
 
 export const submitPayment = (formValues) => (dispatch, getState) => {
+
     const {cartBaseUrl, entityID} = paymentSubmissionSelector(getState())
     const address = addressFormToAddressObject(formValues)
+
     const paymentInformation = {
         billingAddress: {
             ...address,

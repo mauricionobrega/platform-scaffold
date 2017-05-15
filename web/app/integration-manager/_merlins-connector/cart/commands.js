@@ -8,6 +8,7 @@ import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 import {removeNotification} from '../../../containers/app/actions'
 import {getIsLoggedIn} from '../../../containers/app/selectors'
 import {getCustomerEntityID, getUenc} from '../selectors'
+import {receiveEntityID} from '../actions'
 import {receiveCartContents} from '../../cart/results'
 import {receiveEntityID} from '../actions'
 import {receiveCartProductData} from '../../products/results'
@@ -127,7 +128,7 @@ export const fetchCartPageData = (url) => (dispatch) => {
 
             dispatch(receiveCheckoutLocations(parseLocations(magentoFieldData)))
             dispatch(receiveEntityID(parseCheckoutEntityID($response)))
-            dispatch(fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME))
+            return dispatch(fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME))
         })
 }
 
