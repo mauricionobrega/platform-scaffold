@@ -35,6 +35,10 @@ export const navigatedToSection = (router, routes, sectionName) => connector.nav
  * @param {string} username The user's username
  * @param {string} password The password provided by the user in clear text
  * @param {boolean} rememberMe `true` if the login should be persistent (this may be ignored by the connector)
+ *
+ * @return {string} The URL to redirect to. This is often controlled by the
+ *                  backend/connector. If the connector returns a valid URL
+ *                  from this command, the app will navigate to the URL.
  */
 export const login = (username, password, rememberMe) => connector.login(username, password, rememberMe)
 

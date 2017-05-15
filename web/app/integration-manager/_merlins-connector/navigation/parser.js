@@ -17,10 +17,17 @@ export const parseNavigation = ($, $content) => {
     } else {
         root.children.push({
             title: $signIn.text().trim(),
-            path: $signIn.attr('href'),
             type: GUEST_NAV_ITEM_TYPE,
         })
     }
+
+    // Long story. The nav system ignores the `path` property when the user is
+    // logged in. Until we rework this, we always send the login path so the
+    // reducer in the `containers/navigation/` area can just flip the account
+    // node type and title and not worry about switching/adding/deleting the
+    // `path` attribute.
+    // See also `containers/navigation/container.jsx`'s `itemFactory()` function.
+    root.children[0].path = '/customer/account/login/'
 
     const $navListItems = $content.find('#store\\.menu nav.navigation li')
     let path = root.path

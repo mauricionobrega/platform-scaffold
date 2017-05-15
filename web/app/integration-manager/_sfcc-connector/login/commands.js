@@ -108,10 +108,6 @@ export const logout = () => (dispatch) => {
             deleteBasketID()
             deleteAuthToken()
             dispatch(setLoggedIn(false))
-
-            // This isn't great, but it's the only _simple_ way to refresh the
-            // navigation menu to show the Account status correctly.
-            return dispatch(fetchNavigationData())
         })
 }
 

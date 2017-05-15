@@ -6,7 +6,6 @@ import {makeRequest, makeFormEncodedRequest} from 'progressive-web-sdk/dist/util
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import {SubmissionError} from 'redux-form'
 
-import {getFormKey} from '../selectors'
 import {fetchPageData} from '../app/commands'
 import {getCart} from '../cart/commands'
 import {setSigninLoaded, setRegisterLoaded} from '../../login/results'
@@ -32,6 +31,7 @@ export const initRegisterPage = (url) => (dispatch) => {
 
 const submitForm = (href, formValues, formSelector) => {
     return makeFormEncodedRequest(href, formValues, {method: 'POST'})
+        .then((...args) => [...args])
         .then(jqueryResponse)
         .then((res) => {
             const [$, $response] = res // eslint-disable-line no-unused-vars
@@ -51,14 +51,10 @@ const submitForm = (href, formValues, formSelector) => {
         })
 }
 
-export const login = (username, password, rememberMe) => (dispatch, getState) => {
-    const currentState = getState()
-    const formKey = getFormKey(currentState)
-
+export const login = (username, password, rememberMe) => (dispatch) => {
     const formData = {
         'login[username]': username,
         'login[password]': password,
-        form_key: formKey,
         send: ''
     }
     if (rememberMe) {
@@ -68,16 +64,13 @@ export const login = (username, password, rememberMe) => (dispatch, getState) =>
     return submitForm(LOGIN_POST_URL, formData, '.form-login')
 }
 
-export const registerUser = (firstname, lastname, email, password, confirmPassword, rememberMe) => (dispatch, getState) => {
-    const currentState = getState()
-    const formKey = getFormKey(currentState)
+export const registerUser = (firstname, lastname, email, password, confirmPassword, rememberMe) => (dispatch) => {
     const formData = {
         firstname,
         lastname,
         email,
         password,
-        password_confirmation: confirmPassword,
-        form_key: formKey,
+        password_confirmation: confirmPassword
     }
     if (rememberMe) {
         formData.persistent_remember_me = 'on'

@@ -7,7 +7,7 @@ import {receiveNavigationData, setLoggedIn, setCheckoutShippingURL, setCartURL} 
 import {getCart} from '../cart/commands'
 import {parseCategories} from '../parsers'
 
-import {API_END_POINT_URL, SIGN_IN_URL, SIGN_OUT_URL, CHECKOUT_SHIPPING_URL, CART_URL} from '../constants'
+import {API_END_POINT_URL, SIGN_IN_URL, CHECKOUT_SHIPPING_URL, CART_URL} from '../constants'
 import {SIGNED_IN_NAV_ITEM_TYPE, GUEST_NAV_ITEM_TYPE} from '../../../containers/navigation/constants'
 
 export const fetchNavigationData = () => (dispatch) => {
@@ -18,13 +18,21 @@ export const fetchNavigationData = () => (dispatch) => {
 
             const accountNode = utils.isUserLoggedIn(utils.getAuthToken())
                 ? {
-                    path: SIGN_OUT_URL,
+                    title: 'Sign Out',
                     type: SIGNED_IN_NAV_ITEM_TYPE
                 }
                 : {
-                    path: SIGN_IN_URL,
+                    title: 'Sign In',
                     type: GUEST_NAV_ITEM_TYPE
                 }
+
+            // Long story. The nav system ignores the `path` property when the user is
+            // logged in. Until we rework this, we always send the login path so the
+            // reducer in the `containers/navigation/` area can just flip the account
+            // node type and title and not worry about switching/adding/deleting the
+            // `path` attribute.
+            // See also `containers/navigation/container.jsx`'s `itemFactory()` function.
+            accountNode.path = SIGN_IN_URL
 
             return dispatch(receiveNavigationData({
                 path: '/',
