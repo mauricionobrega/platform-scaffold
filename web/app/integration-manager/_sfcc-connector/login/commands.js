@@ -21,7 +21,7 @@ const initLoginData = () => (dispatch) => {
 export const initLoginPage = initLoginData
 export const initRegisterPage = initLoginData
 
-export const navigatedToSection = () => (dispatch) => Promise.resolve()
+export const navigateToSection = () => (dispatch) => Promise.resolve()
 
 export const login = (username, password) => (dispatch) => {
     const authorizationData = window.btoa(`${username}:${password}`)

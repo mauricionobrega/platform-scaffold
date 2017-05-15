@@ -87,7 +87,7 @@ const findPathForRoute = (routes, routeName) => {
  * Uses React router to ensure browser history remains consistent with the
  * selected section.
  */
-export const navigatedToSection = (router, routes, sectionName) => {
+export const navigateToSection = (router, routes, sectionName) => {
     return () => {
         router.push(findPathForRoute(routes, sectionName))
     }

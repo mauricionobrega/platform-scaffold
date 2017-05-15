@@ -28,7 +28,7 @@ export const initRegisterPage = (url, routeName) => connector.initRegisterPage(u
  * @param {string} routes The routes configured in this application
  * @param {string} sectionName The section that was selected (typically this maps to a route name, but that is not guaranteed)
  */
-export const navigatedToSection = (router, routes, sectionName) => connector.navigatedToSection(router, routes, sectionName)
+export const navigateToSection = (router, routes, sectionName) => connector.navigateToSection(router, routes, sectionName)
 
 /**
  * Logs the user in with the given credentials
