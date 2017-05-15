@@ -1,10 +1,15 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import * as ReduxForm from 'redux-form'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 
 // Selectors
-import {getShippingAddress} from '../../../store/checkout/shipping/selectors'
+import {getBillingInitialValues} from '../../../store/checkout/billing/selectors'
+
 
 // Actions
 import {submitPayment} from '../actions'
@@ -50,7 +55,7 @@ CheckoutPaymentForm.propTypes = {
 }
 
 const mapStateToProps = createPropsSelector({
-    initialValues: getShippingAddress
+    initialValues: getBillingInitialValues
 })
 
 const mapDispatchToProps = {

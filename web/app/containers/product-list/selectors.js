@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import Immutable from 'immutable'
 import {createSelector} from 'reselect'
 import {createGetSelector, createHasSelector} from 'reselect-immutable-helpers'
@@ -34,7 +38,9 @@ export const getActiveFilters = createSelector(
 export const getFilteredProductListProducts = createSelector(
     getCategoryProducts,
     getActiveFilters,
-    (products, filters) => products.filter(byFilters(filters.toJS()))
+    (products, filters) => {
+        return filters.size > 0 ? products.filter(byFilters(filters.toJS())) : products
+    }
 )
 
 export const getFilteredAndSortedListProducts = createSelector(

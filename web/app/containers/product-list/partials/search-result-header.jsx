@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
@@ -21,7 +25,7 @@ const SearchResultHeader = ({searchTerm}) => (
                 {searchTerm ?
                     <h1 className="u-text-uppercase">
                         <span>Results For </span>
-                        <span className="u-text-lighter">'{searchTerm}'</span>
+                        <span className="u-text-weight-light">'{searchTerm}'</span>
                     </h1>
                 :
                     <SkeletonText lines={1} type="h1" width="100px" />

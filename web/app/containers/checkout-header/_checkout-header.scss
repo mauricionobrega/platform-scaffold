@@ -26,14 +26,3 @@ $checkout-header__height: 52px; // 1
 
     box-shadow: $large-box-shadow;
 }
-
-
-// Title
-// ---
-
-.t-checkout-header__title {
-    align-items: center;
-
-    font-size: $unit*3;
-    line-height: $unit*3.5;
-}
