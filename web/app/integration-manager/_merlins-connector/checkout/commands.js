@@ -7,9 +7,9 @@ import {SubmissionError} from 'redux-form'
 
 import {parseShippingInitialValues, parseLocations, parseShippingMethods, checkoutConfirmationParser} from './parsers'
 import {parseCheckoutEntityID, extractMagentoShippingStepData} from '../../../utils/magento-utils'
-import {getCookieValue} from '../../../utils/utils'
+// import {getCookieValue} from '../../../utils/utils'
 import {getCart} from '../cart/commands'
-import {receiveCheckoutData, receiveShippingInitialValues, receiveCheckoutConfirmationData, receiveHasExistingCard} from './../../checkout/results'
+import {receiveCheckoutData, receiveShippingInitialValues, receiveCheckoutConfirmationData, receiveBillingInitialValues} from './../../checkout/results'
 
 import {fetchPageData} from '../app/commands'
 import {getCustomerEntityID} from '../selectors'
@@ -18,7 +18,6 @@ import {getShippingFormValues, getFormValues, getFormRegisteredFields} from '../
 import {receiveEntityID} from '../actions'
 import {PAYMENT_URL} from '../constants'
 import {SHIPPING_FORM_NAME, ADD_NEW_ADDRESS_FIELD} from '../../../containers/checkout-shipping/constants'
-import * as paymentSelectors from '../../../store/checkout/payment/selectors'
 import * as shippingSelectors from '../../../store/checkout/shipping/selectors'
 
 const parseLocationData = (formValues, registeredFieldNames) => {
@@ -194,11 +193,12 @@ export const checkCustomerEmail = () => {
     }
 }
 
-export const fetchCheckoutPaymentData = (url) => (dispatch) => {
+export const fetchCheckoutPaymentData = (url) => (dispatch, getState) => {
     return dispatch(fetchPageData(url))
         .then((res) => {
             const [$, $response] = res // eslint-disable-line no-unused-vars
-            dispatch(receiveHasExistingCard(true))
+            const addressData = shippingSelectors.getInitialShippingAddress(getState())
+            dispatch(receiveBillingInitialValues({initialValues: {...addressData, billing_same_as_shipping: true}}))
             return dispatch(processCheckoutData($response))
         })
 }
@@ -215,18 +215,24 @@ export const submitPayment = (formValues) => (dispatch, getState) => {
         addressLine2,
         countryId,
         city,
+        region,
         regionId,
         postcode,
-        username
+        username,
+        customerAddressId,
+        customerId
     } = formValues
     const address = {
         firstname,
         lastname,
+        customerAddressId: `${customerAddressId}`,
+        customerId: `${customerId}`,
         company: company || '',
         postcode,
         city,
         street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1],
         regionId,
+        region,
         countryId,
         saveInAddressBook: false
     }
@@ -258,129 +264,80 @@ export const submitPayment = (formValues) => (dispatch, getState) => {
         })
 }
 
-const buildFormData = (formCredentials) => {
-    const formData = new FormData()
 
-    Object.keys(formCredentials).forEach((key) => {
-        const item = formCredentials[key]
-        if (key === 'street') {
-            // Street must be converted away from an array, and into a
-            // series of `street[]` keys-value pairs. This is what the
-            // Magento backend uses to fill out multiple street
-            // address fields
-            for (let i = 0; i < item.length; i++) {
-                formData.append('street[]', item[i])
-            }
-        } else {
-            formData.append(key, item)
-        }
-    })
-
-    return formData
-}
-
-const createAddressRequestObject = (formValues) => {
-    const {
-        firstname,
-        lastname,
-        company,
-        addressLine1,
-        addressLine2,
-        countryId,
-        city,
-        regionId,
-        region,
-        postcode,
-        telephone
-    } = formValues
-
-    return {
-        firstname,
-        lastname,
-        company: company || '',
-        telephone: telephone ? telephone.replace(/[()\- ]/g, '') : '',
-        postcode,
-        city,
-        street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1, ''],
-        region_id: regionId,
-        region: region || '',
-        country_id: countryId,
-    }
-}
-
-const updateBillingAddress = () => {
-    return (dispatch, getState) => {
-        const formData = buildFormData({
-            form_key: getCookieValue('form_key'),
-            success_url: '',
-            error_url: '',
-            ...createAddressRequestObject(paymentSelectors.getPayment(getState())),
-            default_billing: 1,
-            default_shipping: 1,
-        })
-
-        const postUpdateCustomerAddressURL = '/customer/address/formPost/id/46/'
-        return new Promise((resolve) => {
-            // We need to use jQuery.ajax here because currently fetch sends requests with all headers set to lowercase
-            // using fetch here means the server won't handle our request properly
-            // so instead we're using jQuery ajax since it sends requests matching what the server expects.
-            // see http://stackoverflow.com/questions/34656412/fetch-sends-lower-case-header-keys
-            window.Progressive.$.ajax({
-                url: postUpdateCustomerAddressURL,
-                data: formData,
-                method: 'POST',
-                processData: false,
-                contentType: false,
-                success: () => resolve(),
-                error: (response) => {
-                    console.error('Updating the user Shipping/Billing address failed. Response log:')
-                    console.error(response)
-                    throw new Error('Unable to save Billing Address')
-                }
-            })
-        })
-    }
-}
-
-export const updatingShippingAndBilling = () => {
-    return (dispatch, getState) => {
-        const shippingData = shippingSelectors.getShippingAddress(getState()).toJS()
-        const formData = buildFormData({
-            form_key: getCookieValue('form_key'),
-            success_url: '',
-            error_url: '',
-            ...createAddressRequestObject(shippingData),
-            default_billing: 1,
-            default_shipping: 1,
-        })
-
-        const postUpdateCustomerAddressURL = '/customer/address/formPost/'
-
-        return new Promise((resolve) => {
-            // We need to use jQuery.ajax here because currently fetch sends requests with all headers set to lowercase
-            // using fetch here means the server won't handle our request properly
-            // so instead we're using jQuery ajax since it sends requests matching what the server expects.
-            // see http://stackoverflow.com/questions/34656412/fetch-sends-lower-case-header-keys
-            window.Progressive.$.ajax({
-                url: postUpdateCustomerAddressURL,
-                data: formData,
-                method: 'POST',
-                processData: false,
-                contentType: false,
-                success: () => {
-                    const paymentData = paymentSelectors.getPayment(getState())
-                    const shippingIsDifferentThanBilling = JSON.stringify(shippingData) !== JSON.stringify(paymentData)
-                    if (shippingIsDifferentThanBilling) {
-                        return dispatch(updateBillingAddress())
-                    }
-                    return resolve()
-                },
-                error: (response) => {
-                    console.error('Updating the user Shipping and Billing address failed. Response log:')
-                    console.error(response)
-                    throw new Error('Unable to save Shipping and Billing Address')
-                }
-            })
-        })
-    }
-}
+// const updateBillingAddress = () => {
+//     return (dispatch, getState) => {
+//         const formData = buildFormData({
+//             form_key: getCookieValue('form_key'),
+//             success_url: '',
+//             error_url: '',
+//             ...createAddressRequestObject(paymentSelectors.getPayment(getState())),
+//             default_billing: 1,
+//             default_shipping: 1,
+//         })
+//
+//         const postUpdateCustomerAddressURL = '/customer/address/formPost/id/46/'
+//         return new Promise((resolve) => {
+//             // We need to use jQuery.ajax here because currently fetch sends requests with all headers set to lowercase
+//             // using fetch here means the server won't handle our request properly
+//             // so instead we're using jQuery ajax since it sends requests matching what the server expects.
+//             // see http://stackoverflow.com/questions/34656412/fetch-sends-lower-case-header-keys
+//             window.Progressive.$.ajax({
+//                 url: postUpdateCustomerAddressURL,
+//                 data: formData,
+//                 method: 'POST',
+//                 processData: false,
+//                 contentType: false,
+//                 success: () => resolve(),
+//                 error: (response) => {
+//                     console.error('Updating the user Shipping/Billing address failed. Response log:')
+//                     console.error(response)
+//                     throw new Error('Unable to save Billing Address')
+//                 }
+//             })
+//         })
+//     }
+// }
+//
+// export const updatingShippingAndBilling = () => {
+//     return (dispatch, getState) => {
+//         const shippingData = shippingSelectors.getShippingAddress(getState()).toJS()
+//         const formData = buildFormData({
+//             form_key: getCookieValue('form_key'),
+//             success_url: '',
+//             error_url: '',
+//             ...createAddressRequestObject(shippingData),
+//             default_billing: 1,
+//             default_shipping: 1,
+//         })
+//
+//         const postUpdateCustomerAddressURL = '/customer/address/formPost/'
+//
+//         return new Promise((resolve) => {
+//             // We need to use jQuery.ajax here because currently fetch sends requests with all headers set to lowercase
+//             // using fetch here means the server won't handle our request properly
+//             // so instead we're using jQuery ajax since it sends requests matching what the server expects.
+//             // see http://stackoverflow.com/questions/34656412/fetch-sends-lower-case-header-keys
+//             window.Progressive.$.ajax({
+//                 url: postUpdateCustomerAddressURL,
+//                 data: formData,
+//                 method: 'POST',
+//                 processData: false,
+//                 contentType: false,
+//                 success: () => {
+//                     const paymentData = paymentSelectors.getPayment(getState())
+//                     const shippingIsDifferentThanBilling = JSON.stringify(shippingData) !== JSON.stringify(paymentData)
+//                     if (shippingIsDifferentThanBilling) {
+//                         return dispatch(updateBillingAddress())
+//                     }
+//                     return resolve()
+//                 },
+//                 error: (response) => {
+//                     console.error('Updating the user Shipping and Billing address failed. Response log:')
+//                     console.error(response)
+//                     throw new Error('Unable to save Shipping and Billing Address')
+//                 }
+//             })
+//         })
+//     }
+// }
