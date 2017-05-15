@@ -14,7 +14,6 @@ export const initialState = Immutable.fromJS({
     root: {},
 })
 
-
 export const reducer = handleActions({
     [receiveNavigationData]: mergePayload,
     [receiveData]: mergePayload,
@@ -26,6 +25,5 @@ export const reducer = handleActions({
             )
     }
 }, initialState)
-
 
 export default reducer
