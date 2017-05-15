@@ -25,20 +25,35 @@ class SoftAsk extends React.Component {
             isDismissed: false
         }
 
+        this.pageVisitsNeeded = this.props.showOnPageVisit || DEFAULT_PAGE_VISITS
+
         this.onDismiss = this.onDismiss.bind(this)
         this.onAccept = this.onAccept.bind(this)
     }
 
     componentWillReceiveProps(nextProps) {
-        if (
-            !this.state.isDismissed &&
-            nextProps.canShowSoftAsk &&
-            nextProps.pageVisitCount >= (this.props.showOnPageVisit || DEFAULT_PAGE_VISITS)
-        ) {
+        const shouldShow = this.shouldShow(nextProps)
+        if (shouldShow === true) {
             this.setState({
                 isShown: true
             })
+        } else {
+            console.info('[Messaging] Not showing soft ask, reason:', shouldShow)
         }
+    }
+
+    shouldShow(nextProps) {
+        const modulus = nextProps.pageVisitCount % (this.pageVisitsNeeded)
+
+        if (this.state.isDismissed) {
+            return 'Soft ask was dismissed'
+        } else if (!nextProps.canShowSoftAsk) {
+            return 'Messaging client says we cannot show soft ask.'
+        } else if (modulus !== 0) {
+            return `Waiting for ${this.pageVisitsNeeded - modulus} more page visit(s).`
+        }
+
+        return true
     }
 
     onDismiss() {
@@ -46,10 +61,6 @@ class SoftAsk extends React.Component {
             isShown: false,
             isDismissed: true
         })
-
-        // TODO - Persist a boolean that will ensure we back-off from displaying
-        // when the user has dismissed the soft-ask
-        // i.e. do we just increment PAGE_VISIT counter?
     }
 
     onAccept() {
