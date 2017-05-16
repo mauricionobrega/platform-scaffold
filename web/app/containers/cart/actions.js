@@ -1,17 +1,20 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 import {closeModal, openModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {fetchShippingMethodsEstimate} from '../../integration-manager/checkout/commands'
 import {
     CART_ESTIMATE_SHIPPING_MODAL,
-    ESTIMATE_FORM_NAME,
     CART_REMOVE_ITEM_MODAL,
     CART_WISHLIST_MODAL
 } from './constants'
 import {removeFromCart, updateItemQuantity, addToWishlist, fetchTaxEstimate} from '../../integration-manager/cart/commands'
 import {addNotification} from '../app/actions'
-import {getIsLoggedIn} from '../app/selectors'
+import {getIsLoggedIn} from '../../store/user/selectors'
 import {trigger} from '../../utils/astro-integration'
+import {ESTIMATE_FORM_NAME} from '../../store/form/constants'
 import {getFormValues, getFormRegisteredFields} from '../../store/form/selectors'
 import {getSelectedShippingMethod} from '../../store/checkout/shipping/selectors'
 import {parseLocationData} from '../../utils/utils'

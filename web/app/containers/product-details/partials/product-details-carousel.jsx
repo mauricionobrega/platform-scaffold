@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
@@ -37,7 +41,7 @@ const ProductDetailsCarousel = ({images, contentsLoaded}) => {
     }
 
     const imgProps = {
-        className: classNames('u-block', {
+        className: classNames('u-display-block', {
             'c--is-transitioning': !contentsLoaded // Carousel hasn't received the final images yet
         }),
         hidePlaceholder: true,

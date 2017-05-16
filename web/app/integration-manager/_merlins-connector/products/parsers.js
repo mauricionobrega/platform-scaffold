@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {extractMagentoJson} from '../../../utils/magento-utils'
 import {getTextFrom, parseTextLink, parseImage} from '../../../utils/parser-utils'
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
@@ -87,7 +91,7 @@ export const productListParser = ($, $html) => {
         const link = parseTextLink($product.find('.product-item-link'))
         const thumbnail = parseImage($product.find('.product-image-photo'))
         productMap[urlToPathKey(link.href)] = {
-            id: $product.find('.price-box').attr('data-product-id'),
+            id: $product.find('.price-box').length ? $product.find('.price-box').attr('data-product-id') : '',
             title: link.text,
             price: getTextFrom($product, '.price'),
             href: link.href,

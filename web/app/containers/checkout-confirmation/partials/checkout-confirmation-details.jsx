@@ -1,8 +1,12 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import {GRID_SETTINGS} from '../constants'
-import {getIsLoggedIn} from '../../app/selectors'
+import {getIsLoggedIn} from '../../../store/user/selectors'
 import * as selectors from '../selectors'
 
 import {Grid, GridSpan} from 'progressive-web-sdk/dist/components/grid'
@@ -28,7 +32,7 @@ const CheckoutConfirmationDetails = (props) => {
         <Grid className="u-center-piece">
             <GridSpan {...GRID_SETTINGS}>
                 <div className="t-checkout-confirmation__heading u-padding-md u-padding-top-lg">
-                    <h2 className="u-h4 u-text-all-caps">Save Your Address Details</h2>
+                    <h2 className="u-h4 u-text-uppercase">Save Your Address Details</h2>
                 </div>
             </GridSpan>
 

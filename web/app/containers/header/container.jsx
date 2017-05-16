@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
@@ -108,6 +112,7 @@ class Header extends React.Component {
                 <Search
                     className="t-header__search"
                     isOverlay
+                    onClickSuggestion={onSearchCloseClick}
                     isOpen={searchIsOpen}
                     onChange={this.onChangeSearchQuery}
                     onClose={onSearchCloseClick}

@@ -1,10 +1,14 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import {openRemoveItemModal, saveToWishlist, updateItem} from '../actions'
 import {getCartItems, getCartSummaryCount} from '../../../store/cart/selectors'
-import {getIsLoggedIn} from '../../app/selectors'
+import {getIsLoggedIn} from '../../../store/user/selectors'
 
 import {noop} from 'progressive-web-sdk/dist/utils/utils'
 
@@ -76,7 +80,7 @@ class CartProductItem extends React.Component {
         return (
             <ProductItem customWidth="40%"
                 className={productItemClassNames}
-                title={<h2 className="u-h5 u-text-font-family u-text-semi-bold">{product.title}</h2>}
+                title={<h2 className="u-h5 u-text-family u-text-weight-semi-bold">{product.title}</h2>}
                 image={<ProductImage {...product.thumbnail} />}
                 >
                 <p className="u-color-neutral-50">Color: Maroon</p>
@@ -97,7 +101,7 @@ class CartProductItem extends React.Component {
 
                     <Field>
                         <div className="u-text-align-end u-flex">
-                            <div className="u-h5 u-color-accent u-text-bold">{linePrice}</div>
+                            <div className="u-h5 u-color-accent u-text-weight-bold">{linePrice}</div>
                             <div className="u-text-quiet"><em>{itemPrice} each</em></div>
                         </div>
                     </Field>
@@ -105,7 +109,7 @@ class CartProductItem extends React.Component {
 
                 <div className="u-flexbox">
                     <Button
-                        className="u-text-small u-color-brand u-flex-none u-text-letter-spacing-normal"
+                        className="u-text-size-small u-color-brand u-flex-none u-text-letter-spacing-normal"
                         innerClassName="c--no-min-width u-padding-start-0 u-padding-bottom-0"
                         href={configureUrl}
                         >
@@ -113,7 +117,7 @@ class CartProductItem extends React.Component {
                     </Button>
 
                     <Button
-                        className="u-text-small u-color-brand u-padding-start-0 u-padding-end-0 u-text-letter-spacing-normal"
+                        className="u-text-size-small u-color-brand u-padding-start-0 u-padding-end-0 u-text-letter-spacing-normal"
                         innerClassName="u-padding-bottom-0 u-padding-start-0"
                         onClick={this.saveForLater}
                         >
@@ -121,7 +125,7 @@ class CartProductItem extends React.Component {
                     </Button>
 
                     <Button
-                        className="u-text-small u-color-brand u-text-letter-spacing-normal qa-cart__remove-item"
+                        className="u-text-size-small u-color-brand u-text-letter-spacing-normal qa-cart__remove-item"
                         innerClassName="u-padding-end-0 u-padding-bottom-0 u-padding-start-0"
                         onClick={this.removeItem}
                         >
@@ -159,7 +163,7 @@ const CartProductList = ({items, isLoggedIn, summaryCount, onSaveLater, onUpdate
             <div className="t-cart__product-list-title u-padding-top-md u-padding-bottom-md">
                 <div className="u-flexbox u-align-center">
                     <h1 className="u-flex u-text-uppercase">
-                        Cart {summaryCount > 0 && <span className="u-text-lighter">({summaryCount} Items)</span>}
+                        Cart {summaryCount > 0 && <span className="u-text-weight-light">({summaryCount} Items)</span>}
                     </h1>
                     {!isLoggedIn &&
                         <Button className="u-flex-none u-color-brand u-text-letter-spacing-normal" onClick={onOpenSignIn}>

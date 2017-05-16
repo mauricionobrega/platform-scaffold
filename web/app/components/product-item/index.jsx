@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import classNames from 'classnames'
 
@@ -15,7 +19,7 @@ const ProductItem = ({
     title,
     customWidth
 }) => {
-    const classes = classNames('c-product-item', 'u-flexbox', 'u-row-reverse', className)
+    const classes = classNames('c-product-item', 'u-flexbox', 'u-direction-row-reverse', className)
 
     return (
         <article className={classes}>

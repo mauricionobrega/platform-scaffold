@@ -1,10 +1,15 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import {createPropsSelector} from 'reselect-immutable-helpers'
+
 import {connect} from 'react-redux'
 
 import {onAstroEvent, disableAstroEvent, jsRpcMethod} from '../../utils/astro-integration'
 
-import {getIsLoggedIn} from '../../containers/app/selectors'
+import {getIsLoggedIn} from '../../store/user/selectors'
 
 import {getCart} from '../../integration-manager/cart/commands'
 

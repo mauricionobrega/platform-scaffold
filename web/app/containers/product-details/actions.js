@@ -1,11 +1,16 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 import {SubmissionError} from 'redux-form'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 
-import {getItemQuantity, getAddToCartFormValues} from './selectors'
+import {getItemQuantity} from './selectors'
 import {getCurrentPathKey, getCartURL} from '../app/selectors'
 import {getSelectedProductId, getProductVariants, getProductVariationCategories, getProductVariationCategoryIds} from '../../store/products/selectors'
+import {getAddToCartFormValues} from '../../store/form/selectors'
 
 import {addToCart} from '../../integration-manager/cart/commands'
 import {getProductVariantData} from '../../integration-manager/products/commands'
