@@ -7,7 +7,6 @@ import {closeModal, openModal} from 'progressive-web-sdk/dist/store/modals/actio
 import {fetchShippingMethodsEstimate} from '../../integration-manager/checkout/commands'
 import {
     CART_ESTIMATE_SHIPPING_MODAL,
-    ESTIMATE_FORM_NAME,
     CART_REMOVE_ITEM_MODAL,
     CART_WISHLIST_MODAL
 } from './constants'
@@ -15,6 +14,7 @@ import {removeFromCart, updateItemQuantity, addToWishlist, fetchTaxEstimate} fro
 import {addNotification} from '../app/actions'
 import {getIsLoggedIn} from '../../store/user/selectors'
 import {trigger} from '../../utils/astro-integration'
+import {ESTIMATE_FORM_NAME} from '../../store/form/constants'
 import {getFormValues, getFormRegisteredFields} from '../../store/form/selectors'
 import {getSelectedShippingMethod} from '../../store/checkout/shipping/selectors'
 import {parseLocationData} from '../../utils/utils'
