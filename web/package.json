@@ -3,6 +3,7 @@
   "projectSlug": "progressive-web-scaffold",
   "aJSSlug": "merlinspotions-2",
   "messagingSiteId": "merlinspotions",
+  "messagingEnabled": true,
   "repository": {
     "type": "git",
     "url": "http://github.com/mobify/platform-scaffold"

@@ -1,4 +1,6 @@
 {
+  "messagingSiteId": "merlinspotions",
+  "messagingEnabled": true,
   "dependencies": {
     "babel-runtime": "6.11.6",
     "bluebird": "^2.9.34",

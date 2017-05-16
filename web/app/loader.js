@@ -1,4 +1,4 @@
-/* global NATIVE_WEBPACK_ASTRO_VERSION, MESSAGING_SITE_ID */
+/* global NATIVE_WEBPACK_ASTRO_VERSION, MESSAGING_SITE_ID, MESSAGING_ENABLED */
 import {getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
 import {isSamsungBrowser} from 'progressive-web-sdk/dist/utils/utils'
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
@@ -29,17 +29,21 @@ const attemptToInitializeApp = () => {
         return
     }
 
-    window.Progressive = {
-        AstroPromise: Promise.resolve({})
-    }
-
     // This isn't accurate but does describe the case where the PR currently works
     const IS_PREVIEW = /mobify-path=true/.test(document.cookie)
     const ASTRO_VERSION = NATIVE_WEBPACK_ASTRO_VERSION // replaced at build time
+    const messagingEnabled = MESSAGING_ENABLED  // replaced at build time
 
     const CAPTURING_CDN = '//cdn.mobify.com/capturejs/capture-latest.min.js'
     const ASTRO_CLIENT_CDN = `//assets.mobify.com/astro/astro-client-${ASTRO_VERSION}.min.js`
     const SW_LOADER_PATH = `/service-worker-loader.js?preview=${IS_PREVIEW}&b=${cacheHashManifest.buildDate}`
+
+    window.Progressive = {
+        AstroPromise: Promise.resolve({}),
+        Messaging: {
+            enabled: messagingEnabled
+        }
+    }
 
     // An array of functions that will be called when all the scripts
     // loaded by this function are done. They are only executed if all
@@ -115,6 +119,10 @@ const attemptToInitializeApp = () => {
      * Do the preloading preparation for the Messaging client.
      * This includes any work that does not require a network fetch or
      * otherwise slow down initialization.
+     *
+     * If messagingEnabled is not truthy, then we don't load the
+     * Messaging PWA client. The Messaging service worker code is
+     * still included, but won't be configured and will do nothing.
      */
     const setupMessagingClient = (serviceWorkerSupported) => {
         if ((!serviceWorkerSupported) || isRunningInAstro) {
@@ -133,10 +141,14 @@ const attemptToInitializeApp = () => {
         // the Messaging worker version data.
         deferredUntilLoadComplete.push(updateMessagingSWVersion)
 
-        // We know we're not running in Astro, and that service worker is
-        // supported and loaded, so we can add a deferred function to
-        // load and initialize the Messaging client.
-        deferredUntilLoadComplete.push(() => loadAndInitMessagingClient(IS_PREVIEW, MESSAGING_SITE_ID))
+        if (messagingEnabled) {
+            // We know we're not running in Astro, that the service worker is
+            // supported and loaded, and messaging is enabled, so we can add a
+            // deferred function to load and initialize the Messaging client.
+            deferredUntilLoadComplete.push(
+                () => loadAndInitMessagingClient(IS_PREVIEW, MESSAGING_SITE_ID)
+            )
+        }
     }
 
     if (isReactRoute() && !isSamsungBrowser(window.navigator.userAgent)) {
@@ -168,7 +180,7 @@ const attemptToInitializeApp = () => {
          : Promise.resolve(false)
         ).then((serviceWorkerSupported) => {
 
-            // Set up the Messaging client intergration - this must be
+            // Set up the Messaging client integration - this must be
             // done now, but the work is deferred until after script
             // loading is complete.
             setupMessagingClient(serviceWorkerSupported)

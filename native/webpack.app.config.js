@@ -4,6 +4,8 @@ var webpack = require('webpack');
 var path = require('path');
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
+var appPackageJson = require('./package.json')
+
 var rootDir = process.cwd();
 var entry = path.resolve(rootDir, 'app/app.js');
 var outDir = path.resolve(rootDir, 'app/build');
@@ -39,6 +41,12 @@ var config = {
                     formatter: require('eslint/lib/formatters/unix')
                 }
             }
+        }),
+        new webpack.DefinePlugin({
+            // Boolean constant
+            MESSAGING_ENABLED: `${appPackageJson.messagingEnabled}`,
+            // String constant
+            MESSAGING_SITE_ID: `'${appPackageJson.messagingSiteId}'`
         })
     ],
     module: {

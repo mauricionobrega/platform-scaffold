@@ -1,3 +1,5 @@
+/* global MESSAGING_SITE_ID */
+
 import Astro from 'progressive-app-sdk/astro-full'
 
 import PushPlugin from 'progressive-app-sdk/plugins/pushPlugin'
@@ -26,7 +28,7 @@ const PushController = function(pushPlugin) {
 }
 
 PushController.init = async function() {
-    const pushSiteId = 'merlinspotions'
+    const pushSiteId = MESSAGING_SITE_ID    // replaced at build time
     const mobifySlugName = 'progressive-web-scaffold'
 
     const engagementPromise = EngagementController.init(mobifySlugName, baseConfig.baseURL)

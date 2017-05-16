@@ -10,6 +10,8 @@ const webpack = require('webpack')
 const baseCommon = require('./base.common')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
+const webPackageJson = require('../package.json')   // eslint-disable-line import/no-extraneous-dependencies
+
 module.exports = {
     devtool: 'cheap-source-map',
     entry: './app/native/onboarding/onboarding.jsx',
@@ -59,6 +61,10 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             template: './app/native/onboarding/index.html'
+        }),
+        new webpack.DefinePlugin({
+            // This is defined as a boolean, not a string
+            MESSAGING_ENABLED: `${webPackageJson.messagingEnabled}`
         })
     ]
 }

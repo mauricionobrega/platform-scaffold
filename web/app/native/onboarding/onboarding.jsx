@@ -2,6 +2,8 @@
 /* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
+/* global MESSAGING_ENABLED */
+
 // React
 import React from 'react'
 import {render} from 'react-dom'
@@ -69,8 +71,12 @@ const login = {
 
 const carouselData = {
     location,
-    notifications,
     login
+}
+
+// MESSAGING_ENABLED is replaced at build time by webpack.
+if (MESSAGING_ENABLED) {
+    carouselData.notifications = notifications
 }
 
 const rootEl = document.getElementsByClassName('react-target')[0]

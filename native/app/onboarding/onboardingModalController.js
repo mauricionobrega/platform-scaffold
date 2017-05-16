@@ -24,6 +24,8 @@ const OnboardingModalController = function(modalView, onboardingController) {
 }
 
 OnboardingModalController.init = async function() {
+    const messagingEnabled = AstroNative.Configuration.messagingEnabled
+
     const [
         modalView,
         onboardingController,
@@ -31,7 +33,8 @@ OnboardingModalController.init = async function() {
     ] = await Promise.all([
         ModalViewPlugin.init(),
         OnboardingController.init(),
-        PushController.init()
+        // If messaging is not enabled, pushController will become null
+        messagingEnabled ? PushController.init() : Promise.resolve(null)
     ])
 
     modalView.setContentView(onboardingController.viewPlugin)
@@ -51,10 +54,13 @@ OnboardingModalController.init = async function() {
     })
 
     Astro.registerRpcMethod(AppRpc.names.pushEnable, [], () => {
-        if (AstroNative.Configuration.DEBUG) {
-            pushController.subscribeTest()
-        } else {
-            pushController.subscribe()
+        // If pushController wasn't initialized, this becomes a no-op
+        if (pushController) {
+            if (AstroNative.Configuration.DEBUG) {
+                pushController.subscribeTest()
+            } else {
+                pushController.subscribe()
+            }
         }
     })
 
