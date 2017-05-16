@@ -3,7 +3,6 @@
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
 import React, {PropTypes} from 'react'
-import {getHighResImage} from '../../../integration-manager/_merlins-connector/utils'
 
 // SDK Components
 import Image from 'progressive-web-sdk/dist/components/image'
@@ -24,7 +23,7 @@ const PaymentProductItem = ({
 }) => {
     const productImage = (
         <Image
-            src={getHighResImage(thumbnail.src)}
+            src={thumbnail.src}
             alt={thumbnail.alt}
             width="104px"
             height="104px"
