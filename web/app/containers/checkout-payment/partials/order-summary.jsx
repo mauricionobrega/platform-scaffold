@@ -266,7 +266,7 @@ const mapStateToProps = createPropsSelector({
     orderTotal: cartSelectors.getOrderTotal,
     shippingRate: getSelectedShippingRate,
     shippingLabel: getSelectedShippingLabel,
-    taxAmount: cartSelectors.getTaxAmount,
+    taxAmount: cartSelectors.getTax,
     summaryCount: cartSelectors.getCartSummaryCount,
     isFixedPlaceOrderShown: selectors.getIsFixedPlaceOrderShown
 })

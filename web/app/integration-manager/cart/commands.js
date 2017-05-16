@@ -22,6 +22,6 @@ export const addToCart = (...args) => connector.addToCart(...args)
 
 export const fetchTaxEstimate = (...args) => connector.fetchTaxEstimate(...args)
 
-export const putPromoCode = (...args) => connector.submitPromoCode(...args)
+export const putPromoCode = (...args) => connector.putPromoCode(...args)
 
-export const deletePromoCode = (...args) => connector.removePromoCode(...args)
+export const deletePromoCode = (...args) => connector.deletePromoCode(...args)

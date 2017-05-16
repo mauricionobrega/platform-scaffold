@@ -8,7 +8,7 @@ import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as cartSelectors from '../../../store/cart/selectors'
 import {CART_ESTIMATE_SHIPPING_MODAL} from '../constants'
 import {openModal} from 'progressive-web-sdk/dist/store/modals/actions'
-import {getSelectedShippingRate, getSelectedShippingLabel, getPostcode} from '../../../store/checkout/shipping/selectors'
+import {getSelectedShippingLabel, getPostcode} from '../../../store/checkout/shipping/selectors'
 import {getCheckoutShippingURL} from '../../app/selectors'
 import {removePromoCode} from '../actions' // @TODO figure out where this is coming from
 
@@ -23,8 +23,8 @@ const CartSummary = ({
     checkoutShippingURL,
     summaryCount,
     subtotal,
-    shippingRate,
-    shippingLabel,
+    selectedShippingRate,
+    selectedShippingLabel,
     zipCode,
     taxAmount,
     discountAmount,
@@ -52,6 +52,13 @@ const CartSummary = ({
         </Button>
     )
 
+    // when we want to show taxes with Calculate button
+    const neitherShippingNorDiscountsCalculatedYet = !zipCode && !discountLabel
+    const onlyDiscountCalculated = !zipCode && discountLabel
+
+    // When we want taxes to show with actual tax values
+    const onlyTaxIsCalculated = zipCode && !discountLabel
+    const bothTaxAndDiscountsCalculated = zipCode && discountLabel
 
     return (
         <div className="t-cart__summary">
@@ -82,12 +89,15 @@ const CartSummary = ({
                         />
                     }
 
-                    {shippingRate && [
+                    {zipCode &&
                         <LedgerRow
-                            label={`Shipping (${shippingLabel})`}
-                            value={shippingRate}
-                            key={`Shipping (${shippingLabel})`}
-                        />,
+                            label={`Shipping (${selectedShippingLabel})`}
+                            value={selectedShippingRate}
+                            key={`Shipping (${selectedShippingLabel})`}
+                        />
+                    }
+
+                    {(onlyTaxIsCalculated || bothTaxAndDiscountsCalculated) &&
                         <LedgerRow
                             className="u-flex-none u-border-0"
                             label="Taxes"
@@ -95,9 +105,9 @@ const CartSummary = ({
                             labelAction={editButton}
                             key="Taxes"
                         />
-                    ]}
+                    }
 
-                    {!shippingRate &&
+                    {(onlyDiscountCalculated || neitherShippingNorDiscountsCalculatedYet) &&
                         <LedgerRow
                             className="u-flex-none"
                             label="Taxes"
@@ -130,8 +140,8 @@ CartSummary.propTypes = {
     grandTotal: PropTypes.string,
     orderTotal: PropTypes.string,
     removePromoCode: PropTypes.func,
-    shippingLabel: PropTypes.string,
-    shippingRate: PropTypes.string,
+    selectedShippingLabel: PropTypes.string,
+    selectedShippingRate: PropTypes.string,
     subtotal: PropTypes.string,
     summaryCount: PropTypes.number,
     taxAmount: PropTypes.string,
@@ -145,10 +155,10 @@ const mapStateToProps = createPropsSelector({
     checkoutShippingURL: getCheckoutShippingURL,
     subtotal: cartSelectors.getSubtotal,
     orderTotal: cartSelectors.getOrderTotal,
-    shippingRate: getSelectedShippingRate,
-    shippingLabel: getSelectedShippingLabel,
+    selectedShippingRate: cartSelectors.getShippingAmount,
+    selectedShippingLabel: getSelectedShippingLabel,
     zipCode: getPostcode,
-    taxAmount: cartSelectors.getTaxAmount,
+    taxAmount: cartSelectors.getTax,
     summaryCount: cartSelectors.getCartSummaryCount,
 })
 

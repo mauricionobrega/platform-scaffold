@@ -9,9 +9,8 @@ import {removeNotification} from '../../../containers/app/actions'
 import {getIsLoggedIn} from '../../../store/user/selectors'
 import {getUenc, getCustomerEntityID} from '../selectors'
 import {receiveEntityID} from '../actions'
-import {getDiscountLabel} from '../../../store/cart/selectors'
 import {getSelectedShippingMethod} from '../../../store/checkout/shipping/selectors'
-import {getFormValues, getFormRegisteredFields} from '../../../store/form/selectors'
+import {getFormValues, getFormRegisteredFields, getCouponValue} from '../../../store/form/selectors'
 import {receiveCartContents} from '../../cart/results'
 import {receiveCartProductData} from '../../products/results'
 import {submitForm, textFromFragment} from '../utils'
@@ -180,13 +179,7 @@ export const fetchTaxEstimate = (address, shippingMethod) => (dispatch, getState
         .then((response) => response.json())
         .then((responseJSON) => {
             dispatch(receiveCartContents(
-                // @TODO: Verify that this works as intended
                 parseCartTotals(responseJSON)
-                // {
-                //     subtotal: `$${responseJSON.subtotal.toFixed(2)}`,
-                //     subtotal_incl_tax: `$${responseJSON.subtotal_incl_tax.toFixed(2)}`,
-                //     tax_amount: `$${responseJSON.tax_amount.toFixed(2)}`
-                // }
             ))
         })
 }
@@ -217,9 +210,9 @@ export const putPromoCode = () => (dispatch, getState) => {
     const currentState = getState()
     const isLoggedIn = getIsLoggedIn(currentState)
     const entityID = getCustomerEntityID(currentState)
-    const discountLabel = getDiscountLabel(currentState)
+    const couponCode = getCouponValue(currentState)
 
-    const putPromoUrl = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/coupons/${discountLabel}`
+    const putPromoUrl = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/coupons/${couponCode}`
     return makeJsonEncodedRequest(putPromoUrl, {}, {method: 'PUT'})
         .then((response) => {
             if (response.status === 404) {

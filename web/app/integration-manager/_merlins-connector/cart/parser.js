@@ -29,7 +29,7 @@ export const parseCartProducts = ({items}) => /* Products */ {
     return productMap
 }
 
-export const parseCart = ({items, subtotal, subtotal_excl_tax}) => /* Cart */ {
+export const parseCart = ({items, subtotal}) => /* Cart */ {
     return {
         items: items.map(({item_id, product_id, product_url, qty, product_price}) => ({
             id: item_id,
@@ -39,7 +39,7 @@ export const parseCart = ({items, subtotal, subtotal_excl_tax}) => /* Cart */ {
             itemPrice: textFromFragment(product_price),
             linePrice: productSubtotal(textFromFragment(product_price), qty)
         })),
-        subtotal: textFromFragment(subtotal_excl_tax),
+        subtotal: textFromFragment(subtotal),
         orderTotal: textFromFragment(subtotal)
     }
 }
@@ -51,8 +51,22 @@ export const parseCartTotals = ({
     tax_amount,
     discount_amount,
     shipping_amount,
-    base_grand_total
+    base_grand_total,
+    subtotal,
+    subtotal_incl_tax
 }) => {
+
+    /* eslint-disable camelcase */
+    let orderTotal
+    if (discount_amount && !tax_amount) {
+        orderTotal = subtotal_with_discount
+    } else if (tax_amount) {
+        orderTotal = base_grand_total
+    } else {
+        orderTotal = subtotal_incl_tax
+    }
+    /* eslint-enable camelcase */
+
     return {
         shipping: {
             // label // => this value is either blank or set when a shipping method is chosen
@@ -63,8 +77,8 @@ export const parseCartTotals = ({
             code: coupon_code,
             amount: formatMerlinsMoney(discount_amount, true)
         },
-        subtotal: formatMerlinsMoney(subtotal_with_discount),
+        subtotal: formatMerlinsMoney(subtotal),
         tax: formatMerlinsMoney(tax_amount),
-        orderTotal: formatMerlinsMoney(base_grand_total)
+        orderTotal: formatMerlinsMoney(orderTotal)
     }
 }
