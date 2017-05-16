@@ -19,6 +19,7 @@ import {isModalOpen} from '../../store/selectors'
 import {closeModal} from '../../store/modals/actions'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 import {withRouter} from 'progressive-web-sdk/dist/routing'
+import NavigationSocialIcons from './partials/navigation-social-icons'
 
 const Navigation = (props) => {
     const {path, isOpen, root, closeNavigation, router, logoutAction} = props
@@ -60,7 +61,7 @@ const Navigation = (props) => {
                 <HeaderBar>
                     <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
                         <h2 className="t-navigation__title u-heading-family u-text-uppercase">
-                            <span className="u-text-extra-lighter">Merlin's</span> Potions
+                            <span className="u-text-extra-lighter">Merlin&#39;s</span> Potions
                         </h2>
                     </HeaderBarTitle>
 
@@ -70,6 +71,13 @@ const Navigation = (props) => {
                 </HeaderBar>
 
                 <NavMenu itemFactory={itemFactory} />
+
+                <div>
+                    <NavigationSocialIcons />
+                    <div className="t-navigation__copyright u-padding-md">
+                        <p>Copyright Merlin&#39;s Potions 2016. All rights reserved.</p>
+                    </div>
+                </div>
             </Nav>
         </Sheet>
     )

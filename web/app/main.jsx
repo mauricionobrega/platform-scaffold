@@ -26,12 +26,11 @@ import Stylesheet from './stylesheet.scss' // eslint-disable-line no-unused-vars
 
 import {analyticManager} from 'progressive-web-sdk/dist/analytics/analytic-manager'
 import {clientAnalytics} from './utils/analytics/client-analytics'
-import {pushMessaging} from './utils/push-messaging/push-messaging-distributor'
 
 analyticManager.init({
     projectSlug: AJS_SLUG, // eslint-disable-line no-undef
     isDebug: false
-}, clientAnalytics, pushMessaging)
+}, clientAnalytics)
 initCacheManifest(cacheHashManifest)
 
 const store = configureStore()

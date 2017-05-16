@@ -6,7 +6,7 @@
 import {mount, shallow} from 'enzyme'
 import React from 'react'
 
-import ListTile from 'progressive-web-sdk/dist/components/list-tile'
+import Link from 'progressive-web-sdk/dist/components/link'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 
 import ConnectedFooterNavigation from './footer-navigation'
@@ -18,18 +18,18 @@ test('FooterNavigation renders without errors', () => {
     expect(wrapper.length).toBe(1)
 })
 
-test('FooterNavigation renders a ListTile for each navigation item', () => {
+test('FooterNavigation renders a Link for each navigation item', () => {
     const navigation = [
         {href: '/one.html', text: 'One!'},
         {href: '/two.html', text: 'Two!'}
     ]
     const wrapper = shallow(<FooterNavigation navigation={navigation} />)
 
-    const tiles = wrapper.find(ListTile)
-    expect(tiles.length).toBe(navigation.length)
-    tiles.forEach((tile, idx) => {
-        expect(tile.prop('href')).toBe(navigation[idx].href)
-        expect(tile.childAt(0).text()).toBe(navigation[idx].text)
+    const links = wrapper.find(Link)
+    expect(links.length).toBe(navigation.length)
+    links.forEach((link, idx) => {
+        expect(link.prop('href')).toBe(navigation[idx].href)
+        expect(link.childAt(0).text()).toBe(navigation[idx].text)
     })
 })
 
@@ -40,10 +40,10 @@ test('FooterNavigation renders SkeletonText for each navigation item with no tex
     ]
     const wrapper = shallow(<FooterNavigation navigation={navigation} />)
 
-    const tiles = wrapper.find(ListTile)
-    expect(tiles.length).toBe(navigation.length)
-    tiles.forEach((tile, idx) => {
-        expect(tile.prop('href')).toBe(navigation[idx].href)
-        expect(tile.childAt(0).type()).toBe(SkeletonText)
+    const links = wrapper.find(Link)
+    expect(links.length).toBe(navigation.length)
+    links.forEach((link, idx) => {
+        expect(link.prop('href')).toBe(navigation[idx].href)
+        expect(link.childAt(0).type()).toBe(SkeletonText)
     })
 })
