@@ -51,7 +51,7 @@
     "lint:sass": "sass-lint -c .sass-lint.yml 'app/**/*.scss' -v",
     "test": "cross-env NODE_ENV=test jest",
     "test:all": "npm run lint && npm test -- --coverage",
-    "build": "webpack"
+    "build": "cross-env NODE_ENV=production webpack"
   },
   "jest": {
     "moduleNameMapper": {
