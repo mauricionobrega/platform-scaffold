@@ -26,7 +26,7 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'babel-loader',
                 options: {
-                    cacheDirectory: `${__dirname}/build/tmp`
+                    cacheDirectory: true
                 }
             },
             {
