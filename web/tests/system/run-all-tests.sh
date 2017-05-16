@@ -12,7 +12,6 @@ if [ $CIRCLE_NODE_TOTAL -eq 1 ]; then
   echo 'Running Lighthouse Tests'
   npm run test:pwa-ci
   echo 'Running End to End Tests'
-  ./tests/system/start-test-server.sh
   npm run test:e2e
 
 else

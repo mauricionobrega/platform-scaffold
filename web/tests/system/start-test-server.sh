@@ -2,7 +2,7 @@
 set -o pipefail
 set -o nounset
 
-
+# This script starts the local dev server if the current git branch is not master.
 if git rev-parse ; then
     # Get the current branch on CircleCI or local
     CURRENT_BRANCH=${CIRCLE_BRANCH:-$(git branch | grep "*" | awk '{ print $2 }')}
