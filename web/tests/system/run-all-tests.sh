@@ -2,8 +2,6 @@
 set -o pipefail
 set -o nounset
 
-
-
 if [ $CIRCLE_NODE_TOTAL -eq 1 ]; then
   echo 'Running lint'
   npm run lint
