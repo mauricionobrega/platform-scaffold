@@ -17,11 +17,11 @@ import CartPromoForm from './cart-promo-form'
 import Icon from 'progressive-web-sdk/dist/components/icon'
 import {Ledger, LedgerRow} from 'progressive-web-sdk/dist/components/ledger'
 import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/accordion'
-import OrderTotal from '../../../components/order-total'
 
 const CartSummary = ({
     checkoutShippingURL,
     summaryCount,
+    orderTotal,
     subtotal,
     selectedShippingRate,
     selectedShippingLabel,
@@ -117,7 +117,13 @@ const CartSummary = ({
                         />
                     }
                 </Ledger>
-                <OrderTotal className="u-border-light-top" />
+                <Ledger>
+                    <LedgerRow
+                        label="Total"
+                        isTotal={true}
+                        value={orderTotal}
+                    />
+                </Ledger>
 
                 <div className="u-padding-end-md u-padding-bottom-lg u-padding-start-md">
                     <Button

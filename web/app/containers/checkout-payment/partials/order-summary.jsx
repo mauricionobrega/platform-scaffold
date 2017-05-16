@@ -20,7 +20,6 @@ import * as checkoutPaymentActions from '../actions'
 // Partials
 import PaymentProductItem from './payment-product-item'
 import CartPromoForm from '../../cart/partials/cart-promo-form'
-import OrderTotal from '../../../components/order-total'
 
 // SDK Components
 import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/accordion'
@@ -139,7 +138,13 @@ class OrderSummary extends React.Component {
                         </Accordion>
                     }
 
-                    <OrderTotal />
+                    <Ledger>
+                        <LedgerRow
+                            label="Total"
+                            isTotal={true}
+                            value={orderTotal}
+                        />
+                    </Ledger>
 
                     {/* This is the statically positioned "Place Your Order" container */}
                     <div className="u-padding-end-md u-padding-start-md">
