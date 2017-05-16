@@ -14,7 +14,7 @@
         box-shadow: inset 0 -2px 0 $brand-color;
 
         .pw-tabs__link {
-            font-weight: 600;
+            font-weight: $semi-bold-font-weight;
         }
     }
 }

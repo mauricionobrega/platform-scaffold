@@ -17,7 +17,7 @@ const ProductDetailsCarousel = ConnectedProductDetailsCarousel.WrappedComponent
 /* eslint-disable newline-per-chained-call */
 
 test('renders without errors', () => {
-    const wrapper = mount(<ProductDetailsCarousel />)
+    const wrapper = mount(<ProductDetailsCarousel images={[]} />)
 
     expect(wrapper.length).toBe(1)
 })
@@ -25,31 +25,31 @@ test('renders without errors', () => {
 const ROOT_CLASS = 't-product-details__carousel'
 
 test('renders the component class correctly', () => {
-    const carouselItems = [
-        {position: '0', img: 'test.png'}
+    const images = [
+        {src: 'test.png'}
     ]
-    const wrapper = shallow(<ProductDetailsCarousel items={carouselItems} />)
+    const wrapper = shallow(<ProductDetailsCarousel images={images} />)
 
     expect(wrapper.hasClass(ROOT_CLASS)).toBe(true)
 })
 
 test('renders a Carousel', () => {
-    const carouselItems = [
-        {position: '0', img: 'test.png'}
+    const images = [
+        {src: 'test.png'}
     ]
-    const wrapper = shallow(<ProductDetailsCarousel items={carouselItems} />)
+    const wrapper = shallow(<ProductDetailsCarousel images={images} />)
 
     expect(wrapper.type()).toBe(Carousel)
 })
 
-test('renders a CarouselItem for each item passed', () => {
-    const items = [
-        {position: '0', img: 'test.png'},
-        {position: '1', img: 'whoa.gif'}
+test('renders a CarouselItem for each image passed', () => {
+    const images = [
+        {src: 'test.png'},
+        {src: 'whoa.gif'}
     ];
 
     [1, 2].forEach((n) => {
-        const wrapper = shallow(<ProductDetailsCarousel items={items.slice(0, n)} />)
+        const wrapper = shallow(<ProductDetailsCarousel images={images.slice(0, n)} />)
         const carouselItems = wrapper.find(CarouselItem)
 
         expect(carouselItems.length).toBe(n)
@@ -58,16 +58,16 @@ test('renders a CarouselItem for each item passed', () => {
             const itemContents = carouselItems.at(i).children()
             expect(itemContents.length).toBe(1)
             expect(itemContents.type()).toBe(Image)
-            expect(itemContents.prop('src')).toBe(items[i].img)
+            expect(itemContents.prop('src')).toBe(images[i].src)
         }
     })
 })
 
-test('renders two SkeletonBlock when the carousel items array is empty', () => {
+test('renders two SkeletonBlock when the images array is empty', () => {
     // One skeleton block is a placeholder for the carousel image, the other is
     // for the carousel pips
 
-    const wrapper = shallow(<ProductDetailsCarousel items={[]} />)
+    const wrapper = shallow(<ProductDetailsCarousel images={[]} />)
     const skeletonBlocks = wrapper.find(SkeletonBlock)
     const placeholderCount = 2 // image placeholder, and pip placeholder
 

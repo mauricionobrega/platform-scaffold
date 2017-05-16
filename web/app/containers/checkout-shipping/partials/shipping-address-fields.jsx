@@ -9,9 +9,9 @@ import * as ReduxForm from 'redux-form'
 import {normalizePhone} from '../../../utils/normalize-utils'
 
 import {showCompanyAndApt} from '../actions'
-import {SHIPPING_FORM_NAME} from '../constants'
-import {fetchShippingMethodsEstimate} from '../../../store/checkout/shipping/actions'
 import {getIsCompanyOrAptShown} from '../selectors'
+import {fetchShippingMethodsEstimate} from '../../../integration-manager/checkout/commands'
+import {SHIPPING_FORM_NAME} from '../../../store/form/constants'
 import {getCountries, getAvailableRegions} from '../../../store/checkout/locations/selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -34,7 +34,7 @@ const ShippingAddressFields = ({
             innerClassName="c--no-min-height u-padding-0"
             onClick={handleShowCompanyAndApt}
         >
-            <span className="u-color-brand u-text-letter-spacing-normal u-text-small">
+            <span className="u-color-brand u-text-letter-spacing-normal u-text-size-small">
                 Add company or apt #
             </span>
             <Icon name="chevron-down" className="u-margin-start-sm u-color-brand" />
@@ -47,8 +47,7 @@ const ShippingAddressFields = ({
                 <ReduxForm.Field
                     component={Field}
                     name="name"
-                    label="Full
-                    Name"
+                    label="Full Name"
                 >
                     <input type="text" noValidate />
                 </ReduxForm.Field>

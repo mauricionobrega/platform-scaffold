@@ -35,7 +35,7 @@
 // Neither grow nor shrink!
 
 .u-flex-none {
-    flex: 0 0 auto !important; // @TODO: Add to spline
+    flex: 0 0 auto !important;
 }
 
 
@@ -52,12 +52,13 @@
 }
 
 .u-flexbox-gutters {
-    @include flexbox-gutters(true);
+    margin-right: ($unit * -0.5) !important;
+    margin-left: ($unit * -0.5) !important;
 }
 
 .u-flexbox-gutters > .u-flex,
 .u-flexbox-gutters > .u-flex-shrink {
-    @include flexbox-inner-gutters(true);
+    margin: 0 ($unit / 2) !important;
 }
 
 
@@ -65,19 +66,19 @@
 // ---
 
 .u-direction-column {
-    flex-direction: column !important; // @TODO: Add to Spline
+    flex-direction: column !important;
 }
 
 .u-direction-column-reverse {
-    flex-direction: column-reverse !important; // @TODO: Add to Spline
+    flex-direction: column-reverse !important;
 }
 
 .u-direction-row {
-    flex-direction: row !important; // @TODO: Add to Spline
+    flex-direction: row !important;
 }
 
 .u-direction-row-reverse {
-    flex-direction: row-reverse !important; // @TODO: Add to Spline
+    flex-direction: row-reverse !important;
 }
 
 
@@ -85,15 +86,15 @@
 // ---
 
 .u-align-top {
-    @include align-top(true);
+    align-items: flex-start !important;
 }
 
 .u-align-center {
-    @include align-center(true);
+    align-items: center !important;
 }
 
 .u-align-bottom {
-    @include align-bottom(true);
+    align-items: flex-end !important;
 }
 
 
@@ -101,43 +102,23 @@
 // ---
 
 .u-justify-start {
-    @include justify-start(true);
+    justify-content: flex-start !important;
 }
 
 .u-justify-end {
-    @include justify-end(true);
+    justify-content: flex-end !important;
 }
 
 .u-justify-between {
-    @include justify-between(true);
+    justify-content: space-between !important;
 }
 
 .u-justify-center {
-    @include justify-center(true);
+    justify-content: center !important;
 }
 
 .u-justify-around {
-    @include justify-around(true);
-}
-
-
-// Flex Direction
-// ---
-
-.u-row-reverse {
-    @include row-reverse(true);
-}
-
-.u-row {
-    flex-direction: row !important; // @TODO: Add to spline
-}
-
-.u-column {
-    flex-direction: column !important; // @TODO: Add to spline
-}
-
-.u-column-reverse {
-    flex-direction: column-reverse !important; // @TODO: Add to spline
+    justify-content: space-around !important;
 }
 
 
@@ -148,25 +129,25 @@
 // your own stylesheet to re-order more.
 
 .u-order-1 {
-    @include order-1(true);
+    order: 1 !important;
 }
 
 .u-order-2 {
-    @include order-2(true);
+    order: 2 !important;
 }
 
 .u-order-3 {
-    @include order-3(true);
+    order: 3 !important;
 }
 
 .u-order-4 {
-    @include order-4(true);
+    order: 4 !important;
 }
 
 .u-order-5 {
-    @include order-5(true);
+    order: 5 !important;
 }
 
 .u-order-6 {
-    @include order-6(true);
+    order: 6 !important;
 }
