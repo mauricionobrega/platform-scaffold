@@ -9,6 +9,16 @@ import {mergePayload} from '../../utils/reducer-utils'
 import {receiveData, setNavigationPath} from './actions'
 import {SIGN_IN_LINK_TEXT, SIGN_OUT_LINK_TEXT, GUEST_NAV_ITEM_TYPE, SIGNED_IN_NAV_ITEM_TYPE} from './constants'
 
+const LOGGED_IN_NAV = {
+    type: SIGNED_IN_NAV_ITEM_TYPE,
+    title: SIGN_OUT_LINK_TEXT
+}
+
+const GUEST_NAV = {
+    type: GUEST_NAV_ITEM_TYPE,
+    title: SIGN_IN_LINK_TEXT
+}
+
 export const initialState = Immutable.fromJS({
     path: undefined,
     root: {},
@@ -26,15 +36,7 @@ export const reducer = handleActions({
             return state
         }
 
-        return state
-            .setIn(
-                [...accountNodePath, 'title'],
-                isLoggedIn ? SIGN_OUT_LINK_TEXT : SIGN_IN_LINK_TEXT
-            )
-            .setIn(
-                [...accountNodePath, 'type'],
-                isLoggedIn ? SIGNED_IN_NAV_ITEM_TYPE : GUEST_NAV_ITEM_TYPE
-            )
+        return state.mergeDeepIn(accountNodePath, isLoggedIn ? LOGGED_IN_NAV : GUEST_NAV)
     }
 }, initialState)
 
