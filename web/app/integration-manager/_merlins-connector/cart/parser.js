@@ -56,16 +56,18 @@ export const parseCartTotals = ({
 
     /* eslint-disable camelcase */
     const hasOnlyDiscountCalculated = discount_amount && !shipping_amount
-    const hasOnlyTaxCalculated = !discount_amount && shipping_amount
     const hasDiscountAndTaxCalculated = discount_amount && shipping_amount
     let orderTotal
 
-    if (hasOnlyTaxCalculated) {
-        orderTotal = subtotal_incl_tax
-    } else if (hasOnlyDiscountCalculated || hasDiscountAndTaxCalculated) {
+    if (hasOnlyDiscountCalculated || hasDiscountAndTaxCalculated) {
         orderTotal = base_grand_total
     } else { // if neither discount and tax is calculated
         orderTotal = subtotal_incl_tax
+    }
+
+    // when user chose another shipping method other than default shipping method
+    if (shipping_amount > 0) {
+        orderTotal = base_grand_total
     }
     /* eslint-enable camelcase */
 
