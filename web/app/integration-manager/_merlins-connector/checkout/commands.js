@@ -8,7 +8,7 @@ import {SubmissionError} from 'redux-form'
 import {parseShippingInitialValues, parseLocations, parseShippingMethods, checkoutConfirmationParser} from './parsers'
 import {parseCartTotals} from '../cart/parser'
 import {parseCheckoutEntityID, extractMagentoShippingStepData} from '../../../utils/magento-utils'
-import {getCookieValue} from '../../../utils/utils'
+import {getCookieValue, parseLocationData} from '../../../utils/utils'
 import {getCart} from '../cart/commands'
 import {receiveCheckoutData, receiveShippingInitialValues, receiveCheckoutConfirmationData, receiveHasExistingCard} from './../../checkout/results'
 import {receiveCartContents} from './../../cart/results'
@@ -21,38 +21,6 @@ import {PAYMENT_URL} from '../constants'
 import {SHIPPING_FORM_NAME, ADD_NEW_ADDRESS_FIELD} from '../../../containers/checkout-shipping/constants'
 import * as paymentSelectors from '../../../store/checkout/payment/selectors'
 import * as shippingSelectors from '../../../store/checkout/shipping/selectors'
-
-const parseLocationData = (formValues, registeredFieldNames) => {
-    // Default values to use if none have been selected
-    const address = {country_id: 'US', region_id: '0', postcode: null}
-
-    if (formValues) {
-        // Only return the field value if the field is registered
-        const getRegisteredFieldValue = (fieldName) => {
-            return registeredFieldNames.includes(fieldName) ? formValues[fieldName] : undefined
-        }
-
-        const countryId = getRegisteredFieldValue('country_id')
-        if (countryId) {
-            address.country_id = countryId
-        }
-
-        const postcode = getRegisteredFieldValue('postcode')
-        if (postcode) {
-            address.postcode = postcode
-        }
-
-        if (formValues.region) {
-            address.region = getRegisteredFieldValue('region')
-            // Remove the region_id in case we have an old value
-            delete address.region_id
-        } else {
-            address.region_id = getRegisteredFieldValue('region_id')
-        }
-    }
-
-    return address
-}
 
 export const fetchShippingMethodsEstimate = (formKey) => (dispatch, getState) => {
     const currentState = getState()
@@ -180,8 +148,7 @@ export const submitShipping = (formValues) => (dispatch, getState) => {
                 throw new SubmissionError({_error: 'Unable to save shipping address'})
             }
 
-            // @TODO: insert orderTotal update action/dispatch here
-            dispatch(receiveCartContents(parseCartTotals(responseJSON)))
+            dispatch(receiveCartContents(parseCartTotals(responseJSON.totals)))
             return PAYMENT_URL
         })
 }

@@ -44,10 +44,8 @@ export const parseCart = ({items, subtotal}) => /* Cart */ {
     }
 }
 
-// @TODO: Note that this used to be parseTotals
 export const parseCartTotals = ({
     coupon_code,
-    subtotal_with_discount,
     tax_amount,
     discount_amount,
     shipping_amount,
@@ -57,12 +55,16 @@ export const parseCartTotals = ({
 }) => {
 
     /* eslint-disable camelcase */
+    const hasOnlyDiscountCalculated = discount_amount && !shipping_amount
+    const hasOnlyTaxCalculated = !discount_amount && shipping_amount
+    const hasDiscountAndTaxCalculated = discount_amount && shipping_amount
     let orderTotal
-    if (discount_amount && !tax_amount) {
-        orderTotal = subtotal_with_discount
-    } else if (tax_amount) {
+
+    if (hasOnlyTaxCalculated) {
+        orderTotal = subtotal_incl_tax
+    } else if (hasOnlyDiscountCalculated || hasDiscountAndTaxCalculated) {
         orderTotal = base_grand_total
-    } else {
+    } else { // if neither discount and tax is calculated
         orderTotal = subtotal_incl_tax
     }
     /* eslint-enable camelcase */

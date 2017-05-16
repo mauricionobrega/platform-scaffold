@@ -9,8 +9,8 @@ import {removeNotification} from '../../../containers/app/actions'
 import {getIsLoggedIn} from '../../../store/user/selectors'
 import {getUenc, getCustomerEntityID} from '../selectors'
 import {receiveEntityID} from '../actions'
-import {getSelectedShippingMethod} from '../../../store/checkout/shipping/selectors'
-import {getFormValues, getFormRegisteredFields, getCouponValue} from '../../../store/form/selectors'
+import {getSelectedShippingMethod, getShippingAddress} from '../../../store/checkout/shipping/selectors'
+import {getCouponValue} from '../../../store/form/selectors'
 import {receiveCartContents} from '../../cart/results'
 import {receiveCartProductData} from '../../products/results'
 import {submitForm, textFromFragment} from '../utils'
@@ -22,7 +22,6 @@ import {parseCart, parseCartProducts, parseCartTotals} from './parser'
 import {parseCheckoutEntityID, extractMagentoJson} from '../../../utils/magento-utils'
 import {ESTIMATE_FORM_NAME, ADD_TO_WISHLIST_URL} from '../../../containers/cart/constants'
 import {getProductById} from '../../../store/products/selectors'
-import {parseLocationData} from '../../../utils/utils'
 
 const LOAD_CART_SECTION_URL = '/customer/section/load/?sections=cart%2Cmessages&update_section_id=true'
 const REMOVE_CART_ITEM_URL = '/checkout/sidebar/removeItem/'
@@ -185,14 +184,16 @@ export const fetchTaxEstimate = (address, shippingMethod) => (dispatch, getState
 }
 
 export const getCartTotalsInfo = (currentState) => {
-    const formValues = getFormValues(ESTIMATE_FORM_NAME)(currentState)
-    const registeredFieldNames = getFormRegisteredFields(ESTIMATE_FORM_NAME)(currentState).map(({name}) => name)
-    const address = parseLocationData(formValues, registeredFieldNames) || {}
+    const address = getShippingAddress(currentState).toJS()
     let shippingMethod = getSelectedShippingMethod(currentState).toJS().value || ''
     shippingMethod = shippingMethod.length ? shippingMethod.split('_') : []
     const requestData = {
         addressInformation: {
-            address,
+            address: {
+                country_id: address.countryId || address.country_id,
+                region_id: address.regionId || address.region_id,
+                postcode: address.postcode
+            },
             shipping_carrier_code: shippingMethod[0],
             shipping_method_code: shippingMethod[1]
         }
