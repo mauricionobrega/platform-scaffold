@@ -8,4 +8,8 @@ export const register = (commands) => {
     connector = commands
 }
 
-export const initApp = (...args) => connector.initApp(...args)
+/**
+ * Initializes the connector during app startup. This command dispatched
+ * be called before any other integration manager commands are.
+ */
+export const initApp = () => connector.initApp()
