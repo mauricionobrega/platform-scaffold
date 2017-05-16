@@ -3,6 +3,7 @@
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
 import React from 'react'
+import template from '../../template'
 
 import ProductDetailsHeading from './partials/product-details-heading'
 import ProductDetailsCarousel from './partials/product-details-carousel'
@@ -12,11 +13,12 @@ import ProductDetailsItemAddedModal from './partials/product-details-item-added-
 import ProductNearestStores from './partials/product-nearest-stores'
 
 const ProductDetails = ({route: {routeName}}) => {
+    const isInCheckout = (routeName === 'cartEditPage')
     return (
         <div className="t-product-details">
-            <ProductDetailsHeading isInCheckout={routeName === 'cartEditPage'} />
+            <ProductDetailsHeading isInCheckout={isInCheckout} />
             <ProductDetailsCarousel />
-            <ProductDetailsAddToCart />
+            <ProductDetailsAddToCart isInCheckout={isInCheckout} />
             <ProductDetailsDescription />
             <ProductDetailsItemAddedModal />
             <div className="u-padding-md u-bg-color-neutral-10">
@@ -26,6 +28,7 @@ const ProductDetails = ({route: {routeName}}) => {
     )
 }
 
+
 ProductDetails.propTypes = {
     /**
     * The route object passed down by the router
@@ -33,4 +36,4 @@ ProductDetails.propTypes = {
     route: React.PropTypes.object,
 }
 
-export default ProductDetails
+export default template(ProductDetails)

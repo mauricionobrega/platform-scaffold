@@ -11,6 +11,8 @@ import classNames from 'classnames'
 import WebFont from 'webfontloader'
 import {isRunningInAstro} from '../../utils/astro-integration'
 
+import {initApp} from '../../integration-manager/app/commands'
+
 import {hidePreloader} from 'progressive-web-sdk/dist/preloader'
 import DangerousHTML from 'progressive-web-sdk/dist/components/dangerous-html'
 import SkipLinks from 'progressive-web-sdk/dist/components/skip-links'
@@ -24,22 +26,10 @@ import * as selectors from './selectors'
 
 import NotificationManager from '../../components/notification-manager'
 
-import {requestIdleCallback} from '../../utils/utils'
-
-// These Unwrapped containers are loadable components. They'll only be
-// downloaded when we call upon them
-import {
-    UnwrappedCart,
-    UnwrappedCheckoutConfirmation,
-    UnwrappedCheckoutPayment,
-    UnwrappedCheckoutShipping,
-    UnwrappedLogin,
-    UnwrappedProductDetails,
-    UnwrappedProductList,
-    Offline
-} from '../templates'
+import {registerPreloadCallbacks} from '../templates'
 
 // Offline support
+import Offline from '../offline/container'
 import OfflineBanner from '../offline/partials/offline-banner'
 import OfflineModal from '../offline/partials/offline-modal'
 
@@ -55,6 +45,7 @@ class App extends React.Component {
     componentDidMount() {
         hidePreloaderWhenCSSIsLoaded()
         this.props.fetchSvgSprite()
+        this.props.initApp()
         WebFont.load({
             google: {
                 families: ['Oswald:200,400']
@@ -63,36 +54,15 @@ class App extends React.Component {
 
         // Lazy load other containers when browser is at the end of frame
         // to prevent jank
-        requestIdleCallback(() => {
-            UnwrappedCart.preload()
-        })
-        requestIdleCallback(() => {
-            UnwrappedCheckoutConfirmation.preload()
-        })
-        requestIdleCallback(() => {
-            UnwrappedCheckoutPayment.preload()
-        })
-        requestIdleCallback(() => {
-            UnwrappedCheckoutShipping.preload()
-        })
-        requestIdleCallback(() => {
-            UnwrappedLogin.preload()
-        })
-        requestIdleCallback(() => {
-            UnwrappedProductDetails.preload()
-        })
-        requestIdleCallback(() => {
-            UnwrappedProductList.preload()
-        })
-
+        registerPreloadCallbacks()
     }
 
     render() {
         const {
             children,
             history,
-            fetchPage,
             fetchError,
+            fetchPage,
             hasFetchedCurrentPath,
             notifications,
             removeNotification,
@@ -103,7 +73,7 @@ class App extends React.Component {
         const CurrentHeader = routeProps.Header || Header
         const CurrentFooter = routeProps.Footer || Footer
 
-        const reload = () => fetchPage(window.location.href, routeProps.component.WrappedComponent, routeProps.routeName)
+        const reload = () => fetchPage(routeProps.fetchAction, window.location.href, routeProps.routeName)
 
         const skipLinksItems = [
             // Customize your list of SkipLinks here. These are necessary to
@@ -182,14 +152,18 @@ class App extends React.Component {
 
 App.propTypes = {
     children: PropTypes.element.isRequired,
-    fetchPage: PropTypes.func.isRequired,
+    fetchError: PropTypes.string,
+    fetchPage: PropTypes.func,
+    fetchSvgSprite: PropTypes.func,
+    hasFetchedCurrentPath: PropTypes.bool,
     /**
      * The react-router history object
      */
-    fetchError: PropTypes.string,
-    fetchSvgSprite: PropTypes.func,
-    hasFetchedCurrentPath: PropTypes.bool,
     history: PropTypes.object,
+    /**
+    * Calls a command in the integration manager that initializes some app data
+    */
+    initApp: PropTypes.func,
     notifications: PropTypes.array,
     removeNotification: PropTypes.func,
     /**
@@ -207,8 +181,9 @@ const mapStateToProps = createPropsSelector({
 
 const mapDispatchToProps = {
     removeNotification: appActions.removeNotification,
-    fetchPage: appActions.fetchPage,
-    fetchSvgSprite: () => appActions.fetchSvgSprite()
+    fetchSvgSprite: () => appActions.fetchSvgSprite(),
+    fetchPage: (fetchAction, url, routeName) => fetchAction(url, routeName),
+    initApp
 }
 
 export default connect(

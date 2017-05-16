@@ -7,16 +7,16 @@ import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import {CART_REMOVE_ITEM_MODAL} from '../constants'
-import {removeFromCart} from '../../../store/cart/actions'
-import {closeModal} from '../../../store/modals/actions'
-import {isModalOpen} from '../../../store/selectors'
+import {removeItem} from '../actions'
+import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
+import {isModalOpen} from 'progressive-web-sdk/dist/store/modals/selectors'
 import {getRemoveItemID} from '../selectors'
 
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 import Button from 'progressive-web-sdk/dist/components/button'
 import Image from 'progressive-web-sdk/dist/components/image'
 
-const CartRemoveItemModal = ({closeModal, isOpen, removeItemID, removeFromCart}) => {
+const CartRemoveItemModal = ({closeModal, isOpen, removeItemID, removeItem}) => {
     return (
         <Sheet
             className="pw--no-shadow t-cart__remove-item-confirmation-modal"
@@ -57,7 +57,7 @@ const CartRemoveItemModal = ({closeModal, isOpen, removeItemID, removeFromCart})
                         className="c--secondary u-text-uppercase u-flex u-margin-start"
                         onClick={() => {
                             closeModal()
-                            removeFromCart(removeItemID)
+                            removeItem(removeItemID)
                         }}
                     >
                         Ok
@@ -80,7 +80,7 @@ CartRemoveItemModal.propTypes = {
     /**
     * Removes the item from the cart
     */
-    removeFromCart: React.PropTypes.func,
+    removeItem: React.PropTypes.func,
     /**
     * The id of the item being deleted
     */
@@ -94,6 +94,6 @@ const mapStateToProps = createPropsSelector({
 
 const mapDispatchToProps = {
     closeModal: () => closeModal(CART_REMOVE_ITEM_MODAL),
-    removeFromCart
+    removeItem
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CartRemoveItemModal)

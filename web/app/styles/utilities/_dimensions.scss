@@ -2,41 +2,52 @@
 // ===
 //
 // Apply fluid widths to components or sub-components.
+//
+//
+// 1. Force elements to keep their explicit width when inside a flexbox to
+//    prevent them from growing or shrinking.
 
 
 // Fractional Widths
 // ---
 
 .u-width-1of6 {
-    @include width-1of6(true); // 16.667%
+    flex: initial !important; // 1
+    width: (100%/6) !important; // 16.667%
 }
 
 .u-width-1of4 {
-    @include width-1of4(true); // 25%
+    flex: initial !important; // 1
+    width: 25% !important;
 }
 
 .u-width-1of3,
 .u-width-2of6 {
-    @include width-2of6(true); // 33.333%
+    flex: initial !important; // 1
+    width: (100%/3) !important; // 33.333%
 }
 
 .u-width-1of2,
 .u-width-2of4,
 .u-width-3of6 {
-    @include width-3of6(true); // 50%
+    flex: initial !important; // 1
+    width: 50% !important;
 }
 
 .u-width-2of3,
 .u-width-4of6 {
-    @include width-4of6(true); // 66.666%
+    flex: initial !important; // 1
+    width: 2 * (100%/3) !important; // 66.666%
 }
 
 .u-width-3of4 {
-    @include width-3of4(true); // 75%
+    flex: initial !important; // 1
+    width: 75% !important;
 }
 
 .u-width-5of6 {
-    @include width-5of6(true); // 83.333%
+    flex: initial !important; // 1
+    width: 5 * (100%/6) !important; // 83.333%
 }
 
 
@@ -44,7 +55,8 @@
 // ---
 
 .u-width-full {
-    @include width-full(true); // 100%
+    flex: initial !important; // 1
+    width: 100% !important;
 }
 
 
@@ -53,6 +65,8 @@
 //
 // Set width to 100% with display block.
 
-.u-width-full-block {
-    @include width-full-block(true);
+.u-width-block-full {
+    display: block !important;
+    flex: initial !important; // 1
+    width: 100% !important;
 }

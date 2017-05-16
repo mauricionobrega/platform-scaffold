@@ -22,6 +22,8 @@ const isReactRoute = () => {
     return ReactRegexes.some((regex) => regex.test(window.location.pathname))
 }
 
+window.Progressive = {}
+
 initCacheManifest(cacheHashManifest)
 
 const attemptToInitializeApp = () => {
