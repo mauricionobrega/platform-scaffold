@@ -20,7 +20,8 @@ import {fetchShippingMethodsEstimate} from '../checkout/commands'
 import {fetchPageData} from '../app/commands'
 import {parseCart, parseCartProducts, parseCartTotals} from './parser'
 import {parseCheckoutEntityID, extractMagentoJson} from '../../../utils/magento-utils'
-import {ESTIMATE_FORM_NAME, ADD_TO_WISHLIST_URL} from '../../../containers/cart/constants'
+import {ADD_TO_WISHLIST_URL} from '../../../containers/cart/constants'
+import {ESTIMATE_FORM_NAME} from '../../../store/form/constants'
 import {getProductById} from '../../../store/products/selectors'
 
 const LOAD_CART_SECTION_URL = '/customer/section/load/?sections=cart%2Cmessages&update_section_id=true'
@@ -122,7 +123,7 @@ export const updateItemQuantity = (itemId, itemQuantity) => {
 
 const ESTIMATE_FIELD_PATH = ['#block-summary', 'Magento_Ui/js/core/app', 'components', 'block-summary', 'children', 'block-shipping', 'children', 'address-fieldsets', 'children']
 
-export const fetchCartPageData = (url) => (dispatch) => {
+export const initCartPage = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then((res) => {
             const [$, $response] = res // eslint-disable-line no-unused-vars

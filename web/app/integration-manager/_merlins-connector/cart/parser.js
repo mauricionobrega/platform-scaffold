@@ -5,7 +5,7 @@
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 import {textFromFragment, productSubtotal, getHighResImage, formatMerlinsMoney} from '../utils'
 
-export const parseCartProducts = ({items}) => /* Products */ {
+export const parseCartProducts = ({items}) => { /* Products */
     const products = items.map(({product_id, product_name, product_url, product_price, product_image}) => ({
         id: product_id,
         title: product_name,

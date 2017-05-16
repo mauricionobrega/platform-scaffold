@@ -8,8 +8,8 @@ import * as ReduxForm from 'redux-form'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 
 // Selectors
+import {PAYMENT_FORM_NAME} from '../../../store/form/constants'
 import {getBillingInitialValues} from '../../../store/checkout/billing/selectors'
-
 
 // Actions
 import {submitPayment} from '../actions'
@@ -62,7 +62,7 @@ const mapDispatchToProps = {
 }
 
 const CheckoutPaymentReduxForm = ReduxForm.reduxForm({
-    form: 'paymentForm'
+    form: PAYMENT_FORM_NAME
 })(CheckoutPaymentForm)
 
 export default connect(
