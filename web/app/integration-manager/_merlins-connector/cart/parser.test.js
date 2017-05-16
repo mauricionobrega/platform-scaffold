@@ -3,7 +3,7 @@
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
 /* eslint-env jquery, jest, node */
-import {parseCart, parseCartProducts} from './parser'
+import {parseCart, parseCartProducts, parseCartTotals} from './parser'
 
 describe('Parsing the cart', () => {
     test('should map cart summary information to Cart type', () => {
@@ -27,15 +27,13 @@ describe('Parsing the cart products', () => {
     })
 })
 
-// @TODO add test for parseCartTotals
 describe('Parsing the cart totals', () => {
-    test('should map the cart totals based on somethign soemthign', () => {
-        // const data = require('./cart-contents-example.json')
-        // const expected = require('./cart-contents-parse-cart-products-expected.json')
-        //
-        // const cartProducts = parseCartProducts(data.cart)
-        //
-        // expect(cartProducts).toEqual(expected)
-        throw Error('create test for parseCartTotals')
+    test('should map the cart totals to Cart total type', () => {
+        const data = require('./cart-totals-example.json')
+        const expected = require('./cart-totals-parse-expected.json')
+
+        const cartTotals = parseCartTotals(data)
+
+        expect(cartTotals).toEqual(expected)
     })
 })
