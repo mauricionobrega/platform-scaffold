@@ -6,21 +6,21 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {extractPathFromURL} from 'progressive-web-sdk/dist/utils/utils'
 import {createPropsSelector} from 'reselect-immutable-helpers'
-
 import Nav from 'progressive-web-sdk/dist/components/nav'
 import NavMenu from 'progressive-web-sdk/dist/components/nav-menu'
 import NavItem from 'progressive-web-sdk/dist/components/nav-item'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
+import {isModalOpen} from 'progressive-web-sdk/dist/store/modals/selectors'
+import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
+import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
+import {withRouter} from 'progressive-web-sdk/dist/routing'
+
 import IconLabelButton from '../../components/icon-label-button'
-import * as merlinsNavItem from '../../components/nav-item'
+import {AccountNavItem, NavItemWithOnClick} from '../../components/nav-item'
 import * as selectors from './selectors'
 import {NAVIGATION_MODAL} from './constants'
 import {signOut} from '../app/actions'
-import {isModalOpen} from 'progressive-web-sdk/dist/store/modals/selectors'
-import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {setNavigationPath} from './actions'
-import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
-import {withRouter} from 'progressive-web-sdk/dist/routing'
 import NavigationSocialIcons from './partials/navigation-social-icons'
 
 const Navigation = (props) => {
@@ -43,10 +43,10 @@ const Navigation = (props) => {
     const itemFactory = (type, props) => {
         switch (type) {
             case 'AccountNavItem':
-                return <merlinsNavItem.AccountNavItem {...props} />
+                return <AccountNavItem {...props} />
             case 'AccountLogoutNavItem':
                 return (
-                    <merlinsNavItem.NavItemWithOnClick
+                    <NavItemWithOnClick
                         {...props}
                         onClick={() => {
                             logoutAction()
