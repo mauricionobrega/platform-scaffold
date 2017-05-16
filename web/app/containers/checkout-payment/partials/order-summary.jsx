@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
@@ -141,7 +145,7 @@ class OrderSummary extends React.Component {
 
                     {/* This is the statically positioned "Place Your Order" container */}
                     <div className="u-padding-end-md u-padding-start-md">
-                        <Button className="c--primary u-flex-none u-width-full u-text-all-caps" type="submit">
+                        <Button className="c--primary u-flex-none u-width-full u-text-uppercase" type="submit">
                             <Icon name="lock" />
                             Place Your Order
                         </Button>
@@ -154,7 +158,7 @@ class OrderSummary extends React.Component {
                         aria-hidden="true"
                     >
                         <div className="u-padding-md u-bg-color-neutral-00 u-text-align-center">
-                            <Button className="c--primary u-flex-none u-width-full u-text-all-caps" type="submit">
+                            <Button className="c--primary u-flex-none u-width-full u-text-uppercase" type="submit">
                                 <Icon name="lock" />
                                 Place Your Order
                             </Button>

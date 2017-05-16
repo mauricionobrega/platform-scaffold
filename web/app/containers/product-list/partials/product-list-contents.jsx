@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
@@ -22,9 +26,7 @@ const emptySearchText = 'Your search returned no results. Please check your spel
 
 const ResultList = ({products}) => (
     <List className="c--borderless">
-        {products.map((product) => {
-            return <ProductTile key={product.id} {...product} />
-        })}
+        {products.map((product, idx) => <ProductTile key={product ? product.id : idx} {...product} />)}
     </List>
 )
 
@@ -71,7 +73,6 @@ const ProductListContents = ({
                         </div>
                     )}
                 </div>
-
                 <div className="u-flex-none">
                     <Button
                         className="u-color-brand"
@@ -91,10 +92,9 @@ const ProductListContents = ({
                         {products.length > 0 &&
                             <div className="u-flexbox">
                                 <div className="t-product-list__filter u-flex u-margin-end-md">
-                                    <div className="u-text-semi-bold u-margin-bottom-sm">
+                                    <div className="u-text-weight-semi-bold u-margin-bottom-sm">
                                         {products.length} Items
                                     </div>
-
                                     <Button
                                         className="c--tertiary u-width-full u-text-uppercase"
                                         onClick={openModal}
@@ -104,10 +104,9 @@ const ProductListContents = ({
                                     </Button>
                                 </div>
                                 <div className="t-product-list__sort u-flex">
-                                    <label htmlFor="sort" className="u-text-semi-bold u-margin-bottom-sm">
+                                    <label htmlFor="sort" className="u-text-weight-semi-bold u-margin-bottom-sm">
                                         Sort by
                                     </label>
-
                                     <div>
                                         <div className="u-position-relative u-width-full">
                                             <select
@@ -120,7 +119,6 @@ const ProductListContents = ({
                                                 <option value="name">Name</option>
                                                 <option value="price">Price</option>
                                             </select>
-
                                             <div className="t-product-list__sort-icon">
                                                 <Icon name="caret-down" />
                                             </div>

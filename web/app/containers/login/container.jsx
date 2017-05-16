@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'progressive-web-sdk/dist/routing'
@@ -47,7 +51,7 @@ class Login extends React.Component {
             return (
                 <div className="t-login">
                     <div className="u-bg-color-neutral-10 u-padding-md u-padding-top-lg u-padding-bottom-lg u-box-shadow-inset">
-                        <h1 className="u-text-uppercase u-text-normal">
+                        <h1 className="u-text-uppercase u-text-weight-medium">
                             Customer Login
                         </h1>
                     </div>

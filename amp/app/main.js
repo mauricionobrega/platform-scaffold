@@ -11,9 +11,9 @@ import _jsdom from 'jsdom'
 import {Provider} from 'react-redux'
 import {createStore} from 'redux'
 
-import Home from './containers/home'
-import PDP from './containers/pdp'
-import PLP from './containers/plp'
+import Home from './containers/home/container'
+import PDP from './containers/pdp/container'
+import PLP from './containers/plp/container'
 
 
 import ampPage from './templates/amp-page'

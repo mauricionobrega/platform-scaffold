@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import * as ReduxForm from 'redux-form'
 import {connect} from 'react-redux'
@@ -78,7 +82,7 @@ class CreditCardForm extends React.Component {
         const creditCardForm = (
             <div onChange={this.handleCVV}>
                 <FieldRow>
-                    <ReduxForm.Field component={Field} name="name" label="Cardholder Name">
+                    <ReduxForm.Field component={Field} name="ccname" label="Cardholder Name">
                         <input type="text" noValidate />
                     </ReduxForm.Field>
                 </FieldRow>
@@ -113,7 +117,7 @@ class CreditCardForm extends React.Component {
                             <ReduxForm.Field
                                 component={Field}
                                 name="selectCreditCard"
-                                label={<strong className="u-text-normal">VISA **** **** **** 5678</strong>}
+                                label={<strong className="u-text-weight-regular">VISA **** **** **** 5678</strong>}
                                 caption="John Appleseed"
                             >
                                 <input type="radio" value={PAYMENT_EXISTING_CARD} onChange={this.handleRadioChange} defaultChecked noValidate />
@@ -125,7 +129,7 @@ class CreditCardForm extends React.Component {
                                 <ReduxForm.Field
                                     component={Field}
                                     name="selectCreditCard"
-                                    label={<span className={isNewCardInputSelected && 'u-text-semi-bold'}>Add a new card</span>}
+                                    label={<span className={isNewCardInputSelected && 'u-text-weight-medium'}>Add a new card</span>}
                                 >
                                     <input type="radio" value={PAYMENT_NEW_CARD} onChange={this.handleRadioChange} noValidate />
                                 </ReduxForm.Field>

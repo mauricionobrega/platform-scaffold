@@ -1,7 +1,9 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 import React from 'react'
 
-import Divider from 'progressive-web-sdk/dist/components/divider'
-import ListTile from 'progressive-web-sdk/dist/components/list-tile'
+import Link from 'progressive-web-sdk/dist/components/link'
 
 const footerLinks = [
     {text: 'Privacy and Cookie Policy', href: '/privacy-policy-cookie-restriction-mode/'},
@@ -14,18 +16,11 @@ const footerLinks = [
 const FooterNavigation = () => {
     return (
         <div className="t-footer__navigation u-padding-lg u-text-align-center">
-            {footerLinks.map(({text, href}) => (
-                <ListTile href={href} key={text}>
+            {footerLinks.map(({text, href}, index) => (
+                <Link className="t-footer__navigation-link" href={href} key={index}>
                     {text}
-                </ListTile>
+                </Link>
             ))}
-
-            <Divider />
-
-            <div className="t-footer__copyright u-padding-top u-padding-bottom">
-                <p>Copyright Merlin&#39;s Potions 2017</p>
-                <p className="u-margin-top">All rights reserved.</p>
-            </div>
         </div>
     )
 }

@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import Immutable from 'immutable'
 import {createSelector} from 'reselect'
 import {createGetSelector, createHasSelector} from 'reselect-immutable-helpers'
@@ -27,7 +31,6 @@ export const getCartSummaryCount = createSelector(
 
 export const getSubtotal = createGetSelector(getCart, 'subtotal')
 export const getOrderTotal = createGetSelector(getCart, 'orderTotal')
-
 export const getTaxes = createGetSelector(getCart, 'taxes', Immutable.Map())
 export const getTaxAmount = createGetSelector(getTaxes, 'amount')
 export const getTaxLabel = createGetSelector(getTaxes, 'label')

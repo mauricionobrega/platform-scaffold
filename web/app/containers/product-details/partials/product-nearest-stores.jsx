@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 /* eslint-disable react/self-closing-comp */
 import React, {PropTypes} from 'react'
 
@@ -63,7 +67,7 @@ class ProductNearestStores extends React.Component {
                 <div className="u-card u-padding-md u-padding-top-lg u-padding-bottom-lg">
                     {title &&
                         <div className="u-flexbox u-align-center u-padding-bottom-md u-border-light-bottom">
-                            <Icon name="check" className="u-color-success" /> <h2 className="u-margin-start-md  u-text-uppercase">{title}</h2>
+                            <Icon name="check" className="u-color-success" /> <h2 className="u-h3 u-margin-start-md u-text-uppercase">{title}</h2>
                         </div>
                     }
 

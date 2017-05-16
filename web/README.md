@@ -218,7 +218,7 @@ npm run dev
 To visualize bundle script content, run:
 
 ```
-MOBIFY_ANALYZE=true npm run prod:build
+npm run analyze-build
 ```
 
 ## Swapping Integration Managers
@@ -232,21 +232,21 @@ Note: This should make it's way into the Tutorial eventually, but this is here f
 
 ```
 import connector from './integration-manager/_merlins-connector'
-// import connector from './integration-manager/_demandware-connector'
+// import connector from './integration-manager/_sfcc-connector'
 ```
 
 3. Open Preview using the following link:
 
 https://preview.mobify.com/?url=https%3A%2F%2Fwww.merlinspotions.com%2F&site_folder=https%3A%2F%2Flocalhost%3A8443%2Floader.js&disabled=0&domain=&scope=0
 
-### Running against Demandware:
+### Running against Salesforce Commerce Cloud:
 
 1. Open `app/main.jsx`.
-2. Import the Demandware connector:
+2. Import the SFCC connector:
 
 ```
 // import connector from './integration-manager/_merlins-connector'
-import connector from './integration-manager/_demandware-connector'
+import connector from './integration-manager/_sfcc-connector'
 ```
 
 3. Open Preview using the following link:

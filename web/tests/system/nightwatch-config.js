@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 var reportsPath = process.env.CIRCLE_TEST_REPORTS || './tests/reports';
 var screenshotsPath = process.env.CIRCLE_ARTIFACTS || './tests/screenshots';
 

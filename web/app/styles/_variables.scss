@@ -89,9 +89,19 @@ $tiny-line-height: 8px;
 $huge-font-size: 28px;
 $bigger-font-size: 24px;
 $big-font-size: 20px;
+$medium-font-size: 16px;
 $font-size: 14px;
 $small-font-size: 12px;
 $smaller-font-size: 8px;
+
+// Font weight
+$thin-font-weight: 100;
+$extra-light-font-weight: 200;
+$light-font-weight: 300;
+$regular-font-weight: 400;
+$medium-font-weight: 500;
+$semi-bold-font-weight: 600;
+$bold-font-weight: 700;
 
 
 // [DDD] Color Palette
@@ -163,7 +173,6 @@ $active-link-color: $dark-accent-color;
 $focus-color: $brand-color;
 
 $border-color: $neutral-20;
-$light-border-color: $border-color;
 $border-radius: 4px;
 
 $input-background-color: $neutral-00;
@@ -197,6 +206,7 @@ $z4-depth: 1000; // modal dialog or similar
 // Quick ways to write properties that you re-use often.
 
 $border: 1px solid $border-color;
+$light-border: 1px solid $neutral-15;
 $input-padding: $vertical-input-padding $horizontal-input-padding;
 
 $box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.3);
