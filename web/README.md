@@ -7,7 +7,7 @@ All the `npm` scripts listed below must be run from the `web` directory inside y
 Here's how to get a list of all the available npm scripts in the Progressive Web Scaffold:
 
 ```
-cd ~/MYPROJECT/web
+cd PROJECT-DIRECTORY/web
 npm run
 ```
 
