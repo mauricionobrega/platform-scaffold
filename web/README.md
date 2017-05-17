@@ -34,7 +34,7 @@ npm run push -- -m "Test push by <name>"
 ## 🔒 Avoiding HTTPS errors in local development
 
 The development server uses a self-signed SSL certificate. This is totally valid, but
-the self-signed certificate must be added to your operating system to work correctly.
+the self-signed certificate must be added to your operating system to be trusted.
 
 ### macOS
 
