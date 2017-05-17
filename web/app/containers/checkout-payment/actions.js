@@ -13,7 +13,8 @@ import {splitFullName} from '../../utils/utils'
 export const receiveContents = createAction('Received CheckoutPayment Contents')
 export const toggleFixedPlaceOrder = createAction('Toggled the fixed "Place Order" container', ['isFixedPlaceOrderShown'])
 export const toggleCardInputRadio = createAction('Toggled the card method radio input', ['isNewCardInputSelected'])
-export const toggleCompanyAptField = createAction('Showing the "Company" and "Apt #" fields', ['isCompanyOrAptShown'])
+export const toggleCompanyAptField = createAction('Toggle the "Company" and "Apt #" fields (Payment)', ['isCompanyOrAptShown'])
+export const showCompanyAndApt = () => toggleCompanyAptField(true)
 export const toggleNewAddressFields = createAction('Toggled new address fields', ['newShippingAddressIsEnabled'])
 export const setCvvType = createAction('Setting CVV type', ['cvvType'])
 

@@ -7,6 +7,7 @@ import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as ReduxForm from 'redux-form'
 import {normalizePhone} from '../../../utils/normalize-utils'
+import {stripEvent} from '../../../utils/utils'
 
 import {showCompanyAndApt} from '../actions'
 import {getIsCompanyOrAptShown} from '../selectors'
@@ -209,7 +210,7 @@ const mapStateToProps = createPropsSelector({
 })
 
 const mapDispatchToProps = {
-    handleShowCompanyAndApt: showCompanyAndApt,
+    handleShowCompanyAndApt: stripEvent(showCompanyAndApt),
     fetchShippingMethods: () => fetchShippingMethodsEstimate(SHIPPING_FORM_NAME)
 }
 

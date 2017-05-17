@@ -19,7 +19,8 @@ import {login} from '../../integration-manager/login/commands'
 import {getShippingFormValues} from '../../store/form/selectors'
 import {addNotification, removeNotification} from '../app/actions'
 
-export const showCompanyAndApt = createAction('Showing the "Company" and "Apt #" fields')
+export const toggleCompanyAndApt = createAction('Toggle the "Company" and "Apt #" fields (Shipping)', ['isCompanyOrAptShown'])
+export const showCompanyAndApt = () => toggleCompanyAndApt(true)
 export const setCustomerEmailRecognized = createAction('Set Customer email Recognized', ['customerEmailRecognized'])
 export const setShowAddNewAddress = createAction('Setting the "Saved/New Address" field', ['showAddNewAddress'])
 export const receiveData = createAction('Receive Checkout Shipping Data')
