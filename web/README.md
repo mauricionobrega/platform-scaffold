@@ -138,7 +138,7 @@ npm run lint
 If this code style is a poor match for your pre-existing practices,
 there are two ways you can modify the linter configuration to suit
 your use case better. For small changes, you can add rules to the
-[`.eslintrc.yml`](.eslintrc.yml) file in the `web` directory inside your project directory. 
+[`.eslintrc.yml`](./.eslintrc.yml) file in the `web` directory inside your project directory. 
 Rules specified in this file override rules in the Mobify standard; 
 the following `rules` section adds an additional rule and disables an existing rule:
 
@@ -150,8 +150,8 @@ rules:
 
 For larger differences from the Mobify code style, you can replace the
 Mobify config with a different configuration base. This involves
-editing the `extends` section in [`.eslintrc.yml`](.eslintrc.yml). For example, if you
-use the Airbnb style guide, replace the contents of [`.eslintrc.yml`](.eslintrc.yml)
+editing the `extends` section in [`.eslintrc.yml`](./.eslintrc.yml). For example, if you
+use the Airbnb style guide, replace the contents of [`.eslintrc.yml`](./.eslintrc.yml)
 with:
 
 ```yaml
