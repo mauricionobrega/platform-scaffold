@@ -32,8 +32,11 @@ class SignInForm extends React.Component {
     }
 
     onSubmit(values) {
+        console.log('test')
+        console.log(values)
+
         return new Promise((resolve, reject) => {
-            this.props.submitForm(values, resolve, reject)
+            // this.props.submitForm(values, resolve, reject)
         })
     }
 

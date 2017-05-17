@@ -49,13 +49,15 @@ export const submitLoginForm = (formValues, resolve, reject) => {
         console.log('TESTTESTTEST')
         const {href, hiddenInputs} = getForm(getStore()).toJS()
         console.log(href)
+        console.log(hiddenInputs)
         // const {href, hiddenInputs} = loginData.signinSection.form
 
         hiddenInputs.forEach((input) => {
             formValues[input.name] = input.value
         })
+        console.log('form values')
         console.log(formValues)
 
-        return sendForm(href, formValues, '.form-login', resolve, reject)
+        // return sendForm(href, formValues, '.form-login', resolve, reject)
     }
 }
