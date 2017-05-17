@@ -4,7 +4,7 @@
 
 /* eslint-disable import/namespace */
 /* eslint-disable import/named */
-import {EventAction, Page, Transaction} from 'progressive-web-sdk/src/analytics/analytics-constants'
+import {EVENT_ACTION, Page, Transaction} from 'progressive-web-sdk/src/analytics/data-objects/'
 
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
@@ -32,14 +32,14 @@ export const updateSvgSprite = createAction('Updated SVG sprite', ['sprite'])
 export const onRouteChanged = createActionWithAnalytics(
     'On route changed',
     ['currentURL'],
-    EventAction.pageview,
+    EVENT_ACTION.pageview,
     (currentURL, routeName) => (new Page({[Page.TEMPLATENAME]: routeName}))
 )
 
 export const sendPurchaseEvent = createActionWithAnalytics(
     'Send Purchase Event',
     [],
-    EventAction.purchase,
+    EVENT_ACTION.purchase,
     (transaction, products) => (new Transaction(transaction, products))
 )
 

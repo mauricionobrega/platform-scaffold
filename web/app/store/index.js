@@ -17,11 +17,11 @@ import {reducer as formReducer} from 'redux-form'
 import analytics from 'redux-analytics'
 
 // TO-DO - remember to revert this change
-import analyticManager from 'progressive-web-sdk/src/analytics/analytics-manager'
+import analyticsManager from 'progressive-web-sdk/src/analytics/analytics-manager'
 
 const noop = (f) => f
 
-analyticManager.init({
+analyticsManager.init({
     projectSlug: AJS_SLUG,      // eslint-disable-line no-undef
     debug: true,
     mobifyGAID: 'UA-53825302-1',
@@ -30,7 +30,7 @@ analyticManager.init({
 
 const configureStore = (initialState) => {
     const middlewares = [
-        analytics(({type, payload}, state) => analyticManager.distribute(type, payload, state)),
+        analytics(({type, payload}, state) => analyticsManager.distribute(type, payload, state)),
         thunk
     ]
 
