@@ -7,17 +7,18 @@ import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as selectors from '../selectors'
 import {stripEvent} from '../../../utils/utils'
-import {isModalOpen} from '../../../store/selectors'
+import {isModalOpen} from 'progressive-web-sdk/dist/store/modals/selectors'
+import {getProductThumbnail, getProductTitle, getProductPrice} from '../../../store/products/selectors'
 import * as productDetailsActions from '../actions'
 import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from '../constants'
-import {closeModal} from '../../../store/modals/actions'
+import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import Icon from 'progressive-web-sdk/dist/components/icon'
 import ProductItem from '../../../components/product-item'
 import Sheet from 'progressive-web-sdk/dist/components/sheet'
 
-const ProductDetailsItemAddedModal = ({open, onDismiss, quantity, title, price, productImage, onGoToCheckout}) => (
+const ProductDetailsItemAddedModal = ({open, onDismiss, quantity, title, price, thumbnail, onGoToCheckout}) => (
     <Sheet open={open} onDismiss={onDismiss} effect="slide-bottom" className="t-product-details__item-added-modal" coverage="50%" shrinkToContent>
         {/* Modal header */}
         <div className="u-flex-none u-border-bottom">
@@ -34,16 +35,16 @@ const ProductDetailsItemAddedModal = ({open, onDismiss, quantity, title, price, 
             </div>
         </div>
 
-        <div className="u-flexbox u-column u-flex u-padding-md">
+        <div className="u-flexbox u-direction-column u-flex u-padding-md">
             {/* Modal product information */}
             <div className="u-flex u-margin-bottom-md">
                 <ProductItem customWidth="20%"
-                    title={<h2 className="u-h5 u-text-font-family u-text-semi-bold">{title}</h2>}
-                    image={<img role="presentation" src={productImage} alt="" width="60px" />}
+                    title={<h2 className="u-h5 u-text-family u-text-weight-medium">{title}</h2>}
+                    image={<img role="presentation" src={thumbnail.src} alt={thumbnail.alt} width="60px" />}
                 >
                     <div className="u-flexbox u-justify-between u-padding-top-sm">
                         <p>Qty: {quantity}</p>
-                        <p className="u-text-bold">{price}</p>
+                        <p className="u-text-weight-bold">{price}</p>
                     </div>
                 </ProductItem>
             </div>
@@ -67,19 +68,22 @@ const ProductDetailsItemAddedModal = ({open, onDismiss, quantity, title, price, 
 ProductDetailsItemAddedModal.propTypes = {
     open: PropTypes.bool,
     price: PropTypes.string,
-    productImage: PropTypes.string,
     quantity: PropTypes.number,
+    thumbnail: PropTypes.shape({
+        src: PropTypes.string,
+        alt: PropTypes.string
+    }),
     title: PropTypes.string,
     onDismiss: PropTypes.func,
     onGoToCheckout: PropTypes.func,
 }
 
 const mapStateToProps = createPropsSelector({
-    productImage: selectors.getFirstProductImage,
+    thumbnail: getProductThumbnail,
     open: isModalOpen(PRODUCT_DETAILS_ITEM_ADDED_MODAL),
     quantity: selectors.getItemQuantity,
-    title: selectors.getProductTitle,
-    price: selectors.getProductPrice
+    title: getProductTitle,
+    price: getProductPrice
 })
 
 const mapDispatchToProps = {

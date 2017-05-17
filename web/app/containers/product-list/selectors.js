@@ -5,80 +5,48 @@
 import Immutable from 'immutable'
 import {createSelector} from 'reselect'
 import {createGetSelector, createHasSelector} from 'reselect-immutable-helpers'
-import {getUi, getCategories, getProducts} from '../../store/selectors'
-import * as appSelectors from '../app/selectors'
-import {PLACEHOLDER} from '../app/constants'
+import {getUi, getCategories} from '../../store/selectors'
+import {getSelectedCategory, getCategoryProducts} from '../../store/categories/selectors'
+import {getCurrentPathKey} from '../app/selectors'
 import {byFilters} from '../../utils/filter-utils'
 import {sortLib} from '../../utils/sort-utils'
 
-const PLACEHOLDER_URLS = Immutable.List(new Array(5).fill(PLACEHOLDER))
-
 export const getProductList = createSelector(getUi, ({productList}) => productList)
 
-export const getSelectedCategory = createGetSelector(
-    getCategories,
-    appSelectors.getCurrentPathKey,
+export const getCurrentProductList = createGetSelector(
+    getProductList,
+    getCurrentPathKey,
     Immutable.Map()
 )
 
+export const getCurrentSort = createGetSelector(getCurrentProductList, 'sort')
+
 export const getProductListContentsLoaded = createHasSelector(
     getCategories,
-    appSelectors.getCurrentPathKey
-)
-
-export const getProductPaths = createGetSelector(getSelectedCategory, 'products', PLACEHOLDER_URLS)
-export const getNumItems = createGetSelector(getSelectedCategory, 'itemCount')
-export const getHasProducts = createSelector(getNumItems, (count) => count > 0)
-export const getProductListTitle = createGetSelector(getSelectedCategory, 'title')
-export const getSearchResultTerm = createGetSelector(getSelectedCategory, 'searchTerm')
-export const getNoResultsText = createGetSelector(getSelectedCategory, 'noResultsText')
-export const getProductListProducts = createSelector(
-    getProducts,
-    getProductPaths,
-    (products, productUrls) => productUrls.map((path) => products.get(path))
+    getCurrentPathKey
 )
 
 export const getFilters = createGetSelector(getSelectedCategory, 'filters', Immutable.List())
 export const getActiveFilters = createSelector(
     getFilters,
-    (filters) => {
-        let activeFilters = Immutable.List()
-
-        filters.forEach((filter) => {
-            activeFilters = activeFilters.concat(
-                filter.get('kinds').filter((kind) => kind.get('active'))
-            )
-        })
-
-        return activeFilters
-    }
+    (filters) => (
+        filters.reduce((activeFilters, filter) => activeFilters.concat(
+            filter.get('kinds').filter((kind) => kind.get('active'))
+        ), Immutable.List())
+    )
 )
 export const getFilteredProductListProducts = createSelector(
-    getProductListProducts,
+    getCategoryProducts,
     getActiveFilters,
     (products, filters) => {
-        const filteredProducts = products.toJS().filter(byFilters(filters.toJS()))
-        return Immutable.List(filteredProducts)
+        return filters.size > 0 ? products.filter(byFilters(filters.toJS())) : products
     }
 )
-
-export const getSort = createGetSelector(getSelectedCategory, 'sort', Immutable.Map())
 
 export const getFilteredAndSortedListProducts = createSelector(
     getFilteredProductListProducts,
-    getSort,
+    getCurrentSort,
     (products, sort) => {
-        const arrayOfProducts = products.toJS()
-        const options = sort.get('options')
-
-        if (arrayOfProducts < 1) {
-            return []
-        }
-
-        if (!options) {
-            return arrayOfProducts
-        }
-        const activeSort = options.find((option) => option.get('selected'))
-        return arrayOfProducts.sort(sortLib[activeSort.get('value')])
+        return sort ? products.sort(sortLib[sort]) : products
     }
 )

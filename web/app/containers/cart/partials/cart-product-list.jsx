@@ -4,13 +4,11 @@
 
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {getHighResImage} from '../../../utils/utils'
 
 import {createPropsSelector} from 'reselect-immutable-helpers'
-import {updateItemQuantity} from '../../../store/cart/actions'
-import {openRemoveItemModal, saveToWishlist} from '../actions'
+import {openRemoveItemModal, saveToWishlist, updateItem} from '../actions'
 import {getCartItems, getCartSummaryCount} from '../../../store/cart/selectors'
-import {getIsLoggedIn} from '../../app/selectors'
+import {getIsLoggedIn} from '../../../store/user/selectors'
 
 import {noop} from 'progressive-web-sdk/dist/utils/utils'
 
@@ -58,45 +56,44 @@ class CartProductItem extends React.Component {
     }
 
     changeQuantity(newQty) {
-        this.props.onQtyChange(this.props.item_id, newQty)
+        this.props.onQtyChange(this.props.cartItemId, newQty)
     }
 
     removeItem() {
-        this.props.openRemoveItemModal(this.props.item_id)
+        this.props.openRemoveItemModal(this.props.cartItemId)
     }
 
     saveForLater() {
-        this.props.onSaveLater(this.props.productId, this.props.item_id, this.props.product_url)
+        this.props.onSaveLater(this.props.productId, this.props.cartItemId, this.props.product.href)
     }
 
     render() {
         const {
-            configure_url,
-            product_name,
-            product_image,
-            item_id,
-            qty,
-            product_price
+            cartItemId,
+            configureUrl,
+            product,
+            quantity,
+            itemPrice,
+            linePrice
         } = this.props
-        const imageSrc = getHighResImage(product_image.src)
 
         return (
             <ProductItem customWidth="40%"
                 className={productItemClassNames}
-                title={<h2 className="u-h5 u-text-font-family u-text-semi-bold">{product_name}</h2>}
-                image={<ProductImage {...product_image} src={imageSrc} />}
+                title={<h2 className="u-h5 u-text-family u-text-weight-semi-bold">{product.title}</h2>}
+                image={<ProductImage {...product.thumbnail} />}
                 >
                 <p className="u-color-neutral-50">Color: Maroon</p>
                 <p className="u-margin-bottom-sm u-color-neutral-50">Size: XL</p>
 
                 <FieldRow className="u-align-bottom">
-                    <Field label="Quantity" idFor={`quantity-${item_id}`}>
+                    <Field label="Quantity" idFor={`quantity-${cartItemId}`}>
                         <Stepper
                             className="pw--simple t-cart__product-stepper"
-                            idForLabel={`quantity-${item_id}`}
+                            idForLabel={`quantity-${cartItemId}`}
                             incrementIcon="plus"
                             decrementIcon="minus"
-                            initialValue={qty}
+                            initialValue={quantity}
                             minimumValue={1}
                             onChange={this.changeQuantity}
                             />
@@ -104,23 +101,23 @@ class CartProductItem extends React.Component {
 
                     <Field>
                         <div className="u-text-align-end u-flex">
-                            <div className="u-h5 u-color-accent u-text-bold">{product_price}</div>
-                            <div className="u-text-quiet"><em>Was $29.99</em></div>
+                            <div className="u-h5 u-color-accent u-text-weight-bold">{linePrice}</div>
+                            <div className="u-text-quiet"><em>{itemPrice} each</em></div>
                         </div>
                     </Field>
                 </FieldRow>
 
                 <div className="u-flexbox">
                     <Button
-                        className="u-text-small u-color-brand u-flex-none u-text-letter-spacing-normal"
+                        className="u-text-size-small u-color-brand u-flex-none u-text-letter-spacing-normal"
                         innerClassName="c--no-min-width u-padding-start-0 u-padding-bottom-0"
-                        href={configure_url}
+                        href={configureUrl}
                         >
                         Edit
                     </Button>
 
                     <Button
-                        className="u-text-small u-color-brand u-padding-start-0 u-padding-end-0 u-text-letter-spacing-normal"
+                        className="u-text-size-small u-color-brand u-padding-start-0 u-padding-end-0 u-text-letter-spacing-normal"
                         innerClassName="u-padding-bottom-0 u-padding-start-0"
                         onClick={this.saveForLater}
                         >
@@ -128,7 +125,7 @@ class CartProductItem extends React.Component {
                     </Button>
 
                     <Button
-                        className="u-text-small u-color-brand u-text-letter-spacing-normal qa-cart__remove-item"
+                        className="u-text-size-small u-color-brand u-text-letter-spacing-normal qa-cart__remove-item"
                         innerClassName="u-padding-end-0 u-padding-bottom-0 u-padding-start-0"
                         onClick={this.removeItem}
                         >
@@ -145,15 +142,15 @@ CartProductItem.defaultProps = {
 }
 
 CartProductItem.propTypes = {
-    configure_url: PropTypes.string,
-    item_id: PropTypes.string,
+    cartItemId: PropTypes.string, /* CartItem.id */
+    configureUrl: PropTypes.string,
+    href: PropTypes.string,
+    itemPrice: PropTypes.string,
+    linePrice: PropTypes.string,
     openRemoveItemModal: PropTypes.func,
+    product: PropTypes.object, /* Product */
     productId: PropTypes.string,
-    product_image: PropTypes.object,
-    product_name: PropTypes.string,
-    product_price: PropTypes.string,
-    product_url: PropTypes.string,
-    qty: PropTypes.number,
+    quantity: PropTypes.number,
     onQtyChange: PropTypes.func,
     onSaveLater: PropTypes.func
 }
@@ -166,7 +163,7 @@ const CartProductList = ({items, isLoggedIn, summaryCount, onSaveLater, onUpdate
             <div className="t-cart__product-list-title u-padding-top-md u-padding-bottom-md">
                 <div className="u-flexbox u-align-center">
                     <h1 className="u-flex u-text-uppercase">
-                        Cart {summaryCount > 0 && <span className="u-text-lighter">({summaryCount} Items)</span>}
+                        Cart {summaryCount > 0 && <span className="u-text-weight-light">({summaryCount} Items)</span>}
                     </h1>
                     {!isLoggedIn &&
                         <Button className="u-flex-none u-color-brand u-text-letter-spacing-normal" onClick={onOpenSignIn}>
@@ -179,7 +176,14 @@ const CartProductList = ({items, isLoggedIn, summaryCount, onSaveLater, onUpdate
 
             <List className="u-bg-color-neutral-00 u-border-light-top u-border-light-bottom">
                 {isCartEmpty && <ProductSkeleton />}
-                {items.map((item) => (<CartProductItem {...item} key={item.item_id} onQtyChange={onUpdateItemQuantity} onSaveLater={onSaveLater} openRemoveItemModal={openRemoveItemModal} />))}
+                {items.map((item) => (
+                    <CartProductItem {...item}
+                        cartItemId={item.id}
+                        key={item.id}
+                        onQtyChange={onUpdateItemQuantity}
+                        onSaveLater={onSaveLater}
+                        openRemoveItemModal={openRemoveItemModal}
+                    />))}
             </List>
         </div>
     )
@@ -202,9 +206,12 @@ const mapStateToProps = createPropsSelector({
 })
 
 const mapDispatchToProps = {
-    onUpdateItemQuantity: updateItemQuantity,
+    onUpdateItemQuantity: updateItem,
     onSaveLater: saveToWishlist,
     openRemoveItemModal
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CartProductList)
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(CartProductList)

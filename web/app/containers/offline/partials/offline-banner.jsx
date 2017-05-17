@@ -7,7 +7,7 @@ import {connect} from 'react-redux'
 
 import IconLabelButton from '../../../components/icon-label-button'
 import {OFFLINE_MODAL} from '../constants'
-import {openModal} from '../../../store/modals/actions'
+import {openModal} from 'progressive-web-sdk/dist/store/modals/actions'
 
 /**
  * A banner displayed at the top of the page to let users know they are offline.

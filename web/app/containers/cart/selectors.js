@@ -9,4 +9,4 @@ import {getUi} from '../../store/selectors'
 export const getCart = createSelector(getUi, ({cart}) => cart)
 export const getRemoveItemID = createGetSelector(getCart, 'removeItemId')
 export const getIsWishlistAddComplete = createGetSelector(getCart, 'isWishlistAddComplete')
-export const getTaxInitiation = createGetSelector(getCart, 'initiateTaxRequest')
+export const isTaxRequestPending = createGetSelector(getCart, 'taxRequestPending')

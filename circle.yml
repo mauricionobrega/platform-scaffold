@@ -18,12 +18,12 @@ test:
             pwd: web
         - npm test -- --runInBand:
             pwd: web
-        # Calculate the Lighthouse score 
+        # Calculate the Lighthouse score
         - npm run test:pwa-ci:
             pwd: web
         # Run end-to-end tests
-        - npm run smoke-test:
-           pwd: web
+        # - npm run smoke-test:
+        #    pwd: web
     post:
        - cp -R lighthouse/* $CIRCLE_ARTIFACTS:
            pwd: web

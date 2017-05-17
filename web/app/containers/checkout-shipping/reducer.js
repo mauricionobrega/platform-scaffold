@@ -5,12 +5,12 @@
 import {handleActions} from 'redux-actions'
 import Immutable from 'immutable'
 import {mergePayload} from '../../utils/reducer-utils'
-import {receiveData, showCompanyAndApt, setShowAddNewAddress} from './actions'
+import {showCompanyAndApt, setShowAddNewAddress, setCustomerEmailRecognized} from './actions'
 
 export default handleActions({
-    [receiveData]: mergePayload,
+    [setCustomerEmailRecognized]: mergePayload,
     [setShowAddNewAddress]: mergePayload,
     [showCompanyAndApt]: (state) => {
-        return state.merge({isCompanyOrAptShown: true})
+        return state.set('isCompanyOrAptShown', true)
     }
 }, Immutable.Map())

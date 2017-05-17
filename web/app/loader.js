@@ -1,6 +1,6 @@
 /* global NATIVE_WEBPACK_ASTRO_VERSION, MESSAGING_SITE_ID, MESSAGING_ENABLED */
 import {getAssetUrl, loadAsset, initCacheManifest} from 'progressive-web-sdk/dist/asset-utils'
-import {isSamsungBrowser} from 'progressive-web-sdk/dist/utils/utils'
+import {isSamsungBrowser, isFirefoxBrowser} from 'progressive-web-sdk/dist/utils/utils'
 import {displayPreloader} from 'progressive-web-sdk/dist/preloader'
 import cacheHashManifest from '../tmp/loader-cache-hash-manifest.json'
 import {isRunningInAstro} from './utils/astro-integration'
@@ -21,6 +21,8 @@ import preloadJS from 'raw-loader!./preloader/preload.js' // eslint-disable-line
 const isReactRoute = () => {
     return ReactRegexes.some((regex) => regex.test(window.location.pathname))
 }
+
+window.Progressive = {}
 
 initCacheManifest(cacheHashManifest)
 
@@ -151,7 +153,7 @@ const attemptToInitializeApp = () => {
         }
     }
 
-    if (isReactRoute() && !isSamsungBrowser(window.navigator.userAgent)) {
+    if (isReactRoute() && !isSamsungBrowser(window.navigator.userAgent) && !isFirefoxBrowser(window.navigator.userAgent)) {
         if (!isRunningInAstro) {
             displayPreloader(preloadCSS, preloadHTML, preloadJS)
         }

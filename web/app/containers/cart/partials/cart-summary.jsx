@@ -7,8 +7,9 @@ import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as cartSelectors from '../../../store/cart/selectors'
 import {CART_ESTIMATE_SHIPPING_MODAL} from '../constants'
-import {openModal} from '../../../store/modals/actions'
+import {openModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {getSelectedShippingRate, getSelectedShippingLabel, getPostcode} from '../../../store/checkout/shipping/selectors'
+import {getCheckoutShippingURL} from '../../app/selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import CartPromoForm from './cart-promo-form'
@@ -16,7 +17,7 @@ import Icon from 'progressive-web-sdk/dist/components/icon'
 import {Ledger, LedgerRow} from 'progressive-web-sdk/dist/components/ledger'
 import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/accordion'
 
-const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, shippingRate, shippingLabel, zipCode, taxAmount, onCalculateClick}) => {
+const CartSummary = ({summaryCount, subtotal, orderTotal, shippingRate, shippingLabel, onCalculateClick, zipCode, taxAmount, checkoutShippingURL}) => {
     const calculateButton = (
         <Button innerClassName="u-padding-end-0 u-color-brand u-text-letter-spacing-normal" onClick={onCalculateClick}>
             Calculate <Icon name="chevron-right" />
@@ -48,7 +49,7 @@ const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, shippingRa
                 <Ledger className="u-border-light-top">
                     <LedgerRow
                         label={`Subtotal (${summaryCount} items)`}
-                        value={subtotalExclTax}
+                        value={subtotal}
                     />
 
                     {/* <LedgerRow
@@ -83,14 +84,14 @@ const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, shippingRa
                     <LedgerRow
                         label="Total"
                         isTotal={true}
-                        value={subtotalInclTax}
+                        value={orderTotal}
                     />
                 </Ledger>
 
                 <div className="u-padding-end-md u-padding-bottom-lg u-padding-start-md">
                     <Button
                         className="c--primary u-flex-none u-width-full u-text-uppercase qa-cart__checkout"
-                        href="/checkout/">
+                        href={checkoutShippingURL}>
                         <Icon name="lock" />
                         Proceed To Checkout
                     </Button>
@@ -102,10 +103,11 @@ const CartSummary = ({summaryCount, subtotalExclTax, subtotalInclTax, shippingRa
 
 
 CartSummary.propTypes = {
+    checkoutShippingURL: PropTypes.string,
+    orderTotal: PropTypes.string,
     shippingLabel: PropTypes.string,
     shippingRate: PropTypes.string,
-    subtotalExclTax: PropTypes.string,
-    subtotalInclTax: PropTypes.string,
+    subtotal: PropTypes.string,
     summaryCount: PropTypes.number,
     taxAmount: PropTypes.string,
     zipCode: PropTypes.string,
@@ -113,11 +115,12 @@ CartSummary.propTypes = {
 }
 
 const mapStateToProps = createPropsSelector({
+    checkoutShippingURL: getCheckoutShippingURL,
+    subtotal: cartSelectors.getSubtotal,
+    orderTotal: cartSelectors.getOrderTotal,
     shippingRate: getSelectedShippingRate,
     shippingLabel: getSelectedShippingLabel,
     zipCode: getPostcode,
-    subtotalExclTax: cartSelectors.getSubtotalExcludingTax,
-    subtotalInclTax: cartSelectors.getSubtotalIncludingTax,
     taxAmount: cartSelectors.getTaxAmount,
     summaryCount: cartSelectors.getCartSummaryCount,
 })
