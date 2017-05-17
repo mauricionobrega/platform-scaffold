@@ -12,7 +12,7 @@ import {showCompanyAndApt} from '../actions'
 import {getIsCompanyOrAptShown} from '../selectors'
 import {fetchShippingMethodsEstimate} from '../../../integration-manager/checkout/commands'
 import {SHIPPING_FORM_NAME} from '../../../store/form/constants'
-import {getCountries, getAvailableRegions} from '../../../store/checkout/locations/selectors'
+import {getCountries, getAvailableRegions} from '../../../store/checkout/selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
