@@ -2,31 +2,7 @@
 // ===
 
 @import 'animations/background';
+@import 'animations/fade';
+@import 'animations/inline-loader-pulse';
 @import 'animations/slide';
 @import 'animations/visibility';
-
-@keyframes inlineLoaderPulseAnimation {
-    40% {
-        opacity: 1;
-
-        transform: scale(1);
-    }
-
-    0%,
-    80%,
-    100% {
-        opacity: 0;
-
-        transform: scale(0);
-    }
-}
-
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}

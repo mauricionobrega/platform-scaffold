@@ -71,7 +71,7 @@
     background: $neutral-00;
 
     &:not(.pw--is-empty) {
-        animation: slide-up 0.3s ease-in 1 reverse, fadeIn 0.3s ease-out 1 forwards;
+        animation: slide-up 0.3s ease-in 1 reverse, fade-in 0.3s ease-out 1 forwards;
     }
 }
 
