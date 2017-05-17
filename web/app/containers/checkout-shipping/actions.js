@@ -12,7 +12,7 @@ import {receiveCheckoutData} from '../../integration-manager/checkout/results'
 
 import {
     submitShipping as submitShippingCommand,
-    checkCustomerEmail as checkCustomerEmailCommand
+    isEmailAvailable as isEmailAvailableCommand
 } from '../../integration-manager/checkout/commands'
 import {login} from '../../integration-manager/login/commands'
 
@@ -83,9 +83,10 @@ export const submitShipping = () => (dispatch, getState) => {
         })
 }
 
-export const checkCustomerEmail = () => (dispatch, getState) => {
-    const {username} = getShippingFormValues(getState())
-    return dispatch(checkCustomerEmailCommand(username))
+export const isEmailAvailable = () => (dispatch, getState) => {
+    const formValues = getShippingFormValues(getState())
+
+    return dispatch(isEmailAvailableCommand(formValues.username))
         .then((emailAvailable) => dispatch(
             emailAvailable
                 ? onShippingEmailAvailable()

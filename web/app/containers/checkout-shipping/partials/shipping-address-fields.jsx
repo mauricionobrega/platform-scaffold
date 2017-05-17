@@ -9,9 +9,9 @@ import * as ReduxForm from 'redux-form'
 import {normalizePhone} from '../../../utils/normalize-utils'
 
 import {showCompanyAndApt} from '../actions'
-import {SHIPPING_FORM_NAME} from '../constants'
 import {getIsCompanyOrAptShown} from '../selectors'
 import {fetchShippingMethodsEstimate} from '../../../integration-manager/checkout/commands'
+import {SHIPPING_FORM_NAME} from '../../../store/form/constants'
 import {getCountries, getAvailableRegions} from '../../../store/checkout/locations/selectors'
 
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -47,8 +47,7 @@ const ShippingAddressFields = ({
                 <ReduxForm.Field
                     component={Field}
                     name="name"
-                    label="Full
-                    Name"
+                    label="Full Name"
                 >
                     <input type="text" noValidate />
                 </ReduxForm.Field>

@@ -11,6 +11,7 @@ import {submitPayment as submitPaymentCommand} from '../../integration-manager/c
 jest.mock('progressive-web-sdk/dist/routing')
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 
+import {PAYMENT_FORM_NAME} from '../../store/form/constants'
 
 test('submitPayment calls submitPayment command', () => {
     const mockDispatch = jest.fn()
@@ -20,7 +21,7 @@ test('submitPayment calls submitPayment command', () => {
             email: 'test@email.com'
         }),
         form: {
-            paymentForm: {
+            [PAYMENT_FORM_NAME]: {
                 values: {
                     billing_same_as_shipping: false,
                     name: 'Test Name'
