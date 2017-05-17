@@ -7,7 +7,6 @@ All the `npm` scripts listed below must be run from the `web` directory inside y
 Here's how to get a list of all the available npm scripts in the Progressive Web Scaffold:
 
 ```
-cd PROJECT-DIRECTORY/web
 npm run
 ```
 
@@ -65,7 +64,7 @@ To add the certificate to the Windows Trusted Root Certificate Store:
 7.  Click OK to close the Add or Remove Snap-Ins dialog.
 8.  Expand the Certificates node and right-click on the Trusted Root Certification Authorities node.
 9.  Select All Tasks → Import.
-10.  Import the `localhost.p7b` file in `PROJECT-DIRECTORY\web\dev-server\`. *Leave all other settings as is while importing.*
+10.  Import the `localhost.p7b` file in `web\dev-server\`. *Leave all other settings as is while importing.*
 11. After clicking Finish, you should get an alert saying "The import was successful."
 12. Exit the window. *You do not need to save the console settings, so click No when prompted.*
 13. Close your browser.
