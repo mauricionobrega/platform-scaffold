@@ -14,7 +14,7 @@ const SignInPanel = () => (
             </p>
         </div>
 
-        <div className="u-padding-start-md u-padding-end-md u-padding-bottom-lg u-box-shadow-inset">
+        <div className="u-padding-start-md u-padding-end-md u-padding-bottom-lg">
             <SignInForm />
         </div>
     </div>

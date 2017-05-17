@@ -26,8 +26,9 @@ export const fetchPageData = (url) => (dispatch) => (
         .then(jqueryResponse)
         .then((res) => {
             const [$, $response] = res
-            dispatch(setLoggedIn(parseLoginStatus($response)))
-            dispatch(receiveNavigationData(parseNavigation($, $response)))
+            const isLoggedIn = parseLoginStatus($response)
+            dispatch(setLoggedIn(isLoggedIn))
+            dispatch(receiveNavigationData(parseNavigation($, $response, isLoggedIn)))
             return res
         })
         .catch((error) => {
