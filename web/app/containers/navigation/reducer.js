@@ -6,7 +6,7 @@ import {handleActions} from 'redux-actions'
 import Immutable from 'immutable'
 import {receiveNavigationData, setLoggedIn} from '../../integration-manager/results'
 import {mergePayload} from '../../utils/reducer-utils'
-import {receiveData, setNavigationPath} from './actions'
+import {setNavigationPath} from './actions'
 import {SIGN_IN_LINK_TEXT, SIGN_OUT_LINK_TEXT, GUEST_NAV_ITEM_TYPE, SIGNED_IN_NAV_ITEM_TYPE} from './constants'
 
 const LOGGED_IN_NAV = {
@@ -26,7 +26,6 @@ export const initialState = Immutable.fromJS({
 
 export const reducer = handleActions({
     [receiveNavigationData]: mergePayload,
-    [receiveData]: mergePayload,
     [setNavigationPath]: mergePayload,
     [setLoggedIn]: (state, {payload: {isLoggedIn}}) => {
         const accountNodePath = ['root', 'children', 0]
