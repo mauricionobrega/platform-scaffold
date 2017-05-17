@@ -1,0 +1,40 @@
+// Style override
+// ===
+//
+// Allows overriding existing styles with extreme specificity while keeping
+// source code clean and readable. Only use this for overriding 3rd-party CSS
+// that cannot be changed. Does not override !important or inline styles; those
+// must be dealt with separately.
+
+
+// Configurable variables
+// ---
+
+// The default selector used to build the override. Since it’s a special
+// character in CSS, the `!` must be escaped. Eg. <div id="!">.
+
+$style-override-selector: '#\\!' !default;
+
+
+// Style override
+// ---
+//
+// @param $degree [Number]: The “force” of the override. Effectively the number
+// of id-level selectors you need to override.
+// @param $selector [String]: An id selector that matches the
+// $style-override-selector tag.
+
+@mixin style-override($degree: 1, $selector: $style-override-selector) {
+    $selector-chain: '';
+
+    // Build an id selector by chaining the same id onto itself once more than
+    // the specified degree. So if degree: 4, we get #id#id#id#id#id.
+
+    @for $i from 1 through $degree + 1 {
+        $selector-chain: $selector-chain + $selector;
+    }
+
+    @at-root #{$selector-chain} {
+        @content;
+    }
+}

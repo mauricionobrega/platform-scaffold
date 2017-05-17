@@ -1,18 +1,20 @@
 // Utilities
 // ===
 
-@import 'utilities/border';
-@import 'utilities/box-shadow';
-@import 'utilities/card';
-@import 'utilities/color';
-@import 'utilities/dimensions';
-@import 'utilities/display';
-@import 'utilities/flexbox';
-@import 'utilities/heading';
-@import 'utilities/layout';
-@import 'utilities/margin';
-@import 'utilities/padding';
-@import 'utilities/text-content';
-@import 'utilities/text';
-@import 'utilities/visibility';
-@import 'utilities/z-index';
+@include style-override(3, $selector: "#app") {
+    @import 'utilities/border';
+    @import 'utilities/box-shadow';
+    @import 'utilities/card';
+    @import 'utilities/color';
+    @import 'utilities/dimensions';
+    @import 'utilities/display';
+    @import 'utilities/flexbox';
+    @import 'utilities/heading';
+    @import 'utilities/layout';
+    @import 'utilities/margin';
+    @import 'utilities/padding';
+    @import 'utilities/text-content';
+    @import 'utilities/text';
+    @import 'utilities/visibility';
+    @import 'utilities/z-index';
+}
