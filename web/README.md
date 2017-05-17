@@ -205,7 +205,6 @@ For CI builds, this command builds and serves the bundle for testing with Previe
 npm run test:pwa-ci
 ```
 
-
 ## Developing against `develop` of the Progressive Web SDK
 
 If you are wanting to improve or add a library/component in the [Progressive Web SDK](https://github.com/mobify/progressive-web-sdk),
