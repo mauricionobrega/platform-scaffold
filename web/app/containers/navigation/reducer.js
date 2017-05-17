@@ -7,17 +7,7 @@ import Immutable from 'immutable'
 import {receiveNavigationData, setLoggedIn} from '../../integration-manager/results'
 import {mergePayload} from '../../utils/reducer-utils'
 import {setNavigationPath} from './actions'
-import {SIGN_IN_LINK_TEXT, SIGN_OUT_LINK_TEXT, GUEST_NAV_ITEM_TYPE, SIGNED_IN_NAV_ITEM_TYPE} from './constants'
-
-const LOGGED_IN_NAV = {
-    type: SIGNED_IN_NAV_ITEM_TYPE,
-    title: SIGN_OUT_LINK_TEXT
-}
-
-const GUEST_NAV = {
-    type: GUEST_NAV_ITEM_TYPE,
-    title: SIGN_IN_LINK_TEXT
-}
+import {LOGGED_IN_NAV, GUEST_NAV} from './constants'
 
 export const initialState = Immutable.fromJS({
     path: undefined,

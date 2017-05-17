@@ -2,18 +2,16 @@
 /* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
-import {SIGNED_IN_NAV_ITEM_TYPE, GUEST_NAV_ITEM_TYPE} from '../../../containers/navigation/constants'
+import {LOGGED_IN_NAV, GUEST_NAV} from '../../../containers/navigation/constants'
 
 // We hard-code this since it is only parseable from non-checkout pages.
 const SIGN_IN_HREF = '/customer/account/login/'
 
 export const parseNavigation = ($, $content, isLoggedIn) => {
     const root = {title: 'Root', path: '/', children: []}
-    const $signIn = $content.find('.header.links li.authorization-link a').first()
 
     root.children.push({
-        title: $signIn.text().trim(),
-        type: isLoggedIn ? SIGNED_IN_NAV_ITEM_TYPE : GUEST_NAV_ITEM_TYPE,
+        ...(isLoggedIn ? LOGGED_IN_NAV : GUEST_NAV),
         // Long story. The nav system ignores the `path` property when the user is
         // logged in. Until we rework this, we always send the login path so the
         // reducer in the `containers/navigation/` area can just flip the account
