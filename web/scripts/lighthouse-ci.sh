@@ -2,7 +2,7 @@
 # Run the Lighthouse test against the dev build with continuous integration.
 
 # Location to save the generated HTML report.
-OUTPUT_PATH=./lighthouse/audit-local.html
+OUTPUT_PATH=./lighthouse/audit-local
 # See package.json's siteUrl key.
 URL=${1-$npm_package_siteUrl}
 # Append Mobify Hash to the URL to force the Mobify Tag to load the local bundle.
@@ -33,8 +33,9 @@ npm run test:server &
 sleep 5
 lighthouse \
 	--chrome-flags='--user-agent="MobifyPreview" --allow-insecure-localhost' \
-	--output=html \
-	--output-path=${OUTPUT_PATH} \
+	--output json \
+	--output html \
+	--output-path ${OUTPUT_PATH} \
 	--disable-device-emulation=true \
 	"${URL}${PREVIEW}"
 
