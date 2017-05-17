@@ -11,22 +11,23 @@ import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import Icon from 'progressive-web-sdk/dist/components/icon'
 
-// Merlins Potions Nearby Widget Config
-import merlinsPotionsNearbyConfig from '../../../config/merlins-potions-nearby-config.json'
-
-const $merlinsPotionsNearbyWidgetSelector = 'js-merlins-potions-nearby-widget'
+// Nearby Widget Config
+import NearbyConfig from '../../../config/nearby-config.json'
+import {LOCATION_URL} from '../../app/constants'
 
 /**
- * Merlins Donde Nearby Widget
+ * Donde Nearby Widget
  */
+
+const NEARBY_WIDGET_SELECTOR = 'js-nearby-widget-script'
 
 class ProductNearestStores extends React.Component {
 
     componentWillMount() {
         // Nearby widget async script
-        const merlinsPotionsAsync = !function(a) { // eslint-disable-line wrap-iife
+        const AsyncScript = !function(a) { // eslint-disable-line wrap-iife
             const b = document.createElement('script')
-            b.setAttribute('id', $merlinsPotionsNearbyWidgetSelector)
+            b.setAttribute('id', NEARBY_WIDGET_SELECTOR)
             b.type = 'text/javascript'
             b.src = 'https://dtopnrgu570sp.cloudfront.net/nearby-widget/nearby.min.js'
             b.setAttribute('async', true)
@@ -40,17 +41,17 @@ class ProductNearestStores extends React.Component {
             }
             document.head.appendChild(b)
         }(() => {
-            window.DondeNearby.load({...merlinsPotionsNearbyConfig})
+            window.DondeNearby.load({...NearbyConfig})
         })
 
-        const merlinsPotionsScript = document.createElement('script')
-        merlinsPotionsScript.innerHTML = merlinsPotionsAsync
-        document.body.appendChild(merlinsPotionsScript)
+        const ScriptElement = document.createElement('script')
+        ScriptElement.innerHTML = AsyncScript
+        document.body.appendChild(ScriptElement)
     }
 
     componentWillUnmount() {
         // Remove nearby widget script if component unmount
-        const $script = document.getElementById($merlinsPotionsNearbyWidgetSelector)
+        const $script = document.getElementById(NEARBY_WIDGET_SELECTOR)
         $script.parentNode.removeChild($script)
     }
 
@@ -60,7 +61,7 @@ class ProductNearestStores extends React.Component {
             viewAllStoresText
         } = this.props
 
-        const closestLocations = merlinsPotionsNearbyConfig.configs
+        const closestLocations = NearbyConfig.configs
 
         return (
             <div className="t-product-details__nearest-stores">
@@ -93,7 +94,12 @@ class ProductNearestStores extends React.Component {
                         })}
                     </div>
 
-                    <Button className="c--tertiary u-text-uppercase u-width-full" href="https://locations.merlinspotions.com">{viewAllStoresText}</Button>
+                    <Button
+                        className="c--tertiary u-text-uppercase u-width-full"
+                        href={LOCATION_URL}
+                    >
+                        {viewAllStoresText}
+                    </Button>
                 </div>
             </div>
         )
