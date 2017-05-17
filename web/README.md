@@ -225,7 +225,7 @@ npm run analyze-build
 
 Note: This should make it's way into the Tutorial eventually, but this is here for now.
 
-### Running against Merlins:
+### Running against custom Merlin's connector:
 
 1. Open `app/main.jsx`.
 2. Import the Merlin's connector:
