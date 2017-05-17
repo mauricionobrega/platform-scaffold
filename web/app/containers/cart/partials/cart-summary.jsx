@@ -143,7 +143,6 @@ CartSummary.propTypes = {
     checkoutShippingURL: PropTypes.string,
     discountAmount: PropTypes.string,
     discountLabel: PropTypes.string,
-    grandTotal: PropTypes.string,
     orderTotal: PropTypes.string,
     removePromoCode: PropTypes.func,
     selectedShippingLabel: PropTypes.string,

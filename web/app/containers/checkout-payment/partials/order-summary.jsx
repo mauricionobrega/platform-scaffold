@@ -225,6 +225,9 @@ OrderSummary.propTypes = {
      */
     orderTotal: PropTypes.string,
 
+    /**
+     * Removes applied promo code
+     */
     removePromoCode: PropTypes.func,
 
     /**

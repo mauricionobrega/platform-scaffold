@@ -8,7 +8,8 @@ import {fetchShippingMethodsEstimate} from '../../integration-manager/checkout/c
 import {
     CART_ESTIMATE_SHIPPING_MODAL,
     CART_REMOVE_ITEM_MODAL,
-    CART_WISHLIST_MODAL
+    CART_WISHLIST_MODAL,
+    PROMO_ERROR
 } from './constants'
 import {
     removeFromCart,
@@ -124,10 +125,10 @@ export const submitPromoCode = () => (dispatch) => {
     dispatch(putPromoCode())
         .catch(({message}) => {
             let notificationMessage
-            if (message.includes('Unable to apply promo')) {
+            if (message.includes(PROMO_ERROR)) {
                 notificationMessage = message
             } else {
-                notificationMessage = 'Unable to apply promo'
+                notificationMessage = PROMO_ERROR
             }
             dispatch(addNotification({
                 content: notificationMessage,

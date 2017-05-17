@@ -20,7 +20,7 @@ import {fetchShippingMethodsEstimate} from '../checkout/commands'
 import {fetchPageData} from '../app/commands'
 import {parseCart, parseCartProducts, parseCartTotals} from './parser'
 import {parseCheckoutEntityID, extractMagentoJson} from '../../../utils/magento-utils'
-import {ADD_TO_WISHLIST_URL} from '../../../containers/cart/constants'
+import {ADD_TO_WISHLIST_URL, PROMO_ERROR} from '../../../containers/cart/constants'
 import {ESTIMATE_FORM_NAME} from '../../../store/form/constants'
 import {getProductById} from '../../../store/products/selectors'
 
@@ -218,7 +218,7 @@ export const putPromoCode = () => (dispatch, getState) => {
     return makeJsonEncodedRequest(putPromoUrl, {}, {method: 'PUT'})
         .then((response) => {
             if (response.status === 404) {
-                throw Error('Unable to apply promo, code is invalid')
+                throw Error(`${PROMO_ERROR}, code is invalid`)
             }
             return response.json()
         })

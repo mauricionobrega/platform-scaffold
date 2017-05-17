@@ -10,7 +10,7 @@ import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 
-import {submitPromoCode} from '../actions' // @TODO: Figure out where this is coming from
+import {submitPromoCode} from '../actions'
 
 const CartPromoForm = (props) => {
     const {handleSubmit, submitPromoCode, disabled, submitting} = props
