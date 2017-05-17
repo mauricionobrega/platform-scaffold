@@ -9,7 +9,7 @@ import * as parser from './parser'
 describe('the navigation parser', () => {
 
     const expectedRoot = {title: 'Root', path: '/', children: [
-        {title: 'Sign In', path: 'http://www.merlinspotions.com/customer/account/login/', type: 'AccountNavItem'},
+        {title: 'Sign In', path: '/customer/account/login/', type: 'AccountNavItem'},
         {title: 'Potions', isCategoryLink: true, path: 'http://www.merlinspotions.com/potions.html'},
         {title: 'Books', isCategoryLink: true, path: 'http://www.merlinspotions.com/books.html'},
         {title: 'Ingredients', isCategoryLink: true, path: 'http://www.merlinspotions.com/ingredients.html'},
