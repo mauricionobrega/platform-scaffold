@@ -33,7 +33,7 @@ export const fetchShippingMethodsEstimate = () => (dispatch) => {
         })
 }
 
-export const fetchCheckoutShippingData = () => (dispatch) => {
+export const initCheckoutShippingPage = () => (dispatch) => {
     return createBasket()
         .then((basket) => {
             return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}`, {method: 'GET'})
@@ -82,7 +82,7 @@ export const fetchCheckoutShippingData = () => (dispatch) => {
         })
 }
 
-export const fetchCheckoutPaymentData = () => (dispatch) => {
+export const initCheckoutPaymentPage = () => (dispatch) => {
     dispatch(populateLocationsData())
     return createBasket()
         .then((basket) => {
@@ -245,7 +245,8 @@ export const submitPayment = (formValues) => (dispatch, getState) => {
         })
 }
 
+export const updateShippingAndBilling = () => () => Promise.resolve()
 
 // We're not currently checking the customer's email on the sfcc site
 // Return true to prevent the welcome banner from showing
-export const checkCustomerEmail = () => () => Promise.resolve(true)
+export const isEmailAvailable = () => () => Promise.resolve(true)

@@ -18,7 +18,7 @@ import {withRouter} from 'progressive-web-sdk/dist/routing'
 import IconLabelButton from '../../components/icon-label-button'
 import {AccountNavItem, NavItemWithOnClick} from '../../components/nav-item'
 import * as selectors from './selectors'
-import {NAVIGATION_MODAL} from './constants'
+import {NAVIGATION_MODAL, SIGNED_IN_NAV_ITEM_TYPE, GUEST_NAV_ITEM_TYPE} from './constants'
 import {signOut} from '../app/actions'
 import {setNavigationPath} from './actions'
 import NavigationSocialIcons from './partials/navigation-social-icons'
@@ -42,9 +42,9 @@ const Navigation = (props) => {
      */
     const itemFactory = (type, props) => {
         switch (type) {
-            case 'AccountNavItem':
+            case GUEST_NAV_ITEM_TYPE:
                 return <AccountNavItem {...props} />
-            case 'AccountLogoutNavItem':
+            case SIGNED_IN_NAV_ITEM_TYPE:
                 return (
                     <NavItemWithOnClick
                         {...props}

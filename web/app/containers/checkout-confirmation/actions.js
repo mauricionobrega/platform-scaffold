@@ -9,7 +9,7 @@ import {openModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import * as shippingSelectors from '../../store/checkout/shipping/selectors'
 import * as formSelectors from '../../store/form/selectors'
 import {getEmailAddress} from '../../store/checkout/selectors'
-import {updatingShippingAndBilling} from '../../integration-manager/checkout/commands'
+import {updateShippingAndBilling} from '../../integration-manager/checkout/commands'
 import {registerUser} from '../../integration-manager/login/commands'
 
 export const hideRegistrationForm = createAction('Hiding Registration Form (Save Your Address Details)')
@@ -29,7 +29,7 @@ export const submitRegisterForm = () => {
         return dispatch(registerUser(firstname, lastname, email, password, password_confirmation))
             .then(() => {
                 dispatch(openModal(CHECKOUT_CONFIRMATION_MODAL))
-                dispatch(updatingShippingAndBilling())
+                dispatch(updateShippingAndBilling())
                 dispatch(hideRegistrationForm())
             })
             .catch((error) => {

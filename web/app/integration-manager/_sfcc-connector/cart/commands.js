@@ -13,14 +13,14 @@ export const getCart = () => (dispatch) => {
         .then((responseJSON) => dispatch(handleCartData(responseJSON)))
 }
 
-export const addToCart = (productID, qty) => (dispatch) => {
+export const addToCart = (productId, quantity) => (dispatch) => {
     return createBasket()
         .then((basket) => {
             const options = {
                 method: 'POST',
                 body: JSON.stringify([{
-                    product_id: productID,
-                    quantity: qty
+                    product_id: productId,
+                    quantity
                 }])
             }
             return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}/items`, options)
@@ -68,7 +68,7 @@ export const updateItemQuantity = (itemId, itemQuantity) => (dispatch) => {
         })
 }
 
-export const fetchCartPageData = () => (dispatch) => {
+export const initCartPage = () => (dispatch) => {
     return new Promise(() => {
         dispatch(populateLocationsData())
     })
@@ -94,8 +94,6 @@ export const addToWishlist = (productId) => (dispatch) => {
             }
             return makeSfccRequest(`${API_END_POINT_URL}/customers/${customerID}/product_lists`, requestOptions)
                 .then((response) => response.json())
-
-
         })
         .then(({id}) => {
             const requestOptions = {
@@ -116,3 +114,5 @@ export const addToWishlist = (productId) => (dispatch) => {
                 })
         })
 }
+
+export const fetchTaxEstimate = () => Promise.reject('Method not implemented')
