@@ -15,11 +15,8 @@ export const formatMerlinsMoney = (price, isDiscount) => {
     if (isNaN(val)) {
         val = 0
     }
-    if (typeof val === 'undefined') {
-        return ''
-    }
     if (isDiscount) {
-        return `-$${val.toFixed(2).replace('-', '')}`
+        return `-$${Math.abs(val).toFixed(2)}`
     }
     return `$${val.toFixed(2)}`
 }
