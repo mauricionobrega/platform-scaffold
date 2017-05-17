@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import * as ReduxForm from 'redux-form'
@@ -22,8 +26,7 @@ const ProductDetailsVariations = ({variations, onVariationChange}) => {
                     }}
                 >
                     <select name={id}>
-                        {/* Include an empty option to show by default */}
-                        <option />
+                        <option disabled value="">{label}</option>
                         {values.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
                     </select>
                 </ReduxForm.Field>

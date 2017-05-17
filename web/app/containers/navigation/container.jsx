@@ -14,7 +14,7 @@ import Sheet from 'progressive-web-sdk/dist/components/sheet'
 import IconLabelButton from '../../components/icon-label-button'
 import * as merlinsNavItem from '../../components/nav-item'
 import * as selectors from './selectors'
-import {NAVIGATION_MODAL} from './constants'
+import {NAVIGATION_MODAL, SIGNED_IN_NAV_ITEM_TYPE, GUEST_NAV_ITEM_TYPE} from './constants'
 import {signOut} from '../app/actions'
 import {isModalOpen} from 'progressive-web-sdk/dist/store/modals/selectors'
 import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
@@ -42,9 +42,9 @@ const Navigation = (props) => {
      */
     const itemFactory = (type, props) => {
         switch (type) {
-            case 'AccountNavItem':
+            case GUEST_NAV_ITEM_TYPE:
                 return <merlinsNavItem.AccountNavItem {...props} />
-            case 'AccountLogoutNavItem':
+            case SIGNED_IN_NAV_ITEM_TYPE:
                 return (
                     <merlinsNavItem.NavItemWithOnClick
                         {...props}
@@ -64,8 +64,8 @@ const Navigation = (props) => {
             <Nav root={root.title ? root : null} path={path} onPathChange={onPathChange}>
                 <HeaderBar>
                     <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
-                        <h2 className="t-navigation__title u-heading-family u-text-uppercase">
-                            <span className="u-text-extra-lighter">Merlin&#39;s</span> Potions
+                        <h2 className="u-text-family-header u-text-uppercase">
+                            <span className="u-text-weight-extra-light">Merlin&#39;s</span> Potions
                         </h2>
                     </HeaderBarTitle>
 

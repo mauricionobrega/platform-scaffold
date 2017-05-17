@@ -6,6 +6,7 @@ import {createStore, combineReducers, compose, applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
 
 import rootReducer from '../containers/reducers'
+import userReducer from './user/reducer'
 import cartReducer from './cart/reducer'
 import categoryReducer from './categories/reducer'
 import modalReducer from 'progressive-web-sdk/dist/store/modals/reducer'
@@ -33,11 +34,11 @@ const configureStore = (initialState) => {
         analytics(({type, payload}, state) => analyticsManager.distribute(type, payload, state)),
         thunk
     ]
-
     const reducer = combineReducers({
         categories: categoryReducer,
         cart: cartReducer,
         ui: rootReducer,
+        user: userReducer,
         modals: modalReducer,
         products: productReducer,
         checkout: checkoutReducer,

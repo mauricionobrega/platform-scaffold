@@ -3,7 +3,6 @@
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
 import React, {PropTypes} from 'react'
-import {getHighResImage} from '../../../integration-manager/_merlins-connector/utils'
 
 // SDK Components
 import Image from 'progressive-web-sdk/dist/components/image'
@@ -24,7 +23,7 @@ const PaymentProductItem = ({
 }) => {
     const productImage = (
         <Image
-            src={getHighResImage(thumbnail.src)}
+            src={thumbnail.src}
             alt={thumbnail.alt}
             width="104px"
             height="104px"
@@ -38,7 +37,7 @@ const PaymentProductItem = ({
             image={productImage}
         >
             <div className="u-flexbox u-align-bottom">
-                <div className="u-flex-none u-color-neutral-50 u-text-small">
+                <div className="u-flex-none u-color-neutral-50 u-text-size-small">
                     {options && options.map(({label, value}, idx) => (
                         <p
                             className={idx > 0 ? 'u-margin-top-sm' : ''}
@@ -55,7 +54,7 @@ const PaymentProductItem = ({
 
                 <div className="u-text-align-end u-flex">
                     <div>
-                        <div className="u-h5 u-text-semi-bold">
+                        <div className="u-h5 u-text-weight-semi-bold">
                             {linePrice}
                         </div>
 

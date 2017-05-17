@@ -4,7 +4,7 @@
 
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
-import {getIsLoggedIn} from '../../../containers/app/selectors'
+import {getIsLoggedIn} from '../../user/selectors'
 import {receiveSavedShippingAddresses} from '../actions'
 
 export const setDefaultShippingAddressId = createAction('Receive default shipping address ID', 'defaultShippingAddressId')

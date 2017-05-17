@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 import {receiveFormInfo} from '../actions'
 
@@ -6,7 +10,7 @@ import {fetchPageData} from '../app/commands'
 import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../../products/results'
 import {productDetailsParser, productDetailsUIParser, pdpAddToCartFormParser} from './parsers'
 
-export const fetchPdpData = (url) => (dispatch) => {
+export const initProductDetailsPage = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then((res) => {
             const [$, $response] = res
@@ -24,3 +28,5 @@ export const fetchPdpData = (url) => (dispatch) => {
         })
         .catch((error) => { console.info(error.message) })
 }
+
+export const getProductVariantData = () => (dispatch) => Promise.resolve()

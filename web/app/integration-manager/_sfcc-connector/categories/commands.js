@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 import {makeSfccRequest} from '../utils'
 import {receiveCategoryContents, receiveCategoryInformation} from '../../categories/results'
@@ -32,7 +36,7 @@ const fetchCategoryInfo = (id) => (dispatch) => {
         .then(processCategory(dispatch))
 }
 
-export const fetchProductListData = (url) => (dispatch) => {
+export const initProductListPage = (url) => (dispatch) => {
     const categoryIDMatch = /\/([^/]+)$/.exec(url)
     const categoryID = categoryIDMatch ? categoryIDMatch[1] : ''
 

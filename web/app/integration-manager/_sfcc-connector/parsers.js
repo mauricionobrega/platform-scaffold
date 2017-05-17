@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {SITE_ID} from './constants'
 import {formatPrice} from './utils'
 
@@ -21,6 +25,22 @@ const parseVariationCategories = (variation_attributes) => {
         }))
     }))
 }
+
+const setInitialVariantValues = (variants, id, variationCategories) => {
+    const currentVariant = variants.find(({product_id}) => product_id === id)
+
+    if (currentVariant) {
+        return currentVariant.variation_values
+    }
+
+    const defaultVariant = {}
+    variationCategories.forEach(({id, values}) => {
+        defaultVariant[id] = values[0].value
+    })
+
+    return defaultVariant
+}
+
 /* eslint-enable camelcase */
 
 export const getProductHref = (productID) => `/s/2017refresh/${productID}.html`
@@ -34,6 +54,7 @@ export const parseProductDetails = ({id, name, price, long_description, image_gr
         description: long_description,
         thumbnail: images[0],
         images,
+        initialValues: setInitialVariantValues(variants, id, variation_attributes),
         variationCategories: parseVariationCategories(variation_attributes),
         variants: variants.map(({product_id, variation_values}) => {
             return {
@@ -44,22 +65,59 @@ export const parseProductDetails = ({id, name, price, long_description, image_gr
     }
 }
 
-export const getCurrentProductID = () => {
+export const parseBasketContents = ({product_items, product_sub_total, product_total, order_total}) => {
+    /* eslint-disable camelcase */
+    let summary_count = 0
+    const items = product_items ? product_items.map(({item_id, product_name, product_id, base_price, quantity}) => {
+        summary_count += quantity
+        return {
+            product_name,
+            product_price: `${formatPrice(base_price)}`,
+            product_image: {},
+            qty: quantity,
+            // item_id is different from product_id
+            // it is used when updating the item in the cart
+            // (delete item, update item qty etc)
+            item_id,
+            // product_id is used to describe which product the item is
+            // (used to fetch product images, or build the product URL etc)
+            product_id
+        }
+    }) : []
+    return {
+        items,
+        subtotal: formatPrice(product_total),
+        subtotal_excl_tax: formatPrice(product_sub_total),
+        summary_count,
+        orderTotal: order_total
+    }
+}
+
+export const getCurrentProductID = (url) => {
     let productID
 
-    let productIDMatch = /(\d+).html/.exec(window.location.href)
+    let productIDMatch = /(\d+).html/.exec(url)
+
     if (productIDMatch) {
         productID = productIDMatch[1]
     }
 
     if (!productID) {
-    // Cart edit style: https://.../checkout/cart/configure/id/{basket_id}/product_id/{product_id}/
-        productIDMatch = /product_id\/(\d+)/.exec(window.location.href)
+        // Cart edit style: https://.../checkout/cart/configure/id/{basket_id}/product_id/{product_id}/
+        productIDMatch = /product_id\/(\d+)/.exec(url)
         productID = productIDMatch ? productIDMatch[1] : ''
     }
 
     console.log('[getCurrentProductID]', productID)
     return productID
+}
+
+export const getInitialSelectedVariant = (variants, initialValues) => {
+    return variants.find(({values}) => {
+        return Object.keys(values).every((key) => {
+            return values[key] === initialValues[key]
+        })
+    })
 }
 
 export const parseCategories = (categories) => {

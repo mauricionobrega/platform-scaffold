@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {makeSfccRequest, getBasketID, storeBasketID, deleteBasketID} from '../utils'
 import {getCartItems} from '../../../store/cart/selectors'
 import {receiveCartProductData} from '../../products/results'
@@ -11,7 +15,7 @@ import {parseCartProducts, parseCartContents} from './parsers'
 export const createBasket = (basketContents) => {
     const basketID = getBasketID()
     if (basketID && !basketContents) {
-        return Promise.resolve(basketID)
+        return Promise.resolve({basket_id: basketID})
     }
     const options = {
         method: 'POST'
@@ -25,11 +29,7 @@ export const createBasket = (basketContents) => {
         .then((response) => response.json())
         .then((basket) => {
             storeBasketID(basket.basket_id)
-            if (basketContents) {
-                return basket
-            }
-
-            return basket.basket_id
+            return basket
         })
 }
 
@@ -110,7 +110,7 @@ export const fetchCartItemImages = () => (dispatch, getState) => {
 
 export const requestCartData = (noRetry) => {
     return createBasket()
-        .then((basketID) => makeSfccRequest(`${API_END_POINT_URL}/baskets/${basketID}`, {method: 'GET'}))
+        .then((basket) => makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}`, {method: 'GET'}))
         .then((response) => {
             if (response.status === 404) {
                 if (noRetry) {

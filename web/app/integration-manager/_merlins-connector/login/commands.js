@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {makeRequest, makeFormEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import {SubmissionError} from 'redux-form'
@@ -6,20 +10,18 @@ import {getFormKey} from '../selectors'
 import {fetchPageData} from '../app/commands'
 import {getCart} from '../cart/commands'
 import {setSigninLoaded, setRegisterLoaded} from '../../login/results'
-import {receiveNavigationData} from '../../results'
-import {parseNavigation} from '../navigation/parser'
 import {LOGIN_POST_URL, CREATE_ACCOUNT_POST_URL} from '../constants'
 
 import {isFormResponseInvalid} from './parsers/parsers'
 
-export const fetchSigninData = (url) => (dispatch) => {
+export const initLoginPage = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then(() => {
             dispatch(setSigninLoaded())
         })
 }
 
-export const fetchRegisterData = (url) => (dispatch) => {
+export const initRegisterPage = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then(() => {
             dispatch(setRegisterLoaded())
@@ -50,12 +52,14 @@ const submitForm = (href, formValues, formSelector) => {
 export const login = (username, password, rememberMe) => (dispatch, getState) => {
     const currentState = getState()
     const formKey = getFormKey(currentState)
+
     const formData = {
         'login[username]': username,
         'login[password]': password,
         form_key: formKey,
         send: ''
     }
+
     if (rememberMe) {
         formData.persistent_remember_me = 'on'
     }
@@ -66,13 +70,14 @@ export const login = (username, password, rememberMe) => (dispatch, getState) =>
 export const registerUser = (firstname, lastname, email, password, confirmPassword, rememberMe) => (dispatch, getState) => {
     const currentState = getState()
     const formKey = getFormKey(currentState)
+
     const formData = {
         firstname,
         lastname,
         email,
         password,
         password_confirmation: confirmPassword,
-        form_key: formKey,
+        form_key: formKey
     }
     if (rememberMe) {
         formData.persistent_remember_me = 'on'
@@ -86,7 +91,8 @@ const findPathForRoute = (routes, routeName) => {
 }
 
 /**
- * Uses React router to navigate between different pages. Takes care of browser history, etc.
+ * Uses React router to ensure browser history remains consistent with the
+ * selected section.
  */
 export const navigateToSection = (router, routes, sectionName) => {
     return () => {
@@ -98,9 +104,7 @@ export const logout = () => (dispatch) => (
     makeRequest('/customer/account/logout/')
         // Don't wait for the cart to do everything else
         .then(() => { dispatch(getCart()) })
-        // Update navigation menu
+        // Update navigation menu and logged in flag
         // Need to request current location so that the right entry is active
-        .then(() => makeRequest(window.location.href))
-        .then(jqueryResponse)
-        .then(([$, $response]) => dispatch(receiveNavigationData(parseNavigation($, $response))))
+        .then(() => fetchPageData(window.location.href))
 )

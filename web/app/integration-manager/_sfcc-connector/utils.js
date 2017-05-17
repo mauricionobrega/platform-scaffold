@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {API_END_POINT_URL, REQUEST_HEADERS} from './constants'
 
@@ -27,6 +31,10 @@ export const getBasketID = () => {
 }
 
 export const storeBasketID = (basketID) => {
+    if (basketID === undefined) {
+        throw new Error('Storing basketID that is undefined!!')
+    }
+
     window.sessionStorage.setItem(BASKET_KEY_NAME, basketID)
 }
 
@@ -41,9 +49,14 @@ export const getAuthTokenPayload = (authToken) => {
 }
 
 export const isUserLoggedIn = (authorization) => {
-    const {sub} = getAuthTokenPayload(authorization)
-    const subData = JSON.parse(sub)
-    return !subData.customer_info.guest
+    try {
+        const {sub} = getAuthTokenPayload(authorization)
+        const subData = JSON.parse(sub)
+        return !subData.customer_info.guest
+    } catch (e) {
+        console.log('Error checking if user is logged in. Assuming `false`', e)
+        return false
+    }
 }
 
 export const initSfccSession = (authorization) => {
@@ -102,7 +115,7 @@ export const initSfccAuthAndSession = () => {
     }
     const options = {
         method: 'POST',
-        body: '{ type : "session" }',
+        body: '{ type : "guest" }',
         headers: REQUEST_HEADERS
     }
     let authorization

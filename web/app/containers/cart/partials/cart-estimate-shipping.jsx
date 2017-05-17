@@ -6,7 +6,9 @@ import React from 'react'
 import {connect} from 'react-redux'
 import * as ReduxForm from 'redux-form'
 import {createPropsSelector} from 'reselect-immutable-helpers'
-import {CART_ESTIMATE_SHIPPING_MODAL, ESTIMATE_FORM_NAME} from '../constants'
+import {CART_ESTIMATE_SHIPPING_MODAL} from '../constants'
+import {ESTIMATE_FORM_NAME} from '../../../store/form/constants'
+
 import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {isModalOpen} from 'progressive-web-sdk/dist/store/modals/selectors'
 import {getCountries, getAvailableRegions} from '../../../store/checkout/locations/selectors'
@@ -26,8 +28,8 @@ export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateP
         <Sheet className="t-cart__estimate-shipping-modal" open={isOpen} onDismiss={closeModal} maskOpacity={0.7} effect="slide-right" coverage="85%">
             <HeaderBar>
                 <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
-                    <h1 className="u-h4 u-heading-family u-text-uppercase">
-                        <span className="u-text-extra-lighter">Estimate Shipping</span>
+                    <h1 className="u-h4 u-text-family-header u-text-uppercase">
+                        <span className="u-text-weight-extra-light">Estimate Shipping</span>
                     </h1>
                 </HeaderBarTitle>
 

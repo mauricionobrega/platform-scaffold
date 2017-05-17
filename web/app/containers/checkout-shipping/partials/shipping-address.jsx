@@ -10,7 +10,7 @@ import classNames from 'classnames'
 
 import {setShowAddNewAddress} from '../actions'
 import {ADD_NEW_ADDRESS_FIELD, SAVED_SHIPPING_ADDRESS_FIELD} from '../constants'
-import {getIsLoggedIn} from '../../app/selectors'
+import {getIsLoggedIn} from '../../../store/user/selectors'
 import {getShowAddNewAddress} from '../selectors'
 import {getSavedAddresses} from '../../../store/checkout/shipping/selectors'
 
@@ -51,7 +51,7 @@ const ShippingAddressForm = ({
                     component={Field}
                     name={SAVED_SHIPPING_ADDRESS_FIELD}
                     label={
-                        <strong className="u-text-semi-bold">{street}</strong>
+                        <strong className="u-text-weight-semi-bold">{street}</strong>
                     }
                     caption={shippingAddress}
                     type="radio"
@@ -86,7 +86,7 @@ const ShippingAddressForm = ({
                             component={Field}
                             name={SAVED_SHIPPING_ADDRESS_FIELD}
                             label={
-                                <strong className="u-text-semi-bold">
+                                <strong className="u-text-weight-semi-bold">
                                     Add a new address
                                 </strong>
                             }

@@ -2,23 +2,24 @@
 /* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
-export const parseNavigation = ($, $content) => {
-    const root = {title: 'Root', path: '/', children: []}
-    const $signIn = $content.find('.header.links li.authorization-link a').first()
-    const signInHref = $signIn.attr('href')
+import {LOGGED_IN_NAV, GUEST_NAV} from '../../../containers/navigation/constants'
 
-    if (/logout/i.test(signInHref)) {
-        root.children.push({
-            title: $signIn.text().trim(),
-            type: 'AccountLogoutNavItem',
-        })
-    } else {
-        root.children.push({
-            title: $signIn.text().trim(),
-            path: $signIn.attr('href'),
-            type: 'AccountNavItem',
-        })
-    }
+// We hard-code this since it is only parseable from non-checkout pages.
+const SIGN_IN_HREF = '/customer/account/login/'
+
+export const parseNavigation = ($, $content, isLoggedIn) => {
+    const root = {title: 'Root', path: '/', children: []}
+
+    root.children.push({
+        ...(isLoggedIn ? LOGGED_IN_NAV : GUEST_NAV),
+        // Long story. The nav system ignores the `path` property when the user is
+        // logged in. Until we rework this, we always send the login path so the
+        // reducer in the `containers/navigation/` area can just flip the account
+        // node type and title and not worry about switching/adding/deleting the
+        // `path` attribute.
+        // See also `containers/navigation/container.jsx`'s `itemFactory()` function.
+        path: SIGN_IN_HREF
+    })
 
     const $navListItems = $content.find('#store\\.menu nav.navigation li')
     let path = root.path

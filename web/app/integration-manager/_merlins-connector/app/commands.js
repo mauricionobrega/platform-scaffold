@@ -1,29 +1,34 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 
 import {getCart} from '../cart/commands'
-import {appParser} from './parser'
+import {parseLoginStatus} from './parser'
 import {parseNavigation} from '../navigation/parser'
 import {receiveFormKey} from '../actions'
 import {CHECKOUT_SHIPPING_URL, CART_URL} from '../constants'
+import {getCookieValue} from '../../../utils/utils'
 import {generateFormKeyCookie} from '../../../utils/magento-utils'
 
 import {
     receiveNavigationData,
-    receiveAppData,
     setPageFetchError,
     setCheckoutShippingURL,
-    setCartURL
+    setCartURL,
+    setLoggedIn
 } from '../../results'
 
-export const fetchPageData = (url) => (dispatch) => {
-    return makeRequest(url)
+export const fetchPageData = (url) => (dispatch) => (
+    makeRequest(url)
         .then(jqueryResponse)
         .then((res) => {
             const [$, $response] = res
-            const appData = appParser($response)
-            dispatch(receiveAppData({...appData}))
-            dispatch(receiveNavigationData(parseNavigation($, $response)))
+            const isLoggedIn = parseLoginStatus($response)
+            dispatch(setLoggedIn(isLoggedIn))
+            dispatch(receiveNavigationData(parseNavigation($, $response, isLoggedIn)))
             return res
         })
         .catch((error) => {
@@ -34,10 +39,14 @@ export const fetchPageData = (url) => (dispatch) => {
                 dispatch(setPageFetchError(error.message))
             }
         })
-}
+)
 
 export const initApp = () => (dispatch) => {
-    const formKey = generateFormKeyCookie()
+    // Use the pre-existing form_key if it already exists
+    let formKey = getCookieValue('form_key')
+    if (!formKey) {
+        formKey = generateFormKeyCookie()
+    }
     dispatch(receiveFormKey(formKey))
 
     dispatch(setCheckoutShippingURL(CHECKOUT_SHIPPING_URL))

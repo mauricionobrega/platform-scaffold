@@ -8,11 +8,11 @@ import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 
 import {splitFullName} from '../../utils/utils'
-import {receiveCheckoutData} from '../../store/checkout/actions'
+import {receiveCheckoutData} from '../../integration-manager/checkout/results'
 
 import {
     submitShipping as submitShippingCommand,
-    checkCustomerEmail as checkCustomerEmailCommand
+    isEmailAvailable as isEmailAvailableCommand
 } from '../../integration-manager/checkout/commands'
 import {login} from '../../integration-manager/login/commands'
 
@@ -65,13 +65,12 @@ export const submitShipping = () => (dispatch, getState) => {
         lastname,
         ...formValues
     }
-
     dispatch(receiveCheckoutData({shipping: {address}, emailAddress: formValues.username}))
 
     return dispatch(submitShippingCommand(address))
-        .then(() => {
+        .then((paymentURL) => {
             browserHistory.push({
-                pathname: '/checkout/payment/'
+                pathname: paymentURL
             })
         })
         .catch(() => {
@@ -83,8 +82,10 @@ export const submitShipping = () => (dispatch, getState) => {
         })
 }
 
-export const checkCustomerEmail = () => (dispatch) => {
-    return dispatch(checkCustomerEmailCommand())
+export const isEmailAvailable = () => (dispatch, getState) => {
+    const formValues = getShippingFormValues(getState())
+
+    return dispatch(isEmailAvailableCommand(formValues.username))
         .then((emailAvailable) => {
             if (emailAvailable) {
                 return dispatch(onShippingEmailAvailable())

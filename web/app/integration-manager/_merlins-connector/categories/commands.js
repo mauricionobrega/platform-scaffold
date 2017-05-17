@@ -1,3 +1,7 @@
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+/* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
+/* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
+
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
 import {receiveCategoryContents, receiveCategoryInformation} from '../../categories/results'
 import {receiveProductListProductData} from '../../products/results'
@@ -5,7 +9,7 @@ import categoryProductsParser, {parseCategoryTitle, parseCategoryId, priceFilter
 import {productListParser} from '../products/parsers'
 import {fetchPageData} from '../app/commands'
 
-export const fetchProductListData = (url) => (dispatch) => {
+export const initProductListPage = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then((res) => {
             const [$, $response] = res

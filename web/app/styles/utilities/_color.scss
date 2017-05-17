@@ -4,24 +4,58 @@
 // Neutral Colors
 // ---
 
+.u-color-neutral-00 {
+    color: $neutral-00 !important;
+
+    fill: $neutral-00 !important;
+}
+
 .u-color-neutral-10 {
-    @include color-neutral-10(true);
+    color: $neutral-10 !important;
+
+    fill: $neutral-10 !important;
+}
+
+.u-color-neutral-15 {
+    color: $neutral-15 !important;
+
+    fill: $neutral-15 !important;
+}
+
+.u-color-neutral-20 {
+    color: $neutral-20 !important;
+
+    fill: $neutral-20 !important;
+}
+
+.u-color-neutral-30 {
+    color: $neutral-30 !important;
+
+    fill: $neutral-30 !important;
 }
 
 .u-color-neutral-40 {
-    @include color-neutral-40(true);
+    color: $neutral-40 !important;
+
+    fill: $neutral-40 !important;
 }
 
 .u-color-neutral-50 {
-    @include color-neutral-50(true);
+    color: $neutral-50 !important;
+
+    fill: $neutral-50 !important;
 }
 
 .u-color-neutral-60 {
-    @include color-neutral-60(true);
+    color: $neutral-60 !important;
+
+    fill: $neutral-60 !important;
 }
 
 .u-color-neutral-70 {
-    @include color-neutral-70(true);
+    color: $neutral-70 !important;
+
+    fill: $neutral-70 !important;
 }
 
 
@@ -29,19 +63,45 @@
 // ---
 
 .u-color-brand {
-    @include color-brand(true);
+    color: $brand-color !important;
+
+    fill: $brand-color !important;
 }
 
 .u-color-accent {
-    @include color-accent(true);
+    color: $accent-color !important;
+
+    fill: $accent-color !important;
+}
+
+.u-color-primary-action {
+    color: $primary-action-color !important;
+
+    fill: $primary-action-color !important;
+}
+
+.u-color-secondary-action {
+    color: $secondary-action-color !important;
+
+    fill: $secondary-action-color !important;
 }
 
 .u-color-success {
-    @include color-success(true);
+    color: $success-color !important;
+
+    fill: $success-color !important;
 }
 
 .u-color-error {
-    @include color-error(true);
+    color: $error-color !important;
+
+    fill: $error-color !important;
+}
+
+.u-color-sale {
+    color: $sale-color !important;
+
+    fill: $sale-color !important;
 }
 
 
@@ -49,29 +109,69 @@
 // ---
 
 .u-bg-color-neutral-00 {
-    background-color: $neutral-00 !important; // @TODO: Add to spline
+    background-color: $neutral-00 !important;
 }
 
 .u-bg-color-neutral-10 {
-    background-color: $neutral-10 !important; // @TODO: Add to spline
+    background-color: $neutral-10 !important;
+}
+
+.u-bg-color-neutral-15 {
+    background-color: $neutral-15 !important;
 }
 
 .u-bg-color-neutral-20 {
-    @include bg-color-neutral-20(true); // @TODO: Add to spline (it's a local mixin atm)
+    background-color: $neutral-20 !important;
 }
 
 .u-bg-color-neutral-30 {
-    @include bg-color-neutral-30(true);
+    background-color: $neutral-30 !important;
 }
 
+.u-bg-color-neutral-40 {
+    background-color: $neutral-40 !important;
+}
+
+.u-bg-color-neutral-50 {
+    background-color: $neutral-50 !important;
+}
+
+.u-bg-color-neutral-60 {
+    background-color: $neutral-60 !important;
+}
+
+.u-bg-color-neutral-70 {
+    background-color: $neutral-70 !important;
+}
+
+
+// Other Background Colors
+// ---
+
 .u-bg-color-brand {
-    @include bg-color-brand(true);
+    background-color: $brand-color !important;
+}
+
+.u-bg-color-accent {
+    background-color: $accent-color !important;
+}
+
+.u-bg-color-primary-action {
+    background-color: $primary-action-color !important;
+}
+
+.u-bg-color-secondary-action {
+    background-color: $secondary-action-color !important;
+}
+
+.u-bg-color-success {
+    background-color: $success-color !important;
 }
 
 .u-bg-color-error {
-    @include bg-color-error(true);
+    background-color: $error-color !important;
 }
 
-.u-bg-color-light-error {
-    @include bg-color-light-error(true);
+.u-bg-color-sale {
+    background-color: $sale-color !important;
 }
