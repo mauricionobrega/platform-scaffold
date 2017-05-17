@@ -80,7 +80,7 @@
 // ---
 
 .pw-search__suggestion-heading {
-    @include visually-hidden(true);
+    @include visually-hidden;
 }
 
 

@@ -8,28 +8,15 @@
 // 2. Contain the the first child’s top margin. Ensures rendering is consistent
 //    with the other common clearfix method, `overflow: hidden`.
 
-@mixin clearfix($important: false) {
-    @if($important) {
-        &::before,
-        &::after {
-            content: ' ' !important; // 1
+@mixin clearfix() {
+    &::before,
+    &::after {
+        content: ' '; // 1
 
-            display: table !important; // 2
-        }
+        display: table; // 2
+    }
 
-        &::after {
-            clear: both !important;
-        }
-    } @else {
-        &::before,
-        &::after {
-            content: ' '; // 1
-
-            display: table; // 2
-        }
-
-        &::after {
-            clear: both;
-        }
+    &::after {
+        clear: both;
     }
 }
