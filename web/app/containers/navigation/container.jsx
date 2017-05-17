@@ -79,7 +79,7 @@ const Navigation = (props) => {
                 <div>
                     <NavigationSocialIcons />
                     <div className="t-navigation__copyright u-padding-md">
-                        <p>© 2016 Mobify Research & Development Inc. All rights reserved.</p>
+                        <p>© 2017 Mobify Research & Development Inc. All rights reserved.</p>
                     </div>
                 </div>
             </Nav>
