@@ -9,15 +9,16 @@ import {parseShippingInitialValues, parseLocations, parseShippingMethods, checko
 import {parseCheckoutEntityID, extractMagentoShippingStepData} from '../../../utils/magento-utils'
 import {getCookieValue} from '../../../utils/utils'
 import {getCart} from '../cart/commands'
-import {receiveCheckoutData, receiveShippingInitialValues, receiveCheckoutConfirmationData, receiveHasExistingCard} from './../../checkout/results'
+import {receiveCheckoutData, receiveShippingInitialValues, receiveCheckoutConfirmationData, receiveHasExistingCard} from '../../checkout/results'
 
 import {fetchPageData} from '../app/commands'
 import {getCustomerEntityID} from '../selectors'
-import {getIsLoggedIn} from '../../../store/user/selectors'
-import {getShippingFormValues, getFormValues, getFormRegisteredFields} from '../../../store/form/selectors'
 import {receiveEntityID} from '../actions'
 import {PAYMENT_URL} from '../constants'
-import {SHIPPING_FORM_NAME, ADD_NEW_ADDRESS_FIELD} from '../../../containers/checkout-shipping/constants'
+import {ADD_NEW_ADDRESS_FIELD} from '../../../containers/checkout-shipping/constants'
+import {getFormValues, getFormRegisteredFields} from '../../../store/form/selectors'
+import {getIsLoggedIn} from '../../../store/user/selectors'
+import {SHIPPING_FORM_NAME} from '../../../store/form/constants'
 import * as paymentSelectors from '../../../store/checkout/payment/selectors'
 import * as shippingSelectors from '../../../store/checkout/shipping/selectors'
 
@@ -92,13 +93,13 @@ const processCheckoutData = ($response) => (dispatch) => {
     }))
 }
 
-export const fetchCheckoutShippingData = (url) => (dispatch) => {
+export const initCheckoutShippingPage = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then(([$, $response]) => dispatch(processCheckoutData($response)))  // eslint-disable-line no-unused-vars
         .then(() => dispatch(fetchShippingMethodsEstimate(SHIPPING_FORM_NAME)))
 }
 
-export const fetchCheckoutConfirmationData = (url) => (dispatch) => {
+export const initCheckoutConfirmationPage = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then(([$, $response]) => {
             dispatch(receiveCheckoutConfirmationData(checkoutConfirmationParser($, $response)))
@@ -182,19 +183,19 @@ export const submitShipping = (formValues) => (dispatch, getState) => {
         })
 }
 
-export const checkCustomerEmail = () => {
-    return (dispatch, getState) => {
-        const formValues = getShippingFormValues(getState())
-
-        return makeJsonEncodedRequest('/rest/default/V1/customers/isEmailAvailable', {customerEmail: formValues.username}, {method: 'POST'})
-            .then((response) => response.text())
-            .then((responseText) => {
-                return /true/.test(responseText)
-            })
-    }
+export const isEmailAvailable = (email) => (dispatch) => {
+    return makeJsonEncodedRequest(
+            '/rest/default/V1/customers/isEmailAvailable',
+            {customerEmail: email},
+            {method: 'POST'}
+        )
+        .then((response) => response.text())
+        .then((responseText) => {
+            return /true/.test(responseText)
+        })
 }
 
-export const fetchCheckoutPaymentData = (url) => (dispatch) => {
+export const initCheckoutPaymentPage = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then((res) => {
             const [$, $response] = res // eslint-disable-line no-unused-vars
@@ -332,7 +333,7 @@ const updateBillingAddress = () => {
     }
 }
 
-export const updatingShippingAndBilling = () => {
+export const updateShippingAndBilling = () => {
     return (dispatch, getState) => {
         const shippingData = shippingSelectors.getShippingAddress(getState()).toJS()
         const formData = buildFormData({
