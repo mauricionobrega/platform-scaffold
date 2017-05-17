@@ -208,33 +208,34 @@ export const getCartTotalsInfo = (currentState) => {
         // the above request will be handled by other actions below!
 }
 
-export const putPromoCode = () => (dispatch, getState) => {
+export const putPromoCode = (couponCode) => (dispatch, getState) => {
     const currentState = getState()
     const isLoggedIn = getIsLoggedIn(currentState)
     const entityID = getCustomerEntityID(currentState)
-    const couponCode = getCouponValue(currentState)
+    couponCode = getCouponValue(currentState)
 
     const putPromoUrl = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/coupons/${couponCode}`
-    return makeJsonEncodedRequest(putPromoUrl, {}, {method: 'PUT'})
+    return makeJsonEncodedRequest(putPromoUrl, couponCode, {method: 'PUT'})
         .then((response) => {
+            // Check if coupon is valid
             if (response.status === 404) {
                 throw Error(`${PROMO_ERROR}, code is invalid`)
             }
-            return response.json()
         })
         .then(() => getCartTotalsInfo(currentState))
         .then((responseJSON) => {
             dispatch(receiveCartContents(parseCartTotals(responseJSON)))
         })
-
 }
 
-export const deletePromoCode = () => (dispatch, getState) => {
+export const deletePromoCode = (couponCode) => (dispatch, getState) => {
     const currentState = getState()
     const isLoggedIn = getIsLoggedIn(currentState)
     const entityID = getCustomerEntityID(currentState)
+    couponCode = getCouponValue(currentState)
+
     const deletePromoUrl = `/rest/default/V1/${isLoggedIn ? 'carts/mine' : `guest-carts/${entityID}`}/coupons/`
-    return makeJsonEncodedRequest(deletePromoUrl, {}, {method: 'DELETE'})
+    return makeJsonEncodedRequest(deletePromoUrl, couponCode, {method: 'DELETE'})
         .then((response) => response.json())
         .then(() => getCartTotalsInfo(currentState))
         .then((responseJSON) => {

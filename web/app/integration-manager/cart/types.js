@@ -21,7 +21,6 @@ const CartItem = Runtypes.Record({
     linePrice: Money
 })
 
-// @TODO: get this approved
 const Discount = Runtypes.Record({
     label: Text,
     code: Text,

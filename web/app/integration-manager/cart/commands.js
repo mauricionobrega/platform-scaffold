@@ -55,10 +55,12 @@ export const fetchTaxEstimate = (address, shippingMethod) => connector.fetchTaxE
 
 /**
  * Adds promo code
+ * @param couponCode {string} The coupon code to be applied
  */
-export const putPromoCode = () => connector.putPromoCode()
+export const putPromoCode = (couponCode) => connector.putPromoCode(couponCode)
 
 /**
  * Deletes promo code
+ * @param couponCode {string} The coupon code to be removed
  */
-export const deletePromoCode = () => connector.deletePromoCode()
+export const deletePromoCode = (couponCode) => connector.deletePromoCode(couponCode)

@@ -121,8 +121,8 @@ export const updateItem = (itemId, itemQuantity) => (dispatch) => {
         })
 }
 
-export const submitPromoCode = () => (dispatch) => {
-    dispatch(putPromoCode())
+export const submitPromoCode = (couponCode) => (dispatch) => {
+    dispatch(putPromoCode(couponCode))
         .catch(({message}) => {
             let notificationMessage
             if (message.includes(PROMO_ERROR)) {
@@ -138,8 +138,8 @@ export const submitPromoCode = () => (dispatch) => {
         })
 }
 
-export const removePromoCode = () => (dispatch) => {
-    dispatch(deletePromoCode())
+export const removePromoCode = (couponCode) => (dispatch) => {
+    dispatch(deletePromoCode(couponCode))
         .catch(() => {
             dispatch(addNotification({
                 content: 'Unable to remove promo',
