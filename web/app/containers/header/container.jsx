@@ -73,6 +73,7 @@ class Header extends React.Component {
 
     render() {
         const {
+            clearTerm,
             onMenuClick,
             onMiniCartClick,
             onSearchOpenClick,
@@ -117,6 +118,7 @@ class Header extends React.Component {
                     onChange={this.onChangeSearchQuery}
                     onClose={onSearchCloseClick}
                     onSubmit={this.onSearchSubmit}
+                    onClear={clearTerm}
                     termSuggestions={searchSuggestions}
                     submitButtonProps={{
                         className: 'c--secondary t-header__search-submit-button',
@@ -140,6 +142,7 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
+    clearTerm: PropTypes.func,
     isCollapsed: PropTypes.bool,
     itemCount: PropTypes.number,
     searchIsOpen: PropTypes.bool,
@@ -168,6 +171,7 @@ const mapDispatchToProps = {
     searchSubmit: headerActions.searchSubmit,
     toggleHeader: headerActions.toggleHeader,
     searchQueryChanged: headerActions.searchQueryChanged,
+    clearTerm: headerActions.clearTerm
 }
 
 export default connect(
