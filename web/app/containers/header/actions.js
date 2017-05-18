@@ -13,6 +13,7 @@ export const toggleHeader = createAction('Toggled the header', ['isCollapsed'])
 
 export const openSearch = createAction('Open header search')
 export const closeSearch = createAction('Close header search')
+export const clearSuggestions = createAction('Clear search suggestion')
 
 export const searchQueryChanged = (query) => (dispatch) => (
     dispatch(getSearchSuggestions(query))
