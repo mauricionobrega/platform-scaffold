@@ -82,7 +82,6 @@ const LogMeInForm = reduxForm({
 LogMeInForm.propTypes = {
     error: PropTypes.string,
     fields: PropTypes.array,
-    forgotPassword: PropTypes.object,
     handleSubmit: PropTypes.func,
     href: PropTypes.string,
     invalid: PropTypes.bool,
@@ -95,7 +94,6 @@ const mapStateToProps = createPropsSelector({
     fields: selectors.signin.form.getFields,
     href: selectors.signin.form.getHref,
     submitText: selectors.signin.form.getSubmitText,
-    forgotPassword: selectors.signin.form.getForgotPassword
 })
 
 const mapDispatchToProps = {
