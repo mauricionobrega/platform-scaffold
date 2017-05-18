@@ -127,33 +127,14 @@ export const initSfccAuthAndSession = () => {
         })
 }
 
-export const makeSfccRequest = (url, options) => {
+export const makeApiRequest = (path, options) => {
     return initSfccAuthAndSession()
         .then((headers) => {
             const requestOptions = {
                 ...options,
                 headers
             }
-            return makeRequest(url, requestOptions)
-        })
-}
-
-export const makeApiRequest = (path, options) => makeSfccRequest(
-    API_END_POINT_URL + path,
-    options
-)
-
-export const makeSfccJsonRequest = (url, body, options) => {
-    return makeSfccRequest(url, {
-        ...options,
-        body: JSON.stringify(body)
-    })
-        .then((response) => response.json())
-        .then((responseJSON) => {
-            if (responseJSON.fault) {
-                throw new Error(responseJSON.fault.message)
-            }
-            return responseJSON
+            return makeRequest(API_END_POINT_URL + path, requestOptions)
         })
 }
 
