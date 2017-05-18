@@ -1,13 +1,12 @@
-// Style override
+// Wrap At Root
 // ===
 //
-// Allows overriding existing styles with extreme specificity while keeping
-// source code clean and readable. Only use this for overriding 3rd-party CSS
-// that cannot be changed. Does not override !important or inline styles; those
-// must be dealt with separately.
+// Allows overriding exisiting styles with extreme specificty while keeping
+// source code clean and readable. Does not override !important or inline
+// styles; those must be dealt with separately.
 
 
-// Style override
+// Parameters
 // ---
 //
 // @param $degree [Number]: The “force” of the override. Effectively the number
@@ -15,7 +14,7 @@
 // @param $selector [String]: An id selector that matches the
 // $style-override-selector tag.
 
-@mixin style-override($degree: 1, $selector: '') {
+@mixin wrap-at-root($degree: 1, $selector: '') {
     $selector-chain: '';
 
     // Build an id selector by chaining the same id onto itself once more than

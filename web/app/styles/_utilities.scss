@@ -5,7 +5,7 @@
 // source code clean and readable. Does not override !important or inline
 // styles; those must be dealt with separately.
 
-@include style-override(3, "#app") {
+@include wrap-at-root(1, "#app") {
     @import 'utilities/border';
     @import 'utilities/box-shadow';
     @import 'utilities/card';
