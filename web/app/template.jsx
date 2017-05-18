@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {sendPurchaseEvent, onRouteChanged, removeAllNotifications, checkIfOffline, setFetchedPage} from './containers/app/actions'
+import {onRouteChanged, removeAllNotifications, checkIfOffline, setFetchedPage} from './containers/app/actions'
 
 import {trigger as astroTrigger} from './utils/astro-integration'
 
@@ -22,23 +22,6 @@ const template = (WrappedComponent) => {
             const url = getURL(location)
 
             dispatch(onRouteChanged(url, route.routeName))
-
-            dispatch(sendPurchaseEvent({
-                id: 't-124',
-                revenue: '160'
-            }, [
-                {
-                    id: 'p-123',
-                    name: 'Red Potion',
-                    price: '90',
-                    quantity: 1
-                }, {
-                    id: 'p-456',
-                    name: 'Blue Potion',
-                    price: '45',
-                    quantity: 1
-                }
-            ]))
 
             if (route.fetchAction) {
                 dispatch(route.fetchAction(route.fetchUrl || url, route.routeName))

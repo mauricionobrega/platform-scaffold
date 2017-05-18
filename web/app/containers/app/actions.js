@@ -4,7 +4,7 @@
 
 /* eslint-disable import/namespace */
 /* eslint-disable import/named */
-import {EVENT_ACTION, Page, Transaction} from 'progressive-web-sdk/src/analytics/data-objects/'
+import {EVENT_ACTION, Page} from 'progressive-web-sdk/dist/analytics/data-objects/'
 
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
@@ -33,13 +33,6 @@ export const onRouteChanged = createActionWithAnalytics(
     [CURRENT_URL],
     EVENT_ACTION.pageview,
     (currentURL, routeName) => (new Page({[Page.TEMPLATENAME]: routeName}))
-)
-
-export const sendPurchaseEvent = createActionWithAnalytics(
-    'Send Purchase Event',
-    [],
-    EVENT_ACTION.purchase,
-    (transaction, products) => (new Transaction(transaction, products))
 )
 
 export const setFetchedPage = createAction('Set fetched page', ['url'])

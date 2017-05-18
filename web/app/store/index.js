@@ -18,15 +18,15 @@ import {reducer as formReducer} from 'redux-form'
 import analytics from 'redux-analytics'
 
 // TO-DO - remember to revert this change
-import analyticsManager from 'progressive-web-sdk/src/analytics/analytics-manager'
+import analyticsManager from 'progressive-web-sdk/dist/analytics/analytics-manager'
 
 const noop = (f) => f
 
 analyticsManager.init({
-    projectSlug: AJS_SLUG,      // eslint-disable-line no-undef
-    debug: true,
+    projectSlug: AJS_SLUG,              // eslint-disable-line no-undef
     mobifyGAID: 'UA-53825302-1',
-    ecommerceLibrary: 'ecommerce'
+    ecommerceLibrary: 'ecommerce',
+    debug: true
 })
 
 const configureStore = (initialState) => {
