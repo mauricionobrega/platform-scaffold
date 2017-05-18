@@ -30,7 +30,7 @@ $style-override-selector: '#\\!' !default;
     // Build an id selector by chaining the same id onto itself once more than
     // the specified degree. So if degree: 4, we get #id#id#id#id#id.
 
-    @for $i from 1 through $degree + 1 {
+    @for $i from 1 through $degree {
         $selector-chain: $selector-chain + $selector;
     }
 
