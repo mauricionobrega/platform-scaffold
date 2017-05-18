@@ -22,28 +22,40 @@ h6 {
     }
 }
 
+%h1,
 h1 {
-    @extend %h1;
+    font-size: $huge-font-size;
+    line-height: $huge-line-height;
 }
 
+%h2,
 h2 {
-    @extend %h2;
+    font-size: $bigger-font-size;
+    line-height: $bigger-line-height;
 }
 
+%h3,
 h3 {
-    @extend %h3;
+    font-size: $big-font-size;
+    line-height: $big-line-height;
 }
 
+%h4,
 h4 {
-    @extend %h4;
+    font-size: $big-font-size;
+    line-height: $big-line-height;
 }
 
+%h5,
 h5 {
-    @extend %h5;
+    font-size: $medium-font-size;
+    line-height: $line-height;
 }
 
+%h6,
 h6 {
-    @extend %h6;
+    font-size: $font-size;
+    line-height: $line-height;
 }
 
 
