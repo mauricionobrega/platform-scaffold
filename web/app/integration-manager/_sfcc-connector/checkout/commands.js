@@ -150,98 +150,110 @@ export const submitShipping = (formValues) => (dispatch) => {
         })
 }
 
-export const submitPayment = (formValues) => (dispatch, getState) => {
-    return createBasket()
-        .then((basket) => {
-            const orderTotal = getOrderTotal(getState())
-            const type = getCardData(formValues.ccnumber).cardType
-            const requestOptions = {
-                method: 'POST',
-                body: JSON.stringify({
-                    amount: parseInt(orderTotal.replace('$', '')),
-                    payment_method_id: 'CREDIT_CARD',
-                    payment_card: {
-                        card_type: type
-                    }
-                })
+const addPaymentMethod = (formValues, basket) => (dispatch, getState) => {
+    const orderTotal = getOrderTotal(getState())
+    const type = getCardData(formValues.ccnumber).cardType
+    const requestOptions = {
+        method: 'POST',
+        body: JSON.stringify({
+            amount: parseFloat(orderTotal.replace('$', '')),
+            payment_method_id: 'CREDIT_CARD',
+            payment_card: {
+                card_type: type
             }
-            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}/payment_instruments`, requestOptions)
-                .then((response) => response.json())
-                .then((responseJSON) => {
-                    if (responseJSON.fault) {
-                        throw new Error(responseJSON.fault.message)
-                    }
-                    return responseJSON
-                })
         })
-        .then((basket) => {
-            if (!formValues.billing_same_as_shipping) {
-                // set billing address
-                const billingAddress = createOrderAddressObject(formValues)
-                const requestOptions = {
-                    method: 'PUT',
-                    body: JSON.stringify(billingAddress)
+    }
+
+    return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}/payment_instruments`, requestOptions)
+        .then((response) => response.json())
+        .then((responseJSON) => {
+            if (responseJSON.fault) {
+                throw new Error(responseJSON.fault.message)
+            }
+            return responseJSON /* OCAPI Basket */
+        })
+}
+
+const setBillingAddress = (formValues, basket) => (dispatch) => {
+    if (!formValues.billing_same_as_shipping) {
+        // set billing address
+        const billingAddress = createOrderAddressObject(formValues)
+        const requestOptions = {
+            method: 'PUT',
+            body: JSON.stringify(billingAddress)
+        }
+        return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}/billing_address?use_as_shipping=false`, requestOptions)
+            .then((response) => response.json())
+            .then((responseJSON) => {
+                if (responseJSON.fault) {
+                    throw new Error(responseJSON.fault.message)
                 }
-                return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}/billing_address?use_as_shipping=false`, requestOptions)
-                    .then((response) => response.json())
-                    .then((responseJSON) => {
-                        if (responseJSON.fault) {
-                            throw new Error(responseJSON.fault.message)
-                        }
-                        return responseJSON
-                    })
+                return responseJSON /* OCAPI Basket */
+            })
+    } else {
+        // No change
+        return basket
+    }
+}
+
+const createOrder = (basket) => (dispatch) => {
+    // place order
+    const requestOptions = {
+        method: 'POST',
+        body: JSON.stringify(basket)
+    }
+    return makeSfccRequest(`${API_END_POINT_URL}/orders`, requestOptions)
+        .then((response) => response.json())
+        .then((responseJSON) => {
+            if (responseJSON.fault) {
+                throw new Error(responseJSON.fault.message)
             }
-            return basket
+            return responseJSON /* OCAPI Order */
         })
-        .then((basket) => {
-            // place order
-            const requestOptions = {
-                method: 'POST',
-                body: JSON.stringify(basket)
+}
+
+const setPaymentMethod = (formValues, order) => (dispatch) => {
+   // set payment method
+    const type = getCardData(formValues.ccnumber).cardType
+    const expiryMonth = /^\d\d/.exec(formValues.ccexpiry)[0]
+    const expiryYear = /\d\d$/.exec(formValues.ccexpiry)[0]
+    const paymentInstrumentID = order.payment_instruments[0].payment_instrument_id
+    const requestOptions = {
+        method: 'PATCH',
+        body: JSON.stringify({
+            payment_card: {
+                card_type: type,
+                expiration_month: parseInt(expiryMonth),
+                expiration_year: 2000 + parseInt(expiryYear),
+                holder: formValues.ccname,
+                number: formValues.ccnumber,
+                security_code: formValues.cvv
+            },
+            payment_method_id: 'CREDIT_CARD'
+        })
+    }
+
+    return makeSfccRequest(`${API_END_POINT_URL}/orders/${order.order_no}/payment_instruments/${paymentInstrumentID}`, requestOptions)
+        .then((response) => response.json())
+        .then((responseJSON) => {
+            if (responseJSON.fault) {
+                throw new Error(responseJSON.fault.message)
             }
-            return makeSfccRequest(`${API_END_POINT_URL}/orders`, requestOptions)
-                .then((response) => response.json())
-                .then((responseJSON) => {
-                    if (responseJSON.fault) {
-                        throw new Error(responseJSON.fault.message)
-                    }
-                    return responseJSON
-                })
-                .then((orderData) => {
-                    // set payment method
-                    const type = getCardData(formValues.ccnumber).cardType
-                    const expiryMonth = /^\d\d/.exec(formValues.ccexpiry)[0]
-                    const expiryYear = /\d\d$/.exec(formValues.ccexpiry)[0]
-                    const paymentInstrumentID = orderData.payment_instruments[0].payment_instrument_id
-                    const requestOptions = {
-                        method: 'PATCH',
-                        body: JSON.stringify({
-                            payment_card: {
-                                card_type: type,
-                                expiration_month: parseInt(expiryMonth),
-                                expiration_year: 2000 + parseInt(expiryYear),
-                                holder: formValues.ccname,
-                                number: formValues.ccnumber,
-                                security_code: formValues.cvv
-                            },
-                            payment_method_id: 'CREDIT_CARD'
-                        })
-                    }
-                    return makeSfccRequest(`${API_END_POINT_URL}/orders/${orderData.order_no}/payment_instruments/${paymentInstrumentID}`, requestOptions)
-                        .then((response) => response.json())
-                        .then((responseJSON) => {
-                            if (responseJSON.fault) {
-                                throw new Error(responseJSON.fault.message)
-                            }
-                            return responseJSON
-                        })
-                })
-                .then((responseJSON) => {
-                    dispatch(receiveOrderConfirmationContents({
-                        orderNumber: responseJSON.order_no
-                    }))
-                    return `/on/demandware.store/${SITE_ID}/default/COSummary-Submit`
-                })
+            return responseJSON /* OCAPI Order */
+        })
+}
+
+export const submitPayment = (formValues) => (dispatch) => {
+    return createBasket()
+        .then((basket) => dispatch(addPaymentMethod(formValues, basket)))
+        .then((basket) => dispatch(setBillingAddress(formValues, basket)))
+        .then((basket) => dispatch(createOrder(basket)))
+        .then((order) => dispatch(setPaymentMethod(formValues, order)))
+        .then((order) => {
+            dispatch(receiveOrderConfirmationContents({
+                orderNumber: order.order_no
+            }))
+            return `/on/demandware.store/${SITE_ID}/default/COSummary-Submit`
         })
 }
 

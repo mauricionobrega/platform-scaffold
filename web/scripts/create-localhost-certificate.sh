@@ -30,3 +30,10 @@ DNS.1 = localhost
 IP.1 = 127.0.0.1
 EOF
 )
+
+SECONDARY_OUTPUT=$MYPATH/../dev-server/localhost.p7b
+
+openssl crl2pkcs7 \
+    -nocrl \
+    -certfile $DEFAULT_OUTPUT \
+    -out $SECONDARY_OUTPUT
