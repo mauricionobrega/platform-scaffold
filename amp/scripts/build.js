@@ -13,11 +13,18 @@ const execSync = require('child_process').execSync;
 const rimraf = Promise.promisify(require('rimraf'));
 const fs = Promise.promisifyAll(require('fs'));
 const ncp = Promise.promisify(require('ncp').ncp);
+const chalk = require('chalk');
 
 const ampRootDir = path.resolve(path.join(__dirname), '..')
 const buildDir = path.join(ampRootDir, 'build')
 
 const staticInDir = path.join(ampRootDir, 'app', 'static')
+
+
+const info = (m) => console.log(m)
+const success = (m) => console.log(chalk.green(m))
+const warning = (m) => console.log(chalk.yellow(m))
+const error = (m) => console.error(chalk.red(m))
 
 
 const repoIsClean = (repo) => repo.getStatus().then(statuses => statuses.length === 0);
@@ -37,8 +44,6 @@ const zip = (inDir, outPath) => {
     return new Promise((resolve, reject) => {
         const output = fs.createWriteStream(outPath);
         const archive = archiver('zip');
-        const split = inDir.split(path.sep).filter(x => x !== '');
-        const name = split.length > 0 ? split[split.length -1] : inDir;
         output.on('close', resolve);
         output.on('end', resolve);
         output.on('finish', resolve);
@@ -48,9 +53,6 @@ const zip = (inDir, outPath) => {
         archive.finalize()
     })
 }
-
-
-const log = console.log;
 
 
 const build = () => {
@@ -64,33 +66,36 @@ const build = () => {
             const serverOutDir = path.join(outputDir, 'server')
             const serverOutZip = path.join(outputDir, 'server.zip')
 
-            return (!clean ? Promise.resolve() : Promise.reject(`The repository has uncommitted changes, aborting`))
+            if (!clean) {
+                warning('The repository has uncommitted changes.')
+            }
 
-                .tap(() => log('Cleaning build directory'))
+            return Promise.resolve()
+                .tap(() => info('Cleaning build directory'))
                 .then(() => rimraf(buildDir))
 
-                .tap(() => log('Creating directories'))
+                .tap(() => info('Creating directories'))
                 .then(() => fs.mkdirAsync(buildDir))
                 .then(() => fs.mkdirAsync(outputDir))
                 .then(() => fs.mkdirAsync(serverOutDir))
 
-                .tap(() => log('Copying static assets'))
+                .tap(() => info('Copying static assets'))
                 .then(() => ncp(staticInDir, staticOutDir))
 
-                .tap(() => log('Installing dependencies'))
+                .tap(() => info('Installing dependencies'))
                 .then(() => ncp(path.join(ampRootDir, 'package.json'), path.join(serverOutDir, 'package.json')))
                 .then(() => installDependencies(serverOutDir))
 
-                .tap(() => log('Building app'))
+                .tap(() => info('Building app'))
                 .then(() => webpack(serverOutDir))
 
-                .tap(() => log('Creating Zip archive'))
+                .tap(() => info('Creating Zip archive'))
                 .then(() => zip(serverOutDir, serverOutZip))
                 .then(() => rimraf(serverOutDir))
         })
-        .tap(() => log('Built successfully'))
+        .tap(() => success('Built successfully'))
         .catch(err => {
-            console.error(err)
+            error(err)
             process.exit(1);
         })
 }
