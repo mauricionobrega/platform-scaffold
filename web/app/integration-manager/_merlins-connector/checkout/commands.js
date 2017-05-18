@@ -6,11 +6,12 @@ import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils
 import {SubmissionError} from 'redux-form'
 
 import {parseShippingInitialValues, parseLocations, parseShippingMethods, checkoutConfirmationParser} from './parsers'
+import {parseCartTotals} from '../cart/parser'
 import {parseCheckoutEntityID, extractMagentoShippingStepData} from '../../../utils/magento-utils'
-import {getCookieValue} from '../../../utils/utils'
+import {getCookieValue, parseLocationData} from '../../../utils/utils'
 import {getCart} from '../cart/commands'
-import {receiveCheckoutData, receiveShippingInitialValues, receiveCheckoutConfirmationData, receiveHasExistingCard} from '../../checkout/results'
-
+import {receiveCheckoutData, receiveShippingInitialValues, receiveCheckoutConfirmationData, receiveHasExistingCard} from './../../checkout/results'
+import {receiveCartContents} from './../../cart/results'
 import {fetchPageData} from '../app/commands'
 import {getCustomerEntityID} from '../selectors'
 import {receiveEntityID} from '../actions'
@@ -21,38 +22,6 @@ import {getIsLoggedIn} from '../../../store/user/selectors'
 import {SHIPPING_FORM_NAME} from '../../../store/form/constants'
 import * as paymentSelectors from '../../../store/checkout/payment/selectors'
 import * as shippingSelectors from '../../../store/checkout/shipping/selectors'
-
-const parseLocationData = (formValues, registeredFieldNames) => {
-    // Default values to use if none have been selected
-    const address = {country_id: 'US', region_id: '0', postcode: null}
-
-    if (formValues) {
-        // Only return the field value if the field is registered
-        const getRegisteredFieldValue = (fieldName) => {
-            return registeredFieldNames.includes(fieldName) ? formValues[fieldName] : undefined
-        }
-
-        const countryId = getRegisteredFieldValue('country_id')
-        if (countryId) {
-            address.country_id = countryId
-        }
-
-        const postcode = getRegisteredFieldValue('postcode')
-        if (postcode) {
-            address.postcode = postcode
-        }
-
-        if (formValues.region) {
-            address.region = getRegisteredFieldValue('region')
-            // Remove the region_id in case we have an old value
-            delete address.region_id
-        } else {
-            address.region_id = getRegisteredFieldValue('region_id')
-        }
-    }
-
-    return address
-}
 
 export const fetchShippingMethodsEstimate = (formKey) => (dispatch, getState) => {
     const currentState = getState()
@@ -179,6 +148,8 @@ export const submitShipping = (formValues) => (dispatch, getState) => {
             if (!responseJSON.payment_methods) {
                 throw new SubmissionError({_error: 'Unable to save shipping address'})
             }
+
+            dispatch(receiveCartContents(parseCartTotals(responseJSON.totals)))
             return PAYMENT_URL
         })
 }

@@ -8,9 +8,17 @@ import {fetchShippingMethodsEstimate} from '../../integration-manager/checkout/c
 import {
     CART_ESTIMATE_SHIPPING_MODAL,
     CART_REMOVE_ITEM_MODAL,
-    CART_WISHLIST_MODAL
+    CART_WISHLIST_MODAL,
+    PROMO_ERROR
 } from './constants'
-import {removeFromCart, updateItemQuantity, addToWishlist, fetchTaxEstimate} from '../../integration-manager/cart/commands'
+import {
+    removeFromCart,
+    updateItemQuantity,
+    addToWishlist,
+    fetchTaxEstimate,
+    putPromoCode,
+    deletePromoCode
+} from '../../integration-manager/cart/commands'
 import {addNotification} from 'progressive-web-sdk/dist/store/notifications/actions'
 import {getIsLoggedIn} from '../../store/user/selectors'
 import {trigger} from '../../utils/astro-integration'
@@ -106,5 +114,33 @@ export const updateItem = (itemId, itemQuantity) => (dispatch) => {
                 error.message,
                 true
             ))
+        })
+}
+
+export const submitPromoCode = (couponCode) => (dispatch) => {
+    dispatch(putPromoCode(couponCode))
+        .catch(({message}) => {
+            let notificationMessage
+            if (message.includes(PROMO_ERROR)) {
+                notificationMessage = message
+            } else {
+                notificationMessage = PROMO_ERROR
+            }
+            dispatch(addNotification({
+                content: notificationMessage,
+                id: 'promoError',
+                showRemoveButton: true
+            }))
+        })
+}
+
+export const removePromoCode = (couponCode) => (dispatch) => {
+    dispatch(deletePromoCode(couponCode))
+        .catch(() => {
+            dispatch(addNotification({
+                content: 'Unable to remove promo',
+                id: 'promoError',
+                showRemoveButton: true
+            }))
         })
 }

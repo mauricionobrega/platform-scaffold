@@ -7,7 +7,6 @@ let connector = {}
 export const register = (commands) => {
     connector = commands
 }
-
 /**
  * Initializes any required data for the Cart page
  * @param {string} url The url of the current page
@@ -53,3 +52,15 @@ export const addToWishlist = (productId, productURL) => connector.addToWishlist(
  * @param shippingMethod {string} The shipping method to use for tax estimation (connector-specific!)
  */
 export const fetchTaxEstimate = (address, shippingMethod) => connector.fetchTaxEstimate(address, shippingMethod)
+
+/**
+ * Adds promo code
+ * @param couponCode {string} The coupon code to be applied
+ */
+export const putPromoCode = (couponCode) => connector.putPromoCode(couponCode)
+
+/**
+ * Deletes promo code
+ * @param couponCode {string} The coupon code to be removed
+ */
+export const deletePromoCode = (couponCode) => connector.deletePromoCode(couponCode)
