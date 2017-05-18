@@ -180,7 +180,7 @@ const mapStateToProps = createPropsSelector({
 })
 
 const mapDispatchToProps = {
-    handleShowAddNewAddress: (bool) => setShowAddNewAddress(bool)
+    handleShowAddNewAddress: setShowAddNewAddress
 }
 
 export default connect(
