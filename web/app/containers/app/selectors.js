@@ -12,7 +12,6 @@ export const getApp = createSelector(getUi, ({app}) => app)
 
 export const getCurrentUrl = createGetSelector(getApp, CURRENT_URL)
 export const getCurrentPathKey = createSelector(getCurrentUrl, urlToPathKey)
-export const getNotifications = createGetSelector(getApp, 'notifications')
 
 // This will need to become more complicated when we handle more types of errors,
 // but will do for now
