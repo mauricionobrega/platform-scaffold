@@ -5,7 +5,7 @@
 import {makeRequest, makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
-import {removeNotification} from '../../../containers/app/actions'
+import {removeNotification} from 'progressive-web-sdk/dist/store/notifications/actions'
 import {getIsLoggedIn} from '../../../store/user/selectors'
 import {getUenc, getCustomerEntityID} from '../selectors'
 import {receiveEntityID} from '../actions'
