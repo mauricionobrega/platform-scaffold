@@ -6,7 +6,7 @@ import {SubmissionError} from 'redux-form'
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {setRegisterLoaded, setSigninLoaded} from '../../login/results'
 import {setLoggedIn} from '../../results'
-import {initSfccSession, deleteAuthToken, storeAuthToken, makeApiRequest, deleteBasketID, storeBasketID} from '../utils'
+import {initSfccSession, deleteAuthToken, storeAuthToken, makeApiRequest, makeApiJsonRequest, deleteBasketID, storeBasketID} from '../utils'
 import {requestCartData, createBasket, handleCartData} from '../cart/utils'
 
 import {API_END_POINT_URL, REQUEST_HEADERS} from '../constants'
@@ -66,22 +66,22 @@ export const login = (username, password) => (dispatch) => {
         .then(() => makeApiRequest(`/customers/${customerID}/baskets`), {method: 'GET'})
         .then((response) => response.json())
         .then(({baskets}) => {
-            if (baskets.length) {
-                const basketID = baskets[0].basket_id
-                storeBasketID(basketID)
-                if (!basketContents.product_items) {
-                    // There is no basket to merge, so return the existing one
-                    return Promise.resolve(baskets[0])
-                }
-                // update basket with contents (product_items)
-                const requestOptions = {
-                    method: 'POST',
-                    body: JSON.stringify(basketContents.product_items)
-                }
-                return makeApiRequest(`/baskets/${basketID}/items`, requestOptions)
-                    .then((response) => response.json())
+            if (baskets.length === 0) {
+                return createBasket(basketContents)
             }
-            return createBasket(basketContents)
+
+            const basketID = baskets[0].basket_id
+            storeBasketID(basketID)
+            if (!basketContents.product_items) {
+                // There is no basket to merge, so return the existing one
+                return Promise.resolve(baskets[0])
+            }
+            // update basket with contents (product_items)
+            return makeApiJsonRequest(
+                `/baskets/${basketID}/items`,
+                basketContents.product_items,
+                {method: 'POST'}
+            )
         })
         .then((responseJSON) => dispatch(handleCartData(responseJSON)))
         .then(() => {
@@ -107,27 +107,18 @@ export const logout = () => (dispatch) => {
 }
 
 export const registerUser = ({firstname, lastname, email, password}) => (dispatch) => {
-    const requestOptions = {
-        method: 'POST',
-        body: JSON.stringify({
-            password,
-            customer: {
-                first_name: firstname,
-                last_name: lastname,
-                login: email,
-                email
-            }
-        })
+    const requestBody = {
+        password,
+        customer: {
+            first_name: firstname,
+            last_name: lastname,
+            login: email,
+            email
+        }
     }
-    return makeApiRequest('/customers', requestOptions)
-        .then((response) => response.json())
-        .then((responseJSON) => {
-            if (responseJSON.fault) {
-                throw new SubmissionError({_error: 'Unable to create account.'})
-            }
 
-            // Creating a user doesn't sign them in automatically, so dispatch the login command
-            return dispatch(login(email, password, true))
-        })
-
+    return makeApiJsonRequest('/customers', requestBody, {method: 'POST'})
+        .catch(() => { throw new SubmissionError({_error: 'Unable to create account.'}) })
+        // Creating a user doesn't sign them in automatically, so dispatch the login command
+        .then(() => dispatch(login(email, password, true)))
 }
