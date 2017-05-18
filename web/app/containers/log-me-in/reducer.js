@@ -30,7 +30,6 @@ const signinFields = [
 const initialState = Immutable.fromJS({
     title: 'Customer Login',
     signinSection: {
-        href: '',
         form: {
             href: '',
             fields: signinFields,
