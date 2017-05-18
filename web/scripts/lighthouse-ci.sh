@@ -31,13 +31,14 @@ npm run prod:build
 http-server --ssl --cors --p=8443 \
 	--key lighthouse/server.pem --cert lighthouse/server.pem build &
 
+# --ignore-certificate-errors thanks to https://github.com/GoogleChrome/lighthouse/issues/559
 sleep 5
 lighthouse \
 	--chrome-flags='--user-agent="MobifyPreview" --allow-insecure-localhost' \
 	--output=html \
 	--output-path=${OUTPUT_PATH} \
 	--disable-device-emulation=true \
-    --chrome-flags "--ignore-certificate-errors"
+    --chrome-flags "--ignore-certificate-errors" \
 	"${URL}${PREVIEW}"
 
 node ./lighthouse/check-score.js
