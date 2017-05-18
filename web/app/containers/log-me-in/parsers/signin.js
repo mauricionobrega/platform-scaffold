@@ -18,10 +18,7 @@ const parseForm = ($, $form) => {
 const signinParser = ($, $html) => {
     return {
         title: getTextFrom($html, '.page-title'),
-        heading: getTextFrom($html, '#block-customer-login-heading'),
-        description: getTextFrom($html, '.field.note'),
         href: $html.find('.header.links .authorization-link a').first().attr('href'),
-        requiredText: $html.find('.fieldset.login').attr('data-hasrequired'),
         form: parseForm($, $html.find('form.form-login'))
     }
 }
