@@ -1,3 +1,6 @@
+## 0.16.4 (May 18, 2017)
+- Fix lighthouse tests by ignoring certificate errors in Chrome
+
 ## 0.16.3 (May 17, 2017)
 - Release updated README.md to support Windows (for upcoming training)
 
