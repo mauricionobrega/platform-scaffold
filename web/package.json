@@ -72,7 +72,7 @@
     "jest-cli": "19.0.2",
     "jsdom": "9.12.0",
     "json-loader": "0.5.4",
-    "lighthouse": "1.6.0",
+    "lighthouse": "1.6.5",
     "minimist": "1.2.0",
     "mobify-code-style": "2.8.1",
     "nightwatch": "0.9.8",
