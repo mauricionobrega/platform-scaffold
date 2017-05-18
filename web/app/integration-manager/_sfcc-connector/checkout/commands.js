@@ -4,7 +4,7 @@
 
 import {SubmissionError} from 'redux-form'
 import {createBasket, handleCartData} from '../cart/utils'
-import {makeSfccRequest, getAuthToken, getAuthTokenPayload} from '../utils'
+import {makeSfccRequest, makeSfccJsonRequest, getAuthToken, getAuthTokenPayload} from '../utils'
 import {getOrderTotal} from '../../../store/cart/selectors'
 import {populateLocationsData, createOrderAddressObject} from './utils'
 import {parseShippingAddressFromBasket} from './parsers'
@@ -153,64 +153,38 @@ export const submitShipping = (formValues) => (dispatch) => {
 const addPaymentMethod = (formValues, basket) => (dispatch, getState) => {
     const orderTotal = getOrderTotal(getState())
     const type = getCardData(formValues.ccnumber).cardType
-    const requestOptions = {
-        method: 'POST',
-        body: JSON.stringify({
-            amount: parseFloat(orderTotal.replace('$', '')),
-            payment_method_id: 'CREDIT_CARD',
-            payment_card: {
-                card_type: type
-            }
-        })
+    const requestBody = {
+        amount: parseFloat(orderTotal.replace('$', '')),
+        payment_method_id: 'CREDIT_CARD',
+        payment_card: {
+            card_type: type
+        }
     }
 
-    return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}/payment_instruments`, requestOptions)
-        .then((response) => response.json())
-        .then((responseJSON) => {
-            if (responseJSON.fault) {
-                throw new Error(responseJSON.fault.message)
-            }
-            return responseJSON /* OCAPI Basket */
-        })
+    return makeSfccJsonRequest(
+        `${API_END_POINT_URL}/baskets/${basket.basket_id}/payment_instruments`,
+        requestBody,
+        {method: 'POST'}
+    )
 }
 
 const setBillingAddress = (formValues, basket) => (dispatch) => {
-    if (!formValues.billing_same_as_shipping) {
-        // set billing address
-        const billingAddress = createOrderAddressObject(formValues)
-        const requestOptions = {
-            method: 'PUT',
-            body: JSON.stringify(billingAddress)
-        }
-        return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}/billing_address?use_as_shipping=false`, requestOptions)
-            .then((response) => response.json())
-            .then((responseJSON) => {
-                if (responseJSON.fault) {
-                    throw new Error(responseJSON.fault.message)
-                }
-                return responseJSON /* OCAPI Basket */
-            })
-    } else {
-        // No change
-        return basket
+    if (formValues.billing_same_as_shipping) {
+        // No change to the address is necessary
+        return Promise.resolve(basket)
     }
+
+    // set billing address
+    return makeSfccJsonRequest(
+        `${API_END_POINT_URL}/baskets/${basket.basket_id}/billing_address?use_as_shipping=false`,
+        createOrderAddressObject(formValues),
+        {method: 'PUT'}
+    )
 }
 
-const createOrder = (basket) => (dispatch) => {
-    // place order
-    const requestOptions = {
-        method: 'POST',
-        body: JSON.stringify(basket)
-    }
-    return makeSfccRequest(`${API_END_POINT_URL}/orders`, requestOptions)
-        .then((response) => response.json())
-        .then((responseJSON) => {
-            if (responseJSON.fault) {
-                throw new Error(responseJSON.fault.message)
-            }
-            return responseJSON /* OCAPI Order */
-        })
-}
+const createOrder = (basket) => (dispatch) =>
+    makeSfccJsonRequest(`${API_END_POINT_URL}/orders`, basket, {method: 'POST'})
+
 
 const setPaymentMethod = (formValues, order) => (dispatch) => {
    // set payment method
@@ -218,29 +192,23 @@ const setPaymentMethod = (formValues, order) => (dispatch) => {
     const expiryMonth = /^\d\d/.exec(formValues.ccexpiry)[0]
     const expiryYear = /\d\d$/.exec(formValues.ccexpiry)[0]
     const paymentInstrumentID = order.payment_instruments[0].payment_instrument_id
-    const requestOptions = {
-        method: 'PATCH',
-        body: JSON.stringify({
-            payment_card: {
-                card_type: type,
-                expiration_month: parseInt(expiryMonth),
-                expiration_year: 2000 + parseInt(expiryYear),
-                holder: formValues.ccname,
-                number: formValues.ccnumber,
-                security_code: formValues.cvv
-            },
-            payment_method_id: 'CREDIT_CARD'
-        })
+    const requestBody = {
+        payment_card: {
+            card_type: type,
+            expiration_month: parseInt(expiryMonth),
+            expiration_year: 2000 + parseInt(expiryYear),
+            holder: formValues.ccname,
+            number: formValues.ccnumber,
+            security_code: formValues.cvv
+        },
+        payment_method_id: 'CREDIT_CARD'
     }
 
-    return makeSfccRequest(`${API_END_POINT_URL}/orders/${order.order_no}/payment_instruments/${paymentInstrumentID}`, requestOptions)
-        .then((response) => response.json())
-        .then((responseJSON) => {
-            if (responseJSON.fault) {
-                throw new Error(responseJSON.fault.message)
-            }
-            return responseJSON /* OCAPI Order */
-        })
+    return makeSfccJsonRequest(
+        `${API_END_POINT_URL}/orders/${order.order_no}/payment_instruments/${paymentInstrumentID}`,
+        requestBody,
+        {method: 'PATCH'}
+    )
 }
 
 export const submitPayment = (formValues) => (dispatch) => {
