@@ -97,56 +97,48 @@ export const initCheckoutPaymentPage = () => (dispatch) => {
         })
 }
 
-export const submitShipping = (formValues) => (dispatch) => {
-    const {
-        name,
-        username,
-        shipping_method
-    } = formValues
-    const orderAddress = createOrderAddressObject(formValues)
-    return createBasket()
-        .then((basket) => {
-            const authToken = getAuthTokenPayload(getAuthToken())
-            const customerID = JSON.parse(authToken.sub).customer_info.customer_id
-            const requestOptions = {
-                method: 'PUT',
-                body: JSON.stringify({
-                    email: username,
-                    customer_name: name,
-                    customer_id: customerID
-                })
-            }
-            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}/customer`, requestOptions)
-                .then(() => basket.basket_id)
-        })
-        .then((basketID) => {
-            const requestOptions = {
-                method: 'PUT',
-                body: JSON.stringify(orderAddress)
-            }
-            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basketID}/shipments/me/shipping_address?use_as_billing=true`, requestOptions)
-                .then((response) => response.json())
-                .then((responseJSON) => {
-                    if (responseJSON.fault) {
-                        throw new SubmissionError({_error: 'Unable to save shipping data'})
-                    }
-                })
-                .then(() => {
-                    const shippingMethodRequestOptions = {
-                        method: 'PUT',
-                        body: JSON.stringify({id: shipping_method})
-                    }
-                    return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basketID}/shipments/me/shipping_method`, shippingMethodRequestOptions)
-                        .then((response) => response.json())
-                        .then((responseJSON) => {
-                            if (responseJSON.fault) {
-                                throw new SubmissionError({_error: 'Unable to save shipping data'})
-                            }
-                            dispatch(handleCartData(responseJSON))
+const setCustomerNameAndEmail = (formValues, basket) => () => {
+    const authToken = getAuthTokenPayload(getAuthToken())
+    const customerID = JSON.parse(authToken.sub).customer_info.customer_id
+    const requestBody = {
+        email: formValues.username,
+        customer_name: formValues.name,
+        customer_id: customerID
+    }
 
-                            return PAYMENT_URL
-                        })
-                })
+    return makeSfccJsonRequest(
+        `${API_END_POINT_URL}/baskets/${basket.basket_id}/customer`,
+        requestBody,
+        {method: 'PUT'}
+    )
+}
+
+const setShippingAddress = (formValues, basket) => () => {
+    const orderAddress = createOrderAddressObject(formValues)
+    return makeSfccJsonRequest(
+        `${API_END_POINT_URL}/baskets/${basket.basket_id}/shipments/me/shipping_address?use_as_billing=true`,
+        orderAddress,
+        {method: 'PUT'}
+    )
+}
+
+const setShippingMethod = (formValues, basket) => () => (
+    makeSfccJsonRequest(
+        `${API_END_POINT_URL}/baskets/${basket.basket_id}/shipments/me/shipping_method`,
+        {id: formValues.shipping_method},
+        {method: 'PUT'}
+    )
+)
+
+export const submitShipping = (formValues) => (dispatch) => {
+    return createBasket()
+        .then((basket) => dispatch(setCustomerNameAndEmail(formValues, basket)))
+        .then((basket) => dispatch(setShippingAddress(formValues, basket)))
+        .then((basket) => dispatch(setShippingMethod(formValues, basket)))
+        .catch(() => { throw new SubmissionError({_error: 'Unable to save shipping data'}) })
+        .then((basket) => {
+            dispatch(handleCartData(basket))
+            return PAYMENT_URL
         })
 }
 
@@ -168,7 +160,7 @@ const addPaymentMethod = (formValues, basket) => (dispatch, getState) => {
     )
 }
 
-const setBillingAddress = (formValues, basket) => (dispatch) => {
+const setBillingAddress = (formValues, basket) => () => {
     if (formValues.billing_same_as_shipping) {
         // No change to the address is necessary
         return Promise.resolve(basket)
@@ -182,11 +174,11 @@ const setBillingAddress = (formValues, basket) => (dispatch) => {
     )
 }
 
-const createOrder = (basket) => (dispatch) =>
+const createOrder = (basket) => () =>
     makeSfccJsonRequest(`${API_END_POINT_URL}/orders`, basket, {method: 'POST'})
 
 
-const setPaymentMethod = (formValues, order) => (dispatch) => {
+const setPaymentMethod = (formValues, order) => () => {
    // set payment method
     const type = getCardData(formValues.ccnumber).cardType
     const expiryMonth = /^\d\d/.exec(formValues.ccexpiry)[0]
