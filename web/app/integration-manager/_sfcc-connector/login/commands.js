@@ -36,7 +36,6 @@ export const login = (username, password) => (dispatch) => {
     let basketContents
     let customerID
     return requestCartData()
-        .then((response) => response.json())
         .then((basket) => {
             basketContents = basket
 

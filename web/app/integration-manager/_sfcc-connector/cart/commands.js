@@ -6,11 +6,9 @@ import {makeApiRequest, makeApiJsonRequest, getAuthTokenPayload} from '../utils'
 import {populateLocationsData} from '../checkout/utils'
 import {requestCartData, createBasket, handleCartData} from './utils'
 
-export const getCart = () => (dispatch) => {
-    return requestCartData()
-        .then((response) => response.json())
-        .then((responseJSON) => dispatch(handleCartData(responseJSON)))
-}
+export const getCart = () => (dispatch) =>
+    requestCartData().then((basket) => dispatch(handleCartData(basket)))
+
 
 export const addToCart = (productId, quantity) => (dispatch) => {
     return createBasket()
