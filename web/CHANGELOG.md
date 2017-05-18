@@ -1,4 +1,5 @@
-## To be released
+## 0.16.3 (May 17, 2017)
+- Release updated README.md to support Windows (for upcoming training)
 
 ## 0.16.2
 - Update dependencies, including babel, jsdom, jest, and more.
