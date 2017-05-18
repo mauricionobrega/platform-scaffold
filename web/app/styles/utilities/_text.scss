@@ -14,7 +14,7 @@
 
     // Added with webfontloader. See loadFonts() in app/container.js
     .wf-active & {
-        font-family: $loaded-header-font-family; // TODO: CHECK HERE
+        font-family: $loaded-header-font-family;
     }
 }
 
