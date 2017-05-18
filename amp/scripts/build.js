@@ -5,7 +5,7 @@
  * including production dependencies.
  */
 const Promise = require('bluebird');
-const Git = require('nodegit');
+const git = require('git-rev-sync');
 const archiver = require('archiver');
 const path = require('path');
 const process = require('process');
@@ -23,11 +23,7 @@ const staticInDir = path.join(ampRootDir, 'app', 'static')
 
 const info = (m) => console.log(m)
 const success = (m) => console.log(chalk.green(m))
-const warning = (m) => console.log(chalk.yellow(m))
 const error = (m) => console.error(chalk.red(m))
-
-
-const repoIsClean = (repo) => repo.getStatus().then(statuses => statuses.length === 0);
 
 
 const webpack = (outputDir) => execSync(
@@ -57,18 +53,12 @@ const zip = (inDir, outPath) => {
 
 const build = () => {
     Promise.resolve()
-        .then(() => Git.Repository.open(path.resolve(__dirname, "../../.git")))
-        .then(repo => Promise.all([Promise.resolve(repo), repoIsClean(repo), repo.getHeadCommit()]))
-        .then(([repo, clean, commit]) => {
-            const commitId = commit.id().tostrS().slice(0, 8)
+        .then(() => {
+            const commitId = git.short()
             const outputDir = path.join(buildDir, commitId)
             const staticOutDir = path.join(outputDir, 'static')
             const serverOutDir = path.join(outputDir, 'server')
             const serverOutZip = path.join(outputDir, 'server.zip')
-
-            if (!clean) {
-                warning('The repository has uncommitted changes.')
-            }
 
             return Promise.resolve()
                 .tap(() => info('Cleaning build directory'))
@@ -92,8 +82,9 @@ const build = () => {
                 .tap(() => info('Creating Zip archive'))
                 .then(() => zip(serverOutDir, serverOutZip))
                 .then(() => rimraf(serverOutDir))
+
+                .tap(() => success(`Built version '${commitId}' successfully`))
         })
-        .tap(() => success('Built successfully'))
         .catch(err => {
             error(err)
             process.exit(1);
