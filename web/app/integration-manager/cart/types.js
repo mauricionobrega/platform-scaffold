@@ -21,6 +21,12 @@ const CartItem = Runtypes.Record({
     linePrice: Money
 })
 
+const Discount = Runtypes.Record({
+    label: Text,
+    code: Text,
+    amount: Money
+})
+
 const Tax = Runtypes.Record({
     label: Text,
     amount: Money
@@ -45,6 +51,10 @@ export const Cart = Runtypes.Record({
      */
     orderTotal: Money
 }).And(Runtypes.Optional({
+    /**
+     * The discount, including promos, coupons and dicounts
+     */
+    discount: Discount,
     /**
      * All taxes applied to items in this cart
      */
