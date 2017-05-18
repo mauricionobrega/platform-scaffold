@@ -24,6 +24,7 @@
     "node-fetch": "1.6.3",
     "node-sass": "^4.5.2",
     "nodemon": "1.11.0",
+    "npm-run-all": "^4.0.2",
     "progressive-web-scaffold": "file:../web",
     "react": "15.4.2",
     "react-addons-shallow-compare": "15.4.2",
@@ -41,15 +42,16 @@
   "scripts": {
     "add:component": "amp-sdk-add-component",
     "add:container": "amp-sdk-add-container",
-    "dev": "nodemon --exec \"npm start\"",
+    "dev:serve": "nodemon build/main.js",
+    "dev:watch": "webpack --watch",
+    "dev": "npm-run-all --parallel dev:watch dev:serve",
     "lint": "npm run lint:js && npm run lint:sass",
     "lint:fix": "npm run lint:js -- --fix",
     "lint:js": "eslint '**/*.{js,jsx}'",
     "lint:sass": "sass-lint -c .sass-lint.yml 'app/**/*.scss' -v",
-    "start": "babel-node ./app/main.js",
     "test": "cross-env NODE_ENV=test jest",
     "test:all": "npm run lint && npm test -- --coverage",
-    "build": "webpack"
+    "build": "cross-env NODE_ENV=production webpack"
   },
   "jest": {
     "moduleNameMapper": {

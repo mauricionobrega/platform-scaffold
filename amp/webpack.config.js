@@ -24,10 +24,7 @@ module.exports = {
             {
                 test: /\.js(x?)$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader',
-                options: {
-                    cacheDirectory: `${__dirname}/build/tmp`
-                }
+                loader: 'babel-loader?cacheDirectory=true'
             },
             {
                 test: /\.scss$/,

@@ -1,6 +1,7 @@
 import sourceMapSupport from 'source-map-support'
 sourceMapSupport.install()
 
+import path from 'path'
 import Promise from 'bluebird'
 import fetch from 'node-fetch'
 import express from 'express'
@@ -99,6 +100,9 @@ app.get('/new-arrivals.html', productListPage)
 app.get('/charms.html', productListPage)
 app.get('/checkout/cart/configure/id/*/product_id/*/', productDetailPage)
 app.get('*.html', productDetailPage)
+
+app.use('/static', express.static(path.resolve('./app/static')))
+
 
 app.listen(3000, () => {
     console.log('Example app listening on port 3000!')
