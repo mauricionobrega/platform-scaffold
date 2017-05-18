@@ -152,12 +152,12 @@ export const makeApiJsonRequest = (path, body, options) => {
         })
 }
 
-export const makeSfccUnAuthenticatedRequest = (url, options) => {
+export const makeUnAuthenticatedApiRequest = (path, options) => {
     const requestOptions = {
         ...options,
         headers: REQUEST_HEADERS
     }
-    return makeRequest(url, requestOptions)
+    return makeRequest(API_END_POINT_URL + path, requestOptions)
 }
 
 export const formatPrice = (price) => {
