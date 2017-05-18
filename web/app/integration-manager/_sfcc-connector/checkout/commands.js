@@ -4,7 +4,7 @@
 
 import {SubmissionError} from 'redux-form'
 import {createBasket, handleCartData} from '../cart/utils'
-import {makeSfccRequest, makeSfccJsonRequest, getAuthToken, getAuthTokenPayload} from '../utils'
+import {makeApiRequest, makeSfccJsonRequest, getAuthToken, getAuthTokenPayload} from '../utils'
 import {getOrderTotal} from '../../../store/cart/selectors'
 import {populateLocationsData, createOrderAddressObject} from './utils'
 import {parseShippingAddressFromBasket} from './parsers'
@@ -17,7 +17,7 @@ import {receiveCheckoutData, receiveShippingInitialValues, receiveBillingInitial
 export const fetchShippingMethodsEstimate = () => (dispatch) => {
     return createBasket()
         .then((basket) => {
-            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}/shipments/me/shipping_methods`, {method: 'GET'})
+            return makeApiRequest(`/baskets/${basket.basket_id}/shipments/me/shipping_methods`, {method: 'GET'})
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     const shippingMethods = responseJSON.applicable_shipping_methods.map(({name, description, price, id}) => {
@@ -36,7 +36,7 @@ export const fetchShippingMethodsEstimate = () => (dispatch) => {
 export const initCheckoutShippingPage = () => (dispatch) => {
     return createBasket()
         .then((basket) => {
-            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}`, {method: 'GET'})
+            return makeApiRequest(`/baskets/${basket.basket_id}`, {method: 'GET'})
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     const {
@@ -86,7 +86,7 @@ export const initCheckoutPaymentPage = () => (dispatch) => {
     dispatch(populateLocationsData())
     return createBasket()
         .then((basket) => {
-            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}`, {method: 'GET'})
+            return makeApiRequest(`/baskets/${basket.basket_id}`, {method: 'GET'})
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     const addressData = parseShippingAddressFromBasket(responseJSON)
