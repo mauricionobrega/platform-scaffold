@@ -12,7 +12,7 @@ const titleClass = `${containerClass}__title`
 
 const LogMeIn = ({title}) => (
     <div className={containerClass}>
-        <h1 className={titleClass}>HI - {title}</h1>
+        <h1 className={titleClass}>{title}</h1>
         <LogMeInForm />
     </div>
 )

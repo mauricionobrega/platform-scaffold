@@ -10,6 +10,7 @@ import checkoutShipping from './checkout-shipping/reducer'
 import footer from './footer/reducer'
 import header from './header/reducer'
 import home from './home/reducer'
+import logMeIn from './log-me-in/reducer'
 import login from './login/reducer'
 import navigation from './navigation/reducer'
 import productDeets from './product-deets/reducer'
@@ -27,6 +28,7 @@ const uiReducer = combineReducers({
     footer,
     header,
     home,
+    logMeIn,
     login,
     navigation,
     productDeets,

@@ -86,32 +86,11 @@ const initialState = Immutable.fromJS({
     title: 'Customer Login',
     signinSection: {
         href: '',
-        heading: '',
-        description: '',
-        requiredText: '',
         form: {
             href: '',
             fields: signinFields,
             hiddenInputs: [],
             submitText: ''
-        },
-    },
-    registerSection: {
-        href: '',
-        heading: '',
-        description: '',
-        requiredText: '',
-        form: {
-            href: '',
-            hiddenInputs: [],
-            submitText: '',
-            sections: [{
-                heading: '',
-                fields: registerPersonalFields,
-            }, {
-                heading: '',
-                fields: registerSigninFields,
-            }]
         },
     }
 })
