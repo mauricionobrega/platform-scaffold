@@ -1,4 +1,4 @@
-/* global AstroNative */
+/* global AstroNative, MESSAGING_ENABLED */
 
 import Promise from 'bluebird'
 import Astro from 'progressive-app-sdk/astro-full'
@@ -24,8 +24,6 @@ const OnboardingModalController = function(modalView, onboardingController) {
 }
 
 OnboardingModalController.init = async function() {
-    const messagingEnabled = AstroNative.Configuration.messagingEnabled
-
     const [
         modalView,
         onboardingController,
@@ -34,7 +32,7 @@ OnboardingModalController.init = async function() {
         ModalViewPlugin.init(),
         OnboardingController.init(),
         // If messaging is not enabled, pushController will become null
-        messagingEnabled ? PushController.init() : Promise.resolve(null)
+        MESSAGING_ENABLED ? PushController.init() : Promise.resolve(null)
     ])
 
     modalView.setContentView(onboardingController.viewPlugin)

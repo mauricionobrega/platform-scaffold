@@ -1,4 +1,4 @@
-/* global AstroNative, MESSAGING_ENABLED */
+/* global AstroNative */
 
 // Remember to set up Chrome port forwarding for this to work in Android
 const localPreviewUrl = 'https://localhost:8443/loader.js'
@@ -15,12 +15,7 @@ const baseConfig = {
         ? localPreviewUrl
         : '//cdn.mobify.com/sites/progressive-web-scaffold/production/loader.js',
     colors,
-    logoUrl: 'file:///logo.png',
-
-    // This boolean is true if messaging support has been enabled
-    // by the generator. If it's false, messaging support is disabled
-    // and an RPC call to pushEnable will do nothing.
-    messagingEnabled: MESSAGING_ENABLED // replaced at build time by webpack
+    logoUrl: 'file:///logo.png'
 }
 
 export default baseConfig
