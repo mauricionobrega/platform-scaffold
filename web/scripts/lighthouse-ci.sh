@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Run the Lighthouse test against the dev build with continuous integration.
 
-# Location to save the generated HTML report.
+# Location to save the generated report.
 OUTPUT_PATH=./lighthouse/audit-local
 # See package.json's siteUrl key.
 URL=${1-$npm_package_siteUrl}
