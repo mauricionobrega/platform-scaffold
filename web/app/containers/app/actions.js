@@ -19,6 +19,7 @@ import {
     UnwrappedCheckoutConfirmation,
     UnwrappedCheckoutPayment,
     UnwrappedCheckoutShipping,
+    UnwrappedLogMeIn,
     UnwrappedLogin,
     UnwrappedStartersKit,
     UnwrappedProductDeets,
@@ -34,6 +35,7 @@ import * as checkoutShippingUIActions from '../checkout-shipping/actions'
 import * as checkoutShippingActions from '../../store/checkout/shipping/actions'
 import * as cartActions from '../../store/cart/actions'
 import * as homeActions from '../home/actions'
+import * as logMeInActions from '../log-me-in/actions'
 import * as loginActions from '../login/actions'
 import * as startersKitActions from '../starters-kit/actions'
 import * as productDeetsActions from '../product-deets/actions'
@@ -157,6 +159,8 @@ export const fetchPage = (url, pageComponent, routeName, fetchUrl) => {
 
                 if (pageComponent === Home) {
                     dispatch(homeActions.process(receivedAction))
+                } else if (pageComponent === UnwrappedLogMeIn) {
+                    dispatch(logMeInActions.process(receivedAction))
                 } else if (pageComponent === UnwrappedLogin) {
                     dispatch(loginActions.process(receivedAction))
                 } else if (pageComponent === UnwrappedStartersKit) {
