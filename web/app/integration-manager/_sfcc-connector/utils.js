@@ -143,7 +143,12 @@ export const makeApiJsonRequest = (path, body, options) => {
         ...options,
         body: JSON.stringify(body)
     })
-        .then((response) => response.json())
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(response.statusText)
+            }
+            return response.json()
+        })
         .then((responseJSON) => {
             if (responseJSON.fault) {
                 throw new Error(responseJSON.fault.message)
