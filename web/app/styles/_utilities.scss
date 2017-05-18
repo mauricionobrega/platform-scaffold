@@ -1,7 +1,11 @@
 // Utilities
 // ===
+//
+// Allows overriding existing styles with extreme specificity while keeping
+// source code clean and readable. Does not override !important or inline
+// styles; those must be dealt with separately.
 
-@include style-override(3, $selector: "#app") {
+@include style-override(3, "#app") {
     @import 'utilities/border';
     @import 'utilities/box-shadow';
     @import 'utilities/card';
