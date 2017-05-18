@@ -27,14 +27,6 @@
 @import 'styles/animations';
 
 
-// Sass utilities
-// ---
-//
-// Libraries of mixins/functions
-
-@import 'styles/utilities';
-
-
 // Base
 // ---
 //
@@ -64,6 +56,14 @@
 // ---
 
 @import 'styles/templates';
+
+
+// Sass utilities
+// ---
+//
+// Libraries of mixins/functions
+
+@import 'styles/utilities';
 
 
 // Overrides
