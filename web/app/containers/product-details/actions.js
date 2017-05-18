@@ -15,7 +15,7 @@ import {getAddToCartFormValues} from '../../store/form/selectors'
 import {addToCart} from '../../integration-manager/cart/commands'
 import {getProductVariantData} from '../../integration-manager/products/commands'
 import {openModal, closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
-import {addNotification} from '../app/actions'
+import {addNotification} from 'progressive-web-sdk/dist/store/notifications/actions'
 import {PRODUCT_DETAILS_ITEM_ADDED_MODAL} from './constants'
 
 import {isRunningInAstro, trigger} from '../../utils/astro-integration'
@@ -69,11 +69,11 @@ export const submitCartForm = (formValues) => (dispatch, getStore) => {
         .then(() => dispatch(openModal(PRODUCT_DETAILS_ITEM_ADDED_MODAL)))
         .catch((error) => {
             console.error('Error adding to cart', error)
-            return dispatch(addNotification({
-                content: 'Unable to add item to the cart.',
-                id: 'addToCartError',
-                showRemoveButton: true
-            }))
+            return dispatch(addNotification(
+                'addToCartError',
+                'Unable to add item to the cart.',
+                true
+            ))
         })
         .then(() => dispatch(addToCartComplete()))
 }
