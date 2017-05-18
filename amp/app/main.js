@@ -1,6 +1,7 @@
 import sourceMapSupport from 'source-map-support'
 sourceMapSupport.install()
 
+import process from 'process'
 import path from 'path'
 import Promise from 'bluebird'
 import fetch from 'node-fetch'
@@ -105,24 +106,28 @@ app.get('*.html', productDetailPage)
 app.use('/static', express.static(path.resolve('./app/static')))
 
 
-// if (require.main === module) {
-//     app.listen(3000, () => {
-//         console.log('Example app listening on port 3000!')
-//     })
-// }
 
-// The most useful lambda docs live here
-// http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-set-up-simple-proxy.html#api-gateway-simple-proxy-for-lambda-output-format
+const onLambda = process.env.hasOwnProperty('AWS_LAMBDA_FUNCTION_NAME')
 
-const binaryMimeTypes = [
-  // If we choose to let express output gzipped responses, we'd need to add mimetypes here.
-  // 'application/javascript',
-  // 'application/json',
-  // 'application/octet-stream',
-  // 'text/html',
-  // 'text/plain',
-  // 'text/text',
-]
-const server = awsServerlessExpress.createServer(app, null, binaryMimeTypes)
-export const handler = (event, context) => awsServerlessExpress.proxy(server, event, context)
+
+if (!onLambda) {
+    app.listen(3000, () => console.log('Example app listening on port 3000!'))
+}
+
+
+/**
+ * Wrap the express app returning a handler function that can be used with AWS Lambda.
+ */
+const makeHandler = (expressApp) => {
+    const binaryMimeTypes = [
+      // If we choose to let express output gzipped responses, we'd need to add mimetypes here.
+      // 'text/html',
+    ]
+    const server = awsServerlessExpress.createServer(expressApp, null, binaryMimeTypes)
+    return (event, context) => awsServerlessExpress.proxy(server, event, context)
+}
+
+
+export const handler = onLambda ? makeHandler(app) : undefined
+
 

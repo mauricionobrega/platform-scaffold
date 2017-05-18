@@ -9,7 +9,7 @@ const Git = require('nodegit');
 const archiver = require('archiver');
 const path = require('path');
 const process = require('process');
-const exec = require('child_process').exec;
+const execSync = require('child_process').execSync;
 const rimraf = Promise.promisify(require('rimraf'));
 const fs = Promise.promisifyAll(require('fs'));
 const ncp = Promise.promisify(require('ncp').ncp);
@@ -23,24 +23,15 @@ const staticInDir = path.join(ampRootDir, 'app', 'static')
 const repoIsClean = (repo) => repo.getStatus().then(statuses => statuses.length === 0);
 
 
-/**
- * Wrap a subprocess called through exec() in a promise.
- */
-const execPromise = (cmd, opts={}) => {
-    return new Promise((resolve, reject) => {
-        const child = exec(cmd, opts, (err, stdout, stderr) => err ? reject(err) : resolve(stdout))
-        child.stdout.pipe(process.stdout)
-        child.stderr.pipe(process.stderr)
-    })
-}
-
-const webpack = (outputDir) => execPromise(
-    `./node_modules/.bin/webpack --output-path ${outputDir}`, {cwd: ampRootDir}
+const webpack = (outputDir) => execSync(
+    `./node_modules/.bin/webpack --output-path ${outputDir}`, {cwd: ampRootDir, stdio: 'inherit'}
 )
 
-const installDependencies = (outputDir) => execPromise(
-    'npm install --only production', {cwd: outputDir}
+
+const installDependencies = (outputDir) => execSync(
+    'npm install --only production', {cwd: outputDir, stdio: 'inherit'}
 )
+
 
 const zip = (inDir, outPath) => {
     return new Promise((resolve, reject) => {
@@ -53,7 +44,7 @@ const zip = (inDir, outPath) => {
         output.on('finish', resolve);
         archive.pipe(output)
         archive.on('error', reject);
-        archive.directory(inDir, name)
+        archive.glob('**/*.*', {cwd: inDir}, {})
         archive.finalize()
     })
 }
@@ -63,10 +54,11 @@ const log = console.log;
 
 
 const build = () => {
-    Git.Repository.open(path.resolve(__dirname, "../../.git"))
+    Promise.resolve()
+        .then(() => Git.Repository.open(path.resolve(__dirname, "../../.git")))
         .then(repo => Promise.all([Promise.resolve(repo), repoIsClean(repo), repo.getHeadCommit()]))
         .then(([repo, clean, commit]) => {
-            const commitId = commit.id().tostrS()
+            const commitId = commit.id().tostrS().slice(0, 8)
             const outputDir = path.join(buildDir, commitId)
             const staticOutDir = path.join(outputDir, 'static')
             const serverOutDir = path.join(outputDir, 'server')
@@ -92,11 +84,11 @@ const build = () => {
                 .tap(() => log('Building app'))
                 .then(() => webpack(serverOutDir))
 
-                // .tap(() => log('Creating Zip archive'))
-                // .then(() => zip(serverOutDir, serverOutZip))
-                // .then(() => rimraf(serverOutDir))
+                .tap(() => log('Creating Zip archive'))
+                .then(() => zip(serverOutDir, serverOutZip))
+                .then(() => rimraf(serverOutDir))
         })
-        .then(log('Built successfully'))
+        .tap(() => log('Built successfully'))
         .catch(err => {
             console.error(err)
             process.exit(1);
