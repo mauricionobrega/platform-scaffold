@@ -18,9 +18,7 @@ mainConfig.module.rules = mainConfig.module.rules.concat({
     loader: ExtractTextPlugin.extract(['css-loader?-autoprefixer&-url', 'postcss-loader', 'sass-loader']),
     include: [
         /node_modules\/progressive-web-sdk/,
-        /app/,
-        // TO-DO - remember to revert this change
-        './../../progressive-web-sdk/src/'
+        /app/
     ]
 })
 
