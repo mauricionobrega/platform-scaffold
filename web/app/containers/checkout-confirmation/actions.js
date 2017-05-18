@@ -4,7 +4,7 @@
 
 import {CHECKOUT_CONFIRMATION_MODAL, CHECKOUT_CONFIRMATION_REGISTRATION_FAILED} from './constants'
 import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
-import {addNotification, removeAllNotifications} from '../app/actions'
+import {addNotification, removeAllNotifications} from 'progressive-web-sdk/dist/store/notifications/actions'
 import {openModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import * as shippingSelectors from '../../store/checkout/shipping/selectors'
 import * as formSelectors from '../../store/form/selectors'
@@ -34,23 +34,23 @@ export const submitRegisterForm = () => {
             })
             .catch((error) => {
                 if (error.name !== 'SubmissionError') {
-                    dispatch(addNotification({
-                        content: `Sorry, registration failed. Contact us for assistance. ${error.message}`,
-                        id: CHECKOUT_CONFIRMATION_REGISTRATION_FAILED,
-                        showRemoveButton: true
-                    }))
+                    dispatch(addNotification(
+                        CHECKOUT_CONFIRMATION_REGISTRATION_FAILED,
+                        `Sorry, registration failed. Contact us for assistance. ${error.message}`,
+                        true
+                    ))
                 } else if (error.message.includes('Unable to save')) {
-                    dispatch(addNotification({
-                        content: error.message,
-                        id: CHECKOUT_CONFIRMATION_REGISTRATION_FAILED,
-                        showRemoveButton: true
-                    }))
+                    dispatch(addNotification(
+                        CHECKOUT_CONFIRMATION_REGISTRATION_FAILED,
+                        error.message,
+                        true
+                    ))
                 } else {
-                    dispatch(addNotification({
-                        content: 'Could not complete registration. The email you provided may already be in use.',
-                        id: CHECKOUT_CONFIRMATION_REGISTRATION_FAILED,
-                        showRemoveButton: true
-                    }))
+                    dispatch(addNotification(
+                        CHECKOUT_CONFIRMATION_REGISTRATION_FAILED,
+                        'Could not complete registration. The email you provided may already be in use.',
+                        true
+                    ))
                 }
             })
     }

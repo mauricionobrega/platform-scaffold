@@ -7,5 +7,6 @@ export const getUser = ({user}) => user
 export const getCategories = ({categories}) => categories
 export const getProducts = ({products}) => products
 export const getCart = ({cart}) => cart
+export const getNotifications = ({notifications}) => notifications
 export const getCheckout = ({checkout}) => checkout
 export const getForm = ({form}) => form
