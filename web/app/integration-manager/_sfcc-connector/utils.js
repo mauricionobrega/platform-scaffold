@@ -138,6 +138,11 @@ export const makeSfccRequest = (url, options) => {
         })
 }
 
+export const makeApiRequest = (path, options) => makeSfccRequest(
+    API_END_POINT_URL + path,
+    options
+)
+
 export const makeSfccJsonRequest = (url, body, options) => {
     return makeSfccRequest(url, {
         ...options,
