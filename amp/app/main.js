@@ -10,6 +10,7 @@ import ReactDOMServer from 'react-dom/server'
 import _jsdom from 'jsdom'
 import {Provider} from 'react-redux'
 import {createStore} from 'redux'
+import * as awsServerlessExpress from 'aws-serverless-express'
 
 import Home from './containers/home'
 import PDP from './containers/pdp'
@@ -24,8 +25,6 @@ import styles from './stylesheet.scss'
 
 const jsdom = Promise.promisifyAll(_jsdom)
 
-
-const app = express()
 
 const base = 'https://www.merlinspotions.com'
 
@@ -91,6 +90,8 @@ const homePage = (req, res, next) => {
         .catch(next)
 }
 
+const app = express()
+
 app.get('/', homePage)
 app.get('/potions.html', productListPage)
 app.get('/books.html', productListPage)
@@ -104,6 +105,24 @@ app.get('*.html', productDetailPage)
 app.use('/static', express.static(path.resolve('./app/static')))
 
 
-app.listen(3000, () => {
-    console.log('Example app listening on port 3000!')
-})
+// if (require.main === module) {
+//     app.listen(3000, () => {
+//         console.log('Example app listening on port 3000!')
+//     })
+// }
+
+// The most useful lambda docs live here
+// http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-set-up-simple-proxy.html#api-gateway-simple-proxy-for-lambda-output-format
+
+const binaryMimeTypes = [
+  // If we choose to let express output gzipped responses, we'd need to add mimetypes here.
+  // 'application/javascript',
+  // 'application/json',
+  // 'application/octet-stream',
+  // 'text/html',
+  // 'text/plain',
+  // 'text/text',
+]
+const server = awsServerlessExpress.createServer(app, null, binaryMimeTypes)
+export const handler = (event, context) => awsServerlessExpress.proxy(server, event, context)
+

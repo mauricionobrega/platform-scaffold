@@ -45,7 +45,7 @@ const installDependencies = (outputDir) => execPromise(
 const zip = (inDir, outPath) => {
     return new Promise((resolve, reject) => {
         const output = fs.createWriteStream(outPath);
-        const archive = archiver('tar');
+        const archive = archiver('zip');
         const split = inDir.split(path.sep).filter(x => x !== '');
         const name = split.length > 0 ? split[split.length -1] : inDir;
         output.on('close', resolve);
@@ -92,9 +92,9 @@ const build = () => {
                 .tap(() => log('Building app'))
                 .then(() => webpack(serverOutDir))
 
-                .tap(() => log('Creating Zip archive'))
-                .then(() => zip(serverOutDir, serverOutZip))
-                .then(() => rimraf(serverOutDir))
+                // .tap(() => log('Creating Zip archive'))
+                // .then(() => zip(serverOutDir, serverOutZip))
+                // .then(() => rimraf(serverOutDir))
         })
         .then(log('Built successfully'))
         .catch(err => {
