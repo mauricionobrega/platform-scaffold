@@ -7,15 +7,6 @@
 // must be dealt with separately.
 
 
-// Configurable variables
-// ---
-
-// The default selector used to build the override. Since it’s a special
-// character in CSS, the `!` must be escaped. Eg. <div id="!">.
-
-$style-override-selector: '#\\!' !default;
-
-
 // Style override
 // ---
 //
@@ -24,7 +15,7 @@ $style-override-selector: '#\\!' !default;
 // @param $selector [String]: An id selector that matches the
 // $style-override-selector tag.
 
-@mixin style-override($degree: 1, $selector: $style-override-selector) {
+@mixin style-override($degree: 1, $selector: '') {
     $selector-chain: '';
 
     // Build an id selector by chaining the same id onto itself once more than
