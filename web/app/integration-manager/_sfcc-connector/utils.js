@@ -157,6 +157,20 @@ export const makeSfccJsonRequest = (url, body, options) => {
         })
 }
 
+export const makeApiJsonRequest = (path, body, options) => {
+    return makeApiRequest(path, {
+        ...options,
+        body: JSON.stringify(body)
+    })
+        .then((response) => response.json())
+        .then((responseJSON) => {
+            if (responseJSON.fault) {
+                throw new Error(responseJSON.fault.message)
+            }
+            return responseJSON
+        })
+}
+
 export const makeSfccUnAuthenticatedRequest = (url, options) => {
     const requestOptions = {
         ...options,

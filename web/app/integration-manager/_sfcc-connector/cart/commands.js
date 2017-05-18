@@ -2,10 +2,9 @@
 /* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
-import {makeApiRequest, makeSfccJsonRequest, getAuthTokenPayload} from '../utils'
+import {makeApiRequest, makeApiJsonRequest, getAuthTokenPayload} from '../utils'
 import {populateLocationsData} from '../checkout/utils'
 import {requestCartData, createBasket, handleCartData} from './utils'
-import {API_END_POINT_URL} from '../constants'
 
 export const getCart = () => (dispatch) => {
     return requestCartData()
@@ -102,8 +101,8 @@ export const addToWishlist = (productId) => (dispatch) => {
                 quantity: 1
             }
 
-            return makeSfccJsonRequest(
-                `${API_END_POINT_URL}/customers/${customerID}/product_lists/${id}/items`,
+            return makeApiJsonRequest(
+                `/customers/${customerID}/product_lists/${id}/items`,
                 requestBody,
                 {method: 'POST'}
             )

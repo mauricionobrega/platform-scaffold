@@ -9,7 +9,6 @@ import {receiveCartContents} from '../../cart/results'
 
 import {getProductById, getProductThumbnailSrcByPathKey, getProductThumbnailByPathKey} from '../../../store/products/selectors'
 import {getProductHref} from '../parsers'
-import {API_END_POINT_URL} from '../constants'
 import {parseCartProducts, parseCartContents} from './parsers'
 
 export const createBasket = (basketContents) => {
