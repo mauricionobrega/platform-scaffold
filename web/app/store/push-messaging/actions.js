@@ -1,109 +1,120 @@
 import {createAction} from '../../utils/utils'
+import StoreJS from './store'
 
 import * as messagingSelectors from './selectors'
-import {PAGE_VISIT_COUNT} from './constants'
+import {PAGE_COUNT, VISIT_COUNTDOWN} from './constants'
 
+export const onRehydratedPageCount = createAction('[Push Messaging] Page Count Rehydrated')
+export const onRehydratedVisitCountdown = createAction('[Push Messaging] Visit Countdown Rehydrated')
+export const stateUpdate = createAction('[Push Messaging] state updated')
+export const onVisitCountdownDecrement = createAction('[Push Messaging] Decrease Visit Countdown')
+export const onPageCountIncrement = createAction('[Push Messaging] Increment Page Count')
+export const onVisitCountdownSet = createAction('[Push Messaging] Visit Countdown Set')
+
+const storage = new StoreJS('pw')
+const ACTIVE_VISIT_DURATION = 6 * 60 * 60 // 6 days in seconds
+const PERMA_DURATION = 365 * 24 * 60 * 60 // 1 year in seconds
+
+/**
+ * Sets a visit countdown that can be used to guard against showing Push Messaging
+ * asks until X visits have elapsed
+ * Is persisted in local storage for 1 year
+ *
+ * @param {number} count - how many visits to wait for
+ */
+export const setVisitCountdown = (count) => (dispatch) => {
+    dispatch(onVisitCountdownSet(count))
+
+    console.log('[Messaging] setVisitcountdown', count, PERMA_DURATION)
+    storage.set(VISIT_COUNTDOWN, count, PERMA_DURATION)
+}
+
+/**
+ * Triggers the system-ask dialog to ask user for permissions. If user has already
+ * provided permission, subscribes or unsubscribes them to the provided channel(s).
+ * Provide a key representing the channel name, and a truthy value to subscribe
+ * or falsy value to unsubscribe.
+ *
+ * e.g.
+ * {
+ *   newDeals: true,
+ *   priceDrops: false
+ * }
+ *
+ * @param {object} [channels] - list of channels to un/subscribe to
+ * @returns {Promise} resolves to a Push Messaging State
+ */
 export const subscribe = (channels) => (dispatch) => {
     channels = channels || {default: true}
 
-    console.info('[Messaging] Subscribed to channel:', channels)
+    console.info('[Messaging] Channel subscription update:', channels)
     return window.Progressive.MessagingClientInitPromise
+        // .then(() => dispatch(subscriptionInProgress())) // TODO: Let app know we have a subscription ongoing
         .then(() => window.Progressive.MessagingClient.subscribe(channels))
         .catch((err) => console.error(err))
 }
 
-// TODO - These need to be separated from the Redux actions that are exported
-
 /**
- * Method to be called when an ask for a specific messaging channel has been shown.
+ * Informs the Push Messaging service that the given channel name was offered to the user
+ * (Dispatch this action when the UI asking user to subscribe has been shown)
+ *
+ * @param {string} channel - the name of the channel that was shown to the user
+ * @param {Promise} resolves to undefined
  */
-const channelOfferShown = (channel) => {
+export const channelOfferShown = (channel) => (dispatch) => {
     if (typeof channel !== 'string' || channel.length === 0) {
         console.log('[Messaging] Channel name must be specified.')
+        return Promise.resolve()
     }
 
-    console.info(`[Messaging] Notifying client that channel ${channel} was displayed.`)
     return window.Progressive.MessagingClientInitPromise
-        .then(() => window.Progressive.MessagingClient.channelOfferShown(channel))
+        .then(() => {
+            console.info(`[Messaging] Notifying client that channel ${channel} was displayed.`)
+            return window.Progressive.MessagingClient.channelOfferShown(channel)
+        })
         .catch((err) => console.error(err))
 }
 
-let storage
+/**
+ * For internal use, this adds 1 to the existing page counter and is dispatched by `onRouteChanged`
+ * Also persists the value in local storage
+ *
+ * @param {number} [count] - the number to increment the page count by
+ */
+export const incrementPageCount = (count = 1) => (dispatch, getState) => {
+    // First, increment the page count
+    dispatch(onPageCountIncrement(count))
 
-const setInStorage = (key, value) => {
-    return window.Progressive.MessagingClientInitPromise.then(() => {
-        storage = Object.assign({}, {
-            [key]: value
-        })
-        const result = window.Progressive.MessagingClient.LocalStorage.set('pwa:storage', JSON.stringify(storage))
-        console.info('[Messaging] set in storage:', key, value)
+    // Now that we've updated the store, get the current page count
+    const currCount = messagingSelectors.getPageCount(getState())
 
-        return result
-    })
-    .catch((err) => console.error(err))
+    // Finally, update localStorage with the latest page count
+    console.log('[Messaging] incrementPageCount', count, currCount, ACTIVE_VISIT_DURATION)
+    storage.set(PAGE_COUNT, currCount, ACTIVE_VISIT_DURATION)
 }
 
-const getFromStorage = (key) => {
-    return window.Progressive.MessagingClientInitPromise.then(() => {
-        const result = window.Progressive.MessagingClient.LocalStorage.get(key)
-        console.info('[Messaging] get from storage:', key, result)
+export const rehydratePageCount = () => (dispatch, getState) => {
+    const fromStore = storage.get(PAGE_COUNT)
 
-        return JSON.parse(result)
-    })
-    .catch((err) => console.error(err))
-}
+    if (typeof fromStore !== 'undefined') {
+        console.log('[Messaging] rehydratePageCount', fromStore)
+        dispatch(onRehydratedPageCount(fromStore))
+    } else {
+        // If page count isn't in the store, it expired. So, decrease visit countdown
+        let currCount = messagingSelectors.getVisitCountdown(getState())
 
-const rehydrateFromStore = (key) => {
-    return getFromStorage('pwa:storage').then((store) => {
-        if (store === null) {
-            return null
+        if (currCount !== false) {
+            console.log('[Messaging] Visit countdown was', currCount, 'now is', currCount - 1)
+            dispatch(setVisitCountdown(--currCount))
         }
-
-        return key ? store[key] : store
-    })
-}
-
-export const stateUpdate = createAction('[Push Messaging] state updated')
-
-// TODO - unsubscribe
-
-let rehydrated = false
-
-export const onPageVisitIncrement = createAction('Increment Page Visit Count')
-// export const onPageVisitIncrement = createActionWithMeta('Increment Page Visit Count', [], () => ({persist: true}))
-
-// TODO - Buffer actions while waiting for Messaging init promise
-export const incrementPageVisitCount = (count = 1) => {
-    return (dispatch, getState) => {
-        dispatch(onPageVisitIncrement(count))
-        const currCount = messagingSelectors.getPageVisitCount(getState())
-        setInStorage(PAGE_VISIT_COUNT, currCount)
-        console.info('[Messaging] Increment page visit count to:', currCount)
-
     }
 }
 
-// TODO - Generalize storage of specific slices of store
-export const onPageVisitRehydration = createAction('Page Visit Count Rehydrated')
+export const rehydrateVisitCountdown = () => (dispatch) => {
+    const fromStore = storage.get(VISIT_COUNTDOWN)
 
-export const rehydratePageVisitCount = () => {
-    return (dispatch) => {
-        if (rehydrated) {
-            return Promise.resolve()
-        }
-
-        return rehydrateFromStore(PAGE_VISIT_COUNT).then((count) => {
-            console.info('[Messaging] Rehydrated page count:', count)
-            rehydrated = true
-
-            if (count !== null) {
-                return dispatch(stateUpdate({[PAGE_VISIT_COUNT]: count}))
-            } else {
-                return Promise.resolve()
-            }
-        })
-        .catch((e) => {
-            console.error('[Messaging] error in rehydration:', e)
-        })
+    if (typeof fromStore !== 'undefined') {
+        console.log('[Messaging] rehydrateVisitCountdown', fromStore)
+        dispatch(onRehydratedVisitCountdown(fromStore))
     }
 }

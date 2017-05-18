@@ -180,7 +180,7 @@ class App extends React.Component {
                             <Offline reload={reload} location={children.props.location} route={routeProps} />
                     }
                 </div>
-                <SoftAsk showOnPageVisit={3} />
+                <SoftAsk showOnPageCount={3} sessionsToWaitIfDismissed={3} />
             </div>
         )
     }

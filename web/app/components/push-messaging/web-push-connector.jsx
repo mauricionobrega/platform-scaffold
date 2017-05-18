@@ -3,11 +3,21 @@ import {connect} from 'react-redux'
 
 import * as messagingActions from '../../store/push-messaging/actions'
 
+/**
+ * Non-UI component to register with the Messaging Client for state updates, as
+ * well as handle the rehydration of the Redux store of persisted values important
+ * to the Push Messaging components.
+ */
 class WebPushConnector extends React.Component {
     constructor(props) {
         super(props)
 
         this.handleStateUpdate = this.handleStateUpdate.bind(this)
+    }
+
+    componentWillMount() {
+        this.props.rehydrateVisitCountdown()
+        this.props.rehydratePageCount()
     }
 
     componentDidMount() {
@@ -36,6 +46,16 @@ class WebPushConnector extends React.Component {
 
 WebPushConnector.propTypes = {
     /**
+     * Rehydrates the Redux store with the persisted page count in local storage,
+     * if present
+     */
+    rehydratePageCount: PropTypes.func.isRequired,
+    /**
+     * Rehydrates the Redux store with the persisted visit countdown in local
+     * storage, if present
+     */
+    rehydrateVisitCountdown: PropTypes.func.isRequired,
+    /**
      * Dispatches an action to update Redux representation of Messaging state:
      * - {boolean} subscribed - whether the user is subscribed to Messaging
      * - {boolean} canSubscribe - whether it's possible to ask the user to subscribe
@@ -46,7 +66,9 @@ WebPushConnector.propTypes = {
 }
 
 const mapDispatchToProps = {
-    stateUpdate: messagingActions.stateUpdate
+    stateUpdate: messagingActions.stateUpdate,
+    rehydratePageCount: messagingActions.rehydratePageCount,
+    rehydrateVisitCountdown: messagingActions.rehydrateVisitCountdown
 }
 
 export default connect(

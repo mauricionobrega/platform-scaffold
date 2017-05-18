@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {onRouteChanged, fetchPage, removeAllNotifications} from './containers/app/actions'
-import {incrementPageVisitCount, rehydratePageVisitCount} from './store/push-messaging/actions'
+import {incrementPageCount} from './store/push-messaging/actions'
 
 import {trigger as astroTrigger} from './utils/astro-integration'
 
@@ -22,7 +22,7 @@ const template = (WrappedComponent) => {
         dispatchRouteChange({dispatch, location, route}) {
             const url = getURL(location)
 
-            dispatch(rehydratePageVisitCount()).then(() => dispatch(incrementPageVisitCount()))
+            dispatch(incrementPageCount())
             dispatch(onRouteChanged(url, route.routeName))
 
             if (!route.suppressFetch) {
