@@ -16,7 +16,7 @@
 
     transform: scale(1);
 
-    animation: inlineLoaderPulseAnimation 1s ease-in-out infinite;
+    animation: inline-loader-pulse 1s ease-in-out infinite;
 
     &::after {
         content: '';
