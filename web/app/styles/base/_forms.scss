@@ -6,12 +6,43 @@ $base__radio-checkmark: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2
 
 // General Form Elements
 // ---
+//
+// 1. Address Firefox 4+ setting `line-height` on `input` using `!important` in
+// the UA stylesheet.
+// 2. Remove padding so people aren’t caught out if they zero out fieldsets.
+// 3. Remove inner padding and border in Firefox 4+.
+
+// 4. Correct color not being inherited. Known issue: affects color of disabled
+//    elements.
+// 5. Correct font properties not being inherited.
+// 6. Address margins set differently in Firefox 4+, Safari, and Chrome.
 
 fieldset {
     min-width: 0;
     margin: 0;
     padding: 0;
     border: 0;
+}
+
+input {
+    margin: 0; // 6
+
+    color: inherit; // 4
+    font: inherit; // 5
+
+    line-height: normal; // 1
+
+    &::-moz-focus-inner {
+        padding: 0; // 3
+        border: 0; // 3
+    }
+}
+
+textarea {
+    margin: 0; // 6
+
+    color: inherit; // 4
+    font: inherit; // 5
 }
 
 input,
@@ -69,19 +100,32 @@ textarea,
     }
 }
 
+legend {
+    padding: 0; // 2
+}
+
 
 // Search input
 // ---
 //
 // These properties must be set with a slightly higher specificity for search
 // inputs because Normalize's defaults are a bit too specific
+//
+// 1. Address `appearance` set to `searchfield` in Safari and Chrome.
+// 2. Remove inner padding and search cancel button in Safari and Chrome on OS X.
+// Safari (but not Chrome) clips the cancel button when the search input has
+// padding (and `textfield` appearance).
 
 input[type="search"] {
     box-sizing: border-box;
 
-    -webkit-appearance: none;
-}
+    -webkit-appearance: none; // 1
 
+    &::-webkit-search-cancel-button,
+    &::-webkit-search-decoration {
+        -webkit-appearance: none; // 2
+    }
+}
 
 // Select
 // ---
@@ -90,13 +134,25 @@ input[type="search"] {
 //    styling, remove both these lines.
 // 2. Simulate the position of the down-arrow as if it were a Icon component in
 //    a button.
+// 3. Address inconsistent `text-transform` inheritance for `button` and `select`.
+// All other form control elements do not inherit `text-transform` values.
+// Correct `button` style inheritance in Firefox and Opera. Correct `select`
+// style inheritance in Firefox.
+
+// 4. Correct color not being inherited. Known issue: affects color of disabled
+//    elements.
+// 5. Correct font properties not being inherited.
+// 6. Address margins set differently in Firefox 4+, Safari, and Chrome.
 
 select {
     height: $tap-size; // 1
+    margin: 0; // 6
 
     border-radius: 0;
 
     color: $brand-color;
+    font: inherit; // 5
+    text-transform: none; // 3
 
     &,
     &[disabled] {
@@ -104,6 +160,13 @@ select {
         background-position: calc(100% - 14px) center; // 2
         background-size: 12px 6px;
     }
+}
+
+optgroup {
+    margin: 0; // 6
+
+    color: inherit; // 4
+    font: inherit; // 5
 }
 
 
@@ -190,23 +253,50 @@ select {
 
 // Buttons
 // ---
+//
+// 1. Address margins set differently in Firefox 4+, Safari, and Chrome.
+// 2. Correct color not being inherited. Known issue: affects color of disabled
+//    elements.
+// 3. Correct font properties not being inherited.
+// 4. Address inconsistent `text-transform` inheritance for `button` and `select`.
+// All other form control elements do not inherit `text-transform` values.
+// Correct `button` style inheritance in Firefox and Opera. Correct `select`
+// style inheritance in Firefox.
+// 5. Remove inner padding and border in Firefox 4+.
+// 6. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+//    and `video` controls.
+// 7. Correct inability to style clickable `input` types in iOS.
 
 button,
 [type="submit"] {
     display: block;
+    margin: 0; // 1
     padding: 0;
     border: 0;
 
     background: $neutral-15;
 
+    color: inherit; // 2
+    font: inherit; // 3
     line-height: $line-height;
+    text-transform: none; // 4
 
     -webkit-appearance: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
+    &::-moz-focus-inner {
+        padding: 0; // 5
+        border: 0; // 5
+    }
+
     &:active {
         background: $neutral-30;
     }
+}
+
+html input[type="button"], // 6
+input[type="reset"], {
+    -webkit-appearance: button; // 7
 }
 
 
