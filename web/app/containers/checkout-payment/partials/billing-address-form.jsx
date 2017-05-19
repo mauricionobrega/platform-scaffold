@@ -17,6 +17,7 @@ import * as checkoutPaymentActions from '../actions'
 
 // Local components
 import CountrySelect from '../../../components/country-select'
+import RegionField from '../../../components/region-field'
 
 // SDK Components
 import Button from 'progressive-web-sdk/dist/components/button'
@@ -144,11 +145,7 @@ class BillingAddressForm extends React.Component {
                             </FieldRow>
 
                             <FieldRow>
-                                <ReduxForm.Field component={Field} className="pw--has-select" name="regionId" label="State/Province">
-                                    <select>
-                                        {regions.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
-                                    </select>
-                                </ReduxForm.Field>
+                                <RegionField regions={regions}/>
                             </FieldRow>
 
                             <FieldRow>

@@ -15,6 +15,7 @@ import {SHIPPING_FORM_NAME} from '../../../store/form/constants'
 import {getCountries, getAvailableRegions} from '../../../store/checkout/locations/selectors'
 
 import CountrySelect from '../../../components/country-select'
+import RegionField from '../../../components/region-field'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
@@ -109,30 +110,7 @@ const ShippingAddressFields = ({
             </FieldRow>
 
             <FieldRow>
-                {regions.length === 0 ?
-                    <ReduxForm.Field
-                        component={Field}
-                        name="region"
-                        label="State/Province"
-                    >
-                        <input type="text" noValidate />
-                    </ReduxForm.Field>
-                :
-                    <ReduxForm.Field
-                        component={Field}
-                        className="pw--has-select"
-                        name="regionId"
-                        label="State/Province"
-                    >
-                        <select>
-                            {regions.map(({label, value}) =>
-                                <option value={value} key={`region-${value}`}>
-                                    {label}
-                                </option>
-                            )}
-                        </select>
-                    </ReduxForm.Field>
-                }
+                <RegionField regions={regions} />
             </FieldRow>
 
             <FieldRow>
