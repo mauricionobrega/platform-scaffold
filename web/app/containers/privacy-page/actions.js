@@ -10,4 +10,4 @@ export const process = ({payload}) => {
 }
 
 // This action will change the `title` key in the local private state
-export const changeTitle = createAction('Change PrivacyPage title', 'title')
+// export const changeTitle = createAction('Change PrivacyPage title', 'title')
