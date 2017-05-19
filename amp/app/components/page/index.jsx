@@ -14,7 +14,7 @@ const Page = ({className, links, title}) => {
     return (
         <div className={classes}>
 
-            <button is on="tap:my-lightbox">Open lightbox</button>
+            <div dangerouslySetInnerHTML={{__html: '<button on="tap:my-lightbox">Open lightbox</button>'}} />
             <AmpLightbox id="my-lightbox">
                 <amp-img src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif" width="500" height="500" />
             </AmpLightbox>

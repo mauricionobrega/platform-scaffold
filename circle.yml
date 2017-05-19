@@ -5,6 +5,7 @@ dependencies:
     cache_directories:
         - "web/node_modules"
         - "native/node_modules"
+        - "amp/node_modules"
     pre:
         - ./web/scripts/install-google-chrome-stable.sh
         - npm install:
@@ -12,6 +13,9 @@ dependencies:
         # Disabling native `npm install` for now as we aren't set up to `npm install` a git dep yet
         #- npm install:
         #    pwd: native
+        # Disabling amp `npm install` for now as we aren't set up to `npm install` a git dep yet
+        #- npm install:
+        #    pwd: amp
 test:
     override:
         - npm run lint:
@@ -24,6 +28,8 @@ test:
         # Run end-to-end tests
         # - npm run smoke-test:
         #    pwd: web
+        # - npm run test:unit:
+        #    pwd: amp
     post:
        - cp -R lighthouse/* $CIRCLE_ARTIFACTS:
            pwd: web
