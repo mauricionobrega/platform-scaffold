@@ -58,10 +58,13 @@
 @import 'styles/templates';
 
 
-// Sass utilities
+// Utilities
 // ---
 //
-// Libraries of mixins/functions
+// List of utility classes that applies a single rule or very simple styles.
+//
+// *important note: @import utilities at bottom of stylesheet file to ensure
+// that utility styles override above.*
 
 @import 'styles/utilities';
 
