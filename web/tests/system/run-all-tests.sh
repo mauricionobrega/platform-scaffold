@@ -14,12 +14,12 @@ if [ $CIRCLE_NODE_TOTAL -eq 1 ]; then
   npm run test:e2e
 
 else
-  #If the node total is greater than 1 assign the first node to running lighthouse. Divy up the remaining tests.
+  #If the node total is greater than 1 
   if [ $CIRCLE_NODE_TOTAL -gt 1 ]; then
     echo $CIRCLE_NODE_TOTAL 'Circle CI nodes. Running tests in parallel.'
     echo 'This is Circle CI node' $CIRCLE_NODE_INDEX'.'
 
-
+    #Assign the first node to running lighthouse Tests
     if [ $CIRCLE_NODE_INDEX -eq 0 ]; then
       echo 'Running Lighthouse Test'
       npm run test:pwa-ci
@@ -33,8 +33,8 @@ else
     echo 'Running Unit Tests'
     npm test -- --runInBand
     
-    #If there are ever more than 2 nodes, node 3 will be part of the division to run another test:e2e
     echo 'Running End to End Tests"
+    #If we have nodes > 2, it will be part of the division to run another test:e2e
     i=0
     for testfile in $(find ./tests/system/workflows/ -name '*.js'| sort); do
       if [ $(expr $i % $(expr $CIRCLE_NODE_TOTAL - 1)) -eq $(expr $CIRCLE_NODE_INDEX - 1) ]; then
