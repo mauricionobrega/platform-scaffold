@@ -11,6 +11,13 @@ const productListParser = ($, $html) => {
           })
           .map(urlToPathKey)
 
+    // TEMPORARY change to remove a product on Merlin's which no longer works with the
+    // current branch. This particular product supports variants, which isn't supported
+    // by the current release, but will be once the Integration Manager changes ship.
+    if (/potions.html/.test(window.location.href)) {
+        products.shift()
+    }
+
     return {
         noResultsText: getTextFrom($html, '.message.empty'),
         itemCount: $numItems.length > 0 ? $numItems.text() : '0',
