@@ -15,7 +15,7 @@ import {receiveCartContents} from '../../cart/results'
 import {receiveCartProductData} from '../../products/results'
 import {submitForm, textFromFragment} from '../utils'
 import {parseLocations} from '../checkout/parsers'
-import {receiveCheckoutData} from '../../checkout/results'
+import {receiveCheckoutLocations} from '../../checkout/results'
 import {fetchShippingMethodsEstimate} from '../checkout/commands'
 import {fetchPageData} from '../app/commands'
 import {parseCart, parseCartProducts, parseCartTotals} from './parser'
@@ -125,14 +125,11 @@ const ESTIMATE_FIELD_PATH = ['#block-summary', 'Magento_Ui/js/core/app', 'compon
 
 export const initCartPage = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
-        .then((res) => {
-            const [$, $response] = res // eslint-disable-line no-unused-vars
-            const customerEntityID = parseCheckoutEntityID($response)
+        .then(([$, $response]) => { // eslint-disable-line no-unused-vars
             const magentoFieldData = extractMagentoJson($response).getIn(ESTIMATE_FIELD_PATH)
-            const locationsData = parseLocations(magentoFieldData)
 
-            dispatch(receiveEntityID(customerEntityID))
-            dispatch(receiveCheckoutData(locationsData))
+            dispatch(receiveEntityID(parseCheckoutEntityID($response)))
+            dispatch(receiveCheckoutLocations(parseLocations(magentoFieldData)))
 
             return dispatch(fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME))
         })

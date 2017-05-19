@@ -10,7 +10,7 @@ import {parseCartTotals} from '../cart/parser'
 import {parseCheckoutEntityID, extractMagentoShippingStepData} from '../../../utils/magento-utils'
 import {parseLocationData} from '../../../utils/utils'
 import {getCart} from '../cart/commands'
-import {receiveCheckoutData, receiveShippingInitialValues, receiveCheckoutConfirmationData, receiveBillingInitialValues} from './../../checkout/results'
+import {receiveCheckoutData, receiveCheckoutLocations, receiveShippingInitialValues, receiveCheckoutConfirmationData, receiveBillingInitialValues} from './../../checkout/results'
 import {receiveCartContents} from './../../cart/results'
 import {fetchPageData} from '../app/commands'
 import {getCustomerEntityID} from '../selectors'
@@ -53,8 +53,8 @@ const processCheckoutData = ($response) => (dispatch) => {
     const magentoFieldData = extractMagentoShippingStepData($response)
           .getIn(['children', 'shipping-address-fieldset', 'children'])
 
+    dispatch(receiveCheckoutLocations(parseLocations(magentoFieldData)))
     return dispatch(receiveCheckoutData({
-        locations: parseLocations(magentoFieldData).locations,
         shipping: {
             initialValues: parseShippingInitialValues(magentoFieldData)
         }
