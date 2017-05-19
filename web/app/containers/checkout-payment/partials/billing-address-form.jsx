@@ -147,7 +147,7 @@ class BillingAddressForm extends React.Component {
                             </FieldRow>
 
                             <FieldRow>
-                                <RegionField regions={regions}/>
+                                <RegionField regions={regions} />
                             </FieldRow>
 
                             <FieldRow>
