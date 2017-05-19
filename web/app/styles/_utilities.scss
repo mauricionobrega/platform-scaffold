@@ -1,9 +1,9 @@
 // Utilities
 // ===
 //
-// Allows overriding existing styles with extreme specificity while keeping
-// source code clean and readable. Does not override !important or inline
-// styles; those must be dealt with separately.
+// Use wrap-at-root mixin to allow overriding existing styles with extreme
+// specificity while keeping source code clean and readable. Does not override
+// !important or inline styles; those must be dealt with separately.
 
 @include wrap-at-root(1, "#app") {
     @import 'utilities/border';
