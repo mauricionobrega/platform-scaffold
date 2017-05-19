@@ -138,6 +138,20 @@ export const makeSfccRequest = (url, options) => {
         })
 }
 
+export const makeSfccJsonRequest = (url, body, options) => {
+    return makeSfccRequest(url, {
+        ...options,
+        body: JSON.stringify(body)
+    })
+        .then((response) => response.json())
+        .then((responseJSON) => {
+            if (responseJSON.fault) {
+                throw new Error(responseJSON.fault.message)
+            }
+            return responseJSON
+        })
+}
+
 export const makeSfccUnAuthenticatedRequest = (url, options) => {
     const requestOptions = {
         ...options,

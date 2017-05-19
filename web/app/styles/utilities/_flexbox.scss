@@ -15,7 +15,7 @@
 // `display: flex` property.
 
 .u-flex {
-    @include flex(true);
+    @include flex;
 }
 
 
@@ -25,7 +25,7 @@
 // Shrink Flexbox items to a minimum size.
 
 .u-flex-shrink {
-    @include flex-shrink(true);
+    @include flex-shrink;
 }
 
 
@@ -35,7 +35,7 @@
 // Neither grow nor shrink!
 
 .u-flex-none {
-    flex: 0 0 auto !important;
+    flex: 0 0 auto;
 }
 
 
@@ -48,17 +48,17 @@
 // ensure an element that has both classes inherits `display: flex`!
 
 .u-flexbox {
-    @include flexbox(true);
+    @include flexbox;
 }
 
 .u-flexbox-gutters {
-    margin-right: ($unit * -0.5) !important;
-    margin-left: ($unit * -0.5) !important;
+    margin-right: ($unit * -0.5);
+    margin-left: ($unit * -0.5);
 }
 
 .u-flexbox-gutters > .u-flex,
 .u-flexbox-gutters > .u-flex-shrink {
-    margin: 0 ($unit / 2) !important;
+    margin: 0 ($unit / 2);
 }
 
 
@@ -66,19 +66,19 @@
 // ---
 
 .u-direction-column {
-    flex-direction: column !important;
+    flex-direction: column;
 }
 
 .u-direction-column-reverse {
-    flex-direction: column-reverse !important;
+    flex-direction: column-reverse;
 }
 
 .u-direction-row {
-    flex-direction: row !important;
+    flex-direction: row;
 }
 
 .u-direction-row-reverse {
-    flex-direction: row-reverse !important;
+    flex-direction: row-reverse;
 }
 
 
@@ -86,15 +86,15 @@
 // ---
 
 .u-align-top {
-    align-items: flex-start !important;
+    align-items: flex-start;
 }
 
 .u-align-center {
-    align-items: center !important;
+    align-items: center;
 }
 
 .u-align-bottom {
-    align-items: flex-end !important;
+    align-items: flex-end;
 }
 
 
@@ -102,23 +102,23 @@
 // ---
 
 .u-justify-start {
-    justify-content: flex-start !important;
+    justify-content: flex-start;
 }
 
 .u-justify-end {
-    justify-content: flex-end !important;
+    justify-content: flex-end;
 }
 
 .u-justify-between {
-    justify-content: space-between !important;
+    justify-content: space-between;
 }
 
 .u-justify-center {
-    justify-content: center !important;
+    justify-content: center;
 }
 
 .u-justify-around {
-    justify-content: space-around !important;
+    justify-content: space-around;
 }
 
 
@@ -129,25 +129,25 @@
 // your own stylesheet to re-order more.
 
 .u-order-1 {
-    order: 1 !important;
+    order: 1;
 }
 
 .u-order-2 {
-    order: 2 !important;
+    order: 2;
 }
 
 .u-order-3 {
-    order: 3 !important;
+    order: 3;
 }
 
 .u-order-4 {
-    order: 4 !important;
+    order: 4;
 }
 
 .u-order-5 {
-    order: 5 !important;
+    order: 5;
 }
 
 .u-order-6 {
-    order: 6 !important;
+    order: 6;
 }

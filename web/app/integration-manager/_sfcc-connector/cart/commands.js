@@ -2,7 +2,7 @@
 /* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
-import {makeSfccRequest, getAuthTokenPayload} from '../utils'
+import {makeSfccRequest, makeSfccJsonRequest, getAuthTokenPayload} from '../utils'
 import {populateLocationsData} from '../checkout/utils'
 import {requestCartData, createBasket, handleCartData} from './utils'
 import {API_END_POINT_URL} from '../constants'
@@ -96,22 +96,18 @@ export const addToWishlist = (productId) => (dispatch) => {
                 .then((response) => response.json())
         })
         .then(({id}) => {
-            const requestOptions = {
-                method: 'POST',
-                body: JSON.stringify({
-                    type: 'product',
-                    product_id: productId,
-                    quantity: 1
-                })
+            const requestBody = {
+                type: 'product',
+                product_id: productId,
+                quantity: 1
             }
 
-            return makeSfccRequest(`${API_END_POINT_URL}/customers/${customerID}/product_lists/${id}/items`, requestOptions)
-                .then((response) => response.json())
-                .then((responseJSON) => {
-                    if (responseJSON.fault) {
-                        throw new Error('Unable to add item to wishlist.')
-                    }
-                })
+            return makeSfccJsonRequest(
+                `${API_END_POINT_URL}/customers/${customerID}/product_lists/${id}/items`,
+                requestBody,
+                {method: 'POST'}
+            )
+                .catch(() => { throw new Error('Unable to add item to wishlist.') })
         })
 }
 
