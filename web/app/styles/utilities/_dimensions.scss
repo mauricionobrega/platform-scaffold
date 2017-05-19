@@ -12,42 +12,42 @@
 // ---
 
 .u-width-1of6 {
-    flex: initial !important; // 1
-    width: (100%/6) !important; // 16.667%
+    flex: initial; // 1
+    width: (100%/6); // 16.667%
 }
 
 .u-width-1of4 {
-    flex: initial !important; // 1
-    width: 25% !important;
+    flex: initial; // 1
+    width: 25%;
 }
 
 .u-width-1of3,
 .u-width-2of6 {
-    flex: initial !important; // 1
-    width: (100%/3) !important; // 33.333%
+    flex: initial; // 1
+    width: (100%/3); // 33.333%
 }
 
 .u-width-1of2,
 .u-width-2of4,
 .u-width-3of6 {
-    flex: initial !important; // 1
-    width: 50% !important;
+    flex: initial; // 1
+    width: 50%;
 }
 
 .u-width-2of3,
 .u-width-4of6 {
-    flex: initial !important; // 1
-    width: 2 * (100%/3) !important; // 66.666%
+    flex: initial; // 1
+    width: 2 * (100%/3); // 66.666%
 }
 
 .u-width-3of4 {
-    flex: initial !important; // 1
-    width: 75% !important;
+    flex: initial; // 1
+    width: 75%;
 }
 
 .u-width-5of6 {
-    flex: initial !important; // 1
-    width: 5 * (100%/6) !important; // 83.333%
+    flex: initial; // 1
+    width: 5 * (100%/6); // 83.333%
 }
 
 
@@ -55,8 +55,8 @@
 // ---
 
 .u-width-full {
-    flex: initial !important; // 1
-    width: 100% !important;
+    flex: initial; // 1
+    width: 100%;
 }
 
 
@@ -66,7 +66,7 @@
 // Set width to 100% with display block.
 
 .u-width-block-full {
-    display: block !important;
-    flex: initial !important; // 1
-    width: 100% !important;
+    display: block;
+    flex: initial; // 1
+    width: 100%;
 }

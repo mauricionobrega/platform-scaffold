@@ -1,38 +1,26 @@
 // Heading
 // ===
 
-%h1,
 .u-h1 {
-    font-size: $huge-font-size !important;
-    line-height: $huge-line-height !important;
+    @include h1();
 }
 
-%h2,
 .u-h2 {
-    font-size: $bigger-font-size !important;
-    line-height: $bigger-line-height !important;
+    @include h2();
 }
 
-%h3,
 .u-h3 {
-    font-size: $big-font-size !important;
-    line-height: $big-line-height !important;
+    @include h3();
 }
 
-%h4,
 .u-h4 {
-    font-size: $big-font-size !important;
-    line-height: $big-line-height !important;
+    @include h4();
 }
 
-%h5,
 .u-h5 {
-    font-size: $medium-font-size !important;
-    line-height: $line-height !important;
+    @include h5();
 }
 
-%h6,
 .u-h6 {
-    font-size: $font-size !important;
-    line-height: $line-height !important;
+    @include h6();
 }
