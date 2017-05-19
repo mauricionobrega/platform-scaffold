@@ -270,79 +270,82 @@ const createAddressRequestObject = (formValues) => {
     }
 }
 
-const updateBillingAddress = () => {
-    return (dispatch, getState) => {
-        const formData = buildFormData({
-            form_key: getCookieValue('form_key'),
-            success_url: '',
-            error_url: '',
-            ...createAddressRequestObject(paymentSelectors.getPayment(getState())),
-            default_billing: 1,
-            default_shipping: 1,
+// Some of the endpoints don't work with fetch, getting a 400 error
+// from the backend. This function wraps the jQuery ajax() function
+// to make requests to these endpoints.
+//
+// It looks like the server may be looking for the header
+// X-Requested-With: XMLHttpRequest, which is not present with fetch.
+//
+// Alternatively, we could have an issue with header case:
+// http://stackoverflow.com/questions/34656412/fetch-sends-lower-case-header-keys
+const jqueryAjaxWrapper = (options) => {
+    return new Promise((resolve, reject) => {
+        window.Progressive.$.ajax({
+            ...options,
+            success: (responseData) => resolve(responseData),
+            error: (xhr, status) => reject(status)
         })
-
-        const postUpdateCustomerAddressURL = '/customer/address/formPost/id/46/'
-        return new Promise((resolve) => {
-            // We need to use jQuery.ajax here because currently fetch sends requests with all headers set to lowercase
-            // using fetch here means the server won't handle our request properly
-            // so instead we're using jQuery ajax since it sends requests matching what the server expects.
-            // see http://stackoverflow.com/questions/34656412/fetch-sends-lower-case-header-keys
-            window.Progressive.$.ajax({
-                url: postUpdateCustomerAddressURL,
-                data: formData,
-                method: 'POST',
-                processData: false,
-                contentType: false,
-                success: () => resolve(),
-                error: (response) => {
-                    console.error('Updating the user Shipping/Billing address failed. Response log:')
-                    console.error(response)
-                    throw new Error('Unable to save Billing Address')
-                }
-            })
-        })
-    }
+    })
 }
 
-export const updateShippingAndBilling = () => {
-    return (dispatch, getState) => {
-        const shippingData = shippingSelectors.getShippingAddress(getState()).toJS()
-        const formData = buildFormData({
-            form_key: getCookieValue('form_key'),
-            success_url: '',
-            error_url: '',
-            ...createAddressRequestObject(shippingData),
-            default_billing: 1,
-            default_shipping: 1,
-        })
+const updateBillingAddress = () => (dispatch, getState) => {
+    const formData = buildFormData({
+        form_key: getCookieValue('form_key'),
+        success_url: '',
+        error_url: '',
+        ...createAddressRequestObject(paymentSelectors.getPayment(getState())),
+        default_billing: 1,
+        default_shipping: 1,
+    })
 
-        const postUpdateCustomerAddressURL = '/customer/address/formPost/'
-
-        return new Promise((resolve) => {
-            // We need to use jQuery.ajax here because currently fetch sends requests with all headers set to lowercase
-            // using fetch here means the server won't handle our request properly
-            // so instead we're using jQuery ajax since it sends requests matching what the server expects.
-            // see http://stackoverflow.com/questions/34656412/fetch-sends-lower-case-header-keys
-            window.Progressive.$.ajax({
-                url: postUpdateCustomerAddressURL,
-                data: formData,
-                method: 'POST',
-                processData: false,
-                contentType: false,
-                success: () => {
-                    const paymentData = paymentSelectors.getPayment(getState())
-                    const shippingIsDifferentThanBilling = JSON.stringify(shippingData) !== JSON.stringify(paymentData)
-                    if (shippingIsDifferentThanBilling) {
-                        return dispatch(updateBillingAddress())
-                    }
-                    return resolve()
-                },
-                error: (response) => {
-                    console.error('Updating the user Shipping and Billing address failed. Response log:')
-                    console.error(response)
-                    throw new Error('Unable to save Shipping and Billing Address')
-                }
-            })
+    const postUpdateCustomerAddressURL = '/customer/address/formPost/id/46/'
+    return jqueryAjaxWrapper({
+        url: postUpdateCustomerAddressURL,
+        data: formData,
+        method: 'POST',
+        processData: false,
+        contentType: false
+    })
+        .catch((error) => {
+            console.error('Updating the user Shipping/Billing address failed. Response log:')
+            console.error(error)
+            throw new Error('Unable to save Billing Address')
         })
-    }
+}
+
+
+export const updateShippingAndBilling = () => (dispatch, getState) => {
+    const shippingData = shippingSelectors.getShippingAddress(getState()).toJS()
+    const formData = buildFormData({
+        form_key: getCookieValue('form_key'),
+        success_url: '',
+        error_url: '',
+        ...createAddressRequestObject(shippingData),
+        default_billing: 1,
+        default_shipping: 1,
+    })
+
+    const postUpdateCustomerAddressURL = '/customer/address/formPost/'
+
+    return jqueryAjaxWrapper({
+        url: postUpdateCustomerAddressURL,
+        data: formData,
+        method: 'POST',
+        processData: false,
+        contentType: false,
+    })
+        .then(() => {
+            const paymentData = paymentSelectors.getPayment(getState())
+            const shippingIsDifferentThanBilling = JSON.stringify(shippingData) !== JSON.stringify(paymentData)
+            if (shippingIsDifferentThanBilling) {
+                return dispatch(updateBillingAddress())
+            }
+            return Promise.resolve()
+        })
+        .catch((error) => {
+            console.error('Updating the user Shipping and Billing address failed. Response log:')
+            console.error(error)
+            throw new Error('Unable to save Shipping and Billing Address')
+        })
 }
