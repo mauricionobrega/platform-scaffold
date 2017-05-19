@@ -9,7 +9,7 @@ import {createPropsSelector} from 'reselect-immutable-helpers'
 
 // Selectors
 import * as selectors from '../selectors'
-import {getCountries, getRegions} from '../../../store/checkout/locations/selectors'
+import {getCountries, getAvailableRegions} from '../../../store/checkout/locations/selectors'
 import {getShippingFullName, getAddressLineOne, getCity, getPostcode} from '../../../store/checkout/shipping/selectors'
 
 // Actions
@@ -24,6 +24,8 @@ import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 import Icon from 'progressive-web-sdk/dist/components/icon'
+
+import {PAYMENT_FORM_NAME} from '../../../store/form/constants'
 
 class BillingAddressForm extends React.Component {
     constructor(props) {
@@ -232,7 +234,7 @@ const mapStateToProps = createPropsSelector({
     name: getShippingFullName,
     newShippingAddressIsEnabled: selectors.getNewShippingAddressIsEnabled,
     postcode: getPostcode,
-    regions: getRegions,
+    regions: getAvailableRegions(PAYMENT_FORM_NAME),
     street: getAddressLineOne,
 })
 
