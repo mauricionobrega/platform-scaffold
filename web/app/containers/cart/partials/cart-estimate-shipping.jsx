@@ -19,6 +19,7 @@ import Sheet from 'progressive-web-sdk/dist/components/sheet'
 import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
+import CountrySelect from '../../../components/country-select'
 import IconLabelButton from '../../../components/icon-label-button'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 import InlineLoader from 'progressive-web-sdk/dist/components/inline-loader'
@@ -42,11 +43,7 @@ export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateP
             <div className="u-padding-md">
                 <form onSubmit={handleSubmit(submitEstimateShipping)}>
                     <FieldRow>
-                        <ReduxForm.Field component={Field} className="pw--has-select" name="countryId" label="Country">
-                            <select>
-                                {countries.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
-                            </select>
-                        </ReduxForm.Field>
+                        <CountrySelect countries={countries} />
                     </FieldRow>
 
                     <FieldRow>

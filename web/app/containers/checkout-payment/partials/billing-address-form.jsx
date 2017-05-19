@@ -15,6 +15,9 @@ import {getShippingFullName, getAddressLineOne, getCity, getPostcode} from '../.
 // Actions
 import * as checkoutPaymentActions from '../actions'
 
+// Local components
+import CountrySelect from '../../../components/country-select'
+
 // SDK Components
 import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
@@ -156,11 +159,7 @@ class BillingAddressForm extends React.Component {
                             </FieldRow>
 
                             <FieldRow>
-                                <ReduxForm.Field component={Field} className="pw--has-select" name="countryId" label="Country">
-                                    <select>
-                                        {countries.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
-                                    </select>
-                                </ReduxForm.Field>
+                                <CountrySelect countries={countries} />
                             </FieldRow>
                         </div>
                     }
