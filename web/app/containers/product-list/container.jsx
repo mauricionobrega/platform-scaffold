@@ -3,7 +3,7 @@
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
 import React from 'react'
-
+import template from '../../template'
 import {isRunningInAstro} from '../../utils/astro-integration'
 import ProductListHeader from './partials/product-list-header'
 import SearchResultHeader from './partials/search-result-header'
@@ -33,4 +33,4 @@ ProductList.propTypes = {
     route: React.PropTypes.object
 }
 
-export default ProductList
+export default template(ProductList)

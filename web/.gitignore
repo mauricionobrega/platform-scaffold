@@ -4,4 +4,7 @@ build.tar
 coverage
 tests/reports
 tests/screenshots
-lighthouse/audit*.html
+lighthouse/audit*
+
+app/loader-routes.js
+.tern-port

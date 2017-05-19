@@ -16,12 +16,11 @@ export const getRegions = createGetSelector(getLocations, 'regions', Immutable.L
 export const getSelectedCountryID = (formKey) => createSelector(
     getFormValues(formKey),
     (values) => {
-        return values ? values.country_id : null
+        return values ? values.countryId : null
     }
 )
 
 export const getDefaultRegionEntry = createGetSelector(getRegions, 0)
-
 
 // Filter list of available regions based on what user has selected as country
 // Accepts a formKey that determines which form's country selection should be used

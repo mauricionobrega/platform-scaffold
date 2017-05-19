@@ -8,5 +8,4 @@ import {getUi} from '../../store/selectors'
 
 export const getFooter = createSelector(getUi, ({footer}) => footer)
 
-export const getNewsletter = createGetSelector(getFooter, 'newsletter')
-export const getNavigation = createGetSelector(getFooter, 'navigation')
+export const getNewsletterSignupStatus = createGetSelector(getFooter, 'signupStatus')

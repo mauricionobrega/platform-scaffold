@@ -2,9 +2,17 @@
 // ===
 
 .u-box-shadow {
-    box-shadow: $box-shadow; // @TODO: add to spline
+    box-shadow: $box-shadow !important;
 }
 
 .u-box-shadow-inset {
-    box-shadow: $inset-box-shadow; // @TODO: add to spline
+    box-shadow: $inset-box-shadow !important;
+}
+
+.u-box-shadow-lg {
+    box-shadow: $large-box-shadow !important;
+}
+
+.u-box-shadow-input {
+    box-shadow: $input-box-shadow !important;
 }

@@ -2,38 +2,22 @@
 /* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
-import React, {PropTypes} from 'react'
-import {createPropsSelector} from 'reselect-immutable-helpers'
-import {connect} from 'react-redux'
-import * as selectors from '../selectors'
-import * as actions from '../actions'
+import React from 'react'
 
 import SignInForm from './signin-form'
-import {PanelDescription} from './common'
 
-const SignInPanel = ({description, submitForm}) => (
+const SignInPanel = () => (
     <div className="t-login__signin-panel">
         <div className="u-padding-start-md u-padding-end-md u-padding-top-lg u-padding-bottom-lg">
-            <PanelDescription description={description} />
+            <p>
+                If you have an account, sign in with your email address.
+            </p>
         </div>
 
         <div className="u-padding-start-md u-padding-end-md u-padding-bottom-lg">
-            <SignInForm submitForm={submitForm} />
+            <SignInForm />
         </div>
     </div>
 )
 
-SignInPanel.propTypes = {
-    description: PropTypes.string,
-    submitForm: PropTypes.func
-}
-
-const mapStateToProps = createPropsSelector({
-    description: selectors.signin.getDescription,
-})
-
-const mapDispatchToProps = {
-    submitForm: actions.submitSignInForm
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignInPanel)
+export default SignInPanel

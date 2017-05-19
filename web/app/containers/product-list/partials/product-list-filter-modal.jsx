@@ -6,9 +6,9 @@ import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import {PRODUCT_LIST_FILTER_MODAL} from '../constants'
-import {closeModal, openModal} from '../../../store/modals/actions'
+import {closeModal, openModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {changeFilterTo} from '../../../store/categories/actions'
-import {isModalOpen} from '../../../store/selectors'
+import {isModalOpen} from 'progressive-web-sdk/dist/store/modals/selectors'
 import * as selectors from '../selectors'
 
 import {Accordion, AccordionItem} from 'progressive-web-sdk/dist/components/accordion'
@@ -42,7 +42,7 @@ class ProductListFilterModal extends React.Component {
                 <HeaderBar>
                     <HeaderBarTitle className="u-flex u-padding-start u-text-align-start">
                         <h1 className="u-h3 u-text-uppercase">
-                            <span className="u-text-extra-lighter">Filter Results By</span>
+                            <span className="u-text-weight-extra-light">Filter Results By</span>
                         </h1>
                     </HeaderBarTitle>
 

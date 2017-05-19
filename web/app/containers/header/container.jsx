@@ -10,7 +10,7 @@ import classnames from 'classnames'
 
 import * as headerActions from './actions'
 import * as miniCartActions from '../mini-cart/actions'
-import {openModal} from '../../store/modals/actions'
+import {openModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {NAVIGATION_MODAL} from '../navigation/constants'
 import * as selectors from './selectors'
 import {getCartSummaryCount} from '../../store/cart/selectors'
@@ -73,6 +73,7 @@ class Header extends React.Component {
 
     render() {
         const {
+            clearSuggestions,
             onMenuClick,
             onMiniCartClick,
             onSearchOpenClick,
@@ -112,10 +113,12 @@ class Header extends React.Component {
                 <Search
                     className="t-header__search"
                     isOverlay
+                    onClickSuggestion={onSearchCloseClick}
                     isOpen={searchIsOpen}
                     onChange={this.onChangeSearchQuery}
                     onClose={onSearchCloseClick}
                     onSubmit={this.onSearchSubmit}
+                    onClear={clearSuggestions}
                     termSuggestions={searchSuggestions}
                     submitButtonProps={{
                         className: 'c--secondary t-header__search-submit-button',
@@ -139,6 +142,7 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
+    clearSuggestions: PropTypes.func,
     isCollapsed: PropTypes.bool,
     itemCount: PropTypes.number,
     searchIsOpen: PropTypes.bool,
@@ -167,6 +171,7 @@ const mapDispatchToProps = {
     searchSubmit: headerActions.searchSubmit,
     toggleHeader: headerActions.toggleHeader,
     searchQueryChanged: headerActions.searchQueryChanged,
+    clearSuggestions: headerActions.clearSuggestions
 }
 
 export default connect(

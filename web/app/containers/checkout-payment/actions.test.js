@@ -3,69 +3,43 @@
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
 /* eslint-env jest */
-import {fetchContents, receiveResponse} from './actions'
+import {submitPayment} from './actions'
+import Immutable from 'immutable'
 
-let realFetch
-beforeAll(() => {
-    realFetch = global.fetch
-    global.fetch = jest.fn()
-    global.fetch.mockReturnValue(Promise.resolve())
-})
+jest.mock('../../integration-manager/checkout/commands')
+import {submitPayment as submitPaymentCommand} from '../../integration-manager/checkout/commands'
+jest.mock('progressive-web-sdk/dist/routing')
+import {browserHistory} from 'progressive-web-sdk/dist/routing'
 
-afterAll(() => {
-    global.fetch = realFetch
-})
+import {PAYMENT_FORM_NAME} from '../../store/form/constants'
 
-jest.mock('progressive-web-sdk/dist/jquery-response')
-import {jqueryResponse} from 'progressive-web-sdk/dist/jquery-response'
-jest.mock('./checkout-payment-parser')
-import checkoutPaymentParser from './checkout-payment-parser'
-
-test('fetchContents dispatches receiveResponse, which dispatches receiveContents', () => {
-    global.fetch.mockClear()
-    global.fetch.mockReturnValueOnce(Promise.resolve('page contents!'))
-
-    const url = 'http://test.mobify.com/'
-
-    /**
-     * We don't have the ability to change window.location.href, so we mock it
-     * as a workaround
-     * @url - https://github.com/tmpvar/jsdom#changing-the-url-of-an-existing-jsdom-window-instance
-     * @url - https://github.com/facebook/jest/issues/890#issuecomment-209698782
-     */
-    Object.defineProperty(window.location, 'href', {
-        writable: true,
-        value: url
+test('submitPayment calls submitPayment command', () => {
+    const mockDispatch = jest.fn()
+    mockDispatch.mockImplementation((...args) => args[0])
+    const mockGetState = () => ({
+        checkout: Immutable.Map({
+            email: 'test@email.com'
+        }),
+        form: {
+            [PAYMENT_FORM_NAME]: {
+                values: {
+                    billing_same_as_shipping: false,
+                    name: 'Test Name'
+                }
+            }
+        }
     })
+    submitPaymentCommand.mockClear()
+    submitPaymentCommand.mockReturnValueOnce(Promise.resolve('test/url'))
+    browserHistory.push.mockClear()
+    browserHistory.push.mockReturnValueOnce(Promise.resolve())
 
-    const thunk = fetchContents()
+    const thunk = submitPayment()
     expect(typeof thunk).toBe('function')
 
-    const mockDispatch = jest.fn()
-
-    return thunk(mockDispatch)
+    return thunk(mockDispatch, mockGetState)
         .then(() => {
-            expect(global.fetch).toBeCalled()
-            expect(global.fetch.mock.calls[0][0]).toBe(url)
-
             expect(mockDispatch).toBeCalled()
-        })
-})
-
-test('receiveResponse parses the response and dispatches receiveContents', () => {
-    jqueryResponse.mockClear()
-    jqueryResponse.mockReturnValue(Promise.resolve(['$', '$response']))
-
-    const thunk = receiveResponse('page contents!')
-    expect(typeof thunk).toBe('function')
-
-    const mockDispatch = jest.fn()
-
-    return thunk(mockDispatch)
-        .then(() => {
-            expect(jqueryResponse).toBeCalledWith('page contents!')
-
-            expect(mockDispatch).toBeCalled()
-            expect(checkoutPaymentParser).toBeCalledWith('$', '$response')
+            expect(submitPaymentCommand).toBeCalled()
         })
 })

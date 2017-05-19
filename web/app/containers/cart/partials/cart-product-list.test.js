@@ -16,7 +16,16 @@ test('renders without errors', () => {
 })
 
 test('renders without errors with one item', () => {
-    const wrapper = mount(<CartProductList items={[{product_name: 'TestName', product_image: {alt: 'TestAlt', src: 'TestSrc'}}]} summary_count={1} />)
+    const wrapper = mount(<CartProductList items={[
+        {
+            id: '1',
+            productId: 'Product1',
+            product: {id: 'Product1', title: 'Eye of Newt', price: '$14.99'},
+            quantity: 2,
+            itemPrice: '14.99',
+            linePrice: '$29.98'
+        }]}
+        summary_count={2} />)
 
     expect(wrapper.length).toBe(1)
 })

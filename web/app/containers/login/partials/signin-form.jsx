@@ -6,58 +6,35 @@ import React, {PropTypes} from 'react'
 import {reduxForm} from 'redux-form'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import {connect} from 'react-redux'
-import * as selectors from '../selectors'
-import {isModalOpen} from '../../../store/selectors'
-import {openModal, closeModal} from '../../../store/modals/actions'
-import {SIGN_IN_SECTION} from '../constants'
+import {isSigninLoaded} from '../selectors'
+import {submitSignInForm} from '../actions'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import FieldSet from 'progressive-web-sdk/dist/components/field-set'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 
-import {LoginField} from './common'
+import {LoginField, RememberMeTooltip} from './common'
+
+const FORGOT_PASSWORD_PATH = '/customer/account/forgotpassword'
 
 class SignInForm extends React.Component {
     constructor(props) {
         super(props)
 
         this.onSubmit = this.onSubmit.bind(this)
-
-        // Props from `mapDispatchToProps` should never change
-        // so it's OK that we do this once and for all
-        this.modalInfo = {
-            openModal: props.openInfoModal,
-            closeModal: props.closeInfoModal
-        }
     }
 
     onSubmit(values) {
-        return new Promise((resolve, reject) => {
-            this.props.submitForm(values, resolve, reject)
-        })
+        return this.props.submitForm(values)
     }
 
     render() {
         const {
-            // redux-form
             error,
             submitting,
             handleSubmit,
-            // props from store
-            href,
-            fields,
-            submitText,
-            forgotPassword,
-            modalOpen
+            isFormLoaded
         } = this.props
-
-        // Ensure that modalInfo changes if and only if modalOpen changes.
-        if (modalOpen !== this.modalInfo.modalOpen) {
-            this.modalInfo = {
-                ...this.modalInfo,
-                modalOpen
-            }
-        }
 
         return (
             <form noValidate={true} onSubmit={handleSubmit(this.onSubmit)}>
@@ -68,17 +45,33 @@ class SignInForm extends React.Component {
                 }
 
                 <FieldSet className="t-login__signin-fieldset">
-                    {fields.map((field, idx) =>
-                        <LoginField {...field} key={idx} modalInfo={this.modalInfo} forgotPassword={forgotPassword} />
-                    )}
+                    <LoginField
+                        label="Email"
+                        name="username"
+                        type="email"
+                        />
+
+                    <LoginField
+                        label="Password"
+                        name="password"
+                        type="password"
+                        forgotPassword={{href: FORGOT_PASSWORD_PATH}}
+                        />
+
+                    <LoginField
+                        label="Remember Me"
+                        name="persistent_remember_me"
+                        type="checkbox"
+                        tooltip={<RememberMeTooltip />}
+                        />
 
                     <FieldRow>
                         <Button
                             className="c--primary u-width-full"
                             type="submit"
-                            disabled={submitting || !href}
+                            disabled={submitting || !isFormLoaded}
                         >
-                            <span className="u-text-uppercase">{submitText || 'Login'}</span>
+                            <span className="u-text-uppercase">Login</span>
                         </Button>
                     </FieldRow>
                 </FieldSet>
@@ -88,17 +81,10 @@ class SignInForm extends React.Component {
 }
 
 SignInForm.propTypes = {
-    closeInfoModal: PropTypes.func,
     error: PropTypes.string,
-    fields: PropTypes.array,
-    forgotPassword: PropTypes.object,
     handleSubmit: PropTypes.func,
-    href: PropTypes.string,
-    invalid: PropTypes.bool,
-    modalOpen: PropTypes.bool,
-    openInfoModal: PropTypes.func,
+    isFormLoaded: PropTypes.bool,
     submitForm: PropTypes.func,
-    submitText: PropTypes.string,
     submitting: PropTypes.bool,
 }
 
@@ -108,16 +94,11 @@ const ReduxSignInForm = reduxForm({
 })(SignInForm)
 
 const mapStateToProps = createPropsSelector({
-    fields: selectors.signin.form.getFields,
-    href: selectors.signin.form.getHref,
-    modalOpen: isModalOpen(SIGN_IN_SECTION),
-    submitText: selectors.signin.form.getSubmitText,
-    forgotPassword: selectors.signin.form.getForgotPassword
+    isFormLoaded: isSigninLoaded
 })
 
 const mapDispatchToProps = {
-    closeInfoModal: () => closeModal(SIGN_IN_SECTION),
-    openInfoModal: () => openModal(SIGN_IN_SECTION)
+    submitForm: submitSignInForm
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReduxSignInForm)
