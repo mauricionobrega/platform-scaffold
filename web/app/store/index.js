@@ -23,7 +23,7 @@ const noop = (f) => f
 analyticsManager.init({
     projectSlug: AJS_SLUG,              // eslint-disable-line no-undef
     mobifyGAID: 'UA-53825302-1',
-    ecommerceLibrary: 'ecommerce',
+    ecommerceLibrary: 'ec',
     debug: true
 })
 
