@@ -19,7 +19,7 @@
     "eslint-plugin-jsx-a11y": "2.2.3",
     "eslint-plugin-react": "6.10.3",
     "jest-cli": "19.0.2",
-    "mobify-amp-sdk": "ssh+git://git@github.com:mobify/mobify-amp-sdk.git#master",
+    "mobify-amp-sdk": "ssh+git://git@github.com:mobify/mobify-amp-sdk.git#add-image-component",
     "mobify-code-style": "2.8.2",
     "node-fetch": "1.6.3",
     "node-sass": "^4.5.2",
