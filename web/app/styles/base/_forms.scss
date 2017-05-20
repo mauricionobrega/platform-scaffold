@@ -293,9 +293,8 @@ button,
     }
 }
 
-html input[type="button"],
-// 6
-input[type="reset"], {
+html input[type="button"], // 6
+input[type="reset"] {
     -webkit-appearance: button; // 7
 }
 
