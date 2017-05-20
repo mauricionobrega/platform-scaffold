@@ -120,9 +120,9 @@ sub {
 // ---
 //
 // Hide visually and from screen readers. The html5 `hidden` attribute is
-// preferred to a `u-hidden` class because it exactly matches our intent and
-// has machine-readable semantics.
+// preferred to a `u-visually-hidden` class because it exactly matches our
+// intent and has machine-readable semantics.
 
 [hidden] {
-    display: none !important;
+    display: none;
 }
