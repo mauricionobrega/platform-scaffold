@@ -38,7 +38,7 @@ export const submitPayment = () => (dispatch, getState) => {
         address = {
             username: email,
             ...getShippingAddress(currentState).toJS(),
-            sameAsShipping: billingFormValues.billing_same_as_shipping
+            sameAsShipping: true
         }
     } else {
         const {firstname, lastname} = splitFullName(billingFormValues.name)
