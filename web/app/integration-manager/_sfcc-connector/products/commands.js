@@ -5,19 +5,18 @@
 import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../../products/results'
 import {setCurrentURL} from '../../results'
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
-import {makeSfccRequest} from '../utils'
+import {makeApiRequest} from '../utils'
 import {parseProductDetails, getCurrentProductID, getProductHref, getInitialSelectedVariant} from '../parsers'
-import {API_END_POINT_URL} from '../constants'
 
 export const initProductDetailsPage = (url) => (dispatch) => {
-    const productURL = `${API_END_POINT_URL}/products/${getCurrentProductID(url)}?expand=prices,images,variations`
+    const productURL = `/products/${getCurrentProductID(url)}?expand=prices,images,variations`
     const productPathKey = urlToPathKey(url)
 
     const options = {
         method: 'GET'
     }
 
-    return makeSfccRequest(productURL, options)
+    return makeApiRequest(productURL, options)
         .then((response) => response.json())
         .then((responseJSON) => {
             const productDetailsData = {
