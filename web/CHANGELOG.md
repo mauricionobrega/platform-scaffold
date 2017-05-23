@@ -3,6 +3,13 @@
 - Fix PLP to successfully display no results message if there are no products [#525](https://github.com/mobify/platform-scaffold/pull/525)
 - Update SDK version to 0.14.6 [#557](https://github.com/mobify/platform-scaffold/pull/557)
 - Add `analyze-build` npm script [#575](https://github.com/mobify/platform-scaffold/pull/575)
+- Utility styles change: remove `!important`, wrap utility styles with id, and `@import` bottom of stylesheet file [#604](https://github.com/mobify/platform-scaffold/pull/604)
+
+## 0.16.4 (May 18, 2017)
+- Fix lighthouse tests by ignoring certificate errors in Chrome
+
+## 0.16.3 (May 17, 2017)
+- Release updated README.md to support Windows (for upcoming training)
 
 ## 0.16.2
 - Update dependencies, including babel, jsdom, jest, and more.

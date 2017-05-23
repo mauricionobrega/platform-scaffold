@@ -4,8 +4,9 @@
 
 /* eslint-env jest */
 
-import {fetchPage, setPageFetchError, clearPageFetchError, checkIfOffline} from './actions'
-import {closeModal} from '../../store/modals/actions'
+import {clearPageFetchError, checkIfOffline} from './actions'
+import {setPageFetchError} from '../../integration-manager/results'
+import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {OFFLINE_MODAL} from '../offline/constants'
 import {OFFLINE_ASSET_URL} from './constants'
 
@@ -85,25 +86,5 @@ test('checkIfOffline clears offline modal and page fetch errors when it receives
             expect(fakeDispatch).toHaveBeenCalledTimes(2)
             expect(fakeDispatch.mock.calls[0][0]).toEqual(clearPageFetchError())
             expect(fakeDispatch.mock.calls[1][0]).toEqual(closeModal(OFFLINE_MODAL))
-        })
-})
-
-test('fetchPage does not throw on error', () => {
-    const fetchError = new Error()
-    fetchError.name = 'FetchError'
-    global.fetch.mockClear()
-    global.fetch.mockReturnValueOnce(Promise.reject(fetchError))
-
-    const thunk = fetchPage('url', 'pageType', '/')
-    expect(typeof thunk).toBe('function')
-
-    const fakeDispatch = jest.fn()
-
-    return thunk(fakeDispatch)
-        .catch(() => {
-            expect('The catch clause was called').toEqual('catch was not called')
-        })
-        .then(() => {
-            expect(fakeDispatch.mock.calls[0][0]).toEqual(setPageFetchError(''))
         })
 })

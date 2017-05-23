@@ -7,22 +7,23 @@ import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import * as ReduxForm from 'redux-form'
 
-import {getIsLoggedIn} from '../../app/selectors'
+import {getIsLoggedIn} from '../../../store/user/selectors'
 import {getInitialShippingAddress} from '../../../store/checkout/shipping/selectors'
 
 import {submitShipping} from '../actions'
+import {SHIPPING_FORM_NAME} from '../../../store/form/constants'
 import {fetchSavedShippingAddresses} from '../../../store/checkout/shipping/actions'
-import {SHIPPING_FORM_NAME} from '../constants'
 
 import {Grid, GridSpan} from 'progressive-web-sdk/dist/components/grid'
 import ShippingAddress from './shipping-address'
 import ShippingEmail from './shipping-email'
 import ShippingMethod from './shipping-method'
 
-const validate = (values) => {
+const REQUIRED_TEXT = 'Required'
+
+const validate = (values, props) => {
     const errors = {}
     const requiredFieldNames = [
-        'username',
         'name',
         'addressLine1',
         'city',
@@ -42,9 +43,13 @@ const validate = (values) => {
         errors.username = 'Enter a valid email address'
     }
 
+    if (!props.isLoggedIn && !values.username) {
+        errors.username = REQUIRED_TEXT
+    }
+
     requiredFieldNames.forEach((fieldName) => {
         if (!values[fieldName]) {
-            errors[fieldName] = 'Required'
+            errors[fieldName] = REQUIRED_TEXT
         }
     })
 
@@ -59,7 +64,7 @@ class CheckoutShippingForm extends React.Component {
 
     onSubmit(values) {
         return new Promise((resolve, reject) => {
-            const errors = validate(values)
+            const errors = validate(values, this.props)
             if (!Object.keys(errors).length) {
                 this.props.submitShipping()
                 return resolve()

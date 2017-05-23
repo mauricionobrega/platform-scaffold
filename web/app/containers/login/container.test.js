@@ -10,7 +10,7 @@ import React from 'react'
 import * as AstroIntegration from '../../utils/astro-integration'
 
 import ConnectedLogin from './container'
-const Login = ConnectedLogin.WrappedComponent
+const Login = ConnectedLogin.WrappedComponent.WrappedComponent
 
 describe('The Login', () => {
     const originalIsRunningInAstro = AstroIntegration.isRunningInAstro

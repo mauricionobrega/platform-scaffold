@@ -1,35 +1,26 @@
 // Heading
 // ===
 
-.u-heading-family {
-    font-family: $header-font-family !important;
-
-    // Added with webfontloader. See loadFonts() in app/container.js
-    .wf-active & {
-        font-family: $loaded-header-font-family !important;
-    }
-}
-
 .u-h1 {
-    @include heading-level-1(true); // 28px/32px
+    @include h1();
 }
 
 .u-h2 {
-    @include heading-level-2(true); // 20px/24px
+    @include h2();
 }
 
 .u-h3 {
-    @include heading-level-3(true); // 18px/24px
+    @include h3();
 }
 
 .u-h4 {
-    @include heading-level-4(true); // 18px/24px
+    @include h4();
 }
 
 .u-h5 {
-    @include heading-level-5(true); // 16px/20px
+    @include h5();
 }
 
 .u-h6 {
-    @include heading-level-6(true); // 14px/20px
+    @include h6();
 }

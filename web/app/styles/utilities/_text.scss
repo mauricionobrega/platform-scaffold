@@ -1,15 +1,178 @@
 // Text utils
 // ===
 
+
+// Font-Family
+// ---
+
+.u-text-family {
+    font-family: $font-family;
+}
+
+.u-text-family-header {
+    font-family: $header-font-family;
+
+    // Added with webfontloader. See loadFonts() in app/container.js
+    .wf-active & {
+        font-family: $loaded-header-font-family;
+    }
+}
+
+.u-text-family-loaded {
+    font-family: $loaded-header-font-family;
+}
+
+
+// Weights & Style
+// ---
+
+.u-text-weight-thin {
+    font-weight: $thin-font-weight;
+}
+
+.u-text-weight-extra-light {
+    font-weight: $extra-light-font-weight;
+}
+
+.u-text-weight-light {
+    font-weight: $light-font-weight;
+}
+
+.u-text-weight-regular {
+    font-weight: $regular-font-weight;
+}
+
+.u-text-weight-medium {
+    font-weight: $medium-font-weight;
+}
+
+.u-text-weight-semi-bold {
+    font-weight: $semi-bold-font-weight;
+}
+
+.u-text-weight-bold {
+    font-weight: $bold-font-weight;
+}
+
+.u-text-style-italic {
+    font-style: italic;
+}
+
+.u-text-quiet {
+    color: $neutral-50;
+    font-size: $small-font-size;
+
+    fill: $neutral-50;
+}
+
+
+// Size
+// ---
+
+.u-text-size-smaller {
+    font-size: $smaller-font-size;
+}
+
+.u-text-size-small {
+    font-size: $small-font-size;
+}
+
+.u-text-size-base {
+    font-size: $font-size;
+}
+
+.u-text-size-big {
+    font-size: $big-font-size;
+}
+
+.u-text-size-bigger {
+    font-size: $bigger-font-size;
+}
+
+.u-text-size-huge {
+    font-size: $huge-font-size;
+}
+
+
+// Line Height
+// ---
+
+.u-text-height-0 {
+    line-height: 0;
+}
+
+.u-text-height-tiny {
+    line-height: $tiny-line-height;
+}
+
+.u-text-height-smaller {
+    line-height: $smaller-line-height;
+}
+
+.u-text-height-small {
+    line-height: $small-line-height;
+}
+
+.u-text-height-base {
+    line-height: $line-height;
+}
+
+.u-text-height-big {
+    line-height: $big-line-height;
+}
+
+.u-text-height-bigger {
+    line-height: $bigger-line-height;
+}
+
+.u-text-height-huge {
+    line-height: $huge-line-height;
+}
+
+
+// Letter Spacing
+// ---
+
+.u-text-letter-spacing-small {
+    letter-spacing: 1px;
+}
+
+.u-text-letter-spacing-normal {
+    letter-spacing: normal;
+}
+
+
+// Text Alignment
+// ---
+
+.u-text-align-start {
+    text-align: left;
+}
+
+.u-text-align-center {
+    text-align: center;
+}
+
+.u-text-align-end {
+    text-align: right;
+}
+
+.u-text-align-middle {
+    vertical-align: middle;
+}
+
+.u-text-align-baseline {
+    vertical-align: baseline;
+}
+
+
 // All Caps
 // ---
 //
 // Set text uppercase, letterspaced for legibility.
 
-.u-text-all-caps {
-    @include text-all-caps(true);
-
-    letter-spacing: initial !important; // @TODO: maybe remove letter-spacing from text-all-caps() method in Spline
+.u-text-uppercase {
+    text-transform: uppercase;
 }
 
 
@@ -19,17 +182,7 @@
 // Capitalize first letter of string.
 
 .u-text-capitalize {
-    @include text-capitalize(true);
-}
-
-
-// Lowercase Text
-// ---
-//
-// Lowercase all text in string.
-
-.u-text-uppercase {
-    text-transform: uppercase !important; // @TODO: add to Spline
+    text-transform: capitalize;
 }
 
 
@@ -39,120 +192,5 @@
 // Lowercase all text in string.
 
 .u-text-lowercase {
-    @include text-lowercase(true);
-}
-
-
-// Text Flow Alignment
-// ---
-//
-// Writing-direction independent text alignment. For RTL stylesheets, re-define
-// these styles with the opposite direction. Templates need not be changed.
-
-.u-text-align-start {
-    @include text-align-start(true);
-}
-
-.u-text-align-center {
-    @include text-align-center(true);
-}
-
-.u-text-align-end {
-    @include text-align-end(true);
-}
-
-
-// Vertical Alignment
-// ---
-//
-// Vertical aligment of text and replaced (inline-block) elements within a line.
-
-.u-align-middle {
-    @include align-middle(true);
-}
-
-.u-align-baseline {
-    @include align-baseline(true);
-}
-
-
-// Weights & Style
-// ---
-
-.u-text-normal {
-    @include text-normal(true);
-}
-
-.u-text-bold {
-    @include text-bold(true);
-}
-
-.u-text-italic {
-    @include text-italic(true);
-}
-
-.u-text-quiet {
-    @include text-quiet(true); // @TODO: Tweak to use a $font-size-small var
-
-    font-size: 12px !important; // @TODO: Remove this line after above todo is done
-}
-
-.u-text-extra-lighter {
-    font-weight: 200 !important; // @TODO: Add to Spline
-}
-
-.u-text-lighter {
-    font-weight: 300 !important; // @TODO: Add to Spline
-}
-
-.u-text-semi-bold {
-    font-weight: 500 !important; // @TODO: Add to Spline
-}
-
-// Size
-// ---
-
-.u-text-small {
-    font-size: 12px !important; // @TODO: Add to spline and assign a variable
-}
-
-
-// Font-Family
-// ---
-
-.u-text-header-font-family {
-    font-family: $header-font-family !important;
-
-    // Added with webfontloader. See loadFonts() in app/container.js
-    .wf-active & {
-        font-family: $loaded-header-font-family !important;
-    }
-}
-
-
-// Letter Spacing
-// ---
-
-.u-text-letter-spacing {
-    letter-spacing: 1px !important; // @TODO: Add to spline
-}
-
-.u-text-letter-spacing-normal {
-    letter-spacing: initial !important; // @TODO: Add to spline
-}
-
-
-// Line Height
-// ---
-
-.u-text-line-height-0 {
-    line-height: 0 !important; // @TODO: Add to spline
-}
-
-
-// Font Family
-// ---
-
-.u-text-font-family {
-    font-family: $font-family !important; // @TODO: Add to spline
+    text-transform: lowercase;
 }

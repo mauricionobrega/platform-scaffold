@@ -10,40 +10,31 @@ h3,
 h4,
 h5,
 h6 {
-    margin: 0;
-
-    font-family: $header-font-family;
-    font-weight: normal;
-    line-height: 1.25;
-
-    // Added with webfontloader. See loadFonts() in app/container.js
-    .wf-active & {
-        font-family: $loaded-header-font-family;
-    }
+    @include heading();
 }
 
 h1 {
-    @include heading-level-1;
+    @include h1();
 }
 
 h2 {
-    @include heading-level-2;
+    @include h2();
 }
 
 h3 {
-    @include heading-level-3;
+    @include h3();
 }
 
 h4 {
-    @include heading-level-4;
+    @include h4();
 }
 
 h5 {
-    @include heading-level-5;
+    @include h5();
 }
 
 h6 {
-    @include heading-level-6;
+    @include h6();
 }
 
 
@@ -70,7 +61,7 @@ a {
 
 hr {
     margin: ($unit * 2) 0;
-    border: 1px solid $border-color;
+    border: $border;
     border-width: 0 0 1px;
 }
 

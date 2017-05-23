@@ -15,7 +15,7 @@
 // `display: flex` property.
 
 .u-flex {
-    @include flex(true);
+    @include flex;
 }
 
 
@@ -25,7 +25,7 @@
 // Shrink Flexbox items to a minimum size.
 
 .u-flex-shrink {
-    @include flex-shrink(true);
+    @include flex-shrink;
 }
 
 
@@ -35,7 +35,7 @@
 // Neither grow nor shrink!
 
 .u-flex-none {
-    flex: 0 0 auto !important; // @TODO: Add to spline
+    flex: 0 0 auto;
 }
 
 
@@ -48,16 +48,17 @@
 // ensure an element that has both classes inherits `display: flex`!
 
 .u-flexbox {
-    @include flexbox(true);
+    @include flexbox;
 }
 
 .u-flexbox-gutters {
-    @include flexbox-gutters(true);
+    margin-right: ($unit * -0.5);
+    margin-left: ($unit * -0.5);
 }
 
 .u-flexbox-gutters > .u-flex,
 .u-flexbox-gutters > .u-flex-shrink {
-    @include flexbox-inner-gutters(true);
+    margin: 0 ($unit / 2);
 }
 
 
@@ -65,19 +66,19 @@
 // ---
 
 .u-direction-column {
-    flex-direction: column !important; // @TODO: Add to Spline
+    flex-direction: column;
 }
 
 .u-direction-column-reverse {
-    flex-direction: column-reverse !important; // @TODO: Add to Spline
+    flex-direction: column-reverse;
 }
 
 .u-direction-row {
-    flex-direction: row !important; // @TODO: Add to Spline
+    flex-direction: row;
 }
 
 .u-direction-row-reverse {
-    flex-direction: row-reverse !important; // @TODO: Add to Spline
+    flex-direction: row-reverse;
 }
 
 
@@ -85,15 +86,15 @@
 // ---
 
 .u-align-top {
-    @include align-top(true);
+    align-items: flex-start;
 }
 
 .u-align-center {
-    @include align-center(true);
+    align-items: center;
 }
 
 .u-align-bottom {
-    @include align-bottom(true);
+    align-items: flex-end;
 }
 
 
@@ -101,43 +102,23 @@
 // ---
 
 .u-justify-start {
-    @include justify-start(true);
+    justify-content: flex-start;
 }
 
 .u-justify-end {
-    @include justify-end(true);
+    justify-content: flex-end;
 }
 
 .u-justify-between {
-    @include justify-between(true);
+    justify-content: space-between;
 }
 
 .u-justify-center {
-    @include justify-center(true);
+    justify-content: center;
 }
 
 .u-justify-around {
-    @include justify-around(true);
-}
-
-
-// Flex Direction
-// ---
-
-.u-row-reverse {
-    @include row-reverse(true);
-}
-
-.u-row {
-    flex-direction: row !important; // @TODO: Add to spline
-}
-
-.u-column {
-    flex-direction: column !important; // @TODO: Add to spline
-}
-
-.u-column-reverse {
-    flex-direction: column-reverse !important; // @TODO: Add to spline
+    justify-content: space-around;
 }
 
 
@@ -148,25 +129,25 @@
 // your own stylesheet to re-order more.
 
 .u-order-1 {
-    @include order-1(true);
+    order: 1;
 }
 
 .u-order-2 {
-    @include order-2(true);
+    order: 2;
 }
 
 .u-order-3 {
-    @include order-3(true);
+    order: 3;
 }
 
 .u-order-4 {
-    @include order-4(true);
+    order: 4;
 }
 
 .u-order-5 {
-    @include order-5(true);
+    order: 5;
 }
 
 .u-order-6 {
-    @include order-6(true);
+    order: 6;
 }

@@ -1,7 +1,9 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {onRouteChanged, fetchPage, removeAllNotifications} from './containers/app/actions'
+
+import {onRouteChanged, checkIfOffline, setFetchedPage} from './containers/app/actions'
 import {incrementPageCount} from './store/push-messaging/actions'
+import {removeAllNotifications} from 'progressive-web-sdk/dist/store/notifications/actions'
 
 import {trigger as astroTrigger} from './utils/astro-integration'
 
@@ -25,8 +27,11 @@ const template = (WrappedComponent) => {
             dispatch(incrementPageCount())
             dispatch(onRouteChanged(url, route.routeName))
 
-            if (!route.suppressFetch) {
-                dispatch(fetchPage(url, WrappedComponent, route.routeName, route.fetchUrl))
+            if (route.fetchAction) {
+                dispatch(route.fetchAction(route.fetchUrl || url, route.routeName))
+                    .then(() => dispatch(setFetchedPage(url)))
+                    .then(() => dispatch(checkIfOffline()))
+                    .catch((error) => console.error(`Error executing fetch action for ${route.routeName}`, error))
             }
             dispatch(removeAllNotifications())
         }
@@ -44,7 +49,6 @@ const template = (WrappedComponent) => {
 
         componentWillReceiveProps(nextProps) {
             if (getPath(this.props.location) !== getPath(nextProps.location)) {
-                console.log('changing', Template.displayName)
                 this.dispatchRouteChange(nextProps)
                 this.props.dispatch(removeAllNotifications())
             }

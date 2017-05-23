@@ -120,7 +120,7 @@ select {
     margin-right: $unit;
     border: $border;
 
-    background: #fff;
+    background: $neutral-00;
 
     vertical-align: middle;
 
@@ -162,7 +162,7 @@ select {
         left: $unit;
 
         border-radius: 50%;
-        background: #fff;
+        background: $neutral-00;
     }
 }
 
@@ -179,7 +179,7 @@ select {
 
             background: url($base__radio-checkmark); // @TODO replace with Icon Component
 
-            color: #fff;
+            color: $neutral-00;
             line-height: 0;
 
             pointer-events: none;
