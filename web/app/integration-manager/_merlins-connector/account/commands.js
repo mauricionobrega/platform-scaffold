@@ -12,7 +12,6 @@ import {getCart} from '../cart/commands'
 import {setSigninLoaded, setRegisterLoaded} from '../../account/results'
 import {buildFormData, createAddressRequestObject} from './utils'
 import {jqueryAjaxWrapper} from '../utils'
-import {getCookieValue} from '../../../utils/utils'
 import {LOGIN_POST_URL, CREATE_ACCOUNT_POST_URL} from '../constants'
 
 import {isFormResponseInvalid} from './parsers/parsers'
@@ -114,7 +113,6 @@ export const logout = () => (dispatch) => (
 
 export const updateShippingAddress = (shippingData) => (dispatch) => {
     const formData = buildFormData({
-        form_key: getCookieValue('form_key'),
         success_url: '',
         error_url: '',
         ...createAddressRequestObject(shippingData),
@@ -140,7 +138,6 @@ export const updateShippingAddress = (shippingData) => (dispatch) => {
 
 export const updateBillingAddress = (paymentData) => (dispatch) => {
     const formData = buildFormData({
-        form_key: getCookieValue('form_key'),
         success_url: '',
         error_url: '',
         ...createAddressRequestObject(paymentData),
