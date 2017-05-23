@@ -1,6 +1,7 @@
 import sourceMapSupport from 'source-map-support'
 sourceMapSupport.install()
 
+import process from 'process'
 import path from 'path'
 import Promise from 'bluebird'
 import fetch from 'node-fetch'
@@ -10,6 +11,7 @@ import ReactDOMServer from 'react-dom/server'
 import _jsdom from 'jsdom'
 import {Provider} from 'react-redux'
 import {createStore} from 'redux'
+import * as awsServerlessExpress from 'aws-serverless-express'
 
 import Home from './containers/home/container'
 import PDP from './containers/pdp/container'
@@ -24,8 +26,6 @@ import styles from './stylesheet.scss'
 
 const jsdom = Promise.promisifyAll(_jsdom)
 
-
-const app = express()
 
 const base = 'https://www.merlinspotions.com'
 
@@ -91,6 +91,8 @@ const homePage = (req, res, next) => {
         .catch(next)
 }
 
+const app = express()
+
 app.get('/', homePage)
 app.get('/potions.html', productListPage)
 app.get('/books.html', productListPage)
@@ -104,6 +106,28 @@ app.get('*.html', productDetailPage)
 app.use('/static', express.static(path.resolve('./app/static')))
 
 
-app.listen(3000, () => {
-    console.log('Example app listening on port 3000!')
-})
+
+const onLambda = process.env.hasOwnProperty('AWS_LAMBDA_FUNCTION_NAME')
+
+
+if (!onLambda) {
+    app.listen(3000, () => console.log('Example app listening on port 3000!'))
+}
+
+
+/**
+ * Wrap the express app returning a handler function that can be used with AWS Lambda.
+ */
+const makeHandler = (expressApp) => {
+    const binaryMimeTypes = [
+      // If we choose to let express output gzipped responses, we'd need to add mimetypes here.
+      // 'text/html',
+    ]
+    const server = awsServerlessExpress.createServer(expressApp, null, binaryMimeTypes)
+    return (event, context) => awsServerlessExpress.proxy(server, event, context)
+}
+
+
+export const handler = onLambda ? makeHandler(app) : undefined
+
+
