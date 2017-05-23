@@ -6,6 +6,10 @@ import React, {PropTypes} from 'react'
 import classNames from 'classnames'
 import * as ReduxForm from 'redux-form'
 import Field from 'progressive-web-sdk/dist/components/field'
+import {createPropsSelector} from 'reselect-immutable-helpers'
+import {connect} from 'react-redux'
+
+import {getCountries} from '../../store/checkout/locations/selectors'
 
 /**
  * A field for selecting a country.
@@ -55,4 +59,8 @@ CountrySelect.propTypes = {
     }))
 }
 
-export default CountrySelect
+const mapStateToProps = createPropsSelector({
+    countries: getCountries
+})
+
+export default connect(mapStateToProps)(CountrySelect)

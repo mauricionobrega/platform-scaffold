@@ -12,18 +12,27 @@ for correct connection to the store.
     const Redux = require('redux');
     const ReactRedux = require('react-redux');
     const React = require('react');
+    const Immutable = require('immutable')
+    const CSModule = require('./index');
+
+    const CountrySelect = CSModule.default;
 
     // Redux setup
-    const reducers = {
-        form: ReduxForm.reducer,
-    };
-    const reducer = Redux.combineReducers(reducers);
-    const store = Redux.createStore(reducer);
-
     const countries = [
         {id: 'us', label: 'United States'},
         {id: 'ca', label: 'Canada'}
     ]
+
+    const checkoutReducer = () => Immutable.fromJS({
+        locations: {countries}
+    })
+
+    const reducers = {
+        checkout: checkoutReducer,
+        form: ReduxForm.reducer,
+    };
+    const reducer = Redux.combineReducers(reducers);
+    const store = Redux.createStore(reducer);
 
     // The form
     const DemoForm = (props) => {
@@ -33,7 +42,7 @@ for correct connection to the store.
                 <h3>Order Info</h3>
                 <form onSubmit={handleSubmit}>
                     <FieldRow>
-                        <CountrySelect countries={countries} />
+                        <CountrySelect />
                     </FieldRow>
                 </form>
             </div>

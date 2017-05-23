@@ -9,7 +9,7 @@ import {createPropsSelector} from 'reselect-immutable-helpers'
 
 // Selectors
 import * as selectors from '../selectors'
-import {getCountries, getAvailableRegions} from '../../../store/checkout/locations/selectors'
+import {getAvailableRegions} from '../../../store/checkout/locations/selectors'
 import {getShippingFullName, getAddressLineOne, getCity, getPostcode} from '../../../store/checkout/shipping/selectors'
 
 // Actions
@@ -47,7 +47,6 @@ class BillingAddressForm extends React.Component {
     render() {
         const {
             city,
-            countries,
             isCompanyOrAptShown,
             name,
             postcode,
@@ -158,7 +157,7 @@ class BillingAddressForm extends React.Component {
                             </FieldRow>
 
                             <FieldRow>
-                                <CountrySelect countries={countries} />
+                                <CountrySelect />
                             </FieldRow>
                         </div>
                     }
@@ -173,14 +172,6 @@ BillingAddressForm.propTypes = {
     * City of saved shipping address
     */
     city: PropTypes.string,
-
-    /**
-    * Countries available to ship to
-    */
-    countries: PropTypes.arrayOf(PropTypes.shape({
-        label: PropTypes.string,
-        value: PropTypes.string
-    })),
 
     /**
      * Shows the "Company" and "Apt #" fields
@@ -229,7 +220,6 @@ BillingAddressForm.propTypes = {
 
 const mapStateToProps = createPropsSelector({
     city: getCity,
-    countries: getCountries,
     isCompanyOrAptShown: selectors.getIsCompanyOrAptShown,
     name: getShippingFullName,
     newShippingAddressIsEnabled: selectors.getNewShippingAddressIsEnabled,

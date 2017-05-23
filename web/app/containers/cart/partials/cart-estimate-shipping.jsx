@@ -11,7 +11,7 @@ import {ESTIMATE_FORM_NAME} from '../../../store/form/constants'
 
 import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {isModalOpen} from 'progressive-web-sdk/dist/store/modals/selectors'
-import {getCountries, getAvailableRegions} from '../../../store/checkout/locations/selectors'
+import {getAvailableRegions} from '../../../store/checkout/locations/selectors'
 import {submitEstimateShipping} from '../actions'
 import {isTaxRequestPending} from '../selectors'
 
@@ -25,7 +25,7 @@ import RegionField from '../../../components/region-field'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 import InlineLoader from 'progressive-web-sdk/dist/components/inline-loader'
 
-export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateProvinces, submitEstimateShipping, isTaxRequestPending, handleSubmit}) => {
+export const CartEstimateShippingModal = ({closeModal, isOpen, stateProvinces, submitEstimateShipping, isTaxRequestPending, handleSubmit}) => {
     return (
         <Sheet className="t-cart__estimate-shipping-modal" open={isOpen} onDismiss={closeModal} maskOpacity={0.7} effect="slide-right" coverage="85%">
             <HeaderBar>
@@ -44,7 +44,7 @@ export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateP
             <div className="u-padding-md">
                 <form onSubmit={handleSubmit(submitEstimateShipping)}>
                     <FieldRow>
-                        <CountrySelect countries={countries} />
+                        <CountrySelect />
                     </FieldRow>
 
                     <FieldRow>
@@ -80,7 +80,6 @@ CartEstimateShippingModal.propTypes = {
      */
     closeModal: React.PropTypes.func,
 
-    countries: React.PropTypes.array,
     /**
     * (Internal) Added by Redux form
     */
@@ -101,7 +100,6 @@ CartEstimateShippingModal.propTypes = {
 }
 
 const mapStateToProps = createPropsSelector({
-    countries: getCountries,
     isTaxRequestPending,
     isOpen: isModalOpen(CART_ESTIMATE_SHIPPING_MODAL),
     stateProvinces: getAvailableRegions(ESTIMATE_FORM_NAME)

@@ -12,7 +12,7 @@ import {showCompanyAndApt} from '../actions'
 import {getIsCompanyOrAptShown} from '../selectors'
 import {fetchShippingMethodsEstimate} from '../../../integration-manager/checkout/commands'
 import {SHIPPING_FORM_NAME} from '../../../store/form/constants'
-import {getCountries, getAvailableRegions} from '../../../store/checkout/locations/selectors'
+import {getAvailableRegions} from '../../../store/checkout/locations/selectors'
 
 import CountrySelect from '../../../components/country-select'
 import RegionField from '../../../components/region-field'
@@ -24,7 +24,6 @@ import Icon from 'progressive-web-sdk/dist/components/icon'
 
 
 const ShippingAddressFields = ({
-    countries,
     fetchShippingMethods,
     handleShowCompanyAndApt,
     isCompanyOrAptShown,
@@ -106,7 +105,7 @@ const ShippingAddressFields = ({
             </FieldRow>
 
             <FieldRow>
-                <CountrySelect countries={countries} />
+                <CountrySelect />
             </FieldRow>
 
             <FieldRow>
@@ -143,14 +142,6 @@ const ShippingAddressFields = ({
 
 ShippingAddressFields.propTypes = {
     /**
-    * Countries available to ship to
-    */
-    countries: React.PropTypes.arrayOf(React.PropTypes.shape({
-        label: React.PropTypes.string,
-        value: React.PropTypes.string
-    })),
-
-    /**
     * Fetches the available shipping methods from the back end
     */
     fetchShippingMethods: React.PropTypes.func,
@@ -177,7 +168,6 @@ ShippingAddressFields.propTypes = {
 }
 
 const mapStateToProps = createPropsSelector({
-    countries: getCountries,
     isCompanyOrAptShown: getIsCompanyOrAptShown,
     regions: getAvailableRegions(SHIPPING_FORM_NAME),
 })
