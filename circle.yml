@@ -28,7 +28,7 @@ test:
         # Run end-to-end tests
         # - npm run smoke-test:
         #    pwd: web
-        # - npm run test:unit:
+        # - npm run test:
         #    pwd: amp
     post:
        - cp -R lighthouse/* $CIRCLE_ARTIFACTS:

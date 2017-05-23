@@ -73,19 +73,19 @@ const render = (req, res, store, component) => {
 }
 
 
-const productDetailPage = (req, res, next) => {
+export const productDetailPage = (req, res, next) => {
     initializeStore(req)
         .then((store) => render(req, res, store, PDP))
         .catch(next)
 }
 
-const productListPage = (req, res, next) => {
+export const productListPage = (req, res, next) => {
     initializeStore(req)
         .then((store) => render(req, res, store, PLP))
         .catch(next)
 }
 
-const homePage = (req, res, next) => {
+export const homePage = (req, res, next) => {
     initializeStore(req)
         .then((store) => render(req, res, store, Home))
         .catch(next)
