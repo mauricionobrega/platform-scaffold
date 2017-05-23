@@ -27,7 +27,7 @@ const remapProducts = (products) => {
 
 const realReceiveCheckoutConfirmationData = createActionWithAnalytics(
     'Receive Checkout Confirmation Data',
-    ['confirmationData', 'purchaseData'],
+    ['confirmationData'],
     EVENT_ACTION.purchase,
     (confirmationData, purchaseData) => {
         return new Transaction(
@@ -42,6 +42,8 @@ const realReceiveCheckoutConfirmationData = createActionWithAnalytics(
 )
 
 // This is a proxy action to get state information before dispatching the real intended action
+// The idea here is that we obtain the data in the state using selectors so that is can be
+// used to build out the analytic data required for analytic manager
 export const receiveCheckoutConfirmationData = (confirmationData) => (dispatch, getState) => {
     return dispatch(realReceiveCheckoutConfirmationData(confirmationData, {
         [Transaction.REVENUE]: getOrderTotal(getState()),
