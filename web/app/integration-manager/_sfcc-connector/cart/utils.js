@@ -2,14 +2,13 @@
 /* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
-import {makeSfccRequest, getBasketID, storeBasketID, deleteBasketID} from '../utils'
+import {makeApiRequest, getBasketID, storeBasketID, deleteBasketID} from '../utils'
 import {getCartItems} from '../../../store/cart/selectors'
 import {receiveCartProductData} from '../../products/results'
 import {receiveCartContents} from '../../cart/results'
 
 import {getProductById, getProductThumbnailSrcByPathKey, getProductThumbnailByPathKey} from '../../../store/products/selectors'
 import {getProductHref} from '../parsers'
-import {API_END_POINT_URL} from '../constants'
 import {parseCartProducts, parseCartContents} from './parsers'
 
 export const createBasket = (basketContents) => {
@@ -25,7 +24,7 @@ export const createBasket = (basketContents) => {
         options.body = JSON.stringify(basketContents)
     }
 
-    return makeSfccRequest(`${API_END_POINT_URL}/baskets`, options)
+    return makeApiRequest('/baskets', options)
         .then((response) => response.json())
         .then((basket) => {
             storeBasketID(basket.basket_id)
@@ -44,7 +43,7 @@ export const getProductImage = (item, currentState) => {
         })
     } else {
         // We have no images for the item in our state, fetch images using the Salseforce Commerce Cloud API
-        return makeSfccRequest(`${API_END_POINT_URL}/products/${item.product_id}/images?view_type=large`, {method: 'GET'})
+        return makeApiRequest(`/products/${item.product_id}/images?view_type=large`, {method: 'GET'})
             .then((response) => response.json())
             .then(({image_groups}) => {
                 return Promise.resolve({
@@ -84,7 +83,7 @@ export const fetchCartItemImages = () => (dispatch, getState) => {
             .map((cartItem) => {
                 const productId = cartItem.get('productId')
 
-                return makeSfccRequest(`${API_END_POINT_URL}/products/${productId}/images?all_images=false&view_type=${largeViewType},${thumbnailViewType}`, {method: 'GET'})
+                return makeApiRequest(`/products/${productId}/images?all_images=false&view_type=${largeViewType},${thumbnailViewType}`, {method: 'GET'})
                     .then((response) => response.json())
                     .then(({image_groups, name, short_description}) => {
                         const product = getProductById(productId)(currentState).toJS()
@@ -110,7 +109,7 @@ export const fetchCartItemImages = () => (dispatch, getState) => {
 
 export const requestCartData = (noRetry) => {
     return createBasket()
-        .then((basket) => makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}`, {method: 'GET'}))
+        .then((basket) => makeApiRequest(`/baskets/${basket.basket_id}`, {method: 'GET'}))
         .then((response) => {
             if (response.status === 404) {
                 if (noRetry) {
