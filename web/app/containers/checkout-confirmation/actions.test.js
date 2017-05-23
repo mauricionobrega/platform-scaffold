@@ -50,7 +50,7 @@ describe('submitRegisterForm', () => {
             })
     })
 
-    test('calls updateShippingAndBilling on success', () => {
+    test('calls updateShippingAddress on success', () => {
         registerUser.mockClear()
         registerUser.mockImplementationOnce(() => Promise.resolve())
         const thunk = submitRegisterForm()
