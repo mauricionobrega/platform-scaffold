@@ -238,6 +238,8 @@ const buildFormData = (formCredentials) => {
         }
     })
 
+    formData.append('form_key', getCookieValue('form_key'))
+
     return formData
 }
 
@@ -291,7 +293,6 @@ const jqueryAjaxWrapper = (options) => {
 
 const updateBillingAddress = () => (dispatch, getState) => {
     const formData = buildFormData({
-        form_key: getCookieValue('form_key'),
         success_url: '',
         error_url: '',
         ...createAddressRequestObject(paymentSelectors.getPayment(getState())),
@@ -318,7 +319,6 @@ const updateBillingAddress = () => (dispatch, getState) => {
 export const updateShippingAndBilling = () => (dispatch, getState) => {
     const shippingData = shippingSelectors.getShippingAddress(getState()).toJS()
     const formData = buildFormData({
-        form_key: getCookieValue('form_key'),
         success_url: '',
         error_url: '',
         ...createAddressRequestObject(shippingData),
