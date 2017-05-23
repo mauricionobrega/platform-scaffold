@@ -55,14 +55,29 @@ a {
     }
 }
 
+b,
+strong {
+    font-weight: bold;
+}
+
+small {
+    font-size: 80%;
+}
+
 
 // Miscellaneous Elements
 // ---
+//
+// 1. Address differences between Firefox and other browsers.
 
 hr {
+    box-sizing: content-box; // 1
+    height: 0; // 1
     margin: ($unit * 2) 0;
     border: $border;
     border-width: 0 0 1px;
+
+    -moz-box-sizing: content-box; // 1
 }
 
 img {
