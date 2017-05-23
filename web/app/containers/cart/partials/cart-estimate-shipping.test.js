@@ -6,6 +6,8 @@
 import Immutable from 'immutable'
 import React from 'react'
 import ConnectedEstimateShippingReduxForm, {CartEstimateShippingModal} from './cart-estimate-shipping'
+import CountrySelect from '../../../components/country-select'
+import RegionField from '../../../components/region-field'
 import {Field} from 'redux-form'
 import {Provider} from 'react-redux'
 import {noop} from 'progressive-web-sdk/dist/utils/utils'
@@ -61,7 +63,16 @@ test('renders the component class correctly', () => {
 test('renders the countries and state/provinces', () => {
     const wrapper = shallow(<CartEstimateShippingModal {...testProps} />)
 
+    const countrySelect = wrapper.find(CountrySelect)
+    expect(countrySelect.length).toBe(1)
+    expect(countrySelect.prop('countries')).toEqual(testProps.countries)
+
+    const regionFields = wrapper.find(RegionField)
+    expect(regionFields.length).toBe(1)
+    expect(regionFields.prop('regions')).toEqual(testProps.stateProvinces)
+
+
     const fields = wrapper.find(Field)
 
-    expect(fields.length).toBe(3)
+    expect(fields.length).toBe(1)
 })
