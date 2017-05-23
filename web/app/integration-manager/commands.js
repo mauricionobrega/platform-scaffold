@@ -20,7 +20,7 @@ export const register = (commands) => {
     registerCategories(commands.categories)
     registerCart(commands.cart)
     registerCheckout(commands.checkout)
-    registerAccount(commands.login)
+    registerAccount(commands.account)
 }
 
 export const submitNewsletter = (...args) => connector.submitNewsletter(...args)
