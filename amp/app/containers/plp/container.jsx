@@ -10,7 +10,7 @@ const PLP = ({links, title}) => {
         <div className={containerClass}>
             <div dangerouslySetInnerHTML={{__html: '<button on="tap:my-lightbox">Open lightbox</button>'}} />
             <AmpLightbox id="my-lightbox">
-                <amp-img src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif" width="500" height="500" />
+                <AmpImage src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif" width="500" height="500" />
             </AmpLightbox>
             <AmpImage src="/static/mobify.png" width="252" height="64" layout="fixed" />
 
@@ -33,7 +33,7 @@ PLP.propTypes = {
 
 const mapStateToProps = (state) => ({
     links: state.links,
-    title: `Home! - ${state.title}` || '',
+    title: `PLP! - ${state.title}` || '',
     className: containerClass
 })
 
