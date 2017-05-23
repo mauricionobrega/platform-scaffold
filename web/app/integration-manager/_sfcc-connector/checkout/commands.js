@@ -12,7 +12,7 @@ import {PAYMENT_URL, SITE_ID} from '../constants'
 import {STATES} from './constants'
 import {receiveOrderConfirmationContents} from '../../results'
 import {getCardData} from 'progressive-web-sdk/dist/card-utils'
-import {receiveCheckoutData, receiveShippingInitialValues, receiveBillingInitialValues} from './../../checkout/results'
+import {receiveCheckoutData, receiveCheckoutLocations, receiveShippingInitialValues, receiveBillingInitialValues} from './../../checkout/results'
 
 export const fetchShippingMethodsEstimate = () => (dispatch) => {
     return createBasket()
@@ -66,11 +66,9 @@ export const initCheckoutShippingPage = () => (dispatch) => {
             }
             dispatch(receiveShippingInitialValues({initialValues}))
             /* eslint-enable camelcase */
-            return dispatch(receiveCheckoutData({
-                locations: {
-                    countries: [{value: 'us', label: 'United States'}],
-                    regions: STATES
-                }
+            return dispatch(receiveCheckoutLocations({
+                countries: [{id: 'us', label: 'United States'}],
+                regions: STATES
             }))
         })
         .then(() => dispatch(fetchShippingMethodsEstimate()))

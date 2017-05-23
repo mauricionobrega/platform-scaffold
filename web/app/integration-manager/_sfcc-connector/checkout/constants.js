@@ -4,318 +4,318 @@
 
 export const STATES = [
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Select...',
-        value: ''
+        id: ''
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Alabama',
-        value: 'AL'
+        id: 'AL'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Alaska',
-        value: 'AK'
+        id: 'AK'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'American Samoa',
-        value: 'AS'
+        id: 'AS'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Arizona',
-        value: 'AZ'
+        id: 'AZ'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Arkansas',
-        value: 'AR'
+        id: 'AR'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'California',
-        value: 'CA'
+        id: 'CA'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Colorado',
-        value: 'CO'
+        id: 'CO'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Connecticut',
-        value: 'CT'
+        id: 'CT'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Delaware',
-        value: 'DE'
+        id: 'DE'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'District of Columbia',
-        value: 'DC'
+        id: 'DC'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Florida',
-        value: 'FL'
+        id: 'FL'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Georgia',
-        value: 'GA'
+        id: 'GA'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Guam',
-        value: 'GU'
+        id: 'GU'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Hawaii',
-        value: 'HI'
+        id: 'HI'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Idaho',
-        value: 'ID'
+        id: 'ID'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Illinois',
-        value: 'IL'
+        id: 'IL'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Indiana',
-        value: 'IN'
+        id: 'IN'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Iowa',
-        value: 'IA'
+        id: 'IA'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Kansas',
-        value: 'KS'
+        id: 'KS'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Kentucky',
-        value: 'KY'
+        id: 'KY'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Louisiana',
-        value: 'LA'
+        id: 'LA'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Maine',
-        value: 'ME'
+        id: 'ME'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Maryland',
-        value: 'MD'
+        id: 'MD'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Massachusetts',
-        value: 'MA'
+        id: 'MA'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Michigan',
-        value: 'MI'
+        id: 'MI'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Minnesota',
-        value: 'MN'
+        id: 'MN'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Mississippi',
-        value: 'MS'
+        id: 'MS'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Missouri',
-        value: 'MO'
+        id: 'MO'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Montana',
-        value: 'MT'
+        id: 'MT'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Nebraska',
-        value: 'NE'
+        id: 'NE'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Nevada',
-        value: 'NV'
+        id: 'NV'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'New Hampshire',
-        value: 'NH'
+        id: 'NH'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'New Jersey',
-        value: 'NJ'
+        id: 'NJ'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'New Mexico',
-        value: 'NM'
+        id: 'NM'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'New York',
-        value: 'NY'
+        id: 'NY'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'North Carolina',
-        value: 'NC'
+        id: 'NC'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'North Dakota',
-        value: 'ND'
+        id: 'ND'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Ohio',
-        value: 'OH'
+        id: 'OH'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Oklahoma',
-        value: 'OK'
+        id: 'OK'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Oregon',
-        value: 'OR'
+        id: 'OR'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Pennsylvania',
-        value: 'PA'
+        id: 'PA'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Puerto Rico',
-        value: 'PR'
+        id: 'PR'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Rhode Island',
-        value: 'RI'
+        id: 'RI'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'South Carolina',
-        value: 'SC'
+        id: 'SC'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'South Dakota',
-        value: 'SD'
+        id: 'SD'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Tennessee',
-        value: 'TN'
+        id: 'TN'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Texas',
-        value: 'TX'
+        id: 'TX'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Utah',
-        value: 'UT'
+        id: 'UT'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Vermont',
-        value: 'VT'
+        id: 'VT'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Virgin Islands',
-        value: 'VI'
+        id: 'VI'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Virginia',
-        value: 'VA'
+        id: 'VA'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Washington',
-        value: 'WA'
+        id: 'WA'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'West Virginia',
-        value: 'WV'
+        id: 'WV'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Wisconsin',
-        value: 'WI'
+        id: 'WI'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Wyoming',
-        value: 'WY'
+        id: 'WY'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Armed Forces Africa',
-        value: 'AE'
+        id: 'AE'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Armed Forces America (exc. Canada)',
-        value: 'AA'
+        id: 'AA'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Armed Forces Canada',
-        value: 'AE'
+        id: 'AE'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Armed Forces Europe',
-        value: 'AE'
+        id: 'AE'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Armed Forces Middle East',
-        value: 'AE'
+        id: 'AE'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Armed Forces Pacific',
-        value: 'AP'
+        id: 'AP'
     },
     {
-        country_id: 'us',
+        countryId: 'us',
         label: 'Non-US/Other',
-        value: 'OTHER'
+        id: 'OTHER'
     }
 ]
