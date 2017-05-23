@@ -126,21 +126,21 @@ export const submitPromoCode = (couponCode) => (dispatch) => {
             } else {
                 notificationMessage = PROMO_ERROR
             }
-            dispatch(addNotification({
-                content: notificationMessage,
-                id: 'promoError',
-                showRemoveButton: true
-            }))
+            dispatch(addNotification(
+                'submitPromoError',
+                notificationMessage,
+                true
+            ))
         })
 }
 
 export const removePromoCode = (couponCode) => (dispatch) => {
     dispatch(deletePromoCode(couponCode))
         .catch(() => {
-            dispatch(addNotification({
-                content: 'Unable to remove promo',
-                id: 'promoError',
-                showRemoveButton: true
-            }))
+            dispatch(addNotification(
+                'removePromoError',
+                'Unable to remove promo',
+                true
+            ))
         })
 }
