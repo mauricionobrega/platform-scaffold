@@ -10,6 +10,7 @@ import {parseLoginStatus} from './parser'
 import {parseNavigation} from '../navigation/parser'
 import {receiveFormKey} from '../actions'
 import {CHECKOUT_SHIPPING_URL, CART_URL} from '../constants'
+import {getCookieValue} from '../../../utils/utils'
 import {generateFormKeyCookie} from '../../../utils/magento-utils'
 
 import {
@@ -25,8 +26,9 @@ export const fetchPageData = (url) => (dispatch) => (
         .then(jqueryResponse)
         .then((res) => {
             const [$, $response] = res
-            dispatch(setLoggedIn(parseLoginStatus($response)))
-            dispatch(receiveNavigationData(parseNavigation($, $response)))
+            const isLoggedIn = parseLoginStatus($response)
+            dispatch(setLoggedIn(isLoggedIn))
+            dispatch(receiveNavigationData(parseNavigation($, $response, isLoggedIn)))
             return res
         })
         .catch((error) => {
@@ -40,7 +42,11 @@ export const fetchPageData = (url) => (dispatch) => (
 )
 
 export const initApp = () => (dispatch) => {
-    const formKey = generateFormKeyCookie()
+    // Use the pre-existing form_key if it already exists
+    let formKey = getCookieValue('form_key')
+    if (!formKey) {
+        formKey = generateFormKeyCookie()
+    }
     dispatch(receiveFormKey(formKey))
 
     dispatch(setCheckoutShippingURL(CHECKOUT_SHIPPING_URL))

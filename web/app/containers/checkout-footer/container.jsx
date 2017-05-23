@@ -18,7 +18,7 @@ const CheckoutFooter = function(props) {
                     </div>
                 </div>
                 <div className="t-checkout-footer__copyright u-padding-top u-padding-bottom u-margin-0">
-                    <p>© 2016 Mobify Research & Development Inc.</p>
+                    <p>© 2017 Mobify Research & Development Inc.</p>
                 </div>
             </div>
         </footer>

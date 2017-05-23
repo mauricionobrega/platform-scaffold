@@ -2,10 +2,9 @@
 /* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
-import {makeSfccRequest, getAuthTokenPayload} from '../utils'
+import {makeApiRequest, makeApiJsonRequest, getAuthTokenPayload} from '../utils'
 import {populateLocationsData} from '../checkout/utils'
 import {requestCartData, createBasket, handleCartData} from './utils'
-import {API_END_POINT_URL} from '../constants'
 
 export const getCart = () => (dispatch) => {
     return requestCartData()
@@ -13,17 +12,17 @@ export const getCart = () => (dispatch) => {
         .then((responseJSON) => dispatch(handleCartData(responseJSON)))
 }
 
-export const addToCart = (productID, qty) => (dispatch) => {
+export const addToCart = (productId, quantity) => (dispatch) => {
     return createBasket()
         .then((basket) => {
             const options = {
                 method: 'POST',
                 body: JSON.stringify([{
-                    product_id: productID,
-                    quantity: qty
+                    product_id: productId,
+                    quantity
                 }])
             }
-            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}/items`, options)
+            return makeApiRequest(`/baskets/${basket.basket_id}/items`, options)
                 .then((response) => {
                     if (response.ok) {
                         return response.json()
@@ -37,7 +36,7 @@ export const addToCart = (productID, qty) => (dispatch) => {
 export const removeFromCart = (itemId) => (dispatch) => {
     return createBasket()
         .then((basket) => {
-            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}/items/${itemId}`, {method: 'DELETE'})
+            return makeApiRequest(`/baskets/${basket.basket_id}/items/${itemId}`, {method: 'DELETE'})
                 .then((response) => {
                     if (response.ok) {
                         return response.json()
@@ -57,7 +56,7 @@ export const updateItemQuantity = (itemId, itemQuantity) => (dispatch) => {
                     quantity: itemQuantity
                 })
             }
-            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}/items/${itemId}`, requestOptions)
+            return makeApiRequest(`/baskets/${basket.basket_id}/items/${itemId}`, requestOptions)
                 .then((response) => {
                     if (response.ok) {
                         return response.json()
@@ -68,7 +67,7 @@ export const updateItemQuantity = (itemId, itemQuantity) => (dispatch) => {
         })
 }
 
-export const fetchCartPageData = () => (dispatch) => {
+export const initCartPage = () => (dispatch) => {
     return new Promise(() => {
         dispatch(populateLocationsData())
     })
@@ -78,7 +77,7 @@ export const addToWishlist = (productId) => (dispatch) => {
     const {sub} = getAuthTokenPayload()
     const customerID = JSON.parse(sub).customer_info.customer_id
 
-    return makeSfccRequest(`${API_END_POINT_URL}/customers/${customerID}/product_lists`, {method: 'GET'})
+    return makeApiRequest(`/customers/${customerID}/product_lists`, {method: 'GET'})
         .then((response) => response.json())
         .then(({count, data}) => {
             if (count) {
@@ -92,27 +91,23 @@ export const addToWishlist = (productId) => (dispatch) => {
                     name: 'Saved for Later'
                 })
             }
-            return makeSfccRequest(`${API_END_POINT_URL}/customers/${customerID}/product_lists`, requestOptions)
+            return makeApiRequest(`/customers/${customerID}/product_lists`, requestOptions)
                 .then((response) => response.json())
-
-
         })
         .then(({id}) => {
-            const requestOptions = {
-                method: 'POST',
-                body: JSON.stringify({
-                    type: 'product',
-                    product_id: productId,
-                    quantity: 1
-                })
+            const requestBody = {
+                type: 'product',
+                product_id: productId,
+                quantity: 1
             }
 
-            return makeSfccRequest(`${API_END_POINT_URL}/customers/${customerID}/product_lists/${id}/items`, requestOptions)
-                .then((response) => response.json())
-                .then((responseJSON) => {
-                    if (responseJSON.fault) {
-                        throw new Error('Unable to add item to wishlist.')
-                    }
-                })
+            return makeApiJsonRequest(
+                `/customers/${customerID}/product_lists/${id}/items`,
+                requestBody,
+                {method: 'POST'}
+            )
+                .catch(() => { throw new Error('Unable to add item to wishlist.') })
         })
 }
+
+export const fetchTaxEstimate = () => Promise.reject('Method not implemented')

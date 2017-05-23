@@ -7,7 +7,6 @@ import Immutable from 'immutable'
 import {createGetSelector, createHasSelector} from 'reselect-immutable-helpers'
 import {getUi} from '../../store/selectors'
 import * as appSelectors from '../app/selectors'
-import {getFormValues} from '../../store/form/selectors'
 
 const PLACEHOLDER_BREADCRUMBS = Immutable.fromJS([
     {
@@ -46,5 +45,3 @@ export const getProductDetailsBreadcrumbs = createGetSelector(
     'breadcrumbs',
     PLACEHOLDER_BREADCRUMBS
 )
-
-export const getAddToCartFormValues = getFormValues('product-add-to-cart')

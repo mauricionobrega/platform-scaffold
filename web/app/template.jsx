@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {onRouteChanged, removeAllNotifications, checkIfOffline, setFetchedPage} from './containers/app/actions'
+import {onRouteChanged, checkIfOffline, setFetchedPage} from './containers/app/actions'
+import {removeAllNotifications} from 'progressive-web-sdk/dist/store/notifications/actions'
 
 import {trigger as astroTrigger} from './utils/astro-integration'
 
@@ -27,6 +28,7 @@ const template = (WrappedComponent) => {
                 dispatch(route.fetchAction(route.fetchUrl || url, route.routeName))
                     .then(() => dispatch(setFetchedPage(url)))
                     .then(() => dispatch(checkIfOffline()))
+                    .catch((error) => console.error(`Error executing fetch action for ${route.routeName}`, error))
             }
             dispatch(removeAllNotifications())
         }
