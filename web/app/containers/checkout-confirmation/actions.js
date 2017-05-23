@@ -4,6 +4,7 @@
 
 import {CHECKOUT_CONFIRMATION_MODAL, CHECKOUT_CONFIRMATION_REGISTRATION_FAILED} from './constants'
 import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import {addNotification, removeAllNotifications} from '../app/actions'
 import {openModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import * as shippingSelectors from '../../store/checkout/shipping/selectors'
@@ -14,19 +15,29 @@ import {updateShippingAddress, updateBillingAddress, registerUser} from '../../i
 
 export const hideRegistrationForm = createAction('Hiding Registration Form (Save Your Address Details)')
 
+const registrationFormSelector = createPropsSelector({
+    firstname: shippingSelectors.getShippingFirstName,
+    lastname: shippingSelectors.getShippingLastName,
+    email: getEmailAddress,
+    formValues: formSelectors.getConfirmationFormValues,
+    shippingData: shippingSelectors.getShippingAddress,
+    billingAddressData: getBillingAddress
+})
+
 export const submitRegisterForm = () => {
     return (dispatch, getState) => {
         dispatch(removeAllNotifications())
-        const currentState = getState()
-        const firstname = shippingSelectors.getShippingFirstName(currentState)
-        const lastname = shippingSelectors.getShippingLastName(currentState)
-        const email = getEmailAddress(currentState)
         const {
-            password,
-            password_confirmation
-        } = formSelectors.getConfirmationFormValues(currentState)
-        const shippingData = shippingSelectors.getShippingAddress(currentState).toJS()
-        const billingAddressData = getBillingAddress(currentState).toJS()
+            firstname,
+            lastname,
+            email,
+            formValues: {
+                password,
+                password_confirmation
+            },
+            shippingData,
+            billingAddressData
+        } = registrationFormSelector(getState())
 
         return dispatch(registerUser(firstname, lastname, email, password, password_confirmation))
             .then(() => {
