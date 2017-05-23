@@ -19,8 +19,8 @@ for correct connection to the store.
 
     // Redux setup
     const countries = [
-        {id: 'us', label: 'United States'},
-        {id: 'ca', label: 'Canada'}
+        {value: 'us', label: 'United States'},
+        {value: 'ca', label: 'Canada'}
     ]
 
     const checkoutReducer = () => Immutable.fromJS({
