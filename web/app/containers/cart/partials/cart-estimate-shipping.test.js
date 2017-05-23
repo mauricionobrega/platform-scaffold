@@ -13,7 +13,6 @@ import {Provider} from 'react-redux'
 import {noop} from 'progressive-web-sdk/dist/utils/utils'
 import {mount, shallow} from 'enzyme'
 
-const countries = [{value: 'C1', label: 'country 1'}, {value: 'C2', label: 'country 2'}]
 const regions = [{value: 'R1', label: 'region 1'}, {value: 'R2', label: 'region 2'}]
 const store = {
     subscribe: () => {},
@@ -22,7 +21,6 @@ const store = {
         modals: Immutable.Map(),
         checkout: Immutable.fromJS({
             locations: {
-                countries,
                 regions
             },
         }),
@@ -35,7 +33,6 @@ const store = {
     })
 }
 const testProps = {
-    countries,
     stateProvinces: regions,
     onSubmit: noop,
     handleSubmit: noop,
@@ -65,7 +62,6 @@ test('renders the countries and state/provinces', () => {
 
     const countrySelect = wrapper.find(CountrySelect)
     expect(countrySelect.length).toBe(1)
-    expect(countrySelect.prop('countries')).toEqual(testProps.countries)
 
     const regionFields = wrapper.find(RegionField)
     expect(regionFields.length).toBe(1)
