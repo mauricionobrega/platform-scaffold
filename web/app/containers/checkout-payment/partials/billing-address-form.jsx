@@ -9,7 +9,7 @@ import {createPropsSelector} from 'reselect-immutable-helpers'
 
 // Selectors
 import * as selectors from '../selectors'
-import {getAvailableRegions} from '../../../store/checkout/locations/selectors'
+import {getAvailableRegions} from '../../../store/checkout/selectors'
 import {getShippingFullName, getAddressLineOne, getCity, getPostcode} from '../../../store/checkout/shipping/selectors'
 
 // Actions

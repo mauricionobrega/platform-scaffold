@@ -11,7 +11,7 @@ import {ESTIMATE_FORM_NAME} from '../../../store/form/constants'
 
 import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {isModalOpen} from 'progressive-web-sdk/dist/store/modals/selectors'
-import {getAvailableRegions} from '../../../store/checkout/locations/selectors'
+import {getAvailableRegions} from '../../../store/checkout/selectors'
 import {submitEstimateShipping} from '../actions'
 import {isTaxRequestPending} from '../selectors'
 
