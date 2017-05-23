@@ -7,7 +7,7 @@ import {connect} from 'react-redux'
 import {withRouter} from 'progressive-web-sdk/dist/routing'
 import template from '../../template'
 
-import {navigateToSection} from '../../integration-manager/login/commands'
+import {navigateToSection} from '../../integration-manager/account/commands'
 
 import SignInPanel from './partials/signin-panel'
 import RegisterPanel from './partials/register-panel'

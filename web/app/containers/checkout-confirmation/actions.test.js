@@ -6,8 +6,8 @@
 import {submitRegisterForm} from './actions'
 import Immutable from 'immutable'
 
-jest.mock('../../integration-manager/login/commands')
-import {registerUser, updateShippingAddress} from '../../integration-manager/login/commands'
+jest.mock('../../integration-manager/account/commands')
+import {registerUser, updateShippingAddress} from '../../integration-manager/account/commands'
 jest.mock('../app/actions')
 import {addNotification} from '../app/actions'
 

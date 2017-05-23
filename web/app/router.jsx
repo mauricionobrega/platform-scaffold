@@ -17,7 +17,7 @@ import {fetchHomeData} from './integration-manager/home/commands'
 import {fetchCartPageData} from './integration-manager/cart/commands'
 import {fetchProductListData} from './integration-manager/categories/commands'
 import {fetchPdpData} from './integration-manager/products/commands'
-import {fetchRegisterData, fetchSigninData} from './integration-manager/login/commands'
+import {fetchRegisterData, fetchSigninData} from './integration-manager/account/commands'
 import {fetchCheckoutShippingData, fetchCheckoutPaymentData, fetchCheckoutConfirmationData} from './integration-manager/checkout/commands'
 
 import {getURL} from './utils/utils'

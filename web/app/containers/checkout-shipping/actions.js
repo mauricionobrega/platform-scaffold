@@ -14,7 +14,7 @@ import {
     submitShipping as submitShippingCommand,
     checkCustomerEmail as checkCustomerEmailCommand
 } from '../../integration-manager/checkout/commands'
-import {login} from '../../integration-manager/login/commands'
+import {login} from '../../integration-manager/account/commands'
 
 import {getShippingFormValues} from '../../store/form/selectors'
 import {addNotification, removeNotification} from '../app/actions'

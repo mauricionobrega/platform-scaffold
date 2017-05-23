@@ -3,7 +3,7 @@
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
 import {noop} from 'progressive-web-sdk/dist/utils/utils'
-import {setRegisterLoaded, setSigninLoaded} from '../../login/results'
+import {setRegisterLoaded, setSigninLoaded} from '../../account/results'
 import {setLoggedIn} from '../../results'
 import {initSfccSession, storeAuthToken, makeSfccRequest, deleteBasketID, storeBasketID, getAuthTokenPayload} from '../utils'
 import {requestCartData, createBasket, handleCartData} from '../cart/utils'
