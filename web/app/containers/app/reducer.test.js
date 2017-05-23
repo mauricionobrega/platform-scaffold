@@ -18,7 +18,7 @@ test('unknown action type leaves state unchanged', () => {
 
 test('onRouteChanged changes the current URL', () => {
     const testURL = 'https://test.mobify.com/'
-    const action = actions.onRouteChanged(testURL)
+    const action = actions.onRouteChanged(testURL, 'home')
 
     expect(reducer(initialState, action).get(CURRENT_URL)).toBe(testURL)
 })
