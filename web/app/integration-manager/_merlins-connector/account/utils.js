@@ -2,6 +2,8 @@
 /* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
+import {getCookieValue} from '../../../utils/utils'
+
 export const buildFormData = (formValues) => {
     const formData = new FormData()
 
@@ -19,6 +21,8 @@ export const buildFormData = (formValues) => {
             formData.append(key, item)
         }
     })
+
+    formData.append('form_key', getCookieValue('form_key'))
 
     return formData
 }
