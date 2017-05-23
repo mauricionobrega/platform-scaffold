@@ -1,4 +1,4 @@
-import {createAction} from '../../utils/utils'
+import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
 import StoreJS from './store'
 
 import * as messagingSelectors from './selectors'
