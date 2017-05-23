@@ -4,11 +4,11 @@
 
 import {SubmissionError} from 'redux-form'
 import {createBasket, handleCartData} from '../cart/utils'
-import {makeSfccRequest, makeSfccJsonRequest, getAuthToken, getAuthTokenPayload} from '../utils'
+import {makeApiRequest, makeApiJsonRequest, getAuthToken, getAuthTokenPayload} from '../utils'
 import {getOrderTotal} from '../../../store/cart/selectors'
 import {populateLocationsData, createOrderAddressObject} from './utils'
 import {parseShippingAddressFromBasket} from './parsers'
-import {API_END_POINT_URL, PAYMENT_URL, SITE_ID} from '../constants'
+import {PAYMENT_URL, SITE_ID} from '../constants'
 import {STATES} from './constants'
 import {receiveOrderConfirmationContents} from '../../results'
 import {getCardData} from 'progressive-web-sdk/dist/card-utils'
@@ -17,7 +17,7 @@ import {receiveCheckoutData, receiveShippingInitialValues, receiveBillingInitial
 export const fetchShippingMethodsEstimate = () => (dispatch) => {
     return createBasket()
         .then((basket) => {
-            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}/shipments/me/shipping_methods`, {method: 'GET'})
+            return makeApiRequest(`/baskets/${basket.basket_id}/shipments/me/shipping_methods`, {method: 'GET'})
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     const shippingMethods = responseJSON.applicable_shipping_methods.map(({name, description, price, id}) => {
@@ -36,7 +36,7 @@ export const fetchShippingMethodsEstimate = () => (dispatch) => {
 export const initCheckoutShippingPage = () => (dispatch) => {
     return createBasket()
         .then((basket) => {
-            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}`, {method: 'GET'})
+            return makeApiRequest(`/baskets/${basket.basket_id}`, {method: 'GET'})
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     const {
@@ -86,7 +86,7 @@ export const initCheckoutPaymentPage = () => (dispatch) => {
     dispatch(populateLocationsData())
     return createBasket()
         .then((basket) => {
-            return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}`, {method: 'GET'})
+            return makeApiRequest(`/baskets/${basket.basket_id}`, {method: 'GET'})
                 .then((response) => response.json())
                 .then((responseJSON) => {
                     const addressData = parseShippingAddressFromBasket(responseJSON)
@@ -106,8 +106,8 @@ const setCustomerNameAndEmail = (formValues, basket) => () => {
         customer_id: customerID
     }
 
-    return makeSfccJsonRequest(
-        `${API_END_POINT_URL}/baskets/${basket.basket_id}/customer`,
+    return makeApiJsonRequest(
+        `/baskets/${basket.basket_id}/customer`,
         requestBody,
         {method: 'PUT'}
     )
@@ -115,16 +115,16 @@ const setCustomerNameAndEmail = (formValues, basket) => () => {
 
 const setShippingAddress = (formValues, basket) => () => {
     const orderAddress = createOrderAddressObject(formValues)
-    return makeSfccJsonRequest(
-        `${API_END_POINT_URL}/baskets/${basket.basket_id}/shipments/me/shipping_address?use_as_billing=true`,
+    return makeApiJsonRequest(
+        `/baskets/${basket.basket_id}/shipments/me/shipping_address?use_as_billing=true`,
         orderAddress,
         {method: 'PUT'}
     )
 }
 
 const setShippingMethod = (formValues, basket) => () => (
-    makeSfccJsonRequest(
-        `${API_END_POINT_URL}/baskets/${basket.basket_id}/shipments/me/shipping_method`,
+    makeApiJsonRequest(
+        `/baskets/${basket.basket_id}/shipments/me/shipping_method`,
         {id: formValues.shipping_method},
         {method: 'PUT'}
     )
@@ -153,8 +153,8 @@ const addPaymentMethod = (formValues, basket) => (dispatch, getState) => {
         }
     }
 
-    return makeSfccJsonRequest(
-        `${API_END_POINT_URL}/baskets/${basket.basket_id}/payment_instruments`,
+    return makeApiJsonRequest(
+        `/baskets/${basket.basket_id}/payment_instruments`,
         requestBody,
         {method: 'POST'}
     )
@@ -167,16 +167,14 @@ const setBillingAddress = (formValues, basket) => () => {
     }
 
     // set billing address
-    return makeSfccJsonRequest(
-        `${API_END_POINT_URL}/baskets/${basket.basket_id}/billing_address?use_as_shipping=false`,
+    return makeApiJsonRequest(
+        `/baskets/${basket.basket_id}/billing_address?use_as_shipping=false`,
         createOrderAddressObject(formValues),
         {method: 'PUT'}
     )
 }
 
-const createOrder = (basket) => () =>
-    makeSfccJsonRequest(`${API_END_POINT_URL}/orders`, basket, {method: 'POST'})
-
+const createOrder = (basket) => () => makeApiJsonRequest('/orders', basket, {method: 'POST'})
 
 const setPaymentMethod = (formValues, order) => () => {
    // set payment method
@@ -196,8 +194,8 @@ const setPaymentMethod = (formValues, order) => () => {
         payment_method_id: 'CREDIT_CARD'
     }
 
-    return makeSfccJsonRequest(
-        `${API_END_POINT_URL}/orders/${order.order_no}/payment_instruments/${paymentInstrumentID}`,
+    return makeApiJsonRequest(
+        `/orders/${order.order_no}/payment_instruments/${paymentInstrumentID}`,
         requestBody,
         {method: 'PATCH'}
     )
