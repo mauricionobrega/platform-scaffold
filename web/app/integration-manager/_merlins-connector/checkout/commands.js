@@ -8,8 +8,9 @@ import {createSelector} from 'reselect'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 
 import {parseShippingInitialValues, parseLocations, parseShippingMethods, checkoutConfirmationParser} from './parsers'
+import {parseCartTotals} from '../cart/parser'
 import {parseCheckoutEntityID, extractMagentoShippingStepData} from '../../../utils/magento-utils'
-import {getCookieValue} from '../../../utils/utils'
+import {getCookieValue, parseLocationData} from '../../../utils/utils'
 import {getCart} from '../cart/commands'
 import {
     receiveShippingMethods,
@@ -19,7 +20,7 @@ import {
     storeBillingAddress,
     receiveHasExistingCard
 } from './../../checkout/results'
-
+import {receiveCartContents} from './../../cart/results'
 import {fetchPageData} from '../app/commands'
 import {getCustomerEntityID} from '../selectors'
 import {getIsLoggedIn} from '../../../store/user/selectors'
@@ -69,7 +70,6 @@ const parseLocationData = (formValues, registeredFieldNames) => {
 
     return address
 }
-
 
 export const fetchShippingMethodsEstimate = (formKey) => (dispatch, getState) => {
     const currentState = getState()
@@ -208,6 +208,8 @@ export const submitShipping = (formValues) => (dispatch, getState) => {
             if (!responseJSON.payment_methods) {
                 throw new SubmissionError({_error: 'Unable to save shipping address'})
             }
+
+            dispatch(receiveCartContents(parseCartTotals(responseJSON.totals)))
             return PAYMENT_URL
         })
 }
@@ -220,25 +222,6 @@ export const isEmailAvailable = (email) => (dispatch) => {
         )
         .then((response) => response.text())
         .then((responseText) => /true/.test(responseText))
-}
-
-// Some of the endpoints don't work with fetch, getting a 400 error
-// from the backend. This function wraps the jQuery ajax() function
-// to make requests to these endpoints.
-//
-// It looks like the server may be looking for the header
-// X-Requested-With: XMLHttpRequest, which is not present with fetch.
-//
-// Alternatively, we could have an issue with header case:
-// http://stackoverflow.com/questions/34656412/fetch-sends-lower-case-header-keys
-const jqueryAjaxWrapper = (options) => {
-    return new Promise((resolve, reject) => {
-        window.Progressive.$.ajax({
-            ...options,
-            success: (responseData) => resolve(responseData),
-            error: (xhr, status) => reject(status)
-        })
-    })
 }
 
 const paymentSubmissionSelector = createPropsSelector({
@@ -297,6 +280,8 @@ const buildFormData = (formCredentials) => {
         }
     })
 
+    formData.append('form_key', getCookieValue('form_key'))
+
     return formData
 }
 
@@ -329,9 +314,27 @@ const createAddressRequestObject = (formValues) => {
     }
 }
 
+// Some of the endpoints don't work with fetch, getting a 400 error
+// from the backend. This function wraps the jQuery ajax() function
+// to make requests to these endpoints.
+//
+// It looks like the server may be looking for the header
+// X-Requested-With: XMLHttpRequest, which is not present with fetch.
+//
+// Alternatively, we could have an issue with header case:
+// http://stackoverflow.com/questions/34656412/fetch-sends-lower-case-header-keys
+const jqueryAjaxWrapper = (options) => {
+    return new Promise((resolve, reject) => {
+        window.Progressive.$.ajax({
+            ...options,
+            success: (responseData) => resolve(responseData),
+            error: (xhr, status) => reject(status)
+        })
+    })
+}
+
 const updateBillingAddress = () => (dispatch, getState) => {
     const formData = buildFormData({
-        form_key: getCookieValue('form_key'),
         success_url: '',
         error_url: '',
         ...createAddressRequestObject(paymentSelectors.getPayment(getState())),
@@ -347,17 +350,17 @@ const updateBillingAddress = () => (dispatch, getState) => {
         processData: false,
         contentType: false
     })
-        .catch((response) => {
+        .catch((error) => {
             console.error('Updating the user Shipping/Billing address failed. Response log:')
-            console.error(response)
+            console.error(error)
             throw new Error('Unable to save Billing Address')
         })
 }
 
+
 export const updateShippingAndBilling = () => (dispatch, getState) => {
     const shippingData = shippingSelectors.getShippingAddress(getState()).toJS()
     const formData = buildFormData({
-        form_key: getCookieValue('form_key'),
         success_url: '',
         error_url: '',
         ...createAddressRequestObject(shippingData),
@@ -380,11 +383,13 @@ export const updateShippingAndBilling = () => (dispatch, getState) => {
             if (shippingIsDifferentThanBilling) {
                 return dispatch(updateBillingAddress())
             }
-            return null
+
+            return Promise.resolve()
         })
-        .catch((response) => {
+        .catch((error) => {
             console.error('Updating the user Shipping and Billing address failed. Response log:')
-            console.error(response)
+            console.error(error)
+
             throw new Error('Unable to save Shipping and Billing Address')
         })
 }

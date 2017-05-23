@@ -127,23 +127,37 @@ export const initSfccAuthAndSession = () => {
         })
 }
 
-export const makeSfccRequest = (url, options) => {
+export const makeApiRequest = (path, options) => {
     return initSfccAuthAndSession()
         .then((headers) => {
             const requestOptions = {
                 ...options,
                 headers
             }
-            return makeRequest(url, requestOptions)
+            return makeRequest(API_END_POINT_URL + path, requestOptions)
         })
 }
 
-export const makeSfccUnAuthenticatedRequest = (url, options) => {
+export const makeApiJsonRequest = (path, body, options) => {
+    return makeApiRequest(path, {
+        ...options,
+        body: JSON.stringify(body)
+    })
+        .then((response) => response.json())
+        .then((responseJSON) => {
+            if (responseJSON.fault) {
+                throw new Error(responseJSON.fault.message)
+            }
+            return responseJSON
+        })
+}
+
+export const makeUnAuthenticatedApiRequest = (path, options) => {
     const requestOptions = {
         ...options,
         headers: REQUEST_HEADERS
     }
-    return makeRequest(url, requestOptions)
+    return makeRequest(API_END_POINT_URL + path, requestOptions)
 }
 
 export const formatPrice = (price) => {

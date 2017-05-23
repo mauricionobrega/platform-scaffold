@@ -69,3 +69,13 @@
         }
     }
 }
+
+
+// Sale
+// ---
+
+.pw-ledger__row.pw--sale {
+    .pw-ledger__value {
+        color: $sale-color;
+    }
+}

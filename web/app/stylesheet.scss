@@ -27,14 +27,6 @@
 @import 'styles/animations';
 
 
-// Sass utilities
-// ---
-//
-// Libraries of mixins/functions
-
-@import 'styles/utilities';
-
-
 // Base
 // ---
 //
@@ -64,6 +56,17 @@
 // ---
 
 @import 'styles/templates';
+
+
+// Utilities
+// ---
+//
+// List of utility classes that applies a single rule or very simple styles.
+//
+// *important note: @import utilities at bottom of stylesheet file to ensure
+// that utility styles override above.*
+
+@import 'styles/utilities';
 
 
 // Overrides
