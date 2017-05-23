@@ -2,11 +2,11 @@
 /* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
-export const buildFormData = (formCredentials) => {
+export const buildFormData = (formValues) => {
     const formData = new FormData()
 
-    Object.keys(formCredentials).forEach((key) => {
-        const item = formCredentials[key]
+    Object.keys(formValues).forEach((key) => {
+        const item = formValues[key]
         if (key === 'street') {
             // Street must be converted away from an array, and into a
             // series of `street[]` keys-value pairs. This is what the
