@@ -5,27 +5,27 @@
 // ---
 
 .u-border {
-    border: $border !important;
+    border: $border;
 }
 
 .u-border-0 {
-    border: 0 !important;
+    border: 0;
 }
 
 .u-border-top {
-    border-top: $border !important;
+    border-top: $border;
 }
 
 .u-border-end {
-    border-right: $border !important;
+    border-right: $border;
 }
 
 .u-border-bottom {
-    border-bottom: $border !important;
+    border-bottom: $border;
 }
 
 .u-border-start {
-    border-left: $border !important;
+    border-left: $border;
 }
 
 
@@ -33,23 +33,23 @@
 // ---
 
 .u-border-light {
-    border: $light-border !important;
+    border: $light-border;
 }
 
 .u-border-light-top {
-    border-top: $light-border !important;
+    border-top: $light-border;
 }
 
 .u-border-light-end {
-    border-right: $light-border !important;
+    border-right: $light-border;
 }
 
 .u-border-light-bottom {
-    border-bottom: $light-border !important;
+    border-bottom: $light-border;
 }
 
 .u-border-light-start {
-    border-left: $light-border !important;
+    border-left: $light-border;
 }
 
 
@@ -57,5 +57,5 @@
 // ---
 
 .u-border-radius {
-    border-radius: $border-radius !important;
+    border-radius: $border-radius;
 }
