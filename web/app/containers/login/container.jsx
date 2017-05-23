@@ -29,10 +29,10 @@ class Login extends React.Component {
     constructor(props) {
         super(props)
 
-        this.navigateToSection = this.navigateToSection.bind(this)
+        this.onChangeTab = this.onChangeTab.bind(this)
     }
 
-    navigateToSection(index) {
+    onChangeTab(index) {
         this.props.navigateToSection(
             this.props.router,
             this.props.routes,
@@ -56,7 +56,7 @@ class Login extends React.Component {
                         </h1>
                     </div>
 
-                    <Tabs activeIndex={INDEX_FOR_SECTION[routeName]} className="t-login__navigation" onChange={this.navigateToSection}>
+                    <Tabs activeIndex={INDEX_FOR_SECTION[routeName]} className="t-login__navigation" onChange={this.onChangeTab}>
                         <TabsPanel title={SECTION_NAMES[SIGN_IN_SECTION]}>
                             <SignInPanel />
                         </TabsPanel>

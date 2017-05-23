@@ -18,14 +18,14 @@ import {LOGIN_POST_URL, CREATE_ACCOUNT_POST_URL} from '../constants'
 
 import {isFormResponseInvalid} from './parsers/parsers'
 
-export const fetchSigninData = (url) => (dispatch) => {
+export const initLoginPage = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then(() => {
             dispatch(setSigninLoaded())
         })
 }
 
-export const fetchRegisterData = (url) => (dispatch) => {
+export const initRegisterPage = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then(() => {
             dispatch(setRegisterLoaded())
@@ -56,12 +56,14 @@ const submitForm = (href, formValues, formSelector) => {
 export const login = (username, password, rememberMe) => (dispatch, getState) => {
     const currentState = getState()
     const formKey = getFormKey(currentState)
+
     const formData = {
         'login[username]': username,
         'login[password]': password,
         form_key: formKey,
         send: ''
     }
+
     if (rememberMe) {
         formData.persistent_remember_me = 'on'
     }
@@ -72,13 +74,14 @@ export const login = (username, password, rememberMe) => (dispatch, getState) =>
 export const registerUser = (firstname, lastname, email, password, confirmPassword, rememberMe) => (dispatch, getState) => {
     const currentState = getState()
     const formKey = getFormKey(currentState)
+
     const formData = {
         firstname,
         lastname,
         email,
         password,
         password_confirmation: confirmPassword,
-        form_key: formKey,
+        form_key: formKey
     }
     if (rememberMe) {
         formData.persistent_remember_me = 'on'
@@ -92,7 +95,8 @@ const findPathForRoute = (routes, routeName) => {
 }
 
 /**
- * Uses React router to navigate between different pages. Takes care of browser history, etc.
+ * Uses React router to ensure browser history remains consistent with the
+ * selected section.
  */
 export const navigateToSection = (router, routes, sectionName) => {
     return () => {

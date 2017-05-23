@@ -13,6 +13,7 @@ import {getBillingAddress} from '../../store/checkout/billing/selectors'
 import {getEmailAddress} from '../../store/checkout/selectors'
 import {updateShippingAddress, updateBillingAddress, registerUser} from '../../integration-manager/account/commands'
 
+
 export const hideRegistrationForm = createAction('Hiding Registration Form (Save Your Address Details)')
 
 const registrationFormSelector = createPropsSelector({
@@ -50,8 +51,8 @@ export const submitRegisterForm = () => {
 
                         return Promise.resolve()
                     })
-                    .then(() => dispatch(hideRegistrationForm()))
             })
+            .then(() => dispatch(hideRegistrationForm()))
             .catch((error) => {
                 if (error.name !== 'SubmissionError') {
                     dispatch(addNotification({
