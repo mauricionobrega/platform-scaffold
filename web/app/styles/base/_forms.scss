@@ -111,8 +111,8 @@ legend {
 //
 // 1. Address `appearance` set to `searchfield` in Safari and Chrome.
 // 2. Remove inner padding and search cancel button in Safari and Chrome on OS X.
-// Safari (but not Chrome) clips the cancel button when the search input has
-// padding (and `textfield` appearance).
+//    Safari (but not Chrome) clips the cancel button when the search input has
+//    padding (and `textfield` appearance).
 
 input[type="search"] {
     box-sizing: border-box;
@@ -133,10 +133,9 @@ input[type="search"] {
 // 2. Simulate the position of the down-arrow as if it were a Icon component in
 //    a button.
 // 3. Address inconsistent `text-transform` inheritance for `button` and `select`.
-// All other form control elements do not inherit `text-transform` values.
-// Correct `button` style inheritance in Firefox and Opera. Correct `select`
-// style inheritance in Firefox.
-
+//    All other form control elements do not inherit `text-transform` values.
+//    Correct `button` style inheritance in Firefox and Opera. Correct `select`
+//    style inheritance in Firefox.
 // 4. Correct color not being inherited. Known issue: affects color of disabled
 //    elements.
 // 5. Correct font properties not being inherited.
@@ -257,9 +256,9 @@ optgroup {
 //    elements.
 // 3. Correct font properties not being inherited.
 // 4. Address inconsistent `text-transform` inheritance for `button` and `select`.
-// All other form control elements do not inherit `text-transform` values.
-// Correct `button` style inheritance in Firefox and Opera. Correct `select`
-// style inheritance in Firefox.
+//    All other form control elements do not inherit `text-transform` values.
+//    Correct `button` style inheritance in Firefox and Opera. Correct `select`
+//    style inheritance in Firefox.
 // 5. Remove inner padding and border in Firefox 4+.
 // 6. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
 //    and `video` controls.
