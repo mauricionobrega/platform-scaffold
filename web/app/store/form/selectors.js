@@ -5,18 +5,23 @@
 import {createSelector} from 'reselect'
 import {getForm} from '../selectors'
 
-export const getShippingForm = createSelector(getForm, (form) => form.shippingForm)
+import {
+    ADD_TO_CART_FORM_NAME,
+    CONFIRMATION_FORM_NAME,
+    PAYMENT_FORM_NAME,
+    SHIPPING_FORM_NAME
+} from './constants'
 
-export const getShippingFormValues = createSelector(getShippingForm, (shippingForm) => { return shippingForm ? shippingForm.values : undefined })
-
-export const getFormByKey = (formKey) => createSelector(getForm, (form) => { return form[formKey] ? form[formKey] : {} })
-
+const getFormByKey = (formKey) => createSelector(getForm, (form) => { return form[formKey] ? form[formKey] : {} })
 export const getFormValues = (formKey) => createSelector(getFormByKey(formKey), ({values}) => values)
 
 export const getFormRegisteredFields = (formKey) => createSelector(getFormByKey(formKey), ({registeredFields}) => { return registeredFields ? registeredFields : [] })
 
-export const getPaymentBillingForm = createSelector(getForm, (form) => form.paymentForm)
-export const getPaymentBillingFormValues = createSelector(getPaymentBillingForm, (paymentForm) => paymentForm.values)
-
-export const getConfirmationForm = createSelector(getForm, (form) => form.confirmationForm)
-export const getConfirmationFormValues = createSelector(getConfirmationForm, (confirmationForm) => confirmationForm.values)
+export const getShippingFormValues = getFormValues(SHIPPING_FORM_NAME)
+export const getPaymentBillingFormValues = getFormValues(PAYMENT_FORM_NAME)
+export const getConfirmationFormValues = getFormValues(CONFIRMATION_FORM_NAME)
+export const getAddToCartFormValues = getFormValues(ADD_TO_CART_FORM_NAME)
+export const getCouponForm = createSelector(getForm, (form) => form.cartPromoForm)
+export const getCouponValue = createSelector(getCouponForm, (cartPromoForm) => {
+    return cartPromoForm ? cartPromoForm.values.promo : undefined
+})

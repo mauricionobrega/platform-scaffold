@@ -18,6 +18,7 @@ const header = handleActions({
     [headerActions.toggleHeader]: mergePayload,
     [headerActions.openSearch]: (state) => state.set('searchIsOpen', true),
     [headerActions.closeSearch]: (state) => state.set('searchIsOpen', false).set('searchSuggestions', null),
+    [headerActions.clearSuggestions]: (state) => state.set('searchSuggestions', null),
     [receiveSearchSuggestions]: (state, {payload}) => state.set('searchSuggestions', payload)
 }, initialState)
 

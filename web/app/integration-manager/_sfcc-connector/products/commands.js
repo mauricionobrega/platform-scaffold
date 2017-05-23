@@ -5,17 +5,18 @@
 import {receiveProductDetailsProductData, receiveProductDetailsUIData} from '../../products/results'
 import {setCurrentURL} from '../../results'
 import {urlToPathKey} from 'progressive-web-sdk/dist/utils/utils'
-import {makeSfccRequest} from '../utils'
+import {makeApiRequest} from '../utils'
 import {parseProductDetails, getCurrentProductID, getProductHref, getInitialSelectedVariant} from '../parsers'
-import {API_END_POINT_URL} from '../constants'
 
-export const fetchPdpData = (url) => (dispatch) => {
-    const productURL = `${API_END_POINT_URL}/products/${getCurrentProductID(url)}?expand=prices,images,variations`
+export const initProductDetailsPage = (url) => (dispatch) => {
+    const productURL = `/products/${getCurrentProductID(url)}?expand=prices,images,variations`
     const productPathKey = urlToPathKey(url)
+
     const options = {
         method: 'GET'
     }
-    return makeSfccRequest(productURL, options)
+
+    return makeApiRequest(productURL, options)
         .then((response) => response.json())
         .then((responseJSON) => {
             const productDetailsData = {
@@ -39,22 +40,22 @@ export const fetchPdpData = (url) => (dispatch) => {
                 const currentProductHref = defaultVariant.id
 
                 dispatch(setCurrentURL(getProductHref(currentProductHref)))
-                dispatch(fetchPdpData(getProductHref(currentProductHref)))
+                dispatch(initProductDetailsPage(getProductHref(currentProductHref)))
             }
         })
 }
 
-export const getProductVariantData = (selections, variants, categoryIds) => (dispatch) => {
-    if (categoryIds.some((id) => !selections[id])) {
+export const getProductVariantData = (variationSelections, variants, categoryIds) => (dispatch) => {
+    if (categoryIds.some((id) => !variationSelections[id])) {
         return Promise.resolve()
     }
 
     for (const {values, id} of variants) {
-        if (categoryIds.every((id) => selections[id] === values[id])) {
+        if (categoryIds.every((id) => variationSelections[id] === values[id])) {
             const currentProductHref = getProductHref(id)
             dispatch(setCurrentURL(currentProductHref))
 
-            return dispatch(fetchPdpData(currentProductHref))
+            return dispatch(initProductDetailsPage(currentProductHref))
         }
     }
 

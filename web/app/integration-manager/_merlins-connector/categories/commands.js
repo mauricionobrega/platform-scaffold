@@ -9,7 +9,7 @@ import categoryProductsParser, {parseCategoryTitle, parseCategoryId, priceFilter
 import {productListParser} from '../products/parsers'
 import {fetchPageData} from '../app/commands'
 
-export const fetchProductListData = (url) => (dispatch) => {
+export const initProductListPage = (url) => (dispatch) => {
     return dispatch(fetchPageData(url))
         .then((res) => {
             const [$, $response] = res

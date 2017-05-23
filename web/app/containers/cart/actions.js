@@ -7,14 +7,22 @@ import {closeModal, openModal} from 'progressive-web-sdk/dist/store/modals/actio
 import {fetchShippingMethodsEstimate} from '../../integration-manager/checkout/commands'
 import {
     CART_ESTIMATE_SHIPPING_MODAL,
-    ESTIMATE_FORM_NAME,
     CART_REMOVE_ITEM_MODAL,
-    CART_WISHLIST_MODAL
+    CART_WISHLIST_MODAL,
+    PROMO_ERROR
 } from './constants'
-import {removeFromCart, updateItemQuantity, addToWishlist, fetchTaxEstimate} from '../../integration-manager/cart/commands'
-import {addNotification} from '../app/actions'
-import {getIsLoggedIn} from '../app/selectors'
+import {
+    removeFromCart,
+    updateItemQuantity,
+    addToWishlist,
+    fetchTaxEstimate,
+    putPromoCode,
+    deletePromoCode
+} from '../../integration-manager/cart/commands'
+import {addNotification} from 'progressive-web-sdk/dist/store/notifications/actions'
+import {getIsLoggedIn} from '../../store/user/selectors'
 import {trigger} from '../../utils/astro-integration'
+import {ESTIMATE_FORM_NAME} from '../../store/form/constants'
 import {getFormValues, getFormRegisteredFields} from '../../store/form/selectors'
 import {getSelectedShippingMethod} from '../../store/checkout/shipping/selectors'
 import {parseLocationData} from '../../utils/utils'
@@ -29,12 +37,6 @@ const shippingFormSelector = createPropsSelector({
     shippingMethod: getSelectedShippingMethod
 })
 
-const taxErrorNotification = {
-    content: 'Unable to calculate tax.',
-    id: 'taxError',
-    showRemoveButton: true
-}
-
 export const submitEstimateShipping = () => (dispatch, getState) => {
     const currentState = getState()
     const {formValues, registeredFields, shippingMethod} = shippingFormSelector(currentState)
@@ -44,7 +46,11 @@ export const submitEstimateShipping = () => (dispatch, getState) => {
     dispatch(fetchShippingMethodsEstimate(ESTIMATE_FORM_NAME))
         .then(() => {
             return dispatch(fetchTaxEstimate(address, shippingMethod.value))
-                .catch(() => dispatch(addNotification(taxErrorNotification)))
+                .catch(() => dispatch(addNotification(
+                    'taxError',
+                    'Unable to calculate tax.',
+                    true
+                )))
         })
         .then(() => {
             dispatch(closeModal(CART_ESTIMATE_SHIPPING_MODAL))
@@ -60,11 +66,11 @@ export const removeItem = (itemID) => (dispatch) => {
             trigger('cart:updated')
         })
         .catch((error) => {
-            dispatch(addNotification({
-                content: error.message,
-                id: 'cartUpdateError',
-                showRemoveButton: true
-            }))
+            dispatch(addNotification(
+                'cartUpdateError',
+                error.message,
+                true
+            ))
         })
 }
 
@@ -74,12 +80,6 @@ export const saveToWishlist = (productId, itemId, productURL) => (dispatch, getS
     if (!getIsLoggedIn(getState())) {
         return Promise.resolve()
     }
-    const wishListErrorNotification = {
-        content: 'Unable to add item to wishlist.',
-        id: 'cartWishlistError',
-        showRemoveButton: true
-    }
-
     return dispatch(addToWishlist(productId, productURL))
         .then(() => {
             dispatch(removeItem(itemId))
@@ -88,7 +88,11 @@ export const saveToWishlist = (productId, itemId, productURL) => (dispatch, getS
         .catch((error) => {
             if (/Failed to fetch|Add Request Failed|Unable to add item/i.test(error.message)) {
                 dispatch(closeModal(CART_WISHLIST_MODAL))
-                dispatch(addNotification(wishListErrorNotification))
+                dispatch(addNotification(
+                    'cartWishlistError',
+                    'Unable to add item to wishlist.',
+                    true
+                ))
             } else {
                 throw error
             }
@@ -105,10 +109,38 @@ export const openRemoveItemModal = (itemId) => {
 export const updateItem = (itemId, itemQuantity) => (dispatch) => {
     return dispatch(updateItemQuantity(itemId, itemQuantity))
         .catch((error) => {
-            dispatch(addNotification({
-                content: error.message,
-                id: 'cartUpdateError',
-                showRemoveButton: true
-            }))
+            dispatch(addNotification(
+                'cartUpdateError',
+                error.message,
+                true
+            ))
+        })
+}
+
+export const submitPromoCode = (couponCode) => (dispatch) => {
+    dispatch(putPromoCode(couponCode))
+        .catch(({message}) => {
+            let notificationMessage
+            if (message.includes(PROMO_ERROR)) {
+                notificationMessage = message
+            } else {
+                notificationMessage = PROMO_ERROR
+            }
+            dispatch(addNotification(
+                'submitPromoError',
+                notificationMessage,
+                true
+            ))
+        })
+}
+
+export const removePromoCode = (couponCode) => (dispatch) => {
+    dispatch(deletePromoCode(couponCode))
+        .catch(() => {
+            dispatch(addNotification(
+                'removePromoError',
+                'Unable to remove promo',
+                true
+            ))
         })
 }
