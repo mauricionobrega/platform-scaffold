@@ -8,7 +8,14 @@ import * as ReduxForm from 'redux-form'
 import Field from 'progressive-web-sdk/dist/components/field'
 
 /**
+ * A field for selecting/entering a region for an address.
  *
+ * When passed a list of regions (e.g. US states, Canadian provinces),
+ * this renders a `select` element to choose between these choices.
+ *
+ * If the list of regions is empty or absent, it instead renders an
+ * `input` element for free-form entry of the region name. (this is
+ * used in, e.g. the UK)
  */
 
 const RegionField = ({
