@@ -29,8 +29,8 @@ const CountrySelect = ({
             label="Country"
         >
             <select>
-                {countries.map(({label, value}) => (
-                    <option value={value} key={value}>
+                {countries.map(({label, id}) => (
+                    <option value={id} key={id}>
                         {label}
                     </option>
                 ))}
@@ -55,7 +55,7 @@ CountrySelect.propTypes = {
      */
     countries: PropTypes.arrayOf(PropTypes.shape({
         label: PropTypes.string,
-        value: PropTypes.string
+        id: PropTypes.string
     }))
 }
 

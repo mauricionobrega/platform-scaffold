@@ -44,8 +44,9 @@ const RegionField = ({
             label="State/Province"
         >
             <select>
-                {regions.map(({label, value}) => (
-                    <option value={value} key={label}>
+                <option value={null}>Please select a region, state, or province</option>
+                {regions.map(({label, id}) => (
+                    <option value={id} key={`${id}-${label}`}>
                         {label}
                     </option>
                 ))}
@@ -69,7 +70,7 @@ RegionField.propTypes = {
      */
     regions: PropTypes.arrayOf(PropTypes.shape({
         label: PropTypes.string,
-        value: PropTypes.string
+        id: PropTypes.string
     }))
 }
 
