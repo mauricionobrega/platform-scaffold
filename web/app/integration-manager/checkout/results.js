@@ -4,7 +4,7 @@
 
 import {createAction, createActionWithAnalytics} from 'progressive-web-sdk/dist/utils/action-creation'
 import {EVENT_ACTION, Transaction, Product} from 'progressive-web-sdk/dist/analytics/data-objects/'
-import {getCartItems, getOrderTotal, getTaxes} from '../../store/cart/selectors'
+import {getCartItems, getOrderTotal, getTax} from '../../store/cart/selectors'
 
 export const receiveCheckoutData = createAction('Receive Checkout Data')
 export const receiveShippingInitialValues = createAction('Receive Shipping Initial Values', ['shipping'])
@@ -45,7 +45,7 @@ const realReceiveCheckoutConfirmationData = createActionWithAnalytics(
 export const receiveCheckoutConfirmationData = (confirmationData) => (dispatch, getState) => {
     return dispatch(realReceiveCheckoutConfirmationData(confirmationData, {
         [Transaction.REVENUE]: getOrderTotal(getState()),
-        [Transaction.TAX]: getTaxes(getState()),
+        [Transaction.TAX]: getTax(getState()),
         products: remapProducts(getCartItems(getState()).toJS())
     }))
 }
