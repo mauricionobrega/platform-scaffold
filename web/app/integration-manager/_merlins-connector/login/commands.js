@@ -146,36 +146,35 @@ export const updateShippingAddress = (shippingData) => (dispatch) => {
     })
 }
 
-export const updateBillingAddress = (paymentData) => {
-    return (dispatch) => {
-        const formData = buildFormData({
-            form_key: getCookieValue('form_key'),
-            success_url: '',
-            error_url: '',
-            ...createAddressRequestObject(paymentData),
-            default_billing: 1,
-            default_shipping: 1,
-        })
+export const updateBillingAddress = (paymentData) => (dispatch) => {
+    const formData = buildFormData({
+        form_key: getCookieValue('form_key'),
+        success_url: '',
+        error_url: '',
+        ...createAddressRequestObject(paymentData),
+        default_billing: 1,
+        default_shipping: 1,
+    })
 
-        const postUpdateCustomerAddressURL = '/customer/address/formPost/id/46/'
-        return new Promise((resolve) => {
-            // We need to use jQuery.ajax here because currently fetch sends requests with all headers set to lowercase
-            // using fetch here means the server won't handle our request properly
-            // so instead we're using jQuery ajax since it sends requests matching what the server expects.
-            // see http://stackoverflow.com/questions/34656412/fetch-sends-lower-case-header-keys
-            window.Progressive.$.ajax({
-                url: postUpdateCustomerAddressURL,
-                data: formData,
-                method: 'POST',
-                processData: false,
-                contentType: false,
-                success: () => resolve(),
-                error: (response) => {
-                    console.error('Updating the user Shipping/Billing address failed. Response log:')
-                    console.error(response)
-                    throw new Error('Unable to save Billing Address')
-                }
-            })
+    const postUpdateCustomerAddressURL = '/customer/address/formPost/id/46/'
+    return new Promise((resolve) => {
+        // We need to use jQuery.ajax here because currently fetch sends requests with all headers set to lowercase
+        // using fetch here means the server won't handle our request properly
+        // so instead we're using jQuery ajax since it sends requests matching what the server expects.
+        // see http://stackoverflow.com/questions/34656412/fetch-sends-lower-case-header-keys
+        window.Progressive.$.ajax({
+            url: postUpdateCustomerAddressURL,
+            data: formData,
+            method: 'POST',
+            processData: false,
+            contentType: false,
+            success: () => resolve(),
+            error: (response) => {
+                console.error('Updating the user Shipping/Billing address failed. Response log:')
+                console.error(response)
+                throw new Error('Unable to save Billing Address')
+            }
         })
-    }
+    })
+
 }
