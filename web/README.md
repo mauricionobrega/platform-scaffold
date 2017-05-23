@@ -1,5 +1,15 @@
 # Mobify Progressive Web Scaffold
 
+## Running npm scripts
+
+All the `npm` scripts listed below must be run from the `web` directory inside your project directory. 
+
+Here's how to get a list of all the available npm scripts in the Progressive Web Scaffold:
+
+```
+npm run
+```
+
 ## Setup
 
 ```
@@ -22,22 +32,24 @@ npm run push -- -m "Test push by <name>"
 
 ## 🔒 Avoiding HTTPS errors in local development
 
-The development server uses a self-signed SSL certificate which is valid, but
-must be added to your operating system to work correctly.
+The development server uses a self-signed SSL certificate. This is totally valid, but
+the self-signed certificate must be added to your operating system to be trusted.
 
 ### macOS
 
 To add the certificate to the Mac system trust store:
 
 1. Open https://localhost:8443. *You should see a security warning.* ⚠️
-2. In the root of the project directory, run `open dev-server/localhost.pem`.
-3. Add the certificate to your `login` Keychain.
-4. In `Keychain Access` search for `Mobify Development Server`.
-5. Right click it and select `Get Info`.
-6. Expand the `Trust` section.
-7. Set `Secure Socket Layer (SSL)` to `Always Trust`.
-8. Close the info window. You will need to enter your password.
-9. Open https://localhost:8443 in your browser. *The warning is gone!* 🎉
+2. Open your terminal and go to the `web` directory inside your project directory.
+3. Run `open dev-server/localhost.pem`. *The `Keychain Access` app will open.*
+4. Add the certificate to your `login` Keychain.
+5. In `Keychain Access`, search for `Mobify Development Server`.
+6. Right click it and select `Get Info`.
+7. Expand the `Trust` section.
+8. Set `Secure Socket Layer (SSL)` to `Always Trust`.
+9. Close the info window. *You will need to enter your password.*
+10. Close your browser.
+11. Open https://localhost:8443 in your browser. *The security warning should be gone!* 🎉
 
 ### Windows
 
@@ -49,14 +61,14 @@ To add the certificate to the Windows Trusted Root Certificate Store:
 4.  Select "Certificates" and click Add.
 5.  Select "Computer Account" and click Next.
 6.  Select "Local Computer" and click Finish.
-7.  Click OK to close the Add or Remove Snap Ins dialog.
-8.  Expand the Certificates node and right-click on the Trusted Roots Certification Authorities node.
+7.  Click OK to close the Add or Remove Snap-Ins dialog.
+8.  Expand the Certificates node and right-click on the Trusted Root Certification Authorities node.
 9.  Select All Tasks → Import.
-10.  Import the file at `$\web\dev-server\localhost.pem`. Leave all other settings as is while importing.
-11. After clicking Finish, you should get an alert saying "Import Successful".
-12. Exit the window. You do not need to save the console settings so click No when prompted.
-13. Open https://localhost:8443 in your browser. *The warning is gone!* 🎉
-
+10.  Import the `localhost.p7b` file in `web\dev-server\`. *Leave all other settings as is while importing.*
+11. After clicking Finish, you should get an alert saying "The import was successful."
+12. Exit the window. *You do not need to save the console settings, so click No when prompted.*
+13. Close your browser.
+14. Open https://localhost:8443 in your browser. *The security warning should be gone!* 🎉
 
 ## Adding a page (container)
 
@@ -126,9 +138,9 @@ npm run lint
 If this code style is a poor match for your pre-existing practices,
 there are two ways you can modify the linter configuration to suit
 your use case better. For small changes, you can add rules to the
-`.eslintrc.yml` file in the root web directory. Rules specified in
-this file override rules in the Mobify standard; the following `rules`
-section adds an additional rule and disables an existing rule:
+[`.eslintrc.yml`](./.eslintrc.yml) file in the `web` directory inside your project directory. 
+Rules specified in this file override rules in the Mobify standard; 
+the following `rules` section adds an additional rule and disables an existing rule:
 
 ```yaml
 rules:
@@ -138,8 +150,8 @@ rules:
 
 For larger differences from the Mobify code style, you can replace the
 Mobify config with a different configuration base. This involves
-editing the `extends` section in `.eslintrc.yml`. For example, if you
-use the Airbnb style guide, replace the contents of `.eslintrc.yml`
+editing the `extends` section in [`.eslintrc.yml`](./.eslintrc.yml). For example, if you
+use the Airbnb style guide, replace the contents of [`.eslintrc.yml`](./.eslintrc.yml)
 with:
 
 ```yaml
@@ -192,7 +204,6 @@ For CI builds, this command builds and serves the bundle for testing with Previe
 npm run test:pwa-ci
 ```
 
-
 ## Developing against `develop` of the Progressive Web SDK
 
 If you are wanting to improve or add a library/component in the [Progressive Web SDK](https://github.com/mobify/progressive-web-sdk),
@@ -225,7 +236,7 @@ npm run analyze-build
 
 Note: This should make it's way into the Tutorial eventually, but this is here for now.
 
-### Running against Merlins:
+### Running against custom Merlin's connector:
 
 1. Open `app/main.jsx`.
 2. Import the Merlin's connector:

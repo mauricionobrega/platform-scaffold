@@ -8,11 +8,11 @@ import {receiveUserEmail} from '../../checkout/results'
 import {getCart} from '../cart/commands'
 import {parseCategories} from '../parsers'
 
-import {API_END_POINT_URL, SIGN_IN_URL, CHECKOUT_SHIPPING_URL, CART_URL} from '../constants'
+import {SIGN_IN_URL, CHECKOUT_SHIPPING_URL, CART_URL} from '../constants'
 import {SIGNED_IN_NAV_ITEM_TYPE, GUEST_NAV_ITEM_TYPE} from '../../../containers/navigation/constants'
 
 export const fetchNavigationData = () => (dispatch) => {
-    return utils.makeSfccUnAuthenticatedRequest(`${API_END_POINT_URL}/categories/root?levels=2`, {method: 'GET'})
+    return utils.makeUnAuthenticatedApiRequest('/categories/root?levels=2', {method: 'GET'})
         .then((response) => response.json())
         .then(({categories}) => {
             const navData = parseCategories(categories)
@@ -58,7 +58,7 @@ export const initApp = () => (dispatch) => {
             dispatch(setCartURL(CART_URL))
             if (!customerData.guest) {
                 dispatch(setLoggedIn(true))
-                return utils.makeSfccRequest(`${API_END_POINT_URL}/customers/${customerData.customer_id}`, {method: 'GET'})
+                return utils.makeApiRequest(`/customers/${customerData.customer_id}`, {method: 'GET'})
                     .then((response) => response.json())
                     .then(({email}) => {
                         return dispatch(receiveUserEmail(email))

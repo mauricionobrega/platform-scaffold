@@ -12,8 +12,6 @@ import {getCart} from '../cart/commands'
 import {setSigninLoaded, setRegisterLoaded} from '../../account/results'
 import {buildFormData, createAddressRequestObject} from './utils'
 import {getCookieValue} from '../../../utils/utils'
-import {receiveNavigationData} from '../../results'
-import {parseNavigation} from '../navigation/parser'
 import {LOGIN_POST_URL, CREATE_ACCOUNT_POST_URL} from '../constants'
 
 import {isFormResponseInvalid} from './parsers/parsers'
@@ -108,11 +106,9 @@ export const logout = () => (dispatch) => (
     makeRequest('/customer/account/logout/')
         // Don't wait for the cart to do everything else
         .then(() => { dispatch(getCart()) })
-        // Update navigation menu
+        // Update navigation menu and logged in flag
         // Need to request current location so that the right entry is active
-        .then(() => makeRequest(window.location.href))
-        .then(jqueryResponse)
-        .then(([$, $response]) => dispatch(receiveNavigationData(parseNavigation($, $response))))
+        .then(() => fetchPageData(window.location.href))
 )
 
 export const updateShippingAddress = (shippingData) => (dispatch) => {

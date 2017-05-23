@@ -6,7 +6,7 @@ import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {setRegisterLoaded, setSigninLoaded} from '../../account/results'
 import {setLoggedIn} from '../../results'
 import {createOrderAddressObject} from '../checkout/utils'
-import {initSfccSession, deleteAuthToken, storeAuthToken, makeSfccRequest, deleteBasketID, storeBasketID, getAuthTokenPayload} from '../utils'
+import {initSfccSession, deleteAuthToken, storeAuthToken, makeApiRequest, deleteBasketID, storeBasketID, getAuthTokenPayload} from '../utils'
 import {requestCartData, createBasket, handleCartData} from '../cart/utils'
 
 import {API_END_POINT_URL, REQUEST_HEADERS} from '../constants'
@@ -63,7 +63,7 @@ export const login = (username, password) => (dispatch) => {
             return initSfccSession(authorization)
         })
         // Check if the user has a basket already
-        .then(() => makeSfccRequest(`${API_END_POINT_URL}/customers/${customerID}/baskets`), {method: 'GET'})
+        .then(() => makeApiRequest(`/customers/${customerID}/baskets`), {method: 'GET'})
         .then((response) => response.json())
         .then(({baskets}) => {
             if (baskets && baskets.length) {
@@ -78,7 +78,7 @@ export const login = (username, password) => (dispatch) => {
                     method: 'POST',
                     body: JSON.stringify(basketContents.product_items)
                 }
-                return makeSfccRequest(`${API_END_POINT_URL}/baskets/${basketID}/items`, requestOptions)
+                return makeApiRequest(`/baskets/${basketID}/items`, requestOptions)
                     .then((response) => response.json())
             }
             return createBasket(basketContents)
@@ -92,11 +92,7 @@ export const login = (username, password) => (dispatch) => {
 }
 
 export const logout = () => (dispatch) => {
-    const requestOptions = {
-        method: 'DELETE',
-    }
-
-    return makeSfccRequest(`${API_END_POINT_URL}/customers/auth`, requestOptions)
+    return makeApiRequest('/customers/auth', {method: 'DELETE'})
         .then((response) => {
             // We don't really do any serious error checking here because we can't
             // really do much about it.
@@ -124,7 +120,7 @@ export const registerUser = (firstname, lastname, email, password) => (dispatch)
         })
     }
     let responseHeaders
-    return makeSfccRequest(`${API_END_POINT_URL}/customers`, requestOptions)
+    return makeApiRequest('/customers', requestOptions)
         .then((response) => {
             responseHeaders = response.headers
             return response.json()
@@ -156,7 +152,7 @@ const addAddress = (formValues, addressName) => {
             address_id: addressName
         })
     }
-    return makeSfccRequest(`${API_END_POINT_URL}/customers/${customerId}/addresses`, requestData)
+    return makeApiRequest(`/customers/${customerId}/addresses`, requestData)
         .then((response) => {
             if (response.status === 200) {
                 return response.json

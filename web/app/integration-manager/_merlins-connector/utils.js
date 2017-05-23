@@ -7,11 +7,16 @@ import {getCookieValue} from '../../utils/utils'
 
 /**
  * Formats a floating point string as money (eg. '95.7500' -> '$95.75')
+ * @param {String} price
+ * @param {Boolean} isDiscount
  */
-export const formatMerlinsMoney = (price) => {
+export const formatMerlinsMoney = (price, isDiscount) => {
     let val = parseFloat(price)
     if (isNaN(val)) {
         val = 0
+    }
+    if (isDiscount) {
+        return `-$${Math.abs(val).toFixed(2)}`
     }
     return `$${val.toFixed(2)}`
 }
