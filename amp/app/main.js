@@ -69,7 +69,7 @@ const render = (req, res, store, component) => {
         title: state.title,
         canonicalURL: req.url,
         body,
-        globalCSS: styles.toString(),
+        globalCSS: globalCSS.toString(),
         css: styles.toString(),
         ampScriptIncludes: scripts.items().join('\n')
     })
