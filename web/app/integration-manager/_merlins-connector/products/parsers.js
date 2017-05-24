@@ -31,6 +31,11 @@ const parseBreadcrumbs = ($, $breadcrumbsLinks) => {
         .map((breadcrumbLink) => parseTextLink($(breadcrumbLink)))
 }
 
+const getAvailabilityFrom = ($content) => {
+    const availability = getTextFrom($content, '.product-info-stock-sku [title="Availability"]')
+    return availability.toLowerCase() === 'in stock'
+}
+
 export const productDetailsParser = ($, $html) => {
     const $mainContent = $html.find('.page-main')
     const magentoObject = extractMagentoJson($html)
@@ -42,6 +47,7 @@ export const productDetailsParser = ($, $html) => {
         title: getTextFrom($mainContent, '.page-title-wrapper.product .page-title > span'),
         price: getTextFrom($mainContent, '.product-info-price .price-wrapper .price'),
         description: getTextFrom($mainContent, '.product.info.detailed .product.attibute.description p'),
+        available: getAvailabilityFrom($mainContent),
         images,
         thumbnail: images[0]
     }
