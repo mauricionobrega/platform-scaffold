@@ -13,7 +13,7 @@ import * as categoriesCommands from './categories/commands'
 import * as cartCommands from './cart/commands'
 import * as appCommands from './app/commands'
 import * as checkoutCommands from './checkout/commands'
-import * as loginCommands from './login/commands'
+import * as accountCommands from './account/commands'
 
 export const submitNewsletter = (formData) => {
     return makeFormEncodedRequest('/newsletter/subscriber/new/', formData, {method: 'POST'})
@@ -41,7 +41,7 @@ export default {
     categories: categoriesCommands,
     cart: cartCommands,
     app: appCommands,
-    login: loginCommands,
+    account: accountCommands,
     submitNewsletter,
     getSearchSuggestions
 }

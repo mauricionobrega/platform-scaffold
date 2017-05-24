@@ -9,3 +9,4 @@ export const receiveShippingInitialValues = createAction('Receive Shipping Initi
 export const receiveHasExistingCard = createAction('Receive Has Existing Cart flag', ['hasExistingCreditCard'])
 export const receiveBillingInitialValues = createAction('Receive Billing Initial Values', ['billing'])
 export const receiveCheckoutConfirmationData = createAction('Receive Checkout Confiramtion Data')
+export const receiveUserEmail = createAction('Receive User Email Address', ['emailAddress'])

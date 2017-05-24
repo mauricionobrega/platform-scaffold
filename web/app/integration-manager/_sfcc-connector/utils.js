@@ -48,11 +48,15 @@ export const getAuthTokenPayload = (authToken) => {
     return JSON.parse(window.atob(authToken.split('.')[1]))
 }
 
+export const getCustomerData = (authorization) => {
+    const {sub} = getAuthTokenPayload(authorization)
+    const subData = JSON.parse(sub)
+    return subData.customer_info
+}
+
 export const isUserLoggedIn = (authorization) => {
     try {
-        const {sub} = getAuthTokenPayload(authorization)
-        const subData = JSON.parse(sub)
-        return !subData.customer_info.guest
+        return !getCustomerData(authorization).guest
     } catch (e) {
         console.log('Error checking if user is logged in. Assuming `false`', e)
         return false
