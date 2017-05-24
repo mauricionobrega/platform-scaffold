@@ -7,5 +7,6 @@ import {receiveHomeData} from '../../results'
 export const initHomePage = () => (dispatch) => {
     // Banners are being pulled from the bundle right now
     // so we just need an array with the correct number of objects
-    return Promise.resolve(dispatch(receiveHomeData({banners: [{}, {}, {}]})))
+    dispatch(receiveHomeData({banners: [{}, {}, {}]}))
+    return Promise.resolve()
 }
