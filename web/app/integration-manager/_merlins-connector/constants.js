@@ -2,6 +2,7 @@
 /* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
+// configuration is not currently used by the Merlin's connector
 let config = {} // eslint-disable-line
 
 export const registerConfig = (cfg) => {
