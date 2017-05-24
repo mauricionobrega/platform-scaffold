@@ -11,7 +11,7 @@ import {ESTIMATE_FORM_NAME} from '../../../store/form/constants'
 
 import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import {isModalOpen} from 'progressive-web-sdk/dist/store/modals/selectors'
-import {getCountries, getAvailableRegions} from '../../../store/checkout/locations/selectors'
+import {getAvailableRegions} from '../../../store/checkout/locations/selectors'
 import {submitEstimateShipping} from '../actions'
 import {isTaxRequestPending} from '../selectors'
 
@@ -19,11 +19,13 @@ import Sheet from 'progressive-web-sdk/dist/components/sheet'
 import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
+import CountrySelect from '../../../components/country-select'
 import IconLabelButton from '../../../components/icon-label-button'
+import RegionField from '../../../components/region-field'
 import {HeaderBar, HeaderBarActions, HeaderBarTitle} from 'progressive-web-sdk/dist/components/header-bar'
 import InlineLoader from 'progressive-web-sdk/dist/components/inline-loader'
 
-export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateProvinces, submitEstimateShipping, isTaxRequestPending, handleSubmit}) => {
+export const CartEstimateShippingModal = ({closeModal, isOpen, stateProvinces, submitEstimateShipping, isTaxRequestPending, handleSubmit}) => {
     return (
         <Sheet className="t-cart__estimate-shipping-modal" open={isOpen} onDismiss={closeModal} maskOpacity={0.7} effect="slide-right" coverage="85%">
             <HeaderBar>
@@ -42,26 +44,11 @@ export const CartEstimateShippingModal = ({closeModal, isOpen, countries, stateP
             <div className="u-padding-md">
                 <form onSubmit={handleSubmit(submitEstimateShipping)}>
                     <FieldRow>
-                        <ReduxForm.Field component={Field} className="pw--has-select" name="countryId" label="Country">
-                            <select>
-                                {countries.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
-                            </select>
-                        </ReduxForm.Field>
+                        <CountrySelect />
                     </FieldRow>
 
                     <FieldRow>
-                        {stateProvinces.length === 0 ?
-                            <ReduxForm.Field component={Field} name="region" label="State/Province">
-                                <input type="text" noValidate />
-                            </ReduxForm.Field>
-                        :
-                            <ReduxForm.Field component={Field} className="pw--has-select" name="regionId" label="State/Province">
-                                <select>
-                                    {stateProvinces.map(({label, value}) => <option value={value} key={label}>{label}</option>)}
-                                </select>
-                            </ReduxForm.Field>
-                        }
-
+                        <RegionField regions={stateProvinces} />
                     </FieldRow>
 
                     <FieldRow>
@@ -93,7 +80,6 @@ CartEstimateShippingModal.propTypes = {
      */
     closeModal: React.PropTypes.func,
 
-    countries: React.PropTypes.array,
     /**
     * (Internal) Added by Redux form
     */
@@ -114,7 +100,6 @@ CartEstimateShippingModal.propTypes = {
 }
 
 const mapStateToProps = createPropsSelector({
-    countries: getCountries,
     isTaxRequestPending,
     isOpen: isModalOpen(CART_ESTIMATE_SHIPPING_MODAL),
     stateProvinces: getAvailableRegions(ESTIMATE_FORM_NAME)
