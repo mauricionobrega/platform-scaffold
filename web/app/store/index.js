@@ -4,6 +4,7 @@
 
 import {createStore, combineReducers, compose, applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
+import Immutable from 'immutable'
 
 import rootReducer from '../containers/reducers'
 import userReducer from './user/reducer'
@@ -18,9 +19,6 @@ import {reducer as formReducer} from 'redux-form'
 
 import analytics from 'redux-analytics'
 import {analyticManager} from 'progressive-web-sdk/dist/analytics/analytic-manager'
-
-const noop = (f) => f
-
 
 const configureStore = (initialState) => {
     const middlewares = [
@@ -40,13 +38,18 @@ const configureStore = (initialState) => {
         form: formReducer
     })
 
+    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+          ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+              serialize: {
+                  immutable: Immutable
+              }
+          })
+          : compose
+
     const store = createStore(
         reducer,
         initialState,
-        compose(
-            applyMiddleware(...middlewares),
-            window.devToolsExtension ? window.devToolsExtension() : noop
-        )
+        composeEnhancers(applyMiddleware(...middlewares))
     )
 
     return store
