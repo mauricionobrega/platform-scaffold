@@ -45,13 +45,14 @@ const setInitialVariantValues = (variants, id, variationCategories) => {
 
 export const getProductHref = (productID) => `/s/2017refresh/${productID}.html`
 
-export const parseProductDetails = ({id, name, price, long_description, image_groups, variants, variation_attributes}) => {
+export const parseProductDetails = ({id, name, price, inventory, long_description, image_groups, variants, variation_attributes}) => {
     const images = parseImages(image_groups)
     return {
         id,
         title: name,
         price: `${formatPrice(price)}`,
         description: long_description,
+        available: inventory.orderable,
         thumbnail: images[0],
         images,
         initialValues: setInitialVariantValues(variants, id, variation_attributes),

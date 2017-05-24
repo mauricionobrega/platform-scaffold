@@ -9,7 +9,7 @@ import {makeApiRequest} from '../utils'
 import {parseProductDetails, getCurrentProductID, getProductHref, getInitialSelectedVariant} from '../parsers'
 
 export const initProductDetailsPage = (url) => (dispatch) => {
-    const productURL = `/products/${getCurrentProductID(url)}?expand=prices,images,variations`
+    const productURL = `/products/${getCurrentProductID(url)}?expand=availability,prices,images,variations`
     const productPathKey = urlToPathKey(url)
 
     return makeApiRequest(productURL, {method: 'GET'})
