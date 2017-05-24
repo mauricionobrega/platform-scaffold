@@ -40,3 +40,11 @@ test('receiveShippingCustomContent updates the custom branch of shipping', () =>
 
     expect(reducer(Immutable.Map(), action).toJS()).toEqual(expectedState)
 })
+
+test('receiveShippingAddressCustomContent updates the custom branch of shipping address', () => {
+    const customContent = {test: 'shipping address content'}
+    const expectedState = {shipping: {address: {custom: customContent}}}
+    const action = checkoutActions.receiveShippingAddressCustomContent(customContent)
+
+    expect(reducer(Immutable.Map(), action).toJS()).toEqual(expectedState)
+})
