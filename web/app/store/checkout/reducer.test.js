@@ -56,3 +56,11 @@ test('receiveBillingCustomContent updates the custom branch of billing', () => {
 
     expect(reducer(Immutable.Map(), action).toJS()).toEqual(expectedState)
 })
+
+test('receiveBillingAddressCustomContent updates the custom branch of billing address', () => {
+    const customContent = {test: 'billing address content'}
+    const expectedState = {billing: {address: {custom: customContent}}}
+    const action = checkoutActions.receiveBillingAddressCustomContent(customContent)
+
+    expect(reducer(Immutable.Map(), action).toJS()).toEqual(expectedState)
+})
