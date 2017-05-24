@@ -1,6 +1,6 @@
 
 
-const ampPage = ({title, canonicalURL, body, css, ampScriptIncludes}) => (
+const ampPage = ({title, canonicalURL, body, globalCSS, css, ampScriptIncludes}) => (
     /*eslint-disable */
     `
     <!doctype html>
@@ -18,6 +18,8 @@ const ampPage = ({title, canonicalURL, body, css, ampScriptIncludes}) => (
 
             <!-- AMP Component JS includes go here -->
             <style amp-custom>
+                ${globalCSS}
+
                 ${css}
             </style>
         </head>

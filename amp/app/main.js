@@ -23,6 +23,9 @@ import * as ampSDK from './amp-sdk'
 
 import styles from './stylesheet.scss'
 
+// import global styles from PWA
+import globalCSS from './global.scss'
+
 
 const jsdom = Promise.promisifyAll(_jsdom)
 
@@ -66,6 +69,7 @@ const render = (req, res, store, component) => {
         title: state.title,
         canonicalURL: req.url,
         body,
+        globalCSS: styles.toString(),
         css: styles.toString(),
         ampScriptIncludes: scripts.items().join('\n')
     })
@@ -129,5 +133,3 @@ const makeHandler = (expressApp) => {
 
 
 export const handler = onLambda ? makeHandler(app) : undefined
-
-
