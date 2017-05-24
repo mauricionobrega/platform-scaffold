@@ -1,0 +1,18 @@
+// AMP Components Themes
+// ===
+//
+// @TODO: remove this file and only include in container container.jsx
+
+
+// AMP SDK Base Styles from progressive-web-sdk node_modules
+// ---
+
+@import 'node_modules/mobify-amp-sdk/dist/components/amp-image/base';
+@import 'node_modules/mobify-amp-sdk/dist/components/heading/base';
+
+
+// AMP SDK Custom Styles
+// ---
+
+@import 'amp-components/amp-image';
+@import 'amp-components/heading';
