@@ -22,10 +22,12 @@ export const getRequestHeaders = () => ({
 
 export const getCategoryPath = (id) => `/s/${config.siteID}/${id}`
 
-export const getHomeURL = () => `/on/demandware.store/${config.siteID}/default/Home-Show`
-export const getSignInURL = () => `/on/demandware.store/${config.siteID}/default/Account-Show`
-export const getSignOutURL = () => `/on/demandware.store/${config.siteID}/default/Logout-Logout`
-export const getCheckoutShippingURL = () => `/on/demandware.store/${config.siteID}/default/COShipping-Start`
-export const getCartURL = () => `/on/demandware.store/${config.siteID}/default/Cart-Show`
-export const getPaymentURL = () => `/on/demandware.store/${config.siteID}/default/COBilling-Start`
-export const getConfirmationURL = () => `/on/demandware.store/${config.siteID}/default/COSummary-Submit`
+export const getBaseURL = () => `/on/demandware.store/${config.siteID}/default/`
+
+export const getHomeURL = () => `${getBaseURL()}Home-Show`
+export const getSignInURL = () => `${getBaseURL()}Account-Show`
+export const getSignOutURL = () => `${getBaseURL()}Logout-Logout`
+export const getCheckoutShippingURL = () => `${getBaseURL()}COShipping-Start`
+export const getCartURL = () => `${getBaseURL()}Cart-Show`
+export const getPaymentURL = () => `${getBaseURL()}COBilling-Start`
+export const getConfirmationURL = () => `${getBaseURL()}COSummary-Submit`

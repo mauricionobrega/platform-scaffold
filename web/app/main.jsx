@@ -32,6 +32,8 @@ import {Connector} from './integration-manager/_merlins-connector'
 
 import {registerConnector} from './integration-manager'
 
+// This is okay to pass to both SFCC and Merlin's connectors,
+// as Merlin's doesn't need a configuration object
 registerConnector(Connector({
     siteID: '2017refresh',
     clientID: '5640cc6b-f5e9-466e-9134-9853e9f9db93'
