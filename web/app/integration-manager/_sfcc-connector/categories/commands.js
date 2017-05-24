@@ -8,7 +8,7 @@ import {receiveCategoryContents, receiveCategoryInformation} from '../../categor
 import {receiveProductListProductData} from '../../products/results'
 import {parseProductListData} from '../parsers'
 
-import {getSiteID} from '../constants'
+import {getSiteID} from '../config'
 
 const makeCategoryURL = (id) => `/categories/${id}`
 const makeCategorySearchURL = (id) => `/product_search?expand=images,prices&q=&refine_1=cgid=${id}`

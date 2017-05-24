@@ -26,3 +26,4 @@ export const getSignOutURL = () => `/on/demandware.store/${config.siteID}/defaul
 export const getCheckoutShippingURL = () => `/on/demandware.store/${config.siteID}/default/COShipping-Start`
 export const getCartURL = () => `/on/demandware.store/${config.siteID}/default/Cart-Show`
 export const getPaymentURL = () => `/on/demandware.store/${config.siteID}/default/COBilling-Start`
+export const getConfirmationURL = () => `/on/demandware.store/${config.siteID}/default/COSummary-Submit`

@@ -8,7 +8,7 @@ import {receiveUserEmail} from '../../checkout/results'
 import {getCart} from '../cart/commands'
 import {parseCategories} from '../parsers'
 
-import {getSignInURL, getCheckoutShippingURL, getCartURL} from '../constants'
+import {getSignInURL, getCheckoutShippingURL, getCartURL} from '../config'
 import {SIGNED_IN_NAV_ITEM_TYPE, GUEST_NAV_ITEM_TYPE} from '../../../containers/navigation/constants'
 
 export const fetchNavigationData = () => (dispatch) => {

@@ -2,7 +2,7 @@
 /* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
-import {getSiteID} from './constants'
+import {getSiteID} from './config'
 import {formatPrice} from './utils'
 
 const parseImages = (imageGroups) => {

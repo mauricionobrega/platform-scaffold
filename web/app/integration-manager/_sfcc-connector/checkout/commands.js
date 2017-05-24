@@ -8,7 +8,7 @@ import {makeApiRequest, makeApiJsonRequest, getAuthToken, getAuthTokenPayload} f
 import {getOrderTotal} from '../../../store/cart/selectors'
 import {populateLocationsData, createOrderAddressObject} from './utils'
 import {parseShippingAddressFromBasket} from './parsers'
-import {getPaymentURL, getSiteID} from '../constants'
+import {getPaymentURL, getConfirmationURL} from '../config'
 import {STATES} from './constants'
 import {receiveOrderConfirmationContents} from '../../results'
 import {getCardData} from 'progressive-web-sdk/dist/card-utils'
@@ -214,7 +214,7 @@ export const submitPayment = (formValues) => (dispatch) => {
             dispatch(receiveOrderConfirmationContents({
                 orderNumber: order.order_no
             }))
-            return `/on/demandware.store/${getSiteID()}/default/COSummary-Submit`
+            return getConfirmationURL()
         })
 }
 

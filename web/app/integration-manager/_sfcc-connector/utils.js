@@ -3,7 +3,7 @@
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
-import {getApiEndPoint, getRequestHeaders} from './constants'
+import {getApiEndPoint, getRequestHeaders} from './config'
 
 const AUTH_KEY_NAME = 'mob-auth'
 const BASKET_KEY_NAME = 'mob-basket'

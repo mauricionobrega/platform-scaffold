@@ -9,7 +9,7 @@ import {createOrderAddressObject} from '../checkout/utils'
 import {initSfccSession, deleteAuthToken, storeAuthToken, makeApiRequest, deleteBasketID, storeBasketID, getAuthTokenPayload} from '../utils'
 import {requestCartData, createBasket, handleCartData} from '../cart/utils'
 
-import {getHomeURL, getApiEndPoint, getRequestHeaders} from '../constants'
+import {getHomeURL, getApiEndPoint, getRequestHeaders} from '../config'
 
 const initLoginData = () => (dispatch) => {
     dispatch(setSigninLoaded())
