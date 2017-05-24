@@ -2,14 +2,13 @@
 /* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
-import {makeSfccRequest, getBasketID, storeBasketID, deleteBasketID} from '../utils'
+import {makeApiRequest, getBasketID, storeBasketID, deleteBasketID} from '../utils'
 import {getCartItems} from '../../../store/cart/selectors'
 import {receiveCartProductData} from '../../products/results'
 import {receiveCartContents} from '../../cart/results'
 
 import {getProductById, getProductThumbnailSrcByPathKey, getProductThumbnailByPathKey} from '../../../store/products/selectors'
 import {getProductHref} from '../parsers'
-import {API_END_POINT_URL} from '../constants'
 import {parseCartProducts, parseCartContents} from './parsers'
 
 export const createBasket = (basketContents) => {
@@ -25,7 +24,7 @@ export const createBasket = (basketContents) => {
         options.body = JSON.stringify(basketContents)
     }
 
-    return makeSfccRequest(`${API_END_POINT_URL}/baskets`, options)
+    return makeApiRequest('/baskets', options)
         .then((response) => response.json())
         .then((basket) => {
             storeBasketID(basket.basket_id)
@@ -42,17 +41,15 @@ export const getProductImage = (item, currentState) => {
             src: productImage,
             alt: item.product_name
         })
-    } else {
-        // We have no images for the item in our state, fetch images using the Salseforce Commerce Cloud API
-        return makeSfccRequest(`${API_END_POINT_URL}/products/${item.product_id}/images?view_type=large`, {method: 'GET'})
-            .then((response) => response.json())
-            .then(({image_groups}) => {
-                return Promise.resolve({
-                    src: image_groups[0].images[0].link,
-                    alt: item.product_name
-                })
-            })
     }
+
+    // We have no images for the item in our state, fetch images using the Salseforce Commerce Cloud API
+    return makeApiRequest(`/products/${item.product_id}/images?view_type=large`, {method: 'GET'})
+        .then((response) => response.json())
+        .then(({image_groups}) => ({
+            src: image_groups[0].images[0].link,
+            alt: item.product_name
+        }))
 }
 
 const imageFromJson = (imageJson, name, description) => ({
@@ -84,7 +81,7 @@ export const fetchCartItemImages = () => (dispatch, getState) => {
             .map((cartItem) => {
                 const productId = cartItem.get('productId')
 
-                return makeSfccRequest(`${API_END_POINT_URL}/products/${productId}/images?all_images=false&view_type=${largeViewType},${thumbnailViewType}`, {method: 'GET'})
+                return makeApiRequest(`/products/${productId}/images?all_images=false&view_type=${largeViewType},${thumbnailViewType}`, {method: 'GET'})
                     .then((response) => response.json())
                     .then(({image_groups, name, short_description}) => {
                         const product = getProductById(productId)(currentState).toJS()
@@ -108,9 +105,9 @@ export const fetchCartItemImages = () => (dispatch, getState) => {
     })
 }
 
-export const requestCartData = (noRetry) => {
-    return createBasket()
-        .then((basket) => makeSfccRequest(`${API_END_POINT_URL}/baskets/${basket.basket_id}`, {method: 'GET'}))
+export const requestCartData = (noRetry) => (
+    createBasket()
+        .then((basket) => makeApiRequest(`/baskets/${basket.basket_id}`, {method: 'GET'}))
         .then((response) => {
             if (response.status === 404) {
                 if (noRetry) {
@@ -122,14 +119,15 @@ export const requestCartData = (noRetry) => {
             }
             return response
         })
-}
+        .then((response) => response.json())
+)
 
-export const handleCartData = (responseJSON) => (dispatch) => {
+export const handleCartData = (basket) => (dispatch) => {
     // Note: These need to be dispatched in this order, otherwise there's
     //       a chance we could try to render cart items and not have product
     //       data in the store for it.
-    dispatch(receiveCartProductData(parseCartProducts(responseJSON)))
-    dispatch(receiveCartContents(parseCartContents(responseJSON)))
+    dispatch(receiveCartProductData(parseCartProducts(basket)))
+    dispatch(receiveCartContents(parseCartContents(basket)))
 
     return dispatch(fetchCartItemImages())
 }

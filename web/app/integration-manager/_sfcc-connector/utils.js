@@ -48,11 +48,15 @@ export const getAuthTokenPayload = (authToken) => {
     return JSON.parse(window.atob(authToken.split('.')[1]))
 }
 
+export const getCustomerData = (authorization) => {
+    const {sub} = getAuthTokenPayload(authorization)
+    const subData = JSON.parse(sub)
+    return subData.customer_info
+}
+
 export const isUserLoggedIn = (authorization) => {
     try {
-        const {sub} = getAuthTokenPayload(authorization)
-        const subData = JSON.parse(sub)
-        return !subData.customer_info.guest
+        return !getCustomerData(authorization).guest
     } catch (e) {
         console.log('Error checking if user is logged in. Assuming `false`', e)
         return false
@@ -127,23 +131,42 @@ export const initSfccAuthAndSession = () => {
         })
 }
 
-export const makeSfccRequest = (url, options) => {
+export const makeApiRequest = (path, options) => {
     return initSfccAuthAndSession()
         .then((headers) => {
             const requestOptions = {
                 ...options,
                 headers
             }
-            return makeRequest(url, requestOptions)
+            return makeRequest(API_END_POINT_URL + path, requestOptions)
         })
 }
 
-export const makeSfccUnAuthenticatedRequest = (url, options) => {
+export const makeApiJsonRequest = (path, body, options) => {
+    return makeApiRequest(path, {
+        ...options,
+        body: JSON.stringify(body)
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(response.statusText)
+            }
+            return response.json()
+        })
+        .then((responseJSON) => {
+            if (responseJSON.fault) {
+                throw new Error(responseJSON.fault.message)
+            }
+            return responseJSON
+        })
+}
+
+export const makeUnAuthenticatedApiRequest = (path, options) => {
     const requestOptions = {
         ...options,
         headers: REQUEST_HEADERS
     }
-    return makeRequest(url, requestOptions)
+    return makeRequest(API_END_POINT_URL + path, requestOptions)
 }
 
 export const formatPrice = (price) => {

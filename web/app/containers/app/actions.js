@@ -10,16 +10,13 @@ import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 import {createAction, createActionWithAnalytics} from 'progressive-web-sdk/dist/utils/action-creation'
 
-import {logout} from '../../integration-manager/login/commands'
+import {logout} from '../../integration-manager/account/commands'
 import {setPageFetchError} from '../../integration-manager/results'
 
 import {CURRENT_URL, OFFLINE_ASSET_URL} from './constants'
 import {closeModal} from 'progressive-web-sdk/dist/store/modals/actions'
+import {addNotification} from 'progressive-web-sdk/dist/store/notifications/actions'
 import {OFFLINE_MODAL} from '../offline/constants'
-
-export const addNotification = createAction('Add Notification')
-export const removeNotification = createAction('Remove Notification')
-export const removeAllNotifications = createAction('Remove All Notifications')
 
 export const updateSvgSprite = createAction('Updated SVG sprite', ['sprite'])
 
@@ -84,9 +81,9 @@ export const signOut = () => (dispatch) => (
     dispatch(logout()).then(() => {
         // Desktop's message includes 'redirect to home page' message
         // so we'll just hardcode a message instead
-        dispatch(addNotification({
-            content: 'You are now signed out',
-            id: 'signedOutNotification'
-        }))
+        dispatch(addNotification(
+            'signedOutNotification',
+            'You are now signed out'
+        ))
     })
 )

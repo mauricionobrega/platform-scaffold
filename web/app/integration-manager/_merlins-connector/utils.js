@@ -7,11 +7,16 @@ import {getCookieValue} from '../../utils/utils'
 
 /**
  * Formats a floating point string as money (eg. '95.7500' -> '$95.75')
+ * @param {String} price
+ * @param {Boolean} isDiscount
  */
-export const formatMerlinsMoney = (price) => {
+export const formatMerlinsMoney = (price, isDiscount) => {
     let val = parseFloat(price)
     if (isNaN(val)) {
         val = 0
+    }
+    if (isDiscount) {
+        return `-$${Math.abs(val).toFixed(2)}`
     }
     return `$${val.toFixed(2)}`
 }
@@ -62,4 +67,24 @@ export const getHighResImage = (src) => {
     const result = src ? src.replace(/thumbnail\/\d+x\d+/, 'small_image/240x300') : src
     console.log(`getHighResImage ${src} -> ${result}`)
     return result
+}
+
+
+// Some of the endpoints don't work with fetch, getting a 400 error
+// from the backend. This function wraps the jQuery ajax() function
+// to make requests to these endpoints.
+//
+// It looks like the server may be looking for the header
+// X-Requested-With: XMLHttpRequest, which is not present with fetch.
+//
+// Alternatively, we could have an issue with header case:
+// http://stackoverflow.com/questions/34656412/fetch-sends-lower-case-header-keys
+export const jqueryAjaxWrapper = (options) => {
+    return new Promise((resolve, reject) => {
+        window.Progressive.$.ajax({
+            ...options,
+            success: (responseData) => resolve(responseData),
+            error: (xhr, status) => reject(status)
+        })
+    })
 }

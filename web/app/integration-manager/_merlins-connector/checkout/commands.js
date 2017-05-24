@@ -6,11 +6,12 @@ import {makeJsonEncodedRequest} from 'progressive-web-sdk/dist/utils/fetch-utils
 import {SubmissionError} from 'redux-form'
 
 import {parseShippingInitialValues, parseLocations, parseShippingMethods, checkoutConfirmationParser} from './parsers'
+import {parseCartTotals} from '../cart/parser'
 import {parseCheckoutEntityID, extractMagentoShippingStepData} from '../../../utils/magento-utils'
-import {getCookieValue} from '../../../utils/utils'
+import {parseLocationData} from '../../../utils/utils'
 import {getCart} from '../cart/commands'
-import {receiveCheckoutData, receiveShippingInitialValues, receiveCheckoutConfirmationData, receiveHasExistingCard} from '../../checkout/results'
-
+import {receiveCheckoutData, receiveShippingInitialValues, receiveCheckoutConfirmationData, receiveBillingInitialValues} from './../../checkout/results'
+import {receiveCartContents} from './../../cart/results'
 import {fetchPageData} from '../app/commands'
 import {getCustomerEntityID} from '../selectors'
 import {receiveEntityID} from '../actions'
@@ -19,40 +20,7 @@ import {ADD_NEW_ADDRESS_FIELD} from '../../../containers/checkout-shipping/const
 import {getFormValues, getFormRegisteredFields} from '../../../store/form/selectors'
 import {getIsLoggedIn} from '../../../store/user/selectors'
 import {SHIPPING_FORM_NAME} from '../../../store/form/constants'
-import * as paymentSelectors from '../../../store/checkout/payment/selectors'
 import * as shippingSelectors from '../../../store/checkout/shipping/selectors'
-
-const parseLocationData = (formValues, registeredFieldNames) => {
-    // Default values to use if none have been selected
-    const address = {country_id: 'US', region_id: '0', postcode: null}
-
-    if (formValues) {
-        // Only return the field value if the field is registered
-        const getRegisteredFieldValue = (fieldName) => {
-            return registeredFieldNames.includes(fieldName) ? formValues[fieldName] : undefined
-        }
-
-        const countryId = getRegisteredFieldValue('country_id')
-        if (countryId) {
-            address.country_id = countryId
-        }
-
-        const postcode = getRegisteredFieldValue('postcode')
-        if (postcode) {
-            address.postcode = postcode
-        }
-
-        if (formValues.region) {
-            address.region = getRegisteredFieldValue('region')
-            // Remove the region_id in case we have an old value
-            delete address.region_id
-        } else {
-            address.region_id = getRegisteredFieldValue('region_id')
-        }
-    }
-
-    return address
-}
 
 export const fetchShippingMethodsEstimate = (formKey) => (dispatch, getState) => {
     const currentState = getState()
@@ -179,6 +147,8 @@ export const submitShipping = (formValues) => (dispatch, getState) => {
             if (!responseJSON.payment_methods) {
                 throw new SubmissionError({_error: 'Unable to save shipping address'})
             }
+
+            dispatch(receiveCartContents(parseCartTotals(responseJSON.totals)))
             return PAYMENT_URL
         })
 }
@@ -195,11 +165,12 @@ export const isEmailAvailable = (email) => (dispatch) => {
         })
 }
 
-export const initCheckoutPaymentPage = (url) => (dispatch) => {
+export const initCheckoutPaymentPage = (url) => (dispatch, getState) => {
     return dispatch(fetchPageData(url))
         .then((res) => {
             const [$, $response] = res // eslint-disable-line no-unused-vars
-            dispatch(receiveHasExistingCard(true))
+            const addressData = shippingSelectors.getInitialShippingAddress(getState())
+            dispatch(receiveBillingInitialValues({initialValues: {...addressData, billing_same_as_shipping: true}}))
             return dispatch(processCheckoutData($response))
         })
 }
@@ -208,16 +179,32 @@ export const submitPayment = (formValues) => (dispatch, getState) => {
     const currentState = getState()
     const entityID = getCustomerEntityID(currentState)
     const isLoggedIn = getIsLoggedIn(currentState)
-
+    const {
+        firstname,
+        lastname,
+        company,
+        addressLine1,
+        addressLine2,
+        countryId,
+        city,
+        region,
+        regionId,
+        postcode,
+        customerAddressId,
+        customerId
+    } = formValues
     const address = {
-        firstname: formValues.firstname,
-        lastname: formValues.lastname,
-        company: formValues.company || '',
-        postcode: formValues.postcode,
-        city: formValues.city,
-        street: formValues.street,
-        regionId: formValues.regionId,
-        countryId: formValues.countryId,
+        firstname,
+        lastname,
+        customerAddressId: `${customerAddressId}`,
+        customerId: `${customerId}`,
+        company: company || '',
+        postcode,
+        city,
+        street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1],
+        regionId,
+        region,
+        countryId,
         saveInAddressBook: false
     }
 
@@ -247,131 +234,4 @@ export const submitPayment = (formValues) => (dispatch, getState) => {
                 throw new Error(responseJSON.message)
             }
         })
-}
-
-const buildFormData = (formCredentials) => {
-    const formData = new FormData()
-
-    Object.keys(formCredentials).forEach((key) => {
-        const item = formCredentials[key]
-        if (key === 'street') {
-            // Street must be converted away from an array, and into a
-            // series of `street[]` keys-value pairs. This is what the
-            // Magento backend uses to fill out multiple street
-            // address fields
-            for (let i = 0; i < item.length; i++) {
-                formData.append('street[]', item[i])
-            }
-        } else {
-            formData.append(key, item)
-        }
-    })
-
-    return formData
-}
-
-const createAddressRequestObject = (formValues) => {
-    const {
-        firstname,
-        lastname,
-        company,
-        addressLine1,
-        addressLine2,
-        countryId,
-        city,
-        regionId,
-        region,
-        postcode,
-        telephone
-    } = formValues
-
-    return {
-        firstname,
-        lastname,
-        company: company || '',
-        telephone: telephone ? telephone.replace(/[()\- ]/g, '') : '',
-        postcode,
-        city,
-        street: addressLine2 ? [addressLine1, addressLine2] : [addressLine1, ''],
-        region_id: regionId,
-        region: region || '',
-        country_id: countryId,
-    }
-}
-
-const updateBillingAddress = () => {
-    return (dispatch, getState) => {
-        const formData = buildFormData({
-            form_key: getCookieValue('form_key'),
-            success_url: '',
-            error_url: '',
-            ...createAddressRequestObject(paymentSelectors.getPayment(getState())),
-            default_billing: 1,
-            default_shipping: 1,
-        })
-
-        const postUpdateCustomerAddressURL = '/customer/address/formPost/id/46/'
-        return new Promise((resolve) => {
-            // We need to use jQuery.ajax here because currently fetch sends requests with all headers set to lowercase
-            // using fetch here means the server won't handle our request properly
-            // so instead we're using jQuery ajax since it sends requests matching what the server expects.
-            // see http://stackoverflow.com/questions/34656412/fetch-sends-lower-case-header-keys
-            window.Progressive.$.ajax({
-                url: postUpdateCustomerAddressURL,
-                data: formData,
-                method: 'POST',
-                processData: false,
-                contentType: false,
-                success: () => resolve(),
-                error: (response) => {
-                    console.error('Updating the user Shipping/Billing address failed. Response log:')
-                    console.error(response)
-                    throw new Error('Unable to save Billing Address')
-                }
-            })
-        })
-    }
-}
-
-export const updateShippingAndBilling = () => {
-    return (dispatch, getState) => {
-        const shippingData = shippingSelectors.getShippingAddress(getState()).toJS()
-        const formData = buildFormData({
-            form_key: getCookieValue('form_key'),
-            success_url: '',
-            error_url: '',
-            ...createAddressRequestObject(shippingData),
-            default_billing: 1,
-            default_shipping: 1,
-        })
-
-        const postUpdateCustomerAddressURL = '/customer/address/formPost/'
-
-        return new Promise((resolve) => {
-            // We need to use jQuery.ajax here because currently fetch sends requests with all headers set to lowercase
-            // using fetch here means the server won't handle our request properly
-            // so instead we're using jQuery ajax since it sends requests matching what the server expects.
-            // see http://stackoverflow.com/questions/34656412/fetch-sends-lower-case-header-keys
-            window.Progressive.$.ajax({
-                url: postUpdateCustomerAddressURL,
-                data: formData,
-                method: 'POST',
-                processData: false,
-                contentType: false,
-                success: () => {
-                    const paymentData = paymentSelectors.getPayment(getState())
-                    const shippingIsDifferentThanBilling = JSON.stringify(shippingData) !== JSON.stringify(paymentData)
-                    if (shippingIsDifferentThanBilling) {
-                        return dispatch(updateBillingAddress())
-                    }
-                    return resolve()
-                },
-                error: (response) => {
-                    console.error('Updating the user Shipping and Billing address failed. Response log:')
-                    console.error(response)
-                    throw new Error('Unable to save Shipping and Billing Address')
-                }
-            })
-        })
-    }
 }

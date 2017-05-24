@@ -6,12 +6,10 @@
 import {submitRegisterForm} from './actions'
 import Immutable from 'immutable'
 
-jest.mock('../../integration-manager/checkout/commands')
-import {updateShippingAndBilling} from '../../integration-manager/checkout/commands'
-jest.mock('../../integration-manager/login/commands')
-import {registerUser} from '../../integration-manager/login/commands'
-jest.mock('../app/actions')
-import {addNotification} from '../app/actions'
+jest.mock('../../integration-manager/account/commands')
+import {registerUser, updateShippingAddress} from '../../integration-manager/account/commands'
+jest.mock('progressive-web-sdk/dist/store/notifications/actions')
+import {addNotification} from 'progressive-web-sdk/dist/store/notifications/actions'
 import {CONFIRMATION_FORM_NAME} from '../../store/form/constants'
 
 describe('submitRegisterForm', () => {
@@ -50,7 +48,7 @@ describe('submitRegisterForm', () => {
             })
     })
 
-    test('calls updateShippingAndBilling on success', () => {
+    test('calls updateShippingAddress on success', () => {
         registerUser.mockClear()
         registerUser.mockImplementationOnce(() => Promise.resolve())
         const thunk = submitRegisterForm()
@@ -59,7 +57,7 @@ describe('submitRegisterForm', () => {
         return thunk(mockDispatch, mockGetState)
             .then(() => {
                 expect(mockDispatch).toBeCalled()
-                expect(updateShippingAndBilling).toBeCalled()
+                expect(updateShippingAddress).toBeCalled()
             })
     })
 })
