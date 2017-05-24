@@ -8,7 +8,7 @@ import {receiveUserEmail} from '../../checkout/results'
 import {getCart} from '../cart/commands'
 import {parseCategories} from '../parsers'
 
-import {SIGN_IN_URL, CHECKOUT_SHIPPING_URL, CART_URL} from '../constants'
+import {getSignInURL, getCheckoutShippingURL, getCartURL} from '../constants'
 import {SIGNED_IN_NAV_ITEM_TYPE, GUEST_NAV_ITEM_TYPE} from '../../../containers/navigation/constants'
 
 export const fetchNavigationData = () => (dispatch) => {
@@ -33,7 +33,7 @@ export const fetchNavigationData = () => (dispatch) => {
             // node type and title and not worry about switching/adding/deleting the
             // `path` attribute.
             // See also `containers/navigation/container.jsx`'s `itemFactory()` function.
-            accountNode.path = SIGN_IN_URL
+            accountNode.path = getSignInURL()
 
             return dispatch(receiveNavigationData({
                 path: '/',
@@ -54,8 +54,8 @@ export const initApp = () => (dispatch) => {
         .then(() => dispatch(fetchNavigationData()))
         .then(() => {
             const customerData = utils.getCustomerData(utils.getAuthToken())
-            dispatch(setCheckoutShippingURL(CHECKOUT_SHIPPING_URL))
-            dispatch(setCartURL(CART_URL))
+            dispatch(setCheckoutShippingURL(getCheckoutShippingURL()))
+            dispatch(setCartURL(getCartURL()))
             if (!customerData.guest) {
                 dispatch(setLoggedIn(true))
                 return utils.makeApiRequest(`/customers/${customerData.customer_id}`, {method: 'GET'})

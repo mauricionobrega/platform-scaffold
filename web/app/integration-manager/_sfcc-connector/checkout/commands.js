@@ -8,7 +8,7 @@ import {makeApiRequest, makeApiJsonRequest, getAuthToken, getAuthTokenPayload} f
 import {getOrderTotal} from '../../../store/cart/selectors'
 import {populateLocationsData, createOrderAddressObject} from './utils'
 import {parseShippingAddressFromBasket} from './parsers'
-import {PAYMENT_URL, SITE_ID} from '../constants'
+import {getPaymentURL, getSiteID} from '../constants'
 import {STATES} from './constants'
 import {receiveOrderConfirmationContents} from '../../results'
 import {getCardData} from 'progressive-web-sdk/dist/card-utils'
@@ -141,7 +141,7 @@ export const submitShipping = (formValues) => (dispatch) => {
         .catch(() => { throw new SubmissionError({_error: 'Unable to save shipping data'}) })
         .then((basket) => {
             dispatch(handleCartData(basket))
-            return PAYMENT_URL
+            return getPaymentURL()
         })
 }
 
@@ -214,7 +214,7 @@ export const submitPayment = (formValues) => (dispatch) => {
             dispatch(receiveOrderConfirmationContents({
                 orderNumber: order.order_no
             }))
-            return `/on/demandware.store/${SITE_ID}/default/COSummary-Submit`
+            return `/on/demandware.store/${getSiteID()}/default/COSummary-Submit`
         })
 }
 

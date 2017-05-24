@@ -43,7 +43,7 @@ const setInitialVariantValues = (variants, id, variationCategories) => {
 
 /* eslint-enable camelcase */
 
-export const getProductHref = (productID) => `/s/${config.siteID}/${productID}.html`
+export const getProductHref = (productID) => `/s/${getSiteID()}/${productID}.html`
 
 export const parseProductDetails = ({id, name, price, long_description, image_groups, variants, variation_attributes}) => {
     const images = parseImages(image_groups)
