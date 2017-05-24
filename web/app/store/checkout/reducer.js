@@ -18,6 +18,7 @@ const checkoutReducer = handleActions({
     [integrationManagerResults.receiveCheckoutCustomContent]: mergePayload,
     [integrationManagerResults.receiveLocationsCustomContent]: (state, {payload}) => state.setIn(['locations', 'custom'], payload),
     [integrationManagerResults.receiveShippingCustomContent]: (state, {payload}) => state.setIn(['shipping', 'custom'], payload),
+    [integrationManagerResults.receiveShippingAddressCustomContent]: (state, {payload}) => state.setIn(['shipping', 'address', 'custom'], payload),
     [setDefaultShippingAddressId]: mergePayload
 }, Immutable.Map())
 

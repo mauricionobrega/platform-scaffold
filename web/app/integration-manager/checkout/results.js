@@ -13,3 +13,4 @@ export const receiveCheckoutConfirmationData = createAction('Receive Checkout Co
 export const receiveUserEmail = createAction('Receive User Email Address', ['emailAddress'])
 export const receiveLocationsCustomContent = createAction('Receive Locations Custom Content')
 export const receiveShippingCustomContent = createAction('Receive Shipping Custom Content')
+export const receiveShippingAddressCustomContent = createAction('Receive Shipping Address Custom Content')
