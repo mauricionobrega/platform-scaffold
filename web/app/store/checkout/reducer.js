@@ -15,6 +15,7 @@ const checkoutReducer = handleActions({
     [integrationManagerResults.receiveShippingInitialValues]: mergePayload,
     [integrationManagerResults.receiveCheckoutData]: mergePayload,
     [integrationManagerResults.receiveUserEmail]: mergePayload,
+    [integrationManagerResults.receiveCheckoutCustomContent]: mergePayload,
     [setDefaultShippingAddressId]: mergePayload
 }, Immutable.Map())
 
