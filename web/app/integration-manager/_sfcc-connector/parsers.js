@@ -2,7 +2,7 @@
 /* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
-import {getSiteID} from './config'
+import {getSiteID, getCategoryPath} from './config'
 import {formatPrice} from './utils'
 
 const parseImages = (imageGroups) => {
@@ -124,7 +124,7 @@ export const parseCategories = (categories) => {
     return categories.map((category) => {
         return {
             title: category.name,
-            path: `/s/${getSiteID()}/${category.id}`,
+            path: getCategoryPath(category.id),
             isCategoryLink: true,
             children: category.categories ? parseCategories(category.categories) : []
         }

@@ -20,6 +20,8 @@ export const getRequestHeaders = () => ({
     'x-dw-client-id': config.clientID
 })
 
+export const getCategoryPath = (id) => `/s/${config.siteID}/${id}`
+
 export const getHomeURL = () => `/on/demandware.store/${config.siteID}/default/Home-Show`
 export const getSignInURL = () => `/on/demandware.store/${config.siteID}/default/Account-Show`
 export const getSignOutURL = () => `/on/demandware.store/${config.siteID}/default/Logout-Logout`
