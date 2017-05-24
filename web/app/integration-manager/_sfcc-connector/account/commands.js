@@ -82,7 +82,7 @@ export const login = (username, password) => (dispatch) => {
                 {method: 'POST'}
             )
         })
-        .then((responseJSON) => dispatch(handleCartData(responseJSON)))
+        .then((basket) => dispatch(handleCartData(basket)))
         .then(() => {
             // Navigate to the homepage, since we haven't made an account page yet
             // and demandware's account page is at the same URL as their login page
@@ -92,11 +92,12 @@ export const login = (username, password) => (dispatch) => {
 
 export const logout = () => (dispatch) => {
     return makeApiRequest('/customers/auth', {method: 'DELETE'})
-        .then((response) => {
+        .then((response) => response.json())
+        .then((responseJSON) => {
             // We don't really do any serious error checking here because we can't
             // really do much about it.
-            if (response.fault) {
-                console.error('Error logging out. Clearing auth tokens anyways.', response.json())
+            if (responseJSON.fault) {
+                console.error('Error logging out. Clearing auth tokens anyways.', responseJSON)
             }
 
             deleteBasketID()
@@ -144,20 +145,12 @@ const addAddress = (formValues, addressName) => {
     const addressData = createOrderAddressObject(formValues)
     const {sub} = getAuthTokenPayload()
     const customerId = JSON.parse(sub).customer_info.customer_id
-    const requestData = {
-        method: 'POST',
-        body: JSON.stringify({
-            ...addressData,
-            address_id: addressName
-        })
+    const requestBody = {
+        ...addressData,
+        address_id: addressName
     }
-    return makeApiRequest(`/customers/${customerId}/addresses`, requestData)
-        .then((response) => {
-            if (response.status === 200) {
-                return response.json
-            }
-            throw Error('Unable to save address')
-        })
+    return makeApiJsonRequest(`/customers/${customerId}/addresses`, requestBody, {method: 'POST'})
+        .catch(() => { throw Error('Unable to save address') })
 }
 
 
