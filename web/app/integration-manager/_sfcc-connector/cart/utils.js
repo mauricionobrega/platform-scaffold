@@ -41,17 +41,15 @@ export const getProductImage = (item, currentState) => {
             src: productImage,
             alt: item.product_name
         })
-    } else {
-        // We have no images for the item in our state, fetch images using the Salseforce Commerce Cloud API
-        return makeApiRequest(`/products/${item.product_id}/images?view_type=large`, {method: 'GET'})
-            .then((response) => response.json())
-            .then(({image_groups}) => {
-                return Promise.resolve({
-                    src: image_groups[0].images[0].link,
-                    alt: item.product_name
-                })
-            })
     }
+
+    // We have no images for the item in our state, fetch images using the Salseforce Commerce Cloud API
+    return makeApiRequest(`/products/${item.product_id}/images?view_type=large`, {method: 'GET'})
+        .then((response) => response.json())
+        .then(({image_groups}) => ({
+            src: image_groups[0].images[0].link,
+            alt: item.product_name
+        }))
 }
 
 const imageFromJson = (imageJson, name, description) => ({
@@ -107,8 +105,8 @@ export const fetchCartItemImages = () => (dispatch, getState) => {
     })
 }
 
-export const requestCartData = (noRetry) => {
-    return createBasket()
+export const requestCartData = (noRetry) => (
+    createBasket()
         .then((basket) => makeApiRequest(`/baskets/${basket.basket_id}`, {method: 'GET'}))
         .then((response) => {
             if (response.status === 404) {
@@ -121,14 +119,15 @@ export const requestCartData = (noRetry) => {
             }
             return response
         })
-}
+        .then((response) => response.json())
+)
 
-export const handleCartData = (responseJSON) => (dispatch) => {
+export const handleCartData = (basket) => (dispatch) => {
     // Note: These need to be dispatched in this order, otherwise there's
     //       a chance we could try to render cart items and not have product
     //       data in the store for it.
-    dispatch(receiveCartProductData(parseCartProducts(responseJSON)))
-    dispatch(receiveCartContents(parseCartContents(responseJSON)))
+    dispatch(receiveCartProductData(parseCartProducts(basket)))
+    dispatch(receiveCartContents(parseCartContents(basket)))
 
     return dispatch(fetchCartItemImages())
 }
