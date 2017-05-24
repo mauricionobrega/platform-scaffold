@@ -14,3 +14,4 @@ export const receiveUserEmail = createAction('Receive User Email Address', ['ema
 export const receiveLocationsCustomContent = createAction('Receive Locations Custom Content')
 export const receiveShippingCustomContent = createAction('Receive Shipping Custom Content')
 export const receiveShippingAddressCustomContent = createAction('Receive Shipping Address Custom Content')
+export const receiveBillingCustomContent = createAction('Receive Billing Custom Content')
