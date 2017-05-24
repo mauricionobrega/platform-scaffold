@@ -7,6 +7,8 @@ import {createSelector} from 'reselect'
 import {createGetSelector, createHasSelector} from 'reselect-immutable-helpers'
 import {getCart, getProducts} from '../selectors'
 
+export const getCartCustomContent = createGetSelector(getCart, 'custom')
+
 export const getCartLoaded = createHasSelector(getCart, 'items')
 
 const getCartItemsPrivate = createGetSelector(getCart, 'items', Immutable.List())
