@@ -4,34 +4,55 @@
 
 import {CHECKOUT_CONFIRMATION_MODAL, CHECKOUT_CONFIRMATION_REGISTRATION_FAILED} from './constants'
 import {createAction} from 'progressive-web-sdk/dist/utils/action-creation'
+import {createPropsSelector} from 'reselect-immutable-helpers'
 import {addNotification, removeAllNotifications} from 'progressive-web-sdk/dist/store/notifications/actions'
 import {openModal} from 'progressive-web-sdk/dist/store/modals/actions'
 import * as shippingSelectors from '../../store/checkout/shipping/selectors'
 import * as formSelectors from '../../store/form/selectors'
+import {getBillingAddress} from '../../store/checkout/billing/selectors'
 import {getEmailAddress} from '../../store/checkout/selectors'
-import {updateShippingAndBilling} from '../../integration-manager/checkout/commands'
-import {registerUser} from '../../integration-manager/login/commands'
+import {updateShippingAddress, updateBillingAddress, registerUser} from '../../integration-manager/account/commands'
+
 
 export const hideRegistrationForm = createAction('Hiding Registration Form (Save Your Address Details)')
+
+const registrationFormSelector = createPropsSelector({
+    firstname: shippingSelectors.getShippingFirstName,
+    lastname: shippingSelectors.getShippingLastName,
+    email: getEmailAddress,
+    formValues: formSelectors.getConfirmationFormValues,
+    shippingData: shippingSelectors.getShippingAddress,
+    billingAddressData: getBillingAddress
+})
 
 export const submitRegisterForm = () => {
     return (dispatch, getState) => {
         dispatch(removeAllNotifications())
-        const currentState = getState()
-        const firstname = shippingSelectors.getShippingFirstName(currentState)
-        const lastname = shippingSelectors.getShippingLastName(currentState)
-        const email = getEmailAddress(currentState)
         const {
-            password,
-            password_confirmation
-        } = formSelectors.getConfirmationFormValues(currentState)
+            firstname,
+            lastname,
+            email,
+            formValues: {
+                password,
+                password_confirmation
+            },
+            shippingData,
+            billingAddressData
+        } = registrationFormSelector(getState())
 
         return dispatch(registerUser(firstname, lastname, email, password, password_confirmation))
             .then(() => {
                 dispatch(openModal(CHECKOUT_CONFIRMATION_MODAL))
-                dispatch(updateShippingAndBilling())
-                dispatch(hideRegistrationForm())
+                return dispatch(updateShippingAddress(shippingData))
+                    .then(() => {
+                        if (!billingAddressData.sameAsShipping) {
+                            return dispatch(updateBillingAddress(billingAddressData))
+                        }
+
+                        return Promise.resolve()
+                    })
             })
+            .then(() => dispatch(hideRegistrationForm()))
             .catch((error) => {
                 if (error.name !== 'SubmissionError') {
                     dispatch(addNotification(

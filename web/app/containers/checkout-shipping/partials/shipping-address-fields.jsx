@@ -12,7 +12,10 @@ import {showCompanyAndApt} from '../actions'
 import {getIsCompanyOrAptShown} from '../selectors'
 import {fetchShippingMethodsEstimate} from '../../../integration-manager/checkout/commands'
 import {SHIPPING_FORM_NAME} from '../../../store/form/constants'
-import {getCountries, getAvailableRegions} from '../../../store/checkout/locations/selectors'
+import {getAvailableRegions} from '../../../store/checkout/locations/selectors'
+
+import CountrySelect from '../../../components/country-select'
+import RegionField from '../../../components/region-field'
 
 import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
@@ -21,7 +24,6 @@ import Icon from 'progressive-web-sdk/dist/components/icon'
 
 
 const ShippingAddressFields = ({
-    countries,
     fetchShippingMethods,
     handleShowCompanyAndApt,
     isCompanyOrAptShown,
@@ -103,47 +105,11 @@ const ShippingAddressFields = ({
             </FieldRow>
 
             <FieldRow>
-                <ReduxForm.Field
-                    component={Field}
-                    className="pw--has-select"
-                    name="countryId"
-                    label="Country"
-                >
-                    <select>
-                        {countries.map(({label, value}) =>
-                            <option value={value} key={value}>
-                                {label}
-                            </option>
-                        )}
-                    </select>
-                </ReduxForm.Field>
+                <CountrySelect />
             </FieldRow>
 
             <FieldRow>
-                {regions.length === 0 ?
-                    <ReduxForm.Field
-                        component={Field}
-                        name="region"
-                        label="State/Province"
-                    >
-                        <input type="text" noValidate />
-                    </ReduxForm.Field>
-                :
-                    <ReduxForm.Field
-                        component={Field}
-                        className="pw--has-select"
-                        name="regionId"
-                        label="State/Province"
-                    >
-                        <select>
-                            {regions.map(({label, value}) =>
-                                <option value={value} key={`region-${value}`}>
-                                    {label}
-                                </option>
-                            )}
-                        </select>
-                    </ReduxForm.Field>
-                }
+                <RegionField regions={regions} />
             </FieldRow>
 
             <FieldRow>
@@ -176,14 +142,6 @@ const ShippingAddressFields = ({
 
 ShippingAddressFields.propTypes = {
     /**
-    * Countries available to ship to
-    */
-    countries: React.PropTypes.arrayOf(React.PropTypes.shape({
-        label: React.PropTypes.string,
-        value: React.PropTypes.string
-    })),
-
-    /**
     * Fetches the available shipping methods from the back end
     */
     fetchShippingMethods: React.PropTypes.func,
@@ -210,7 +168,6 @@ ShippingAddressFields.propTypes = {
 }
 
 const mapStateToProps = createPropsSelector({
-    countries: getCountries,
     isCompanyOrAptShown: getIsCompanyOrAptShown,
     regions: getAvailableRegions(SHIPPING_FORM_NAME),
 })

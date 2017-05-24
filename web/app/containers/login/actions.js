@@ -6,7 +6,7 @@ import isEmail from 'validator/lib/isEmail'
 import {SubmissionError} from 'redux-form'
 
 import {isRunningInAstro, jsRpcMethod} from '../../utils/astro-integration'
-import {login, registerUser} from '../../integration-manager/login/commands'
+import {login, registerUser} from '../../integration-manager/account/commands'
 import {browserHistory} from 'progressive-web-sdk/dist/routing'
 import isReactRoute from 'progressive-web-sdk/dist/routing/is-react-route'
 
