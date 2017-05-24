@@ -9,7 +9,7 @@ import Field from 'progressive-web-sdk/dist/components/field'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import {connect} from 'react-redux'
 
-import {getCountries} from '../../store/checkout/locations/selectors'
+import {getCountries} from '../../store/checkout/selectors'
 
 /**
  * A field for selecting a country.
