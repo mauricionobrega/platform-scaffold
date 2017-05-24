@@ -82,6 +82,9 @@ export const initCheckoutShippingPage = () => (dispatch) => {
         })
 }
 
+// We don't need to fetch any data for this page
+export const initCheckoutConfirmationPage = () => () => Promise.resolve()
+
 export const initCheckoutPaymentPage = () => (dispatch) => {
     dispatch(populateLocationsData())
     return createBasket()
