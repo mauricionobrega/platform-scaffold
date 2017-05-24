@@ -4,16 +4,9 @@
 
 import commands from './commands'
 import reducer from './reducer'
+import {registerConfig} from './constants'
 
-const defaultConfig = {
-    // Currently the Merlin's connector does not need any configuration
-}
-
-export const config = {}
-
-const Connector = (cfg) => {
-    Object.assign(config, defaultConfig, cfg)
+export const Connector = (cfg) => {
+    registerConfig(cfg)
     return {commands, reducer}
 }
-
-export default Connector

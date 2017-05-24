@@ -2,6 +2,12 @@
 /* Copyright (c) 2017 Mobify Research & Development Inc. All rights reserved. */
 /* * *  *  * *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * */
 
+let config = {} // eslint-disable-line
+
+export const registerConfig = (cfg) => {
+    config = cfg
+}
+
 export const CHECKOUT_SHIPPING_URL = '/checkout/'
 export const CART_URL = '/checkout/cart/'
 export const PAYMENT_URL = '/checkout/payment/'

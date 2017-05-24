@@ -8,7 +8,7 @@ import {receiveCategoryContents, receiveCategoryInformation} from '../../categor
 import {receiveProductListProductData} from '../../products/results'
 import {parseProductListData} from '../parsers'
 
-import {SITE_ID} from '../constants'
+import {getSiteID} from '../constants'
 
 const makeCategoryURL = (id) => `/categories/${id}`
 const makeCategorySearchURL = (id) => `/product_search?expand=images,prices&q=&refine_1=cgid=${id}`
@@ -16,7 +16,7 @@ const makeCategorySearchURL = (id) => `/product_search?expand=images,prices&q=&r
 /* eslint-disable camelcase, no-use-before-define */
 const processCategory = (dispatch) => ({parent_category_id, id, name}) => {
     const parentId = parent_category_id !== 'root' ? parent_category_id : null
-    const path = `/s/${SITE_ID}/${id}`
+    const path = `/s/${getSiteID()}/${id}`
     dispatch(receiveCategoryInformation(path, {
         id,
         title: name,
