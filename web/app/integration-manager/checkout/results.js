@@ -15,3 +15,4 @@ export const receiveLocationsCustomContent = createAction('Receive Locations Cus
 export const receiveShippingCustomContent = createAction('Receive Shipping Custom Content')
 export const receiveShippingAddressCustomContent = createAction('Receive Shipping Address Custom Content')
 export const receiveBillingCustomContent = createAction('Receive Billing Custom Content')
+export const receiveBillingAddressCustomContent = createAction('Receive Billing Address Custom Content')
