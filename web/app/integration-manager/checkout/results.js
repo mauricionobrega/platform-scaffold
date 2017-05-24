@@ -12,3 +12,4 @@ export const receiveBillingInitialValues = createAction('Receive Billing Initial
 export const receiveCheckoutConfirmationData = createAction('Receive Checkout Confiramtion Data')
 export const receiveUserEmail = createAction('Receive User Email Address', ['emailAddress'])
 export const receiveLocationsCustomContent = createAction('Receive Locations Custom Content')
+export const receiveShippingCustomContent = createAction('Receive Shipping Custom Content')
