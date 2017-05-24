@@ -51,3 +51,5 @@ export const receiveCheckoutConfirmationData = (confirmationData) => (dispatch, 
         products: remapProducts(getCartItems(getState()).toJS())
     }))
 }
+
+export const receiveUserEmail = createAction('Receive User Email Address', ['emailAddress'])
