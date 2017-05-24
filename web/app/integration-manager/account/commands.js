@@ -49,6 +49,26 @@ export const logout = () => connector.logout()
 
 /**
  * Creates an account using the given parameters
- * @param {string} formValues The form values provided from the registration form
+ * @param {string} firstname The user's first name
+ * @param {string} lastname The user's lastname
+ * @param {string} email The user's email
+ * @param {string} password The user's password
+ *
  */
-export const registerUser = (formValues) => connector.registerUser(formValues)
+export const registerUser = (firstname, lastname, email, password) => connector.registerUser(firstname, lastname, email, password)
+
+/**
+* Updates the user's shipping address to the given address
+* Some backends don't distinguish between a save shipping and saved billing address
+* In those cases this command will still save the address for the user
+* @param {object} formValues The form values provided from the address form
+*/
+export const updateShippingAddress = (formValues) => connector.updateShippingAddress(formValues)
+
+/**
+* Updates the user's billing address to the given address
+* Some backends don't distinguish between a save shipping and saved billing address
+* In those cases this command will still save the address for the user
+* @param {object} formValues The form values provided from the address form
+*/
+export const updateBillingAddress = (formValues) => connector.updateBillingAddress(formValues)

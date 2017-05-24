@@ -14,7 +14,7 @@ import {
     submitShipping as submitShippingCommand,
     isEmailAvailable as isEmailAvailableCommand
 } from '../../integration-manager/checkout/commands'
-import {login} from '../../integration-manager/login/commands'
+import {login} from '../../integration-manager/account/commands'
 
 import {getShippingFormValues} from '../../store/form/selectors'
 import {addNotification, removeNotification} from 'progressive-web-sdk/dist/store/notifications/actions'
@@ -65,8 +65,12 @@ export const submitShipping = () => (dispatch, getState) => {
         lastname,
         ...formValues
     }
-    dispatch(receiveCheckoutData({shipping: {address}, emailAddress: formValues.username}))
+    const shippingData = {shipping: {address}}
 
+    if (formValues.username) {
+        shippingData.emailAddress = formValues.username
+    }
+    dispatch(receiveCheckoutData(shippingData))
     return dispatch(submitShippingCommand(address))
         .then((paymentURL) => {
             browserHistory.push({
