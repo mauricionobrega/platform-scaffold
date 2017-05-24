@@ -8,6 +8,8 @@ import {getCheckout} from '../../selectors'
 
 export const getBilling = createGetSelector(getCheckout, 'billing', Immutable.Map())
 
+export const getBillingCustomContent = createGetSelector(getBilling, 'custom')
+
 export const getBillingInitialValues = createGetSelector(getBilling, 'initialValues')
 
 export const getBillingAddress = createGetSelector(getBilling, 'address', Immutable.Map())
