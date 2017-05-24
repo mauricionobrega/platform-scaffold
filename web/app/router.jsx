@@ -17,7 +17,7 @@ import {initHomePage} from './integration-manager/home/commands'
 import {initCartPage} from './integration-manager/cart/commands'
 import {initProductListPage} from './integration-manager/categories/commands'
 import {initProductDetailsPage} from './integration-manager/products/commands'
-import {initRegisterPage, initLoginPage} from './integration-manager/login/commands'
+import {initRegisterPage, initLoginPage} from './integration-manager/account/commands'
 import {initCheckoutShippingPage, initCheckoutPaymentPage, initCheckoutConfirmationPage} from './integration-manager/checkout/commands'
 
 import {getURL} from './utils/utils'
@@ -107,10 +107,26 @@ const Router = ({store}) => (
                     headerHasSignIn
                     fetchAction={initCheckoutShippingPage}
                 />
-                <Route component={CheckoutPayment} path="*/COBilling-Start*" routeName="checkout-payment" Header={CheckoutHeader} Footer={CheckoutFooter} fetchAction={initCheckoutPaymentPage} />
+                <Route
+                    component={CheckoutPayment}
+                    path="*/COBilling-Start*"
+                    routeName="checkout-payment"
+                    Header={CheckoutHeader}
+                    Footer={CheckoutFooter}
+                    fetchAction={initCheckoutPaymentPage}
+                />
                 <Route component={Login} path="*/Account-Show*" routeName="signin" fetchAction={initLoginPage} />
                 <Route component={Cart} path="*/Cart-Show*" routeName="cart" fetchAction={initCartPage} />
-                <Route component={CheckoutConfirmation} path="*/COSummary-Submit*" routeName="checkout-confirmation" Header={CheckoutHeader} Footer={CheckoutFooter} />
+
+                <Route
+                    component={CheckoutConfirmation}
+                    path="*/COSummary-Submit*"
+                    routeName="checkout-confirmation"
+                    Header={CheckoutHeader}
+                    Footer={CheckoutFooter}
+                    fetchAction={initCheckoutConfirmationPage}
+                />
+
             </Route>
         </SDKRouter>
     </Provider>

@@ -8,7 +8,7 @@ import * as categoriesCommands from './categories/commands'
 import * as cartCommands from './cart/commands'
 import * as appCommands from './app/commands'
 import * as checkoutCommands from './checkout/commands'
-import * as loginCommands from './login/commands'
+import * as accountCommands from './account/commands'
 
 export default {
     home: homeCommands,
@@ -17,5 +17,5 @@ export default {
     cart: cartCommands,
     app: appCommands,
     checkout: checkoutCommands,
-    login: loginCommands
+    account: accountCommands
 }
