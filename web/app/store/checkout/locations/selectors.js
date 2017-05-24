@@ -10,6 +10,7 @@ import {getFormValues} from '../../form/selectors'
 import {getCheckout} from '../../selectors'
 
 export const getLocations = createGetSelector(getCheckout, 'locations', Immutable.Map())
+export const getLocationsCustomContent = createGetSelector(getLocations, 'custom')
 export const getCountries = createGetSelector(getLocations, 'countries', Immutable.List())
 export const getRegions = createGetSelector(getLocations, 'regions', Immutable.List())
 
