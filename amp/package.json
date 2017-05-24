@@ -45,6 +45,7 @@
     "sass-lint": "1.10.2",
     "sass-loader": "6.0.5",
     "source-map-support": "0.4.15",
+    "susy": "2.2.12",
     "webpack": "2.5.1"
   },
   "scripts": {
