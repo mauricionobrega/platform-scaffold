@@ -9,17 +9,23 @@ import {createPropsSelector} from 'reselect-immutable-helpers'
 
 // Selectors
 import * as selectors from '../selectors'
-import {getCountries, getRegions} from '../../../store/checkout/locations/selectors'
+import {getAvailableRegions} from '../../../store/checkout/locations/selectors'
 import {getShippingFullName, getAddressLineOne, getCity, getPostcode} from '../../../store/checkout/shipping/selectors'
 
 // Actions
 import * as checkoutPaymentActions from '../actions'
+
+// Local components
+import CountrySelect from '../../../components/country-select'
+import RegionField from '../../../components/region-field'
 
 // SDK Components
 import Button from 'progressive-web-sdk/dist/components/button'
 import Field from 'progressive-web-sdk/dist/components/field'
 import FieldRow from 'progressive-web-sdk/dist/components/field-row'
 import Icon from 'progressive-web-sdk/dist/components/icon'
+
+import {PAYMENT_FORM_NAME} from '../../../store/form/constants'
 
 class BillingAddressForm extends React.Component {
     constructor(props) {
@@ -41,7 +47,6 @@ class BillingAddressForm extends React.Component {
     render() {
         const {
             city,
-            countries,
             isCompanyOrAptShown,
             name,
             postcode,
@@ -141,11 +146,7 @@ class BillingAddressForm extends React.Component {
                             </FieldRow>
 
                             <FieldRow>
-                                <ReduxForm.Field component={Field} className="pw--has-select" name="regionId" label="State/Province">
-                                    <select>
-                                        {regions.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
-                                    </select>
-                                </ReduxForm.Field>
+                                <RegionField regions={regions} />
                             </FieldRow>
 
                             <FieldRow>
@@ -156,11 +157,7 @@ class BillingAddressForm extends React.Component {
                             </FieldRow>
 
                             <FieldRow>
-                                <ReduxForm.Field component={Field} className="pw--has-select" name="countryId" label="Country">
-                                    <select>
-                                        {countries.map(({label, value}) => <option value={value} key={value}>{label}</option>)}
-                                    </select>
-                                </ReduxForm.Field>
+                                <CountrySelect />
                             </FieldRow>
                         </div>
                     }
@@ -175,14 +172,6 @@ BillingAddressForm.propTypes = {
     * City of saved shipping address
     */
     city: PropTypes.string,
-
-    /**
-    * Countries available to ship to
-    */
-    countries: PropTypes.arrayOf(PropTypes.shape({
-        label: PropTypes.string,
-        value: PropTypes.string
-    })),
 
     /**
      * Shows the "Company" and "Apt #" fields
@@ -231,12 +220,11 @@ BillingAddressForm.propTypes = {
 
 const mapStateToProps = createPropsSelector({
     city: getCity,
-    countries: getCountries,
     isCompanyOrAptShown: selectors.getIsCompanyOrAptShown,
     name: getShippingFullName,
     newShippingAddressIsEnabled: selectors.getNewShippingAddressIsEnabled,
     postcode: getPostcode,
-    regions: getRegions,
+    regions: getAvailableRegions(PAYMENT_FORM_NAME),
     street: getAddressLineOne,
 })
 
