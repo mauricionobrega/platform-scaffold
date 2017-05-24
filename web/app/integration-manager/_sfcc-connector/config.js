@@ -11,18 +11,18 @@ export const registerConfig = (cfg) => {
     config = cfg
 }
 
-export const getSiteID = () => config.siteID
+export const getSiteID = () => `Sites-${config.siteID}-Site`
 
-export const getApiEndPoint = () => `/s/${config.siteID}/dw/${API_TYPE}/${API_VERSION}`
+export const getApiEndPoint = () => `/s/${getSiteID()}/dw/${API_TYPE}/${API_VERSION}`
 
 export const getRequestHeaders = () => ({
     'Content-Type': 'application/json',
     'x-dw-client-id': config.clientID
 })
 
-export const getCategoryPath = (id) => `/s/${config.siteID}/${id}`
+export const getCategoryPath = (id) => `/s/${getSiteID()}/${id}`
 
-export const getBaseURL = () => `/on/demandware.store/${config.siteID}/default/`
+const getBaseURL = () => `/on/demandware.store/${getSiteID()}/default/`
 
 export const getHomeURL = () => `${getBaseURL()}Home-Show`
 export const getSignInURL = () => `${getBaseURL()}Account-Show`
