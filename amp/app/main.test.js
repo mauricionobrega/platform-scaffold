@@ -31,7 +31,6 @@ describe('Renders valid AMP', () => {
     })
 
     test('PLP', () => {
-        // expect.assertions(0)
         return new Promise((resolve, reject) => {
             const req = {url: '/potions.html'}
             const res = resObject(resolve, reject)
@@ -42,7 +41,6 @@ describe('Renders valid AMP', () => {
     })
 
     test('PDP', () => {
-        // expect.assertions(0)
         return new Promise((resolve, reject) => {
             const req = {url: '/eye-of-newt.html'}
             const res = resObject(resolve, reject)
