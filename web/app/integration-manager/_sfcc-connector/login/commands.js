@@ -62,7 +62,7 @@ export const login = (username, password) => (dispatch) => {
             return initSfccSession(authorization)
         })
         // Check if the user has a basket already
-        .then(() => makeApiRequest(`/customers/${customerID}/baskets`), {method: 'GET'})
+        .then(() => makeApiRequest(`/customers/${customerID}/baskets`, {method: 'GET'}))
         .then((response) => response.json())
         .then(({baskets}) => {
             if (baskets.length === 0) {
