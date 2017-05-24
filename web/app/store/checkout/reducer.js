@@ -4,7 +4,7 @@
 
 import Immutable from 'immutable'
 import {handleActions} from 'redux-actions'
-import {mergePayload} from '../../utils/reducer-utils'
+import {mergePayload, setCustomContent} from '../../utils/reducer-utils'
 import {receiveSavedShippingAddresses} from './actions'
 import * as integrationManagerResults from '../../integration-manager/checkout/results'
 import {setDefaultShippingAddressId} from './shipping/actions'
@@ -16,11 +16,11 @@ const checkoutReducer = handleActions({
     [integrationManagerResults.receiveCheckoutData]: mergePayload,
     [integrationManagerResults.receiveUserEmail]: mergePayload,
     [integrationManagerResults.receiveCheckoutCustomContent]: mergePayload,
-    [integrationManagerResults.receiveLocationsCustomContent]: (state, {payload}) => state.setIn(['locations', 'custom'], payload),
-    [integrationManagerResults.receiveShippingCustomContent]: (state, {payload}) => state.setIn(['shipping', 'custom'], payload),
-    [integrationManagerResults.receiveShippingAddressCustomContent]: (state, {payload}) => state.setIn(['shipping', 'address', 'custom'], payload),
-    [integrationManagerResults.receiveBillingCustomContent]: (state, {payload}) => state.setIn(['billing', 'custom'], payload),
-    [integrationManagerResults.receiveBillingAddressCustomContent]: (state, {payload}) => state.setIn(['billing', 'address', 'custom'], payload),
+    [integrationManagerResults.receiveLocationsCustomContent]: (state, {payload}) => setCustomContent(state, payload, ['locations']),
+    [integrationManagerResults.receiveShippingCustomContent]: (state, {payload}) => setCustomContent(state, payload, ['shipping']),
+    [integrationManagerResults.receiveShippingAddressCustomContent]: (state, {payload}) => setCustomContent(state, payload, ['shipping', 'address']),
+    [integrationManagerResults.receiveBillingCustomContent]: (state, {payload}) => setCustomContent(state, payload, ['billing']),
+    [integrationManagerResults.receiveBillingAddressCustomContent]: (state, {payload}) => setCustomContent(state, payload, ['billing', 'address']),
     [setDefaultShippingAddressId]: mergePayload
 }, Immutable.Map())
 
