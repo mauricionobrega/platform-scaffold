@@ -9,7 +9,7 @@ import {getCart} from '../cart/commands'
 import {parseLoginStatus} from './parser'
 import {parseNavigation} from '../navigation/parser'
 import {receiveFormKey} from '../actions'
-import {CHECKOUT_SHIPPING_URL, CART_URL} from '../constants'
+import {CHECKOUT_SHIPPING_URL, CART_URL} from '../config'
 import {getCookieValue} from '../../../utils/utils'
 import {generateFormKeyCookie} from '../../../utils/magento-utils'
 
