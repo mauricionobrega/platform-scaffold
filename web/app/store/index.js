@@ -29,8 +29,8 @@ analyticsManager.init({
 
 const configureStore = (initialState) => {
     const middlewares = [
-        analytics(({type, payload}, state) => analyticsManager.distribute(type, payload, state)),
-        thunk
+        thunk,
+        analytics(({type, payload}, state) => analyticsManager.distribute(type, payload, state))
     ]
     const reducer = combineReducers({
         categories: categoryReducer,
