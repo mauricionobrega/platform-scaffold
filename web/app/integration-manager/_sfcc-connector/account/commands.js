@@ -9,7 +9,7 @@ import {createOrderAddressObject} from '../checkout/utils'
 import {initSfccSession, deleteAuthToken, storeAuthToken, makeApiRequest, deleteBasketID, storeBasketID, getAuthTokenPayload} from '../utils'
 import {requestCartData, createBasket, handleCartData} from '../cart/utils'
 
-import {HOME_URL, API_END_POINT_URL, REQUEST_HEADERS} from '../constants'
+import {getHomeURL, getApiEndPoint, getRequestHeaders} from '../constants'
 
 const initLoginData = () => (dispatch) => {
     dispatch(setSigninLoaded())
@@ -28,7 +28,7 @@ export const login = (username, password) => (dispatch) => {
         method: 'POST',
         body: '{type: "credentials"}',
         headers: {
-            ...REQUEST_HEADERS,
+            ...getRequestHeaders(),
             Authorization: `Basic ${authorizationData}`
         }
     }
@@ -41,7 +41,7 @@ export const login = (username, password) => (dispatch) => {
             basketContents = basket
 
             // Actual login call
-            return makeRequest(`${API_END_POINT_URL}/customers/auth`, requestOptions)
+            return makeRequest(`${getApiEndPoint()}/customers/auth`, requestOptions)
         })
         .then((response) => {
             responseHeaders = response.headers
@@ -87,7 +87,7 @@ export const login = (username, password) => (dispatch) => {
         .then(() => {
             // Navigate to the homepage, since we haven't made an account page yet
             // and demandware's account page is at the same URL as their login page
-            return HOME_URL
+            return getHomeURL()
         })
 }
 
