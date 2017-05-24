@@ -1,18 +1,22 @@
 site_id: "progressive-web-scaffold"
 
 config:
+    mobify_property_id: "progressive-web-scaffold"
+    business_slug: "progressive-web-scaffold"
+    cloud_slug: "progressive-web-scaffold"
+
     # Human-readable site name
-    friendly_site_name: "Acme Widgets"
+    friendly_site_name: "Mobify Progressive Web Scaffold"
 
     # Must be a 192x192 icon file.
     default_icon_url: "https://cdn.mobify.com/sites/progressive-web-scaffold/production/static/img/global/app-icon.png"
 
-    # Default is to use the URL for the target domain.
-    default_url: "http://www.acmewidgets.com/"
+    # Default is to use the URL for the target domain, via https
+    default_url:
 
     # The domain (netloc) of the project's website, which must be
     # https-everywhere.
-    target_domain: "www.acmewidgets.com"
+    target_domain: "www.merlinspotions.com"
 
     # This is set for a Progressive Web App
     pwa: true

@@ -2,7 +2,7 @@
   "name": "progressive-web-scaffold",
   "projectSlug": "progressive-web-scaffold",
   "aJSSlug": "merlinspotions-2",
-  "messagingSiteId": "merlinspotions",
+  "messagingSiteId": "progressive-web-scaffold",
   "messagingEnabled": true,
   "repository": {
     "type": "git",
@@ -112,6 +112,7 @@
     "build-sprites": "npm run clean:svgs && svg-sprite --symbol --symbol-dest='.' --symbol-sprite='sprite.svg' --shape-id-generator='pw-%s' --dest=./app/static/svg/sprite-dist ./app/static/svg/sprite-source/*.svg",
     "clean:svgs": "svgo --enable='removeUselessStrokeAndFill' -f ./app/static/svg/sprite-source",
     "clean:images": "imagemin-power -v --recursive --plugin=pngquant \"./app/static/img/**/*\" --out-dir=.",
+    "configure-messaging": "sdk-configure-messaging",
     "copyright:lint": "copyright 'app/!(vendor|static)/**/*.js?(x)' 'worker/**/*.js?(x)' 'tests/**/*.js?(x)' 'webpack/**/*.js?(x)' 'service-worker-loader.js'",
     "copyright:fix": "copyright --fix --update 'app/!(vendor|static)/**/*.js?(x)' 'worker/**/*.js?(x)' 'tests/**/*.js?(x)' 'webpack/**/*.js?(x)' 'service-worker-loader.js'",
     "dev": "sdk-get-routes && sdk-create-hash-manifest && node ./dev-server/index.js",
