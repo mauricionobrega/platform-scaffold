@@ -30,15 +30,19 @@ const processCategory = (dispatch) => ({parent_category_id, id, name}) => {
 }
 /* eslint-enable camelcase, no-use-before-define */
 
-const fetchCategoryInfo = (id) => (dispatch) => {
-    return makeApiRequest(makeCategoryURL(id), {method: 'GET'})
+const fetchCategoryInfo = (id) => (dispatch) => (
+    makeApiRequest(makeCategoryURL(id), {method: 'GET'})
         .then((response) => response.json())
         .then(processCategory(dispatch))
+)
+
+const extractCategoryId = (url) => {
+    const categoryIDMatch = /\/([^/]+)$/.exec(url)
+    return categoryIDMatch ? categoryIDMatch[1] : ''
 }
 
 export const initProductListPage = (url) => (dispatch) => {
-    const categoryIDMatch = /\/([^/]+)$/.exec(url)
-    const categoryID = categoryIDMatch ? categoryIDMatch[1] : ''
+    const categoryID = extractCategoryId(url)
 
     return dispatch(fetchCategoryInfo(categoryID))
         .then(() => makeApiRequest(makeCategorySearchURL(categoryID), {method: 'GET'}))

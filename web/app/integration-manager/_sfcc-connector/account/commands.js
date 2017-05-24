@@ -6,7 +6,7 @@ import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {setRegisterLoaded, setSigninLoaded} from '../../account/results'
 import {setLoggedIn} from '../../results'
 import {createOrderAddressObject} from '../checkout/utils'
-import {initSfccSession, deleteAuthToken, storeAuthToken, makeApiRequest, deleteBasketID, storeBasketID, getAuthTokenPayload} from '../utils'
+import {initSfccSession, deleteAuthToken, storeAuthToken, makeApiRequest, makeApiJsonRequest, deleteBasketID, storeBasketID, getAuthTokenPayload} from '../utils'
 import {requestCartData, createBasket, handleCartData} from '../cart/utils'
 
 import {getHomeURL, getApiEndPoint, getRequestHeaders} from '../config'
@@ -36,7 +36,6 @@ export const login = (username, password) => (dispatch) => {
     let basketContents
     let customerID
     return requestCartData()
-        .then((response) => response.json())
         .then((basket) => {
             basketContents = basket
 
@@ -63,27 +62,27 @@ export const login = (username, password) => (dispatch) => {
             return initSfccSession(authorization)
         })
         // Check if the user has a basket already
-        .then(() => makeApiRequest(`/customers/${customerID}/baskets`), {method: 'GET'})
+        .then(() => makeApiRequest(`/customers/${customerID}/baskets`, {method: 'GET'}))
         .then((response) => response.json())
         .then(({baskets}) => {
-            if (baskets && baskets.length) {
-                const basketID = baskets[0].basket_id
-                storeBasketID(basketID)
-                if (!basketContents.product_items) {
-                    // There is no basket to merge, so return the existing one
-                    return Promise.resolve(baskets[0])
-                }
-                // update basket with contents (product_items)
-                const requestOptions = {
-                    method: 'POST',
-                    body: JSON.stringify(basketContents.product_items)
-                }
-                return makeApiRequest(`/baskets/${basketID}/items`, requestOptions)
-                    .then((response) => response.json())
+            if (!baskets || baskets.length === 0) {
+                return createBasket(basketContents)
             }
-            return createBasket(basketContents)
+
+            const basketID = baskets[0].basket_id
+            storeBasketID(basketID)
+            if (!basketContents.product_items) {
+                // There is no basket to merge, so return the existing one
+                return Promise.resolve(baskets[0])
+            }
+            // update basket with contents (product_items)
+            return makeApiJsonRequest(
+                `/baskets/${basketID}/items`,
+                basketContents.product_items,
+                {method: 'POST'}
+            )
         })
-        .then((responseJSON) => dispatch(handleCartData(responseJSON)))
+        .then((basket) => dispatch(handleCartData(basket)))
         .then(() => {
             // Navigate to the homepage, since we haven't made an account page yet
             // and demandware's account page is at the same URL as their login page
@@ -93,11 +92,12 @@ export const login = (username, password) => (dispatch) => {
 
 export const logout = () => (dispatch) => {
     return makeApiRequest('/customers/auth', {method: 'DELETE'})
-        .then((response) => {
+        .then((response) => response.json())
+        .then((responseJSON) => {
             // We don't really do any serious error checking here because we can't
             // really do much about it.
-            if (response.fault) {
-                console.error('Error logging out. Clearing auth tokens anyways.', response.json())
+            if (responseJSON.fault) {
+                console.error('Error logging out. Clearing auth tokens anyways.', responseJSON)
             }
 
             deleteBasketID()
@@ -125,8 +125,8 @@ export const registerUser = (firstname, lastname, email, password) => (dispatch)
             responseHeaders = response.headers
             return response.json()
         })
-        .then((responseJSON) => {
-            if (responseJSON.fault) {
+        .then(({fault}) => {
+            if (fault) {
                 throw new SubmissionError({_error: 'Unable to create account.'})
             }
             const authorization = responseHeaders.get('Authorization')
@@ -145,20 +145,12 @@ const addAddress = (formValues, addressName) => {
     const addressData = createOrderAddressObject(formValues)
     const {sub} = getAuthTokenPayload()
     const customerId = JSON.parse(sub).customer_info.customer_id
-    const requestData = {
-        method: 'POST',
-        body: JSON.stringify({
-            ...addressData,
-            address_id: addressName
-        })
+    const requestBody = {
+        ...addressData,
+        address_id: addressName
     }
-    return makeApiRequest(`/customers/${customerId}/addresses`, requestData)
-        .then((response) => {
-            if (response.status === 200) {
-                return response.json
-            }
-            throw Error('Unable to save address')
-        })
+    return makeApiJsonRequest(`/customers/${customerId}/addresses`, requestBody, {method: 'POST'})
+        .catch(() => { throw Error('Unable to save address') })
 }
 
 

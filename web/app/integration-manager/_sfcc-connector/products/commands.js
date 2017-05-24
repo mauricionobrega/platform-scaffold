@@ -12,11 +12,7 @@ export const initProductDetailsPage = (url) => (dispatch) => {
     const productURL = `/products/${getCurrentProductID(url)}?expand=prices,images,variations`
     const productPathKey = urlToPathKey(url)
 
-    const options = {
-        method: 'GET'
-    }
-
-    return makeApiRequest(productURL, options)
+    return makeApiRequest(productURL, {method: 'GET'})
         .then((response) => response.json())
         .then((responseJSON) => {
             const productDetailsData = {
