@@ -11,3 +11,4 @@ export const receiveHasExistingCard = createAction('Receive Has Existing Cart fl
 export const receiveBillingInitialValues = createAction('Receive Billing Initial Values', ['billing'])
 export const receiveCheckoutConfirmationData = createAction('Receive Checkout Confiramtion Data')
 export const receiveUserEmail = createAction('Receive User Email Address', ['emailAddress'])
+export const receiveLocationsCustomContent = createAction('Receive Locations Custom Content')
