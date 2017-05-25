@@ -26,7 +26,8 @@ export const initProductListPage = (url) => (dispatch) => {
                 parentId: null,
                 filters: priceFilterParser($, $response),
                 title,
-                searchTerm: searchTermMatch ? searchTermMatch[0] : null
+                searchTerm: searchTermMatch ? searchTermMatch[0] : null,
+                custom: 'category custom content'
             }))
             dispatch(receiveCategoryContents(pathKey, categoryProductsParser($, $response)))
         })

@@ -43,7 +43,8 @@ export const productDetailsParser = ($, $html) => {
         price: getTextFrom($mainContent, '.product-info-price .price-wrapper .price'),
         description: getTextFrom($mainContent, '.product.info.detailed .product.attibute.description p'),
         images,
-        thumbnail: images[0]
+        thumbnail: images[0],
+        custom: 'product custom content'
     }
 }
 
