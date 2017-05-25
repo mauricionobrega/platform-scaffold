@@ -5,12 +5,13 @@
 import Immutable from 'immutable'
 import {handleActions} from 'redux-actions'
 import {mergePayload} from '../../utils/reducer-utils'
-import {setLoggedIn} from '../../integration-manager/results'
+import {setLoggedIn, receiveUserCustomContent} from '../../integration-manager/results'
 
 const initialState = Immutable.Map()
 
 const userReducer = handleActions({
     [setLoggedIn]: mergePayload,
+    [receiveUserCustomContent]: mergePayload
 }, initialState)
 
 export default userReducer
