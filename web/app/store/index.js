@@ -18,12 +18,19 @@ import {reducer as imReducer} from '../integration-manager/reducer'
 import {reducer as formReducer} from 'redux-form'
 
 import analytics from 'redux-analytics'
-import {analyticManager} from 'progressive-web-sdk/dist/analytics/analytic-manager'
+import analyticsManager from 'progressive-web-sdk/dist/analytics/analytics-manager'
+
+analyticsManager.init({
+    projectSlug: AJS_SLUG,              // eslint-disable-line no-undef
+    mobifyGAID: 'UA-53825302-1',
+    ecommerceLibrary: 'ec',
+    debug: true
+})
 
 const configureStore = (initialState) => {
     const middlewares = [
         thunk,
-        analytics(({type, payload}, state) => analyticManager.distribute(type, payload, state))
+        analytics(({type, payload}, state) => analyticsManager.distribute(type, payload, state))
     ]
     const reducer = combineReducers({
         categories: categoryReducer,

@@ -4,7 +4,7 @@
 
 /* eslint-disable import/namespace */
 /* eslint-disable import/named */
-import * as analyticConstants from 'progressive-web-sdk/dist/analytics/analytic-constants'
+import {EVENT_ACTION, Page} from 'progressive-web-sdk/dist/analytics/data-objects/'
 
 import {makeRequest} from 'progressive-web-sdk/dist/utils/fetch-utils'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
@@ -28,8 +28,8 @@ export const updateSvgSprite = createAction('Updated SVG sprite', ['sprite'])
 export const onRouteChanged = createActionWithAnalytics(
     'On route changed',
     [CURRENT_URL],
-    analyticConstants.pageview,
-    (currentURL, routeName) => ({name: routeName})
+    EVENT_ACTION.pageview,
+    (currentURL, routeName) => (new Page({[Page.TEMPLATENAME]: routeName}))
 )
 
 export const setFetchedPage = createAction('Set fetched page', ['url'])
