@@ -7,7 +7,7 @@ import {connect} from 'react-redux'
 import * as selectors from '../selectors'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import {getCartURL} from '../../app/selectors'
-import {getProductTitle, getProductPrice} from '../../../store/products/selectors'
+import {getProductTitle, getProductPrice, getProductAvailability} from '../../../store/products/selectors'
 
 import SkeletonBlock from 'progressive-web-sdk/dist/components/skeleton-block'
 import Breadcrumbs from 'progressive-web-sdk/dist/components/breadcrumbs'
@@ -15,7 +15,7 @@ import Breadcrumbs from 'progressive-web-sdk/dist/components/breadcrumbs'
 import {isRunningInAstro} from '../../../utils/astro-integration'
 
 
-const ProductDetailsHeading = ({breadcrumbs, title, price, isInCheckout, cartURL}) => (
+const ProductDetailsHeading = ({available, breadcrumbs, title, price, isInCheckout, cartURL}) => (
     <div className="t-product-details-heading u-padding-md u-box-shadow u-position-relative u-z-index-1">
         {!isRunningInAstro &&
             <div className="t-product-details__breadcrumbs u-margin-bottom-md">
@@ -28,8 +28,8 @@ const ProductDetailsHeading = ({breadcrumbs, title, price, isInCheckout, cartURL
             <SkeletonBlock width="50%" height="32px" className="u-margin-bottom" />
         }
 
-        {price ?
-            <span className="t-product-details-heading__price t-product-details__price u-color-accent u-text-weight-regular u-text-family-header u-text-letter-spacing-small">{price}</span>
+        {(available != null && price != null) ?
+            price.length > 0 && <span className="t-product-details-heading__price t-product-details__price u-color-accent u-text-weight-regular u-text-family-header u-text-letter-spacing-small">{price}</span>
         :
             <SkeletonBlock width="25%" height="32px" />
         }
@@ -37,6 +37,7 @@ const ProductDetailsHeading = ({breadcrumbs, title, price, isInCheckout, cartURL
 )
 
 ProductDetailsHeading.propTypes = {
+    available: PropTypes.bool,
     breadcrumbs: PropTypes.array,
     cartURL: PropTypes.string,
     isInCheckout: PropTypes.bool,
@@ -45,6 +46,7 @@ ProductDetailsHeading.propTypes = {
 }
 
 const mapStateToProps = createPropsSelector({
+    available: getProductAvailability,
     breadcrumbs: selectors.getProductDetailsBreadcrumbs,
     cartURL: getCartURL,
     title: getProductTitle,

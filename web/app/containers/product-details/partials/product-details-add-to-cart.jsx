@@ -38,7 +38,7 @@ const ProductDetailsAddToCart = ({available, quantity, setQuantity, onSubmit, di
                         <Stepper {...stepperProps} />
                     }
 
-                    <div className="t-product-details__indicator u-border u-margin-start u-padding-md  u-flex u-flexbox u-justify-center">
+                    <div className={`t-product-details__indicator u-border ${available ? 'u-margin-start' : ''} u-padding-md  u-flex u-flexbox u-justify-center`}>
                         <Icon name={available ? 'check' : 'close'} className="u-margin-end-sm" />
                         {available ? 'In stock' : 'Out of stock'}
                     </div>

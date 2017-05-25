@@ -43,10 +43,9 @@ const ProductTile = ({className, thumbnail, href, price, title}) => {
     const titleElement = title
         ? <h2 className={titleClassName}>{title}</h2>
         : <SkeletonBlock height="34px" />
-    const priceElement = price
+    const priceElement = price != null && price.length >= 0
         ? <span className="u-text-weight-bold u-color-error">{price}</span>
         : <SkeletonBlock height="22px" width="50px" />
-
     return (
         <ListTile className="c-product-tile u-card" href={href}>
             <ProductItem customWidth="45%"
