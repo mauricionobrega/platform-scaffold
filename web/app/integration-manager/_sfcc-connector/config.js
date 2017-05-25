@@ -13,16 +13,16 @@ export const registerConfig = (cfg) => {
 
 export const getSiteID = () => config.siteID
 
-export const getApiEndPoint = () => `/s/Sites-${getSiteID()}-Site/dw/${API_TYPE}/${API_VERSION}`
+export const getApiEndPoint = () => `/s/${getSiteID()}/dw/${API_TYPE}/${API_VERSION}`
 
 export const getRequestHeaders = () => ({
     'Content-Type': 'application/json',
     'x-dw-client-id': config.clientID
 })
 
-export const getCategoryPath = (id) => `/s/Sites-${getSiteID()}-Site/${id}`
+export const getCategoryPath = (id) => `/s/${getSiteID()}/${id}`
 
-const getBaseURL = () => `/on/demandware.store/Sites-${getSiteID()}-Site/default/`
+const getBaseURL = () => `/on/demandware.store/${getSiteID()}/default/`
 
 export const getHomeURL = () => `${getBaseURL()}Home-Show`
 export const getSignInURL = () => `${getBaseURL()}Account-Show`
