@@ -29,3 +29,5 @@ export const getAvailableRegions = (formKey) => createSelector(
     getSelectedCountryID(formKey),
     (regions, id) => regions.filter((region) => region.get('countryId') === id)
 )
+
+export const getCheckoutCustomContent = createGetSelector(getCheckout, 'custom')

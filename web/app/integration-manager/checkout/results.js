@@ -9,6 +9,7 @@ import {LocationList} from './types'
 export const receiveCheckoutLocations = createTypedAction('Receive Checkout Locations', LocationList, 'locations')
 
 export const receiveCheckoutData = createAction('Receive Checkout Data')
+export const receiveCheckoutCustomContent = createAction('Receive Checkout Custom Content', ['custom'])
 export const receiveShippingInitialValues = createAction('Receive Shipping Initial Values', ['shipping'])
 export const receiveHasExistingCard = createAction('Receive Has Existing Cart flag', ['hasExistingCreditCard'])
 export const receiveBillingInitialValues = createAction('Receive Billing Initial Values', ['billing'])
