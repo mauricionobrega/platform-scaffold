@@ -40,6 +40,7 @@ export const parseLocations = (shippingStepData) => {
             })),
         regions: shippingStepData
             .getIn(['region_id', 'options'])
+            // Skip the first option, since it's a placeholder.
             .slice(1)
             .toJS()
             .map(({label, value, country_id}) => ({

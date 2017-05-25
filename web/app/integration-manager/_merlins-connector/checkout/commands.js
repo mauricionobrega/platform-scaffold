@@ -54,7 +54,7 @@ const processCheckoutData = ($response) => (dispatch) => {
           .getIn(['children', 'shipping-address-fieldset', 'children'])
 
     dispatch(receiveCheckoutLocations(parseLocations(magentoFieldData)))
-    return dispatch(receiveCheckoutData({
+    dispatch(receiveCheckoutData({
         shipping: {
             initialValues: parseShippingInitialValues(magentoFieldData)
         }
