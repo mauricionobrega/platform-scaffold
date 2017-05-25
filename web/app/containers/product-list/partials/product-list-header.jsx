@@ -5,7 +5,7 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
-import {getCategoryTitle, getCategoryParentTitle, getCategoryParentHref, getCategoryCustomContent} from '../../../store/categories/selectors'
+import {getCategoryTitle, getCategoryParentTitle, getCategoryParentHref} from '../../../store/categories/selectors'
 import {getProductListContentsLoaded} from '../selectors'
 import {getAssetUrl} from 'progressive-web-sdk/dist/asset-utils'
 
@@ -13,7 +13,7 @@ import Link from 'progressive-web-sdk/dist/components/link'
 import SkeletonText from 'progressive-web-sdk/dist/components/skeleton-text'
 import Image from 'progressive-web-sdk/dist/components/image'
 
-const ProductListHeader = ({title, contentsLoaded, parentName, parentHref, customContent}) => (
+const ProductListHeader = ({title, contentsLoaded, parentName, parentHref}) => (
     <div className="u-flexbox u-align-bottom">
         <div className="u-flex u-padding-top-lg u-padding-bottom-lg u-padding-start-md">
             <div className="t-product-list__breadcrumb">
@@ -27,8 +27,6 @@ const ProductListHeader = ({title, contentsLoaded, parentName, parentHref, custo
                 }
             </div>
         </div>
-
-        <h2>{customContent}</h2>
 
         {title &&
             <Image
@@ -54,8 +52,7 @@ const mapStateToProps = createPropsSelector({
     contentsLoaded: getProductListContentsLoaded,
     parentHref: getCategoryParentHref,
     parentName: getCategoryParentTitle,
-    title: getCategoryTitle,
-    customContent: getCategoryCustomContent
+    title: getCategoryTitle
 })
 
 export default connect(mapStateToProps)(ProductListHeader)
